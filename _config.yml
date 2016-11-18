@@ -23,7 +23,7 @@ description: Open Media Processing Framework
 
 # List of links in the navigation bar
 navbar-links:
-  About Me: "aboutme"
+  About OpenMPF: "aboutme"
   Resources:
     - Learn markdown: "http://www.markdowntutorial.com/"
     - GitHub Pages: "https://pages.github.com/"
