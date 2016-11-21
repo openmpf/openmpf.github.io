@@ -23,11 +23,11 @@ description: Open Media Processing Framework
 
 # List of links in the navigation bar
 
-#navbar-links:
-#  About OpenMPF: "aboutmpf"
-#  Resources:
-#    - Learn markdown: "http://www.markdowntutorial.com/"
-#    - GitHub Pages: "https://pages.github.com/"
+navbar-links:
+  About OpenMPF: "aboutmpf"
+  Resources:
+    - Documentation: ""
+    - Get Started!: "https://github.com/openmpf"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
