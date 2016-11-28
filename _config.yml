@@ -14,7 +14,7 @@ baseurl: ""
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: OpenMPF - Open Media Processing Framework
+title: OpenMPF
 
 # Short description of your site
 description: Open Media Processing Framework
@@ -24,7 +24,7 @@ description: Open Media Processing Framework
 # List of links in the navigation bar
 
 navbar-links:
-  About MPF: "aboutmpf"
+  About OpenMPF: "aboutmpf"
   Resources:
     - Documentation: ""
     - Get Started!: "https://github.com/openmpf"
@@ -38,7 +38,7 @@ avatar: "/img/cube-square-small.png"
 # Change all these values or delete the ones you don't want.
 # Important: you must keep the "name" parameter, everything else you can remove
 author:
-  name: Dev Team
+  name: Open MPF Dev Team
   email: "youremail@domain.com"
   facebook: yourname  # eg. daattali
   github: openmpf    # eg. daattali
