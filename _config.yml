@@ -24,7 +24,7 @@ description: Open Media Processing Framework
 # List of links in the navigation bar
 
 navbar-links:
-  About OpenMPF: "aboutmpf"
+  About MPF: "aboutmpf"
   Resources:
     - Documentation: ""
     - Get Started!: "https://github.com/openmpf"
@@ -38,7 +38,7 @@ avatar: "/img/cube-square-small.png"
 # Change all these values or delete the ones you don't want.
 # Important: you must keep the "name" parameter, everything else you can remove
 author:
-  name: OpenMPF Dev Team
+  name: Dev Team
   email: "youremail@domain.com"
   facebook: yourname  # eg. daattali
   github: openmpf    # eg. daattali
