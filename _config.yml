@@ -14,10 +14,10 @@ baseurl: ""
 # Of course don't forget to change the username and projectname to YOUR username and project
 
 # Name of website
-title: OpenMPF - Open Media Processing Framework 
+title: OpenMPF
 
 # Short description of your site
-description: OpenMPF
+description: OpenMPF - Open Media Processing Framework 
 
 # --- Navigation bar options --- #
 
