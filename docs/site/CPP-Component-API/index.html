@@ -35,7 +35,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <a href="../API-Overview/" class="icon icon-home"> OpenMPF</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -45,13 +45,6 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 	<ul class="current">
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
-        
-    </li>
-<li>
           
             <li>
     <li class="toctree-l1 ">
@@ -111,6 +104,13 @@
           
             <li>
     <li class="toctree-l1 ">
+        <a class="" href="../Home/">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
         <a class="" href="../OpenMPF-Overview/">OpenMPF Overview</a>
         
     </li>
@@ -140,7 +140,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">OpenMPF</a>
+        <a href="../API-Overview/">OpenMPF</a>
       </nav>
 
       
@@ -148,7 +148,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
+    <li><a href="../API-Overview/">Docs</a> &raquo;</li>
     
       
     
@@ -231,12 +231,10 @@
 <h1 id="c-component-api-overview">C++ Component API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
 <p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
-<p>Using this API, detection components can be built to provide:</p>
-<ul>
-<li>Detection (Localizing an object)</li>
-<li>Tracking (Localizing an object across multiple frames)</li>
-<li>Classification (Detecting the type of object and optionally localizing that object)</li>
-</ul>
+<p>Using this API, detection components can be built to provide:
+<em> Detection (Localizing an object)
+</em> Tracking (Localizing an object across multiple frames)
+* Classification (Detecting the type of object and optionally localizing that object)</p>
 <h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
 <p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>. Developers create component libraries that encapsulate the component detection logic. Each instance of the Component Executable loads one these libraries and uses it to service job requests sent by the OpenMPF Workflow Manager (WFM).</p>
 <p>The Component Executable:</p>
@@ -309,20 +307,20 @@ component-&gt;Close()
 <code>bool Init()</code></li>
 <li>Parameters: none</li>
 <li>Returns: (bool) Return true if initialization is successful, otherwise return false.</li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">bool SampleComponent::Init() {
+<li>
+<p>Example:</p>
+<p>```c++
+bool SampleComponent::Init() {
   // Get component paths
   string run_dir = GetRunDirectory();
-  string plugin_path = run_dir + &quot;/SampleComponent&quot;;
-  string config_path = plugin_path + &quot;/config&quot;;
-
-  // Setup logger, load data models, etc.
-
-  return true;
+  string plugin_path = run_dir + "/SampleComponent";
+  string config_path = plugin_path + "/config";</p>
+<p>// Setup logger, load data models, etc.</p>
+<p>return true;
 }
-</code></pre>
-
+```</p>
+</li>
+</ul>
 <h3 id="close">Close()</h3>
 <p>The component should perform all shutdown operations in the <code>Close</code> member function.
 <code>Close</code> will be called once by the OpenMPF Component Executable prior to component shutdown.</p>
@@ -332,14 +330,15 @@ component-&gt;Close()
 <code>bool Close()</code></li>
 <li>Parameters: none</li>
 <li>Returns: (bool) Return true if successful, otherwise return false.</li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">bool SampleComponent::Close() {
+<li>
+<p>Example:</p>
+<p><code>c++
+bool SampleComponent::Close() {
     // Free memory, etc.
     return true;
-}
-</code></pre>
-
+}</code></p>
+</li>
+</ul>
 <h3 id="getcomponenttype">GetComponentType()</h3>
 <p>The GetComponentType() member function allows the OpenMPF Component API to determine the component "type." Currently <code>MPF_DETECTION_COMPONENT</code> is the only supported component type. APIs for other component types may be developed in the future.</p>
 <ul>
@@ -347,13 +346,14 @@ component-&gt;Close()
 <code>MPFComponentType GetComponentType()</code></li>
 <li>Parameters: none</li>
 <li>Returns: (MPFComponentType) Currently, <code>MPF_DETECTION_COMPONENT</code> is the only supported return value.</li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">MPFComponentType SampleComponent::GetComponentType() {
+<li>
+<p>Example:</p>
+<p><code>c++
+MPFComponentType SampleComponent::GetComponentType() {
     return MPF_DETECTION_COMPONENT;
-};
-</code></pre>
-
+};</code></p>
+</li>
+</ul>
 <h3 id="getrundirectory">GetRunDirectory()</h3>
 <p>Returns the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder.</p>
 <ul>
@@ -361,14 +361,15 @@ component-&gt;Close()
 <code>string GetRunDirectory()</code></li>
 <li>Parameters: none</li>
 <li>Returns: (string) Full path of the parent folder above where the component is installed.</li>
-<li>Sample Usage:</li>
+<li>
+<p>Sample Usage:</p>
+<p><code>c++
+string run_dir = GetRunDirectory();
+string plugin_path = run_dir + "/SampleComponent";
+string config_path = plugin_path + "/config";
+string logconfig_file = config_path + "/Log4cxxConfig.xml";</code></p>
+</li>
 </ul>
-<pre><code class="c++">string run_dir = GetRunDirectory();
-string plugin_path = run_dir + &quot;/SampleComponent&quot;;
-string config_path = plugin_path + &quot;/config&quot;;
-string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
-</code></pre>
-
 <h3 id="setrundirectorystring">SetRunDirectory(string)</h3>
 <p>Sets the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed.</p>
 <ul>
@@ -465,14 +466,15 @@ A simple detector that operates on videos may simply go through the video frame-
 <li>
 <p>Returns: (bool) True if the component supports the data type, otherwise false.</p>
 </li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">// Sample component that supports only image and video files
+<li>
+<p>Example:</p>
+<p><code>c++
+// Sample component that supports only image and video files
 bool SampleComponent::Supports(MPFDetectionDataType data_type) {
     return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
-}
-</code></pre>
-
+}</code></p>
+</li>
+</ul>
 <h4 id="getdetectiontype">GetDetectionType()</h4>
 <p>Returns the type of object detected by the component.</p>
 <ul>
@@ -484,15 +486,16 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <li>
 <p>Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
 </li>
-<li>Example:</li>
+<li>
+<p>Example:</p>
+<p><code>c++
+string SampleComponent::GetDetectionType() {
+    return "FACE";
+}</code></p>
+</li>
 </ul>
-<pre><code class="c++">string SampleComponent::GetDetectionType() {
-    return &quot;FACE&quot;;
-}
-</code></pre>
-
 <h4 id="getdetectionsmpfimagejob">GetDetections(MPFImageJob …)</h4>
-<p>Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.</p>
+<p>Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file. </p>
 <p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.</p>
 <ul>
 <li>Function Definition:
@@ -524,26 +527,24 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <li>
 <p>Returns: MPFDetectionError</p>
 </li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
+<li>
+<p>Example:</p>
+<p><code>c++
+MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
     // Parse job
     // Generate image locations
     return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
+}</code></p>
+</li>
+</ul>
 <h4 id="getdetectionsmpfvideojob">GetDetections(MPFVideoJob …)</h4>
 <p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" of video data and each segment (containing a range of frames) is assigned to a different job. Components are not guaranteed to receive requests in any order. For example, the first request processed by a component might receive a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
 <ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="c++">MPFDetectionError getDetections(const MPFVideoJob &amp;job, vector&lt;MPFVideoTrack&gt; tracks);
-</code></pre>
-
-<ul>
 <li>
-<p>Parameters:</p>
+<p>Function Definition:</p>
+<p><code>c++
+MPFDetectionError getDetections(const MPFVideoJob &amp;job, vector&lt;MPFVideoTrack&gt; tracks);</code>
+* Parameters:</p>
 <table>
 <thead>
 <tr>
@@ -569,26 +570,24 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <li>
 <p>Returns: MPFDetectionError</p>
 </li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
+<li>
+<p>Example:</p>
+<p><code>c++
+MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
     // Parse job
     // Generate tracks
     return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
+}</code></p>
+</li>
+</ul>
 <h4 id="getdetectionsmpfaudiojob">GetDetections(MPFAudioJob …)</h4>
 <p>Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.</p>
 <ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks)
-</code></pre>
-
-<ul>
 <li>
-<p>Parameters:</p>
+<p>Function Definition:</p>
+<p><code>c++
+MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks)</code>
+* Parameters:</p>
 <table>
 <thead>
 <tr>
@@ -614,15 +613,16 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <li>
 <p>Returns: <code>MPFDetectionError</code></p>
 </li>
-<li>Example:</li>
-</ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
+<li>
+<p>Example:</p>
+<p><code>c++
+MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
     // Parse job
     // Generate tracks
     return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
+}</code></p>
+</li>
+</ul>
 <h3 id="detection-job-data-structures">Detection Job Data Structures</h3>
 <p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):
 <em> <a href="#mpfjob"><code>MPFJob</code></a>
@@ -638,16 +638,15 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <h4 id="mpfjob">MPFJob</h4>
 <p>Structure containing information about about a job to be performed on a piece of media.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFJob(
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFJob(
   const string &amp;job_name,
   const string &amp;data_uri,
   const Properties &amp;job_properties,
-  const Properties &amp;media_properties)
-</code></pre>
-
-<ul>
+  const Properties &amp;media_properties)</code></p>
+</li>
 <li>
 <p>Members:</p>
 <table>
@@ -687,18 +686,15 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in an image file.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFImageJob(
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFImageJob(
     const string &amp;job_name,
     const string &amp;data_uri,
     const Properties &amp;job_properties,
-    const Properties &amp;media_properties)
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+    const Properties &amp;media_properties)</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -736,20 +732,17 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in a video file.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFVideoJob(
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFVideoJob(
   const string &amp;job_name,
   const string &amp;data_uri,
   int start_frame,
   int stop_frame,
   const Properties &amp;job_properties,
-  const Properties &amp;media_properties)
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+  const Properties &amp;media_properties)</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -800,20 +793,17 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in an audio file. Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFAudioJob(
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFAudioJob(
   const string &amp;job_name,
   const string &amp;data_uri,
   int start_time,
   int stop_time,
   const Properties &amp;job_properties,
-  const Properties &amp;media_properties)
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+  const Properties &amp;media_properties)</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -861,21 +851,18 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <h4 id="mpfimagelocation">MPFImageLocation</h4>
 <p>Structure used to store the location of detected objects in a image file.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFImageLocation()
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFImageLocation()
 MPFImageLocation(
   int x_left_upper,
   int y_left_upper,
   int width,
   int height,
   float confidence = -1,
-  const Properties &amp;detection_properties = {})
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+  const Properties &amp;detection_properties = {})</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -933,20 +920,17 @@ detection.detection_properties["CLASSIFICATION"] = "backpack";</code></p>
 <h4 id="mpfvideotrack">MPFVideoTrack</h4>
 <p>Structure used to store the location of detected objects in a video file.</p>
 <ul>
-<li>Constructor:</li>
-</ul>
-<pre><code class="c++">MPFVideoTrack()
+<li>
+<p>Constructor:</p>
+<p><code>c++
+MPFVideoTrack()
 MPFVideoTrack(
   int start_frame,
   int stop_frame,
   float confidence = -1,
   map&lt;int, MPFImageLocation&gt; frame_locations,
-  const Properties &amp;detection_properties = {})
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+  const Properties &amp;detection_properties = {})</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -998,19 +982,16 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <h4 id="mpfaudiotrack">MPFAudioTrack</h4>
 <p>Structure used to store the location of detected objects in an audio file.</p>
 <ul>
-<li>Constructor(s):</li>
-</ul>
-<pre><code class="c++">MPFAudioTrack()
+<li>
+<p>Constructor(s):</p>
+<p><code>c++
+MPFAudioTrack()
 MPFAudioTrack(
   int start_time,
   int stop_time,
   float confidence = -1,
-  const Properties &amp;detection_properties = {})
-</code></pre>
-
-<ul>
-<li>
-<p>Members:</p>
+  const Properties &amp;detection_properties = {})</code>
+* Members:</p>
 <table>
 <thead>
 <tr>
@@ -1172,7 +1153,7 @@ MPFAudioTrack(
 
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
-<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/">Apache log4cxx</a> for OpenMPF Component logging.</p>
+<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/">Apache log4cxx</a> for OpenMPF Component logging. </p>
 <p>Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.</p>
 <p>Log files should be output to:
 <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code></p>
@@ -1208,7 +1189,7 @@ MPFAudioTrack(
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../OpenMPF-Overview/" class="btn btn-neutral float-right" title="OpenMPF Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Home/" class="btn btn-neutral float-right" title="Home">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Build-Environment-Setup-Guide/" class="btn btn-neutral" title="Build Environment Setup Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1240,7 +1221,7 @@ MPFAudioTrack(
         <span><a href="../Build-Environment-Setup-Guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../OpenMPF-Overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Home/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

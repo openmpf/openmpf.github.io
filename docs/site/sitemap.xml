@@ -3,14 +3,6 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2017-01-25</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
      <loc>/API-Overview/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
@@ -28,6 +20,14 @@
     
     <url>
      <loc>/CPP-Component-API/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/Home/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>

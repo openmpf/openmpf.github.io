@@ -1,1 +1,0 @@
-[MPF-REST-API.pdf](pdf/MPF-REST-API.pdf "MPF-REST-API.pdf")
