@@ -515,6 +515,7 @@ Structure used to store the location of detected objects in a image file.
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
+>
 > Source:
 ```c++
 MPFImageLocation detection;
@@ -639,13 +640,12 @@ OpenMPF components should be stateless in operation and give identical output fo
 It is recommended that C++ components are organized according to the following directory structure:
 
 ```
-componentName/
-  config/
-    // Logging and other component-specific configuration
-  descriptor/
-    descriptor.json
-  lib/
-    libComponentName.so // Compiled component library
+componentName
+├── config - Logging and other component-specific configuration
+├── descriptor
+│   └── descriptor.json
+└── lib
+    └──libComponentName.so - Compiled component library
 ```  
 
 Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
