@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Packaging and Registering a Component - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Packaging and Registering a Component";
+    var mkdocs_page_input_path = "Packaging-and-Registering-a-Component.md";
+    var mkdocs_page_url = "/Packaging-and-Registering-a-Component/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">API Overview</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Environment Setup Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">CPP Component API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../OpenMPF-Overview/">OpenMPF Overview</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Packaging and Registering a Component</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#packaging-and-registering-a-component">Packaging and Registering a Component</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-descriptor-overview">Component Descriptor Overview</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-descriptor-data-elements">Component Descriptor Data Elements</a></li>
+                
+                    <li><a class="toctree-l4" href="#packaging-a-component">Packaging a Component</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Packaging and Registering a Component</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="packaging-and-registering-a-component">Packaging and Registering a Component</h1>
+<!-- toc -->
+
+<ul>
+<li><a href="#packaging-and-registering-a-component">Packaging and Registering a Component</a><ul>
+<li><a href="#component-descriptor-overview">Component Descriptor Overview</a></li>
+<li><a href="#component-descriptor-data-elements">Component Descriptor Data Elements</a><ul>
+<li><a href="#componentname">componentName</a></li>
+<li><a href="#componentversion">componentVersion</a></li>
+<li><a href="#componentapiversion">componentAPIVersion</a></li>
+<li><a href="#sourcelanguage">sourceLanguage</a></li>
+<li><a href="#pathname">pathName</a></li>
+<li><a href="#launchargs">launchArgs</a></li>
+<li><a href="#environmentvariables">environmentVariables</a></li>
+<li><a href="#algorithm">algorithm</a></li>
+<li><a href="#actions">actions</a></li>
+<li><a href="#tasks">tasks</a></li>
+<li><a href="#pipelines">pipelines</a></li>
+</ul>
+</li>
+<li><a href="#packaging-a-component">Packaging a Component</a><ul>
+<li><a href="#installing-and-registering-a-component">Installing and registering a component</a></li>
+<li><a href="#unregistering-a-component">Unregistering a component</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h2 id="component-descriptor-overview">Component Descriptor Overview</h2>
+<p>Each component must provide a JavaScript Object Notation (JSON) descriptor file which provides contextual information about the component.</p>
+<p>This file must be named "descriptor.json".</p>
+<p>For an example, please see: <a href="../openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/descriptor.json"><strong>Hello World JSON Descriptor</strong></a></p>
+<h2 id="component-descriptor-data-elements">Component Descriptor Data Elements</h2>
+<p>Contained within the JSON file should be the following elements:</p>
+<h3 id="componentname">componentName</h3>
+<p>Required.</p>
+<p>Contains the component’s name. Should follow CamelCaseFormat.</p>
+<p>Example:
+<code>"componentName" : "SampleComponent"</code></p>
+<h3 id="componentversion">componentVersion</h3>
+<p>Required.</p>
+<p>Contains the component’s version. Does not need to match the <code>componentAPIVersion</code>.</p>
+<p>Example:
+<code>"componentVersion" : "0.1.0"</code></p>
+<h3 id="componentapiversion">componentAPIVersion</h3>
+<p>Required.</p>
+<p>Contains the version of the MPF Component API that the component was built with.</p>
+<p>Example:
+<code>"middlewareVersion" :  "0.9.0"</code></p>
+<h3 id="sourcelanguage">sourceLanguage</h3>
+<p>Required.</p>
+<p>Contains the language the component is coded in. Should be either “java” or “c++”.</p>
+<p>Example:
+<code>"sourceLanguage" : "c++"</code></p>
+<h3 id="pathname">pathName</h3>
+<p>Required.</p>
+<p>For C++ components, this contains the name of the Component Executable that will be used to run the component. Generally, this is <code>amq_detection_component</code> (where “amq” stands for ActiveMQ) for all C++ detection components.</p>
+<p>For Java components, this contains the path to the jar which contains the component implementation.</p>
+<p>Example (C++):
+<code>"pathName" : "amq_detection_component"</code></p>
+<p>Example (Java):
+<code>"pathName" : "sample-component-0.1.0.jar"</code></p>
+<h3 id="launchargs">launchArgs</h3>
+<p>C++: Required.
+Java: Required; can be empty.</p>
+<p>Holds the command line arguments in string format that should be passed to the Component Executable when it is launched.</p>
+<p>For C++ detection components the one and only argument should be the full path to the Component Logic shared object library. The library must reside in a location that is accessible by each of the machines on which the component is deployed.</p>
+<p>For Java detection components, this can be empty.</p>
+<p>Example (C++):
+<code>"launchArgs" : ["${MPF_HOME}/plugins/SampleComponent/lib/libsampleComponent.so"]</code></p>
+<p>Example (Java):
+<code>"launchArgs" : []</code></p>
+<h3 id="environmentvariables">environmentVariables</h3>
+<p>Required; can be empty.</p>
+<p>Defines a collection of environment variables that will be set when executing the MPF Component Executable.</p>
+<p>Contains the following sub-fields:</p>
+<ul>
+<li>
+<p><strong>name:</strong>
+  Name of the environment variable.</p>
+</li>
+<li>
+<p><strong>value:</strong>
+  Value of the environment variable.
+  Note that value can be a list of values separated by “:”.</p>
+</li>
+<li>
+<p><strong>sep:</strong>
+  The <code>sep</code> field (short for “separator”) should be set to “null” or “:”. When set to “null,” the content of the environment variable specified by <code>name</code> is the content of <code>value</code>; for an existing variable, its former value will be replaced, otherwise, a new variable will be created and assigned this value. When set to “:” any prior value of the environment variable is retained and the content of <code>value</code> is simply appended to the end after a “:” character.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>IMPORTANT</strong>: For C++ components, the LD_LIBRARY_PATH needs to be set in order for the Component Executable to load the component’s shared object library as well as any dependent libraries installed with the component. The usual form of the LD_LIBRARY_PATH variable should be <code>${MPF_HOME}/plugins/&lt;componentName&gt;/lib/</code>. Additional directories can be appended after a “:” delimiter.</p>
+</blockquote>
+<p>Example:</p>
+<pre><code class="json">&quot;environmentVariables&quot;: [
+    {
+      &quot;name&quot;: &quot;LD_LIBRARY_PATH&quot;,
+      &quot;value&quot;: &quot;${MPF_HOME}/plugins/SampleComponent/lib&quot;,
+      &quot;sep&quot;: &quot;:&quot;
+    }
+  ]
+</code></pre>
+
+<h3 id="algorithm">algorithm</h3>
+<p>Required.</p>
+<p>Specifies information about the component’s algorithm.</p>
+<p>Contains the following sub-fields:
+* <strong>name:</strong>
+  Required. Contains the algorithm’s name. Should be unique and all CAPS.</p>
+<ul>
+<li>
+<p><strong>description:</strong>
+  Required. Contains a brief description of the algorithm.</p>
+</li>
+<li>
+<p><strong>detectionType:</strong>
+  Required. Defines the type of entity associated with the algorithm. For example: <code>CLASS</code>, <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, or <code>TEXT</code>.</p>
+</li>
+<li>
+<p><strong>actionType:</strong>
+  Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
+</li>
+<li>
+<p><strong>requiresCollection:</strong>
+  Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
+  <br/>This value should be empty <em>unless</em> the component depends on the results of another algorithm.</p>
+</li>
+<li>
+<p><strong>providesCollection:</strong></p>
+</li>
+</ul>
+<p>Contains the following sub-fields:
+  * <strong>states:</strong> Required. Contains the state(s) that the algorithm provides.
+  Should contain the following values:
+    * <code>DETECTION</code>
+    * <code>DETECTION_TYPE</code>, where <code>TYPE</code> is the <code>algorithm.detectionType</code>
+    * <code>DETECTION_TYPE_ALGORITHM</code>, where <code>TYPE</code> is the value of <code>algorithm.detectionType</code> and <code>ALGORITHM</code> is the value of <code>algorithm.name</code>
+    Example:
+      <code>"states": [
+        "DETECTION",
+        "DETECTION_FACE",
+        "DETECTION_FACE_SAMPLECOMPONENT"]</code></p>
+<ul>
+<li><strong>properties:</strong>
+  Required; can be empty. Declares a list of the configurable properties that the algorithm exposes.
+  Contains the following sub-fields:<ul>
+<li><strong>name:</strong>
+  Required.</li>
+<li><strong>type:</strong>
+  Required.
+  <code>BOOLEAN</code>, <code>FLOAT</code>, <code>DOUBLE</code>, <code>INT</code>, <code>LONG</code>, or <code>STRING</code>.</li>
+<li><strong>defaultValue:</strong>
+  Required.
+  Must be provided in order to create a default action associated with the algorithm, where an action is a specific instance of an algorithm configured with a set of property values.</li>
+<li><strong>description:</strong>
+  Required.
+  Description of the property. By convention, the default value for a property should be described in its description text.</li>
+</ul>
+</li>
+</ul>
+<h3 id="actions">actions</h3>
+<p>Optional.</p>
+<p>Actions are used in the development of pipelines. Provides a list of custom actions that will be added during component registration.</p>
+<blockquote>
+<p><strong>NOTE:</strong> For convenience, a default action will be created upon component registration if this element is not provided in the descriptor file.</p>
+</blockquote>
+<p>Contains the following sub-fields:</p>
+<ul>
+<li>
+<p><strong>name:</strong>
+  Required. Contains the action’s name. Must be unique among all actions, including those that already exist on the system and those specified in this descriptor.</p>
+</li>
+<li>
+<p><strong>description:</strong>
+  Required. Contains a brief description of the action.</p>
+</li>
+<li>
+<p><strong>algorithm:</strong>
+  Required. Contains the name of the algorithm for this action. The algorithm must either already exist on the system or be defined in this descriptor.</p>
+</li>
+<li>
+<p><strong>properties:</strong>
+  Optional. List of properties that will be passed to the algorithm. Each property has an associated name and value sub-field, which are both required. Name must be one of the properties specified in the algorithm definition for this action.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code class="json">&quot;actions&quot;: [
+  {
+    &quot;name&quot;: &quot;SAMPLE COMPONENT FACE DETECTION ACTION&quot;,
+    &quot;description&quot;: &quot;Executes the sample component face detection algorithm using the default parameters.&quot;,
+    &quot;algorithm&quot;: &quot;SAMPLECOMPONENT&quot;,
+    &quot;properties&quot;: []
+  }
+]
+</code></pre>
+
+<h3 id="tasks">tasks</h3>
+<p>Optional.</p>
+<p>A list of custom tasks that will be added during component registration.</p>
+<blockquote>
+<p><strong>NOTE:</strong> For convenience, a default task will be created upon component registration if this element is not provided in the descriptor file.</p>
+</blockquote>
+<p>Contains the following sub-fields:</p>
+<ul>
+<li>
+<p><strong>name:</strong>
+  Required. Contains the task's name. Must be unique among all tasks, including those that already exist on the system and those specified in this descriptor.</p>
+</li>
+<li>
+<p><strong>description:</strong>
+  Required. Contains a brief description of the task.</p>
+</li>
+<li>
+<p><strong>actions:</strong>
+  Required. Minimum length is 1. Contains the names of the actions that this task uses. Actions must either already exist on the system or be defined in this descriptor.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code class="json">&quot;tasks&quot;: [
+  {
+    &quot;name&quot;: &quot;SAMPLE COMPONENT FACE DETECTION TASK&quot;,
+    &quot;description&quot;: &quot;Performs sample component face detection.&quot;,
+    &quot;actions&quot;: [
+      &quot;SAMPLE COMPONENT FACE DETECTION ACTION&quot;
+    ]
+  }
+]
+</code></pre>
+
+<h3 id="pipelines">pipelines</h3>
+<p>Optional.</p>
+<p>A list of custom pipelines that will be added during component registration.</p>
+<blockquote>
+<p><strong>NOTE:</strong> For convenience, a default pipeline will be created upon component registration if this element is not provided in the descriptor file.</p>
+</blockquote>
+<p>Contains the following sub-fields:</p>
+<ul>
+<li>
+<p><strong>name:</strong>
+  Required. Contains the pipeline's name. Must be unique among all pipelines, including those that already exist on the system and those specified in this descriptor.</p>
+</li>
+<li>
+<p><strong>description:</strong>
+  Required. Contains a brief description of the pipeline.</p>
+</li>
+<li>
+<p><strong>tasks:</strong>
+  Required. Minimum length is 1. Contains the names of the tasks that this pipeline uses. Tasks must either already exist on the system or be defined in this descriptor.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code class="json">&quot;pipelines&quot;: [
+  {
+    &quot;name&quot;: &quot;SAMPLE COMPONENT FACE DETECTION PIPELINE&quot;,
+    &quot;description&quot;: &quot;Performs sample component face detection.&quot;,
+    &quot;tasks&quot;: [
+      &quot;SAMPLE COMPONENT FACE DETECTION TASK&quot;
+    ]
+  }
+]
+</code></pre>
+
+<h2 id="packaging-a-component">Packaging a Component</h2>
+<p>Once the descriptor file is complete, the next step is to compile your component source code, and finally, create a .tar.gz package containing the descriptor file, component library, and all other necessary files.</p>
+<p>The package should contain a top-level directory with a unique name that will (hopefully) not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the <code>componentName</code>.</p>
+<p>Within the top-level directory there must be a directory named “descriptor” with the descriptor JSON file in it. The name of the file must be “descriptor.json”.</p>
+<p>Example:</p>
+<pre><code>//sample-component-0.1.0-tar.gz contents
+SampleComponent/
+  config/
+  descriptor/
+    descriptor.json
+  lib/
+</code></pre>
+
+<h3 id="installing-and-registering-a-component">Installing and registering a component</h3>
+<p>The Component Registration web page, located in the Admin section of the MPF web user interface, can be used to upload and register the component.</p>
+<p>Drag and drop the .tar.gz file containing the component onto the dropzone area of that page. The component will automatically be uploaded and registered.</p>
+<p>Upon successful registration, the component will be available for deployment onto MPF nodes via the Node Configuration web page and <code>/rest/nodes/config</code> end point.</p>
+<p>If the descriptor contains custom actions, tasks, or pipelines, then they will be automatically added to the system upon registration.</p>
+<blockquote>
+<p><strong>NOTE:</strong> If the descriptor does not contain custom actions, tasks, or pipelines, then a default action, task, and pipeline will be generated and added to the system.</p>
+<p>The default action will use the component’s algorithm with its default property value settings.
+The default task will use the default action.
+The default pipeline will use the default task. This will only be generated if the algorithm does not specify any <code>requiresCollection</code> states.</p>
+</blockquote>
+<h3 id="unregistering-a-component">Unregistering a component</h3>
+<p>A component can be unregistered by using the remove button on the Component Registration page.</p>
+<p>During unregistration, all services, algorithms, actions, tasks, and pipelines associated with the component are deleted. Additionally, all actions, tasks, and pipelines that depend on these elements are removed.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../REST-API/" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../OpenMPF-Overview/" class="btn btn-neutral" title="OpenMPF Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../OpenMPF-Overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../REST-API/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>API Overview - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "API Overview";
+    var mkdocs_page_input_path = "API-Overview.md";
+    var mkdocs_page_url = "/API-Overview/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">API Overview</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#openmpf-api-overview">OpenMPF API Overview</a></li>
+                
+                    <li><a class="toctree-l4" href="#background">Background</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Environment Setup Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">CPP Component API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../OpenMPF-Overview/">OpenMPF Overview</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>API Overview</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="openmpf-api-overview">OpenMPF API Overview</h1>
+<p>The OpenMPF Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:
+<em>   Provide an overview of OpenMPF and its API
+</em>   Define a <em>component</em> in the context of the MPF
+*   Explain the use of the API</p>
+<p><strong>Terminology:</strong>
+In order to talk about OpenMPF, readers should be familiar with the following key OpenMPF-specific terms:</p>
+<ul>
+<li><strong>Job</strong> - An OpenMPF work unit. A job contains a list of media files and the pipeline that will be used to process that media.</li>
+<li><strong>Pipeline</strong> - A logical flow of processes that will be performed on a piece of media. For instance, a pipeline may perform motion tracking on a video and feed the results into a face detection algorithm.</li>
+<li><strong>Component</strong> - An OpenMPF plugin that receives jobs (containing media), processes that media, and returns results.</li>
+<li><strong>Detection Component</strong> - A component that performs either detection (with or without tracking), or classification on a piece of media.</li>
+<li><strong>Node</strong> - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.</li>
+<li><strong>Service</strong> - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.</li>
+</ul>
+<h2 id="background">Background</h2>
+<p>OpenMPF consists of the Workflow Manager, a Node Manager, components, and a message passing mechanism that enables communication between the Workflow Manager and the components.</p>
+<h3 id="workflow-manager">Workflow Manager</h3>
+<p>The Workflow Manager (WFM) receives job requests from user interface and external systems through the REST API. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
+<p>The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.</p>
+<p>The WFM provides work to a component service by placing a job request on the request queue, and it retrieves the component’s response by monitoring the appropriate response queue. The WFM may generate one or more job requests for a large video file, depending on how it segments the file into chunks. The segmentation properties can be specified system-wide using configuration files, or specified on a per-job basis.</p>
+<blockquote>
+<p><strong>Note:</strong> All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.</p>
+</blockquote>
+<h3 id="node-manager">Node Manager</h3>
+<p>The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.</p>
+<p>After the Node Manager spawns a service, the service waits for job requests from the Workflow Manager and produces a response for each request.</p>
+<h3 id="components">Components</h3>
+<p>Components are identified by seven key characteristics:
+<em>   The </em>type of action<em> the component performs
+</em>   The <em>types of data</em> it supports
+<em>   The </em>type of objects<em> it detects
+</em>   The <em>name</em> of the algorithm or vendor
+<em>   The user-configurable </em>properties<em> that the component exposes
+</em>   The <em>required states</em> associated with a job prior to the execution of the component
+<em>   The </em>provided states* associated with a job following the execution of the component</p>
+<p>A component’s action type corresponds to the operation which the algorithm performs. Generally, this is <code>DETECTION</code>.</p>
+<p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code>.</p>
+<p>As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.</p>
+<p>The type of objects produced depends on the input type. For example, video files produce video tracks, audio files produce audio tracks, and images produce image locations.</p>
+<p><img alt="OpenMPF Component IO" src="../img/component_io_diagram.png" title="OpenMPF Component IO" /></p>
+<p>The OpenMPF Component Interface API presented provides developers an interface for developing new components for OpenMPF without requiring the developers to understand the internals of the framework.</p>
+<p>The figure below depicts a high-level block diagram of the OpenMPF architecture with components.</p>
+<p><img alt="OpenMPF System Block Diagram" src="../img/block_diagram.png" title="OpenMPF System Block Diagram" /></p>
+<p>The Component Registry serves as a central location for information about the components registered with the OpenMPF instance. A future goal is to develop a web page that can be used to browse the registry and display the metadata associated with each available component.</p>
+<p>OpenMPF includes a Component Executable for the <code>DETECTION</code> action type, as denoted by the blue cubes. Note that the Component Executable is shown three times to represent three instances of that process, one for each component type. This executable is responsible for loading a component library based on information provided at launch time from the Node Manager. </p>
+<p>One Component Executable instance is associated with each component service. For example, a motion detection service, face detection service, and text detection service will require three instances of the Component Executable process, one for each service. For another example, three motion detection services will also require three instances of the Component Executable process, one for each service. The Component Executable is abstract; it does not care what kind of detection is performed. It simply interacts with the component library through the Component API.</p>
+<p>The Component Executable receives job requests from the message broker, translates those requests for the component, and converts the component’s outputs into response messages for the OpenMPF.</p>
+<p>A separate Component Executable is maintained for C++ and Java components. The component library is compiled as a C++ shared object library, or Java JAR, and encapsulates the component's detection logic.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Build-Environment-Setup-Guide/" class="btn btn-neutral float-right" title="Build Environment Setup Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Build-Environment-Setup-Guide/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

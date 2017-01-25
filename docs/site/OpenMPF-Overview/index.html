@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>OpenMPF Overview - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "OpenMPF Overview";
+    var mkdocs_page_input_path = "OpenMPF-Overview.md";
+    var mkdocs_page_url = "/OpenMPF-Overview/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">API Overview</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Environment Setup Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">CPP Component API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">OpenMPF Overview</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>OpenMPF Overview</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>There are numerous video and image exploitation capabilities available today. The Open Media Processing Framework (OpenMPF) provides a framework for chaining, combining, or replacing individual components for the purpose of experimentation and comparison.</p>
+<p>OpenMPF is a non-proprietary, scalable framework that permits practitioners and researchers to construct video, imagery, and audio exploitation capabilities using the available third-party components. Using OpenMPF, one can extract targeted entities in large-scale data environments, such as face and object detection.</p>
+<p>For those developing new exploitation capabilities, OpenMPF exposes a set of Application Program Interfaces (APIs) for extending media analytics functionality. The APIs allow integrators to introduce new algorithms capable of detecting new targeted entity types. For example, a backpack detection algorithm could be integrated into an OpenMPF instance. OpenMPF does not restrict the number of algorithms that can operate on a given media file, permitting researchers, practitioners, and developers to explore arbitrarily complex composites of exploitation algorithms.</p>
+<p>A list of open source algorithms currently integrated into the OpenMPF as distributed processing components is shown here:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Operation</strong></th>
+<th><strong>Object Type</strong></th>
+<th><strong>Framework</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detection/Tracking</td>
+<td>Face</td>
+<td>OpenCV</td>
+</tr>
+<tr>
+<td>Detection/Tracking</td>
+<td>Face</td>
+<td>Dlib</td>
+</tr>
+<tr>
+<td>Detection/Tracking</td>
+<td>Text</td>
+<td>OpenALPR</td>
+</tr>
+<tr>
+<td>Detection/Tracking</td>
+<td>Motion</td>
+<td>OpenCV w/ STRUCT</td>
+</tr>
+<tr>
+<td>Detection/Tracking</td>
+<td>Person</td>
+<td>OpenCV</td>
+</tr>
+<tr>
+<td>Detection</td>
+<td>Speech</td>
+<td>Sphinx</td>
+</tr>
+<tr>
+<td>Detection</td>
+<td>Classification</td>
+<td>Caffe</td>
+</tr>
+</tbody>
+</table>
+<p>The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Packaging-and-Registering-a-Component/" class="btn btn-neutral float-right" title="Packaging and Registering a Component">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../CPP-Component-API/" class="btn btn-neutral" title="CPP Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../CPP-Component-API/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Packaging-and-Registering-a-Component/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>
