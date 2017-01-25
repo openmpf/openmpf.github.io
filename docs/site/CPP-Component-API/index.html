@@ -921,8 +921,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </li>
 </ul>
 <blockquote>
-<p><strong>EXAMPLE - Using detection_properties</strong>: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
-Source:</p>
+<p><strong>EXAMPLE - Using detection_properties</strong>: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.</p>
+<p>Source:</p>
 </blockquote>
 <pre><code class="c++">MPFImageLocation detection;
 detection.x_left_upper = 0;
@@ -1164,13 +1164,12 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input.</p>
 <h2 id="component-packaging">Component Packaging</h2>
 <p>It is recommended that C++ components are organized according to the following directory structure:</p>
-<pre><code>componentName/
-  config/
-    // Logging and other component-specific configuration
-  descriptor/
-    descriptor.json
-  lib/
-    libComponentName.so // Compiled component library
+<pre><code>componentName
+├── config - Logging and other component-specific configuration
+├── descriptor
+│   └── descriptor.json
+└── lib
+    └──libComponentName.so - Compiled component library
 </code></pre>
 
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
@@ -1223,6 +1222,8 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 
   <div role="contentinfo">
     <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
     
   </div>
 

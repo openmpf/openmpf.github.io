@@ -1,5 +1,6 @@
 site_name: OpenMPF
 theme: readthedocs
+copyright: OpenMPF
 
 markdown_extensions:
 - toc
