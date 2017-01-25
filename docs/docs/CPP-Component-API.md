@@ -1,5 +1,7 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.
 
+# Table of Contents
+
 [TOC]
 
 # C++ Component API Overview
@@ -70,6 +72,7 @@ The API consists of *Component Interfaces*, which provide interfaces and abstrac
 * [`MPFComponent`](#openmpf-component-api) - Abstract base class for components.
 
 **Detection Component Interface**
+
 * [`MPFDetectionComponent`](#openmpf-detection-component-api) extends [`MPFComponent`](#openmpf-component-api) - Abstract class that should be extended by all OpenMPF detection components.
 
 **Job Definitions**
@@ -186,6 +189,7 @@ Sets the value of the private `run_directory` data member which contains the ful
 	| Parameter  | Data Type  | Description  |
 	|---|---|---|
 	| run_dir  | `const string &`  | Full path of the parent folder above where the component is installed. |
+
 * Returns: void
 
 >**IMPORTANT:** `SetRunDirectory` is called by the Component Executable to set the correct path. This function should not be called within your implementation.
@@ -297,7 +301,7 @@ Currently, the data_uri is always a local file path. For example, "/opt/mpf/shar
 	|  job | `const MPFImageJob &`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
 	|  locations | `vector<MPFImageLocation> &` | The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.   |
 
-* Returns: MPFDetectionError
+* Returns: `MPFDetectionError`
 * Example:
 
 ```c++
@@ -324,7 +328,7 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 	| job  | `const MPFVideoJob &`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
 	| tracks  | `vector<MPFVideoTrack> &` | The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  |
 
-* Returns: MPFDetectionError
+* Returns: `MPFDetectionError`
 * Example:
 
 ```c++

@@ -1,16 +1,15 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.
 
-# Packaging and Registering a Component
+# Table of Contents
 
 [TOC]
 
-
 ## 	Component Descriptor Overview
-Each component must provide a JavaScript Object Notation (JSON) descriptor file which provides contextual information about the component.
+In order to registered within OpenMPF, each component must provide a JavaScript Object Notation (JSON) descriptor file which provides contextual information about the component.
 
 This file must be named "descriptor.json".
 
-For an example, please see: [**Hello World JSON Descriptor**](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/descriptor.json)
+For an example, please see: [**Hello World JSON Descriptor**](https://www.github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/descriptor.json)
 
 ## Component Descriptor Data Elements
 

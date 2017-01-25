@@ -1,5 +1,9 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.
 
+# Table of Contents
+
+[toc]
+
 # General Information
 
 The Open Media Processing Framework (OpenMPF) software is distributed as a raw source code package. The reason for this methodology is to allow for publishing under the Apache license to support broad utilization and use-cases. Several of the underlying dependencies can be compiled in ways that introduce copyleft licenses or patent restrictions. Thus, this approach allows the OpenMPF to be built for a variety of use cases and in the general sense, utilized readily for non-commercial in-house use.
@@ -24,7 +28,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
     - **Version**: Red Hat (64-bit)
 
 2. The recommended minimum virtual system specifications tested are:
-    - **Memory**: 8192MB 
+    - **Memory**: 8192MB
     - **CPU**: 4
     - **Disk**: 40GB on a SSD.
 
@@ -1307,7 +1311,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
     - **Version**: Red Hat (64-bit)
 
 2. The recommended minimum virtual system specifications tested are:
-    - **Memory**: 8192MB 
+    - **Memory**: 8192MB
     - **CPU**: 4
     - **Disk**: 40GB on a SSD.
 

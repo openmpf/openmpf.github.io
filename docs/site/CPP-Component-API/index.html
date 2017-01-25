@@ -78,6 +78,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#c-component-api-overview">C++ Component API Overview</a></li>
                 
                     <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
@@ -113,7 +116,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/">Component Packaging and Registration</a>
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
         
     </li>
 
@@ -167,8 +170,10 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="table-of-contents">Table of Contents</h1>
 <div class="toc">
 <ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#c-component-api-overview">C++ Component API Overview</a><ul>
 <li><a href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
 <li><a href="#getting-started">Getting Started</a></li>
@@ -274,8 +279,10 @@ component-&gt;Close()
 <ul>
 <li><a href="#openmpf-component-api"><code>MPFComponent</code></a> - Abstract base class for components.</li>
 </ul>
-<p><strong>Detection Component Interface</strong>
-* <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> extends <a href="#openmpf-component-api"><code>MPFComponent</code></a> - Abstract class that should be extended by all OpenMPF detection components.</p>
+<p><strong>Detection Component Interface</strong></p>
+<ul>
+<li><a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> extends <a href="#openmpf-component-api"><code>MPFComponent</code></a> - Abstract class that should be extended by all OpenMPF detection components.</li>
+</ul>
 <p><strong>Job Definitions</strong></p>
 <p>The following data structures contain details about a specific job (work unit):</p>
 <ul>
@@ -386,13 +393,11 @@ component-&gt;Close()
 <td><code>const string &amp;</code></td>
 <td>Full path of the parent folder above where the component is installed.</td>
 </tr>
-<tr>
-<td>* Returns: void</td>
-<td></td>
-<td></td>
-</tr>
 </tbody>
 </table>
+</li>
+<li>
+<p>Returns: void</p>
 </li>
 </ul>
 <blockquote>
@@ -518,7 +523,7 @@ A simple detector that operates on videos may simply go through the video frame-
 </table>
 </li>
 <li>
-<p>Returns: MPFDetectionError</p>
+<p>Returns: <code>MPFDetectionError</code></p>
 </li>
 <li>Example:</li>
 </ul>
@@ -563,7 +568,7 @@ A simple detector that operates on videos may simply go through the video frame-
 </table>
 </li>
 <li>
-<p>Returns: MPFDetectionError</p>
+<p>Returns: <code>MPFDetectionError</code></p>
 </li>
 <li>Example:</li>
 </ul>
@@ -1206,7 +1211,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Packaging-and-Registering-a-Component/" class="btn btn-neutral float-right" title="Component Packaging and Registration">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Packaging-and-Registering-a-Component/" class="btn btn-neutral float-right" title="Packaging and Registering a Component">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../API-Overview/" class="btn btn-neutral" title="Component Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
