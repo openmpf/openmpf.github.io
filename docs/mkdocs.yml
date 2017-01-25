@@ -1,6 +1,9 @@
 site_name: OpenMPF
 theme: readthedocs
 
+markdown_extensions:
+- toc
+
 pages:
 - Home: index.md
 - Build Guide: Build-Environment-Setup-Guide.md

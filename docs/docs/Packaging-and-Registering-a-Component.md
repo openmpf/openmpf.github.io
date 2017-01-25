@@ -2,27 +2,7 @@
 
 # Packaging and Registering a Component
 
-<!-- toc -->
-
-- [Packaging and Registering a Component](#packaging-and-registering-a-component)
-	- [Component Descriptor Overview](#component-descriptor-overview)
-	- [Component Descriptor Data Elements](#component-descriptor-data-elements)
-		- [componentName](#componentname)
-		- [componentVersion](#componentversion)
-		- [componentAPIVersion](#componentapiversion)
-		- [sourceLanguage](#sourcelanguage)
-		- [pathName](#pathname)
-		- [launchArgs](#launchargs)
-		- [environmentVariables](#environmentvariables)
-		- [algorithm](#algorithm)
-		- [actions](#actions)
-		- [tasks](#tasks)
-		- [pipelines](#pipelines)
-	- [Packaging a Component](#packaging-a-component)
-		- [Installing and registering a component](#installing-and-registering-a-component)
-		- [Unregistering a component](#unregistering-a-component)
-
-<!-- tocstop -->
+[TOC]
 
 
 ## 	Component Descriptor Overview

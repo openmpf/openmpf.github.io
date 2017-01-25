@@ -1,49 +1,6 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.
 
-# Table of Contents
-
-<!-- toc -->
-
-- [Table of Contents](#table-of-contents)
-- [C++ Component API Overview](#c-component-api-overview)
-	- [How Components Integrate into OpenMPF](#how-components-integrate-into-openmpf)
-	- [Getting Started](#getting-started)
-- [OpenMPF API Specification](#openmpf-api-specification)
-	- [OpenMPF Component API](#openmpf-component-api)
-		- [Init()](#init)
-		- [Close()](#close)
-		- [GetComponentType()](#getcomponenttype)
-		- [GetRunDirectory()](#getrundirectory)
-		- [SetRunDirectory(string)](#setrundirectorystring)
-		- [Component Factory Functions](#component-factory-functions)
-	- [OpenMPF Detection Component API](#openmpf-detection-component-api)
-		- [Convenience Adapters](#convenience-adapters)
-		- [Detection Component Interface](#detection-component-interface)
-			- [Supports(MPFDetectionDataType)](#supportsmpfdetectiondatatype)
-			- [GetDetectionType()](#getdetectiontype)
-			- [GetDetections(MPFImageJob …)](#getdetectionsmpfimagejob)
-			- [GetDetections(MPFVideoJob …)](#getdetectionsmpfvideojob)
-			- [GetDetections(MPFAudioJob …)](#getdetectionsmpfaudiojob)
-		- [Detection Job Data Structures](#detection-job-data-structures)
-			- [MPFJob](#mpfjob)
-			- [MPFImageJob](#mpfimagejob)
-			- [MPFVideoJob](#mpfvideojob)
-			- [MPFAudioJob](#mpfaudiojob)
-		- [Detection Job Result Classes](#detection-job-result-classes)
-			- [MPFImageLocation](#mpfimagelocation)
-			- [MPFVideoTrack](#mpfvideotrack)
-			- [MPFAudioTrack](#mpfaudiotrack)
-		- [Enumeration Types](#enumeration-types)
-			- [MPFDetectionError](#mpfdetectionerror)
-		- [Utility Classes](#utility-classes)
-- [C++ Component Build Environment](#c-component-build-environment)
-- [Component Development Best Practices](#component-development-best-practices)
-	- [Single-threaded Operation](#single-threaded-operation)
-	- [Stateless Behavior](#stateless-behavior)
-	- [Component Packaging](#component-packaging)
-	- [Logging](#logging)
-
-<!-- tocstop -->
+[TOC]
 
 # C++ Component API Overview
 
@@ -152,18 +109,18 @@ The component should perform all initialization operations in the `Init` member 
 * Returns: (bool) Return true if initialization is successful, otherwise return false.
 * Example:
 
-	```c++
-	bool SampleComponent::Init() {
-	  // Get component paths
-	  string run_dir = GetRunDirectory();
-	  string plugin_path = run_dir + "/SampleComponent";
-	  string config_path = plugin_path + "/config";
+```c++
+bool SampleComponent::Init() {
+  // Get component paths
+  string run_dir = GetRunDirectory();
+  string plugin_path = run_dir + "/SampleComponent";
+  string config_path = plugin_path + "/config";
 
-	  // Setup logger, load data models, etc.
+  // Setup logger, load data models, etc.
 
-	  return true;
-	}
-	```
+  return true;
+}
+```
 
 ### Close()
 
@@ -178,12 +135,12 @@ This method is called before the component instance is deleted (see [Component F
 * Returns: (bool) Return true if successful, otherwise return false.
 * Example:
 
-	```c++
+```c++
 	bool SampleComponent::Close() {
 	    // Free memory, etc.
 	    return true;
 	}
-	```
+```
 
 ### GetComponentType()
 
@@ -195,11 +152,11 @@ The GetComponentType() member function allows the OpenMPF Component API to deter
 * Returns: (MPFComponentType) Currently, `MPF_DETECTION_COMPONENT` is the only supported return value.
 * Example:
 
-	```c++
+```c++
 	MPFComponentType SampleComponent::GetComponentType() {
 	    return MPF_DETECTION_COMPONENT;
 	};
-	```
+```
 
 ### GetRunDirectory()
 
@@ -211,12 +168,12 @@ Returns the value of the private `run_directory` data member which contains the 
 * Returns: (string) Full path of the parent folder above where the component is installed.
 * Sample Usage:
 
-	```c++
+```c++
 	string run_dir = GetRunDirectory();
 	string plugin_path = run_dir + "/SampleComponent";
 	string config_path = plugin_path + "/config";
 	string logconfig_file = config_path + "/Log4cxxConfig.xml";
-	```
+```
 
 ### SetRunDirectory(string)
 
@@ -301,12 +258,12 @@ Returns true or false depending on the data type is supported or not.
 * Returns: (bool) True if the component supports the data type, otherwise false.
 * Example:
 
-	```c++
+```c++
 	// Sample component that supports only image and video files
 	bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 	    return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
 	}
-	```
+```
 
 #### GetDetectionType()
 
@@ -319,15 +276,15 @@ Returns the type of object detected by the component.
 * Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
 * Example:
 
-	```c++
+```c++
 	string SampleComponent::GetDetectionType() {
 	    return "FACE";
 	}
-	```
+```
 
 #### GetDetections(MPFImageJob …)
 
-Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file. 
+Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.
 
 Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
 
@@ -343,13 +300,13 @@ Currently, the data_uri is always a local file path. For example, "/opt/mpf/shar
 * Returns: MPFDetectionError
 * Example:
 
-	```c++
+```c++
 	MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations) {
 	    // Parse job
 	    // Generate image locations
 	    return MPF_DETECTION_SUCCESS;
 	}
-	```
+```
 
 #### GetDetections(MPFVideoJob …)
 
@@ -357,9 +314,9 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 
 * Function Definition:
 
-	```c++
+```c++
 	MPFDetectionError getDetections(const MPFVideoJob &job, vector<MPFVideoTrack> tracks);
-	```
+```
 * Parameters:
 
 	| Parameter  | Data Type  | Description  |
@@ -370,13 +327,13 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 * Returns: MPFDetectionError
 * Example:
 
-	```c++
+```c++
 	MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
 	    // Parse job
 	    // Generate tracks
 	    return MPF_DETECTION_SUCCESS;
 	}
-	```
+```
 
 #### GetDetections(MPFAudioJob …)
 
@@ -384,9 +341,9 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 
 * Function Definition:
 
-	```c++
+```c++
 	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks)
-	```
+```
 * Parameters:
 
 	| Parameter  | Data Type  | Description  |
@@ -397,13 +354,13 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 * Returns: `MPFDetectionError`
 * Example:
 
-	```c++
+```c++
 	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
 	    // Parse job
 	    // Generate tracks
 	    return MPF_DETECTION_SUCCESS;
 	}
-	```
+```
 
 ### Detection Job Data Structures
 
@@ -425,13 +382,13 @@ Structure containing information about about a job to be performed on a piece of
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFJob(
 	  const string &job_name,
 	  const string &data_uri,
 	  const Properties &job_properties,
 	  const Properties &media_properties)
-	```
+```
 
 * Members:
 
@@ -450,13 +407,13 @@ Structure containing data used for detection of objects in an image file.
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFImageJob(
 		const string &job_name,
 		const string &data_uri,
 		const Properties &job_properties,
 		const Properties &media_properties)
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -473,7 +430,7 @@ Structure containing data used for detection of objects in a video file.
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFVideoJob(
 	  const string &job_name,
 	  const string &data_uri,
@@ -481,7 +438,7 @@ Structure containing data used for detection of objects in a video file.
 	  int stop_frame,
 	  const Properties &job_properties,
 	  const Properties &media_properties)
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -504,7 +461,7 @@ Structure containing data used for detection of objects in an audio file. Curren
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFAudioJob(
 	  const string &job_name,
 	  const string &data_uri,
@@ -512,7 +469,7 @@ Structure containing data used for detection of objects in an audio file. Curren
 	  int stop_time,
 	  const Properties &job_properties,
 	  const Properties &media_properties)
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -532,7 +489,7 @@ Structure used to store the location of detected objects in a image file.
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFImageLocation()
 	MPFImageLocation(
 	  int x_left_upper,
@@ -541,7 +498,7 @@ Structure used to store the location of detected objects in a image file.
 	  int height,
 	  float confidence = -1,
 	  const Properties &detection_properties = {})
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -570,7 +527,7 @@ Structure used to store the location of detected objects in a video file.
 
 * Constructor:
 
-	```c++
+```c++
 	MPFVideoTrack()
 	MPFVideoTrack(
 	  int start_frame,
@@ -578,7 +535,7 @@ Structure used to store the location of detected objects in a video file.
 	  float confidence = -1,
 	  map<int, MPFImageLocation> frame_locations,
 	  const Properties &detection_properties = {})
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -605,14 +562,14 @@ Structure used to store the location of detected objects in an audio file.
 
 * Constructor(s):
 
-	```c++
+```c++
 	MPFAudioTrack()
 	MPFAudioTrack(
 	  int start_time,
 	  int stop_time,
 	  float confidence = -1,
 	  const Properties &detection_properties = {})
-	```
+```
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -691,7 +648,7 @@ Once built, components should be packaged into a .tar.gz containing the contents
 
 ## Logging
 
-It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/) for OpenMPF Component logging. 
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/) for OpenMPF Component logging.
 
 Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.
 
