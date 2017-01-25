@@ -287,7 +287,95 @@
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="table-of-contents">Table of Contents</h1>
-<p>[toc]</p>
+<div class="toc">
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#general-information">General Information</a></li>
+<li><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
+<li><a href="#installing-centos-7">Installing CentOS 7</a></li>
+<li><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a><ul>
+<li><a href="#configure-additional-repositories">Configure Additional Repositories</a></li>
+<li><a href="#rpm-dependencies">RPM Dependencies</a></li>
+<li><a href="#binary-packages">Binary Packages</a></li>
+<li><a href="#python-packages">Python Packages</a></li>
+<li><a href="#building-dependencies">Building Dependencies</a></li>
+<li><a href="#configuring-mysql">Configuring MySQL</a></li>
+<li><a href="#configuring-activemq">Configuring ActiveMQ</a></li>
+<li><a href="#configuring-redis">Configuring Redis</a></li>
+<li><a href="#https-configuration">HTTPS Configuration</a></li>
+<li><a href="#optional-http-configuration">(Optional) HTTP Configuration</a></li>
+<li><a href="#adding-additional-maven-dependencies">Adding Additional Maven Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</a><ul>
+<li><a href="#build-environment">Build Environment</a></li>
+<li><a href="#build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</a><ul>
+<li><a href="#cppcomponents">&lt;cppComponents&gt;</a></li>
+<li><a href="#configfile">&lt;configFile&gt;</a></li>
+</ul>
+</li>
+<li><a href="#build-the-openmpf-package">Build the OpenMPF Package</a></li>
+</ul>
+</li>
+<li><a href="#optional-testing-the-openmpf">(Optional) Testing the OpenMPF</a></li>
+<li><a href="#optional-building-and-running-the-web-application">(Optional) Building and running the web application</a><ul>
+<li><a href="#default-credentials">Default Credentials</a></li>
+</ul>
+</li>
+<li><a href="#deploying-the-openmpf">Deploying the OpenMPF</a></li>
+<li><a href="#appendices">Appendices</a></li>
+<li><a href="#known-issues">Known Issues</a></li>
+<li><a href="#proxy-configuration">Proxy Configuration</a></li>
+<li><a href="#ssl-inspection">SSL Inspection</a></li>
+<li><a href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a><ul>
+<li><a href="#package-lists">Package Lists</a></li>
+</ul>
+</li>
+<li><a href="#build-and-test-environment">Build and Test Environment</a></li>
+<li><a href="#general-information_1">General Information</a></li>
+<li><a href="#set-up-the-minimal-centos-7-vm_1">Set Up the Minimal CentOS 7 VM</a></li>
+<li><a href="#installing-centos-7_1">Installing CentOS 7</a></li>
+<li><a href="#set-up-the-openmpf-build-environment_1">Set Up the OpenMPF Build Environment</a><ul>
+<li><a href="#configure-additional-repositories_1">Configure Additional Repositories</a></li>
+<li><a href="#rpm-dependencies_1">RPM Dependencies</a></li>
+<li><a href="#binary-packages_1">Binary Packages</a></li>
+<li><a href="#python-packages_1">Python Packages</a></li>
+<li><a href="#building-dependencies_1">Building Dependencies</a></li>
+<li><a href="#configuring-mysql_1">Configuring MySQL</a></li>
+<li><a href="#configuring-activemq_1">Configuring ActiveMQ</a></li>
+<li><a href="#configuring-redis_1">Configuring Redis</a></li>
+<li><a href="#https-configuration_1">HTTPS Configuration</a></li>
+<li><a href="#optional-http-configuration_1">(Optional) HTTP Configuration</a></li>
+<li><a href="#adding-additional-maven-dependencies_1">Adding Additional Maven Dependencies</a></li>
+</ul>
+</li>
+<li><a href="#building-and-packaging-the-openmpf_1">Building and Packaging the OpenMPF</a><ul>
+<li><a href="#build-environment_1">Build Environment</a></li>
+<li><a href="#build-the-open-source-openmpf-package_1">Build the Open Source OpenMPF Package</a><ul>
+<li><a href="#cppcomponents_1">&lt;cppComponents&gt;</a></li>
+<li><a href="#configfile_1">&lt;configFile&gt;</a></li>
+</ul>
+</li>
+<li><a href="#build-the-openmpf-package_1">Build the OpenMPF Package</a></li>
+</ul>
+</li>
+<li><a href="#optional-testing-the-openmpf_1">(Optional) Testing the OpenMPF</a></li>
+<li><a href="#optional-building-and-running-the-web-application_1">(Optional) Building and running the web application</a><ul>
+<li><a href="#default-credentials_1">Default Credentials</a></li>
+</ul>
+</li>
+<li><a href="#deploying-the-openmpf_1">Deploying the OpenMPF</a></li>
+<li><a href="#appendices_1">Appendices</a></li>
+<li><a href="#known-issues_1">Known Issues</a></li>
+<li><a href="#proxy-configuration_1">Proxy Configuration</a></li>
+<li><a href="#ssl-inspection_1">SSL Inspection</a></li>
+<li><a href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package_1">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a><ul>
+<li><a href="#package-lists_1">Package Lists</a></li>
+</ul>
+</li>
+<li><a href="#build-and-test-environment_1">Build and Test Environment</a></li>
+</ul>
+</div>
 <h1 id="general-information">General Information</h1>
 <p>The Open Media Processing Framework (OpenMPF) software is distributed as a raw source code package. The reason for this methodology is to allow for publishing under the Apache license to support broad utilization and use-cases. Several of the underlying dependencies can be compiled in ways that introduce copyleft licenses or patent restrictions. Thus, this approach allows the OpenMPF to be built for a variety of use cases and in the general sense, utilized readily for non-commercial in-house use.</p>
 <blockquote>
