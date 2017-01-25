@@ -3,7 +3,7 @@
 
     
     <url>
-     <loc>/API-Overview/</loc>
+     <loc>/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -18,35 +18,25 @@
     
 
     
+        
+    <url>
+     <loc>/API-Overview/</loc>
+     <lastmod>2017-01-25</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     <url>
      <loc>/CPP-Component-API/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>/Home/</loc>
-     <lastmod>2017-01-25</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/OpenMPF-Overview/</loc>
-     <lastmod>2017-01-25</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
+        
     <url>
      <loc>/Packaging-and-Registering-a-Component/</loc>
      <lastmod>2017-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
     
 
     

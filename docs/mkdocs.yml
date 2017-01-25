@@ -1,2 +1,11 @@
 site_name: OpenMPF
 theme: readthedocs
+
+pages:
+- Home: index.md
+- Build Guide: Build-Environment-Setup-Guide.md
+- Component Documentation:
+    - Component Overview: API-Overview.md
+    - C++ Component API: CPP-Component-API.md
+    - Component Packaging and Registration: Packaging-and-Registering-a-Component.md
+- REST API Documentiaton: REST-API.md
