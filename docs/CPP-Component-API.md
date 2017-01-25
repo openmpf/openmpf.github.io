@@ -68,7 +68,7 @@ The Component Executable:
 
 The basic psuedocode for the Component Executable is as follows:
 
-```c++
+``` c++
 component->SetRunDirectory(...)
 component->Init()
 while(true) {
@@ -152,7 +152,7 @@ The component should perform all initialization operations in the `Init` member 
 * Returns: (bool) Return true if initialization is successful, otherwise return false.
 * Example:
 
-	```c++
+	``` c++
 	bool SampleComponent::Init() {
 	  // Get component paths
 	  string run_dir = GetRunDirectory();
@@ -178,7 +178,7 @@ This method is called before the component instance is deleted (see [Component F
 * Returns: (bool) Return true if successful, otherwise return false.
 * Example:
 
-	```c++
+	``` c++
 	bool SampleComponent::Close() {
 	    // Free memory, etc.
 	    return true;
@@ -195,7 +195,7 @@ The GetComponentType() member function allows the OpenMPF Component API to deter
 * Returns: (MPFComponentType) Currently, `MPF_DETECTION_COMPONENT` is the only supported return value.
 * Example:
 
-	```c++
+	``` c++
 	MPFComponentType SampleComponent::GetComponentType() {
 	    return MPF_DETECTION_COMPONENT;
 	};
@@ -211,7 +211,7 @@ Returns the value of the private `run_directory` data member which contains the 
 * Returns: (string) Full path of the parent folder above where the component is installed.
 * Sample Usage:
 
-	```c++
+	``` c++
 	string run_dir = GetRunDirectory();
 	string plugin_path = run_dir + "/SampleComponent";
 	string config_path = plugin_path + "/config";
@@ -246,7 +246,7 @@ The deleter macro creates the factory function that the Component Executable wil
 
 **Example:**
 
-```c++
+``` c++
 // Note: Do not put the TypeName/Class Name in quotes
 MPF_COMPONENT_CREATOR(ComponentNameHere);
 MPF_COMPONENT_DELETER();
@@ -301,7 +301,7 @@ Returns true or false depending on the data type is supported or not.
 * Returns: (bool) True if the component supports the data type, otherwise false.
 * Example:
 
-	```c++
+	``` c++
 	// Sample component that supports only image and video files
 	bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 	    return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
@@ -319,7 +319,7 @@ Returns the type of object detected by the component.
 * Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
 * Example:
 
-	```c++
+	``` c++
 	string SampleComponent::GetDetectionType() {
 	    return "FACE";
 	}
@@ -327,7 +327,7 @@ Returns the type of object detected by the component.
 
 #### GetDetections(MPFImageJob …)
 
-Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file. 
+Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.
 
 Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
 
@@ -343,7 +343,7 @@ Currently, the data_uri is always a local file path. For example, "/opt/mpf/shar
 * Returns: MPFDetectionError
 * Example:
 
-	```c++
+	``` c++
 	MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations) {
 	    // Parse job
 	    // Generate image locations
@@ -357,7 +357,7 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 
 * Function Definition:
 
-	```c++
+	``` c++
 	MPFDetectionError getDetections(const MPFVideoJob &job, vector<MPFVideoTrack> tracks);
 	```
 * Parameters:
@@ -370,7 +370,7 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 * Returns: MPFDetectionError
 * Example:
 
-	```c++
+	``` c++
 	MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
 	    // Parse job
 	    // Generate tracks
@@ -384,7 +384,7 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 
 * Function Definition:
 
-	```c++
+	``` c++
 	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks)
 	```
 * Parameters:
@@ -397,7 +397,7 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 * Returns: `MPFDetectionError`
 * Example:
 
-	```c++
+	``` c++
 	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
 	    // Parse job
 	    // Generate tracks
@@ -425,7 +425,7 @@ Structure containing information about about a job to be performed on a piece of
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFJob(
 	  const string &job_name,
 	  const string &data_uri,
@@ -450,7 +450,7 @@ Structure containing data used for detection of objects in an image file.
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFImageJob(
 		const string &job_name,
 		const string &data_uri,
@@ -473,7 +473,7 @@ Structure containing data used for detection of objects in a video file.
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFVideoJob(
 	  const string &job_name,
 	  const string &data_uri,
@@ -504,7 +504,7 @@ Structure containing data used for detection of objects in an audio file. Curren
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFAudioJob(
 	  const string &job_name,
 	  const string &data_uri,
@@ -532,7 +532,7 @@ Structure used to store the location of detected objects in a image file.
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFImageLocation()
 	MPFImageLocation(
 	  int x_left_upper,
@@ -554,7 +554,7 @@ Structure used to store the location of detected objects in a image file.
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
->```c++
+>``` c++
 >MPFImageLocation detection;
 >detection.x_left_upper = 0;
 >detection.y_left_upper = 0;
@@ -570,7 +570,7 @@ Structure used to store the location of detected objects in a video file.
 
 * Constructor:
 
-	```c++
+	``` c++
 	MPFVideoTrack()
 	MPFVideoTrack(
 	  int start_frame,
@@ -590,7 +590,7 @@ Structure used to store the location of detected objects in a video file.
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that detects text could add an entry to the detection_properties map where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
->```c++
+>``` c++
 >MPFImageLocation detection;
 >detection.x_left_upper = 10;
 >detection.y_left_upper = 40;
@@ -605,7 +605,7 @@ Structure used to store the location of detected objects in an audio file.
 
 * Constructor(s):
 
-	```c++
+	``` c++
 	MPFAudioTrack()
 	MPFAudioTrack(
 	  int start_time,
@@ -684,14 +684,14 @@ componentName/
     descriptor.json
   lib/
     libComponentName.so // Compiled component library
-```  
+```   
 
 Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 
 ## Logging
 
-It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/) for OpenMPF Component logging. 
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/) for OpenMPF Component logging.
 
 Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.
 
@@ -709,7 +709,7 @@ For example:
 
 The following configuration can be used to match the format of other OpenMPF logs:
 
-```xml
+``` xml
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
   <!-- Output the log message to log file-->
