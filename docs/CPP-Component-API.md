@@ -212,12 +212,12 @@ Returns the value of the private `run_directory` data member which contains the 
 * Returns: (string) Full path of the parent folder above where the component is installed.
 * Sample Usage:
 
-	``` c++
-	string run_dir = GetRunDirectory();
-	string plugin_path = run_dir + "/SampleComponent";
-	string config_path = plugin_path + "/config";
-	string logconfig_file = config_path + "/Log4cxxConfig.xml";
-	```
+``` c++
+string run_dir = GetRunDirectory();
+string plugin_path = run_dir + "/SampleComponent";
+string config_path = plugin_path + "/config";
+string logconfig_file = config_path + "/Log4cxxConfig.xml";
+```
 
 ### SetRunDirectory(string)
 
@@ -302,12 +302,12 @@ Returns true or false depending on the data type is supported or not.
 * Returns: (bool) True if the component supports the data type, otherwise false.
 * Example:
 
-	``` c++
-	// Sample component that supports only image and video files
-	bool SampleComponent::Supports(MPFDetectionDataType data_type) {
-	    return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
-	}
-	```
+``` c++
+// Sample component that supports only image and video files
+bool SampleComponent::Supports(MPFDetectionDataType data_type) {
+    return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
+}
+```
 
 #### GetDetectionType()
 
@@ -320,11 +320,11 @@ Returns the type of object detected by the component.
 * Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
 * Example:
 
-	``` c++
-	string SampleComponent::GetDetectionType() {
-	    return "FACE";
-	}
-	```
+``` c++
+string SampleComponent::GetDetectionType() {
+    return "FACE";
+}
+```
 
 #### GetDetections(MPFImageJob …)
 
@@ -344,13 +344,13 @@ Currently, the data_uri is always a local file path. For example, "/opt/mpf/shar
 * Returns: MPFDetectionError
 * Example:
 
-	``` c++
-	MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations) {
-	    // Parse job
-	    // Generate image locations
-	    return MPF_DETECTION_SUCCESS;
-	}
-	```
+``` c++
+MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations) {
+    // Parse job
+    // Generate image locations
+    return MPF_DETECTION_SUCCESS;
+}
+```
 
 #### GetDetections(MPFVideoJob …)
 
@@ -358,9 +358,10 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 
 * Function Definition:
 
-	``` c++
-	MPFDetectionError getDetections(const MPFVideoJob &job, vector<MPFVideoTrack> tracks);
-	```
+``` c++
+MPFDetectionError getDetections(const MPFVideoJob &job, vector<MPFVideoTrack> tracks);
+```
+
 * Parameters:
 
 	| Parameter  | Data Type  | Description  |
@@ -371,13 +372,13 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 * Returns: MPFDetectionError
 * Example:
 
-	``` c++
-	MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
-	    // Parse job
-	    // Generate tracks
-	    return MPF_DETECTION_SUCCESS;
-	}
-	```
+``` c++
+MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
+    // Parse job
+    // Generate tracks
+    return MPF_DETECTION_SUCCESS;
+}
+```
 
 #### GetDetections(MPFAudioJob …)
 
@@ -385,9 +386,10 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 
 * Function Definition:
 
-	``` c++
-	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks)
-	```
+``` c++
+MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks)
+```
+
 * Parameters:
 
 	| Parameter  | Data Type  | Description  |
@@ -398,13 +400,13 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 * Returns: `MPFDetectionError`
 * Example:
 
-	``` c++
-	MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
-	    // Parse job
-	    // Generate tracks
-	    return MPF_DETECTION_SUCCESS;
-	}
-	```
+``` c++
+MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
+    // Parse job
+    // Generate tracks
+    return MPF_DETECTION_SUCCESS;
+}
+```
 
 ### Detection Job Data Structures
 
@@ -426,13 +428,13 @@ Structure containing information about about a job to be performed on a piece of
 
 * Constructor(s):
 
-	``` c++
-	MPFJob(
-	  const string &job_name,
-	  const string &data_uri,
-	  const Properties &job_properties,
-	  const Properties &media_properties)
-	```
+``` c++
+MPFJob(
+  const string &job_name,
+  const string &data_uri,
+  const Properties &job_properties,
+  const Properties &media_properties)
+```
 
 * Members:
 
@@ -451,13 +453,14 @@ Structure containing data used for detection of objects in an image file.
 
 * Constructor(s):
 
-	``` c++
-	MPFImageJob(
-		const string &job_name,
-		const string &data_uri,
-		const Properties &job_properties,
-		const Properties &media_properties)
-	```
+``` c++
+MPFImageJob(
+	const string &job_name,
+	const string &data_uri,
+	const Properties &job_properties,
+	const Properties &media_properties)
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -474,15 +477,16 @@ Structure containing data used for detection of objects in a video file.
 
 * Constructor(s):
 
-	``` c++
-	MPFVideoJob(
-	  const string &job_name,
-	  const string &data_uri,
-	  int start_frame,
-	  int stop_frame,
-	  const Properties &job_properties,
-	  const Properties &media_properties)
-	```
+``` c++
+MPFVideoJob(
+  const string &job_name,
+  const string &data_uri,
+  int start_frame,
+  int stop_frame,
+  const Properties &job_properties,
+  const Properties &media_properties)
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -505,15 +509,16 @@ Structure containing data used for detection of objects in an audio file. Curren
 
 * Constructor(s):
 
-	``` c++
-	MPFAudioJob(
-	  const string &job_name,
-	  const string &data_uri,
-	  int start_time,
-	  int stop_time,
-	  const Properties &job_properties,
-	  const Properties &media_properties)
-	```
+``` c++
+MPFAudioJob(
+  const string &job_name,
+  const string &data_uri,
+  int start_time,
+  int stop_time,
+  const Properties &job_properties,
+  const Properties &media_properties)
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -533,16 +538,17 @@ Structure used to store the location of detected objects in a image file.
 
 * Constructor(s):
 
-	``` c++
-	MPFImageLocation()
-	MPFImageLocation(
-	  int x_left_upper,
-	  int y_left_upper,
-	  int width,
-	  int height,
-	  float confidence = -1,
-	  const Properties &detection_properties = {})
-	```
+``` c++
+MPFImageLocation()
+MPFImageLocation(
+  int x_left_upper,
+  int y_left_upper,
+  int width,
+  int height,
+  float confidence = -1,
+  const Properties &detection_properties = {})
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -571,15 +577,16 @@ Structure used to store the location of detected objects in a video file.
 
 * Constructor:
 
-	``` c++
-	MPFVideoTrack()
-	MPFVideoTrack(
-	  int start_frame,
-	  int stop_frame,
-	  float confidence = -1,
-	  map<int, MPFImageLocation> frame_locations,
-	  const Properties &detection_properties = {})
-	```
+``` c++
+MPFVideoTrack()
+MPFVideoTrack(
+  int start_frame,
+  int stop_frame,
+  float confidence = -1,
+  map<int, MPFImageLocation> frame_locations,
+  const Properties &detection_properties = {})
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
@@ -606,14 +613,15 @@ Structure used to store the location of detected objects in an audio file.
 
 * Constructor(s):
 
-	``` c++
-	MPFAudioTrack()
-	MPFAudioTrack(
-	  int start_time,
-	  int stop_time,
-	  float confidence = -1,
-	  const Properties &detection_properties = {})
-	```
+``` c++
+MPFAudioTrack()
+MPFAudioTrack(
+  int start_time,
+  int stop_time,
+  float confidence = -1,
+  const Properties &detection_properties = {})
+```
+
 * Members:
 
 	| Member  | Data Type  | Description  |
