@@ -48,14 +48,14 @@ As an alternative to extending [`MPFDetectionComponent`](#openmpf-detection-comp
 
 ## Getting Started
 
-The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](/openmpf/openmpf/tree/master/mpf_components/CPP/detection/hello) for the OpenMPF *Hello World* Detection Component.
+The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf/tree/master/mpf_components/CPP/detection/hello) for the OpenMPF *Hello World* Detection Component.
 
 Detection components are implemented by:
 
 1. Extending [`MPFDetectionComponent`](#openmpf-detection-component-api).
-2. Building the component into a shared object library. (See [HelloWorld CMakeLists.txt](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/CMakeLists.txt)).
+2. Building the component into a shared object library. (See [HelloWorld CMakeLists.txt](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/CMakeLists.txt)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component)).
+4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component)).
 
 # OpenMPF API Specification
 
@@ -94,7 +94,7 @@ Components must also include two [Component Factory Functions](#component-factor
 ## OpenMPF Component API
 The [`MPFComponent`](#openmpf-component-api) class is the abstract base class utilized by all OpenMPF components.
 
-**[See the latest source here.](/openmpf/openmpf/blob/master/mpf_components/CPP/componentInterface/include/MPFComponentInterface.h)**
+**[See the latest source here.](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/componentInterface/include/MPFComponentInterface.h)**
 
 >**IMPORTANT:** This interface should not be directly implemented, because no mechanism exists for launching components based off of it. Currently, the only supported type of component is detection, and all components should instead extend [`MPFDetectionComponent`](#openmpf-detection-component-api).
 
@@ -127,7 +127,7 @@ bool SampleComponent::Init() {
 The component should perform all shutdown operations in the `Close` member function.
 `Close` will be called once by the OpenMPF Component Executable prior to component shutdown.
 
-This method is called before the component instance is deleted (see [Component Factory Functions](https://github.com/openmpf/openmpf/wiki/CPP-Component-API/_edit#c-detection-component-factory-functions)).
+This method is called before the component instance is deleted (see [Component Factory Functions](https://github.comhttps://github.com/openmpf/openmpf/wiki/CPP-Component-API/_edit#c-detection-component-factory-functions)).
 
 * Function Definition:
 `bool Close()`
@@ -213,7 +213,7 @@ MPF_COMPONENT_DELETER();
 
 The [`MPFDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.
 
-[**See the latest source here.**](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/detection_base.h)
+[**See the latest source here.**](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/detection_base.h)
 
 >**IMPORTANT:** Each detection component must implement all of the `GetDetections()` functions or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
 >
@@ -228,11 +228,11 @@ As an alternative to extending [`MPFDetectionComponent`](#openmpf-detection-comp
 These adapters provide default implementations of several methods in [`MPFDetectionComponent`](#openmpf-detection-component-api) and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.
 
 The following adapters are provided:
-* Image Detection ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h))
-* Video Detection ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h))
-* Image and Video Detection ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h))
-* Audio Detection ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h))
-*	Audio and Video Detection ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h))
+* Image Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h))
+* Video Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h))
+* Image and Video Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h))
+* Audio Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h))
+*	Audio and Video Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h))
 
 >**Example: Creating Adaptors to Perform Naive Tracking:**
 >A simple detector that operates on videos may simply go through the video frame-by-frame, extract each frame’s data, and perform detections on that data as though it were processing a new unrelated image each time. As each frame is processed, one or more `MPFImageLocations` are generated.
@@ -396,7 +396,7 @@ Structure containing information about about a job to be performed on a piece of
 	|---|---|---|
 	|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
 	| data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
-	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
+	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in [Packaging and Registering a Component](https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 	| media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string`> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
@@ -511,15 +511,16 @@ Structure used to store the location of detected objects in a image file.
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
->```c++
->MPFImageLocation detection;
->detection.x_left_upper = 0;
->detection.y_left_upper = 0;
->detection.width = 0;
->detection.height = 0;
->detection.confidence = probability;
->detection.detection_properties["CLASSIFICATION"] = "backpack";
->```
+> Source:
+```c++
+MPFImageLocation detection;
+detection.x_left_upper = 0;
+detection.y_left_upper = 0;
+detection.width = 0;
+detection.height = 0;
+detection.confidence = probability;
+detection.detection_properties["CLASSIFICATION"] = "backpack";
+```
 
 #### MPFVideoTrack
 
@@ -613,7 +614,7 @@ Enum used to indicate the status of a `GetDetections` call. A component is not r
 
 ### Utility Classes
 
-For convenience, the OpenMPF provides the `MPFImageReader` ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFImageReader.h)) and `MPFVideoCapture` ([source](/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFVideoCapture.h)) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.
+For convenience, the OpenMPF provides the `MPFImageReader` ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFImageReader.h)) and `MPFVideoCapture` ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFVideoCapture.h)) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.
 
 
 # C++ Component Build Environment
