@@ -152,18 +152,18 @@ The component should perform all initialization operations in the `Init` member 
 * Returns: (bool) Return true if initialization is successful, otherwise return false.
 * Example:
 
-	``` c++
-	bool SampleComponent::Init() {
-	  // Get component paths
-	  string run_dir = GetRunDirectory();
-	  string plugin_path = run_dir + "/SampleComponent";
-	  string config_path = plugin_path + "/config";
+``` c++
+bool SampleComponent::Init() {
+  // Get component paths
+  string run_dir = GetRunDirectory();
+  string plugin_path = run_dir + "/SampleComponent";
+  string config_path = plugin_path + "/config";
 
-	  // Setup logger, load data models, etc.
+  // Setup logger, load data models, etc.
 
-	  return true;
-	}
-	```
+  return true;
+}
+```
 
 ### Close()
 
@@ -178,12 +178,12 @@ This method is called before the component instance is deleted (see [Component F
 * Returns: (bool) Return true if successful, otherwise return false.
 * Example:
 
-	``` c++
-	bool SampleComponent::Close() {
-	    // Free memory, etc.
-	    return true;
-	}
-	```
+``` c++
+bool SampleComponent::Close() {
+    // Free memory, etc.
+    return true;
+}
+```
 
 ### GetComponentType()
 
@@ -195,11 +195,11 @@ The GetComponentType() member function allows the OpenMPF Component API to deter
 * Returns: (MPFComponentType) Currently, `MPF_DETECTION_COMPONENT` is the only supported return value.
 * Example:
 
-	``` c++
-	MPFComponentType SampleComponent::GetComponentType() {
-	    return MPF_DETECTION_COMPONENT;
-	};
-	```
+``` c++
+MPFComponentType SampleComponent::GetComponentType() {
+    return MPF_DETECTION_COMPONENT;
+};
+```
 
 ### GetRunDirectory()
 
