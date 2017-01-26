@@ -751,7 +751,7 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
 
 #### `<cppComponents>`
 
-`mogMotionComponent,ocvFaceComponent,dlibComponent,caffeComponent,oalprTextComponent,ocvPersonComponent`
+`mogMotionComponent,ocvFaceComponent,dlibFaceComponent,caffeComponent,oalprTextComponent,ocvPersonComponent`
 
 #### `<configFile>`
 
