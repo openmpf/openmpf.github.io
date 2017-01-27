@@ -8,6 +8,9 @@ markdown_extensions:
 pages:
 - Home: index.md
 - Build Guide: Build-Environment-Setup-Guide.md
+- Install Guide: MPF-Installation.md
+- User Guide: MPF-User-Guide.md
+- Admin Guide: MPF-Admin-Manual.md
 - Component Documentation:
     - Component Overview: API-Overview.md
     - C++ Component API: CPP-Component-API.md
