@@ -39,7 +39,7 @@ avatar: "/img/cube-square-small.png"
 # Important: you must keep the "name" parameter, everything else you can remove
 author:
   name: OpenMPF Dev Team
-  email: "youremail@domain.com"
+  email: "openmpf@googlegroups.com"
   facebook: yourname  # eg. daattali
   github: openmpf    # eg. daattali
   twitter: yourname   # eg. daattali
@@ -57,7 +57,7 @@ author:
 footer-links-active:
   rss: false
   facebook: false
-  email: false
+  email: true
   twitter: false
   google-plus: false
   github: true
