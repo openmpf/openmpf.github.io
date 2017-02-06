@@ -11,6 +11,7 @@ In OpenMPF, a **component** is a plugin that receives jobs (containing media), p
 The OpenMPF Component API currently supports the development of **detection components**, which are used detect objects in image, video, or audio files.
 
 Using this API, detection components can be built to provide:
+
 * Detection (Localizing an object)
 * Tracking (Localizing an object across multiple frames)
 * Classification (Detecting the type of object and optionally localizing that object)
