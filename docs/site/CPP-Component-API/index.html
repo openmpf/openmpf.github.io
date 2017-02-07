@@ -418,12 +418,14 @@ MPF_COMPONENT_DELETER();
 <h3 id="convenience-adapters">Convenience Adapters</h3>
 <p>As an alternative to extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> directly, developers may extend one of several convenience adapter classes provided by OpenMPF.</p>
 <p>These adapters provide default implementations of several methods in <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
-<p>The following adapters are provided:
-<em> Image Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)
-</em> Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)
-<em> Image and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)
-</em> Audio Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)
-*   Audio and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</p>
+<p>The following adapters are provided:</p>
+<ul>
+<li>Image Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)</li>
+<li>Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Image and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</li>
+</ul>
 <blockquote>
 <p><strong>Example: Creating Adaptors to Perform Naive Tracking:</strong>
 A simple detector that operates on videos may simply go through the video frame-by-frame, extract each frame’s data, and perform detections on that data as though it were processing a new unrelated image each time. As each frame is processed, one or more <code>MPFImageLocations</code> are generated.</p>

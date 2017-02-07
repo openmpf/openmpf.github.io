@@ -233,6 +233,7 @@ As an alternative to extending [`MPFDetectionComponent`](#openmpf-detection-comp
 These adapters provide default implementations of several methods in [`MPFDetectionComponent`](#openmpf-detection-component-api) and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.
 
 The following adapters are provided:
+
 * Image Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h))
 * Video Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h))
 * Image and Video Detection ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h))
