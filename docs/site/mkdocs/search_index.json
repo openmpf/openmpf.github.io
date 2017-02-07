@@ -287,8 +287,8 @@
         }, 
         {
             "location": "/REST-API/", 
-            "text": "The OpenMPF REST API is provided by Swagger and is available within the OpenMPF Workflow Manager server.\n\n\nAdditionally, an export of the API is available here:\n\nMPF-REST-API.pdf", 
-            "title": "REST API Documentiaton"
+            "text": "The OpenMPF REST API is provided by Swagger and is available within the OpenMPF Workflow Manager server.\n\n\nA static version of the API is available here:\n\nOpenMPF REST API", 
+            "title": "REST API"
         }
     ]
 }

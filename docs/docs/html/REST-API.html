@@ -1,0 +1,2547 @@
+<html>
+<style>
+    body {
+        font-family: "Helvetica Neue", Trebuchet MS, sans-serif;
+        font-size: 12px;
+        color: #444;
+        padding:15px;
+    }
+
+    p {
+        font-family: "Helvetica Neue", Trebuchet MS, sans-serif;
+        font-size: 12px;
+        color: #444
+    }
+
+    bs-callout {
+        padding: 20px;
+        margin: 20px 0;
+        border: 1px solid #eee;
+        border-left-width: 5px;
+        border-radius: 3px;
+    }
+
+    .small-heading {
+        font-weight: bold;
+    }
+
+    .div-container-heading-summ {
+        margin-left: 20px;
+    }
+
+    .subheading-text {
+        font-size: 98%;
+        color: #555;
+    }
+
+    .th-heading {
+        width: 30%;
+        text-align: left;
+    }
+
+    .th-heading-small {
+        width: 10%;
+        text-align: left;
+    }
+
+    .table-margin {
+        width: 100%;
+        font-size: 100%;
+        margin-top: 0px;
+    }
+
+    .table-std {
+        width: 100%;
+    }
+
+    .div-container-margin {
+        margin-left: 21px;
+        margin-right: 51px;
+    }
+
+    .td-alignment-small {
+        vertical-align: top;
+        width: 20%;
+    }
+
+    .td-alignment-std {
+        vertical-align: top;
+        width: 80%;
+    }
+
+    .td-alignment-small-no-width {
+        vertical-align: top;
+    }
+
+    .td-alignment-std-no-width {
+        vertical-align: top;
+    }
+
+    pre.get {
+        background-color: #0f6ab4;
+    }
+
+    pre.post {
+        background-color: #10a54a;
+    }
+
+    pre.put {
+        background-color: #c5862b;
+    }
+
+    pre.delete {
+        background-color: #a41e22;
+    }
+
+    pre {
+        padding: 10px;
+        margin-bottom: 2px;
+        color: #FFF;
+        font-size: 100%;
+    }
+
+    td {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-right: 4px;
+        padding-left: 4px;
+    }
+
+    .page {
+        page-break-after: always;
+        position: fixed;
+    }
+
+    .centerAlign {
+        text-align: center
+    }
+
+    .coverHeadings {
+        color: #0f6ab4
+    }
+
+    @media print {
+        .footer {
+            position: relative;
+            top: -50px;
+            height: 10px;
+            text-align: center;
+        }
+    }
+
+    .moddedHR {
+        border: none;
+        height: 2px;
+        color: #0f6ab4;
+        background-color: #0f6ab4;
+    }
+
+    list[type=bullet] item description:before {
+        content: "\a";
+        white-space: pre;
+    }
+</style>
+
+<body>
+    <div style='page-break-after:always'>
+        <h1>MPF Workflow Manager REST API</h1>
+        <h2>Version 0.8 (build 20160923)</h2>
+        <br/>
+        <p><i><font size="3">NOTICE</font></i></p>
+        <p><i><font size="3">
+            This software (or technical data) was produced for the U.S. Government
+            under contract, and is subject to the Rights in Data-General Clause
+            52.227-14, Alt. IV (DEC 2007).
+        </font></i></p>
+        <p><i><font size="3">
+            Copyright 2016 The MITRE Corporation. All Rights Reserved.
+        </font></i></p>
+        <br/><br/>
+    </div>
+    <div class='footer'>Last updated on: Mon Oct 05 2016</div>
+    <br/>
+    <div class="coverHeadings">
+        <h1>Introduction</h1>
+    </div>
+    <div>REST-based web services for the MPF Workflow Manager</div>
+    <br />
+    <table>
+        <tr>
+            <td><span class='small-heading'>Host:</span></td>
+            <td><span class='subheading-text'>hostname:8080</span></td>
+        </tr>
+        <tr>
+            <td><span class='small-heading'>Base Path:</span></td>
+            <td><span class='subheading-text'>/workflow-manager</span></td>
+        </tr>
+    </table>
+    <br/>
+    <div style='page-break-after:always'>
+        <div class="coverHeadings">
+            <h1>Table of contents</h1></div>
+            <h2>1. Definitions</h2>
+            <div class="div-container-margin"><span><b>1.1.</b> EnvironmentVariableModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.2.</b> SystemMessage</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.3.</b> DeployedNodeManagerModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.4.</b> JobCreationRequest</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.5.</b> DeployedServiceModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.6.</b> JobCreationResponse</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.7.</b> ServiceModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.8.</b> NodeManagerModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.9.</b> SingleJobInfo</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.10.</b> InfoModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.11.</b> MpfResponse</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.12.</b> AggregatePipelineStatsModel</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.13.</b> AllJobsStatisticsModel</span>
+                <br>
+                <br>
+            </div>
+            <h2>2. Paths</h2>
+            <div class="div-container-margin"><span><b>2.1.</b> GET</span>&nbsp;&nbsp;/rest/info
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.2.</b> GET</span>&nbsp;&nbsp;/rest/jobs/stats
+                <br>
+                <br><span><b>2.3.</b> POST</span>&nbsp;&nbsp;/rest/jobs
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.4.</b> GET</span>&nbsp;&nbsp;/rest/jobs/{id}
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.5.</b> POST</span>&nbsp;&nbsp;/rest/jobs/{id}/cancel
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.6.</b> GET</span>&nbsp;&nbsp;/rest/jobs/{id}/output/detection
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.8.</b> POST</span>&nbsp;&nbsp;/rest/jobs/{id}/resubmit
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.9.</b> GET</span>&nbsp;&nbsp;/rest/nodes/config
+                <br>
+                <br><span><b>2.9.</b> POST</span>&nbsp;&nbsp;/rest/nodes/config
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.10.</b> GET</span>&nbsp;&nbsp;/rest/nodes/hosts
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.11.</b> GET</span>&nbsp;&nbsp;/rest/nodes/info
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.12.</b> GET</span>&nbsp;&nbsp;/rest/nodes/services
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.13.</b> POST</span>&nbsp;&nbsp;/rest/nodes/services/{serviceName}/start
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.14.</b> POST</span>&nbsp;&nbsp;/rest/nodes/services/{serviceName}/stop
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.15.</b> GET</span>&nbsp;&nbsp;/rest/pipelines
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.16.</b> GET</span>&nbsp;&nbsp;/rest/system-message
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.17.</b> POST</span>&nbsp;&nbsp;/rest/system-message
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.18.</b> GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.19.</b> DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}
+                <br>
+                <br>
+            </div>
+            <div style='page-break-after:always'></div>
+        </div>
+    </div>
+    <div style='page-break-after:always'></div>
+    <h2>1. Definitions</h2>
+    <div class="div-container-margin">
+        <h3>1.1. EnvironmentVariableModel</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                    <th class='th-heading'><b>Required</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>name</td>
+                    <td style='width:10%;'>string</td>
+                    <td style="width:30%;">The name of the environment variable</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>value</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The value of the environment variable</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>sep</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The separator for values if wanting to append to an existing environment variable, for example, ":"</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.2. SystemMessage</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                    <th class='th-heading'><b>Required</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>datePosted</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The message timestamp, include only if you want to change the timestamp</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>msg</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The message</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>msgEnum</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The enumerated name of predefined message</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>msgType</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The type of message (intended target)</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>removeStrategy</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The strategy for removing this message</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>severity</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The severity of the message</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="div-container-margin">
+        <h3>1.3. DeployedNodeManagerModel (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>nodeModels</td>
+                    <td style='width:20%;'>array</td>
+                    <td style='width:40%;'>See <b>DeployedServiceModel</b> in the <b>Definitions</b> section.</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.4. JobCreationRequest</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                    <th class='th-heading'><b>Required</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>buildOutput</td>
+                    <td style='width:10%;'>boolean</td>
+                    <td style='width:30%;'>True to build the output objects; otherwise false (true by default)</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>externalId</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>External id</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>mediaUris</td>
+                    <td style='width:10%;'>array</td>
+                    <td style='width:30%;'>A list of strings where each string should contain a valid (properly encoded) URI</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>pipelineName</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The name of the pipeline used to process the media URIs obtained from 'rest/pipelines' - example URIs: 'http://localhost/images/image.png' and 'file:///home/user/images/image.jpg'</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>priority</td>
+                    <td style='width:10%;'>integer</td>
+                    <td style='width:30%;'>Priority of the job, integer values 0 - 9 (0 being the lowest) are valid (default value is set in mpf.properties)</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>callbackURL</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>When the job completes, the callback will perform a GET or POST to the callbackURL with the parameters 'jobId' and 'externalId' of the completed job. For example, on a GET to a callbackURL: /api.example.com/foo?jobId=1&externalId=someid. Another example: /api.example.com/foo?someparam=something&jobId=1&externalId=someid.  Example when no externalId is provided: /api.example.com/foo?jobId=1.</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>callbackMethod</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>A value of 'GET' or 'POST' to perform a HTTP callback</td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.5. DeployedServiceModel (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">kind</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">Simple (binary) or generic (jar)</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">lastKnownState</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">A string that will be one of the following values: Unknown, Configured (configured, but no other indication of presence), Launching (asked to start), Running, ShuttingDown (requested to shut down), ShuttingDownNoRestart, Inactive (inactive after a regular shutdown request), InactiveNoStart, Delete, DeleteInactive (inactive and removed from the config)
+                    </td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">name</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">Name of the service</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">rank</td>
+                    <td style="width:20%;">integer</td>
+                    <td style="width:40%;">Service index</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">restartCount</td>
+                    <td style="width:20%;">integer</td>
+                    <td style="width:40%;">Number of times this service has restarted</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">serviceCount</td>
+                    <td style="width:20%;">integer</td>
+                    <td style="width:40%;">The amount of services</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">unlaunchable</td>
+                    <td style="width:20%;">boolean</td>
+                    <td style="width:40%;">True if the service has reached a condition where it is not launch able; otherwise false</td>
+                </tr>
+            </table>
+            <br />
+        </div>
+        <div class="div-container-margin">
+            <h3>1.6. JobCreationResponse (Response only)</h3>
+            <hr />
+            <table class='table-margin'>
+                <thead>
+                    <tr>
+                        <th class='th-heading'><b>Name</b></th>
+                        <th class='th-heading-small'><b>Type</b></th>
+                        <th class='th-heading'><b>Description</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style=';background-color: #EAEAEA'>
+                        <td style='width:40%;'>jobId</td>
+                        <td style='width:20%;'>integer</td>
+                        <td style='width:40%;'>The job id of the created job</td>
+                    </tr>
+                    <tr style=''>
+                        <td style='width:40%;'>mpfResponse</td>
+                        <td style='width:20%;'></td>
+                        <td style='width:40%;'>See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+        </div>
+        <div class="div-container-margin">
+            <h3>1.7. ServiceModel</h3>
+            <hr />
+            <table class='table-margin'>
+                <thead>
+                    <tr>
+                        <th class='th-heading'><b>Name</b></th>
+                        <th class='th-heading-small'><b>Type</b></th>
+                        <th class='th-heading'><b>Description</b></th>
+                        <th class='th-heading'><b>Required</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr style=";background-color: #EAEAEA">
+                    <td style="width:30%;">args</td>
+                    <td style="width:10%;">array</td>
+                    <td style="width:30%;">Arugments for the process</td>
+                    <td style="width:30%;">No</td>
+                </tr>
+                <tr style="">
+                    <td style="width:30%;">cmd</td>
+                    <td style="width:10%;">string</td>
+                    <td style="width:30%;">The process command</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:30%;">environmentVariables</td>
+                    <td style="width:10%;">array</td>
+                    <td style="width:30%;">See <b>EnvironmentVariableModel</b> in the <b>Definitions</b> section.</td>
+                    <td style="width:30%;">No</td>
+                </tr>
+                <tr style="">
+                    <td style="width:30%;">serviceCount</td>
+                    <td style="width:10%;">integer</td>
+                    <td style="width:30%;">The number of services to start</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:30%;">serviceDescription</td>
+                    <td style="width:10%;">string</td>
+                    <td style="width:30%;">Description of the service</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+                <tr style="">
+                    <td style="width:30%;">serviceLauncher</td>
+                    <td style="width:10%;">string</td>
+                    <td style="width:30%;">'simple' (binary) or 'generic' (jar)</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:30%;">serviceName</td>
+                    <td style="width:10%;">string</td>
+                    <td style="width:30%;">Name of the service</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+                <tr style="">
+                    <td style="width:30%;">workingDirectory</td>
+                    <td style="width:10%;">string</td>
+                    <td style="width:30%;">Working directory for the service</td>
+                    <td style="width:30%;">Yes</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.8. NodeManagerModel</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                    <th class='th-heading'><b>Required</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>host</td>
+                    <td style='width:10%;'>string</td>
+                    <td style='width:30%;'>The hostname of the server running the node manager</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:30%;'>services</td>
+                    <td style='width:10%;'>array</td>
+                    <td style='width:30%;'>See <b>ServiceModel</b> in the <b>Definitions</b> section.</td>
+                    <td style='width:30%;'>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.9. SingleJobInfo (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="">
+                    <td style="width:40%;">endDate</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">The date of job completion</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">jobId</td>
+                    <td style="width:20%;">integer</td>
+                    <td style="width:40%;">The id of the job</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">jobPriority</td>
+                    <td style="width:20%;">integer</td>
+                    <td style="width:40%;">The priority of the job, an integer value between 0 and 9 with 0 being the lowest priority</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">jobProgress</td>
+                    <td style="width:20%;">number</td>
+                    <td style="width:40%;">A float value from 0 to 100 representing the progress of the job</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">jobStatus</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">A string that will be one of the following values: UNKNOWN, INITIALIZED (the job has been initialized but not started), JOB_CREATION_ERROR (indicates that a job was received, but a job could not be created from the contents of the request), IN_PROGRESS, BUILDING_OUTPUT_OBJECT, COMPLETE, CANCELLING, CANCELLED, ERROR</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">outputObjectPath</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">The server file path to the detection output object</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">pipelineName</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">A pipelline string from /rest/pipelines/available</td>
+                </tr>
+                <tr style="">
+                    <td style="width:40%;">startDate</td>
+                    <td style="width:20%;">string</td>
+                    <td style="width:40%;">The date the job started</td>
+                </tr>
+                <tr style=";background-color: #EAEAEA">
+                    <td style="width:40%;">terminal</td>
+                    <td style="width:20%;">boolean</td>
+                    <td style="width:40%;">True if jobStatus is JOB_CREATION_ERROR, COMPLETE, CANCELLED, or ERROR; otherwise false</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.10. InfoModel (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>app</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>Application name (Media Processing Framework)</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>appFamily</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>Application family (Workflow Manager)</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>buildNum</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>Build number</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>gitBranch</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>git branch</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>gitHash</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>git hash</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>version</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>Version number ("x.x.x")</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.11. MpfResponse (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>message</td>
+                    <td style='width:20%;'>string</td>
+                    <td style='width:40%;'>Error message if responseCode is not 0</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>responseCode</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>0 if success, 1 if error</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.12. AggregatePipelineStatsModel (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>count</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The amount of jobs, in any job status, processed with the pipeline</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>maxTime</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The longest amount of time in milliseconds taken to complete a job used to build this model</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>minTime</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The shortest amount of time in milliseconds taken to complete a job used to build this model</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>states</td>
+                    <td style='width:20%;'>object</td>
+                    <td style='width:40%;'>A key-value pair of (string, integer) where the key is the job status and the value is the amount of jobs currently meeting that status</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>totalTime</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The total amount of time taken in milliseconds to complete processing of all jobs used to compile this model</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>validCount</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The amount of jobs with a job status of COMPLETE, which is the amount of total jobs used to compile the statistics in this model</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.13. AllJobsStatisticsModel (Response only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></th>
+                    <th class='th-heading-small'><b>Type</b></th>
+                    <th class='th-heading'><b>Description</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>elapsedTimeMs</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>Time in milliseconds it took to retrieve this model</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>aggregatePipelineStatsMap</td>
+                    <td style='width:20%;'>object</td>
+                    <td style='width:40%;'>A key-value pair of (string, AggregatePipelineStatsModel) where the key is a pipeline name</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:40%;'>jobTypes</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>Amount of different elements in the aggregatePipelineStatsMap, which is equal to the amount of different pipelines used by all of the processed jobs</td>
+                </tr>
+                <tr style=''>
+                    <td style='width:40%;'>totalJobs</td>
+                    <td style='width:20%;'>integer</td>
+                    <td style='width:40%;'>The total amount of jobs used to compile the statistics</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+
+    <div style='page-break-after:always'></div>
+    <h2>2. Paths</h2>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.1 GET</span>&nbsp;&nbsp;/rest/info</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Returns metadata about the Workflow Manager, such as version and build number</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>Note that some of this information is set only during official builds; if you get a '0' or 'unknown', that indicates that this was not an official build.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <p>no parameters</p>
+                        <tr>
+                            <td class='td-alignment-small'><b>Tags</b></td>
+                            <td class='td-alignment-std' style='padding-left:6px'>meta</td>
+                        </tr>
+                        <tr>
+                            <td class='td-alignment-small'><b>Responses</b></td>
+                            <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                                <table class='table-margin'>
+                                    <tr>
+                                        <td class='td-alignment-small'><b>code</b></td>
+                                        <td class='td-alignment-std'><b>description</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class='td-alignment-small'>200</td>
+                                        <td class='td-alignment-std'>Successful response
+                                            <table class='table-margin' style='margin-left:-5px!important'>
+                                                <tr>
+                                                    <td class='td-alignment-small'>&nbsp;</td>
+                                                    <td class='td-alignment-std'>See <b>InfoModel</b> in the <b>Definitions</b> section.
+                                                        <br />
+                                                        <br />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class='td-alignment-small'>401</td>
+                                        <td class='td-alignment-std'>Bad credentials </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.2 GET</span>&nbsp;&nbsp;/rest/jobs/stats</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Compiles the AllJobsStatisticsModel using all of the submitted jobs.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'><p>no parameters</p></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA;'>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>statistics</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>AllJobsStatisticsModel</b> in the <b>Definitions</b> section.
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.3 POST</span>&nbsp;&nbsp;/rest/jobs</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Creates and submits a job using a JSON JobCreationRequest object as the request body.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>The pipelineName in the JobCreationRequest should be one of the values in 'rest/pipelines'. For example: http://localhost/images/image.png. Another example: file:///home/user/images/image.jpg. A callbackURL (optional) and callbackMethod (GET or POST) may be added. When the job completes, the callback will perform a GET or POST to the callbackURL with the parameters 'jobId' and 'externalId' of the completed job.  For example, on a GET to a callbackURL: /api.example.com/foo?jobId=1&externalId=someid. Another example: /api.example.com/foo?someparam=something&jobId=1&externalId=someid. Example when no externalId is provided: /api.example.com/foo?jobId=1. The body of a POST callback will always include the 'jobId' and 'externalId', even if the latter is 'null'. <br/>
+                    <br/>
+                    The body of a POST callback will be:
+                    <table>
+                        <tr>
+                            <td>
+                            <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
+{
+   "jobId":1,
+   "externalId":"someid"
+}
+                            </pre>
+                            </td>
+                        </tr>
+                     </table>
+                     </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Consumes</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>jobCreationRequest</td>
+                                    <td class='td-alignment-small-no-width'>body</td>
+                                    <td class='td-alignment-small-no-width'>See <b>JobCreationRequest</b> in the <b>Definitions</b> section.</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>jobs</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>201</td>
+                                <td class='td-alignment-std'>Job created
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>JobCreationResponse</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.4 GET</span>&nbsp;&nbsp;/rest/jobs/{id}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Gets a SingleJobInfo model for the job with the id provided as a path variable.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>id</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>Job Id</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>long</td>
+                                    <td class='td-alignment-small-no-width'>int64</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>jobs</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>SingleJobInfo</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-alignment-small">400</td>
+                                <td class="td-alignment-std">Invalid job id, the response body will contain no content </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.5 POST</span>&nbsp;&nbsp;/rest/jobs/{id}/cancel</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Cancels the job with the supplied job id.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>id</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>Job id</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>integer</td>
+                                    <td class='td-alignment-small-no-width'>int64</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>jobs</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful cancellation attempt
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-alignment-small">400</td>
+                                <td class="td-alignment-std">Invalid job id, the response will still be an <b>MpfResponse</b> with more information </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.6 GET</span>&nbsp;&nbsp;/rest/jobs/{id}/output/detection</code></pre>
+        <div>
+            <table class="table-margin">
+                <tbody>
+                    <tr>
+                        <td class="td-alignment-small"><b>Summary</b></td>
+                        <td class="td-alignment-std">Gets the JSON detection output object of a specific job using the job id as a required path variable.</td>
+                    </tr>
+                    <tr style=";background-color: #EAEAEA">
+                        <td class="td-alignment-small"><b>Description</b></td>
+                        <td class="td-alignment-std"></td>
+                    </tr>
+                    <tr>
+                        <td class="td-alignment-small"><b>Operation Id</b></td>
+                        <td class="td-alignment-std"></td>
+                    </tr>
+                    <tr style=";background-color: #EAEAEA">
+                        <td class="td-alignment-small"><b>Produces</b></td>
+                        <td class="td-alignment-std">application/json</td>
+                    </tr>
+                    <tr>
+                        <td class="td-alignment-small"><b>Parameters</b></td>
+                        <td class="td-alignment-std" style="padding-left:0px!important;margin-left:0px!important">
+                            <table class="table-margin">
+                                <thead>
+                                    <tr>
+                                        <td class="small-heading">Name</td>
+                                        <td class="small-heading">In</td>
+                                        <td class="small-heading">Description</td>
+                                        <td class="small-heading">Required</td>
+                                        <td class="small-heading">Type</td>
+                                        <td class="small-heading">Format</td>
+                                        <td class="small-heading">Collection Format</td>
+                                        <td class="small-heading">Default</td>
+                                        <td class="small-heading">Min</td>
+                                        <td class="small-heading">Max</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style=";background-color: #EAEAEA">
+                                        <td class="td-alignment-small-no-width">id</td>
+                                        <td class="td-alignment-small-no-width">path</td>
+                                        <td class="td-alignment-small-no-width">Job id</td>
+                                        <td class="td-alignment-small-no-width">Yes</td>
+                                        <td class="td-alignment-small-no-width">long</td>
+                                        <td class="td-alignment-small-no-width">int64</td>
+                                        <td class="td-alignment-small-no-width"></td>
+                                        <td class="td-alignment-small-no-width"></td>
+                                        <td class="td-alignment-small-no-width"></td>
+                                        <td class="td-alignment-small-no-width"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-alignment-small"><b>Tags</b></td>
+                        <td class="td-alignment-std" style="padding-left:6px">job</td>
+                    </tr>
+                    <tr>
+                        <td class="td-alignment-small"><b>Responses</b></td>
+                        <td class="td-alignment-std" style="padding-left:0px!important;margin-left:0px!important">
+                            <table class="table-margin">
+                                <tbody>
+                                    <tr>
+                                        <td class="td-alignment-small"><b>code</b></td>
+                                        <td class="td-alignment-std"><b>description</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-alignment-small">200</td>
+                                        <td class="td-alignment-std">Successful response
+                                            <table class="table-margin" style="margin-left:-5px!important">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="td-alignment-small">&nbsp;</td>
+                                                        <td class="td-alignment-std"><b>JsonOutputObject</b> example.
+                                                            <br>
+                                                            <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
+ {
+    "externalJobId": "string",
+    "jobId": 0,
+    "media": [
+      {
+        "detectionProcessingErrors": {
+
+        },
+        "length": 0,
+        "markupResult": {
+          "id": 0,
+          "message": "string",
+          "path": "string",
+          "status": "string"
+        },
+        "mediaId": 0,
+        "message": "string",
+        "mimeType": "string",
+        "path": "string",
+        "sha256": "string",
+        "status": "string",
+        "tracks": {} (DESCRIBED BELOW)
+      }
+    ],
+    "objectId": "string",
+    "pipeline": {
+      "description": "string",
+      "name": "string",
+      "stages": [
+        {
+          "actionType": "string",
+          "actions": [
+            {
+              "algorithm": "string",
+              "description": "string",
+              "name": "string",
+              "properties": {} (A key value pair using strings which may be used to override
+                        the default parameters associated with the underlying action)
+            }
+          ],
+          "description": "string",
+          "name": "string"
+        }
+      ]
+    },
+    "priority": 0,
+    "siteId": "string",
+    "status": "string",
+    "timeStart": "string",
+    "timeStop": "string"
+  }
+                                                            </pre>
+                                                            <h4>Tracks example </h4>
+                                                            <p> When using a pipeline with face detection and markup actions</p>
+                                                            <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
+                                                                {
+    "+#FACE DETECTION ACTION": [{
+        "id": "e1b810ab07a9fc1459d088867356cf5b63f544d170f78181b86f97b8b78a1919",
+        "startOffset": 0,
+        "stopOffset": 1,
+        "type": "FACE",
+        "source": "+#FACE DETECTION ACTION",
+        "exemplar": {
+            "x": 114,
+            "y": 208,
+            "width": 285,
+            "height": 285,
+            "confidence": 7.9901013,
+            "metadata": "",
+            "offset": 0,
+            "artifactExtractionStatus": "COMPLETED",
+            "artifactPath": ""
+        },
+        "detections": [{
+            "x": 114,
+            "y": 208,
+            "width": 285,
+            "height": 285,
+            "confidence": 7.9901013,
+            "metadata": "",
+            "offset": 0,
+            "artifactExtractionStatus": "COMPLETED",
+            "artifactPath": ""
+        }]
+    }],
+    "+#FACE DETECTION ACTION#GENERIC MARKUP ACTION": []
+},
+                                                        </pre>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-alignment-small">400</td>
+                                    <td class="td-alignment-std">Invalid job id, the response body will contain no content </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-alignment-small">401</td>
+                                    <td class="td-alignment-std">Bad credentials </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.7 POST</span>&nbsp;&nbsp;/rest/jobs/{id}/resubmit</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Resubmits the job with the provided job id. If the job priority parameter is not set the default value will be used.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>id</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>Job id</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>long</td>
+                                    <td class='td-alignment-small-no-width'>int64</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                                <tr style=''>
+                                    <td class='td-alignment-small-no-width'>jobPriority</td>
+                                    <td class='td-alignment-small-no-width'>query</td>
+                                    <td class='td-alignment-small-no-width'>Job priority (0-9 with 0 being the lowest) - OPTIONAL</td>
+                                    <td class='td-alignment-small-no-width'>No</td>
+                                    <td class='td-alignment-small-no-width'>integer</td>
+                                    <td class='td-alignment-small-no-width'>int32</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>jobs</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful resubmission request. See <b>JobCreationResponse</b> in the <b>Definitions</b> section.</td>
+                            </tr>
+                            <tr>
+                                <td class="td-alignment-small">400</td>
+                                <td class="td-alignment-std">Invalid job id, the response will still be a <b>JobCreationResponse</b> with more information </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.8 GET</span>&nbsp;&nbsp;/rest/nodes/config</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Retrieves the configuration information of all NodeManagers, including all services configured to run on each NodeManager</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <p>no parameters</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>array</td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>NodeManagerModel</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.9 POST</span>&nbsp;&nbsp;/rest/nodes/config</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Save the NodeManager configuration using a JSON array of NodeManagerModel objects.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>Each node manager in the cluster will be notified of the change(s) and attempt to conform to those changes.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Consumes</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>nodeManagerModels</td>
+                                    <td class='td-alignment-small-no-width'>body</td>
+                                    <td class='td-alignment-small-no-width'>all NodeManagerModel objects as a JSON array specifying all the configurations for all the nodes in the cluster</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>201</td>
+                                <td class='td-alignment-std'>Config saved. See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.10 GET</span>&nbsp;&nbsp;/rest/nodes/hosts</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Returns a collection of key-value pairs containing a hostname and its node configuration status. If the configuration status is 'true' that hostname is configurated to run a node manager.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>The response is a set of JSON key-value pairs, where the key is the hostname and the value is the configuration status.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <p>no parameters</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>object</td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class="td-alignment-std">{ "host1": true, "host2": true, ..., "hostn": true }</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.11 GET</span>&nbsp;&nbsp;/rest/nodes/info</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Retrieves information about the currently configured node managers and the statuses of the services within each configured node manager.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'><p>no parameters</p></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response. See <b>DeployedNodeManagerModel</b> in the <b>Definitions</b> section.</td>
+
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.12 GET</span>&nbsp;&nbsp;/rest/nodes/services</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Retrieves services that are currently available for deployment to a node.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>In the response, the key is the serviceName and the value is a ServiceModel object.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'><p>no parameters</p></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>array</td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>ServiceModel</b> in the <b>Definitions</b> section.</td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.13 POST</span>&nbsp;&nbsp;/rest/nodes/services/{serviceName}/start</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Starts the service named serviceName</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>This method returns a NodeServiceStatusChangeResult and a HTTP 200 status code on success.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>serviceName</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>The fully qualified name of the service to be shutdown, (e.g., localhost.localdomain:markup:1)</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response. See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.14 POST</span>&nbsp;&nbsp;/rest/nodes/services/{serviceName}/stop</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Shuts down the service named serviceName</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>This method returns a NodeServiceStatusChangeResult and a HTTP 200 status code on success.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>serviceName</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>The fully qualified name of the service to be shutdown, (e.g., localhost.localdomain:markup:1)</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>nodes</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response. See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.15 GET</span>&nbsp;&nbsp;/rest/pipelines</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Retrieves list of available pipelines.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>The response will be a JSON array of strings with each item being a pipeline.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'><p>no parameters</p></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>pipelines</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>array</td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>[ "pipeline1", "pipeline2", ..., "pipelineN" ]</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.16 GET</span>&nbsp;&nbsp;/rest/system-message</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b>
+                    </td>
+                    <td class='td-alignment-std'>
+                        Retrieves all system messages.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b>
+                    </td>
+                    <td class='td-alignment-std'>Returns
+                        a JSON array of all System
+                        Messages.
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b>
+                    </td>
+                    <td class='td-alignment-std'>
+                        application/json
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <p>no parameters</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>system-message</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>
+                                    200
+                                </td>
+                                <td class='td-alignment-std'>
+                                    Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>array</td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>SystemMessage</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.17 POST</span>&nbsp;&nbsp;/rest/system-message</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Adds a system message.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>Adds a system message.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Consumes</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>msg</td>
+                                    <td class='td-alignment-small-no-width'>body</td>
+                                    <td class='td-alignment-small-no-width'>The message</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                                <tr style=''>
+                                    <td class='td-alignment-small-no-width'>msgType</td>
+                                    <td class='td-alignment-small-no-width'>query</td>
+                                    <td class='td-alignment-small-no-width'>
+                                        The message type refers to the audience it is intended for (defaults to 'all'); valid values are:  'all', 'admin', and 'login'
+                                    </td>
+                                    <td class='td-alignment-small-no-width'> No</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>removeStrategy</td>
+                                    <td class='td-alignment-small-no-width'>query</td>
+                                    <td class='td-alignment-small-no-width'>
+                                        Strategy governing how a message is to be removed from the queue (defaultst to 'manual'); valid values are 'atServerStartup', and 'manual'
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>No</td>
+                                    <td class='td-alignment-small-no-width'> string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                                <tr style=''>
+                                    <td class='td-alignment-small-no-width'>severity</td>
+                                    <td class='td-alignment-small-no-width'>query</td>
+                                    <td class='td-alignment-small-no-width'>Severity of the message (defaults to 'info'); valid values are 'info', 'warning' ,and 'error'</td>
+                                    <td class='td-alignment-small-no-width'>No</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>system-message</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b> </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>201</td>
+                                <td class='td-alignment-std'>
+                                    Successfully added. See <b>MpfResponse</b> in the <b>Definitions</b>section.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.18 GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Retrieves all system messages of the given type.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>Returns a JSON array of System Messages matching typeFilter.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Consumes</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>typeFilter</td>
+                                    <td class='td-alignment-small-no-width'>path</td>
+                                    <td class='td-alignment-small-no-width'>The message type to find; valid values are 'all', 'admin', and 'login'</td>
+                                    <td class='td-alignment-small-no-width'>Yes</td>
+                                    <td class='td-alignment-small-no-width'>string</td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>system-message</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Successful response
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td style='width:20%'>
+                                                <b>Schema type</b>
+                                            </td>
+                                            <td style='width:80%'>
+                                                array
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>SystemMessage</b> in the <b>Definitions</b> section.</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>Bad credentials</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="delete"><code class="huge"><span>2.19 DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Deletes a system message identified by id.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'> By design, if you delete a non-existent id, the response code is still 200 since the server no longer has (and may never have had) a message with that id.
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>
+                        application/json
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Consumes</b></td>
+                    <td class='td-alignment-std'>
+                        application/json
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'>
+                        <b>Parameters</b>
+                    </td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                                <tr>
+                                    <td class='small-heading'>Name</td>
+                                    <td class='small-heading'>In</td>
+                                    <td class='small-heading'>Description</td>
+                                    <td class='small-heading'>Required</td>
+                                    <td class='small-heading'>Type</td>
+                                    <td class='small-heading'>Format</td>
+                                    <td class='small-heading'>Collection Format</td>
+                                    <td class='small-heading'>Default</td>
+                                    <td class='small-heading'>Min</td>
+                                    <td class='small-heading'>Max</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style=';background-color: #EAEAEA'>
+                                    <td class='td-alignment-small-no-width'>
+                                        id
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>
+                                        path
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>
+                                        id
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>
+                                        Yes
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>
+                                        integer
+                                    </td>
+                                    <td class='td-alignment-small-no-width'>
+                                        int64
+                                    </td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                    <td class='td-alignment-small-no-width'></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                    <td class='td-alignment-std' style='padding-left:6px'>
+                        system-message
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'>
+                        <b>Responses</b>
+                    </td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'>
+                                    <b>code</b>
+                                </td>
+                                <td class='td-alignment-std'>
+                                    <b>description</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>
+                                    200
+                                </td>
+                                <td class='td-alignment-std'>
+                                    Successfully deleted
+                                    <table class='table-margin' style='margin-left:-5px!important'>
+                                        <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>
+                                                See <b>MpfResponse</b> in the <b>Definitions</b> section.<br/><br/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>
+                                    401
+                                </td>
+                                <td class='td-alignment-std'>
+                                    Bad
+                                    credentials
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
