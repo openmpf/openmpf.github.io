@@ -19,7 +19,7 @@
 
     
     <url>
-     <loc>/MPF-Installation/</loc>
+     <loc>/Installation/</loc>
      <lastmod>2017-02-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -27,7 +27,7 @@
 
     
     <url>
-     <loc>/MPF-User-Guide/</loc>
+     <loc>/User-Guide/</loc>
      <lastmod>2017-02-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -35,7 +35,7 @@
 
     
     <url>
-     <loc>/MPF-Admin-Manual/</loc>
+     <loc>/Admin-Manual/</loc>
      <lastmod>2017-02-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
