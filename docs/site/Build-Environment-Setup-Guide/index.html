@@ -1030,17 +1030,23 @@
 </li>
 <li>Run the Maven clean package command with the <code>create-tar</code> profile and the <code>rpm:rpm</code> goal. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.<ul>
 <li><code>cd /home/mpf/mpf</code></li>
-<li><code>mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=&lt;cppComponents&gt;</code></li>
+<li><code>mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=&lt;cppComponents&gt;</code><blockquote>
+<p><strong>NOTE:</strong> The order of components in the <code>-DcppComponents</code> list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ul>
+<li><code>cd /home/mpf/mpf/trunk/jenkins/scripts</code></li>
+<li><code>perl CreateCustomPackage.pl /home/mpf/mpf master 0 &lt;configFile&gt;</code></li>
+</ul>
+</li>
+<li>The package <code>mpf-*+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.</li>
+<li>(Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:<ul>
+<li><code>cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
 </ul>
 </li>
 </ol>
-<p>Note that the order of components in the <code>-DcppComponents</code> list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
-3. After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:
-    - <code>cd /home/mpf/mpf/trunk/jenkins/scripts</code>
-    - <code>perl CreateCustomPackage.pl /home/mpf/mpf master 0 &lt;configFile&gt;</code>
-4. The package <code>mpf-complete-0.8.0+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.
-5. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
-    - <code>cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
 <h1 id="optional-testing-the-openmpf">(Optional) Testing the OpenMPF</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>

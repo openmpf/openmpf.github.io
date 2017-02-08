@@ -767,12 +767,11 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
 2. Run the Maven clean package command with the `create-tar` profile and the `rpm:rpm` goal. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
     - `cd /home/mpf/mpf`
     - `mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=<cppComponents>`
-
- Note that the order of components in the `-DcppComponents` list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
+> **NOTE:** The order of components in the `-DcppComponents` list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
 3. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
     - `cd /home/mpf/mpf/trunk/jenkins/scripts`
     - `perl CreateCustomPackage.pl /home/mpf/mpf master 0 <configFile>`
-4. The package `mpf-complete-0.8.0+master-0.tar.gz` will be under `/mpfdata/releases/`.
+4. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
 5. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
     - `cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
 
