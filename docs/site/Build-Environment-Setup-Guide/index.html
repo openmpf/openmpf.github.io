@@ -248,7 +248,7 @@
 </ol>
 <h1 id="installing-centos-7">Installing CentOS 7</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong> for instructions to configure the yum package manager before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong> for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
 <ol>
 <li>Open the ‘Settings’ for the OpenMPF Build VM.</li>
@@ -339,7 +339,7 @@
 </ol>
 <h1 id="set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure the yum package manager before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
 <p>At the time of writing, all URLs provided in this section were verified as working.</p>
 <h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
@@ -406,7 +406,7 @@
 <p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake-gui freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libdc1394-devel libffi-devel libICE-devel libjpeg-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python-paramiko python-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <h2 id="binary-packages">Binary Packages</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your environment is behind a proxy server that performs SSL inspection, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#ssl-inspection">SSL Inspection</a></strong> before continuing.</p>
+<p><strong>NOTE:</strong> If your environment is behind a proxy server that performs SSL inspection, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#ssl-inspection">SSL Inspection</a></strong> before continuing.</p>
 </blockquote>
 <p>The following binary packages will need to be downloaded and installed:</p>
 <ol>
@@ -497,7 +497,7 @@
 </ol>
 <h2 id="building-dependencies">Building Dependencies</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure git before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure git before continuing.</p>
 </blockquote>
 <p>The following source packages will need to be downloaded, built, and installed:</p>
 <ol>
@@ -980,7 +980,7 @@
 </ol>
 <h1 id="building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</h1>
 <blockquote>
-<p><strong>IMPORTANT:</strong> The <code>CreateCustomPackage.pl</code> script used in this section assumes dependency packages needed for deployment are present in their correct location under <code>/mpfdata/ansible/install/repo/</code>. For a list of dependencies required for a standard OpenMPF package, please see the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package</a></strong>.</p>
+<p><strong>IMPORTANT:</strong> The <code>CreateCustomPackage.pl</code> script used in this section assumes dependency packages needed for deployment are present in their correct location under <code>/mpfdata/ansible/install/repo/</code>. For a list of dependencies required for a standard OpenMPF package, please see the appendix section <strong><a href="../Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package</a></strong>.</p>
 </blockquote>
 <p>The OpenMPF uses Apache Maven to automate software builds. The <code>mvn</code> commands in this guide are assumed to be run at the command line.</p>
 <h2 id="build-environment">Build Environment</h2>
@@ -1020,7 +1020,7 @@
 <p><code>./config_files/mpf-open-source-package.json</code></p>
 <h2 id="build-the-openmpf-package">Build the OpenMPF Package</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Maven before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Maven before continuing.</p>
 </blockquote>
 <ol>
 <li>Remove the development properties file:<ul>
@@ -1049,7 +1049,7 @@
 </ol>
 <h1 id="optional-testing-the-openmpf">(Optional) Testing the OpenMPF</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
 </blockquote>
 <p>Run these commands to build the OpenMPF and run the integration tests:</p>
 <ul>
@@ -1079,7 +1079,7 @@
 </blockquote>
 <h1 id="optional-building-and-running-the-web-application">(Optional) Building and running the web application</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
 </blockquote>
 <p>Run these commands to build the OpenMPF and launch the web application:</p>
 <ul>
@@ -1296,7 +1296,7 @@ java.lang.InterruptedException: null
 <li><code>. /etc/profile.d/mpf.sh</code></li>
 </ul>
 <h1 id="third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</h1>
-<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#package-lists">Package Lists</a></strong> section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the <code>CreateCustomPackage.pl</code> script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory to the package.</p>
+<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The <strong><a href="../Build-Environment-Setup-Guide#package-lists">Package Lists</a></strong> section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the <code>CreateCustomPackage.pl</code> script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory to the package.</p>
 <p>The following commands can be used to populate the dependency packages into the <code>/mpfdata/ansible/install/repo</code> directory:</p>
 <ul>
 <li><code>cd /mpfdata/ansible/install/repo/rpms/management</code></li>
