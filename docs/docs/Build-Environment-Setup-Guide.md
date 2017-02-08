@@ -1049,7 +1049,6 @@ The following commands can be used to populate the dependency packages into the 
     - **NOTE:** Oracle may require an account to download archived versions of the JRE.
 - `wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
 - `wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
-- `wget -O /mpfdata/ansible/install/repo/tars/ffmpeg-git-64bit-static.tar.xz "http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz"`
 - `cd /mpfdata/ansible/install/repo/pip`
 - `pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six`
 
