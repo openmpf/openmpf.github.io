@@ -57,7 +57,7 @@ Detection components are implemented by:
 1. Extending [`MPFDetectionComponent`](#openmpf-detection-component-api).
 2. Building the component into a shared object library. (See [HelloWorld CMakeLists.txt](https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/CMakeLists.txt)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component)).
+4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component)).
 
 # OpenMPF API Specification
 
@@ -400,7 +400,7 @@ Structure containing information about about a job to be performed on a piece of
 	|---|---|---|
 	|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
 	| data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
-	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in [Packaging and Registering a Component](https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
+	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 	| media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string`> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
