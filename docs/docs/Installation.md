@@ -4,7 +4,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.
 # Minimum Resource Requirements
 
 ## Hardware
-MPF performs best when processing is distributed across a cluster of computers; a minimum of one dedicated server is required that provides the following:
+OpenMPF performs best when processing is distributed across a cluster of computers; a minimum of one dedicated server is required that provides the following:
 
   - 4 Central Processing Units (CPUs)
   - 4GB Random Access Memory (RAM), *although in any operational use case environment at least 16GB of RAM is recommended*
@@ -12,32 +12,32 @@ MPF performs best when processing is distributed across a cluster of computers; 
 
 In a cluster configuration, participating servers are referred to as *nodes*, with one controlling node designated as the *master* node and the others designated as *child* nodes.  In this case, a shared file system accessible to all participating nodes is also required.
 
-The *master* contains the Workflow manager, ActiveMQ, MySQL, an instance of the MPF process manager, named the *Node Manager*. A *child* contains only a node manager and processing components/algorithms.
+The *master* contains the Workflow manager, ActiveMQ, MySQL, an instance of the OpenMPF process manager, named the *Node Manager*. A *child* contains only a node manager and processing components/algorithms.
 
-Below is an example layout of an MPF cluster consisting of 3 nodes:
+Below is an example layout of an OpenMPF cluster consisting of 3 nodes:
 
 ![System Layout](img/system_layout.png "System Layout")
 
 ## Operating System and Software
-MPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity).
+OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity).
 
-A browser is required in order to utilize the MPF Web User Interface (UI). The officially supported browsers are FireFox and Chrome. Although other browsers might work, they have not been thoroughly tested and might not display or function properly.
+A browser is required in order to utilize the OpenMPF Web User Interface (UI). The officially supported browsers are FireFox and Chrome. Although other browsers might work, they have not been thoroughly tested and might not display or function properly.
 
-## MPF Pre-Installation
+## OpenMPF Pre-Installation
 > **Important:** Please verify that all steps in the Pre-installation Checklist are completed **prior** to cluster configuration.
 
 ## Pre-Installation Checklist
 
 
-## MPF Installation
+## OpenMPF Installation
 
-> You only need to complete the following steps on the MPF master node.
+> You only need to complete the following steps on the OpenMPF master node.
 
-** 1. Install and Configure MPF Management Software **
+** 1. Install and Configure OpenMPF Management Software **
 
-Copy the MPF release package .tar.gz, (e.g. mpf-0.4.0+develop-394-d646a55e.tar.gz) to the MPF master node.
+Copy the OpenMPF release package .tar.gz, (e.g. mpf-0.4.0+develop-394-d646a55e.tar.gz) to the OpenMPF master node.
 
-From the MPF master node, unpack the MPF package.
+From the OpenMPF master node, unpack the OpenMPF package.
 
 ```
 tar zxvf <latest .tar.gz>
@@ -45,21 +45,21 @@ cd mpf-release
 sudo sh install-mpf.sh
 ```
 
-** 2. Configure the MPF Cluster **
+** 2. Configure the OpenMPF Cluster **
 
-> Note: A master node will __**not**__ run any services unless it is also designated and configured as a child. Think of a child as a worker in the MPF cluster. Thus, in a single server environment it is mandatory to designate the host as both a master and child in order to do any meaningful processing (e.g. detection). By default, the master only runs the workflow manager web app, AMQ, Redis and MySQL.
+> Note: A master node will __**not**__ run any services unless it is also designated and configured as a child. Think of a child as a worker in the OpenMPF cluster. Thus, in a single server environment it is mandatory to designate the host as both a master and child in order to do any meaningful processing (e.g. detection). By default, the master only runs the workflow manager web app, AMQ, Redis and MySQL.
 
 > Note: When prompted for username and password, use the same username and password you used to log in to the master node.
 
-> Note: When prompted for hostnames, only put in the hostnames (e.g., node-1), DO NOT put in the fully qualified domain name (e.g., node-1.example.org) or MPF will behave in strange ways.
+> Note: When prompted for hostnames, only put in the hostnames (e.g., node-1), DO NOT put in the fully qualified domain name (e.g., node-1.example.org) or OpenMPF will behave in strange ways.
 
 ```
 sudo sh /opt/mpf/manage/configure-cluster.sh
 ```
 
-** 3. Push MPF Configuration to MPF Nodes**
+** 3. Push OpenMPF Configuration to OpenMPF Nodes**
 
-> Note: Early in the script you will be prompted for the MPF password. Use "mpf".
+> Note: Early in the script you will be prompted for the OpenMPF password. Use "mpf".
 
 
 ```
@@ -69,7 +69,7 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
 
 ** 4. Complete Node Configuration **
 
-MPF is now running (no reboot required).
+OpenMPF is now running (no reboot required).
 
 To complete node configuration:
 
@@ -81,7 +81,7 @@ To complete node configuration:
 
 ## Updating Site Configuration
 
-You can add or remove nodes and change other configuration options once MPF has already been installed.
+You can add or remove nodes and change other configuration options once OpenMPF has already been installed.
 
 ```
 # As the "mpf" user:

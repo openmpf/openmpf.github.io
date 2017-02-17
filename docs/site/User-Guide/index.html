@@ -18,8 +18,8 @@
   <script>
     // Current page data
     var mkdocs_page_name = "User Guide";
-    var mkdocs_page_input_path = "MPF-User-Guide.md";
-    var mkdocs_page_url = "/MPF-User-Guide/";
+    var mkdocs_page_input_path = "User-Guide.md";
+    var mkdocs_page_url = "/User-Guide/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -62,7 +62,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Installation/">Install Guide</a>
+        <a class="" href="../Installation/">Install Guide</a>
         
     </li>
 <li>
@@ -133,7 +133,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Admin-Manual/">Admin Guide</a>
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
         
     </li>
 <li>
@@ -169,7 +169,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API Documentiaton</a>
+        <a class="" href="../REST-API/">REST API</a>
         
     </li>
 <li>
@@ -212,15 +212,15 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="general">General</h1>
 <h2 id="accessing-the-web-ui">Accessing the Web UI</h2>
-<p>On the server hosting the Media Processing Framework (MPF), the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".</p>
-<p>The MPF user interface (UI) was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.</p>
+<p>On the server hosting the Open Media Processing Framework (OpenMPF), the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".</p>
+<p>The OpenMPF user interface (UI) was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.</p>
 <h2 id="logging-in">Logging In</h2>
-<p>The MPF Web UI requires user authentication and provides two default accounts: "mpf" and "admin". The password for the "mpf" user is "mpf123". These accounts are used to assign user or admin roles for MPF cluster management. Note that an administrator can remove these accounts and/or add new ones using a command line tool. Refer to the <a href="../MPF-Admin-Manual/">Admin Guide</a> for features available to an admin user.</p>
-<p><img alt="MPF Login Page" src="../img/mpf_login.png" title="MPF Login Page" /></p>
+<p>The OpenMPF Web UI requires user authentication and provides two default accounts: "mpf" and "admin". The password for the "mpf" user is "mpf123". These accounts are used to assign user or admin roles for OpenMPF cluster management. Note that an administrator can remove these accounts and/or add new ones using a command line tool. Refer to the <a href="../Admin-Manual/">Admin Guide</a> for features available to an admin user.</p>
+<p><img alt="Login Page" src="../img/mpf_login.png" title="Login Page" /></p>
 <p>The landing page for a non-admin user is the Job Status page:</p>
-<p><img alt="MPF Landing Page" src="../img/mpf_landing.png" title="MPF Landing Page" /></p>
+<p><img alt="Landing Page" src="../img/mpf_landing.png" title="Landing Page" /></p>
 <p>Logging in starts a user session. By default, after 30 minutes of inactivity the user will automatically be logged out of the system. Within one minute of logging out the user will be prompted to extend or end their session. Note that the timeout period can be configured by any admin user with the admin role.</p>
-<p>A given user can only be logged into the MPF from one machine using one browser at a time. If the same user attempts to log in from another machine, or another browser on the same machine, then the first user session will be terminated immediately and redirected back to the login page. This feature ensures that the user will be able to immediately log in again if the user accidentally closes the browser window or shuts down their machine without properly logging out first.</p>
+<p>A given user can only be logged into the OpenMPF from one machine using one browser at a time. If the same user attempts to log in from another machine, or another browser on the same machine, then the first user session will be terminated immediately and redirected back to the login page. This feature ensures that the user will be able to immediately log in again if the user accidentally closes the browser window or shuts down their machine without properly logging out first.</p>
 <p>A user may have multiple browser tabs or windows open for the same session, for example, to view the Jobs Status page and Logs page at the same time. It is not recommended that two users login using the same browser at the same time in different tabs or windows. Technically, the second user to login will take precedence, but the first user session will not appear to be terminated. Instead the first user will appear to share recently uploaded media, recent jobs, and other information with the second user. Also, when one of the users logs out in this scenario, they will both be logged out.</p>
 <p>Once logged in, the left-hand sidebar shows the Workflow Manager (non-admin) options and the Admin Console options. Note that only the "admin" user has access to the full capabilities within the Admin Console, including node configuration, resetting system properties, and stopping and starting processes across the cluster. A non-admin user can view the status of processes in the Admin Console but cannot alter the node configuration or stop and start processes.</p>
 <h2 id="logging-out">Logging out</h2>
@@ -239,7 +239,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <img alt="Add Local Files Icon" src="../img/add_local_file_icon.png" title="Add Local Files Icon" /> Add Local Files
 <img alt="Upload from URL Icon" src="../img/upload_from_url_icon.png" title="Upload from URL Icon" /> Upload from URL
 <img alt="Refresh Icon" src="../img/refresh_icon.png" title="Refresh Icon" /> Refresh</p>
-<p>Note that the first three options are only available if the "remote-media" directory or one of its subdirectories is selected. That directory resides in the MPF share directory. The full path is shown in the footer of the File Manager section.</p>
+<p>Note that the first three options are only available if the "remote-media" directory or one of its subdirectories is selected. That directory resides in the OpenMPF share directory. The full path is shown in the footer of the File Manager section.</p>
 <p>Clicking the "Add Local Files" icon will display a file browser dialog so that the user can select and upload one or more files from their local machine. The files will be uploaded to the selected directory. The upload progress dialog will display a preview of each file (if possible) and whether or not each file is uploaded successfully.</p>
 <p>Clicking the "Create New Folder" icon will allow the user to create a new directory within the one currently selected. If the user has selected "remote-media", then adding a directory called "Test Data" will place it within "remote-media". "Test Data" will appear as a subdirectory in the directory tree shown in the web UI. If the user then clicks on "Test Data" and then the "Add Local Files" button the user can upload files to that specific directory. In the screenshot below, "lena.png" has been uploaded to the parent "remote-media" directory.</p>
 <p><img alt="Create Job Page" src="../img/mpf_create_job_media.png" title="Create Job Page" /></p>
@@ -252,7 +252,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <p>Files are selected by first clicking the name of a directory to populate the files table in the center of the UI and then clicking the checkbox next to the file. Multiple files can be selected, including files from different directories. Also, the contents of an entire directory, and its subdirectories, can be selected by clicking the checkbox next to the parent directory name. To review which files have been selected, click the "View" button shown to the right of the "# Files" indicator.  If there are many files in a directory, you may need to page through the directory using the page number buttons at the bottom of the center pane.</p>
 <p><img alt="Create Job Page" src="../img/mpf_create_job3.png" title="Create Job Page" /></p>
 <p>After files have been selected it's time to assign a pipeline and job priority. The "Select a pipeline and job priority" section is located on the right side of the screen.  Clicking on the down-arrow on the far right of the "Select a pipeline" area displays a drop-down menu containing the available pipelines.  Click on the desired pipeline to select it. Existing pipelines provided with the system are listed in the Default Pipelines section of this document.</p>
-<p>"Select job priority" is immediately below "Select a pipeline" and has a similar drop-down menu.  Clicking on the down-arrow on the right hand side of the "Select job priority" area displays the drop-down menu of available priorities.  Clicking on the desired priority selects it.  Priority 4 is the default value used if no priority is selected by the user. Priority 0 is the lowest priority, and priority 9 is the highest priority. When a job is executed it's divided into tasks that are each executed by a component service running on one of the nodes in the MPF cluster. Each service executes tasks with the highest priority first. Note that a service will first complete the task it's currently processing before moving on to the next task. Thus, a long-running low-priority task may delay the execution of a high-priority task.</p>
+<p>"Select job priority" is immediately below "Select a pipeline" and has a similar drop-down menu.  Clicking on the down-arrow on the right hand side of the "Select job priority" area displays the drop-down menu of available priorities.  Clicking on the desired priority selects it.  Priority 4 is the default value used if no priority is selected by the user. Priority 0 is the lowest priority, and priority 9 is the highest priority. When a job is executed it's divided into tasks that are each executed by a component service running on one of the nodes in the OpenMPF cluster. Each service executes tasks with the highest priority first. Note that a service will first complete the task it's currently processing before moving on to the next task. Thus, a long-running low-priority task may delay the execution of a high-priority task.</p>
 <p>After files have been selected and a pipeline and priority are assigned, clicking on the "Create Job" icon will start the job.  When the job starts, the user will be shown the "Job Status" view.</p>
 <h2 id="job-status">Job Status</h2>
 <p>The Job Status page displays a summary of the status for all jobs.  Selecting the "Session" tab in the upper left displays all jobs for the current user's session, while selecting "All" displays the status of all jobs including those for the current user's session and those run by any user in the past. The current status and progress of any running job can be monitored from this view, which is updated automatically.</p>
@@ -286,22 +286,22 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <p>NOTE: Pipeline, task, and action names are case-insensitive. All letters will be converted to uppercase.</p>
 </blockquote>
 <h2 id="logs">Logs</h2>
-<p>This page allows a user to view the various log files that are generated by system processes running on the various nodes in the MPF cluster. A log file can be selected by first selecting a host from the "Available Hosts" drop-down and then selecting a log file from the "Available Logs" drop-down. The information in the log can be filtered for display based on the following log levels:  ALL, TRACE, DEBUG, INFO, WARN, ERROR, or FATAL.  Choosing a successive log level displays all information at that level and levels below (e.g., choosing WARN will cause all WARN, INFO, DEBUG, and TRACE information to be displayed, but will filter out ERROR and FATAL information).</p>
+<p>This page allows a user to view the various log files that are generated by system processes running on the various nodes in the OpenMPF cluster. A log file can be selected by first selecting a host from the "Available Hosts" drop-down and then selecting a log file from the "Available Logs" drop-down. The information in the log can be filtered for display based on the following log levels:  ALL, TRACE, DEBUG, INFO, WARN, ERROR, or FATAL.  Choosing a successive log level displays all information at that level and levels below (e.g., choosing WARN will cause all WARN, INFO, DEBUG, and TRACE information to be displayed, but will filter out ERROR and FATAL information).</p>
 <p><img alt="Logs Page" src="../img/mpf_logs1.png" title="Logs Page" /></p>
 <p>In general, all services of the same component type running on the same node write log messages to the same file. For example, all OCV face detection services on somehost-7-mpfd2 write log messages to the same "ocv-face-detection" log file. All OCV face detection services on somehost-7-mpfd3 write log messages to a different "ocv-face-detection" log file.</p>
 <p>Note that only the master node will have the "workflow-manager" log. This is because the workflow manager only runs on the master node. The same is true for the "activemq" and "tomcat" logs.</p>
-<p>The "node-manager-startup" and "node-manager" logs will appear for every node in the MPF cluster. The "node-manager-startup" log captures information about the nodemanager startup process, such as if any errors occurred. The "node-manager" log captures information about node manager execution, such as starting and stopping services.</p>
+<p>The "node-manager-startup" and "node-manager" logs will appear for every node in the OpenMPF cluster. The "node-manager-startup" log captures information about the nodemanager startup process, such as if any errors occurred. The "node-manager" log captures information about node manager execution, such as starting and stopping services.</p>
 <p>The "detection" log captures information about initializing C++ detection components and how they handle job request and response messages.</p>
 <h2 id="node-and-process-status">Node and Process Status</h2>
-<p>This page allows a user to view the various service processes running on each node in the MPF cluster:</p>
+<p>This page allows a user to view the various service processes running on each node in the OpenMPF cluster:</p>
 <p><img alt="Node and Process Status Page" src="../img/mpf_services.jpg" title="Node and Process Status Page" /></p>
 <p>Each service is given a unique name of the form <em>HOSTNAME:SERVICENAME:RANK</em> where <em>HOSTNAME</em> is the hostname of the node the service is configured to run on, <em>SERVICENAME</em> is the name of the service, and <em>RANK</em> is an index that is used to distinguish between multiple instances of the same service running on the same node. For example, if there are two instances of the OpenCV face detection service running on somehost-7-mpfd2 then the first one will have a rank of 1 and the second one will have a rank of 2 (not shown).</p>
 <p>The "Node and Process Status" table shows information about the status of each service, if it is unlaunchable due to an underlying error, and how many times the node manager has attempted to restart the service if an error was detected.</p>
 <h2 id="node-configuration">Node Configuration</h2>
-<p>This page allows a user to view the various services configured to run on each node in the MPF cluster. The number to the right of each service represents the number of instances of that service configured to run on that node:</p>
+<p>This page allows a user to view the various services configured to run on each node in the OpenMPF cluster. The number to the right of each service represents the number of instances of that service configured to run on that node:</p>
 <p><img alt="Node Configuration Page" src="../img/mpf_node_config.jpg" title="Node Configuration Page" /></p>
 <h2 id="properties-settings">Properties Settings</h2>
-<p>This page allows a user to view the various MPF properties configured automatically or by an admin user:</p>
+<p>This page allows a user to view the various OpenMPF properties configured automatically or by an admin user:</p>
 <p><img alt="Edit Properties Page" src="../img/mpf_properties.png" title="Edit Properties Page" /></p>
 <h2 id="statistics">Statistics</h2>
 <p>The "Jobs" tab on this page allows a user to view a bar graph representing the time it took to execute the longest running job for a given pipeline. Pipelines that do not have bars have not been used to run any jobs yet. Job statistics are preserved when the workflow manager is restarted.</p>
@@ -310,7 +310,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <p>The "Processes" tab on this page allows a user to view a table with information about the runtime of various internal workflow manager operations. The "Count" field represents the number of times each operation was run. The min, max, and mean are calculated over the set of times each operation was performed. Runtime information is reset when the workflow manager is restarted.</p>
 <p><img alt="Job Statistics Page" src="../img/mpf_stats_proc.png" title="Job Statistics Page" /></p>
 <h2 id="rest-api">REST API</h2>
-<p>This page allows a user to try out the various REST API endpoints provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the MPF.</p>
+<p>This page allows a user to try out the various REST API endpoints provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the OpenMPF.</p>
 <p>After selecting a functional category, such as "meta", "jobs", "statistics", "nodes", "pipelines", or "system-message", each REST endpoint for that category is shown in a list. Selecting one of them will cause it to expand and reveal more information about the request and response structures. If the request takes any parameters then a section will appear that allows the user to manually specify them.</p>
 <p><img alt="REST API Page" src="../img/swagger1.png" title="REST API Page" /></p>
 <p>In the example above, the "/rest/jobs/{id}" endpoint was selected. It takes a required "id" parameter that corresponds to a previously run job and returns a JSON representation of that job's information. The screenshot below shows the result of specifying an "id" of "1", providing the "mpf" user credentials when prompted, and then clicking the "Try it out!" button:</p>
@@ -398,7 +398,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </tbody>
 </table>
 <h1 id="detection-chaining">Detection Chaining</h1>
-<p>The MPF has the ability to chain detection tasks together in a detection pipeline. As each detection stage in the pipeline completes, the volume of data to be processed in the next stage may be reduced. Generally, any detection tasks executed prior to the final detection task in the pipeline are referred to as preprocessors or filters. For example, consider the following pipeline which demonstrates the use of a motion preprocessor:</p>
+<p>The OpenMPF has the ability to chain detection tasks together in a detection pipeline. As each detection stage in the pipeline completes, the volume of data to be processed in the next stage may be reduced. Generally, any detection tasks executed prior to the final detection task in the pipeline are referred to as preprocessors or filters. For example, consider the following pipeline which demonstrates the use of a motion preprocessor:</p>
 <p><img alt="Detection Chaining Diagram" src="../img/mpf-chain.png" title="Detection Chaining Diagram" /></p>
 <p>In the pipeline above, the motion preprocessor reduces the volume of data which is passed to the face detector. This is particularly useful when the input media collection contains videos captured by a fixed-location camera.  For example, a camera targeting a chokepoint such as a hallway door. The motion preprocessor will filter the input media so that only regions of video containing motion are passed on to the face detector.</p>
 <p>Detection pipelines may be created with, or without, preprocessors and filters using the Create Custom Pipelines view.</p>
@@ -408,8 +408,8 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <h2 id="use_preprocessor-property">"USE_PREPROCESSOR" Property</h2>
 <p>In order to mitigate the risk of eliminating useful media files simply because they are not supported by a detector using its default settings, some algorithms expose a "USE_PREPROCESSOR" property. When a user creates an action based on a detector with this property, the user may assign this property a nonzero value in order to indicate that the detector should behave as a preprocessor as opposed to a filter. When acting as a preprocessor, a detector will not emit an empty detection set when provided with an unsupported media type, rather it will return a single track spanning the duration of the media file. Thus, when configured with the "USE_PREPROCESSOR" setting, the motion detector will not prevent images from passing on to the next stage in the pipeline, for example.</p>
 <h1 id="segmenting-media">Segmenting Media</h1>
-<p>The MPF allows users to configure video segmenting properties for actions in a pipeline. Audio files (which do not have the concept of "frames") and image files (which are treated like single-frame videos) are not affected by these properties.</p>
-<p>Segmenting is performed before a detection action in order to split work across the available detection services running on the various nodes in the MPF cluster. In general, each instance of a detection service can process one video segment at a time. Multiple services can process separate segments at the same time, thus enabling parallel processing. There are two fundamental segmenting scenarios:</p>
+<p>The OpenMPF allows users to configure video segmenting properties for actions in a pipeline. Audio files (which do not have the concept of "frames") and image files (which are treated like single-frame videos) are not affected by these properties.</p>
+<p>Segmenting is performed before a detection action in order to split work across the available detection services running on the various nodes in the OpenMPF cluster. In general, each instance of a detection service can process one video segment at a time. Multiple services can process separate segments at the same time, thus enabling parallel processing. There are two fundamental segmenting scenarios:</p>
 <ol>
 <li>Segmenting must be performed on a video which has not passed through a preprocessor or filter.</li>
 <li>Segmenting must be performed on a video which has passed through a preprocessor or filter.</li>
@@ -473,10 +473,10 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../MPF-Admin-Manual/" class="btn btn-neutral float-right" title="Admin Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Admin-Manual/" class="btn btn-neutral float-right" title="Admin Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../MPF-Installation/" class="btn btn-neutral" title="Install Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Installation/" class="btn btn-neutral" title="Install Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -504,10 +504,10 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../MPF-Installation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Installation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../MPF-Admin-Manual/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Admin-Manual/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

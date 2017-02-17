@@ -59,83 +59,6 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#general-information">General Information</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#installing-centos-7">Installing CentOS 7</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a></li>
-                
-                    <li><a class="toctree-l4" href="#configure-additional-repositories">Configure Additional Repositories</a></li>
-                
-                    <li><a class="toctree-l4" href="#rpm-dependencies">RPM Dependencies</a></li>
-                
-                    <li><a class="toctree-l4" href="#binary-packages">Binary Packages</a></li>
-                
-                    <li><a class="toctree-l4" href="#python-packages">Python Packages</a></li>
-                
-                    <li><a class="toctree-l4" href="#building-dependencies">Building Dependencies</a></li>
-                
-                    <li><a class="toctree-l4" href="#configuring-mysql">Configuring MySQL</a></li>
-                
-                    <li><a class="toctree-l4" href="#configuring-activemq">Configuring ActiveMQ</a></li>
-                
-                    <li><a class="toctree-l4" href="#configuring-redis">Configuring Redis</a></li>
-                
-                    <li><a class="toctree-l4" href="#https-configuration">HTTPS Configuration</a></li>
-                
-                    <li><a class="toctree-l4" href="#optional-http-configuration">(Optional) HTTP Configuration</a></li>
-                
-                    <li><a class="toctree-l4" href="#adding-additional-maven-dependencies">Adding Additional Maven Dependencies</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</a></li>
-                
-                    <li><a class="toctree-l4" href="#build-environment">Build Environment</a></li>
-                
-                    <li><a class="toctree-l4" href="#build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</a></li>
-                
-                    <li><a class="toctree-l4" href="#build-the-openmpf-package">Build the OpenMPF Package</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#optional-testing-the-openmpf">(Optional) Testing the OpenMPF</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#optional-building-and-running-the-web-application">(Optional) Building and running the web application</a></li>
-                
-                    <li><a class="toctree-l4" href="#default-credentials">Default Credentials</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#deploying-the-openmpf">Deploying the OpenMPF</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#proxy-configuration">Proxy Configuration</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#ssl-inspection">SSL Inspection</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a></li>
-                
-                    <li><a class="toctree-l4" href="#package-lists">Package Lists</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#build-and-test-environment">Build and Test Environment</a></li>
-                
-            
             </ul>
         
     </li>
@@ -143,21 +66,21 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Installation/">Install Guide</a>
+        <a class="" href="../Installation/">Install Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-User-Guide/">User Guide</a>
+        <a class="" href="../User-Guide/">User Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Admin-Manual/">Admin Guide</a>
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
         
     </li>
 <li>
@@ -193,7 +116,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API Documentiaton</a>
+        <a class="" href="../REST-API/">REST API</a>
         
     </li>
 <li>
@@ -288,7 +211,7 @@
 </blockquote>
 <p>This guide provides comprehensive instructions for setting up a build environment and generating an OpenMPF deployment package that contains the executable form of the software. This package is self-contained so that it can be installed on a minimal CentOS 7 system without Internet connectivity.</p>
 <h1 id="set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</h1>
-<p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../MPF-Installation">Installation Guide</a>.</p>
+<p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../Installation">Installation Guide</a>.</p>
 <ul>
 <li>This guide assumes a starting point of CentOS 7 with a minimal installation.</li>
 <li>At the time of writing this, the available minimal .iso file is CentOS-7-x86_64-Minimal-1511.iso. It should be downloaded from <a href="https://www.centos.org/download/">https://www.centos.org/download/</a> prior to starting these steps.</li>
@@ -325,7 +248,7 @@
 </ol>
 <h1 id="installing-centos-7">Installing CentOS 7</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong> for instructions to configure the yum package manager before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong> for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
 <ol>
 <li>Open the ‘Settings’ for the OpenMPF Build VM.</li>
@@ -416,7 +339,7 @@
 </ol>
 <h1 id="set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure the yum package manager before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
 <p>At the time of writing, all URLs provided in this section were verified as working.</p>
 <h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
@@ -483,7 +406,7 @@
 <p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake-gui freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libdc1394-devel libffi-devel libICE-devel libjpeg-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python-paramiko python-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <h2 id="binary-packages">Binary Packages</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your environment is behind a proxy server that performs SSL inspection, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#ssl-inspection">SSL Inspection</a></strong> before continuing.</p>
+<p><strong>NOTE:</strong> If your environment is behind a proxy server that performs SSL inspection, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#ssl-inspection">SSL Inspection</a></strong> before continuing.</p>
 </blockquote>
 <p>The following binary packages will need to be downloaded and installed:</p>
 <ol>
@@ -574,7 +497,7 @@
 </ol>
 <h2 id="building-dependencies">Building Dependencies</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure git before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure git before continuing.</p>
 </blockquote>
 <p>The following source packages will need to be downloaded, built, and installed:</p>
 <ol>
@@ -1057,7 +980,7 @@
 </ol>
 <h1 id="building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</h1>
 <blockquote>
-<p><strong>IMPORTANT:</strong> The <code>CreateCustomPackage.pl</code> script used in this section assumes dependency packages needed for deployment are present in their correct location under <code>/mpfdata/ansible/install/repo/</code>. For a list of dependencies required for a standard OpenMPF package, please see the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package</a></strong>.</p>
+<p><strong>IMPORTANT:</strong> The <code>CreateCustomPackage.pl</code> script used in this section assumes dependency packages needed for deployment are present in their correct location under <code>/mpfdata/ansible/install/repo/</code>. For a list of dependencies required for a standard OpenMPF package, please see the appendix section <strong><a href="../Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package</a></strong>.</p>
 </blockquote>
 <p>The OpenMPF uses Apache Maven to automate software builds. The <code>mvn</code> commands in this guide are assumed to be run at the command line.</p>
 <h2 id="build-environment">Build Environment</h2>
@@ -1097,7 +1020,7 @@
 <p><code>./config_files/mpf-open-source-package.json</code></p>
 <h2 id="build-the-openmpf-package">Build the OpenMPF Package</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Maven before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Maven before continuing.</p>
 </blockquote>
 <ol>
 <li>Remove the development properties file:<ul>
@@ -1107,20 +1030,26 @@
 </li>
 <li>Run the Maven clean package command with the <code>create-tar</code> profile and the <code>rpm:rpm</code> goal. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.<ul>
 <li><code>cd /home/mpf/mpf</code></li>
-<li><code>mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=&lt;cppComponents&gt;</code></li>
+<li><code>mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=&lt;cppComponents&gt;</code><blockquote>
+<p><strong>NOTE:</strong> The order of components in the <code>-DcppComponents</code> list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ul>
+<li><code>cd /home/mpf/mpf/trunk/jenkins/scripts</code></li>
+<li><code>perl CreateCustomPackage.pl /home/mpf/mpf master 0 &lt;configFile&gt;</code></li>
+</ul>
+</li>
+<li>The package <code>mpf-*+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.</li>
+<li>(Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:<ul>
+<li><code>cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
 </ul>
 </li>
 </ol>
-<p>Note that the order of components in the <code>-DcppComponents</code> list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
-3. After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:
-    - <code>cd /home/mpf/mpf/trunk/jenkins/scripts</code>
-    - <code>perl CreateCustomPackage.pl /home/mpf/mpf master 0 &lt;configFile&gt;</code>
-4. The package <code>mpf-complete-0.8.0+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.
-5. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
-    - <code>cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
 <h1 id="optional-testing-the-openmpf">(Optional) Testing the OpenMPF</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
 </blockquote>
 <p>Run these commands to build the OpenMPF and run the integration tests:</p>
 <ul>
@@ -1150,7 +1079,7 @@
 </blockquote>
 <h1 id="optional-building-and-running-the-web-application">(Optional) Building and running the web application</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure Firefox before continuing.</p>
 </blockquote>
 <p>Run these commands to build the OpenMPF and launch the web application:</p>
 <ul>
@@ -1182,11 +1111,11 @@
 </code></pre>
 
 <p>After startup, the workflow-manager will be available at <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.</p>
-<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the  <a href="../MPF-User-Guide">User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../MPF-Admin-Manual">Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
+<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the  <a href="../User-Guide">User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Manual">Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
 <blockquote>
 <p><strong>NOTE:</strong> Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <a href="https://www.virtualbox.org/manual/ch06.html#natforward">https://www.virtualbox.org/manual/ch06.html#natforward</a> for configuring port forwarding.</p>
 </blockquote>
-<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../MPF-Admin-Manual/#command-line-tools">Command Line Tools</a> section of the <a href="../MPF-Admin-Manual">Admin Manual</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
+<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Manual/#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Manual">Admin Manual</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
 <p><strong>Starting</strong></p>
 <pre><code>/opt/activemq/bin/activemq start
 sudo systemctl start mysqld
@@ -1222,7 +1151,7 @@ sudo systemctl stop mysqld
 </li>
 </ul>
 <h1 id="deploying-the-openmpf">Deploying the OpenMPF</h1>
-<p>Please see the <a href="../MPF-Installation">Installation Guide</a>.</p>
+<p>Please see the <a href="../Installation">Installation Guide</a>.</p>
 <hr />
 <h1 id="appendices"><strong>Appendices</strong></h1>
 <h1 id="known-issues">Known Issues</h1>
@@ -1367,7 +1296,7 @@ java.lang.InterruptedException: null
 <li><code>. /etc/profile.d/mpf.sh</code></li>
 </ul>
 <h1 id="third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</h1>
-<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The <strong><a href="https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#package-lists">Package Lists</a></strong> section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the <code>CreateCustomPackage.pl</code> script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory to the package.</p>
+<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The <strong><a href="../Build-Environment-Setup-Guide#package-lists">Package Lists</a></strong> section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the <code>CreateCustomPackage.pl</code> script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory to the package.</p>
 <p>The following commands can be used to populate the dependency packages into the <code>/mpfdata/ansible/install/repo</code> directory:</p>
 <ul>
 <li><code>cd /mpfdata/ansible/install/repo/rpms/management</code></li>
@@ -1384,7 +1313,6 @@ java.lang.InterruptedException: null
 </li>
 <li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"</code></li>
 <li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"</code></li>
-<li><code>wget -O /mpfdata/ansible/install/repo/tars/ffmpeg-git-64bit-static.tar.xz "http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz"</code></li>
 <li><code>cd /mpfdata/ansible/install/repo/pip</code></li>
 <li><code>pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six</code></li>
 </ul>
@@ -1641,7 +1569,7 @@ java.lang.InterruptedException: null
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../MPF-Installation/" class="btn btn-neutral float-right" title="Install Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Installation/" class="btn btn-neutral float-right" title="Install Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1675,7 +1603,7 @@ java.lang.InterruptedException: null
         <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../MPF-Installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Installation/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

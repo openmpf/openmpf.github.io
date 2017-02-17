@@ -14,7 +14,7 @@ This guide provides comprehensive instructions for setting up a build environmen
 
 # Set Up the Minimal CentOS 7 VM
 
-The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [Installation Guide](MPF-Installation).
+The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [Installation Guide](Installation).
 
 - This guide assumes a starting point of CentOS 7 with a minimal installation.
 - At the time of writing this, the available minimal .iso file is CentOS-7-x86_64-Minimal-1511.iso. It should be downloaded from <https://www.centos.org/download/> prior to starting these steps.
@@ -39,7 +39,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
 
 # Installing CentOS 7
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)** for instructions to configure the yum package manager before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)** for instructions to configure the yum package manager before continuing.
 
 1. Open the ‘Settings’ for the OpenMPF Build VM.
 - Select the ‘Storage’ menu item.
@@ -109,7 +109,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
 
 # Set Up the OpenMPF Build Environment
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure the yum package manager before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure the yum package manager before continuing.
 
 At the time of writing, all URLs provided in this section were verified as working.
 
@@ -163,7 +163,7 @@ The following RPM packages will need to be downloaded and installed. Use of the 
 
 ## Binary Packages
 
-> **NOTE:** If your environment is behind a proxy server that performs SSL inspection, please read the appendix section **[SSL Inspection](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#ssl-inspection)** before continuing.
+> **NOTE:** If your environment is behind a proxy server that performs SSL inspection, please read the appendix section **[SSL Inspection](Build-Environment-Setup-Guide#ssl-inspection)** before continuing.
 
 The following binary packages will need to be downloaded and installed:
 
@@ -239,7 +239,7 @@ The following binary packages will need to be downloaded and installed:
 
 ## Building Dependencies
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure git before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure git before continuing.
 
 The following source packages will need to be downloaded, built, and installed:
 
@@ -709,7 +709,7 @@ Some Maven dependencies needed for the OpenMPF were not publicly available at th
 
 # Building and Packaging the OpenMPF
 
-> **IMPORTANT:** The `CreateCustomPackage.pl` script used in this section assumes dependency packages needed for deployment are present in their correct location under `/mpfdata/ansible/install/repo/`. For a list of dependencies required for a standard OpenMPF package, please see the appendix section **[Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package)**.
+> **IMPORTANT:** The `CreateCustomPackage.pl` script used in this section assumes dependency packages needed for deployment are present in their correct location under `/mpfdata/ansible/install/repo/`. For a list of dependencies required for a standard OpenMPF package, please see the appendix section **[Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package](Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package)**.
 
 The OpenMPF uses Apache Maven to automate software builds. The `mvn` commands in this guide are assumed to be run at the command line.
 
@@ -759,7 +759,7 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
 
 ## Build the OpenMPF Package
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Maven before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Maven before continuing.
 
 1. Remove the development properties file:
     - `cd /home/mpf/mpf`
@@ -767,18 +767,17 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
 2. Run the Maven clean package command with the `create-tar` profile and the `rpm:rpm` goal. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
     - `cd /home/mpf/mpf`
     - `mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=<cppComponents>`
-
- Note that the order of components in the `-DcppComponents` list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
+> **NOTE:** The order of components in the `-DcppComponents` list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
 3. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
     - `cd /home/mpf/mpf/trunk/jenkins/scripts`
     - `perl CreateCustomPackage.pl /home/mpf/mpf master 0 <configFile>`
-4. The package `mpf-complete-0.8.0+master-0.tar.gz` will be under `/mpfdata/releases/`.
+4. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
 5. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
     - `cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
 
 # (Optional) Testing the OpenMPF
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
 
 Run these commands to build the OpenMPF and run the integration tests:
 
@@ -807,7 +806,7 @@ Run these commands to build the OpenMPF and run the integration tests:
 
 # (Optional) Building and running the web application
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
 
 Run these commands to build the OpenMPF and launch the web application:
 
@@ -840,11 +839,11 @@ INFO: Server startup in 39030 ms
 
 After startup, the workflow-manager will be available at <http://localhost:8080/workflow-manager>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
 
-If you want to test regular user capabilities, log in as 'mpf'. Please see the  [User Guide](MPF-User-Guide) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [Admin Manual](MPF-Admin-Manual) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
+If you want to test regular user capabilities, log in as 'mpf'. Please see the  [User Guide](User-Guide) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [Admin Manual](Admin-Manual) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
 
 > **NOTE:** Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <https://www.virtualbox.org/manual/ch06.html#natforward> for configuring port forwarding.
 
-The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](MPF-Admin-Manual/#command-line-tools) section of the [Admin Manual](MPF-Admin-Manual). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
+The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Manual/#command-line-tools) section of the [Admin Manual](Admin-Manual). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
 
 **Starting**
 
@@ -880,7 +879,7 @@ sudo systemctl stop mysqld
 
 # Deploying the OpenMPF
 
-Please see the [Installation Guide](MPF-Installation).
+Please see the [Installation Guide](Installation).
 
 ---
 
@@ -1034,7 +1033,7 @@ Alternatively, if adding certificates is not an option or difficulties are encou
 
 # Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package
 
-As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The **[Package Lists](https://github.com/openmpf/openmpf/wiki/Build-Environment-Setup-Guide#package-lists)** section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the `CreateCustomPackage.pl` script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the `/mpfdata/ansible/install/repo/` directory to the package.
+As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The **[Package Lists](Build-Environment-Setup-Guide#package-lists)** section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the `CreateCustomPackage.pl` script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the `/mpfdata/ansible/install/repo/` directory to the package.
 
 The following commands can be used to populate the dependency packages into the `/mpfdata/ansible/install/repo` directory:
 
@@ -1050,7 +1049,6 @@ The following commands can be used to populate the dependency packages into the 
     - **NOTE:** Oracle may require an account to download archived versions of the JRE.
 - `wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
 - `wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
-- `wget -O /mpfdata/ansible/install/repo/tars/ffmpeg-git-64bit-static.tar.xz "http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz"`
 - `cd /mpfdata/ansible/install/repo/pip`
 - `pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six`
 

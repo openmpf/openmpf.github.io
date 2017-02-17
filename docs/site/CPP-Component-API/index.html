@@ -62,21 +62,21 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Installation/">Install Guide</a>
+        <a class="" href="../Installation/">Install Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-User-Guide/">User Guide</a>
+        <a class="" href="../User-Guide/">User Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../MPF-Admin-Manual/">Admin Guide</a>
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
         
     </li>
 <li>
@@ -99,37 +99,6 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#c-component-api-overview">C++ Component API Overview</a></li>
-                
-                    <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
-                
-                    <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#c-component-build-environment">C++ Component Build Environment</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
-                
-                    <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
-                
-                    <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
-                
-                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
-                
-                    <li><a class="toctree-l4" href="#logging">Logging</a></li>
-                
-            
             </ul>
         
     </li>
@@ -147,7 +116,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API Documentiaton</a>
+        <a class="" href="../REST-API/">REST API</a>
         
     </li>
 <li>
@@ -255,10 +224,12 @@
 <h1 id="c-component-api-overview">C++ Component API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
 <p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
-<p>Using this API, detection components can be built to provide:
-<em> Detection (Localizing an object)
-</em> Tracking (Localizing an object across multiple frames)
-* Classification (Detecting the type of object and optionally localizing that object)</p>
+<p>Using this API, detection components can be built to provide:</p>
+<ul>
+<li>Detection (Localizing an object)</li>
+<li>Tracking (Localizing an object across multiple frames)</li>
+<li>Classification (Detecting the type of object and optionally localizing that object)</li>
+</ul>
 <h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
 <p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>. Developers create component libraries that encapsulate the component detection logic. Each instance of the Component Executable loads one these libraries and uses it to service job requests sent by the OpenMPF Workflow Manager (WFM).</p>
 <p>The Component Executable:</p>
@@ -447,12 +418,14 @@ MPF_COMPONENT_DELETER();
 <h3 id="convenience-adapters">Convenience Adapters</h3>
 <p>As an alternative to extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> directly, developers may extend one of several convenience adapter classes provided by OpenMPF.</p>
 <p>These adapters provide default implementations of several methods in <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
-<p>The following adapters are provided:
-<em> Image Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)
-</em> Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)
-<em> Image and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)
-</em> Audio Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)
-*   Audio and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</p>
+<p>The following adapters are provided:</p>
+<ul>
+<li>Image Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)</li>
+<li>Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Image and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</li>
+</ul>
 <blockquote>
 <p><strong>Example: Creating Adaptors to Perform Naive Tracking:</strong>
 A simple detector that operates on videos may simply go through the video frame-by-frame, extract each frame’s data, and perform detections on that data as though it were processing a new unrelated image each time. As each frame is processed, one or more <code>MPFImageLocations</code> are generated.</p>
