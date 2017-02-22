@@ -49,7 +49,7 @@ As an alternative to extending [`MPFDetectionComponentBase`](#detection-componen
 
 ## Getting Started
 
-The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf/tree/master/mpf_components/Java/detection/hello) for the OpenMPF *Hello World* Detection Component.
+The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview). Example components are currently in development which provide a template for getting started.
 
 Detection components are implemented by:
 
