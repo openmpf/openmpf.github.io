@@ -31,9 +31,9 @@ The basic psuedocode for the Component Executable is as follows:
 ```c++
 component->SetRunDirectory(...)
 component->Init()
-while(true) {
+while (true) {
   job = ReceiveJob()
-  if(component->Supports(job.data_type))
+  if (component->Supports(job.data_type))
     component->GetDetections(...) // Component logic does the work here
   SendJobResponse()
 }
