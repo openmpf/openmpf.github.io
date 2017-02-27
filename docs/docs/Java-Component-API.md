@@ -80,7 +80,6 @@ The API consists of *Component Interfaces*, which provide interfaces and abstrac
 
 The following classes define the details about a specific job (work unit):
 
-* [`MPFJob`](#mpfjob)
 * [`MPFImageJob`](#mpfjob) extends [`MPFJob`](#mpfjob)
 * [`MPFVideoJob`](#mpfjob) extends [`MPFJob`](#mpfjob)
 * [`MPFAudioJob`](#mpfjob) extends [`MPFJob`](#mpfjob)
@@ -369,7 +368,7 @@ public MPFComponentDetectionError (
 ### Detection Job Classes
 
 The `MPFDetectionComponent` data structures contain details about a specific job (work unit):
-* [`MPFJob`](#mpfjob)
+
 * [`MPFImageJob`](#mpfimagejob) extends [`MPFJob`](#mpfjob)
 * [`MPFVideoJob`](#mpfvideojob) extends [`MPFJob`](#mpfjob)
 * [`MPFAudioJob`](#mpfaudiojob) extends [`MPFJob`](#mpfjob)
