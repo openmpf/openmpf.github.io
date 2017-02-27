@@ -418,7 +418,7 @@ public MPFImageJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
-        final Map <String, String> mediaProperties)
+	final Map <String, String> mediaProperties)
 ```
 * Members:
 
@@ -440,7 +440,7 @@ public MPFVideoJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
-        final Map<String, String> mediaProperties,
+	final Map<String, String> mediaProperties,
 	int startFrame,
 	int stopFrame)
 ```
@@ -514,7 +514,7 @@ public MPFImageLocation(
 | yLeftUpper | int | Upper left Y coordinate of the detected object. |
 | width | int | The width of the detected object. If the detection consists of the entire image, use 0. |
 | height | int | The height of the detected object. If the detection consists of the entire image, use 0. |
-| confidence | float | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+| confidence | float | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | Map<String, String> | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detectionProperties**: A component that performs generic object classification could add an entry to the detectionProperties where the key is `CLASSIFICATION` and the value is a string corresponding to the type of object detected.
@@ -541,7 +541,7 @@ public MPFVideoTrack(
 | startFrame| int | The first frame number (0-based index) that contained the detected object. |
 | stopFrame| int | The last frame number (0-based index) that contained the detected object. |
 | frameLocations| Map<Integer, MPFImageLocation> | A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a [`MPFImageLocation`](mpfimagelocation) calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. In some cases, frames are deliberately skipped, as when a FRAME_INTERVAL > 1 is specified |
-| confidence | float | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+| confidence | float | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | Map<String, String> | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detectionProperties**: A component that detects text could add an entry to the detectionProperties map where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
@@ -566,7 +566,7 @@ public MPFAudioTrack(
 |---|---|---|
 | startTime| int | The time (0-based index, in ms) when the audio detection event started.  |
 | stopTime| int | The time (0-based index, in ms) when the audio detection event stopped. |
-| confidence | float | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+| confidence | float | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | Properties | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS. |
 
 
