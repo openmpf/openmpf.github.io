@@ -259,6 +259,8 @@ String getDetectionType() {
 
 Used to detect objects in image files. The MPFImageJob structure contains the URI specifying the location of the image file.
 
+Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
+
 * Method Definition:
 ```java
 List<MPFImageLocation> getDetections(MPFImageJob job)
@@ -400,7 +402,7 @@ protected MPFJob(
 | Member  | Data Type  | Description  |
 |---|---|---|
 |  jobName <a name="job-name"></a> | String  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
-| dataUri <a name="data-uri"></a> | String  | The URI of the input media file to be processed. e.g., `file://path/to/file`  |
+| dataUri <a name="data-uri"></a> | String  | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".  |
 | jobProperties <a name="job-properties"></a> | Map<String, String>  | The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br /><br /> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value. |
 | mediaProperties <a name="media-properties"></a> | Map<String, String> | Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description. |
 
