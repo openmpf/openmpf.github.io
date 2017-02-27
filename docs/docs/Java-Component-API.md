@@ -228,7 +228,7 @@ Returns the supported data types of the component.
 * Returns: (boolean) True if the component supports the data type, otherwise false.
 * Example:
 ```java
-//Sample Component that supports only image and video files
+// Sample Component that supports only image and video files
 boolean supports(MPFDataType dataType) {
     return dataType == MPFDataType.IMAGE || dataType == MPFDataType.VIDEO;
 }
@@ -259,7 +259,7 @@ String getDetectionType() {
 
 Used to detect objects in image files. The MPFImageJob structure contains the URI specifying the location of the image file.
 
-Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
+Currently, the dataUri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
 
 * Method Definition:
 ```java
