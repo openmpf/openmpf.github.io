@@ -218,7 +218,7 @@ The following adapter is provided:
 Returns the supported data types of the component.
 
 * Method Definition:
-`boolean supports(MPFDataType dataType)`
+`public boolean supports(MPFDataType dataType)`
 * Parameters:
 
 | Parameter  | Data Type  | Description  |
@@ -229,7 +229,7 @@ Returns the supported data types of the component.
 * Example:
 ```java
 // Sample Component that supports only image and video files
-boolean supports(MPFDataType dataType) {
+public boolean supports(MPFDataType dataType) {
     return dataType == MPFDataType.IMAGE || dataType == MPFDataType.VIDEO;
 }
 ```
@@ -250,7 +250,7 @@ Returns the type of object detected by the component.
 
 * Example:
 ```java
-String getDetectionType() {
+public String getDetectionType() {
     return "FACE";
 }
 ```
@@ -263,7 +263,7 @@ Currently, the dataUri is always a local file path. For example, "/opt/mpf/share
 
 * Method Definition:
 ```java
-List<MPFImageLocation> getDetections(MPFImageJob job)
+public List<MPFImageLocation> getDetections(MPFImageJob job)
   throws MPFComponentDetectionError;
 ```
 * Parameters:
@@ -294,7 +294,7 @@ Prior to being sent to the component, videos are split into logical "segments" o
 
 * Method Definition:
 ```java
-List<MPFVideoTrack> getDetections(MPFVideoJob job)
+public List<MPFVideoTrack> getDetections(MPFVideoJob job)
   throws MPFComponentDetectionError;
 ```
 * Parameters:
@@ -322,7 +322,7 @@ Used to detect objects in audio files. Currently, audio files are not logically 
 
 * Method Definition:
 ```java
-List<MPFAudioTrack> getDetections(MPFAudioJob job)
+public List<MPFAudioTrack> getDetections(MPFAudioJob job)
   throws MPFComponentDetectionError;
 ```
 * Parameters:
@@ -418,7 +418,7 @@ public MPFImageJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
-  final Map <String, String> mediaProperties)
+        final Map <String, String> mediaProperties)
 ```
 * Members:
 
@@ -440,7 +440,7 @@ public MPFVideoJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
-  final Map<String, String> mediaProperties,
+        final Map<String, String> mediaProperties,
 	int startFrame,
 	int stopFrame)
 ```
