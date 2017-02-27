@@ -402,7 +402,7 @@ Structure containing information about about a job to be performed on a piece of
 	|---|---|---|
 	|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
 	| data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
-	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
+	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of <`string, string`> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 	| media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string`> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
@@ -427,7 +427,7 @@ Structure containing data used for detection of objects in an image file.
 	|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
 	| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 	| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />Includes the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -633,10 +633,10 @@ Components should be supplied as a tar file, which includes not only the compone
 
 ## Single-threaded Operation
 
-Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component.
+Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.
 
 ## Stateless Behavior
-OpenMPF components should be stateless in operation and give identical output for a provided input.
+OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same `MPFJob`).
 
 ## Component Packaging
 It is recommended that C++ components are organized according to the following directory structure:
