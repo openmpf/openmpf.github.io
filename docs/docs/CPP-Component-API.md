@@ -516,7 +516,7 @@ Structure used to store the location of detected objects in a image file.
 	| y_left_upper | `int` | Upper left Y coordinate of the detected object. |
 	| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
 	| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
-	| confidence | `float` | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
@@ -554,7 +554,7 @@ Structure used to store the location of detected objects in a video file.
 	| start_frame| `int` | The first frame number (0-based index) that contained the detected object. |
 	| stop_frame| `int` | The last frame number (0-based index) that contained the detected object. |
 	| frame_locations| `map<int, MPFImageLocation>` | A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a [`MPFImageLocation`](mpfimagelocation) calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
-	| confidence | `float` | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that detects text could add an entry to the detection_properties map where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
@@ -587,7 +587,7 @@ Structure used to store the location of detected objects in an audio file.
 	|---|---|---|
 	| start_time| `int` | The time (0-based index, in ms) when the audio detection event started.  |
 	| stop_time| `int` | The time (0-based index, in ms) when the audio detection event stopped. |
-	| confidence | `float` | Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0. |
+	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 	| detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 ### Enumeration Types
