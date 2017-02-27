@@ -15,6 +15,7 @@ Using this API, detection components can be built to provide:
 * Detection (Localizing an object)
 * Tracking (Localizing an object across multiple frames)
 * Classification (Detecting the type of object and optionally localizing that object)
+* Transcription (Detecting speech and transcribing it into text)
 
 ## How Components Integrate into OpenMPF
 
