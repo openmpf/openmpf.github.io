@@ -371,7 +371,7 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 ### Detection Job Data Structures
 
 The `MPFDetectionComponent` data structures contain details about a specific job (work unit):
-* [`MPFJob`](#mpfjob)
+
 * [`MPFImageJob`](#mpfimagejob) extends [`MPFJob`](#mpfjob)
 * [`MPFVideoJob`](#mpfvideojob) extends [`MPFJob`](#mpfjob)
 * [`MPFAudioJob`](#mpfaudiojob) extends [`MPFJob`](#mpfjob)
