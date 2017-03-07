@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Java Component API - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Java Component API";
+    var mkdocs_page_input_path = "Java-Component-API.md";
+    var mkdocs_page_url = "/Java-Component-API/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Installation/">Install Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/">User Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Component Documentation</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">Component Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Java Component API</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#java-component-api-overview">Java Component API Overview</a></li>
+                
+                    <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+                
+                    <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#java-component-build-environment">Java Component Build Environment</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
+                
+                    <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
+                
+                    <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+                
+                    <li><a class="toctree-l4" href="#logging">Logging</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Component Documentation &raquo;</li>
+        
+      
+    
+    <li>Java Component API</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="table-of-contents">Table of Contents</h1>
+<div class="toc">
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#java-component-api-overview">Java Component API Overview</a><ul>
+<li><a href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+</ul>
+</li>
+<li><a href="#openmpf-api-specification">OpenMPF API Specification</a><ul>
+<li><a href="#openmpf-component-api">OpenMPF Component API</a><ul>
+<li><a href="#init">init()</a></li>
+<li><a href="#close">close()</a></li>
+<li><a href="#getcomponenttype">getComponentType()</a></li>
+<li><a href="#getrundirectory">getRunDirectory()</a></li>
+<li><a href="#setrundirectorystring">setRunDirectory(String)</a></li>
+</ul>
+</li>
+<li><a href="#openmpf-detection-component-api">OpenMPF Detection Component API</a><ul>
+<li><a href="#convenience-adapters">Convenience Adapters</a></li>
+<li><a href="#detection-component-interface">Detection Component Interface</a><ul>
+<li><a href="#supportsmpfdatatype">supports(MPFDataType)</a></li>
+<li><a href="#getdetectiontype">getDetectionType()</a></li>
+</ul>
+</li>
+<li><a href="#getdetectionsmpfimagejob-job">getDetections(MPFImageJob job)</a></li>
+<li><a href="#getdetectionsmpfvideojob-job">getDetections(MPFVideoJob job)</a></li>
+<li><a href="#getdetectionsmpfaudiojob-job">getDetections(MPFAudioJob job)</a></li>
+<li><a href="#mpfcomponentdetectionerror">MPFComponentDetectionError</a></li>
+<li><a href="#detection-job-classes">Detection Job Classes</a><ul>
+<li><a href="#mpfjob">MPFJob</a></li>
+<li><a href="#mpfimagejob">MPFImageJob</a></li>
+<li><a href="#mpfvideojob">MPFVideoJob</a></li>
+<li><a href="#mpfaudiojob">MPFAudioJob</a></li>
+</ul>
+</li>
+<li><a href="#detection-job-result-classes">Detection Job Result Classes</a><ul>
+<li><a href="#mpfimagelocation">MPFImageLocation</a></li>
+<li><a href="#mpfvideotrack">MPFVideoTrack</a></li>
+<li><a href="#mpfaudiotrack">MPFAudioTrack</a></li>
+</ul>
+</li>
+<li><a href="#enumeration-types">Enumeration Types</a><ul>
+<li><a href="#mpfdetectionerror">MPFDetectionError</a></li>
+</ul>
+</li>
+<li><a href="#utility-classes">Utility Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#java-component-build-environment">Java Component Build Environment</a></li>
+<li><a href="#component-development-best-practices">Component Development Best Practices</a><ul>
+<li><a href="#single-threaded-operation">Single-threaded Operation</a></li>
+<li><a href="#stateless-behavior">Stateless Behavior</a></li>
+<li><a href="#component-packaging">Component Packaging</a></li>
+<li><a href="#logging">Logging</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="java-component-api-overview">Java Component API Overview</h1>
+<p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
+<p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
+<p>Using this API, detection components can be built to provide:</p>
+<ul>
+<li>Detection (Localizing an object)</li>
+<li>Tracking (Localizing an object across multiple frames)</li>
+<li>Classification (Detecting the type of object and optionally localizing that object)</li>
+<li>Transcription (Detecting speech and transcribing it into text)</li>
+</ul>
+<h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
+<p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executor</strong>. Developers create component libraries that encapsulate the component detection logic. Each instance of the Component Executor loads one of these libraries and uses it to service job requests sent by the OpenMPF Workflow Manager (WFM).</p>
+<p>The Component Executor:</p>
+<ol>
+<li>Receives and parses job requests from the WFM</li>
+<li>Invokes methods on the component library to obtain detection results</li>
+<li>Populates and sends the respective responses to the WFM</li>
+</ol>
+<p>The basic psuedocode for the Component Executor is as follows:</p>
+<pre><code class="java">component.setRunDirectory(...)
+component.init()
+while (true) {
+  job = ReceiveJob()
+  if (component.supports(job.dataType))
+    component.getDetections(...) // Component does the work here
+}
+component.close()
+</code></pre>
+
+<p>Each instance of a Component Executor runs as a separate process.</p>
+<p>The Component Executor receives and parses requests from the WFM, invokes methods on the Component Logic to get detection objects, and subsequently populates responses with the component output and sends them to the WFM.</p>
+<p>A component developer implements a detection component by extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</p>
+<p>As an alternative to extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a> directly, a developer may extend one of several convenience adapter classes provided by OpenMPF. See <a href="#convenience-adapters">Convenience Adapters</a> for more information.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview">OpenMPF Component API Overview</a>. Example components are currently in development. These examples will provide a template for getting started.</p>
+<p>Detection components are implemented by:</p>
+<ol>
+<li>Extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</li>
+<li>Building the component into a jar. (TODO: reference example).</li>
+<li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
+<li>Registering the component with OpenMPF (see <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>).</li>
+</ol>
+<h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
+<p>The figure below presents a high-level component diagram of the OpenMPF API.</p>
+<p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_java.png" title="OpenMPF Component Diagram" /></p>
+<p>The API consists of <em>Component Interfaces</em>, which provide interfaces and abstract classes for developing components; <em>Job Definitions</em>, which define the work to be performed by a component; and <em>Job Results</em>, which define the results generated by the component; and <a href="#convenience-adapters"><em>Component Adapters</em></a>, which provide default implementations of several of the <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> methods (examples shown; TODO: implement these). In the future, the API will also include <a href="#utility-classes"><em>Component Utilities</em></a>, which perform actions such as image flipping, rotation, and cropping.</p>
+<p><strong>Component Interfaces</strong></p>
+<ul>
+<li><a href="#openmpf-component-api"><code>MPFComponentInterface</code></a> - Baseline interface for all potential components.</li>
+<li><code>MPFComponentBase</code> - An abstract baseline for components. Provides default implementations for <a href="#openmpf-component-api"><code>MPFComponentInterface</code></a>.</li>
+</ul>
+<p><strong>Detection Component Interfaces</strong></p>
+<ul>
+<li><a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> - Baseline interface for detection components.</li>
+<li><code>MPFDetectionComponentBase</code> - An abstract baseline for detection components. Provides default implementations for  <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a>.</li>
+</ul>
+<p><strong>Job Definitions</strong></p>
+<p>The following classes define the details about a specific job (work unit):</p>
+<ul>
+<li><a href="#mpfjob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfjob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfjob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+</ul>
+<p><strong>Job Results</strong></p>
+<p>The following classes define the results of a component's processing:</p>
+<ul>
+<li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
+<li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
+<li><a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a></li>
+</ul>
+<h2 id="openmpf-component-api">OpenMPF Component API</h2>
+<p>The OpenMPF Component class structure consists of:</p>
+<ul>
+<li><code>MPFComponentInterface</code> - Baseline interface for all potential components.</li>
+<li><code>MPFComponentBase</code> - An abstract baseline for components. Provides default implementations for <code>MPFComponentInterface</code>.</li>
+</ul>
+<blockquote>
+<p><strong>IMPORTANT:</strong> This interface and abstract class should not be directly implemented, because no mechanism exists for launching components based off of it. Instead, it defines the contract that all types of components must follow. Currently, the only supported type of component is "DETECTION", and all components should extend <code>MPFDetectionComponentBase</code></p>
+</blockquote>
+<p><strong><a href="https://github.com/openmpf/openmpf/tree/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api">See the latest source here.</a></strong></p>
+<h3 id="init">init()</h3>
+<p>Performs any necessary startup tasks for the component. This will be executed once, on component startup, and not for every job.</p>
+<ul>
+<li>Method Definition:
+<code>public void init()</code></li>
+<li>Parameters: none</li>
+<li>Returns: N/A</li>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public void init() {
+  // Setup logger, Load data models, etc.
+}
+</code></pre>
+
+<h3 id="close">close()</h3>
+<p>Performs any necessary shutdown tasks for the component. This will be executed once, on component shutdown, and not for every job.</p>
+<ul>
+<li>Method Definition:
+<code>public void close()</code></li>
+<li>Parameters: none</li>
+<li>Returns: N/A</li>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public void close() {
+    // Close file handlers, etc.
+}
+</code></pre>
+
+<h3 id="getcomponenttype">getComponentType()</h3>
+<p>Allows the Component API to determine the component "type." Currently <code>DETECTION</code> is the only supported component type.</p>
+<ul>
+<li>Method Definition:
+<code>public MPFComponentType getComponentType()</code></li>
+<li>Parameters: none</li>
+<li>Returns: (MPFComponentType) Currently, <code>DETECTION</code> is the only supported return value.</li>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public MPFComponentType getComponentType() {
+    return MPFComponentType.DETECTION;
+}
+</code></pre>
+
+<h3 id="getrundirectory">getRunDirectory()</h3>
+<p>Returns the full path of the parent folder above where the component is installed.</p>
+<ul>
+<li>Method Definition:
+<code>public String getRunDirectory()</code></li>
+<li>Parameters: none</li>
+<li>Returns: (string) Full path of the parent folder above where the component is installed.</li>
+<li>Sample Usage:</li>
+</ul>
+<pre><code class="java">
+</code></pre>
+
+<h3 id="setrundirectorystring">setRunDirectory(String)</h3>
+<p>Sets the value to the full path of the parent folder above where the component is installed.</p>
+<ul>
+<li>Method Definition:
+<code>public void setRunDirectory(String runDirectory);</code></li>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>runDirectory</td>
+<td>String</td>
+<td>Full path of the parent folder above where the component is installed.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns: void</li>
+</ul>
+<blockquote>
+<p><strong>IMPORTANT:</strong> <code>setRunDirectory</code> is called by the Component Executor to set the correct path. It is not necessary to call this method in your component implementation.</p>
+</blockquote>
+<h2 id="openmpf-detection-component-api">OpenMPF Detection Component API</h2>
+<p>The <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> must be utilized by all MPF detection components.</p>
+<p>Every Java detection component must define a <em>component</em> class which implements the MPFComponentInterface. This is typically performed by extending <code>MPFDetectionComponentBase</code> which extends <code>MPFComponentBase</code> and implements <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a>.</p>
+<p>To designate the component class, every Java detection component should include an applicationContext.xml which defines the <code>component</code> bean.  The <code>component</code> bean class must implement <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a>.</p>
+<blockquote>
+<p><strong>IMPORTANT:</strong> Each detection component must implement all of the <code>getDetections()</code> methods or extend from a superclass which provides implementations for them (see <a href="#convenience-adapters">convenience adapters</a>).</p>
+<p>If your component does not support a particular data type, it should simply:</p>
+<p><code>throw new MPFComponentDetectionError(MPFDetectionError.MPF_UNSUPPORTED_DATA_TYPE);</code></p>
+</blockquote>
+<h3 id="convenience-adapters">Convenience Adapters</h3>
+<p>As an alternative to extending <code>MPFDetectionComponentBase</code> directly, developers may extend a convenience adapter classes provided by OpenMPF.</p>
+<p>These adapters provide default implementations of several methods in <a href="#mpfdetectioncomponentinterface-api"><code>MPFDetectionComponentInterface</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
+<p>The following adapter is provided:</p>
+<ul>
+<li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapter.java">source</a>)</li>
+</ul>
+<blockquote>
+<p><strong>Example: Using Adaptors to Provide Simple AudioVisual Handling:</strong>
+Many components designed to work on audio files, such as speech detection, are relevant to video files as well.  Some of the tools for these components, however, only function on audio files (such as .wav, .mp3) and not video files (.avi, .mov, etc).</p>
+<p>The <code>MPFAudioAndVideoDetectionComponentAdapter</code> adapter class implements the <code>getDetections(MPFVideoJob)</code> method by translating the video request into an audio request.  It builds a temporary audio file by ripping the audio from the video media input, translates the <code>MPFVideoJob</code> into an <code>MPFAudioJob</code>, and invokes <code>getDetections(MPFAudioJob)</code> on the generated file.  Once processing is done, the adapter translates the <code>MPFAudioTrack</code> list into an <code>MPFVideoTrack</code> list.</p>
+<p>Since only audio and video files are relevant to this adapter, it provides a default implementation of the <code>getDetections(MPFImageJob)</code> method which throws <code>new MPFComponentDetectionError(MPFDetectionError.MPF_UNSUPPORTED_DATA_TYPE)</code>.</p>
+<p>The Sphinx speech detection component uses this adapter to run Sphinx speech detection on video files.  Other components that need to process video files as audio may also use the adapter.</p>
+</blockquote>
+<h3 id="detection-component-interface">Detection Component Interface</h3>
+<h4 id="supportsmpfdatatype">supports(MPFDataType)</h4>
+<p>Returns the supported data types of the component.</p>
+<ul>
+<li>Method Definition:
+<code>public boolean supports(MPFDataType dataType)</code></li>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dataType</td>
+<td><code>MPFDataType</code></td>
+<td>The data type to verify. Component should only return true for IMAGE, VIDEO, and/or AUDIO.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns: (boolean) True if the component supports the data type, otherwise false.</li>
+<li>Example:</li>
+</ul>
+<pre><code class="java">// Sample Component that supports only image and video files
+public boolean supports(MPFDataType dataType) {
+    return dataType == MPFDataType.IMAGE || dataType == MPFDataType.VIDEO;
+}
+</code></pre>
+
+<h4 id="getdetectiontype">getDetectionType()</h4>
+<p>Returns the type of object detected by the component.</p>
+<ul>
+<li>Method Definition:
+<code>public String getDetectionType()</code></li>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns:</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public String getDetectionType() {
+    return &quot;FACE&quot;;
+}
+</code></pre>
+
+<h3 id="getdetectionsmpfimagejob-job">getDetections(MPFImageJob job)</h3>
+<p>Used to detect objects in image files. The MPFImageJob structure contains the URI specifying the location of the image file.</p>
+<p>Currently, the dataUri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.</p>
+<ul>
+<li>Method Definition:</li>
+</ul>
+<pre><code class="java">public List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job)
+  throws MPFComponentDetectionError;
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><code>MPFImageJob</code></td>
+<td>Structure containing details about the work to be performed. See <a href="#mpfimagejob"><code>MPFImageJob</code></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List&lt;MPFImageLocation&gt;</code></td>
+<td>The <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> data for each detected object.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job) 
+  throws MPFComponentDetectionError {
+    // Component logic to generate image locations
+}
+</code></pre>
+
+<h3 id="getdetectionsmpfvideojob-job">getDetections(MPFVideoJob job)</h3>
+<p>Used to detect objects in a video.</p>
+<p>Prior to being sent to the component, videos are split into logical "segments" of video data and each segment (containing a range of frames) is assigned to a different job. Components are not guaranteed to receive requests in any order. For example, the first request processed by a component might receive a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
+<ul>
+<li>Method Definition:</li>
+</ul>
+<pre><code class="java">public List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job)
+  throws MPFComponentDetectionError;
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><code>MPFVideoJob</code></td>
+<td>Structure containing details about the work to be performed. See <a href="#mpfvideojob"><code>MPFVideoJob</code></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List&lt;MPFVideoTrack&gt;</code></td>
+<td>The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.</td>
+</tr>
+<tr>
+<td>* Example:</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="java">public List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job) 
+  throws MPFComponentDetectionError {
+    // Component logic to generate video tracks
+}
+</code></pre>
+
+<h3 id="getdetectionsmpfaudiojob-job">getDetections(MPFAudioJob job)</h3>
+<p>Used to detect objects in audio files. Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.</p>
+<ul>
+<li>Method Definition:</li>
+</ul>
+<pre><code class="java">public List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job)
+  throws MPFComponentDetectionError;
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><code>MPFAudioJob</code></td>
+<td>Structure containing details about the work to be performed. See <a href="#mpfaudiojob"><code>MPFAudioJob</code></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>List&lt;MPFAudioTrack&gt;</code></td>
+<td>The <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> data for each detected object</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Example:</li>
+</ul>
+<pre><code class="java">public List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job) 
+  throws MPFComponentDetectionError {
+    // Component logic to generate audio tracks
+}
+</code></pre>
+
+<h3 id="mpfcomponentdetectionerror">MPFComponentDetectionError</h3>
+<p>An exception that occurs in a component.  The exception must contain a reference to a valid <a href="#mpfdetectionerror"><code>MPFDetectionError</code></a>.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFComponentDetectionError (
+    MPFDetectionError error,
+    String msg,
+    Exception e
+)
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>error</td>
+<td><code>MPFDetectionError</code></td>
+<td>The type of error generated by the component. See <a href="#mpfdetectionerror"><code>MPFDetectionError</code></a>.</td>
+</tr>
+<tr>
+<td>msg</td>
+<td><code>String</code></td>
+<td>The detail message (which is saved for later retrieval by the <code>Throwable.getMessage()</code> method).</td>
+</tr>
+<tr>
+<td>e</td>
+<td><code>Exception</code></td>
+<td>The cause (which is saved for later retrieval by the <code>Throwable.getCause()</code> method). A null value is permitted.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="detection-job-classes">Detection Job Classes</h3>
+<p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):</p>
+<ul>
+<li><a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+</ul>
+<p>The following data structures contain details about detection results:</p>
+<ul>
+<li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
+<li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
+<li><a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a></li>
+</ul>
+<h4 id="mpfjob">MPFJob</h4>
+<p>Structure containing data used for detection of objects.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">protected MPFJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map&lt;String, String&gt; mediaProperties
+)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobName <a name="job-name"></a></td>
+<td>String</td>
+<td>A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.</td>
+</tr>
+<tr>
+<td>dataUri <a name="data-uri"></a></td>
+<td>String</td>
+<td>The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".</td>
+</tr>
+<tr>
+<td>jobProperties <a name="job-properties"></a></td>
+<td>Map<String, String></td>
+<td>The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br /><br /> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value.</td>
+</tr>
+<tr>
+<td>mediaProperties <a name="media-properties"></a></td>
+<td>Map<String, String></td>
+<td>Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mpfimagejob">MPFImageJob</h4>
+<p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
+<p>Structure containing data used for detection of objects in image files.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFImageJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map &lt;String, String&gt; mediaProperties)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobName</td>
+<td>String</td>
+<td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+</tr>
+<tr>
+<td>dataUri</td>
+<td>String</td>
+<td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+</tr>
+<tr>
+<td>jobProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+</tr>
+<tr>
+<td>mediaProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
+</tr>
+</tbody>
+</table>
+<h4 id="mpfvideojob">MPFVideoJob</h4>
+<p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
+<p>Structure containing data used for detection of objects in video files.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFVideoJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map&lt;String, String&gt; mediaProperties,
+    int startFrame,
+    int stopFrame)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobName</td>
+<td>String</td>
+<td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+</tr>
+<tr>
+<td>dataUri</td>
+<td>String</td>
+<td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+</tr>
+<tr>
+<td>startFrame</td>
+<td>int</td>
+<td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
+</tr>
+<tr>
+<td>stopFrame</td>
+<td>int</td>
+<td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
+</tr>
+<tr>
+<td>jobProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+</tr>
+<tr>
+<td>mediaProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li></ul></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>IMPORTANT:</strong> For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
+</blockquote>
+<h4 id="mpfaudiojob">MPFAudioJob</h4>
+<p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
+<p>Structure containing data used for detection of objects in video files.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">MPFAudioJob()
+public MPFAudioJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map&lt;String, String&gt; mediaProperties,
+    int startTime,
+    int stopTime)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jobName</td>
+<td>String</td>
+<td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+</tr>
+<tr>
+<td>dataUri</td>
+<td>String</td>
+<td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+</tr>
+<tr>
+<td>startTime</td>
+<td>int</td>
+<td>The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.</td>
+</tr>
+<tr>
+<td>stopTime</td>
+<td>int</td>
+<td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
+</tr>
+<tr>
+<td>jobProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+</tr>
+<tr>
+<td>mediaProperties</td>
+<td>Map<String, String></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
+</tr>
+</tbody>
+</table>
+<h3 id="detection-job-result-classes">Detection Job Result Classes</h3>
+<h4 id="mpfimagelocation">MPFImageLocation</h4>
+<p>Structure used to store the location of detected objects in an image.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFImageLocation(
+        int xLeftUpper,
+        int yLeftUpper,
+        int width,
+        int height,
+        float confidence,
+        Map&lt;String, String&gt; detectionProperties
+)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xLeftUpper</td>
+<td>int</td>
+<td>Upper left X coordinate of the detected object.</td>
+</tr>
+<tr>
+<td>yLeftUpper</td>
+<td>int</td>
+<td>Upper left Y coordinate of the detected object.</td>
+</tr>
+<tr>
+<td>width</td>
+<td>int</td>
+<td>The width of the detected object. If the detection consists of the entire image, use 0.</td>
+</tr>
+<tr>
+<td>height</td>
+<td>int</td>
+<td>The height of the detected object. If the detection consists of the entire image, use 0.</td>
+</tr>
+<tr>
+<td>confidence</td>
+<td>float</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detectionProperties</td>
+<td>Map<String, String></td>
+<td>Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>EXAMPLE - Using detectionProperties</strong>: A component that performs generic object classification could add an entry to the detectionProperties where the key is <code>CLASSIFICATION</code> and the value is a string corresponding to the type of object detected.</p>
+</blockquote>
+<h4 id="mpfvideotrack">MPFVideoTrack</h4>
+<p>Structure used to store the location of detected objects in an image.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFVideoTrack(
+  int startFrame,
+  int stopFrame,
+  Map&lt;Integer, MPFImageLocation&gt; frameLocations,
+  float confidence,
+  Map&lt;String, String&gt; detectionProperties
+)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startFrame</td>
+<td>int</td>
+<td>The first frame number (0-based index) that contained the detected object.</td>
+</tr>
+<tr>
+<td>stopFrame</td>
+<td>int</td>
+<td>The last frame number (0-based index) that contained the detected object.</td>
+</tr>
+<tr>
+<td>frameLocations</td>
+<td>Map<Integer, MPFImageLocation></td>
+<td>A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame. In some cases, frames are deliberately skipped, as when a FRAME_INTERVAL &gt; 1 is specified</td>
+</tr>
+<tr>
+<td>confidence</td>
+<td>float</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detectionProperties</td>
+<td>Map<String, String></td>
+<td>Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>EXAMPLE - Using detectionProperties</strong>: A component that detects text could add an entry to the detectionProperties map where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
+</blockquote>
+<h4 id="mpfaudiotrack">MPFAudioTrack</h4>
+<p>Structure used to store the location of detected objects in an image.</p>
+<ul>
+<li>Constructor:</li>
+</ul>
+<pre><code class="java">public MPFAudioTrack(
+  int startTime,
+  int stopTime,
+  float confidence,
+  Map&lt;String, String&gt; detectionProperties
+)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>startTime</td>
+<td>int</td>
+<td>The time (0-based index, in ms) when the audio detection event started.</td>
+</tr>
+<tr>
+<td>stopTime</td>
+<td>int</td>
+<td>The time (0-based index, in ms) when the audio detection event stopped.</td>
+</tr>
+<tr>
+<td>confidence</td>
+<td>float</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detectionProperties</td>
+<td>Properties</td>
+<td>Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the Properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="enumeration-types">Enumeration Types</h3>
+<h4 id="mpfdetectionerror">MPFDetectionError</h4>
+<p>Enum used to indicate the status of <code>getDetections</code> in a <a href="#mpfcomponentdetectionerror"><code>MPFComponentDetectionError</code></a>. A component is not required to support all error types.</p>
+<table>
+<thead>
+<tr>
+<th>ENUM</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MPF_DETECTION_SUCCESS</td>
+<td>The execution of any component method has completed normally with no errors.</td>
+</tr>
+<tr>
+<td>MPF_OTHER_DETECTION_ERROR_TYPE</td>
+<td>The component method has failed for a reason that is not captured by any of the other error codes.</td>
+</tr>
+<tr>
+<td>MPF_DETECTION_NOT_INITIALIZED</td>
+<td>The initialization of the component, or the initialization of any of its dependencies, has failed for any reason.</td>
+</tr>
+<tr>
+<td>MPF_UNRECOGNIZED_DATA_TYPE</td>
+<td>The media data type received by a component is not one of the values contained in the <code>MPFDataType</code> enum.  Note that this failure is normally caught by the component executor before a job is passed to the component logic.</td>
+</tr>
+<tr>
+<td>MPF_UNSUPPORTED_DATA_TYPE</td>
+<td>The job passed to a component requests processing of a job of an unsupported type. For instance, a component that is only capable of processing audio files should return this error code if a video or image job request is received.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_DATAFILE_URI</td>
+<td>The string containing the URI location of the input data file is invalid or empty.</td>
+</tr>
+<tr>
+<td>MPF_COULD_NOT_OPEN_DATAFILE</td>
+<td>The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI.</td>
+</tr>
+<tr>
+<td>MPF_COULD_NOT_READ_DATAFILE</td>
+<td>There is a failure reading data from a successfully opened input data file.</td>
+</tr>
+<tr>
+<td>MPF_FILE_WRITE_ERROR</td>
+<td>The component received a failure for any reason when attempting to write to a file.</td>
+</tr>
+<tr>
+<td>MPF_IMAGE_READ_ERROR</td>
+<td>The component failed to read the image provided by the URI.</td>
+</tr>
+<tr>
+<td>MPF_BAD_FRAME_SIZE</td>
+<td>The frame data retrieved has an incorrect or invalid frame size.</td>
+</tr>
+<tr>
+<td>MPF_BOUNDING_BOX_SIZE_ERROR</td>
+<td>The calculation of a detection location bounding box has failed. For example, a component may be using an external library to detect objects, but the bounding box returned by that library lies partially outside the frame boundaries.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_FRAME_INTERVAL</td>
+<td>An invalid or unsupported frame interval was received.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_START_FRAME</td>
+<td>The component received an invalid start frame number. For example, if the start frame is less than zero, or greater than the stop frame, this error code should be used.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_STOP_FRAME</td>
+<td>The component receives an invalid stop frame number. For example, if the stop frame is less than the start frame, or greater than the number of the last frame in a video segment, this error code should be used.</td>
+</tr>
+<tr>
+<td>MPF_DETECTION_TRACKING_FAILED</td>
+<td>General failure of a tracking algorithm.  This does not indicate a lack of tracks generated for the media, but rather a break down in the algorithm that makes it impossible to continue to try to track objects.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_PROPERTY</td>
+<td>The component received a property that is unrecognized or has an invalid/out-of-bounds value.</td>
+</tr>
+<tr>
+<td>MPF_MISSING_PROPERTY</td>
+<td>The component received a job that is missing a required property.</td>
+</tr>
+<tr>
+<td>MPF_JOB_PROPERTY_IS_NOT_INT</td>
+<td>A job property is supposed to be an integer type, but it is of some other type, such as a boolean or a floating point value.</td>
+</tr>
+<tr>
+<td>MPF_JOB_PROPERTY_IS_NOT_FLOAT</td>
+<td>A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value.</td>
+</tr>
+<tr>
+<td>MPF_INVALID_ROTATION</td>
+<td>The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}.</td>
+</tr>
+<tr>
+<td>MPF_MEMORY_ALLOCATION_FAILED</td>
+<td>The component failed to allocate memory for any reason.</td>
+</tr>
+<tr>
+<td>MPF_DETECTION_FAILED</td>
+<td>General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="utility-classes">Utility Classes</h3>
+<p>TODO</p>
+<h1 id="java-component-build-environment">Java Component Build Environment</h1>
+<p>A Java Component must be built using a version of the Java SDK that is compatible with the one used to build the Java Component Executor. The OpenMPF Java Component Executor is currently built using Java version 1.8.0_60-b27. In general, the Java SDK is backwards compatible.</p>
+<p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and Java SDK libraries), and any configuration or data files.</p>
+<h1 id="component-development-best-practices">Component Development Best Practices</h1>
+<h2 id="single-threaded-operation">Single-threaded Operation</h2>
+<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.</p>
+<h2 id="stateless-behavior">Stateless Behavior</h2>
+<p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same <code>MPFJob</code>).</p>
+<h2 id="component-packaging">Component Packaging</h2>
+<p>It is recommended that Java components are organized according to the following directory structure:</p>
+<pre><code>componentName
+├── config - Other component-specific configuration
+├── descriptor
+│   └── descriptor.json
+└── lib - All libraries required by the component
+└── libComponentName.jar - Compiled component library
+└── logback.xml - Logging configuration file
+</code></pre>
+
+<p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
+<h2 id="logging">Logging</h2>
+<p>It is recommended to use <a href="http://www.slf4j.org/">slf4j</a> with <a href="http://logback.qos.ch/">logback</a> for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.</p>
+<p>Log files should be output to:
+<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code></p>
+<p>Each log statement must take the form:
+<code>DATE TIME LEVEL CONTENT</code></p>
+<p>The following log LEVELs are supported:
+ <code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.</p>
+<p>For example:
+<code>2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]</code></p>
+<p>The following logback configuration can be used to match the format of other OpenMPF logs:</p>
+<pre><code class="xml">&lt;configuration&gt;
+    &lt;statusListener class=&quot;ch.qos.logback.core.status.NopStatusListener&quot; /&gt;
+    &lt;if condition='isNull(&quot;sampleComponentLogFile&quot;)' &gt;
+        &lt;then&gt;
+            &lt;property name=&quot;sampleComponentLogFile&quot; value=&quot;${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/sample-component-detection.log&quot; /&gt;
+        &lt;/then&gt;
+    &lt;/if&gt;
+
+    &lt;!-- Logging configuration --&gt;
+    &lt;appender name=&quot;STDOUT-INFO&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;Target&gt;System.out&lt;/Target&gt;
+        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;
+            &lt;level&gt;INFO&lt;/level&gt;
+            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
+            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
+        &lt;/filter&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+    &lt;!-- send everything to stdout --&gt;
+    &lt;appender name=&quot;STDOUT-DEBUG&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;Target&gt;System.out&lt;/Target&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+    &lt;!-- send WARN and ERROR to STDERR --&gt;
+    &lt;appender name=&quot;STDERR-WARN&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;Target&gt;System.err&lt;/Target&gt;
+        &lt;!-- deny all events with a level below WARN, that is INFO, TRACE, and DEBUG --&gt;
+        &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+            &lt;level&gt;WARN&lt;/level&gt;
+        &lt;/filter&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name=&quot;SAMPLE-COMPONENT-DETECTION&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+        &lt;file&gt;${sampleComponentLogFile}&lt;/file&gt;
+        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
+            &lt;fileNamePattern&gt;${sampleComponentLogFile}.%d{yyyy-MM-dd}.%i&lt;/fileNamePattern&gt;
+            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;
+                &lt;maxFileSize&gt;50MB&lt;/maxFileSize&gt;
+            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;
+        &lt;/rollingPolicy&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;logger name=&quot;org.dstovall&quot; level=&quot;WARN&quot;/&gt;
+    &lt;logger name=&quot;org.springframework.context.annotation&quot; level=&quot;WARN&quot;/&gt;
+    &lt;logger name=&quot;org.springframework.beans.factory&quot; level=&quot;WARN&quot;/&gt;
+    &lt;logger name=&quot;org.apache.xbean.spring&quot; level=&quot;WARN&quot;/&gt;
+    &lt;logger name=&quot;org.mitre&quot; level=&quot;INFO&quot;/&gt;
+
+    &lt;root level=&quot;INFO&quot;&gt;
+        &lt;appender-ref ref=&quot;STDERR-WARN&quot; /&gt;
+        &lt;appender-ref ref=&quot;SAMPLE-COMPONENT-DETECTION&quot;/&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Packaging-and-Registering-a-Component/" class="btn btn-neutral float-right" title="Packaging and Registering a Component">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../CPP-Component-API/" class="btn btn-neutral" title="C++ Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../CPP-Component-API/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Packaging-and-Registering-a-Component/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

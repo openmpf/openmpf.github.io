@@ -159,6 +159,13 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
         
     </li>
@@ -319,84 +326,31 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="default-pipelines">Default Pipelines</h1>
 <p>Note that some distributions might not have all of the pipelines in this list depending on the components included in the deployment package and the optional components installed at deployment time. Additional pipelines may be available if third party or vendor components are installed.</p>
 <h2 id="detection-pipelines">Detection Pipelines</h2>
-<table>
-<thead>
-<tr>
-<th><strong>Pipeline</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OCV FACE DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>DLIB FACE DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>OCV FACE DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>DLIB FACE DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>OCV FACE DETECTION (WITH MOTION PREPROCESSOR) PIPELINE</td>
-</tr>
-<tr>
-<td>DLIB FACE DETECTION (WITH MOTION PREPROCESSOR) PIPELINE</td>
-</tr>
-<tr>
-<td>OCV FACE DETECTION (WITH MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>DLIB FACE DETECTION (WITH MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>MOG MOTION DETECTION (WITH TRACKING) PIPELINE</td>
-</tr>
-<tr>
-<td>OALPR TEXT DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>OALPR TEXT DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>OALPR TEXT DETECTION (WITH MOTION PREPROCESSOR) PIPELINE</td>
-</tr>
-<tr>
-<td>OALPR TEXT DETECTION (WITH MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>OCV PERSON DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>OCV PERSON DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>OCV PERSON DETECTION (WITH MOTION PREPROCESSOR) PIPELINE</td>
-</tr>
-<tr>
-<td>OCV PERSON DETECTION (WITH MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>SPHINX SPEECH DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>SPHINX SPEECH DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>SPHINX SPEECH DETECTION (WITH MOTION PREPROCESSOR) PIPELINE</td>
-</tr>
-<tr>
-<td>SPHINX SPEECH DETECTION (WITH MARKUP) PIPELINE</td>
-</tr>
-<tr>
-<td>UNIVERSAL DETECTION PIPELINE</td>
-</tr>
-<tr>
-<td>UNIVERSAL FACE DETECTION PIPELINE</td>
-</tr>
-</tbody>
-</table>
+<p>| <strong>Pipeline</strong> | <strong>Description</strong> |
+| -------- |
+| OCV FACE DETECTION PIPELINE | Performs FACECV face detection. |
+| DLIB FACE DETECTION PIPELINE | Performs dlib face detection. |
+| OCV FACE DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE | Performs motion preprocessing, FACECV face detection, and markup. |
+| DLIB FACE DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE | Performs motion preprocessing, DLIB face detection, and markup. |
+| OCV FACE DETECTION (WITH MOTION PREPROCESSOR) PIPELINE | Performs motion preprocessing and FACECV face detection. |
+| DLIB FACE DETECTION (WITH MOTION PREPROCESSOR) PIPELINE | Performs motion preprocessing and DLIB face detection. |
+| OCV FACE DETECTION (WITH MARKUP) PIPELINE | Performs FACECV face detection and marks up the results. |
+| DLIB FACE DETECTION (WITH MARKUP) PIPELINE | Performs DLIB face detection and marks up the results. |
+| MOG MOTION DETECTION (WITH TRACKING) PIPELINE | Performs MOG MOTION detection. |
+| OALPR TEXT DETECTION PIPELINE | Performs OALPR TEXT detection. |
+| OALPR TEXT DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE | Performs motion preprocessing, OALPR TEXT detection, and markup. |
+| OALPR TEXT DETECTION (WITH MOTION PREPROCESSOR) PIPELINE | Performs motion preprocessing and OALPR TEXT detection. |
+| OALPR TEXT DETECTION (WITH MARKUP) PIPELINE | Performs OALPR TEXT detection and marks up the results. |
+| OCV PERSON DETECTION PIPELINE | Performs PERSONCV PERSON detection. |
+| OCV PERSON DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE | Performs motion preprocessing, PERSONCV PERSON detection, and markup. |
+| OCV PERSON DETECTION (WITH MOTION PREPROCESSOR) PIPELINE | Performs motion preprocessing and PERSONCV PERSON detection. |
+| OCV PERSON DETECTION (WITH MARKUP) PIPELINE | Performs PERSONCV PERSON detection and marks up the results. |
+| SPHINX SPEECH DETECTION PIPELINE | Performs SPHINX SPEECH detection. |
+| SPHINX SPEECH DETECTION (WITH MOTION PREPROCESSOR AND MARKUP) PIPELINE | Performs motion preprocessing, SPHINX SPEECH detection, and markup. |
+| SPHINX SPEECH DETECTION (WITH MOTION PREPROCESSOR) PIPELINE | Performs motion preprocessing and SPHINX SPEECH detection. |
+| SPHINX SPEECH DETECTION (WITH MARKUP) PIPELINE | Performs SPHINX SPEECH detection and marks up the results. |
+| UNIVERSAL DETECTION PIPELINE | Performs multiple detection algorithms. |
+| UNIVERSAL FACE DETECTION PIPELINE | Performs multiple face detection algorithms. |</p>
 <h1 id="detection-chaining">Detection Chaining</h1>
 <p>The OpenMPF has the ability to chain detection tasks together in a detection pipeline. As each detection stage in the pipeline completes, the volume of data to be processed in the next stage may be reduced. Generally, any detection tasks executed prior to the final detection task in the pipeline are referred to as preprocessors or filters. For example, consider the following pipeline which demonstrates the use of a motion preprocessor:</p>
 <p><img alt="Detection Chaining Diagram" src="../img/mpf-chain.png" title="Detection Chaining Diagram" /></p>

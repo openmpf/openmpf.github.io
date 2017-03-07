@@ -99,7 +99,45 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#c-component-api-overview">C++ Component API Overview</a></li>
+                
+                    <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+                
+                    <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#c-component-build-environment">C++ Component Build Environment</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
+                
+                    <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
+                
+                    <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+                
+                    <li><a class="toctree-l4" href="#logging">Logging</a></li>
+                
+            
             </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
         
     </li>
 
@@ -229,6 +267,7 @@
 <li>Detection (Localizing an object)</li>
 <li>Tracking (Localizing an object across multiple frames)</li>
 <li>Classification (Detecting the type of object and optionally localizing that object)</li>
+<li>Transcription (Detecting speech and transcribing it into text)</li>
 </ul>
 <h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
 <p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>. Developers create component libraries that encapsulate the component detection logic. Each instance of the Component Executable loads one these libraries and uses it to service job requests sent by the OpenMPF Workflow Manager (WFM).</p>
@@ -241,9 +280,9 @@
 <p>The basic psuedocode for the Component Executable is as follows:</p>
 <pre><code class="c++">component-&gt;SetRunDirectory(...)
 component-&gt;Init()
-while(true) {
+while (true) {
   job = ReceiveJob()
-  if(component-&gt;Supports(job.data_type))
+  if (component-&gt;Supports(job.data_type))
     component-&gt;GetDetections(...) // Component logic does the work here
   SendJobResponse()
 }
@@ -261,7 +300,7 @@ component-&gt;Close()
 <li>Extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</li>
 <li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/CMakeLists.txt">HelloWorld CMakeLists.txt</a>).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF (see <a href="https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>).</li>
+<li>Registering the component with OpenMPF (see <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>).</li>
 </ol>
 <h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
 <p>The figure below presents a high-level component diagram of the OpenMPF API.</p>
@@ -490,8 +529,12 @@ A simple detector that operates on videos may simply go through the video frame-
 <p>Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.</p>
 <p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.</p>
 <ul>
-<li>Function Definition:
-<code>MPFDetectionError GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations)</code></li>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">    MPFDetectionError GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations)
+</code></pre>
+
+<ul>
 <li>
 <p>Parameters:</p>
 <table>
@@ -619,11 +662,12 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <h3 id="detection-job-data-structures">Detection Job Data Structures</h3>
-<p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):
-<em> <a href="#mpfjob"><code>MPFJob</code></a>
-</em> <a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a>
-<em> <a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a>
-</em> <a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></p>
+<p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):</p>
+<ul>
+<li><a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+</ul>
 <p>The following data structures contain details about detection results:</p>
 <ul>
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
@@ -667,12 +711,12 @@ A simple detector that operates on videos may simply go through the video frame-
 <tr>
 <td>job_properties <a name="job-properties"></a></td>
 <td><code>const Properties &amp;</code></td>
-<td>Contains a map of &lt;<code>string, string</code>&gt; which represents the property name and the property value. The key corresponds to the property name specified in the component registration file described in <a href="https://github.comhttps://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
 </tr>
 <tr>
 <td>media_properties <a name="media-properties"></a></td>
 <td><code>const Properties &amp;</code></td>
-<td>Contains a map of <code>&lt;string, string</code>&gt; of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below.</td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below.</td>
 </tr>
 </tbody>
 </table>
@@ -721,7 +765,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <tr>
 <td>media_properties</td>
 <td><code>const Properties &amp;</code></td>
-<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br /><br />Includes the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -903,7 +947,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <tr>
 <td>confidence</td>
 <td><code>float</code></td>
-<td>Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0.</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
 </tr>
 <tr>
 <td>detection_properties</td>
@@ -971,7 +1015,7 @@ detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot
 <tr>
 <td>confidence</td>
 <td><code>float</code></td>
-<td>Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0.</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
 </tr>
 <tr>
 <td>detection_properties</td>
@@ -1030,7 +1074,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <tr>
 <td>confidence</td>
 <td><code>float</code></td>
-<td>Represents the "quality" of the detection. Range:[0.0(low-quality), 1.0(high-quality)]. If the component is unable to supply a confidence value, it should return -1.0.</td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
 </tr>
 <tr>
 <td>detection_properties</td>
@@ -1153,9 +1197,9 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
 <h2 id="single-threaded-operation">Single-threaded Operation</h2>
-<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component.</p>
+<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.</p>
 <h2 id="stateless-behavior">Stateless Behavior</h2>
-<p>OpenMPF components should be stateless in operation and give identical output for a provided input.</p>
+<p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same <code>MPFJob</code>).</p>
 <h2 id="component-packaging">Component Packaging</h2>
 <p>It is recommended that C++ components are organized according to the following directory structure:</p>
 <pre><code>componentName
@@ -1204,7 +1248,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Packaging-and-Registering-a-Component/" class="btn btn-neutral float-right" title="Packaging and Registering a Component">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Java-Component-API/" class="btn btn-neutral float-right" title="Java Component API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../API-Overview/" class="btn btn-neutral" title="Component Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1238,7 +1282,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
         <span><a href="../API-Overview/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Packaging-and-Registering-a-Component/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Java-Component-API/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
