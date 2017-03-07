@@ -14,5 +14,6 @@ pages:
 - Component Documentation:
     - Component Overview: API-Overview.md
     - C++ Component API: CPP-Component-API.md
+    - Java Component API: Java-Component-API.md
     - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
 - REST API: REST-API.md
