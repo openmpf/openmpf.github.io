@@ -197,7 +197,7 @@ To designate the component class, every Java detection component should include 
 
 As an alternative to extending `MPFDetectionComponentBase` directly, developers may extend a convenience adapter classes provided by OpenMPF.
 
-These adapters provide default implementations of several methods in [`MPFDetectionComponentInterface`](#mpfdetectioncomponentinterface-api) and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.
+These adapters provide default implementations of several methods in [`MPFDetectionComponentInterface`](#detection-component-interface) and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.
 
 The following adapter is provided:
 
@@ -281,7 +281,7 @@ public List<MPFImageLocation> getDetections(MPFImageJob job)
 
 * Example:
 ```java
-public List<MPFImageLocation> getDetections(MPFImageJob job) 
+public List<MPFImageLocation> getDetections(MPFImageJob job)
   throws MPFComponentDetectionError {
 	// Component logic to generate image locations
 }
@@ -311,7 +311,7 @@ public List<MPFVideoTrack> getDetections(MPFVideoJob job)
 | `List<MPFVideoTrack>`  | The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  |
 * Example:
 ```java
-public List<MPFVideoTrack> getDetections(MPFVideoJob job) 
+public List<MPFVideoTrack> getDetections(MPFVideoJob job)
   throws MPFComponentDetectionError {
 	// Component logic to generate video tracks
 }
@@ -340,7 +340,7 @@ public List<MPFAudioTrack> getDetections(MPFAudioJob job)
 
 * Example:
 ```java
-public List<MPFAudioTrack> getDetections(MPFAudioJob job) 
+public List<MPFAudioTrack> getDetections(MPFAudioJob job)
   throws MPFComponentDetectionError {
 	// Component logic to generate audio tracks
 }

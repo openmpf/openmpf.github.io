@@ -106,37 +106,6 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#table-of-contents">Table of Contents</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#java-component-api-overview">Java Component API Overview</a></li>
-                
-                    <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
-                
-                    <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#java-component-build-environment">Java Component Build Environment</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
-                
-                    <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
-                
-                    <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
-                
-                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
-                
-                    <li><a class="toctree-l4" href="#logging">Logging</a></li>
-                
-            
             </ul>
         
     </li>
@@ -433,7 +402,7 @@ component.close()
 </blockquote>
 <h3 id="convenience-adapters">Convenience Adapters</h3>
 <p>As an alternative to extending <code>MPFDetectionComponentBase</code> directly, developers may extend a convenience adapter classes provided by OpenMPF.</p>
-<p>These adapters provide default implementations of several methods in <a href="#mpfdetectioncomponentinterface-api"><code>MPFDetectionComponentInterface</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
+<p>These adapters provide default implementations of several methods in <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
 <p>The following adapter is provided:</p>
 <ul>
 <li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapter.java">source</a>)</li>
@@ -562,7 +531,7 @@ public boolean supports(MPFDataType dataType) {
 <ul>
 <li>Example:</li>
 </ul>
-<pre><code class="java">public List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job) 
+<pre><code class="java">public List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job)
   throws MPFComponentDetectionError {
     // Component logic to generate image locations
 }
@@ -618,7 +587,7 @@ public boolean supports(MPFDataType dataType) {
 </tr>
 </tbody>
 </table>
-<pre><code class="java">public List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job) 
+<pre><code class="java">public List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job)
   throws MPFComponentDetectionError {
     // Component logic to generate video tracks
 }
@@ -672,7 +641,7 @@ public boolean supports(MPFDataType dataType) {
 <ul>
 <li>Example:</li>
 </ul>
-<pre><code class="java">public List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job) 
+<pre><code class="java">public List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job)
   throws MPFComponentDetectionError {
     // Component logic to generate audio tracks
 }
