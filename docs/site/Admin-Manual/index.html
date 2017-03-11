@@ -227,20 +227,26 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <p>WARNING: These commands can be executed by anyone who has command line access to the master node.</p>
 <p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for documentation about a specific action.</p>
 <ul>
-<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.
-         * <code>mpf status</code>: displays a message indicating whether each of the system dependencies is running or not
-         * <code>mpf start</code>: starts all of the system dependencies
-         * <code>mpf stop</code>: stops all of the system dependencies
-         * <code>mpf restart</code> : stops and then starts all of the system dependencies</li>
-<li><strong>User Actions</strong>: Actions for managing workflow manager user accounts. If changes are made to an existing user then that user will need to log off or the workflow manager will need to be restarted for the changes to take effect.
-         * <code>mpf list-users</code> : lists all of the existing user accounts and their role (non-admin or admin)
-         * <code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be prompted to enter the account password
-         * <code>mpf remove-user &lt;username&gt;</code> : removes an existing user account
-         * <code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin or vice versa) for an existing user
-         * <code>mpf change-password &lt;username&gt;</code>: change the password for an existing user; will be prompted to enter the new account password</li>
-<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a new install state. User accounts, registered components, as well as custom actions, tasks, and pipelines, are preserved.
-         * <code>mpf clean</code>: cleans out old job information and results, pending job requests, marked up media files, and ActiveMQ data, but preserves log files and uploaded media
-         * <code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code> but also deletes log files and uploaded media</li>
+<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.<ul>
+<li><code>mpf status</code>: displays a message indicating whether each of the system dependencies is running or not</li>
+<li><code>mpf start</code>: starts all of the system dependencies</li>
+<li><code>mpf stop</code>: stops all of the system dependencies</li>
+<li><code>mpf restart</code> : stops and then starts all of the system dependencies</li>
+</ul>
+</li>
+<li><strong>User Actions</strong>: Actions for managing workflow manager user accounts. If changes are made to an existing user then that user will need to log off or the workflow manager will need to be restarted for the changes to take effect.<ul>
+<li><code>mpf list-users</code> : lists all of the existing user accounts and their role (non-admin or admin)</li>
+<li><code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be prompted to enter the account password</li>
+<li><code>mpf remove-user &lt;username&gt;</code> : removes an existing user account</li>
+<li><code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin or vice versa) for an existing user</li>
+<li><code>mpf change-password &lt;username&gt;</code>: change the password for an existing user; will be prompted to enter the new account password</li>
+</ul>
+</li>
+<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a new install state. User accounts, registered components, as well as custom actions, tasks, and pipelines, are preserved.<ul>
+<li><code>mpf clean</code>: cleans out old job information and results, pending job requests, marked up media files, and ActiveMQ data, but preserves log files and uploaded media</li>
+<li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code> but also deletes log files and uploaded media</li>
+</ul>
+</li>
 </ul>
               
             </div>
