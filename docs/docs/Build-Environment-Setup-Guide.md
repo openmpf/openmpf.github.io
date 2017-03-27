@@ -699,7 +699,7 @@ The OpenMPF can also be run using HTTP instead of HTTPS.
 
 ## Adding Additional Maven Dependencies
 
-Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. These have been provided in addition to the OpenMPF source code archive. These steps assume the archive `mpf-maven-deps.tar.gz` is at `/home/mpf/mpf-maven-deps.tar.gz`.
+Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. They can be downloaded [here](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz). These steps assume the archive `mpf-maven-deps.tar.gz` is at `/home/mpf/mpf-maven-deps.tar.gz`.
 
 1. Set up the local Maven repository:
     - `cd /home/mpf`
