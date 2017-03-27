@@ -171,6 +171,12 @@
 <li><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
 <li><a href="#installing-centos-7">Installing CentOS 7</a></li>
 <li><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a><ul>
+<li><a href="#configure-the-openmpf-source-code">Configure the OpenMPF Source Code</a><ul>
+<li><a href="#if-you-are-cloning-the-openmpf-repository">If you are Cloning the OpenMPF Repository</a></li>
+<li><a href="#if-you-have-an-openmpf-source-code-archive">If you have an OpenMPF Source Code Archive</a></li>
+</ul>
+</li>
+<li><a href="#copy-the-openmpf-profile-script">Copy the OpenMPF Profile Script</a></li>
 <li><a href="#configure-additional-repositories">Configure Additional Repositories</a></li>
 <li><a href="#rpm-dependencies">RPM Dependencies</a></li>
 <li><a href="#binary-packages">Binary Packages</a></li>
@@ -349,18 +355,35 @@
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <strong><a href="../Build-Environment-Setup-Guide#proxy-configuration">Proxy Configuration</a></strong>  for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
 <p>At the time of writing, all URLs provided in this section were verified as working.</p>
-<h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
-<p>Open a terminal window and perform the following steps:</p>
+<h2 id="configure-the-openmpf-source-code">Configure the OpenMPF Source Code</h2>
+<h3 id="if-you-are-cloning-the-openmpf-repository">If you are Cloning the OpenMPF Repository</h3>
+<ul>
+<li>Clone the OpenMPF respository. This will create a <code>/home/mpf/mpf</code> directory which contains the source code:<ul>
+<li><code>cd /home/mpf</code></li>
+<li><code>git clone https://github.com/openmpf/openmpf.git mpf</code></li>
+<li><code>cd mpf</code></li>
+<li><code>git submodule update --init</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="if-you-have-an-openmpf-source-code-archive">If you have an OpenMPF Source Code Archive</h3>
 <ul>
 <li>Copy the OpenMPF source archive to the path <code>/home/mpf</code> on the VM. This can be accomplished in several ways, including the use of a shared folder, SCP, or drag and drop from the host system. For more information on configuring a shared folder in a Virtual Box VM, please see the developer's documentation (<a href="https://www.virtualbox.org/manual/ch04.html#sharedfolders">https://www.virtualbox.org/manual/ch04.html#sharedfolders</a>).</li>
-<li>Extract the OpenMPF source archive. This will create a /home/mpf/mpf directory which contains the source code:<ul>
+<li>Extract the OpenMPF source archive. This will create a <code>/home/mpf/mpf</code> directory which contains the source code:<ul>
+<li><code>cd /home/mpf</code></li>
 <li><code>tar xvzf mpf-*-source.tar.gz -C /home/mpf/</code></li>
 </ul>
 </li>
-<li>Copy the mpf user profile script from the extracted source code:<ul>
+</ul>
+<h2 id="copy-the-openmpf-profile-script">Copy the OpenMPF Profile Script</h2>
+<ul>
+<li>Copy the mpf user profile script from the source code:<ul>
 <li><code>sudo cp /home/mpf/mpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></li>
 </ul>
 </li>
+</ul>
+<h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
+<ul>
 <li>Install the Oracle MySQL Community Release Repository:<ul>
 <li><code>wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"</code></li>
 <li><code>sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm</code></li>

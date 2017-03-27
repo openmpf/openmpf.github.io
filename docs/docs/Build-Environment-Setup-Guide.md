@@ -113,15 +113,30 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
 
 At the time of writing, all URLs provided in this section were verified as working.
 
-## Configure Additional Repositories
+## Configure the OpenMPF Source Code
 
-Open a terminal window and perform the following steps:
+### If you are Cloning the OpenMPF Repository
+
+- Clone the OpenMPF respository. This will create a `/home/mpf/mpf` directory which contains the source code:
+    - `cd /home/mpf`
+    - `git clone https://github.com/openmpf/openmpf.git mpf`
+    - `cd mpf`
+    - `git submodule update --init`
+
+### If you have an OpenMPF Source Code Archive
 
 - Copy the OpenMPF source archive to the path `/home/mpf` on the VM. This can be accomplished in several ways, including the use of a shared folder, SCP, or drag and drop from the host system. For more information on configuring a shared folder in a Virtual Box VM, please see the developer's documentation (<https://www.virtualbox.org/manual/ch04.html#sharedfolders>).
-- Extract the OpenMPF source archive. This will create a /home/mpf/mpf directory which contains the source code:
+- Extract the OpenMPF source archive. This will create a `/home/mpf/mpf` directory which contains the source code:
+    - `cd /home/mpf`
     - `tar xvzf mpf-*-source.tar.gz -C /home/mpf/`
-- Copy the mpf user profile script from the extracted source code:
+
+## Copy the OpenMPF Profile Script
+
+- Copy the mpf user profile script from the source code:
     - `sudo cp /home/mpf/mpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
+
+## Configure Additional Repositories
+
 - Install the Oracle MySQL Community Release Repository:
     - `wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"`
     - `sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm`
