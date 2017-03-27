@@ -6,7 +6,7 @@
 
 # General Information
 
-The Open Media Processing Framework (OpenMPF) software is distributed as a raw source code package. The reason for this methodology is to allow for publishing under the Apache license to support broad utilization and use-cases. Several of the underlying dependencies can be compiled in ways that introduce copyleft licenses or patent restrictions. Thus, this approach allows the OpenMPF to be built for a variety of use cases and in the general sense, utilized readily for non-commercial in-house use.
+The Open Media Processing Framework (OpenMPF) software is distributed as raw source code. The reason for this methodology is to allow for publishing under the Apache license to support broad utilization and use-cases. Several of the underlying dependencies can be compiled in ways that introduce copyleft licenses or patent restrictions. Thus, this approach allows the OpenMPF to be built for a variety of use cases and in the general sense, utilized readily for non-commercial in-house use.
 
 > **IMPORTANT:** It is the responsibility of the end users who follow this guide, and otherwise build the OpenMPF software to create an executable, to abide by all of the non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building the OpenMPF and linking in these dependencies at build time or run time results in creating a derivative work under the terms of the GNU General Public License. Refer to the About page within the OpenMPF for more information about these dependencies.
 
@@ -117,7 +117,7 @@ At the time of writing, all URLs provided in this section were verified as worki
 
 Open a terminal window and perform the following steps:
 
-- Copy the OpenMPF source archive (provided separately) to the path `/home/mpf` on the VM. This can be accomplished in several ways, including the use of a shared folder, SCP, or drag and drop from the host system. For more information on configuring a shared folder in a Virtual Box VM, please see the developer's documentation (<https://www.virtualbox.org/manual/ch04.html#sharedfolders>).
+- Copy the OpenMPF source archive to the path `/home/mpf` on the VM. This can be accomplished in several ways, including the use of a shared folder, SCP, or drag and drop from the host system. For more information on configuring a shared folder in a Virtual Box VM, please see the developer's documentation (<https://www.virtualbox.org/manual/ch04.html#sharedfolders>).
 - Extract the OpenMPF source archive. This will create a /home/mpf/mpf directory which contains the source code:
     - `tar xvzf mpf-*-source.tar.gz -C /home/mpf/`
 - Copy the mpf user profile script from the extracted source code:
@@ -699,7 +699,7 @@ The OpenMPF can also be run using HTTP instead of HTTPS.
 
 ## Adding Additional Maven Dependencies
 
-Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. They can be downloaded [here](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz). These steps assume the archive `mpf-maven-deps.tar.gz` is at `/home/mpf/mpf-maven-deps.tar.gz`.
+Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. They can be downloaded [here](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz). Copy `mpf-maven-deps.tar.gz` to `/home/mpf/mpf-maven-deps.tar.gz`.
 
 1. Set up the local Maven repository:
     - `cd /home/mpf`
