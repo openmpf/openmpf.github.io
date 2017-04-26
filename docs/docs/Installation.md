@@ -75,9 +75,7 @@ To complete node configuration:
 
   1. From the master node, browse to: http://localhost:8080/workflow-manager
   2. Login as the administrator (username: "admin" / password: "mpfadm")
-  3. Go to the Node Configuration page
-  4. Drag and drop desired services to the nodes
-  5. Click Save Configuration and then browse to the Node and Process Status page to ensure the configuration is executing as desired
+  3. Go to the Nodes page and add detection services as desired
 
 ## Updating Site Configuration
 
