@@ -145,7 +145,7 @@
 <body>
     <div style='page-break-after:always'>
         <h1>MPF Workflow Manager REST API</h1>
-        <h2>Version 0.9 (build 20170419)</h2>
+        <h2>Version 0.9 (build 20170426)</h2>
         <br/>
         <p><i><font size="3">NOTICE</font></i></p>
         <p><i><font size="3">
@@ -158,7 +158,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Wed Apr 19, 2017</div>
+    <div class='footer'>Last updated on: Wed Apr 26, 2017</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -257,13 +257,15 @@
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.8.</b> POST</span>&nbsp;&nbsp;/rest/jobs/{id}/resubmit
+            <div class="div-container-margin"><span><b>2.7.</b> POST</span>&nbsp;&nbsp;/rest/jobs/{id}/resubmit
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.9.</b> GET</span>&nbsp;&nbsp;/rest/nodes/config
+            <div class="div-container-margin"><span><b>2.8.</b> GET</span>&nbsp;&nbsp;/rest/nodes/config
                 <br>
-                <br><span><b>2.9.</b> POST</span>&nbsp;&nbsp;/rest/nodes/config
+                <br>
+			</div>
+			<div class="div-container-margin"><span><b>2.9.</b> POST</span>&nbsp;&nbsp;/rest/nodes/config
                 <br>
                 <br>
             </div>
@@ -522,6 +524,7 @@
         </tbody>
     </table>
     <br/></div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <h3>1.6. DeployedServiceModel (Response only)</h3>
         <hr />
@@ -754,6 +757,7 @@
         </table>
         <br />
     </div>
+	<div style='page-break-after:always'></div>	
     <div class="div-container-margin">
         <h3>1.11. InfoModel (Response only)</h3>
         <hr />
@@ -1032,6 +1036,7 @@
             </table>
         </div>
     </div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.3 POST</span>&nbsp;&nbsp;/rest/jobs</code></pre>
         <div>
@@ -1044,14 +1049,28 @@
                     <td class='td-alignment-small'><b>Description</b></td>
                     <td class='td-alignment-std'>The pipelineName should be one of the values in 'rest/pipelines'. The media array should contain objects with a valid mediaUri.  For example: http://localhost/images/image.png. Another example: file:///home/user/images/image.jpg. A callbackURL (optional) and callbackMethod (GET or POST) may be added. When the job completes, the callback will perform a GET or POST to the callbackURL with the parameters 'jobId' and 'externalId' of the completed job. For example, on a GET to a callbackURL: /api.example.com/foo?jobId=1&externalId=1. Another example: /api.example.com/foo?someparam=something&jobId=1&externalId=1. Example when no externalId is provided: /api.example.com/foo?jobId=1. The body of a POST callback will always include the 'jobId' and 'externalId', even if the latter is 'null'. An optional jobProperties object contains String key-value pairs which override the pipeline's job properties for this job. An optional algorithmProperties object containing <String,Map> key-value pairs can override jobProperties for a specific algorithm defined in the pipeline.  For algorithmProperties, the key should be the algorithm name, and the value should be a Map of String key-value pairs representing properties specific to the named algorithm.<br/>
                     <br/>
-                    The body of a POST callback will be:
+                    The body of a POST callback will be similar to this example which uses a OCV FACE DETECTION (WITH MOG MOTION PREPROCESSOR) PIPELINE.  Some unrequired parameters are omitted. Note that this example makes use of overloading by jobProperties, algorithmProperties and mediaProperties:
                     <table>
                         <tr>
                             <td>
                             <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
 {
-   "jobId":1,
-   "externalId":"someid"
+    "jobProperties": {
+        "FRAME_INTERVAL": "5"
+    },
+    "algorithmProperties": {
+        "FACECV": {
+            "MIN_FACE_SIZE": "50"
+        }
+    },
+    "media": [{
+        "mediaUri": "file:///media/sf_SHARED/TRANSFER/samples-new/face/video_01.mp4",
+        "properties": {
+            "HORIZONTAL_FLIP": "true"
+        }
+    }],
+    "pipelineName": "OCV FACE DETECTION (WITH MOG MOTION PREPROCESSOR) PIPELINE",
+    "priority": 0
 }  
                             </pre>
                             </td>
@@ -1231,6 +1250,7 @@
             </table>
         </div>
     </div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.5 POST</span>&nbsp;&nbsp;/rest/jobs/{id}/cancel</code></pre>
         <div>
@@ -1399,97 +1419,146 @@
                                                 <tbody>
                                                     <tr>
                                                         <td class="td-alignment-small">&nbsp;</td>
-                                                        <td class="td-alignment-std"><b>JsonOutputObject</b> example.
+                                                        <td class="td-alignment-std"><b>JsonOutputObject</b> example:
                                                             <br>
                                                             <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">  
- {
-    "externalJobId": "string",
-    "jobId": 0,
-    "media": [
-      {
-        "detectionProcessingErrors": {
-
-        },
-        "length": 0,
-        "markupResult": {
-          "id": 0,
-          "message": "string",
-          "path": "string",
-          "status": "string"
-        },
-        "mediaId": 0,
-        "message": "string",
-        "mimeType": "string",
-        "path": "string",
-        "sha256": "string",
-        "status": "string",
-        "tracks": {} (DESCRIBED BELOW)
-      }
-    ],
-    "objectId": "string",
+{
+    "jobId": 20,
+    "objectId": "f3345ee1-5b76-4c3f-8101-26102f96c102",
     "pipeline": {
-      "description": "string",
-      "name": "string",
-      "stages": [
-        {
-          "actionType": "string",
-          "actions": [
-            {
-              "algorithm": "string",
-              "description": "string",
-              "name": "string",
-              "properties": {} (A key-value pair using strings which may be used to override 
-                        the default parameters associated with the underlying action)
-            }
-          ],
-          "description": "string",
-          "name": "string"
-        }
-      ]
-    },
-    "priority": 0,
-    "siteId": "string",
-    "status": "string",
-    "timeStart": "string",
-    "timeStop": "string"
-  }
-                                                            </pre>
-                                                            <h4>Tracks example </h4>
-                                                            <p> When using a pipeline with face detection and markup actions</p>
-                                                            <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">  
-                                                                {
-    "+#FACE DETECTION ACTION": [{
-        "id": "e1b810ab07a9fc1459d088867356cf5b63f544d170f78181b86f97b8b78a1919",
-        "startOffset": 0,
-        "stopOffset": 1,
-        "type": "FACE",
-        "source": "+#FACE DETECTION ACTION",
-        "exemplar": {
-            "x": 114,
-            "y": 208,
-            "width": 285,
-            "height": 285,
-            "confidence": 7.9901013,
-            "metadata": "",
-            "offset": 0,
-            "artifactExtractionStatus": "COMPLETED",
-            "artifactPath": ""
-        },
-        "detections": [{
-            "x": 114,
-            "y": 208,
-            "width": 285,
-            "height": 285,
-            "confidence": 7.9901013,
-            "metadata": "",
-            "offset": 0,
-            "artifactExtractionStatus": "COMPLETED",
-            "artifactPath": ""
+        "name": "COMBINED DETECTION PIPELINE",
+        "description": "Executes multiple face detection algorithms and a person detection algorithm.",
+        "stages": [{
+            "actionType": "DETECTION",
+            "name": "COMBINED DETECTION ACTION",
+            "description": "Executes multiple face detection algorithms and a person detection algorithm.",
+            "actions": [{
+                "algorithm": "FACECV",
+                "name": "OCV FACE DETECTION ACTION",
+                "description": "Executes the OpenCV face detection algorithm using the default parameters.",
+                "properties": {}
+            }, {
+                "algorithm": "DLIB",
+                "name": "DLIB FACE DETECTION ACTION",
+                "description": "Executes the dlib face detection algorithm using the default parameters.",
+                "properties": {}
+            }, {
+                "algorithm": "PERSONCV",
+                "name": "OCV PERSON DETECTION ACTION",
+                "description": "Executes the OpenCV person detection algorithm using the default parameters.",
+                "properties": {}
+            }]
         }]
-    }],
-    "+#FACE DETECTION ACTION#GENERIC MARKUP ACTION": []
-},
-                                                        </pre>
+    },
+    "priority": 4,
+    "siteId": "mpf1",
+    "externalJobId": null,
+    "timeStart": "2017-04-25 09:47:14.0",
+    "timeStop": "2017-04-25 09:47:17.0",
+    "status": "COMPLETE",
+    "algorithmProperties": {},
+    "jobProperties": {},
+    "media": [{
+        "mediaId": 0,
+        "path": "file:/home/mpf/Desktop/TMP/git/mpf/trunk/install/share/remote-media/meds-aa-S001-01.jpg",
+        "mimeType": "image/jpeg",
+        "length": 1,
+        "sha256": "c067e7eed23a0fe022140c30dbfa993ae720309d6567a803d111ecec739a6713",
+        "message": null,
+        "status": "COMPLETE",
+        "mediaMetadata": {},
+        "mediaProperties": {},
+        "markupResult": null,
+	<div style='page-break-after:always'></div>
+        "output": {
+            "FACE": [{
+                "source": "+#DLIB FACE DETECTION ACTION",
+                "tracks": [{
+                    "id": "a2b623ec3d73a82702e54d75f84fe902e79842f10ef228e3cc5712b27f02b143",
+                    "startOffsetFrame": 0,
+                    "stopOffsetFrame": 1,
+                    "startOffsetTime": 0,
+                    "stopOffsetTime": 0,
+                    "type": "FACE",
+                    "source": "+#DLIB FACE DETECTION ACTION",
+                    "exemplar": {
+                        "x": 114,
+                        "y": 238,
+                        "width": 225,
+                        "height": 225,
+                        "confidence": 2.3898146,
+                        "detectionProperties": {},
+                        "offsetFrame": 0,
+                        "offsetTime": 0,
+                        "artifactExtractionStatus": "COMPLETED",
+                        "artifactPath": "/home/mpf/Desktop/TMP/git/mpf/trunk/install/share/artifacts/20/0/0/meds-aa-S001-01.jpg",
+                        "offset": 0
+                    },
+                    "detections": [{
+                        "x": 114,
+                        "y": 238,
+                        "width": 225,
+                        "height": 225,
+                        "confidence": 2.3898146,
+                        "detectionProperties": {},
+                        "offsetFrame": 0,
+                        "offsetTime": 0,
+                        "artifactExtractionStatus": "COMPLETED",
+                        "artifactPath": "/home/mpf/Desktop/TMP/git/mpf/trunk/install/share/artifacts/20/0/0/meds-aa-S001-01.jpg",
+                        "offset": 0
+                    }],
+                    "stopOffset": 1,
+                    "startOffset": 0
+                }]
+            }, {
+                "source": "+#OCV FACE DETECTION ACTION",
+                "tracks": [{
+                    "id": "4d16bf11dfad28e6b3827b28d4a47e74bd13a329eba5df11577a082c79bf1395",
+                    "startOffsetFrame": 0,
+                    "stopOffsetFrame": 1,
+                    "startOffsetTime": 0,
+                    "stopOffsetTime": 0,
+                    "type": "FACE",
+                    "source": "+#OCV FACE DETECTION ACTION",
+                    "exemplar": {
+                        "x": 85,
+                        "y": 212,
+                        "width": 283,
+                        "height": 283,
+                        "confidence": 58,
+                        "detectionProperties": {},
+                        "offsetFrame": 0,
+                        "offsetTime": 0,
+                        "artifactExtractionStatus": "COMPLETED",
+                        "artifactPath": "/home/mpf/Desktop/TMP/git/mpf/trunk/install/share/artifacts/20/0/0/meds-aa-S001-01.jpg",
+                        "offset": 0
+                    },
+                    "detections": [{
+                        "x": 85,
+                        "y": 212,
+                        "width": 283,
+                        "height": 283,
+                        "confidence": 58,
+                        "detectionProperties": {},
+                        "offsetFrame": 0,
+                        "offsetTime": 0,
+                        "artifactExtractionStatus": "COMPLETED",
+                        "artifactPath": "/home/mpf/Desktop/TMP/git/mpf/trunk/install/share/artifacts/20/0/0/meds-aa-S001-01.jpg",
+                        "offset": 0
+                    }],
+                    "stopOffset": 1,
+                    "startOffset": 0
+                }]
+            }],
+            "NO TRACKS": [{
+                "source": "+#OCV PERSON DETECTION ACTION",
+                "tracks": []
+            }]
+        },
+        "detectionProcessingErrors": {}
+    }]
+}
+                                                            </pre>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -1511,6 +1580,7 @@
             </tbody>
         </table>
     </div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.7 POST</span>&nbsp;&nbsp;/rest/jobs/{id}/resubmit</code></pre>
         <div>
@@ -1756,6 +1826,7 @@
             </table>
         </div>
     </div>
+	<div style='page-break-after:always'></div>	
     <div class="div-container-margin">
         <pre class="get"><code class="huge"><span>2.10 GET</span>&nbsp;&nbsp;/rest/nodes/hosts</code></pre>
         <div>
@@ -1932,6 +2003,7 @@
             </table>
         </div>
     </div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.13 POST</span>&nbsp;&nbsp;/rest/nodes/services/{serviceName}/start</code></pre>
         <div>
@@ -2231,6 +2303,7 @@
             </table>
         </div>
     </div>
+	<div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.17 POST</span>&nbsp;&nbsp;/rest/system-message</code></pre>
         <div>
