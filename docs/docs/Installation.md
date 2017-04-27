@@ -35,7 +35,7 @@ A browser is required in order to utilize the OpenMPF Web User Interface (UI). T
 
 ** 1. Install and Configure OpenMPF Management Software **
 
-Copy the OpenMPF release package .tar.gz, (e.g. mpf-0.4.0+develop-394-d646a55e.tar.gz) to the OpenMPF master node.
+Copy the OpenMPF release package .tar.gz, (e.g. mpf-open-source-0.9.0+master.tar.gz) to the OpenMPF master node.
 
 From the OpenMPF master node, unpack the OpenMPF package.
 
