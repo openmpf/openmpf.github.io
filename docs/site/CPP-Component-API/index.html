@@ -45,88 +45,103 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 	<ul class="current">
+	  
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Installation/">Install Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Installation/">Install Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../User-Guide/">User Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../User-Guide/">User Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Admin-Manual/">Admin Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Admin-Manual/">Admin Guide</a>
+	    </li>
           
-            <li>
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Documentation</span>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
-
-        
+                <li class="">
+                    
+    <a class="" href="../API-Overview/">Component Overview</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">C++ Component API</a>
+    <ul class="subnav">
             
-    <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/">Component Overview</a>
+    <li class="toctree-l3"><a href="#c-component-api-overview">C++ Component API Overview</a></li>
+    
+        <ul>
         
-    </li>
+            <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+        
+            <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
+        
+        </ul>
+    
 
+    <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
+    
+        <ul>
         
-            
-    <li class="toctree-l1 current">
-        <a class="current" href="./">C++ Component API</a>
+            <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
         
-            <ul>
-            
-            </ul>
+            <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
         
-    </li>
+        </ul>
+    
 
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/">Java Component API</a>
-        
-    </li>
+    <li class="toctree-l3"><a href="#c-component-build-environment">C++ Component Build Environment</a></li>
+    
 
+    <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
+    
+        <ul>
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+            <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
         
-    </li>
+            <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
+        
+            <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+        
+            <li><a class="toctree-l4" href="#logging">Logging</a></li>
+        
+        </ul>
+    
 
-        
     </ul>
-<li>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Component-API/">Java Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+                </li>
+    </ul>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../REST-API/">REST API</a>
+	    </li>
           
         </ul>
       </div>
@@ -167,67 +182,6 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="table-of-contents">Table of Contents</h1>
-<div class="toc">
-<ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#c-component-api-overview">C++ Component API Overview</a><ul>
-<li><a href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
-<li><a href="#getting-started">Getting Started</a></li>
-</ul>
-</li>
-<li><a href="#openmpf-api-specification">OpenMPF API Specification</a><ul>
-<li><a href="#openmpf-component-api">OpenMPF Component API</a><ul>
-<li><a href="#init">Init()</a></li>
-<li><a href="#close">Close()</a></li>
-<li><a href="#getcomponenttype">GetComponentType()</a></li>
-<li><a href="#getrundirectory">GetRunDirectory()</a></li>
-<li><a href="#setrundirectorystring">SetRunDirectory(string)</a></li>
-<li><a href="#component-factory-functions">Component Factory Functions</a></li>
-</ul>
-</li>
-<li><a href="#openmpf-detection-component-api">OpenMPF Detection Component API</a><ul>
-<li><a href="#convenience-adapters">Convenience Adapters</a></li>
-<li><a href="#detection-component-interface">Detection Component Interface</a><ul>
-<li><a href="#supportsmpfdetectiondatatype">Supports(MPFDetectionDataType)</a></li>
-<li><a href="#getdetectiontype">GetDetectionType()</a></li>
-<li><a href="#getdetectionsmpfimagejob">GetDetections(MPFImageJob …)</a></li>
-<li><a href="#getdetectionsmpfvideojob">GetDetections(MPFVideoJob …)</a></li>
-<li><a href="#getdetectionsmpfaudiojob">GetDetections(MPFAudioJob …)</a></li>
-</ul>
-</li>
-<li><a href="#detection-job-data-structures">Detection Job Data Structures</a><ul>
-<li><a href="#mpfjob">MPFJob</a></li>
-<li><a href="#mpfimagejob">MPFImageJob</a></li>
-<li><a href="#mpfvideojob">MPFVideoJob</a></li>
-<li><a href="#mpfaudiojob">MPFAudioJob</a></li>
-</ul>
-</li>
-<li><a href="#detection-job-result-classes">Detection Job Result Classes</a><ul>
-<li><a href="#mpfimagelocation">MPFImageLocation</a></li>
-<li><a href="#mpfvideotrack">MPFVideoTrack</a></li>
-<li><a href="#mpfaudiotrack">MPFAudioTrack</a></li>
-</ul>
-</li>
-<li><a href="#enumeration-types">Enumeration Types</a><ul>
-<li><a href="#mpfdetectionerror">MPFDetectionError</a></li>
-</ul>
-</li>
-<li><a href="#utility-classes">Utility Classes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#c-component-build-environment">C++ Component Build Environment</a></li>
-<li><a href="#component-development-best-practices">Component Development Best Practices</a><ul>
-<li><a href="#single-threaded-operation">Single-threaded Operation</a></li>
-<li><a href="#stateless-behavior">Stateless Behavior</a></li>
-<li><a href="#component-packaging">Component Packaging</a></li>
-<li><a href="#logging">Logging</a></li>
-</ul>
-</li>
-</ul>
-</div>
 <h1 id="c-component-api-overview">C++ Component API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
 <p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
@@ -263,13 +217,13 @@ component-&gt;Close()
 <p>A component developer implements a detection component by extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</p>
 <p>As an alternative to extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> directly, a developer may extend one of several convenience adapter classes provided by OpenMPF. See <a href="#convenience-adapters">Convenience Adapters</a> for more information.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf/tree/master/mpf_components/CPP/detection/hello">review the source</a> for the OpenMPF <em>Hello World</em> Detection Component.</p>
+<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf/tree/master/trunk/detection/test-components/cpp/CplusplusHelloWorld">review the source</a> for the OpenMPF <em>Hello World</em> Detection Component.</p>
 <p>Detection components are implemented by:</p>
 <ol>
 <li>Extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</li>
-<li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/hello/CMakeLists.txt">HelloWorld CMakeLists.txt</a>).</li>
+<li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/cpp/CMakeLists.txt">HelloWorld CMakeLists.txt</a>).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF (see <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>).</li>
+<li>Registering the component with OpenMPF (see <a href="https://openmpf.github.io/docs/site/Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>).</li>
 </ol>
 <h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
 <p>The figure below presents a high-level component diagram of the OpenMPF API.</p>
@@ -300,7 +254,7 @@ component-&gt;Close()
 <p>Components must also include two <a href="#component-factory-functions">Component Factory Functions</a>.</p>
 <h2 id="openmpf-component-api">OpenMPF Component API</h2>
 <p>The <a href="#openmpf-component-api"><code>MPFComponent</code></a> class is the abstract base class utilized by all OpenMPF components.</p>
-<p><strong><a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/componentInterface/include/MPFComponentInterface.h">See the latest source here.</a></strong></p>
+<p><strong><a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/interface/include/MPFComponentInterface.h">See the latest source here.</a></strong></p>
 <blockquote>
 <p><strong>IMPORTANT:</strong> This interface should not be directly implemented, because no mechanism exists for launching components based off of it. Currently, the only supported type of component is detection, and all components should instead extend <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</p>
 </blockquote>
@@ -329,7 +283,7 @@ component-&gt;Close()
 <h3 id="close">Close()</h3>
 <p>The component should perform all shutdown operations in the <code>Close</code> member function.
 <code>Close</code> will be called once by the OpenMPF Component Executable prior to component shutdown.</p>
-<p>This method is called before the component instance is deleted (see <a href="https://github.comhttps://github.com/openmpf/openmpf/wiki/CPP-Component-API/_edit#c-detection-component-factory-functions">Component Factory Functions</a>).</p>
+<p>This method is called before the component instance is deleted (see <a href="https://openmpf.github.io/docs/site/CPP-Component-API/#component-factory-functions">Component Factory Functions</a>).</p>
 <ul>
 <li>Function Definition:
 <code>bool Close()</code></li>
@@ -417,7 +371,7 @@ MPF_COMPONENT_DELETER();
 
 <h2 id="openmpf-detection-component-api">OpenMPF Detection Component API</h2>
 <p>The <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.</p>
-<p><a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/detection_base.h"><strong>See the latest source here.</strong></a></p>
+<p><a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFDetectionComponent.h"><strong>See the latest source here.</strong></a></p>
 <blockquote>
 <p><strong>IMPORTANT:</strong> Each detection component must implement all of the <code>GetDetections()</code> functions or extend from a superclass which provides implementations for them (see <a href="#convenience-adapters">convenience adapters</a>).</p>
 <p>If your component does not support a particular data type, it should simply:
@@ -428,11 +382,11 @@ MPF_COMPONENT_DELETER();
 <p>These adapters provide default implementations of several methods in <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
 <p>The following adapters are provided:</p>
 <ul>
-<li>Image Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)</li>
-<li>Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)</li>
-<li>Image and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)</li>
-<li>Audio Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)</li>
-<li>Audio and Video Detection (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Image Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)</li>
+<li>Video Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Image and Video Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)</li>
+<li>Audio and Video Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</li>
 </ul>
 <blockquote>
 <p><strong>Example: Creating Adaptors to Perform Naive Tracking:</strong>
@@ -680,7 +634,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <tr>
 <td>job_properties <a name="job-properties"></a></td>
 <td><code>const Properties &amp;</code></td>
-<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="https://openmpf.github.io/docs/site/Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
 </tr>
 <tr>
 <td>media_properties <a name="media-properties"></a></td>
@@ -1160,7 +1114,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 </tbody>
 </table>
 <h3 id="utility-classes">Utility Classes</h3>
-<p>For convenience, the OpenMPF provides the <code>MPFImageReader</code> (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFImageReader.h">source</a>) and <code>MPFVideoCapture</code> (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/CPP/detection/detectionComponentAPI/include/MPFVideoCapture.h">source</a>) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.</p>
+<p>For convenience, the OpenMPF provides the <code>MPFImageReader</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFImageReader.h">source</a>) and <code>MPFVideoCapture</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFVideoCapture.h">source</a>) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.</p>
 <h1 id="c-component-build-environment">C++ Component Build Environment</h1>
 <p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-4).</p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>

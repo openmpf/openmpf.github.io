@@ -45,105 +45,84 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 	<ul class="current">
+	  
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Install Guide</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#minimum-resource-requirements">Minimum Resource Requirements</a></li>
-                
-                    <li><a class="toctree-l4" href="#hardware">Hardware</a></li>
-                
-                    <li><a class="toctree-l4" href="#operating-system-and-software">Operating System and Software</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-pre-installation">OpenMPF Pre-Installation</a></li>
-                
-                    <li><a class="toctree-l4" href="#pre-installation-checklist">Pre-Installation Checklist</a></li>
-                
-                    <li><a class="toctree-l4" href="#openmpf-installation">OpenMPF Installation</a></li>
-                
-                    <li><a class="toctree-l4" href="#updating-site-configuration">Updating Site Configuration</a></li>
-                
-                    <li><a class="toctree-l4" href="#creating-a-keystore">Creating a Keystore</a></li>
-                
-            
-            </ul>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../User-Guide/">User Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Admin-Manual/">Admin Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Install Guide</a>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
-
-        
             
-    <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/">Component Overview</a>
+    <li class="toctree-l2"><a href="#minimum-resource-requirements">Minimum Resource Requirements</a></li>
+    
+        <ul>
         
-    </li>
+            <li><a class="toctree-l3" href="#hardware">Hardware</a></li>
+        
+            <li><a class="toctree-l3" href="#operating-system-and-software">Operating System and Software</a></li>
+        
+            <li><a class="toctree-l3" href="#openmpf-pre-installation">OpenMPF Pre-Installation</a></li>
+        
+            <li><a class="toctree-l3" href="#pre-installation-checklist">Pre-Installation Checklist</a></li>
+        
+            <li><a class="toctree-l3" href="#openmpf-installation">OpenMPF Installation</a></li>
+        
+            <li><a class="toctree-l3" href="#updating-site-configuration">Updating Site Configuration</a></li>
+        
+            <li><a class="toctree-l3" href="#creating-a-keystore">Creating a Keystore</a></li>
+        
+        </ul>
+    
 
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/">C++ Component API</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/">Java Component API</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
-        
-    </li>
-
-        
     </ul>
-<li>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../User-Guide/">User Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../Admin-Manual/">Admin Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Documentation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../API-Overview/">Component Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Component-API/">C++ Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Component-API/">Java Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../REST-API/">REST API</a>
+	    </li>
           
         </ul>
       </div>
@@ -206,7 +185,7 @@ Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 <p>You only need to complete the following steps on the OpenMPF master node.</p>
 </blockquote>
 <p><strong> 1. Install and Configure OpenMPF Management Software </strong></p>
-<p>Copy the OpenMPF release package .tar.gz, (e.g. mpf-0.4.0+develop-394-d646a55e.tar.gz) to the OpenMPF master node.</p>
+<p>Copy the OpenMPF release package .tar.gz, (e.g. mpf-open-source-0.9.0+master.tar.gz) to the OpenMPF master node.</p>
 <p>From the OpenMPF master node, unpack the OpenMPF package.</p>
 <pre><code>tar zxvf &lt;latest .tar.gz&gt;
 cd mpf-release

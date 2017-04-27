@@ -45,88 +45,103 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 	<ul class="current">
+	  
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Installation/">Install Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Installation/">Install Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../User-Guide/">User Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../User-Guide/">User Guide</a>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Admin-Manual/">Admin Guide</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../Admin-Manual/">Admin Guide</a>
+	    </li>
           
-            <li>
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Documentation</span>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
-
-        
+                <li class="">
+                    
+    <a class="" href="../API-Overview/">Component Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Component-API/">C++ Component API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Java Component API</a>
+    <ul class="subnav">
             
-    <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/">Component Overview</a>
+    <li class="toctree-l3"><a href="#java-component-api-overview">Java Component API Overview</a></li>
+    
+        <ul>
         
-    </li>
+            <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+        
+            <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
+        
+        </ul>
+    
 
+    <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
+    
+        <ul>
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+            <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
         
-    </li>
+            <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
+        
+        </ul>
+    
 
-        
-            
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Java Component API</a>
-        
-            <ul>
-            
-            </ul>
-        
-    </li>
+    <li class="toctree-l3"><a href="#java-component-build-environment">Java Component Build Environment</a></li>
+    
 
+    <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
+    
+        <ul>
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+            <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
         
-    </li>
+            <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
+        
+            <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+        
+            <li><a class="toctree-l4" href="#logging">Logging</a></li>
+        
+        </ul>
+    
 
-        
     </ul>
-<li>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+                </li>
+    </ul>
+	    </li>
           
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API</a>
-        
-    </li>
-<li>
+            <li class="toctree-l1">
+		
+    <a class="" href="../REST-API/">REST API</a>
+	    </li>
           
         </ul>
       </div>
@@ -167,67 +182,6 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="table-of-contents">Table of Contents</h1>
-<div class="toc">
-<ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#java-component-api-overview">Java Component API Overview</a><ul>
-<li><a href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
-<li><a href="#getting-started">Getting Started</a></li>
-</ul>
-</li>
-<li><a href="#openmpf-api-specification">OpenMPF API Specification</a><ul>
-<li><a href="#openmpf-component-api">OpenMPF Component API</a><ul>
-<li><a href="#init">init()</a></li>
-<li><a href="#close">close()</a></li>
-<li><a href="#getcomponenttype">getComponentType()</a></li>
-<li><a href="#getrundirectory">getRunDirectory()</a></li>
-<li><a href="#setrundirectorystring">setRunDirectory(String)</a></li>
-</ul>
-</li>
-<li><a href="#openmpf-detection-component-api">OpenMPF Detection Component API</a><ul>
-<li><a href="#convenience-adapters">Convenience Adapters</a></li>
-<li><a href="#detection-component-interface">Detection Component Interface</a><ul>
-<li><a href="#supportsmpfdatatype">supports(MPFDataType)</a></li>
-<li><a href="#getdetectiontype">getDetectionType()</a></li>
-</ul>
-</li>
-<li><a href="#getdetectionsmpfimagejob-job">getDetections(MPFImageJob job)</a></li>
-<li><a href="#getdetectionsmpfvideojob-job">getDetections(MPFVideoJob job)</a></li>
-<li><a href="#getdetectionsmpfaudiojob-job">getDetections(MPFAudioJob job)</a></li>
-<li><a href="#mpfcomponentdetectionerror">MPFComponentDetectionError</a></li>
-<li><a href="#detection-job-classes">Detection Job Classes</a><ul>
-<li><a href="#mpfjob">MPFJob</a></li>
-<li><a href="#mpfimagejob">MPFImageJob</a></li>
-<li><a href="#mpfvideojob">MPFVideoJob</a></li>
-<li><a href="#mpfaudiojob">MPFAudioJob</a></li>
-</ul>
-</li>
-<li><a href="#detection-job-result-classes">Detection Job Result Classes</a><ul>
-<li><a href="#mpfimagelocation">MPFImageLocation</a></li>
-<li><a href="#mpfvideotrack">MPFVideoTrack</a></li>
-<li><a href="#mpfaudiotrack">MPFAudioTrack</a></li>
-</ul>
-</li>
-<li><a href="#enumeration-types">Enumeration Types</a><ul>
-<li><a href="#mpfdetectionerror">MPFDetectionError</a></li>
-</ul>
-</li>
-<li><a href="#utility-classes">Utility Classes</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#java-component-build-environment">Java Component Build Environment</a></li>
-<li><a href="#component-development-best-practices">Component Development Best Practices</a><ul>
-<li><a href="#single-threaded-operation">Single-threaded Operation</a></li>
-<li><a href="#stateless-behavior">Stateless Behavior</a></li>
-<li><a href="#component-packaging">Component Packaging</a></li>
-<li><a href="#logging">Logging</a></li>
-</ul>
-</li>
-</ul>
-</div>
 <h1 id="java-component-api-overview">Java Component API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
 <p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
