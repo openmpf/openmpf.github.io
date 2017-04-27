@@ -1,33 +1,32 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2016 The MITRE Corporation. All Rights Reserved.
 
-# Table of Contents
-
-[TOC]
-
 # General Information
 
-The Open Media Processing Framework (OpenMPF) software is distributed as raw source code. The reason for this methodology is to allow for publishing under the Apache license to support broad utilization and use-cases. Several of the underlying dependencies can be compiled in ways that introduce copyleft licenses or patent restrictions. Thus, this approach allows the OpenMPF to be built for a variety of use cases and in the general sense, utilized readily for non-commercial in-house use.
+The Open Media Processing Framework (OpenMPF) software is distributed to interested parties as a raw source code package. This is to avoid any potential licensing issues that may arise from distributing a pre-compiled executable that is linked to dependencies that are licensed under a copyleft license or have patent restrictions. Generally, it is acceptable build and execute software with these dependencies for non-commercial in-house use.
+
+By distributing the OpenMPF software as raw source code the development team is able to keep most of the software clean from copyleft and patent issues so that it can be published under a more open Apache license and freely distributed to interested parties.
 
 > **IMPORTANT:** It is the responsibility of the end users who follow this guide, and otherwise build the OpenMPF software to create an executable, to abide by all of the non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building the OpenMPF and linking in these dependencies at build time or run time results in creating a derivative work under the terms of the GNU General Public License. Refer to the About page within the OpenMPF for more information about these dependencies.
 
-This guide provides comprehensive instructions for setting up a build environment and generating an OpenMPF deployment package that contains the executable form of the software. This package is self-contained so that it can be installed on a minimal CentOS 7 system without Internet connectivity.
+In general, it is only acceptable to use and distribute the executable form of the OpenMPF "in house", which is loosely defined as internally with an organization. The OpenMPF should only be distributed to third parties in raw source code form and those parties will be responsible for creating their own executable.
+
+This guide provides comprehensive instructions for setting up a build environment and generating an OpenMPF deployment package that contains the executable form of the software. This package is self-contained so that it can be installed on a minimal CentOS 7 system without Internet connectivity. This package can be freely distributed and installed in-house, but not distributed to third parties.
 
 # Set Up the Minimal CentOS 7 VM
 
-The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [Installation Guide](Installation).
+The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [OpenMPF Installation Guide](Installation/).
 
 - This guide assumes a starting point of CentOS 7 with a minimal installation.
-- At the time of writing this, the available minimal .iso file is CentOS-7-x86_64-Minimal-1511.iso. It should be downloaded from <https://www.centos.org/download/> prior to starting these steps.
-- Oracle Virtual Box 5.0.20-106931 is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not explicitly tested.
+- At the time of writing this, the available minimal .iso file is CentOS-7-x86_64-Minimal-1611.iso. It should be downloaded from <https://www.centos.org/download/> prior to starting these steps.
+- Oracle Virtual Box 5.0.20-106931 is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported.
 
->**NOTE:** You may need to utilize different parameters to suit your operating environment, these parameters utilized for OpenMPF test and build environments.
 
 1. Create a new VM with these settings:
     - **Name**: ’OpenMPF Build’. (This guide assumes the name ‘OpenMPF Build’, but any name can be used.)
     - **Type**: Linux
     - **Version**: Red Hat (64-bit)
 
-2. The recommended minimum virtual system specifications tested are:
+2. The recommended minimum virtual system specifications are:
     - **Memory**: 8192MB
     - **CPU**: 4
     - **Disk**: 40GB on a SSD.
@@ -39,162 +38,151 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
 
 # Installing CentOS 7
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)** for instructions to configure the yum package manager before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure the yum package manager before continuing.
 
 1. Open the ‘Settings’ for the OpenMPF Build VM.
-- Select the ‘Storage’ menu item.
-- In the ‘Storage Tree’ section under the ‘Controller: IDE’ item, select the optical disc icon.
-- Under the ‘Attributes’ section, select the optical disc icon with a small black arrow. This will bring up a menu.
-- Select ‘Choose Virtual Optical Disc file…’
-- Choose the ‘CentOS-7-x86_64-Minimal-1511.iso’ file.
-- Press the ‘OK’ button to exit the OpenMPF Build VM settings.
-- Right click on the OpenMPF Build VM and select ‘Start’ and ‘Normal Start’. A new window will open with the running VM.
-- On the ‘CentOS 7’ screen, select ‘Install CentOS 7’ with the keyboard and press the Enter key.
-- Select the appropriate language and press the ‘Continue’ button.
-- On the ‘Installation Summary’ screen, select the ‘Installation Destination’ icon.
-- Press the ‘Done’ button to accept the defaults.
-- On the ‘Installation Summary’ screen, select the ‘Network & Host Name’ icon. There should be one interface listed.
-- Set the slider switch to ‘On’.
-- Press the ‘Configure’ button, select the ‘General’ tab, and check the box for ‘Automatically connect to this network when available’.
-- Press the 'Save' button.
-- Each interface should show its status as ‘Connected’ with an IPv4 address.
-- Leave the hostname as ‘localhost.localdomain’.
-- Press the ‘Done’ button.
-- Use the default values for everything else and press 'Begin Installation'.
-- Set a password for the root account.
-- Under ‘User Creation’, create a new user:
+2. Select the ‘Storage’ menu item.
+3. In the ‘Storage Tree’ section under the ‘Controller: IDE’ item, select the optical disc icon.
+4. Under the ‘Attributes’ section, select the optical disc icon with a small black arrow. This will bring up a menu.
+5. Select ‘Choose Virtual Optical Disc file…’
+6. Choose the ‘CentOS-7-x86_64-Minimal-1611.iso’ file.
+7. Press the ‘OK’ button to exit the OpenMPF Build VM settings.
+8. Right click on the OpenMPF Build VM and select ‘Start’ and ‘Normal Start’. A new window will open with the running VM.
+9. On the ‘CentOS 7’ screen, select ‘Install CentOS 7’ with the keyboard and press the Enter key.
+10. Select the appropriate language and press the ‘Continue’ button.
+11. On the ‘Installation Summary’ screen, select the ‘Installation Destination’ icon.
+12. Press the ‘Done’ button to accept the defaults.
+13. On the ‘Installation Summary’ screen, select the ‘Network & Host Name’ icon. There should be one interface listed.
+14. Set the slider switch to ‘On’.
+15. Press the ‘Configure’ button, select the ‘General’ tab, and check the box for ‘Automatically connect to this network when available’.
+16. Press the 'Save' button.
+17. Each interface should show its status as ‘Connected’ with an IPv4 address.
+18. Leave the hostname as ‘localhost.localdomain’.
+19. Press the ‘Done’ button.
+20. Use the default values for everything else and press 'Begin Installation'.
+21. Set a password for the root account.
+22. Under ‘User Creation’, create a new user:
     - **Full Name**: mpf
     - **User Name**: mpf
         - Check the box for ‘Make this user administrator’
     - **Password**: mpf
-- When installation is finished, press the ‘Finish Configuration’ button.
-- When configuration is finished, press the ‘Reboot’ button.
-- At the login prompt, login as user ‘mpf’ and password ‘mpf’.
-- Install the epel repository and Delta RPM:
-    - `sudo yum install –y epel-release deltarpm`
-- Perform an initial system update:
-    - `sudo yum update –y`
-- Install Gnome Desktop Environment and some packages needed for the Virtual Box Guest Additions:
-    - `sudo yum groups install –y "GNOME Desktop"`
-- Install packages needed for the Virtual Box Guest Additions:
-    - `sudo yum install gcc kernel-devel bzip2`
-   > **NOTE:** You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example:
-   > - `sudo yum install kernel-devel-3.10.0-327.el7.x86_64`.
-- Reboot the system:
-    - `sudo reboot now`
-- At the login prompt, login as user ‘mpf’ and password ‘mpf’.
-- Switch user to root with this command:
-    - `sudo su –`
-- On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’
-- Install the Virtual Box Guest Additions:
-    - `mount /dev/cdrom /mnt`
-    - `cd /mnt`
-    - `./VBoxLinuxAdditions.run`
-    - `systemctl set-default graphical.target`
-    - `reboot now`
-- After the reboot, a license acceptance screen will come up. Select the 'License Information' icon.
-- Read the license. If you accept it, select the 'I accept the license agreement.' check box.
-- Press the 'Done' button.
-- Press the 'Finish Configuration' button.
-- At the graphical login screen, select the 'mpf' user.
-- Enter 'mpf' as the password.
-- A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.
-- Press the 'Next' button on the 'Typing' page.
-- Press the 'Skip' button on the 'Online Accounts' page.
-- Press the 'Start using CentOS Linux' button.
-- Close the 'Getting Started' window that appears.
-- On the desktop, right click the 'VBOXADDITIONS_5.0.22_108108' icon and select 'Eject'.
-- On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Shared Clipboard’, then "Bidirectional". This will enable the ability to copy and paste commands from this document into the VM.
-- On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Drag and Drop’, then "Bidirectional". This will enable the ability to drag files from the host system to the guest VM.
+23. When installation is finished, press the ‘Finish Configuration’ button.
+24. When configuration is finished, press the ‘Reboot’ button.
+25. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
+26. Install the epel repository and Delta RPM:
+    <br> `sudo yum install -y epel-release deltarpm`
+27. Perform an initial system update:
+    <br> `sudo yum update -y`
+28. Install Gnome Desktop Environment and some packages needed for the Virtual Box Guest Additions:
+    <br> `sudo yum groups install -y "GNOME Desktop"`
+29. Install packages needed for the Virtual Box Guest Additions:
+    <br> `sudo yum install gcc kernel-devel bzip2`
+   > **NOTE:** You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: `sudo yum install kernel-devel-3.10.0-327.el7.x86_64`.
+30. Reboot the system:
+    <br> `sudo reboot now`
+31. Follow the on screen instructions to accept the license agreement.
+32. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
+33. Switch user to root with this command:
+    <br> `sudo su -`
+34. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’
+35. Install the Virtual Box Guest Additions:
+    1. `mount /dev/cdrom /mnt`
+    2. `cd /mnt`
+    3. `./VBoxLinuxAdditions.run`
+36. `systemctl set-default graphical.target`
+37. `reboot now`
+38. At the graphical login screen, select the 'mpf' user.
+39. Enter 'mpf' as the password.
+40. A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.
+41. Press the 'Next' button on the 'Typing' page.
+42. Press the 'Skip' button on the 'Online Accounts' page.
+43. Press the 'Start using CentOS Linux' button.
+44. Close the 'Getting Started' window that appears.
+45. On the desktop, right click the 'VBOXADDITIONS_5.0.22_108108' icon and select 'Eject'.
+46. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Shared Clipboard’, then "Bidirectional". This will enable the ability to copy and paste commands from this document into the VM.
+47. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Drag and Drop’, then "Bidirectional". This will enable the ability to drag files from the host system to the guest VM.
 
 # Set Up the OpenMPF Build Environment
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure the yum package manager before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure the yum package manager before continuing.
 
 At the time of writing, all URLs provided in this section were verified as working.
 
-## Configure the OpenMPF Source Code
-
-### If you are Cloning the OpenMPF Repository
-
-- Clone the OpenMPF respository. This will create a `/home/mpf/mpf` directory which contains the source code:
-    - `cd /home/mpf`
-    - `git clone https://github.com/openmpf/openmpf.git mpf`
-    - `cd mpf`
-    - `git submodule update --init`
-
-### If you have an OpenMPF Source Code Archive
-
-- Copy the OpenMPF source archive to the path `/home/mpf` on the VM. This can be accomplished in several ways, including the use of a shared folder, SCP, or drag and drop from the host system. For more information on configuring a shared folder in a Virtual Box VM, please see the developer's documentation (<https://www.virtualbox.org/manual/ch04.html#sharedfolders>).
-- Extract the OpenMPF source archive. This will create a `/home/mpf/mpf` directory which contains the source code:
-    - `cd /home/mpf`
-    - `tar xvzf mpf-*-source.tar.gz -C /home/mpf/`
-
-## Copy the OpenMPF Profile Script
-
-- Copy the mpf user profile script from the source code:
-    - `sudo cp /home/mpf/mpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
-
 ## Configure Additional Repositories
 
-- Install the Oracle MySQL Community Release Repository:
-    - `wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"`
-    - `sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm`
-- Install the Remi Repo for Redis:
-    - `wget -P /home/mpf/Downloads "http://rpms.remirepo.net/RPM-GPG-KEY-remi"`
-    - `wget -P /home/mpf/Downloads "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"`
-    - `sudo rpm --import /home/mpf/Downloads/RPM-GPG-KEY-remi`
-    - `sudo rpm -Uvh /home/mpf/Downloads/remi-release-7.rpm`
-    - `sudo yum-config-manager --enable remi`
-- Create an ‘/apps’ directory and package subdirectories:
-    - `sudo mkdir -p /apps/source/cmake_sources`
-    - `sudo mkdir -p /apps/install/lib`
-    - `sudo mkdir -p /apps/bin/apache`
-    - `sudo mkdir /apps/ansible`
-    - `sudo mkdir /apps/source/apache_sources`
-    - `sudo mkdir /apps/source/google_sources`
-    - `sudo mkdir /apps/source/opencv_sources`
-    - `sudo mkdir /apps/source/ffmpeg_sources`
-    - `sudo mkdir /apps/source/dlib_sources`
-    - `sudo mkdir /apps/source/openalpr_sources`
-    - `sudo mkdir /apps/source/ansible_sources`
-    - `sudo chown -R mpf:mpf /apps`
-    - `sudo chmod -R 755 /apps`
-- Add /apps/install/bin to the system PATH variable:
-    - `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
-    - `. /etc/profile.d/mpf.sh`
-- Create the OpenMPF ldconfig file:
-    - `sudo touch /etc/ld.so.conf.d/mpf-x86_64.conf`
-- Add /apps/install/lib to the OpenMPF ldconfig file:
-    - `sudo sh -c 'echo "/apps/install/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-- Update the shared library cache:
-    - `sudo ldconfig`
+1. Install the Oracle MySQL Community Release Repository:
+    1. `wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"`
+    2. `sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm`
+2. Install the Remi Repo for Redis:
+    1. `wget -P /home/mpf/Downloads "http://rpms.remirepo.net/RPM-GPG-KEY-remi"`
+    2. `wget -P /home/mpf/Downloads "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"`
+    3. `sudo rpm --import /home/mpf/Downloads/RPM-GPG-KEY-remi`
+    4. `sudo rpm -Uvh /home/mpf/Downloads/remi-release-7.rpm`
+    5. `sudo yum-config-manager --enable remi`
+3. Create an ‘/apps’ directory and package subdirectories:
+    1. `sudo mkdir -p /apps/install/lib`
+    2. `sudo mkdir -p /apps/bin/apache`
+    3. `sudo mkdir /apps/ansible`
+    4. `sudo mkdir -p /apps/source/cmake_sources`
+    5. `sudo mkdir /apps/source/apache_sources`
+    6. `sudo mkdir /apps/source/google_sources`
+    7. `sudo mkdir /apps/source/opencv_sources`
+    8. `sudo mkdir /apps/source/ffmpeg_sources`
+    9. `sudo mkdir /apps/source/dlib-sources`
+    10. `sudo mkdir /apps/source/openalpr_sources`
+    11. `sudo mkdir /apps/source/ansible_sources`
+    12. `sudo chown -R mpf:mpf /apps`
+    13. `sudo chmod -R 755 /apps`
+4. Add /apps/install/bin to the system PATH variable:
+    1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
+    2. `. /etc/profile.d/mpf.sh`
+5. Create the OpenMPF ldconfig file:
+    <br>`sudo touch /etc/ld.so.conf.d/mpf-x86_64.conf`
+6. Add /apps/install/lib to the OpenMPF ldconfig file:
+    <br>`sudo sh -c 'echo "/apps/install/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
+7. Update the shared library cache:
+    <br>`sudo ldconfig`
+
 
 ## RPM Dependencies
 
 The following RPM packages will need to be downloaded and installed. Use of the yum package manager is recommended:
 
-`sudo yum install -y asciidoc autoconf automake boost boost-devel cmake-gui freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libdc1394-devel libffi-devel libICE-devel libjpeg-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python-paramiko python-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel`
+`sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel`
+
+## Get the OpenMPF Source Code
+Open a terminal window and perform the following steps:
+
+1. Clone the OpenMPF repository
+    1. `cd /home/mpf`
+    2. `git clone https://github.com/openmpf/openmpf-projects.git --recursive`
+    3. (Optional) The HTTPS repository URL requires configuring your Github account with a certificate pair. The HTTP URL may be used without any certificates:
+        ```
+        git clone http://github.com/openmpf/openmpf-projects.git --recursive
+        ```
+
+2. Copy the mpf user profile script from the extracted source code:
+    <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
 
 ## Binary Packages
 
-> **NOTE:** If your environment is behind a proxy server that performs SSL inspection, please read the appendix section **[SSL Inspection](Build-Environment-Setup-Guide#ssl-inspection)** before continuing.
+> **NOTE:** If your environment is behind a proxy server that performs SSL inspection, please read the appendix section [SSL Inspection](#ssl-inspection) before continuing.
 
 The following binary packages will need to be downloaded and installed:
 
 1. Oracle JDK:
-    - For reference only: <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>
-    - `cd /home/mpf`
-    - `wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /apps/bin/jdk-8u60-linux-x64.rpm`
-    - `sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u60-linux-x64.rpm`
-    - `sudo alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_60/jre/bin/java 20000`
-    - `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000`
-    - `sudo alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_60/bin/javac 20000`
-    - `sudo alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0_60/jre/bin/javaws 20000`
-    - `sudo alternatives --set java /usr/java/jdk1.8.0_60/jre/bin/java`
-    - `sudo alternatives --set javaws /usr/java/jdk1.8.0_60/jre/bin/javaws`
-    - `sudo alternatives --set javac /usr/java/jdk1.8.0_60/bin/javac`
-    - `sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar`
+    <br>For reference only: <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>
+    1. `cd /home/mpf`
+    2. `wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /apps/bin/jdk-8u60-linux-x64.rpm`
+    3. `sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u60-linux-x64.rpm`
+    4. `sudo alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_60/jre/bin/java 20000`
+    5. `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000`
+    6. `sudo alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_60/bin/javac 20000`
+    7. `sudo alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0_60/jre/bin/javaws 20000`
+    8. `sudo alternatives --set java /usr/java/jdk1.8.0_60/jre/bin/java`
+    9. `sudo alternatives --set javaws /usr/java/jdk1.8.0_60/jre/bin/javaws`
+    10. `sudo alternatives --set javac /usr/java/jdk1.8.0_60/bin/javac`
+    11. `sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar`
    > **NOTE:** If this command to set the `jar` alternative fails with the following error:
    >
    > *failed to read link /usr/bin/jar: No such file or directory*
@@ -202,353 +190,338 @@ The following binary packages will need to be downloaded and installed:
    > You should run the following commands again:
    > - `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000`
    > - `sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar`
-    - `. /etc/profile.d/mpf.sh`
-- Apache ActiveMQ 5.13.0:
-    - For reference only: <http://activemq.apache.org>
-    - `cd /apps/bin/apache`
-    - `wget -O /apps/bin/apache/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
-    - `sudo tar xvzf apache-activemq-5.13.0-bin.tar.gz -C /opt/`
-    - `sudo chown -R mpf:mpf /opt/apache-activemq-5.13.0`
-    - `sudo chmod -R 755 /opt/apache-activemq-5.13.0`
-    - `sudo ln -s /opt/apache-activemq-5.13.0 /opt/activemq`
-- Apache Tomcat 7.0.72:
-    - For reference only: <http://tomcat.apache.org>
-    - `cd /apps/bin/apache `
-    - `wget -O /apps/bin/apache/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
-    - `tar xzvf apache-tomcat-7.0.72.tar.gz`
-    - `sudo mkdir -p /usr/share/apache-tomcat`
-    - `sudo cp -Rf /apps/bin/apache/apache-tomcat-7.0.72/* /usr/share/apache-tomcat/`
-    - `sudo chown -R mpf:mpf /usr/share/apache-tomcat`
-    - `sudo chmod -R 755 /usr/share/apache-tomcat`
-    - `sudo ln -s /usr/share/apache-tomcat /opt/apache-tomcat`
-    - `sudo perl -i -p0e 's/<!--\n    <Manager pathname="" \/>\n      -->.*?/<!-- -->\n    <Manager pathname="" \/>/s' /opt/apache-tomcat/conf/context.xml`
-    - `sudo perl -i -p0e 's/<\/Context>/    <Resources cachingAllowed="true" cacheMaxSize="100000" \/>\n<\/Context>/s' /opt/apache-tomcat/conf/context.xml`
-    - `sudo rm -rf /opt/apache-tomcat/webapps/*`
-- Apache Ant 1.9.6:
-    - For reference only: <http://ant.apache.org>
-    - `cd /apps/bin/apache `
-    - `wget -O /apps/bin/apache/apache-ant-1.9.6-bin.tar.gz "https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.6-bin.tar.gz"`
-    - `tar xzvf apache-ant-1.9.6-bin.tar.gz`
-    - `sudo cp -R /apps/bin/apache/apache-ant-1.9.6 /apps/install/`
-    - `sudo chown -R mpf:mpf /apps/install/apache-ant-1.9.6`
-    - `sudo sed -i '/^PATH/s/$/:\/apps\/install\/apache-ant-1.9.6\/bin/' /etc/profile.d/mpf.sh`
-    - `. /etc/profile.d/mpf.sh`
+    13. `. /etc/profile.d/mpf.sh`
+    
+2. Apache ActiveMQ 5.13.0:
+    <br>For reference only: <http://activemq.apache.org>
+    1. `cd /apps/bin/apache`
+    2. `wget -O /apps/bin/apache/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
+    3. `sudo tar xvzf apache-activemq-5.13.0-bin.tar.gz -C /opt/`
+    4. `sudo chown -R mpf:mpf /opt/apache-activemq-5.13.0`
+    5. `sudo chmod -R 755 /opt/apache-activemq-5.13.0`
+    6. `sudo ln -s /opt/apache-activemq-5.13.0 /opt/activemq`
+3. Apache Tomcat 7.0.72:
+    <br>For reference only: <http://tomcat.apache.org>
+    1. `cd /apps/bin/apache `
+    2. `wget -O /apps/bin/apache/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
+    3. `tar xzvf apache-tomcat-7.0.72.tar.gz`
+    4. `sudo mkdir -p /usr/share/apache-tomcat`
+    5. `sudo cp -Rf /apps/bin/apache/apache-tomcat-7.0.72/* /usr/share/apache-tomcat/`
+    6. `sudo chown -R mpf:mpf /usr/share/apache-tomcat`
+    7. `sudo chmod -R 755 /usr/share/apache-tomcat`
+    8. `sudo ln -s /usr/share/apache-tomcat /opt/apache-tomcat`
+    9. `sudo perl -i -p0e 's/<!--\n    <Manager pathname="" \/>\n      -->.*?/<!-- -->\n    <Manager pathname="" \/>/s' /opt/apache-tomcat/conf/context.xml`
+    10. `sudo rm -rf /opt/apache-tomcat/webapps/*`
+4. Apache Ant 1.9.6:
+    <br>For reference only: <http://ant.apache.org>
+    1. `cd /apps/bin/apache `
+    2. `wget -O /apps/bin/apache/apache-ant-1.9.6-bin.tar.gz "https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.6-bin.tar.gz"`
+    3. `tar xzvf apache-ant-1.9.6-bin.tar.gz`
+    4. `sudo cp -R /apps/bin/apache/apache-ant-1.9.6 /apps/install/`
+    5. `sudo chown -R mpf:mpf /apps/install/apache-ant-1.9.6`
+    6. `sudo sed -i '/^PATH/s/$/:\/apps\/install\/apache-ant-1.9.6\/bin/' /etc/profile.d/mpf.sh`
+    7. `. /etc/profile.d/mpf.sh`
 - Apache Maven 3.3.3:
-    - For reference only: <https://maven.apache.org>
-    - `cd /apps/bin/apache`
-    - `wget -O /apps/bin/apache/apache-maven-3.3.3-bin.tar.gz "https://archive.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz"`
-    - `tar xzvf apache-maven-3.3.3-bin.tar.gz`
-    - `sudo mkdir /opt/apache-maven`
-    - `sudo cp -Rf /apps/bin/apache/apache-maven-3.3.3/* /opt/apache-maven/`
-    - `sudo chown -R mpf:mpf /opt/apache-maven`
-    - `sudo sed -i '/^PATH/s/$/:\/opt\/apache-maven\/bin/' /etc/profile.d/mpf.sh`
-    - `sudo sh -c 'echo "M2_HOME=/opt/apache-maven" >> /etc/profile.d/mpf.sh'`
-    - `. /etc/profile.d/mpf.sh`
+    <br>For reference only: <https://maven.apache.org>
+    1. `cd /apps/bin/apache`
+    2. `wget -O /apps/bin/apache/apache-maven-3.3.3-bin.tar.gz "https://archive.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz"`
+    3. `tar xzvf apache-maven-3.3.3-bin.tar.gz`
+    4. `sudo mkdir /opt/apache-maven`
+    5. `sudo cp -Rf /apps/bin/apache/apache-maven-3.3.3/* /opt/apache-maven/`
+    6. `sudo chown -R mpf:mpf /opt/apache-maven`
+    7. `sudo sed -i '/^PATH/s/$/:\/opt\/apache-maven\/bin/' /etc/profile.d/mpf.sh`
+    8. `sudo sh -c 'echo "M2_HOME=/opt/apache-maven" >> /etc/profile.d/mpf.sh'`
+    9. `. /etc/profile.d/mpf.sh`
 
 ## Python Packages
+
 1. C Foreign Function Interface (CFFI):
-    - `cd /home/mpf`
-    - `sudo -E easy_install -U cffi`
-- OpenMPF Administrative Tools:
-    - `sudo -E pip install /home/mpf/mpf/trunk/bin/mpf-scripts`
+    1. `cd /home/mpf`
+    2. `sudo -E easy_install -U cffi`
+1. OpenMPF Administrative Tools:
+    <br> `sudo -E pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
 
 ## Building Dependencies
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure git before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure git before continuing.
 
 The following source packages will need to be downloaded, built, and installed:
 
 1. Cmake 2.8.12.2:
-    - For reference only: <https://cmake.org>
-    - `cd /apps/source/cmake_sources`
-    - `wget -O /apps/source/cmake_sources/cmake-2.8.12.2.tar.gz "https://cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz"`
-    - `tar xvzf cmake-2.8.12.2.tar.gz`
-    - `cd cmake-2.8.12.2`
-    - `chmod +x *`
-    - `./configure --prefix=/apps/install`
-    - `make -j8`
-    - `sudo make install`
-    - `sudo ldconfig`
-    - `sudo ln -s /apps/install/bin/cmake /usr/local/bin/cmake`
-- FFmpeg 2.6.3:
-  > **NOTE:** FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.
-    - yasm:
-        - For reference only: <http://yasm.tortall.net>
-        - `cd /apps/source/ffmpeg_sources`
-        - `git clone --depth 1 http://github.com/yasm/yasm.git`
-        - `cd yasm`
-        - `autoreconf -fiv`
-        - `./configure --prefix="/apps/install" --bindir="/apps/install/bin"`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - xvidcore:
-        - For reference only: <https://labs.xvid.com>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.2.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz"`
-        - `tar zxvf xvidcore-1.3.2.tar.gz`
-        - `cd xvidcore/build/generic`
-        - `./configure --prefix="/apps/install"`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - libx264:
-        - For reference only: <http://www.videolan.org/developers/x264.html>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/x264-snapshot-20140223-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20140223-2245-stable.tar.bz2"`
-        - `tar xvjf x264-snapshot-20140223-2245-stable.tar.bz2`
-        - `cd x264-snapshot-20140223-2245-stable`
-        - `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared`
-        - `sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh`
-        - `sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" >> /etc/profile.d/mpf.sh'`
-        - `. /etc/profile.d/mpf.sh`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - opencore-amr:
-        - For reference only: <https://sourceforge.net/projects/opencore-amr>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.3.tar.gz "http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.3.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopencore-amr%2Ffiles%2Fopencore-amr%2F&ts=1467223123&use_mirror=tenet"`
-        - `tar xvzf opencore-amr-0.1.3.tar.gz`
-        - `cd opencore-amr-0.1.3`
-        - `autoreconf -fiv`
-        - `./configure --prefix="/apps/install" --enable-shared`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - libmp3lame:
-        - For reference only: <http://lame.sourceforge.net>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/lame-3.99.5.tar.gz "http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"`
-        - `tar xzvf lame-3.99.5.tar.gz`
-        - `cd lame-3.99.5`
-        - `./configure --prefix="/apps/install" --bindir="/apps/install/bin" --enable-shared --enable-nasm`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - libogg:
-        - For reference only: <https://www.xiph.org/ogg>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/libogg-1.3.2.tar.gz "http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz"`
-        - `tar xvzf libogg-1.3.2.tar.gz`
-        - `cd libogg-1.3.2`
-        - `./configure --prefix="/apps/install" --enable-shared`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - libvorbis:
-        - For reference only: <https://xiph.org/vorbis>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.4.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.gz"`
-        - `tar xzvf libvorbis-1.3.4.tar.gz`
-        - `cd libvorbis-1.3.4`
-        - `LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - libtheora:
-        - For reference only: <https://www.theora.org>
-        - `cd /apps/source/ffmpeg_sources`
-        - `wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.bz2 "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.bz2"`
-        - `tar -xvjf libtheora-1.1.1.tar.bz2`
-        - `cd libtheora-1.1.1`
-        - `./configure --prefix="/apps/install" --enable-shared`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-    - FFmpeg:
-        - For reference only: <https://ffmpeg.org>
-        - `cd /apps/source/ffmpeg_sources`
-        - `git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg`
-        - `cd ffmpeg`
-        - `git checkout af5917698bd44f136fd0ff00a9e5f8b5f92f2d58`
-        - `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --bindir="/apps/install/bin" --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr`
-        - `make`
-        - `sudo make install`
-        - `make distclean`
-        - `sudo ldconfig`
-- Google protocol buffers 2.5.0:
-    - For reference only: <https://developers.google.com/protocol-buffers>
-    - `cd /apps/source/google_sources`
-    - `wget -O /apps/source/google_sources/protobuf-2.5.0.tar.gz "https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz"`
-    - `tar xvzf protobuf-2.5.0.tar.gz`
-    - `cd protobuf-2.5.0`
-    - `./configure --prefix=/apps/install`
-    - `make -j8`
-    - `sudo make install`
-    - `make distclean`
-    - `sudo ldconfig`
-    - `sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" >> /etc/profile.d/mpf.sh'`
-    - `sudo ln -s /apps/install/bin/protoc /usr/local/bin/protoc`
-    - `sudo ln -s /usr/lib64/libuuid.so.1.3.0 /usr/lib64/libuuid.so`
-- Apr 1.5.2:
-    - For reference only: <https://apr.apache.org>
-    - `cd /apps/source/apache_sources`
-    - `wget -O /apps/source/apache_sources/apr-1.5.2.tar.gz "http://archive.apache.org/dist/apr/apr-1.5.2.tar.gz"`
-    - `tar -zxvf apr-1.5.2.tar.gz`
-    - `cd /apps/source/apache_sources/apr-1.5.2`
-    - `./configure --prefix=/apps/install`
-    - `make -j8`
-    - `sudo make install`
-    - `make distclean`
-    - `sudo ldconfig`
-- Apr-util 1.5.4:
-    - For reference only: <https://apr.apache.org>
-    - `cd /apps/source/apache_sources`
-    - `wget -O /apps/source/apache_sources/apr-util-1.5.4.tar.gz "http://archive.apache.org/dist/apr/apr-util-1.5.4.tar.gz"`
-    - `tar -xzvf apr-util-1.5.4.tar.gz`
-    - `cd /apps/source/apache_sources/apr-util-1.5.4`
-    - `./configure --with-apr=/apps/install --prefix=/apps/install`
-    - `make -j8`
-    - `sudo make install`
-    - `make distclean`
-    - `sudo ldconfig`
-- Activemqcpp 3.9.0:
-    - For reference only: <http://activemq.apache.org/cms>
-    - `cd /apps/source/apache_sources`
-    - `wget -O /apps/source/apache_sources/activemq-cpp-library-3.9.0-src.tar.gz "https://archive.apache.org/dist/activemq/activemq-cpp/3.9.0/activemq-cpp-library-3.9.0-src.tar.gz"`
-    - `tar zxvf activemq-cpp-library-3.9.0-src.tar.gz`
-    - `cd /apps/source/apache_sources/activemq-cpp-library-3.9.0`
-    - `./autogen.sh`
-    - `./configure --disable-ssl --prefix=/apps/install`
-    - `make -j8`
-    - `sudo make install`
-    - `make distclean`
-    - `sudo ldconfig`
-    - `sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so`
-- openCV 2.4.9:
-    - For reference only: <http://opencv.org>
-    - `sudo ln -s /usr/include/gdk-pixbuf-2.0/gdk-pixbuf /usr/include/gtk-2.0/gdk-pixbuf`
-    - `cd /apps/source/opencv_sources`
-    - `wget -O /apps/source/opencv_sources/opencv-2.4.9.zip "http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.9/opencv-2.4.9.zip?r=http%3A%2F%2Fopencv.org%2Fdownloads.html&ts=1467141570&use_mirror=heanet"`
-    - `unzip -o opencv-2.4.9.zip`
-    - `cd opencv-2.4.9`
-    - `mkdir release`
-    - `cd release`
-    - `cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/apps/install/opencv2.4.9 ..`
-    - `make -j8`
-    - `sudo make install`
-    - `sudo sh -c 'echo "/apps/install/opencv2.4.9/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-    - `sudo ldconfig`
-    - `sudo ln -s /apps/install/opencv2.4.9/include/opencv2 /usr/include/`
-    - `sudo ln -s /apps/install/opencv2.4.9/include/opencv /usr/include/`
-    - `sudo sh -c 'echo "export OpenCV_DIR=/apps/install/opencv2.4.9/share/OpenCV/" >> /etc/profile.d/mpf.sh'`
-    - `. /etc/profile.d/mpf.sh`
-- Leptonica 1.70:
-    - For reference only: <https://github.com/DanBloomberg/leptonica>
-    - `cd /apps/source/openalpr_sources`
-    - `wget -O /apps/source/openalpr_sources/leptonica-1.70.tar.gz "https://github.com/DanBloomberg/leptonica/archive/v1.70.tar.gz"`
-    - `sudo mkdir /usr/local/src/openalpr`
-    - `sudo tar zxvf leptonica-1.70.tar.gz -C /usr/local/src/openalpr/`
-    - `sudo chown -R mpf:mpf /usr/local/src/openalpr`
-    - `sudo chmod -R 755 /usr/local/src/openalpr`
-    - `cd /usr/local/src/openalpr/leptonica-1.70`
-    - `./configure prefix=/usr/local`
-    - `make -j8`
-    - `sudo make install`
-    - `make distclean`
-    - `sudo ldconfig`
-- Tesseract 3.02.02:
-    - For reference only: <https://github.com/tesseract-ocr>
-    - `cd /apps/source/openalpr_sources`
-    - `wget -O /apps/source/openalpr_sources/3.02.02.tar.gz "https://github.com/tesseract-ocr/tesseract/archive/3.02.02.tar.gz"`
-    - `wget -O /apps/source/openalpr_sources/tesseract-ocr-3.02.eng.tar.gz "http://downloads.sourceforge.net/project/tesseract-ocr-alt/tesseract-ocr-3.02.eng.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Ftesseract-ocr-alt%2Ffiles%2F&ts=1468000683&use_mirror=superb-sea2"`
-    - `tar zxvf tesseract-ocr-3.02.eng.tar.gz -C /usr/local/src/openalpr/`
-    - `tar zxvf 3.02.02.tar.gz -C /usr/local/src/openalpr/`
-    - `cd /usr/local/src/openalpr`
-    - `cp -r tesseract-3.02.02/* tesseract-ocr/`
-    - `cd tesseract-ocr`
-    - `./autogen.sh`
-    - `./configure`
-    - `make -j8`
-    - `sudo make install`
-    - `sudo ldconfig`
-- OpenALPR 1.1.0:
-    - For reference only: <https://github.com/openalpr/openalpr>
-    - `cd /usr/local/src/openalpr`
-    - `git clone https://github.com/openalpr/openalpr.git`
-    - `cd /usr/local/src/openalpr/openalpr`
-    - `git checkout 765a41685d88901d8a394f211ba72614e491cbfd`
-    - `mkdir /usr/local/src/openalpr/openalpr/src/build`
-    - `cd /usr/local/src/openalpr/openalpr/src/build`
-    - `cmake -j8 --DCmake -j8_INSTALL_PREFIX:PATH=/usr ../`
-    - `make -j8`
-    - `sudo make install`
-    - `sudo ldconfig`
-    - `sudo ln -s /usr/local/src/openalpr/openalpr /usr/share/openalpr`
-    - `sudo cp -a /usr/local/lib/libopenalpr.so /usr/lib/libopenalpr.so`
-    - `sudo cp /usr/local/lib/libopenalpr.so.1 /usr/lib/libopenalpr.so.1`
-    - `sudo sh -c 'echo "export TESSDATA_PREFIX=/usr/local/src/openalpr/openalpr/runtime_data/ocr" >> /etc/profile.d/mpf.sh'`
-    - `sudo ldconfig`
-    - `. /etc/profile.d/mpf.sh`
-- openCV 3.1.0:
-    - For reference only: <http://opencv.org>
-    - `cd /apps/source/opencv_sources`
-    - `wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"`
-    - `unzip -o opencv-3.1.0.zip`
-    - `wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"`
-    - `tar xvzf opencv_contrib-3.1.0.tar.gz`
-    - `cd opencv-3.1.0`
-    - `mkdir release`
-    - `cd release`
-    - `cmake -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
-    - `make -j8`
-    - `sudo make install`
-    - `sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-    - `sudo ldconfig`
-    - `gedit /home/mpf/mpf/mpf_components/CPP/detection/caffeComponent/CMakeLists.txt`
-    - Under the `# Find and install OpenCV 3.1` section, locate the line `PATHS /opt/opencv3.1.0)`. Change the value of `PATHS` so this line looks like: `PATHS /apps/install/opencv3.1.0)`
-    - Save and close the file.
-- dlib:
-    - For reference only: <http://dlib.net>
-    - `cd /apps/source`
-    - `wget -O /apps/source/config4cpp.tar.gz "http://www.config4star.org/download/config4cpp.tar.gz"`
-    - `tar xvzf config4cpp.tar.gz`
-    - `cd config4cpp`
-    - `make`
-    - `cd /apps/source/dlib_sources`
-    - `wget -O /apps/source/dlib_sources/dlib-18.18.tar.bz2 "http://dlib.net/files/dlib-18.18.tar.bz2"`
-    - `tar xvjf dlib-18.18.tar.bz2`
-    - `cd dlib-18.18/dlib`
-    - `mkdir build`
-    - `cd build`
-    - `cmake ../`
-    - `cmake --build . --config Release`
-    - Make sure libdlib.so and libdlib.so.18.18.0 are present in /apps/source/dlib_sources/dlib-18.18/dlib/build
-    - `sudo make install`
-- Ansible:
-    - For reference only: <https://github.com/ansible/ansible>
-    - `cd /apps/source/ansible_sources`
-    - `git clone https://github.com/ansible/ansible.git --recursive`
-    - `cd ansible`
-    - `git checkout e71cce777685f96223856d5e6cf506a9ea2ef3ff`
-    - `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/core`
-    - `git checkout 36f512abc1a75b01ae7207c74cdfbcb54a84be54`
-    - `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/extras`
-    - `git checkout 32338612b38d1ddfd0d42b1245c597010da02970`
-    - `cd /apps/source/ansible_sources/ansible`
-    - `make rpm`
-    - `sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm`
+    <br>For reference only: <https://cmake.org>
+    1. `cd /apps/source/cmake_sources`
+    2. `wget -O /apps/source/cmake_sources/cmake-2.8.12.2.tar.gz "https://cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz"`
+    3. `tar xvzf cmake-2.8.12.2.tar.gz`
+    4. `cd cmake-2.8.12.2`
+    5. `chmod +x *`
+    6. `./configure --prefix=/apps/install`
+    7. `make -j`
+    8. `sudo make install`
+    9. `sudo ldconfig`
+    10. `sudo ln -s /apps/install/bin/cmake /usr/local/bin/cmake`
+    
+> **NOTE:** FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.    
+    
+2. FFmpeg 2.6.3:
+    1. xvidcore:
+        <br>For reference only: <https://labs.xvid.com>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.2.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz"`
+        3. `tar zxvf xvidcore-1.3.2.tar.gz`
+        4. `cd xvidcore/build/generic`
+        5. `./configure --prefix="/apps/install"`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    2. libx264:
+        <br>For reference only: <http://www.videolan.org/developers/x264.html>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/x264-snapshot-20140223-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20140223-2245-stable.tar.bz2"`
+        3. `tar xvjf x264-snapshot-20140223-2245-stable.tar.bz2`
+        4. `cd x264-snapshot-20140223-2245-stable`
+        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared`
+        6. `sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh`
+        7. `sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" >> /etc/profile.d/mpf.sh'`
+        8. `. /etc/profile.d/mpf.sh`
+        9. `make`
+        10. `sudo make install`
+        11. `make distclean`
+        12. `sudo ldconfig`
+    3. opencore-amr:
+        <br>For reference only: <https://sourceforge.net/projects/opencore-amr>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.3.tar.gz "http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.3.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopencore-amr%2Ffiles%2Fopencore-amr%2F&ts=1467223123&use_mirror=tenet"`
+        3. `tar xvzf opencore-amr-0.1.3.tar.gz`
+        4. `cd opencore-amr-0.1.3`
+        5. `autoreconf -fiv`
+        6. `./configure --prefix="/apps/install" --enable-shared`
+        7. `make`
+        8. `sudo make install`
+        9. `make distclean`
+        10. `sudo ldconfig`
+    4. libmp3lame:
+        <br>For reference only: <http://lame.sourceforge.net>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/lame-3.99.5.tar.gz "http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"`
+        3. `tar xzvf lame-3.99.5.tar.gz`
+        4. `cd lame-3.99.5`
+        5. `./configure --prefix="/apps/install" --bindir="/apps/install/bin" --enable-shared --enable-nasm`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    5. libogg:
+        <br>For reference only: <https://www.xiph.org/ogg>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/libogg-1.3.2.tar.gz "http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz"`
+        3. `tar xvzf libogg-1.3.2.tar.gz`
+        4. `cd libogg-1.3.2`
+        5. `./configure --prefix="/apps/install" --enable-shared`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    6. libvorbis:
+        <br>For reference only: <https://xiph.org/vorbis>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.4.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.gz"`
+        3. `tar xzvf libvorbis-1.3.4.tar.gz`
+        4. `cd libvorbis-1.3.4`
+        5. `LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    7. libtheora:
+        <br>For reference only: <https://www.theora.org>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.bz2 "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.bz2"`
+        3. `tar -xvjf libtheora-1.1.1.tar.bz2`
+        4. `cd libtheora-1.1.1`
+        5. `./configure --prefix="/apps/install" --enable-shared`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    8. FFmpeg:
+        <br>For reference only: <https://ffmpeg.org>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg`
+        3. `cd ffmpeg`
+        4. `git checkout af5917698bd44f136fd0ff00a9e5f8b5f92f2d58`
+        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --bindir="/apps/install/bin" --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr --enable-avresample`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ln -s /apps/install/bin/ffmpeg /usr/bin/ffmpeg`
+        10. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
+        11. `sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" >> /etc/profile.d/mpf.sh'`
+        12. `. /etc/profile.d/mpf.sh`
+        13. `sudo ldconfig`
+3. Google protocol buffers 2.5.0:
+    <br>For reference only: <https://developers.google.com/protocol-buffers>
+    1. `cd /apps/source/google_sources`
+    2. `wget -O /apps/source/google_sources/protobuf-2.5.0.tar.gz "https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz"`
+    3. `tar xvzf protobuf-2.5.0.tar.gz`
+    4. `cd protobuf-2.5.0`
+    5. `./configure --prefix=/apps/install`
+    6. `make -j8`
+    7. `sudo make install`
+    8. `make distclean`
+    9. `sudo ldconfig`
+    10. `sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" >> /etc/profile.d/mpf.sh'`
+    11. `sudo ln -s /apps/install/bin/protoc /usr/local/bin/protoc`
+    12. `sudo ln -s /usr/lib64/libuuid.so.1.3.0 /usr/lib64/libuuid.so`
+4. Apr 1.5.2:
+    <br>For reference only: <https://apr.apache.org>
+    1. `cd /apps/source/apache_sources`
+    2. `wget -O /apps/source/apache_sources/apr-1.5.2.tar.gz "http://archive.apache.org/dist/apr/apr-1.5.2.tar.gz"`
+    3. `tar -zxvf apr-1.5.2.tar.gz`
+    4. `cd /apps/source/apache_sources/apr-1.5.2`
+    5. `./configure --prefix=/apps/install`
+    6. `make -j8`
+    7. `sudo make install`
+    8. `make distclean`
+    9. `sudo ldconfig`
+5. Apr-util 1.5.4:
+    <br>For reference only: <https://apr.apache.org>
+    1. `cd /apps/source/apache_sources`
+    2. `wget -O /apps/source/apache_sources/apr-util-1.5.4.tar.gz "http://archive.apache.org/dist/apr/apr-util-1.5.4.tar.gz"`
+    3. `tar -xzvf apr-util-1.5.4.tar.gz`
+    4. `cd /apps/source/apache_sources/apr-util-1.5.4`
+    5. `./configure --with-apr=/apps/install --prefix=/apps/install`
+    6. `make -j8`
+    7. `sudo make install`
+    8. `make distclean`
+    9. `sudo ldconfig`
+6. Activemqcpp 3.9.0:
+    <br>For reference only: <http://activemq.apache.org/cms>
+    1. `cd /apps/source/apache_sources`
+    2. `wget -O /apps/source/apache_sources/activemq-cpp-library-3.9.0-src.tar.gz "https://archive.apache.org/dist/activemq/activemq-cpp/3.9.0/activemq-cpp-library-3.9.0-src.tar.gz"`
+    3. `tar zxvf activemq-cpp-library-3.9.0-src.tar.gz`
+    4. `cd /apps/source/apache_sources/activemq-cpp-library-3.9.0`
+    5. `./autogen.sh`
+    6. `./configure --disable-ssl --prefix=/apps/install`
+    7. `make -j8`
+    8. `sudo make install`
+    9. `make distclean`
+    10. `sudo ldconfig`
+    11. `sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so`
+7. openCV 3.1.0:
+    <br>For reference only: <http://opencv.org>
+    1. `cd /apps/source/opencv_sources`
+    2. `wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"`
+    3. `unzip -o opencv-3.1.0.zip`
+    4. `wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"`
+    5. `tar xvzf opencv_contrib-3.1.0.tar.gz`
+    6. `cd opencv-3.1.0`
+    7. `mkdir release`
+    8. `cd release`
+    9. `cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
+    10. `make -j4`
+    11. `sudo make install`
+    12. `sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
+    13. `sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0`
+    14. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2`
+    15. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv`	
+    16. `sudo ldconfig`
+    17. `export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV`
+8. Leptonica 1.72:
+    <br>For reference only: <https://github.com/DanBloomberg/leptonica>
+    1. `cd /apps/source/openalpr_sources`
+    2. `wget -O /apps/source/openalpr_sources/leptonica-1.72.tar.gz "https://github.com/DanBloomberg/leptonica/archive/v1.72.tar.gz"`
+    3. `tar xvzf leptonica-1.72.tar.gz`
+    4. `sudo mkdir /usr/local/src/openalpr`    
+    5. `sudo cp -R /apps/source/openalpr_sources/leptonica-1.72 /usr/local/src/openalpr/`
+    6. `sudo chown -R mpf:mpf /usr/local/src/openalpr`
+    7. `sudo chmod -R 755 /usr/local/src/openalpr`
+    8. `cd /usr/local/src/openalpr/leptonica-1.72`
+    9. `./configure --prefix=/usr/local`
+    10. `make --directory /usr/local/src/openalpr/leptonica-1.72 -j`
+    11. `sudo make --directory /usr/local/src/openalpr/leptonica-1.72 install`
+    12. `make --directory /usr/local/src/openalpr/leptonica-1.72 distclean`
+    13. `sudo ldconfig`
+9. Tesseract 3.04.00:
+    <br>For reference only: <https://github.com/tesseract-ocr>
+    1. `cd /apps/source/openalpr_sources`
+    2. `wget -O /apps/source/openalpr_sources/tesseract-3.04.00.tar.gz "https://github.com/tesseract-ocr/tesseract/archive/3.04.00.tar.gz"`
+    3. `tar xvzf tesseract-3.04.00.tar.gz`
+    4. `wget -O /apps/source/openalpr_sources/tessdata-3.04.00.tar.gz https://github.com/tesseract-ocr/tessdata/archive/3.04.00.tar.gz`
+    5. `tar xvzf tessdata-3.04.00.tar.gz`
+    6. `sudo mkdir -p /usr/local/src/openalpr/tesseract-ocr`
+    7. `sudo cp -a /apps/source/openalpr_sources/tessdata-3.04.00/. /usr/local/src/openalpr/tesseract-ocr/tessdata/`
+    8. `sudo cp -a /apps/source/openalpr_sources/tesseract-3.04.00/. /usr/local/src/openalpr/tesseract-ocr/`
+    9. `sudo chown -R mpf:mpf /usr/local/src/openalpr`
+    10. `sudo chmod -R 755 /usr/local/src/openalpr`
+    11. `cd /usr/local/src/openalpr/tesseract-ocr`
+    12. `sh autogen.sh`
+    13. `./configure`
+    14. `make --directory /usr/local/src/openalpr/tesseract-ocr -j`
+    15. `sudo make --directory /usr/local/src/openalpr/tesseract-ocr install`
+    16. `sudo ldconfig`
+10. OpenALPR 2.3.0:
+    <br>For reference only: <https://github.com/openalpr/openalpr>
+    1. `cd /apps/source/openalpr_sources`
+    2. `git clone https://github.com/openalpr/openalpr.git`
+    3. `cd openalpr`
+    4. `git checkout 469c4fd6d782ac63a55246d1073b0f88edd0d230`
+    5. `cp -a /apps/source/openalpr_sources/openalpr /usr/local/src/openalpr/`
+    6. `mkdir -p /usr/local/src/openalpr/openalpr/src/build`
+    7. `cd /usr/local/src/openalpr/openalpr/src/build`
+    8. `cmake3 -j --DCmake3 -j_INSTALL_PREFIX:PATH=/usr -D WITH_DAEMON=OFF ../`
+    10. `make --directory /usr/local/src/openalpr/openalpr/src/build -j`
+    11. `sudo make --directory /usr/local/src/openalpr/openalpr/src/build install`	
+    12. `sudo ln -sf /usr/local/src/openalpr/openalpr /usr/share/openalpr`
+    13. `sudo cp -a /usr/local/lib/libopenalpr.so /usr/lib/libopenalpr.so`
+    14. `sudo cp /usr/local/lib/libopenalpr.so.2 /usr/lib/libopenalpr.so.2`
+    15. `sudo sh -c 'echo "export TESSDATA_PREFIX=/usr/local/src/openalpr/openalpr/runtime_data/ocr" >> /etc/profile.d/mpf.sh'`
+    16. `sudo ldconfig`
+    17. `. /etc/profile.d/mpf.sh`
+11. dlib:
+    <br>For reference only: <http://dlib.net>
+    1. `cd /apps/source`
+    2. `wget -O /apps/source/config4cpp.tar.gz "http://www.config4star.org/download/config4cpp.tar.gz"`
+    3. `tar xvzf config4cpp.tar.gz`
+    4. `cd config4cpp`
+    5. `make`
+    6. `cd /apps/source/dlib-sources`
+    7. `wget -O /apps/source/dlib-sources/dlib-18.18.tar.bz2 "http://dlib.net/files/dlib-18.18.tar.bz2"`
+    8. `tar xvjf dlib-18.18.tar.bz2`
+    9. `cd dlib-18.18/dlib`
+    10. `mkdir build`
+    11. `cd build`
+    12. `cmake3 ../`
+    13. `cmake3 --build . --config Release`
+    14. Make sure libdlib.so and libdlib.so.18.18.0 are present in /apps/source/dlib-sources/dlib-18.18/dlib/build
+    15. `sudo make install`
+12. Ansible:
+    <br>For reference only: <https://github.com/ansible/ansible>
+    1. `cd /apps/source/ansible_sources`
+    2. `git clone https://github.com/ansible/ansible.git --recursive`
+    3. `cd ansible`
+    4. `git checkout e71cce777685f96223856d5e6cf506a9ea2ef3ff`
+    5. `git pull --rebase`
+    6. `git submodule update --init --recursive`
+    7. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/core`
+    8. `git checkout 36f512abc1a75b01ae7207c74cdfbcb54a84be54`
+    9. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/extras`
+    10. `git checkout 32338612b38d1ddfd0d42b1245c597010da02970`
+    11. `cd /apps/source/ansible_sources/ansible`
+    12. `make rpm`
+    13. `sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm`
 
 ## Configuring MySQL
 
-- `sudo systemctl start mysqld`
-- `mysql -u root --execute "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';flush privileges;"`
-- `mysql -u root -ppassword --execute "create database mpf"`
-- `mysql -u root -ppassword --execute "create user 'mpf'@'%' IDENTIFIED by 'mpf';flush privileges;"`
-- `mysql -u root -ppassword --execute "create user 'mpf'@'$(hostname)' IDENTIFIED by 'mpf';flush privileges;"`
-- `mysql -u root -ppassword --execute "create user 'mpf'@'localhost' IDENTIFIED by 'mpf';flush privileges;"`
-- `mysql -u root -ppassword --execute "grant all privileges on mpf.* to 'mpf';flush privileges;"`
-- `sudo systemctl enable mysqld.service`
-- `sudo chkconfig --level 2345 mysqld on`
+1. `sudo systemctl start mysqld`
+2. `mysql -u root --execute "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';flush privileges;"`
+3. `mysql -u root -ppassword --execute "create database mpf"`
+4. `mysql -u root -ppassword --execute "create user 'mpf'@'%' IDENTIFIED by 'mpf';flush privileges;"`
+5. `mysql -u root -ppassword --execute "create user 'mpf'@'$(hostname)' IDENTIFIED by 'mpf';flush privileges;"`
+6. `mysql -u root -ppassword --execute "create user 'mpf'@'localhost' IDENTIFIED by 'mpf';flush privileges;"`
+7. `mysql -u root -ppassword --execute "grant all privileges on mpf.* to 'mpf';flush privileges;"`
+8. `sudo systemctl enable mysqld.service`
+9. `sudo chkconfig --level 2345 mysqld on`
 
 ## Configuring ActiveMQ
 
@@ -644,46 +617,38 @@ daemonize yes
 
 **Generate a self-signed certificate and keystore**
 
-> **NOTE:**  A valid keystore is required to run the OpenMPF with HTTPS support. These instructions will generate a keystore that should be used for local builds only. When deploying the OpenMPF, a keystore containing a valid certificate trust chain should be used.
+> **NOTE:**  A valid keystore is required to run the OpenMPF with HTTPS support. These instructions will generate a keystore that should be used for local builds only. When deploying OpenMPF, a keystore containing a valid certificate trust chain should be used.
 
-- Open a new terminal window.
--  `sudo systemctl stop tomcat7`
-- `cd /home/mpf`
-- `$JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA`
-- At the prompt, enter a keystore password of: `mpf123`
-- Re-enter the keystore password of: `mpf123`
-- At the `What is your first and last name?` prompt, press the Enter key for a blank value.
-- At the `What is the name of your organizational unit?` , press the Enter key for a blank value.
-- At the `What is the name of your organization?` prompt, press the Enter key for a blank value.
-- At the `What is the name of your City or Locality?` prompt, press the Enter key for a blank value.
-- At the `What is the name of your State or Province?` prompt, press the Enter key for a blank value.
-- At the `What is the two-letter country code for this unit?` prompt, press the Enter key for a blank value.
-- At the `Is CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?` prompt, type `yes` and press the Enter key to accept the values.
-- At the `Enter key password for <tomcat>` prompt, press the Enter key for a blank value.
-- Verify the file `/home/mpf/.keystore` was created at the current time.
+1. Open a new terminal window.
+2.  `sudo systemctl stop tomcat7`
+3. `cd /home/mpf`
+4. `$JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA`
+5. At the prompt, enter a keystore password of: `mpf123`
+6. Re-enter the keystore password of: `mpf123`
+7. At the `What is your first and last name?` prompt, press the Enter key for a blank value.
+8. At the `What is the name of your organizational unit?` , press the Enter key for a blank value.
+9. At the `What is the name of your organization?` prompt, press the Enter key for a blank value.
+10. At the `What is the name of your City or Locality?` prompt, press the Enter key for a blank value.
+11. At the `What is the name of your State or Province?` prompt, press the Enter key for a blank value.
+12. At the `What is the two-letter country code for this unit?` prompt, press the Enter key for a blank value.
+13. At the `Is CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?` prompt, type `yes` and press the Enter key to accept the values.
+14. At the `Enter key password for <tomcat>` prompt, press the Enter key for a blank value.
+15. Verify the file `/home/mpf/.keystore` was created at the current time.
 
 **Tomcat Configuration**
 
-- Open the file `/opt/apache-tomcat/conf/server.xml` in a text editor.
-- Below the commented out section on lines 87 through 90, add the following lines:
-
-```
-  <Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+1. Open the file `/opt/apache-tomcat/conf/server.xml` in a text editor.
+2. Below the commented out section on lines 87 through 90, add the following lines:
+<pre><code>&#60;Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
 	disableUploadTimeout="true" enableLookups="false" maxThreads="25"
 	port="8443" keystoreFile="/home/mpf/.keystore" keystorePass="mpf123"
 	protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
-	secure="true" sslProtocol="TLS" />
-```
-
-- Save and close the file.
-- Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
-- Add the following line:
-
-```
-  export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$LD_LIBRARY_PATH -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"
-```
-
-- Save and close the file.
+	secure="true" sslProtocol="TLS" /&#62;</code></pre>
+3. Save and close the file.
+4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
+5. Add the following line:
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$LD_LIBRARY_PATH -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre>
+6. Save and close the file.
 
 **Using an IDE**
 
@@ -691,40 +656,31 @@ If running Tomcat from an IDE, such as IntelliJ, then `-Dtransport.guarantee="CO
 
 ## (Optional) HTTP Configuration
 The OpenMPF can also be run using HTTP instead of HTTPS.
-- Open the file `/opt/apache-tomcat/conf/server.xml` in a text editor.
-- Below the commented out section on lines 87 through 90, remove the following lines if they exist:
 
-```
-  <Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+1. Open the file `/opt/apache-tomcat/conf/server.xml` in a text editor.
+2. Below the commented out section on lines 87 through 90, remove the following lines if they exist:
+<pre><code>&#60;Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
 	disableUploadTimeout="true" enableLookups="false" maxThreads="25"
 	port="8443" keystoreFile="/home/mpf/.keystore" keystorePass="mpf123"
 	protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
-	secure="true" sslProtocol="TLS" />
-```
-
-- Save and close the file.
-- Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
-- Add the following line:
-
-```
-  export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$LD_LIBRARY_PATH -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"
-```
-
-- Save and close the file.
+	secure="true" sslProtocol="TLS" /&#62;</code></pre>
+3. Save and close the file.
+4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
+5. Add the following line:
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$LD_LIBRARY_PATH -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre>
+6. Save and close the file.
 
 ## Adding Additional Maven Dependencies
 
-Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. They can be downloaded [here](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz). Copy `mpf-maven-deps.tar.gz` to `/home/mpf/mpf-maven-deps.tar.gz`.
+Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. These have been provided with the the OpenMPF source code located here <https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz>. These steps assume the archive `mpf-maven-deps.tar.gz` is at `/home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz`.
 
 1. Set up the local Maven repository:
-    - `cd /home/mpf`
-    - `mkdir -p .m2/repository`
+    1. `cd /home/mpf`
+    2. `mkdir -p .m2/repository`
 2. Extract the archive to the local Maven repository:
-    - `tar xvzf mpf-maven-deps.tar.gz -C /home/mpf/.m2/repository/`
+<br>`tar xvzf /home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz -C /home/mpf/.m2/repository/`
 
 # Building and Packaging the OpenMPF
-
-> **IMPORTANT:** The `CreateCustomPackage.pl` script used in this section assumes dependency packages needed for deployment are present in their correct location under `/mpfdata/ansible/install/repo/`. For a list of dependencies required for a standard OpenMPF package, please see the appendix section **[Third-party RPMs, tars, and Python Pip packages included with an OpenMPF Package](Build-Environment-Setup-Guide#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package)**.
 
 The OpenMPF uses Apache Maven to automate software builds. The `mvn` commands in this guide are assumed to be run at the command line.
 
@@ -735,99 +691,113 @@ The OpenMPF packaging script makes use of a directory /mpfdata with the followin
 ```
   mpfdata - the top level directory containing the structure and non-source code artifacts to be packaged for distribution.
   ├── ansible
-  │   └── install
-  │       └── repo
-  │           ├── extComponents - External component archives included with the OpenMPF.
-  │           ├── files - Any other uncategorized files needed by the OpenMPF.
-  │           ├── pip - Dependency packages needed for the OpenMPF administration scripts. Installed with Python pip during deployment.
-  │           ├── rpms - Contains all of the RPM packages needed for installing and running the OpenMPF. Installed with the yum package manager during deployment.
-  │           │   ├── management - RPM  packages needed for the OpenMPF deployment process.
-  │           │   ├── mpf - The OpenMPF RPM packages.
-  │           │   └── mpf-deps - RPM packages needed by the OpenMPF.
-  │           └── tars - Binary packages in tar archives needed by the OpenMPF.
+  │   └── install
+  │       └── repo
+  │           ├── files - Any other uncategorized files needed by the OpenMPF.
+  │           ├── pip - Dependency packages needed for the OpenMPF administration scripts. Installed with Python pip during deployment.
+  │           ├── rpms - Contains all of the RPM packages needed for installing and running the OpenMPF. Installed with the yum package manager during deployment.
+  │           │   ├── management - RPM  packages needed for the OpenMPF deployment process.
+  │           │   ├── mpf - The OpenMPF RPM packages.
+  │           │   └── mpf-deps - RPM packages needed by the OpenMPF.
+  │           └── tars - Binary packages in tar archives needed by the OpenMPF.
   └── releases - Contains the release package(s) that will be built.
 ```
 
 Create the build environment structure:
 
-- `sudo mkdir -p /mpfdata/ansible/install/repo/rpms/management`
-- `sudo mkdir /mpfdata/ansible/install/repo/rpms/mpf`
-- `sudo mkdir /mpfdata/ansible/install/repo/rpms/mpf-deps`
-- `sudo mkdir /mpfdata/ansible/install/repo/extComponents`
-- `sudo mkdir /mpfdata/ansible/install/repo/files`
-- `sudo mkdir /mpfdata/ansible/install/repo/pip`
-- `sudo mkdir /mpfdata/ansible/install/repo/tars`
-- `sudo mkdir /mpfdata/releases`
-- `sudo chown -R mpf:mpf /mpfdata`
+1. `sudo mkdir -p /mpfdata/ansible/install/repo/rpms/management`
+2. `sudo mkdir /mpfdata/ansible/install/repo/rpms/mpf`
+3. `sudo mkdir /mpfdata/ansible/install/repo/rpms/mpf-deps`
+4. `sudo mkdir /mpfdata/ansible/install/repo/files`
+5. `sudo mkdir /mpfdata/ansible/install/repo/pip`
+6. `sudo mkdir /mpfdata/ansible/install/repo/tars`
+7. `sudo mkdir /mpfdata/releases`
+8. `sudo chown -R mpf:mpf /mpfdata`
+
+## Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package
+
+As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The [Package Lists](#package-lists) section lists required third-party dependencies that are packaged with the OpenMPF installation files by the `CreateCustomPackage.pl` script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the `/mpfdata/ansible/install/repo/` directory to the package.
+
+The following commands can be used to populate the dependency packages into the `/mpfdata/ansible/install/repo` directory:
+
+1. `yumdownloader --exclude=*.i?86 --archlist=x86_64 adwaita-cursor-theme adwaita-icon-theme at-spi2-atk at-spi2-core cairo-gobject colord-libs createrepo deltarpm ebtables gcc glibc glibc-common glibc-devel glibc-headers gtk3 httpd httpd-tools json-glib kernel-headers lcms2 libffi-devel libgusb libmng libselinux-python libtomcrypt libtommath libXevie libxml2 libxml2-python libXtst libyaml mailcap mpfr openssh openssh-askpass openssh-clients openssh-server pciutils py-bcrypt python python2-crypto python-babel python-backports python-backports-ssl_match_hostname python-cffi python-chardet python-crypto python-deltarpm python-devel python-ecdsa python-httplib2 python-jinja2 python-keyczar python-kitchen python-libs python-markupsafe python-paramiko python-passlib python-pip python-ply python-ptyprocess python-pyasn1 python-pycparser python-setuptools python-simplejson python-six python-slip python-slip-dbus PyYAML qt qt-settings qt-x11 rest sshpass yum-utils --destdir /mpfdata/ansible/install/repo/rpms/management -C`
+2. `yumdownloader --exclude=*.i?86 --archlist=x86_64 apr apr-util apr-util-ldap atk avahi-libs cairo cdparanoia-libs cpp cups-libs fontconfig fontpackages-filesystem gdk-pixbuf2 graphite2 gsm gstreamer gstreamer1 gstreamer1-plugins-base gstreamer-plugins-base gstreamer-tools gtk2 gtk3 harfbuzz hicolor-icon-theme iso-codes jasper-libs jbigkit-libs jemalloc libdc1394 libICE libjpeg-turbo libmng libmpc libogg libpng libraw1394 libSM libthai libtheora libtiff libusbx libv4l libvisual libvorbis libvpx libX11 libX11-common libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXft libXi libXinerama libxml2 libXrandr libXrender libxshmfence libXv libXxf86vm log4cxx mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi mesa-libGLU mysql-community-client mysql-community-common mysql-community-libs mysql-community-server mysql-connector-python MySQL-python net-tools openjpeg-libs openssh openssh-clients openssh-server opus orc pango perl perl-Carp perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-constant perl-Data-Dumper perl-DBD-MySQL perl-DBI perl-Encode perl-Exporter perl-File-Path perl-File-Temp perl-Filter perl-Getopt-Long perl-HTTP-Tiny perl-IO-Compress perl-libs perl-macros perl-Net-Daemon perl-parent perl-PathTools perl-PlRPC perl-Pod-Escapes perl-podlators perl-Pod-Perldoc perl-Pod-Simple perl-Pod-Usage perl-Scalar-List-Utils perl-Socket perl-Storable perl-Text-ParseWords perl-threads perl-threads-shared perl-Time-HiRes perl-Time-Local pixman redis SDL speex unzip xml-common --destdir /mpfdata/ansible/install/repo/rpms/mpf-deps -C`
+3. `cp /apps/source/ansible_sources/ansible/rpm-build/ansible-*.noarch.rpm /mpfdata/ansible/install/repo/rpms/management/`
+4. `wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u60-linux-x64.rpm`
+> **NOTE:** Oracle may require an account to download archived versions of the JRE.
+5. Download jre-8u60-linux-x64.rpm and place it in `/mpfdata/ansible/install/repo/rpms/mpf-deps` : <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jre-8u60-oth-JPR>
+6. `wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
+7. `wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
+8. `cd /mpfdata/ansible/install/repo/pip`
+9. `pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six`
+
 
 ## Build the Open Source OpenMPF Package
 
-Follow the instructions in the **Build the OpenMPF Package** section below. Use the following values:
-
-#### `<cppComponents>`
-
-`mogMotionComponent,ocvFaceComponent,dlibFaceComponent,caffeComponent,oalprTextComponent,ocvPersonComponent`
-
-#### `<configFile>`
-
-`./config_files/mpf-open-source-package.json`
+Follow the instructions in the **Build the OpenMPF Package** section below. Use the following value for `<configFile>`:
+<br>`/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/mpf-open-source-package.json`
 
 ## Build the OpenMPF Package
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Maven before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure Maven before continuing.
 
 1. Remove the development properties file:
-    - `cd /home/mpf/mpf`
-    - `rm -f trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
-2. Run the Maven clean package command with the `create-tar` profile and the `rpm:rpm` goal. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
-    - `cd /home/mpf/mpf`
-    - `mvn package -Pcreate-tar rpm:rpm -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DgitBranch=master -DcppComponents=<cppComponents>`
-> **NOTE:** The order of components in the `-DcppComponents` list is important. Components will be registered in that order. For example, since the OCV face detection component descriptor file depends on MOG motion preprocessor actions, the MOG motion detection component should appear before the OCV face detection component in the list.
-3. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
-    - `cd /home/mpf/mpf/trunk/jenkins/scripts`
-    - `perl CreateCustomPackage.pl /home/mpf/mpf master 0 <configFile>`
-4. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
-5. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
-    - `cp /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/mpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
+    1. `cd /home/mpf/openmpf-projects/openmpf`
+    2. `rm -f trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
+
+2. (Optional) run maven clean if there has been a previous software build:
+    <br> `mvn clean`
+3. Run the Perl `PackageRPMS.pl` script. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
+    1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
+    2. `perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 0 <configFile>`
+4. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
+    1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
+    2. `perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master 0 <configFile>`
+5. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
+6. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
+<br>`cp /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
+
 
 # (Optional) Testing the OpenMPF
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure Firefox before continuing.
 
 Run these commands to build the OpenMPF and run the integration tests:
 
-- `cd /home/mpf/mpf`
-- Copy the development properties file into place:
+1. `cd /home/mpf/openmpf-projects/openmpf`
+2. Copy the development properties file into place:
+    ```
+    cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
+    ```
 
-  `cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
+3. Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
+4. If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
+    ```
+    [mpf-child]
+    localhost.localdomain
+    ```
 
-- Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
-- If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
+5. Save and close the file.
+6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=<configFile> -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false`
+7. `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/`
+8. `sudo systemctl daemon-reload`
+9. `mpf start --xtc` (This command will start ActiveMQ, MySQL, Redis, and node-manager; not Tomcat.)
+10. `mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
+11. `mpf stop --xtc` (This command will stop node-manager, Redis, MySQL, and ActiveMQ; not Tomcat.)
 
-```
-  [mpf-child]
-  localhost.localdomain
-```
-
-- Save and close the file.
-- `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DcppComponents=<cppComponents>`
-- `sudo cp /home/mpf/mpf/trunk/install/libexec/node-manager /etc/init.d/`
-- `sudo systemctl daemon-reload`
-- `mpf start --xtc` (This command will start ActiveMQ, MySQL, Redis, and node-manager; not Tomcat.)
-- `mvn verify -DcppComponents=<cppComponents> -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'`
-- `mpf stop --xtc` (This command will stop node-manager, Redis, MySQL, and ActiveMQ; not Tomcat.)
-
-> **NOTE:** Please see the appendix section **Known Issues** regarding any `java.lang.InterruptedException: null` warning log messages observed when running the tests.
+> **NOTE:** Please see the appendix section [Known Issues](#known-issues) regarding any `java.lang.InterruptedException: null` warning log messages observed when running the tests.
 
 # (Optional) Building and running the web application
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section **[Proxy Configuration](Build-Environment-Setup-Guide#proxy-configuration)**  for instructions to configure Firefox before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure Firefox before continuing.
 
 Run these commands to build the OpenMPF and launch the web application:
 
-- `cd /home/mpf/mpf`
-- Copy the development properties file into place:
-    - `cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
+1. `cd /home/mpf/openmpf-projects/openmpf`
+2. Copy the development properties file into place:
+    ```
+    cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
+    ```
 - Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
 - If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
 
@@ -836,15 +806,15 @@ Run these commands to build the OpenMPF and launch the web application:
   localhost.localdomain
 ```
 
-- Save and close the file.
-- `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -DcppComponents=<cppComponents>`
-- `cd /home/mpf/mpf/trunk/workflow-manager`
-- `rm -rf /opt/apache-tomcat/webapps/workflow-manager*`
-- `cp target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war`
-- `cd ../..`
-- `sudo cp trunk/install/libexec/node-manager /etc/init.d/`
-- `sudo systemctl daemon-reload`
-- `mpf start`
+5. Save and close the file.
+6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
+7. `cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager`
+8. `rm -rf /opt/apache-tomcat/webapps/workflow-manager*`
+9. `cp target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war`
+10. `cd ../..`
+11. `sudo cp trunk/install/libexec/node-manager /etc/init.d/`
+12. `sudo systemctl daemon-reload`
+13. `mpf start`
 
 The web application should start running in the background as a daemon. Look for this log message in the Tomcat log (`/opt/apache-tomcat/logs/catalina.out`) with a time value indicating the workflow-manager has finished starting:
 
@@ -854,11 +824,11 @@ INFO: Server startup in 39030 ms
 
 After startup, the workflow-manager will be available at <http://localhost:8080/workflow-manager>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
 
-If you want to test regular user capabilities, log in as 'mpf'. Please see the  [User Guide](User-Guide) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [Admin Manual](Admin-Manual) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
+If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Manual](Admin-Manual/) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
 
 > **NOTE:** Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <https://www.virtualbox.org/manual/ch06.html#natforward> for configuring port forwarding.
 
-The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Manual/#command-line-tools) section of the [Admin Manual](Admin-Manual). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
+The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Manual/#command-line-tools) section of the [OpenMPF Admin Manual](Admin-Manual/). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
 
 **Starting**
 
@@ -894,7 +864,7 @@ sudo systemctl stop mysqld
 
 # Deploying the OpenMPF
 
-Please see the [Installation Guide](Installation).
+Please see the [OpenMPF Installation Guide](Installation/).
 
 ---
 
@@ -902,7 +872,7 @@ Please see the [Installation Guide](Installation).
 
 # Known Issues
 
-The following are known issues that are related to setting up and running the OpenMPF on a build VM. For a more complete list of known issues, please see the  Release Notes.
+The following are known issues that are related to setting up and running the OpenMPF on a build VM. For a more complete list of known issues, please see the OpenMPF Release Notes.
 
 **Test Exceptions**
 
@@ -937,7 +907,7 @@ This does not necessarily indicate any type of software bug. The most likely cau
 
 **Time Differences Between OpenMPF Nodes**
 
-When installing the OpenMPF on multiple nodes, an NTP service should be set up on each of the systems in the cluster so that their times are synchronized. Otherwise, the log viewer may behave incorrectly when it updates in real time.
+When installing OpenMPF on multiple nodes, an NTP service should be set up on each of the systems in the cluster so that their times are synchronized. Otherwise, the log viewer may behave incorrectly when it updates in real time.
 
 # Proxy Configuration
 
@@ -945,50 +915,49 @@ When installing the OpenMPF on multiple nodes, an NTP service should be set up o
 
 Before using the yum package manager,  it may be necessary to configure it to work with your environment's proxy settings. If credentials are not required, it is not necessary to add them to the yum configuration.
 
-- `sudo bash -c 'echo "proxy=<address>:<port>" >> /etc/yum.conf'`
-- `sudo bash -c 'echo "proxy_username=<username>" >> /etc/yum.conf'`
-- `sudo bash -c 'echo "proxy_password=<password>" >> /etc/yum.conf'`
+1. `sudo bash -c 'echo "proxy=<address>:<port>" >> /etc/yum.conf'`
+2. `sudo bash -c 'echo "proxy_username=<username>" >> /etc/yum.conf'`
+3. `sudo bash -c 'echo "proxy_password=<password>" >> /etc/yum.conf'`
 
 **Proxy Environment Variables**
 
 If your build environment is behind a proxy server, some applications and tools will need to be configured to use it. To configure an HTTP and HTTPS proxy, run the following commands. If credentials are not required, leave those fields blank.
 
-- `sudo bash -c 'echo "export http_proxy=<username>:<password>@<url>:<port>" >> /etc/profile.d/mpf.sh`
-- `. /etc/profile.d/mpf.sh`
-- `sudo bash -c 'echo "export https_proxy='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
-- `sudo bash -c 'echo "export HTTP_PROXY='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
-- `sudo bash -c 'echo "export HTTPS_PROXY='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
-- `. /etc/profile.d/mpf.sh`
+1. `sudo bash -c 'echo "export http_proxy=<username>:<password>@<url>:<port>" >> /etc/profile.d/mpf.sh`
+2. `. /etc/profile.d/mpf.sh`
+3. `sudo bash -c 'echo "export https_proxy='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
+4. `sudo bash -c 'echo "export HTTP_PROXY='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
+5. `sudo bash -c 'echo "export HTTPS_PROXY='${http_proxy}'" >> /etc/profile.d/mpf.sh'`
+6. `. /etc/profile.d/mpf.sh`
 
 **Git Proxy Configuration**
 
 If your build environment is behind a proxy server, git will need to be configured to use it. The following command will set the git global proxy. If the environment variable `$http_proxy` is not set, use the full proxy server address, port, and credentials (if needed).
-
-- `git config --global http.proxy $http_proxy`
+   <br> `git config --global http.proxy $http_proxy`
 
 **Firefox Proxy Configuration**
 
 Before running the integration tests and the web application, it may be necessary to configure Firefox with your environment's proxy settings.
 
-- In a new terminal window, type `firefox` and press enter. This will launch a new Firefox window.
-- In the new Firefox window, enter `about:preferences#advanced` in the URL text box and press enter.
-- In the left sidebar click 'Advanced', then click the `Network` tab, and in the `Connection` section press the 'Settings...' button.
-- Enter the proxy settings for your environment.
-- In the 'No Proxy for:' text box, verify that `localhost` is included.
-- Press the 'OK' button.
-- Close all open Firefox instances.
+1. In a new terminal window, type `firefox` and press enter. This will launch a new Firefox window.
+2. In the new Firefox window, enter `about:preferences#advanced` in the URL text box and press enter.
+3. In the left sidebar click 'Advanced', then click the `Network` tab, and in the `Connection` section press the 'Settings...' button.
+4. Enter the proxy settings for your environment.
+5. In the 'No Proxy for:' text box, verify that `localhost` is included.
+6. Press the 'OK' button.
+7. Close all open Firefox instances.
 
 **Maven Proxy Configuration**
 
 Before using Maven, it may be necessary to configure it to work with your environment's proxy settings. Open a new terminal window and run these commands. Afterwards, continue with adding the additional maven dependencies.
 
-- `cd /home/mpf`
-- `mkdir -p .m2`
-- `cp /opt/apache-maven/conf/settings.xml .m2/`
-- Open the file `.m2/settings.xml` in a text editor.
-- Navigate to the `<proxies>` section (line 85).
-- There is a commented-out example proxy server specification. Copy and paste the example specification below the commented-out section, but before the end of the closing `</proxies>` tag.
-- Fill in your environment's proxy server information. For additional help and information, please see the Apache Maven guide to configuring a proxy server at <https://maven.apache.org/guides/mini/guide-proxies.html>.
+1. `cd /home/mpf`
+2. `mkdir -p .m2`
+3. `cp /opt/apache-maven/conf/settings.xml .m2/`
+4. Open the file `.m2/settings.xml` in a text editor.
+5. Navigate to the `<proxies>` section (line 85).
+6. There is a commented-out example proxy server specification. Copy and paste the example specification below the commented-out section, but before the end of the closing `</proxies>` tag.
+7. Fill in your environment's proxy server information. For additional help and information, please see the Apache Maven guide to configuring a proxy server at <https://maven.apache.org/guides/mini/guide-proxies.html>.
 
 # SSL Inspection
 
@@ -996,76 +965,52 @@ If your build environment is behind a proxy server that performs SSL inspection,
 
 Additional information on Java keytool can be found at <https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html>.
 
-- Download any certificates needed for using SSL in your build environment to `/home/mpf/Downloads`.
-- Verify that `$JAVA_HOME` is set correctly.
-    - Running this command: `echo $JAVA_HOME` should produce this output: `/usr/java/latest`
-- For each certificate, run this command, filling in the values for certificate alias, certificate name, and keystore passphrase:
-    - `sudo $JAVA_HOME/bin/keytool -import -alias <certificate alias> -file /home/mpf/Downloads/<certificate name>.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass <keystore passphrase> -noprompt`
-- For each certificate, run this command, filling in the value for certificate name:
-    - `sudo cp /home/mpf/Downloads/<certificate name>.crt /tmp`
-- For each certificate, run this command, filling in the values for certificate name:
-    - `sudo -u root -H sh -c "openssl x509 -in /tmp/<certificate name>.crt    -text > /etc/pki/ca-trust/source/anchors/<certificate name>.pem"`
-- Run these commands once:
-    - `sudo -u root -H sh -c "update-ca-trust enable"`
-    - `sudo -u root -H sh -c "update-ca-trust extract"`
-- Run these commands once, filling in the value for the root certificate name:
-    - `sudo cp /etc/pki/tls/certs/ca-bundle.crt /etc/pki/tls/certs/ca-bundle.crt.original`
-    - `sudo -u root -H sh -c "cat /etc/pki/ca-trust/source/anchors/<root certificate name>.pem >> /etc/pki/tls/certs/ca-bundle.crt"`
+1. Download any certificates needed for using SSL in your build environment to `/home/mpf/Downloads`.
+2. Verify that `$JAVA_HOME` is set correctly.
+    <br> Running this command: `echo $JAVA_HOME` should produce this output: `/usr/java/latest`
+3. For each certificate, run this command, filling in the values for certificate alias, certificate name, and keystore passphrase:
+    <br> `sudo $JAVA_HOME/bin/keytool -import -alias <certificate alias> -file /home/mpf/Downloads/<certificate name>.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass <keystore passphrase> -noprompt`
+4. For each certificate, run this command, filling in the value for certificate name:
+    <br> `sudo cp /home/mpf/Downloads/<certificate name>.crt /tmp`
+5. For each certificate, run this command, filling in the values for certificate name:
+    <br> `sudo -u root -H sh -c "openssl x509 -in /tmp/<certificate name>.crt    -text > /etc/pki/ca-trust/source/anchors/<certificate name>.pem"`
+6. Run these commands once:
+    1. `sudo -u root -H sh -c "update-ca-trust enable"`
+    2. `sudo -u root -H sh -c "update-ca-trust extract"`
+7. Run these commands once, filling in the value for the root certificate name:
+    1. `sudo cp /etc/pki/tls/certs/ca-bundle.crt /etc/pki/tls/certs/ca-bundle.crt.original`
+    2. `sudo -u root -H sh -c "cat /etc/pki/ca-trust/source/anchors/<root certificate name>.pem >> /etc/pki/tls/certs/ca-bundle.crt"`
 
 Alternatively, if adding certificates is not an option or difficulties are encountered, you may optionally skip SSL certificate verification for these tools. This is not recommended:
 
 **wget**
 
-- `cd /home/mpf`
-- `touch /home/mpf/.wgetrc`
-- In a text editor, open the file `/home/mpf/.wgetrc`
-- Add this line:
+1. `cd /home/mpf`
+2. `touch /home/mpf/.wgetrc`
+3. In a text editor, open the file `/home/mpf/.wgetrc`
+4. Add this line:
 
-```
-  check_certificate=off
-```
-
-- Save and close the file.
-- `. /home/mpf/.wgetrc`
+    ```
+    check_certificate=off
+    ```
+    
+5. Save and close the file.
+6. `. /home/mpf/.wgetrc`
 
 **git**
 
-- `cd /home/mpf`
-- `git config http.sslVerify false`
-- `git config --global http.sslVerify false`
+1. `cd /home/mpf`
+2. `git config http.sslVerify false`
+3. `git config --global http.sslVerify false`
 
 **maven**
 
-- In a text editor, open the file `/etc/profile.d/mpf.sh`
-- At the bottom of the file, add this line:
+1. In a text editor, open the file `/etc/profile.d/mpf.sh`
+2. At the bottom of the file, add this line:
+<pre><code>export MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true"</code></pre>
+3. Save and close the file.
+4. `. /etc/profile.d/mpf.sh`
 
-```
-  export MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true"
-```
-
-- Save and close the file.
-- `. /etc/profile.d/mpf.sh`
-
-# Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package
-
-As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The **[Package Lists](Build-Environment-Setup-Guide#package-lists)** section below lists required third-party dependencies that are packaged with the OpenMPF installation files by the `CreateCustomPackage.pl` script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the `/mpfdata/ansible/install/repo/` directory to the package.
-
-The following commands can be used to populate the dependency packages into the `/mpfdata/ansible/install/repo` directory:
-
-- `cd /mpfdata/ansible/install/repo/rpms/management`
-- `sudo yumdownloader adwaita-cursor-theme adwaita-icon-theme at-spi2-atk at-spi2-core cairo-gobject colord-libs createrepo deltarpm ebtables firewalld gcc glibc glibc-common glibc-devel glibc-headers gtk3 httpd httpd-tools json-glib kernel-headers lcms2 libffi-devel libgusb libmng libselinux-python libtomcrypt libtommath libXevie libxml2 libxml2-python libXtst libyaml mailcap mpfr openssh openssh-askpass openssh-clients openssh-server pciutils py-bcrypt python python2-crypto python-babel python-backports python-backports-ssl_match_hostname python-cffi python-chardet python-crypto python-deltarpm python-devel python-ecdsa python-httplib2 python-jinja2 python-keyczar python-kitchen python-libs python-markupsafe python-paramiko python-passlib python-pip python-ply python-ptyprocess python-pyasn1 python-pycparser python-setuptools python-simplejson python-six python-slip python-slip-dbus PyYAML qt qt-settings qt-x11 rest sshpass yum-utils    --archlist=x86_64`
-- `sudo rm ./*i686*`
-- `cd /mpfdata/ansible/install/repo/rpms/mpf-deps`
-- `sudo yumdownloader apr apr-util apr-util-ldap atk cairo cdparanoia-libs cpp cups-libs fontconfig fontpackages-filesystem gdk-pixbuf2 graphite2 gsm gstreamer gstreamer1 gstreamer1-plugins-base gstreamer-plugins-base gstreamer-tools gtk2 gtk3 harfbuzz hicolor-icon-theme iso-codes jasper-libs jbigkit-libs jemalloc libdc1394 libICE libjpeg-turbo libmng libmpc libogg libpng libraw1394 libSM libthai libtheora libtiff libusbx libv4l libvisual libvorbis libvpx libX11 libX11-common libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXft libXi libXinerama libxml2 libXrandr libXrender libxshmfence libXv libXxf86vm log4cxx mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi mesa-libGLU mysql-community-client mysql-community-common mysql-community-libs mysql-community-server mysql-connector-python MySQL-python net-tools openjpeg-libs openssh openssh-clients openssh-server opus orc pango perl perl-Carp perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-constant perl-Data-Dumper perl-DBD-MySQL perl-DBI perl-Encode perl-Exporter perl-File-Path perl-File-Temp perl-Filter perl-Getopt-Long perl-HTTP-Tiny perl-IO-Compress perl-libs perl-macros perl-Net-Daemon perl-parent perl-PathTools perl-PlRPC perl-Pod-Escapes perl-podlators perl-Pod-Perldoc perl-Pod-Simple perl-Pod-Usage perl-Scalar-List-Utils perl-Socket perl-Storable perl-Text-ParseWords perl-threads perl-threads-shared perl-Time-HiRes perl-Time-Local pixman redis SDL speex unzip xml-common --archlist=x86_64`
-- `sudo rm ./*i686*`
-- `cp /apps/source/ansible_sources/ansible/rpm-build/ansible-*.noarch.rpm /mpfdata/ansible/install/repo/rpms/management/`
-- `wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u60-linux-x64.rpm`
-- Download jre-8u60-linux-x64.rpm and place it in `/mpfdata/ansible/install/repo/rpms/mpf-deps` : <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jre-8u60-oth-JPR>
-    - **NOTE:** Oracle may require an account to download archived versions of the JRE.
-- `wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"`
-- `wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"`
-- `cd /mpfdata/ansible/install/repo/pip`
-- `pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six`
 
 ## Package Lists
 
@@ -1073,33 +1018,28 @@ The following commands can be used to populate the dependency packages into the 
     - adwaita-cursor-theme-3.14.1-1.el7.noarch.rpm
     - adwaita-icon-theme-3.14.1-1.el7.noarch.rpm
     - ansible-2.1.1.0-0.git201608081816.e71cce7.HEAD.el7.centos.noarch.rpm
-    - at-spi2-atk-2.8.1-4.el7.x86_64.rpm
-    - at-spi2-core-2.8.0-6.el7.x86_64.rpm
+    - at-spi2-atk-2.14.1-1.el7.x86_64.rpm
+    - at-spi2-core-2.14.1-2.el7.x86_64.rpm
     - cairo-gobject-1.14.2-1.el7.x86_64.rpm
     - colord-libs-1.2.7-2.el7.x86_64.rpm
-    - createrepo-0.9.9-25.el7_2.noarch.rpm
+    - createrepo-0.9.9-26.el7.noarch.rpm
     - deltarpm-3.6-3.el7.x86_64.rpm
-    - ebtables-2.0.10-13.el7.x86_64.rpm
-    - firewalld-0.3.9-14.el7.noarch.rpm
-    - gcc-4.8.5-4.el7.x86_64.rpm
-    - glibc-2.17-106.el7_2.6.i686.rpm
-    - glibc-2.17-106.el7_2.6.x86_64.rpm
-    - glibc-common-2.17-106.el7_2.6.x86_64.rpm
-    - glibc-devel-2.17-106.el7_2.4.x86_64.rpm
-    - glibc-devel-2.17-106.el7_2.6.i686.rpm
-    - glibc-devel-2.17-106.el7_2.6.x86_64.rpm
-    - glibc-headers-2.17-106.el7_2.4.x86_64.rpm
-    - glibc-headers-2.17-106.el7_2.6.x86_64.rpm
-    - gtk3-3.14.13-16.el7.x86_64.rpm
-    - httpd-2.4.6-40.el7.centos.x86_64.rpm
-    - httpd-tools-2.4.6-40.el7.centos.x86_64.rpm
+    - ebtables-2.0.10-15.el7.x86_64.rpm
+    - gcc-4.8.5-11.el7.x86_64.rpm
+    - glibc-2.17-157.el7_3.1.x86_64.rpm
+    - glibc-common-2.17-157.el7_3.1.x86_64.rpm
+    - glibc-devel-2.17-157.el7_3.1.x86_64.rpm
+    - glibc-headers-2.17-157.el7_3.1.x86_64.rpm
+    - gtk3-3.14.13-20.el7.x86_64.rpm
+    - httpd-2.4.6-45.el7.centos.4.x86_64.rpm
+    - httpd-tools-2.4.6-45.el7.centos.4.x86_64.rpm
     - json-glib-1.0.2-1.el7.x86_64.rpm
-    - kernel-headers-3.10.0-327.13.1.el7.x86_64.rpm
-    - lcms2-2.6-2.el7.x86_64.rpm
-    - libffi-devel-3.0.13-16.el7.x86_64.rpm
+    - kernel-headers-3.10.0-514.16.1.el7.x86_64.rpm
+    - lcms2-2.6-3.el7.x86_64.rpm
+    - libffi-devel-3.0.13-18.el7.x86_64.rpm
     - libgusb-0.1.6-3.el7.x86_64.rpm
     - libmng-1.0.10-14.el7.x86_64.rpm
-    - libselinux-python-2.2.2-6.el7.x86_64.rpm
+    - libselinux-python-2.5-6.el7.x86_64.rpm
     - libtomcrypt-1.17-23.el7.x86_64.rpm
     - libtommath-0.42.0-4.el7.x86_64.rpm
     - libXevie-1.0.3-7.1.el7.x86_64.rpm
@@ -1109,63 +1049,63 @@ The following commands can be used to populate the dependency packages into the 
     - libyaml-0.1.4-11.el7_0.x86_64.rpm
     - mailcap-2.1.41-2.el7.noarch.rpm
     - mpfr-3.1.1-4.el7.x86_64.rpm
-    - openssh-6.6.1p1-23.el7_2.x86_64.rpm
-    - openssh-askpass-6.6.1p1-23.el7_2.x86_64.rpm
-    - openssh-clients-6.6.1p1-23.el7_2.x86_64.rpm
-    - openssh-server-6.6.1p1-23.el7_2.x86_64.rpm
-    - pciutils-3.2.1-4.el7.x86_64.rpm
+    - openssh-6.6.1p1-35.el7_3.x86_64.rpm
+    - openssh-askpass-6.6.1p1-35.el7_3.x86_64.rpm
+    - openssh-clients-6.6.1p1-35.el7_3.x86_64.rpm
+    - openssh-server-6.6.1p1-35.el7_3.x86_64.rpm
+    - pciutils-3.5.1-1.el7.x86_64.rpm
     - py-bcrypt-0.4-4.el7.x86_64.rpm
-    - python-2.7.5-39.el7_2.x86_64.rpm
-    - python2-crypto-2.6.1-9.el7.x86_64.rpm
+    - python-2.7.5-48.el7.x86_64.rpm
+    - python2-crypto-2.6.1-13.el7.x86_64.rpm
+    - python2-pip-8.1.2-5.el7.noarch.rpm
+    - python2-ptyprocess-0.5.1-6.el7.noarch.rpm
+    - python2-pyasn1-0.1.9-7.el7.noarch.rpm
+    - python2-simplejson-3.10.0-1.el7.x86_64.rpm
     - python-babel-0.9.6-8.el7.noarch.rpm
     - python-backports-1.0-8.el7.x86_64.rpm
     - python-backports-ssl_match_hostname-3.4.0.2-4.el7.noarch.rpm
-    - python-cffi-0.8.6-2.el7.x86_64.rpm
+    - python-cffi-1.6.0-5.el7.x86_64.rpm
     - python-chardet-2.2.1-1.el7_1.noarch.rpm
     - python-crypto-2.6.1-1.el7.centos.x86_64.rpm
     - python-deltarpm-3.6-3.el7.x86_64.rpm
-    - python-devel-2.7.5-34.el7.x86_64.rpm
+    - python-devel-2.7.5-48.el7.x86_64.rpm
     - python-ecdsa-0.11-3.el7.centos.noarch.rpm
     - python-httplib2-0.7.7-3.el7.noarch.rpm
     - python-jinja2-2.7.2-2.el7.noarch.rpm
     - python-keyczar-0.71c-2.el7.noarch.rpm
     - python-kitchen-1.1.1-5.el7.noarch.rpm
-    - python-libs-2.7.5-39.el7_2.x86_64.rpm
+    - python-libs-2.7.5-48.el7.x86_64.rpm
     - python-markupsafe-0.11-10.el7.x86_64.rpm
-    - python-paramiko-1.15.1-1.el7.noarch.rpm
+    - python-paramiko-1.12.4-1.el7.centos.noarch.rpm
     - python-passlib-1.6.2-2.el7.noarch.rpm
-    - python-pip-7.1.0-1.el7.noarch.rpm
     - python-ply-3.4-10.el7.noarch.rpm
-    - python-ptyprocess-0.5-1.el7.noarch.rpm
-    - python-pyasn1-0.1.6-2.el7.noarch.rpm
     - python-pycparser-2.14-1.el7.noarch.rpm
     - python-setuptools-0.9.8-4.el7.noarch.rpm
-    - python-simplejson-3.3.3-1.el7.x86_64.rpm
     - python-six-1.9.0-2.el7.noarch.rpm
     - python-slip-0.4.0-2.el7.noarch.rpm
     - python-slip-dbus-0.4.0-2.el7.noarch.rpm
     - PyYAML-3.10-11.el7.x86_64.rpm
-    - qt-4.8.5-12.el7_2.i686.rpm
-    - qt-4.8.5-12.el7_2.x86_64.rpm
+    - qt-4.8.5-13.el7.x86_64.rpm
     - qt-settings-19-23.5.el7.centos.noarch.rpm
-    - qt-x11-4.8.5-12.el7_2.x86_64.rpm
-    - rest-0.7.92-3.el7.x86_64.rpm
-    - sshpass-1.05-5.el7.x86_64.rpm
-    - yum-utils-1.1.31-34.el7.noarch.rpm
+    - qt-x11-4.8.5-13.el7.x86_64.rpm
+    - rest-0.7.92-5.el7.x86_64.rpm
+    - sshpass-1.06-1.el7.x86_64.rpm
+    - yum-utils-1.1.31-40.el7.noarch.rpm
 
 - **/mpfdata/ansible/install/repo/rpms/mpf-deps**
     - apr-1.4.8-3.el7.x86_64.rpm
     - apr-util-1.5.2-6.el7.x86_64.rpm
     - apr-util-ldap-1.5.2-6.el7.x86_64.rpm
     - atk-2.14.0-1.el7.x86_64.rpm
+    - avahi-libs-0.6.31-17.el7.x86_64.rpm
     - cairo-1.14.2-1.el7.x86_64.rpm
     - cdparanoia-libs-10.2-17.el7.x86_64.rpm
-    - cpp-4.8.5-4.el7.x86_64.rpm
-    - cups-libs-1.6.3-22.el7.x86_64.rpm
-    - fontconfig-2.10.95-7.el7.x86_64.rpm
+    - cpp-4.8.5-11.el7.x86_64.rpm
+    - cups-libs-1.6.3-26.el7.x86_64.rpm
+    - fontconfig-2.10.95-10.el7.x86_64.rpm
     - fontpackages-filesystem-1.44-8.el7.noarch.rpm
     - gdk-pixbuf2-2.31.6-3.el7.x86_64.rpm
-    - graphite2-1.2.2-5.el7.x86_64.rpm
+    - graphite2-1.3.6-1.el7_2.x86_64.rpm
     - gsm-1.0.13-11.el7.x86_64.rpm
     - gstreamer-0.10.36-7.el7.x86_64.rpm
     - gstreamer1-1.4.5-1.el7.x86_64.rpm
@@ -1173,7 +1113,7 @@ The following commands can be used to populate the dependency packages into the 
     - gstreamer-plugins-base-0.10.36-10.el7.x86_64.rpm
     - gstreamer-tools-0.10.36-7.el7.x86_64.rpm
     - gtk2-2.24.28-8.el7.x86_64.rpm
-    - gtk3-3.14.13-16.el7.x86_64.rpm
+    - gtk3-3.14.13-20.el7.x86_64.rpm
     - harfbuzz-0.9.36-1.el7.x86_64.rpm
     - hicolor-icon-theme-0.12-7.el7.noarch.rpm
     - iso-codes-3.46-2.el7.noarch.rpm
@@ -1193,14 +1133,14 @@ The following commands can be used to populate the dependency packages into the 
     - libSM-1.2.2-2.el7.x86_64.rpm
     - libthai-0.1.14-9.el7.x86_64.rpm
     - libtheora-1.1.1-8.el7.x86_64.rpm
-    - libtiff-4.0.3-14.el7.x86_64.rpm
-    - libusbx-1.0.15-4.el7.x86_64.rpm
+    - libtiff-4.0.3-27.el7_3.x86_64.rpm
+    - libusbx-1.0.20-1.el7.x86_64.rpm
     - libv4l-0.9.5-4.el7.x86_64.rpm
     - libvisual-0.4.0-16.el7.x86_64.rpm
     - libvorbis-1.3.3-8.el7.x86_64.rpm
     - libvpx-1.3.0-5.el7_0.x86_64.rpm
-    - libX11-1.6.3-2.el7.x86_64.rpm
-    - libX11-common-1.6.3-2.el7.noarch.rpm
+    - libX11-1.6.3-3.el7.x86_64.rpm
+    - libX11-common-1.6.3-3.el7.noarch.rpm
     - libXau-1.0.8-2.1.el7.x86_64.rpm
     - libxcb-1.11-4.el7.x86_64.rpm
     - libXcomposite-0.4.4-4.1.el7.x86_64.rpm
@@ -1211,34 +1151,34 @@ The following commands can be used to populate the dependency packages into the 
     - libXft-2.3.2-2.el7.x86_64.rpm
     - libXi-1.7.4-2.el7.x86_64.rpm
     - libXinerama-1.1.3-2.1.el7.x86_64.rpm
-    - libxml2-2.9.1-6.el7_2.2.x86_64.rpm
+    - libxml2-2.9.1-6.el7_2.3.x86_64.rpm
     - libXrandr-1.4.2-2.el7.x86_64.rpm
     - libXrender-0.9.8-2.1.el7.x86_64.rpm
     - libxshmfence-1.2-1.el7.x86_64.rpm
     - libXv-1.0.10-2.el7.x86_64.rpm
     - libXxf86vm-1.1.3-2.1.el7.x86_64.rpm
     - log4cxx-0.10.0-16.el7.x86_64.rpm
-    - mesa-libEGL-10.6.5-3.20150824.el7.x86_64.rpm
-    - mesa-libgbm-10.6.5-3.20150824.el7.x86_64.rpm
-    - mesa-libGL-10.6.5-3.20150824.el7.x86_64.rpm
-    - mesa-libglapi-10.6.5-3.20150824.el7.x86_64.rpm
+    - mesa-libEGL-11.2.2-2.20160614.el7.x86_64.rpm
+    - mesa-libgbm-11.2.2-2.20160614.el7.x86_64.rpm
+    - mesa-libGL-11.2.2-2.20160614.el7.x86_64.rpm
+    - mesa-libglapi-11.2.2-2.20160614.el7.x86_64.rpm
     - mesa-libGLU-9.0.0-4.el7.x86_64.rpm
-    - mysql-community-client-5.6.28-2.el7.x86_64.rpm
-    - mysql-community-common-5.6.28-2.el7.x86_64.rpm
-    - mysql-community-libs-5.6.28-2.el7.x86_64.rpm
-    - mysql-community-server-5.6.28-2.el7.x86_64.rpm
-    - mysql-connector-python-1.1.6-1.el7.noarch.rpm
-    - mysql-connector-python-2.1.3-1.el7.x86_64.rpm
-    - MySQL-python-1.2.3-11.el7.x86_64.rpm
+    - mysql-community-client-5.6.36-2.el7.x86_64.rpm
+    - mysql-community-common-5.6.36-2.el7.x86_64.rpm
+    - mysql-community-libs-5.6.36-2.el7.x86_64.rpm
+    - mysql-community-server-5.6.36-2.el7.x86_64.rpm
+    - mysql-connector-python-2.0.4-1.el7.noarch.rpm
+    - mysql-connector-python-2.1.6-1.el7.x86_64.rpm
+    - MySQL-python-1.2.5-1.el7.x86_64.rpm
     - net-tools-2.0-0.17.20131004git.el7.x86_64.rpm
-    - openjpeg-libs-1.5.1-10.el7.x86_64.rpm
-    - openssh-6.6.1p1-25.el7_2.x86_64.rpm
-    - openssh-clients-6.6.1p1-25.el7_2.x86_64.rpm
-    - openssh-server-6.6.1p1-25.el7_2.x86_64.rpm
+    - openjpeg-libs-1.5.1-16.el7_3.x86_64.rpm
+    - openssh-6.6.1p1-35.el7_3.x86_64.rpm
+    - openssh-clients-6.6.1p1-35.el7_3.x86_64.rpm
+    - openssh-server-6.6.1p1-35.el7_3.x86_64.rpm
     - opus-1.0.2-6.el7.x86_64.rpm
     - orc-0.4.22-5.el7.x86_64.rpm
     - pango-1.36.8-2.el7.x86_64.rpm
-    - perl-5.16.3-286.el7.x86_64.rpm
+    - perl-5.16.3-291.el7.x86_64.rpm
     - perl-Carp-1.26-244.el7.noarch.rpm
     - perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64.rpm
     - perl-Compress-Raw-Zlib-2.061-4.el7.x86_64.rpm
@@ -1254,44 +1194,43 @@ The following commands can be used to populate the dependency packages into the 
     - perl-Getopt-Long-2.40-2.el7.noarch.rpm
     - perl-HTTP-Tiny-0.033-3.el7.noarch.rpm
     - perl-IO-Compress-2.061-2.el7.noarch.rpm
-    - perl-libs-5.16.3-286.el7.x86_64.rpm
-    - perl-macros-5.16.3-286.el7.x86_64.rpm
+    - perl-libs-5.16.3-291.el7.x86_64.rpm
+    - perl-macros-5.16.3-291.el7.x86_64.rpm
     - perl-Net-Daemon-0.48-5.el7.noarch.rpm
     - perl-parent-0.225-244.el7.noarch.rpm
     - perl-PathTools-3.40-5.el7.x86_64.rpm
     - perl-PlRPC-0.2020-14.el7.noarch.rpm
-    - perl-Pod-Escapes-1.04-286.el7.noarch.rpm
+    - perl-Pod-Escapes-1.04-291.el7.noarch.rpm
     - perl-podlators-2.5.1-3.el7.noarch.rpm
     - perl-Pod-Perldoc-3.20-4.el7.noarch.rpm
     - perl-Pod-Simple-3.28-4.el7.noarch.rpm
     - perl-Pod-Usage-1.63-3.el7.noarch.rpm
     - perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm
-    - perl-Socket-2.010-3.el7.x86_64.rpm
+    - perl-Socket-2.010-4.el7.x86_64.rpm
     - perl-Storable-2.45-3.el7.x86_64.rpm
     - perl-Text-ParseWords-3.29-4.el7.noarch.rpm
     - perl-threads-1.87-4.el7.x86_64.rpm
     - perl-threads-shared-1.43-6.el7.x86_64.rpm
     - perl-Time-HiRes-1.9725-3.el7.x86_64.rpm
     - perl-Time-Local-1.2300-2.el7.noarch.rpm
-    - pixman-0.32.6-3.el7.x86_64.rpm
-    - redis-3.0.5-1.el7.remi.x86_64.rpm
+    - pixman-0.34.0-1.el7.x86_64.rpm
+    - redis-3.2.8-1.el7.remi.x86_64.rpm
     - SDL-1.2.15-14.el7.x86_64.rpm
     - speex-1.2-0.19.rc1.el7.x86_64.rpm
-    - unzip-6.0-15.el7.x86_64.rpm
+    - unzip-6.0-16.el7.x86_64.rpm
     - xml-common-0.6.3-39.el7.noarch.rpm
 
 - **/mpfdata/ansible/install/repo/tars**
     - apache-activemq-5.13.0-bin.tar.gz
     - apache-tomcat-7.0.72.tar.gz
-    - ffmpeg-git-64bit-static.tar.xz
 
 - **/mpfdata/ansible/install/repo/pip**
-    - argcomplete-1.1.1-py2.py3-none-any.whl
-    - argh-0.26.1.tar.gz
-    - bcrypt-2.0.0.tar.gz
-    - cffi-1.6.0.tar.gz
-    - pycparser-2.14.tar.gz
-    - PyMySQL-0.7.2-py2.py3-none-any.whl
+    - argcomplete-1.8.2-py2.py3-none-any.whl
+    - argh-0.26.2-py2.py3-none-any.whl
+    - bcrypt-3.1.3-cp27-cp27mu-manylinux1_x86_64.whl
+    - cffi-1.10.0-cp27-cp27mu-manylinux1_x86_64.whl
+    - pycparser-2.17.tar.gz
+    - PyMySQL-0.7.11-py2.py3-none-any.whl
     - six-1.10.0-py2.py3-none-any.whl
 
 # Build and Test Environment
@@ -1304,4 +1243,4 @@ When developing for the OpenMPF, you may find the following collaboration and co
 
 **Phabricator**
 
-<https://www.phacility.com/phabricator/>
+<https://www.phacility.com/phabricator>
