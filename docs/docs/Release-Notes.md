@@ -69,7 +69,7 @@
 
 ## New Pipelines
 
-  - New SubSENSE motion preprocessor pipelines have been added to components that perform detection on video.
+  - New SuBSENSE motion preprocessor pipelines have been added to components that perform detection on video.
 
 ## Packaging and Deployment
 
@@ -83,14 +83,14 @@
 
 ## Upgrade to OpenCV 3.1
 
-  - The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the subsense motion component, the version of the SubSENSE library was upgraded to use the code found at this location: <https://bitbucket.org/pierre_luc_st_charles/subsense/src>.
+  - The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the SuBSENSE motion component, the version of the SuBSENSE library was upgraded to use the code found at this location: <https://bitbucket.org/pierre_luc_st_charles/SuBSENSE/src>.
 
 ## Bug Fixes
 
   - MOG motion detection always detected motion in frame 0 of a video. Because motion can only be detected between two adjacent frames, frame 1 is now the first frame in which motion can be detected.
   - MOG motion detection never detected motion in the first frame of a video segment (other than the first video segment because of the frame 0 bug described above). Now, motion is detected using the first frame before the start of a segment, rather than the first frame of the segment.
-  - The above bugs were also present in Subsense motion detection and have been fixed.
-  - Subsense motion detection generated tracks where the frame numbers were off by one. Corrected the frame index logic.
+  - The above bugs were also present in SuBSENSE motion detection and have been fixed.
+  - SuBSENSE motion detection generated tracks where the frame numbers were off by one. Corrected the frame index logic.
   - Very large video files caused an out of memory error in the system during Workflow Manager media inspection.
   - A job would fail when processing images with an invalid metadata tag for the camera flash setting.
   - Users were permitted to select invalid file types using the File Manager UI.
