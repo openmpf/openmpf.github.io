@@ -2,7 +2,7 @@
 
 # OpenMPF Version 0.9:  April 2017
 
-> **WARNING:** MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of MPF and components developed against this version of OpenMPF. Please refer to the [Known Issues](#known-issues) section for more information.
+> **WARNING:** MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the [Known Issues](#known-issues) section for more information.
 
 > **WARNING:** The OALPR Text Detection Component has been renamed to OALPR **License Plate** Text Detection Component. This affects the name of the component package and the name of the actions, tasks, and pipelines. When upgrading from R0.8 to R0.9, if the old OALPR Text Detection Component is installed in R0.8 then you will be prompted to install it again at the end of the upgrade path script. We recommend declining this prompt because the old component will conflict with the new component.
 
@@ -53,7 +53,7 @@
     - `List<MPFAudioTrack> getDetections(MPFAudioJob job) throws MPFComponentDetectionError`
     - `List<MPFImageLocation> getDetections(MPFImageJob job) throws MPFComponentDetectionError`
   - Created examples for the Java Component API.
-  - Reorganized the Java and C++ component source code to enable component development without the MPF core, which will simplify component development and streamline the code base.
+  - Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which will simplify component development and streamline the code base.
 
 ## JSON Output Objects
 
@@ -78,12 +78,12 @@
   - Java components are now packaged as tar.gz files instead of RPMs, bringing them into alignment with C++ components.
   - OpenMPF R0.9 can be installed over OpenMPF R0.8. The deployment scripts will determine that an upgrade should take place.
     - After the upgrade, user-defined actions, tasks, and pipelines will have "CUSTOM" prepended to their name.
-    - The job_request table in the mySQL database will have a new "output_object_version" column. This column will have "1.0" for jobs created using MPF R0.8 and "2.0" for jobs created using MPF R0.9. The JSON output object schema has changed between these versions. 
-  - Reorganized source code repositories so that component SDKs can be downloaded separately from the MPF core and so that components are grouped by license and maturity. Build scripts have been created to streamline and simplify the build process across the various repositories.
+    - The job_request table in the mySQL database will have a new "output_object_version" column. This column will have "1.0" for jobs created using OpenMPF R0.8 and "2.0" for jobs created using OpenMPF R0.9. The JSON output object schema has changed between these versions. 
+  - Reorganized source code repositories so that component SDKs can be downloaded separately from the OpenMPF core and so that components are grouped by license and maturity. Build scripts have been created to streamline and simplify the build process across the various repositories.
 
 ## Upgrade to OpenCV 3.1
 
-  - The MPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the subsense motion component, the version of the SubSENSE library was upgraded to use the code found at this location: <https://bitbucket.org/pierre_luc_st_charles/subsense/src>.
+  - The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the subsense motion component, the version of the SubSENSE library was upgraded to use the code found at this location: <https://bitbucket.org/pierre_luc_st_charles/subsense/src>.
 
 ## Bug Fixes
 
