@@ -7,6 +7,7 @@ markdown_extensions:
 
 pages:
 - Home: index.md
+- Release Notes: Release-Notes.md
 - Build Guide: Build-Environment-Setup-Guide.md
 - Install Guide: Installation.md
 - User Guide: User-Guide.md
