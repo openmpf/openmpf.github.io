@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Release Notes - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Release Notes";
+    var mkdocs_page_input_path = "Release-Notes.md";
+    var mkdocs_page_url = "/Release-Notes/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Release Notes</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#openmpf-version-09-april-2017">OpenMPF Version 0.9:  April 2017</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#documentation">Documentation</a></li>
+        
+            <li><a class="toctree-l3" href="#workflow-manager">Workflow Manager</a></li>
+        
+            <li><a class="toctree-l3" href="#web-user-interface">Web User Interface</a></li>
+        
+            <li><a class="toctree-l3" href="#rest-api">REST API</a></li>
+        
+            <li><a class="toctree-l3" href="#flipping-rotation-and-region-of-interest">Flipping, Rotation, and Region of Interest</a></li>
+        
+            <li><a class="toctree-l3" href="#component-api">Component API</a></li>
+        
+            <li><a class="toctree-l3" href="#json-output-objects">JSON Output Objects</a></li>
+        
+            <li><a class="toctree-l3" href="#caffe-component">Caffe Component</a></li>
+        
+            <li><a class="toctree-l3" href="#new-pipelines">New Pipelines</a></li>
+        
+            <li><a class="toctree-l3" href="#packaging-and-deployment">Packaging and Deployment</a></li>
+        
+            <li><a class="toctree-l3" href="#upgrade-to-opencv-31">Upgrade to OpenCV 3.1</a></li>
+        
+            <li><a class="toctree-l3" href="#bug-fixes">Bug Fixes</a></li>
+        
+            <li><a class="toctree-l3" href="#known-issues">Known Issues</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../Installation/">Install Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../User-Guide/">User Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../Admin-Manual/">Admin Guide</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Documentation</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../API-Overview/">Component Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Component-API/">C++ Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Component-API/">Java Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../REST-API/">REST API</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Release Notes</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="openmpf-version-09-april-2017">OpenMPF Version 0.9:  April 2017</h1>
+<blockquote>
+<p><strong>WARNING:</strong> MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the <a href="#known-issues">Known Issues</a> section for more information.</p>
+<p><strong>WARNING:</strong> The OALPR Text Detection Component has been renamed to OALPR <strong>License Plate</strong> Text Detection Component. This affects the name of the component package and the name of the actions, tasks, and pipelines. When upgrading from R0.8 to R0.9, if the old OALPR Text Detection Component is installed in R0.8 then you will be prompted to install it again at the end of the upgrade path script. We recommend declining this prompt because the old component will conflict with the new component.</p>
+<p><strong>WARNING:</strong> Action, task, and pipeline names that started with "MOTION DETECTION PREPROCESSOR" have been renamed "MOG MOTION DETECTION PREPROCESSOR". Similarly, "WITH MOTION PREPROCESSOR" has changed to "WITH MOG MOTION PREPROCESSOR".</p>
+</blockquote>
+<h2 id="documentation">Documentation</h2>
+<ul>
+<li>Updated the <a href="../REST-API/">REST API</a> to reflect job properties, algorithm-specific properties, and media-specific properties.</li>
+<li>Streamlined the <a href="../CPP-Component-API/">C++ Component API</a> document for clarity and simplicity.</li>
+<li>Completed the <a href="../Java-Component-API/">Java Component API</a> document.</li>
+<li>Updated the <a href="../Admin-Manual/">Admin Manual</a> and <a href="../User-Guide/">User Guide</a> to reflect web UI changes.</li>
+<li>Updated the <a href="../Build-Environment-Setup-Guide/">Build Guide</a> with instructions for GitHub repositories.</li>
+</ul>
+<h2 id="workflow-manager">Workflow Manager</h2>
+<ul>
+<li>Added support for job properties, which will override pre-defined pipeline properties.</li>
+<li>Added support for algorithm-specific properties, which will apply to a single stage of the pipeline and will override job properties and pre-defined pipeline properties.</li>
+<li>Added support for media-specific properties, which will apply to a single piece and media and will override job properties, algorithm-specific properties, and pre-defined pipeline properties. </li>
+<li>Components can now be automatically registered and installed when the web application starts in Tomcat.</li>
+</ul>
+<h2 id="web-user-interface">Web User Interface</h2>
+<ul>
+<li>The "Close All" button on pop-up notifications now dismisses all notifications from the queue, not just the visible ones.</li>
+<li>Job completion notifications now only appear for jobs created during the current login session instead of all jobs.</li>
+<li>The ROTATION, HORIZONTAL_FLIP, and SEARCH_REGION_* properties can be set using the web interface when creating a job. Once files are selected for a job, these properties can be set individually or by groups of files.</li>
+<li>The Node and Process Status page has been merged into the Node Configuration page for simplicity and ease of use.</li>
+<li>The Media Markup results page has been merged into the Job Status page for simplicity and ease of use.</li>
+<li>The File Manager UI has been improved to handle large numbers of files and symbolic links.</li>
+<li>The side navigation menu is now replaced by a top navigation bar.</li>
+</ul>
+<h2 id="rest-api">REST API</h2>
+<ul>
+<li>Added an optional jobProperties object to the /rest/jobs/ request which contains String key-value pairs which override the pipeline's pre-configured job properties.</li>
+<li>Added an optional jobAlgorithmProperties object to the /rest/jobs/ request which can be used to configure properties for specific algorithms in the pipeline. These properties override the pipeline's pre-configured job properties. They also override the values in the jobProperties object.</li>
+<li>Updated the /rest/jobs/ request to add more detail to media, replacing a list of mediaUri Strings with a list of media objects, each of which contains a mediaUri and an optional mediaProperties map. The mediaProperties map can be used to configure properties for the specific piece of media. These properties override the pipeline's pre-configured job properties, values in the jobProperties object, and values in the jobAlgorithmProperties object.</li>
+<li>Streamlined the actions, tasks, and pipelines endpoints that are used by the web UI.</li>
+</ul>
+<h2 id="flipping-rotation-and-region-of-interest">Flipping, Rotation, and Region of Interest</h2>
+<ul>
+<li>The ROTATION, HORIZONTAL_FLIP, and SEARCH_REGION_* properties will no longer appear in the detectionProperties map in the JSON detection output object. When applied to an algorithm these properties now appear in the pipeline.stages.actions.properties element. When applied to a piece of media these properties will now appear in the the media.mediaProperties element.</li>
+<li>The OpenMPF now supports multiple regions of interest in a single media file.  Each region will produce tracks separately, and the tracks for each region will be listed in the JSON output as if from a separate media file.</li>
+</ul>
+<h2 id="component-api">Component API</h2>
+<ul>
+<li>Java Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.</li>
+<li>Re-architected the Java component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:<ul>
+<li><code>List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job) throws MPFComponentDetectionError</code></li>
+<li><code>List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job) throws MPFComponentDetectionError</code></li>
+<li><code>List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job) throws MPFComponentDetectionError</code></li>
+</ul>
+</li>
+<li>Created examples for the Java Component API.</li>
+<li>Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which will simplify component development and streamline the code base.</li>
+</ul>
+<h2 id="json-output-objects">JSON Output Objects</h2>
+<ul>
+<li>The JSON output object for the job now contains a jobProperties map which contains all properties defined for the job in the job request.  For example, if the job request specifies a CONFIDENCE_THRESHOLD of then the jobProperties map in the output will also list a CONFIDENCE_THRESHOLD of 5.</li>
+<li>The JSON output object for the job now contains a jobAlgorithmProperties element which contains all algorithm-specific properties defined for the job in the job request.  For example, if the job request specifies a FRAME_INTERVAL of 2 for FACECV then the jobAlgorithmProperties element in the output will contain an entry for "FACECV" and that entry will list a FRAME_INTERVAL of 2.</li>
+<li>Each JSON media output object now contains a mediaProperties map which contains all media-specific properties defined by the job request.  For example, if the job request specifies a ROTATION of 90 degrees for a single piece of media then the mediaProperties map for that piece of piece will list a ROTATION of 90.</li>
+<li>The content of JSON output objects are now organized by detection type (e.g. MOTION, FACE, PERSON, TEXT, etc.) rather than action type.</li>
+</ul>
+<h2 id="caffe-component">Caffe Component</h2>
+<ul>
+<li>Added support for flip, rotation, and cropping to regions of interest.</li>
+<li>Added support for returning multiple classifications per detection based on user-defined settings. The classification list is in order of decreasing confidence value.</li>
+</ul>
+<h2 id="new-pipelines">New Pipelines</h2>
+<ul>
+<li>New SuBSENSE motion preprocessor pipelines have been added to components that perform detection on video.</li>
+</ul>
+<h2 id="packaging-and-deployment">Packaging and Deployment</h2>
+<ul>
+<li>Actions.xml, Algorithms.xml, nodeManagerConfig.xml, nodeServicesPalette.json, Pipelines.xml, and Tasks.xml are no longer stored within the Workflow Manager WAR file. They are now stored under <code>$MPF_HOME/data</code>. This makes it easier to upgrade the Workflow Manager and makes it easier for users to access these files.</li>
+<li>Each component can now be optionally installed and registered during deployment. Components not registered are set to the UPLOADED state. They can then be removed or registered through the Component Registration page.</li>
+<li>Java components are now packaged as tar.gz files instead of RPMs, bringing them into alignment with C++ components.</li>
+<li>OpenMPF R0.9 can be installed over OpenMPF R0.8. The deployment scripts will determine that an upgrade should take place.<ul>
+<li>After the upgrade, user-defined actions, tasks, and pipelines will have "CUSTOM" prepended to their name.</li>
+<li>The job_request table in the mySQL database will have a new "output_object_version" column. This column will have "1.0" for jobs created using OpenMPF R0.8 and "2.0" for jobs created using OpenMPF R0.9. The JSON output object schema has changed between these versions. </li>
+</ul>
+</li>
+<li>Reorganized source code repositories so that component SDKs can be downloaded separately from the OpenMPF core and so that components are grouped by license and maturity. Build scripts have been created to streamline and simplify the build process across the various repositories.</li>
+</ul>
+<h2 id="upgrade-to-opencv-31">Upgrade to OpenCV 3.1</h2>
+<ul>
+<li>The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the SuBSENSE motion component, the version of the SuBSENSE library was upgraded to use the code found at this location: <a href="https://bitbucket.org/pierre_luc_st_charles/SuBSENSE/src">https://bitbucket.org/pierre_luc_st_charles/SuBSENSE/src</a>.</li>
+</ul>
+<h2 id="bug-fixes">Bug Fixes</h2>
+<ul>
+<li>MOG motion detection always detected motion in frame 0 of a video. Because motion can only be detected between two adjacent frames, frame 1 is now the first frame in which motion can be detected.</li>
+<li>MOG motion detection never detected motion in the first frame of a video segment (other than the first video segment because of the frame 0 bug described above). Now, motion is detected using the first frame before the start of a segment, rather than the first frame of the segment.</li>
+<li>The above bugs were also present in SuBSENSE motion detection and have been fixed.</li>
+<li>SuBSENSE motion detection generated tracks where the frame numbers were off by one. Corrected the frame index logic.</li>
+<li>Very large video files caused an out of memory error in the system during Workflow Manager media inspection.</li>
+<li>A job would fail when processing images with an invalid metadata tag for the camera flash setting.</li>
+<li>Users were permitted to select invalid file types using the File Manager UI.</li>
+</ul>
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li><strong>MPFImageReader does not work reliably with the current release version of OpenCV 3.1</strong>: In OpenCV 3.1, new functionality was introduced to interpret EXIF information when reading jpeg files. </li>
+<li>There are two issues with this new functionality that impact our ability to use the OpenCV <code>imread()</code> function with MPFImageReader:<ul>
+<li>First, because of a bug in the OpenCV code, reading a jpeg file that contains exif information could cause it to hang. (See <a href="https://github.com/opencv/opencv/issues/6665">https://github.com/opencv/opencv/issues/6665</a>.) </li>
+<li>Second, it is not possible to tell the <code>imread()</code>function to ignore the EXIF data, so the image it returns is automatically rotated. (See <a href="https://github.com/opencv/opencv/issues/6348">https://github.com/opencv/opencv/issues/6348</a>.) This results in the MPFImageReader applying a second rotation to the image due to the EXIF information. </li>
+</ul>
+</li>
+<li>To address these issues, we developed the following workarounds:<ul>
+<li>Created a version of the MPFVideoCapture that works with an MPFImageJob. The new MPFVideoCapture can pull frames from both video files and images. MPFVideoCapture leverages cv::VideoCapture, which does not have the two issues described above.</li>
+<li>Disabled the use of MPFImageReader to prevent new users from trying to develop code leveraging this previous functionality.</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Build-Environment-Setup-Guide/" class="btn btn-neutral float-right" title="Build Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Build-Environment-Setup-Guide/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

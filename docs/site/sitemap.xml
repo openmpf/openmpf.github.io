@@ -11,6 +11,14 @@
 
     
     <url>
+     <loc>/Release-Notes/</loc>
+     <lastmod>2017-04-27</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>/Build-Environment-Setup-Guide/</loc>
      <lastmod>2017-04-27</lastmod>
      <changefreq>daily</changefreq>
