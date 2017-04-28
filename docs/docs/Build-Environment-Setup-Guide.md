@@ -191,7 +191,7 @@ The following binary packages will need to be downloaded and installed:
    > - `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000`
    > - `sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar`
     13. `. /etc/profile.d/mpf.sh`
-    
+
 2. Apache ActiveMQ 5.13.0:
     <br>For reference only: <http://activemq.apache.org>
     1. `cd /apps/bin/apache`
@@ -259,9 +259,9 @@ The following source packages will need to be downloaded, built, and installed:
     8. `sudo make install`
     9. `sudo ldconfig`
     10. `sudo ln -s /apps/install/bin/cmake /usr/local/bin/cmake`
-    
+
 > **NOTE:** FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.    
-    
+
 2. FFmpeg 2.6.3:
     1. xvidcore:
         <br>For reference only: <https://labs.xvid.com>
@@ -424,7 +424,7 @@ The following source packages will need to be downloaded, built, and installed:
     12. `sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
     13. `sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0`
     14. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2`
-    15. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv`	
+    15. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv`
     16. `sudo ldconfig`
     17. `export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV`
 8. Leptonica 1.72:
@@ -471,7 +471,7 @@ The following source packages will need to be downloaded, built, and installed:
     7. `cd /usr/local/src/openalpr/openalpr/src/build`
     8. `cmake3 -j --DCmake3 -j_INSTALL_PREFIX:PATH=/usr -D WITH_DAEMON=OFF ../`
     10. `make --directory /usr/local/src/openalpr/openalpr/src/build -j`
-    11. `sudo make --directory /usr/local/src/openalpr/openalpr/src/build install`	
+    11. `sudo make --directory /usr/local/src/openalpr/openalpr/src/build install`
     12. `sudo ln -sf /usr/local/src/openalpr/openalpr /usr/share/openalpr`
     13. `sudo cp -a /usr/local/lib/libopenalpr.so /usr/lib/libopenalpr.so`
     14. `sudo cp /usr/local/lib/libopenalpr.so.2 /usr/lib/libopenalpr.so.2`
@@ -741,6 +741,8 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
 
 > **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure Maven before continuing.
 
+In the instructions below, provide a positive integer value for ``<buildNum>``. If this is your first build, provide a "1". If this is your second build then provide a "2", so on and so forth. The build number will be displayed on the login screen.
+
 1. Remove the development properties file:
     1. `cd /home/mpf/openmpf-projects/openmpf`
     2. `rm -f trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
@@ -749,10 +751,10 @@ Follow the instructions in the **Build the OpenMPF Package** section below. Use 
     <br> `mvn clean`
 3. Run the Perl `PackageRPMS.pl` script. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
     1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
-    2. `perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 0 <configFile>`
+    2. `perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 <buildNum> <configFile>`
 4. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
     1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
-    2. `perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master 0 <configFile>`
+    2. `perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master <buildNum> <configFile>`
 5. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
 6. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
 <br>`cp /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
@@ -993,7 +995,7 @@ Alternatively, if adding certificates is not an option or difficulties are encou
     ```
     check_certificate=off
     ```
-    
+
 5. Save and close the file.
 6. `. /home/mpf/.wgetrc`
 

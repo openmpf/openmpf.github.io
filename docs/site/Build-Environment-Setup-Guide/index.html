@@ -734,7 +734,7 @@
 <li><code>sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
 <li><code>sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0</code></li>
 <li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv</code>    </li>
+<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv</code></li>
 <li><code>sudo ldconfig</code></li>
 <li><code>export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV</code></li>
 </ol>
@@ -787,7 +787,7 @@
 <li><code>cd /usr/local/src/openalpr/openalpr/src/build</code></li>
 <li><code>cmake3 -j --DCmake3 -j_INSTALL_PREFIX:PATH=/usr -D WITH_DAEMON=OFF ../</code></li>
 <li><code>make --directory /usr/local/src/openalpr/openalpr/src/build -j</code></li>
-<li><code>sudo make --directory /usr/local/src/openalpr/openalpr/src/build install</code>  </li>
+<li><code>sudo make --directory /usr/local/src/openalpr/openalpr/src/build install</code></li>
 <li><code>sudo ln -sf /usr/local/src/openalpr/openalpr /usr/share/openalpr</code></li>
 <li><code>sudo cp -a /usr/local/lib/libopenalpr.so /usr/lib/libopenalpr.so</code></li>
 <li><code>sudo cp /usr/local/lib/libopenalpr.so.2 /usr/lib/libopenalpr.so.2</code></li>
@@ -1021,6 +1021,7 @@
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure Maven before continuing.</p>
 </blockquote>
+<p>In the instructions below, provide a positive integer value for <code>&lt;buildNum&gt;</code>. If this is your first build, provide a "1". If this is your second build then provide a "2", so on and so forth. The build number will be displayed on the login screen.</p>
 <ol>
 <li>
 <p>Remove the development properties file:</p>
@@ -1035,12 +1036,12 @@
 </li>
 <li>Run the Perl <code>PackageRPMS.pl</code> script. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.<ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
-<li><code>perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 0 &lt;configFile&gt;</code></li>
+<li><code>perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 &lt;buildNum&gt; &lt;configFile&gt;</code></li>
 </ol>
 </li>
 <li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
-<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master 0 &lt;configFile&gt;</code></li>
+<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master &lt;buildNum&gt; &lt;configFile&gt;</code></li>
 </ol>
 </li>
 <li>The package <code>mpf-*+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.</li>
