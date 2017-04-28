@@ -227,7 +227,7 @@ component.close()
 <li>Extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</li>
 <li>Building the component into a jar. (TODO: reference example).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF (see <a href="https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component">Packaging and Registering a Component</a>).</li>
+<li>Registering the component with OpenMPF (see <a href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>).</li>
 </ol>
 <h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
 <p>The figure below presents a high-level component diagram of the OpenMPF API.</p>
@@ -266,7 +266,7 @@ component.close()
 <blockquote>
 <p><strong>IMPORTANT:</strong> This interface and abstract class should not be directly implemented, because no mechanism exists for launching components based off of it. Instead, it defines the contract that all types of components must follow. Currently, the only supported type of component is "DETECTION", and all components should extend <code>MPFDetectionComponentBase</code></p>
 </blockquote>
-<p><strong><a href="https://github.com/openmpf/openmpf/tree/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api">See the latest source here.</a></strong></p>
+<p><strong><a href="https://github.com/openmpf/openmpf-java-component-sdk/tree/master/java-component-api/src/main/java/org/mitre/mpf/component/api">See the latest source here.</a></strong></p>
 <h3 id="init">init()</h3>
 <p>Performs any necessary startup tasks for the component. This will be executed once, on component startup, and not for every job.</p>
 <ul>
@@ -364,7 +364,7 @@ component.close()
 <p>These adapters provide default implementations of several methods in <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
 <p>The following adapter is provided:</p>
 <ul>
-<li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf/blob/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapter.java">source</a>)</li>
+<li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/test/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapterTest.java">source</a>)</li>
 </ul>
 <blockquote>
 <p><strong>Example: Using Adaptors to Provide Simple AudioVisual Handling:</strong>

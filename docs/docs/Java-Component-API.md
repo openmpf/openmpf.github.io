@@ -53,7 +53,7 @@ Detection components are implemented by:
 1. Extending [`MPFDetectionComponentBase`](#detection-component-interface).
 2. Building the component into a jar. (TODO: reference example).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://github.com/openmpf/openmpf/wiki/Packaging-and-Registering-a-Component)).
+4. Registering the component with OpenMPF (see [Packaging and Registering a Component](Packaging-and-Registering-a-Component/)).
 
 # OpenMPF API Specification
 
@@ -97,7 +97,7 @@ The OpenMPF Component class structure consists of:
 
 >**IMPORTANT:** This interface and abstract class should not be directly implemented, because no mechanism exists for launching components based off of it. Instead, it defines the contract that all types of components must follow. Currently, the only supported type of component is "DETECTION", and all components should extend `MPFDetectionComponentBase`
 
-**[See the latest source here.](https://github.com/openmpf/openmpf/tree/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api)**
+**[See the latest source here.](https://github.com/openmpf/openmpf-java-component-sdk/tree/master/java-component-api/src/main/java/org/mitre/mpf/component/api)**
 
 
 ### init()
@@ -197,7 +197,7 @@ These adapters provide default implementations of several methods in [`MPFDetect
 
 The following adapter is provided:
 
-* Audio And Video Detection Component Adapter ([source](https://github.com/openmpf/openmpf/blob/master/mpf_components/Java/componentApi/src/main/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapter.java))
+* Audio And Video Detection Component Adapter ([source](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/test/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapterTest.java))
 
 >**Example: Using Adaptors to Provide Simple AudioVisual Handling:**
 >Many components designed to work on audio files, such as speech detection, are relevant to video files as well.  Some of the tools for these components, however, only function on audio files (such as .wav, .mp3) and not video files (.avi, .mov, etc).
