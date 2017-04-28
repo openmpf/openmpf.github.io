@@ -45,159 +45,170 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
 	<ul class="current">
-	  
           
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Release-Notes/">Release Notes</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/">Release Notes</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Build Guide</a>
-    <ul class="subnav">
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Build Guide</a>
+        
+            <ul>
             
-    <li class="toctree-l2"><a href="#general-information">General Information</a></li>
-    
-
-    <li class="toctree-l2"><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
-    
-
-    <li class="toctree-l2"><a href="#installing-centos-7">Installing CentOS 7</a></li>
-    
-
-    <li class="toctree-l2"><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a></li>
-    
-        <ul>
+                <li class="toctree-l3"><a href="#general-information">General Information</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#installing-centos-7">Installing CentOS 7</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a></li>
+                
+                    <li><a class="toctree-l4" href="#configure-additional-repositories">Configure Additional Repositories</a></li>
+                
+                    <li><a class="toctree-l4" href="#rpm-dependencies">RPM Dependencies</a></li>
+                
+                    <li><a class="toctree-l4" href="#get-the-openmpf-source-code">Get the OpenMPF Source Code</a></li>
+                
+                    <li><a class="toctree-l4" href="#binary-packages">Binary Packages</a></li>
+                
+                    <li><a class="toctree-l4" href="#python-packages">Python Packages</a></li>
+                
+                    <li><a class="toctree-l4" href="#building-dependencies">Building Dependencies</a></li>
+                
+                    <li><a class="toctree-l4" href="#configuring-mysql">Configuring MySQL</a></li>
+                
+                    <li><a class="toctree-l4" href="#configuring-activemq">Configuring ActiveMQ</a></li>
+                
+                    <li><a class="toctree-l4" href="#configuring-redis">Configuring Redis</a></li>
+                
+                    <li><a class="toctree-l4" href="#https-configuration">HTTPS Configuration</a></li>
+                
+                    <li><a class="toctree-l4" href="#optional-http-configuration">(Optional) HTTP Configuration</a></li>
+                
+                    <li><a class="toctree-l4" href="#adding-additional-maven-dependencies">Adding Additional Maven Dependencies</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</a></li>
+                
+                    <li><a class="toctree-l4" href="#build-environment">Build Environment</a></li>
+                
+                    <li><a class="toctree-l4" href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a></li>
+                
+                    <li><a class="toctree-l4" href="#build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</a></li>
+                
+                    <li><a class="toctree-l4" href="#build-the-openmpf-package">Build the OpenMPF Package</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#optional-testing-the-openmpf">(Optional) Testing the OpenMPF</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#optional-building-and-running-the-web-application">(Optional) Building and running the web application</a></li>
+                
+                    <li><a class="toctree-l4" href="#default-credentials">Default Credentials</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#deploying-the-openmpf">Deploying the OpenMPF</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#proxy-configuration">Proxy Configuration</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#ssl-inspection">SSL Inspection</a></li>
+                
+                    <li><a class="toctree-l4" href="#package-lists">Package Lists</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#build-and-test-environment">Build and Test Environment</a></li>
+                
+            
+            </ul>
         
-            <li><a class="toctree-l3" href="#configure-additional-repositories">Configure Additional Repositories</a></li>
-        
-            <li><a class="toctree-l3" href="#rpm-dependencies">RPM Dependencies</a></li>
-        
-            <li><a class="toctree-l3" href="#get-the-openmpf-source-code">Get the OpenMPF Source Code</a></li>
-        
-            <li><a class="toctree-l3" href="#binary-packages">Binary Packages</a></li>
-        
-            <li><a class="toctree-l3" href="#python-packages">Python Packages</a></li>
-        
-            <li><a class="toctree-l3" href="#building-dependencies">Building Dependencies</a></li>
-        
-            <li><a class="toctree-l3" href="#configuring-mysql">Configuring MySQL</a></li>
-        
-            <li><a class="toctree-l3" href="#configuring-activemq">Configuring ActiveMQ</a></li>
-        
-            <li><a class="toctree-l3" href="#configuring-redis">Configuring Redis</a></li>
-        
-            <li><a class="toctree-l3" href="#https-configuration">HTTPS Configuration</a></li>
-        
-            <li><a class="toctree-l3" href="#optional-http-configuration">(Optional) HTTP Configuration</a></li>
-        
-            <li><a class="toctree-l3" href="#adding-additional-maven-dependencies">Adding Additional Maven Dependencies</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#build-environment">Build Environment</a></li>
-        
-            <li><a class="toctree-l3" href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a></li>
-        
-            <li><a class="toctree-l3" href="#build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</a></li>
-        
-            <li><a class="toctree-l3" href="#build-the-openmpf-package">Build the OpenMPF Package</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#optional-testing-the-openmpf">(Optional) Testing the OpenMPF</a></li>
-    
-
-    <li class="toctree-l2"><a href="#optional-building-and-running-the-web-application">(Optional) Building and running the web application</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#default-credentials">Default Credentials</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#deploying-the-openmpf">Deploying the OpenMPF</a></li>
-    
-
-    <li class="toctree-l2"><a href="#appendices">Appendices</a></li>
-    
-
-    <li class="toctree-l2"><a href="#known-issues">Known Issues</a></li>
-    
-
-    <li class="toctree-l2"><a href="#proxy-configuration">Proxy Configuration</a></li>
-    
-
-    <li class="toctree-l2"><a href="#ssl-inspection">SSL Inspection</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l3" href="#package-lists">Package Lists</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l2"><a href="#build-and-test-environment">Build and Test Environment</a></li>
-    
-
-    </ul>
-	    </li>
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Installation/">Install Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Installation/">Install Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../User-Guide/">User Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/">User Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Admin-Manual/">Admin Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Component Documentation</span>
+            <li>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../API-Overview/">Component Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../CPP-Component-API/">C++ Component API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../Java-Component-API/">Java Component API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
-                </li>
+    <li><span>Component Documentation</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">Component Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
     </ul>
-	    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../REST-API/">REST API</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
           
         </ul>
       </div>

@@ -197,7 +197,7 @@ These adapters provide default implementations of several methods in [`MPFDetect
 
 The following adapter is provided:
 
-* Audio And Video Detection Component Adapter ([source](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/test/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapterTest.java))
+* Audio And Video Detection Component Adapter ([source](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/main/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapter.java))
 
 >**Example: Using Adaptors to Provide Simple AudioVisual Handling:**
 >Many components designed to work on audio files, such as speech detection, are relevant to video files as well.  Some of the tools for these components, however, only function on audio files (such as .wav, .mp3) and not video files (.avi, .mov, etc).
