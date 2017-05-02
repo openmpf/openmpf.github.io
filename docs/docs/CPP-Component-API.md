@@ -48,12 +48,12 @@ As an alternative to extending [`MPFDetectionComponent`](#openmpf-detection-comp
 
 ## Getting Started
 
-The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf/tree/master/trunk/detection/test-components/cpp/CplusplusHelloWorld) for the OpenMPF *Hello World* Detection Component.
+The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf-cpp-component-sdk/tree/master/detection/examples) for example OpenMPF C++ detection components.
 
 Detection components are implemented by:
 
 1. Extending [`MPFDetectionComponent`](#openmpf-detection-component-api).
-2. Building the component into a shared object library. (See [HelloWorld CMakeLists.txt](https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/cpp/CMakeLists.txt)).
+2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
 4. Registering the component with OpenMPF (see [Packaging and Registering a Component](https://openmpf.github.io/docs/site/Packaging-and-Registering-a-Component/)).
 

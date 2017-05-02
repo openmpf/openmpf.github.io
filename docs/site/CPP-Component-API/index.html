@@ -237,11 +237,11 @@ component-&gt;Close()
 <p>A component developer implements a detection component by extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</p>
 <p>As an alternative to extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a> directly, a developer may extend one of several convenience adapter classes provided by OpenMPF. See <a href="#convenience-adapters">Convenience Adapters</a> for more information.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf/tree/master/trunk/detection/test-components/cpp/CplusplusHelloWorld">review the source</a> for the OpenMPF <em>Hello World</em> Detection Component.</p>
+<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/tree/master/detection/examples">review the source</a> for example OpenMPF C++ detection components.</p>
 <p>Detection components are implemented by:</p>
 <ol>
 <li>Extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</li>
-<li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/cpp/CMakeLists.txt">HelloWorld CMakeLists.txt</a>).</li>
+<li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt">HelloWorldComponent CMakeLists.txt</a>).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
 <li>Registering the component with OpenMPF (see <a href="https://openmpf.github.io/docs/site/Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>).</li>
 </ol>
