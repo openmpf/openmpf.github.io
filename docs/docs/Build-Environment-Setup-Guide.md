@@ -755,7 +755,7 @@ In the instructions below, provide a positive integer value for ``<buildNum>``. 
 4. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
     1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
     2. `perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master <buildNum> <configFile>`
-5. The package `mpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
+5. The package `openmpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
 6. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
 <br>`cp /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`
 

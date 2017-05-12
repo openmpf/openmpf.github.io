@@ -3,28 +3,31 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Install Guide - OpenMPF</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+
   
   <script>
     // Current page data
     var mkdocs_page_name = "Install Guide";
-    var mkdocs_page_input_path = "Installation.md";
-    var mkdocs_page_url = "/Installation/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
   <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
   
 </head>
 
@@ -44,90 +47,113 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
+        <ul class="current">
           
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Release-Notes/">Release Notes</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/">Release Notes</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1 current">
-		
-    <a class="current" href="./">Install Guide</a>
-    <ul class="subnav">
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Install Guide</a>
+        
+            <ul>
             
-    <li class="toctree-l2"><a href="#minimum-resource-requirements">Minimum Resource Requirements</a></li>
-    
-        <ul>
+                <li class="toctree-l3"><a href="#minimum-resource-requirements">Minimum Resource Requirements</a></li>
+                
+                    <li><a class="toctree-l4" href="#hardware">Hardware</a></li>
+                
+                    <li><a class="toctree-l4" href="#operating-system-and-software">Operating System and Software</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-pre-installation">OpenMPF Pre-Installation</a></li>
+                
+                    <li><a class="toctree-l4" href="#pre-installation-checklist">Pre-Installation Checklist</a></li>
+                
+                    <li><a class="toctree-l4" href="#openmpf-installation">OpenMPF Installation</a></li>
+                
+                    <li><a class="toctree-l4" href="#updating-site-configuration">Updating Site Configuration</a></li>
+                
+                    <li><a class="toctree-l4" href="#creating-a-keystore">Creating a Keystore</a></li>
+                
+            
+            </ul>
         
-            <li><a class="toctree-l3" href="#hardware">Hardware</a></li>
-        
-            <li><a class="toctree-l3" href="#operating-system-and-software">Operating System and Software</a></li>
-        
-            <li><a class="toctree-l3" href="#openmpf-pre-installation">OpenMPF Pre-Installation</a></li>
-        
-            <li><a class="toctree-l3" href="#pre-installation-checklist">Pre-Installation Checklist</a></li>
-        
-            <li><a class="toctree-l3" href="#openmpf-installation">OpenMPF Installation</a></li>
-        
-            <li><a class="toctree-l3" href="#updating-site-configuration">Updating Site Configuration</a></li>
-        
-            <li><a class="toctree-l3" href="#creating-a-keystore">Creating a Keystore</a></li>
-        
-        </ul>
-    
-
-    </ul>
-	    </li>
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../User-Guide/">User Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/">User Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../Admin-Manual/">Admin Guide</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Component Documentation</span>
+            <li>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../API-Overview/">Component Overview</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../CPP-Component-API/">C++ Component API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../Java-Component-API/">Java Component API</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
-                </li>
+    <li><span>Component Documentation</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">Component Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
     </ul>
-	    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <a class="" href="../REST-API/">REST API</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
           
         </ul>
       </div>
@@ -190,7 +216,7 @@ Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 <p>You only need to complete the following steps on the OpenMPF master node.</p>
 </blockquote>
 <p><strong> 1. Install and Configure OpenMPF Management Software </strong></p>
-<p>Copy the OpenMPF release package .tar.gz, (e.g. mpf-open-source-0.9.0+master.tar.gz) to the OpenMPF master node.</p>
+<p>Copy the OpenMPF release package .tar.gz, (e.g. openmpf-open-source-0.9.0+master.tar.gz) to the OpenMPF master node.</p>
 <p>From the OpenMPF master node, unpack the OpenMPF package.</p>
 <pre><code>tar zxvf &lt;latest .tar.gz&gt;
 cd mpf-release
@@ -259,7 +285,7 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../User-Guide/" class="btn btn-neutral float-right" title="User Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../User-Guide/" class="btn btn-neutral float-right" title="User Guide"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Build-Environment-Setup-Guide/" class="btn btn-neutral" title="Build Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -283,10 +309,10 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
       </div>
 
     </section>
-    
+
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+<div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -297,7 +323,6 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
 
 </body>
 </html>

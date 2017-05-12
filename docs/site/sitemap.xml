@@ -3,48 +3,48 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/Release-Notes/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Release-Notes/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/Build-Environment-Setup-Guide/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Build-Environment-Setup-Guide/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/Installation/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Installation/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/User-Guide/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/User-Guide/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/Admin-Manual/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Admin-Manual/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -52,26 +52,26 @@
     
         
     <url>
-     <loc>/API-Overview/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/API-Overview/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/CPP-Component-API/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/CPP-Component-API/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/Java-Component-API/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Java-Component-API/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/Packaging-and-Registering-a-Component/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/Packaging-and-Registering-a-Component/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -79,8 +79,8 @@
 
     
     <url>
-     <loc>/REST-API/</loc>
-     <lastmod>2017-05-04</lastmod>
+     <loc>None/REST-API/</loc>
+     <lastmod>2017-05-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
