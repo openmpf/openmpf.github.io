@@ -354,7 +354,7 @@
 <p>The <strong>Pipeline Controller</strong> allows for the creation, retrieval, and deletion of pipelines or any of their constituent parts. While actions, tasks, and pipelines may not be directly modified, they may be deleted and recreated.</p>
 <p>For more information on pipelines, please read the <a href="../User-Guide#create-custom-pipelines">Create Custom Pipelines</a> section in the User Guide.</p>
 <h1 id="job-management">Job Management</h1>
-<p>The request to create a job begins at the <a href="#JobController"><code>JobController</code></a>. From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.</p>
+<p>The request to create a job begins at the <a href="#jobcontroller"><code>JobController</code></a>. From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.</p>
 <p>The diagram below shows the sequence of WFM operations. It does not show the ActiveMQ messages that are sent to and from the component services.</p>
 <p><img alt="Job_Creation_Diagram" src="../img/Job_Creation_Diagram.png" title="Job Creation Diagram" /></p>
 <p>After the job request is validated and saved to the MySQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.</p>

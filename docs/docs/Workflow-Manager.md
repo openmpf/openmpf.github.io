@@ -108,7 +108,7 @@ For more information on pipelines, please read the [Create Custom Pipelines](Use
 
 # Job Management
 
-The request to create a job begins at the [`JobController`](#JobController). From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.
+The request to create a job begins at the [`JobController`](#jobcontroller). From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.
 
 The diagram below shows the sequence of WFM operations. It does not show the ActiveMQ messages that are sent to and from the component services.
 
