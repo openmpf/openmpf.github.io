@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Workflow Manager - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Workflow Manager";
+    var mkdocs_page_input_path = "Workflow-Manager.md";
+    var mkdocs_page_url = "/Workflow-Manager/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/">Release Notes</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Installation/">Install Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/">User Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Component Documentation</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">Component Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Architecture</span></li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Workflow Manager</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#workflow-manager-overview">Workflow Manager Overview</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#controllers-services">Controllers / Services</a></li>
+                
+                    <li><a class="toctree-l4" href="#basic-controllers">Basic Controllers</a></li>
+                
+                    <li><a class="toctree-l4" href="#admincomponentregistrationcontroller">AdminComponentRegistrationController</a></li>
+                
+                    <li><a class="toctree-l4" href="#jobcontroller">JobController</a></li>
+                
+                    <li><a class="toctree-l4" href="#markupcontroller">MarkupController</a></li>
+                
+                    <li><a class="toctree-l4" href="#mediacontroller">MediaController</a></li>
+                
+                    <li><a class="toctree-l4" href="#nodecontroller">NodeController</a></li>
+                
+                    <li><a class="toctree-l4" href="#pipelinecontroller">PipelineController</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#job-management">Job Management</a></li>
+                
+                    <li><a class="toctree-l4" href="#job-creator-route">Job Creator Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#media-retriever-route">Media Retriever Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#media-inspection-route">Media Inspection Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#job-router-route">Job Router Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#detection-response-route">Detection Response Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#stage-response-aggregation-route">Stage Response Aggregation Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#markup-response-route">Markup Response Route</a></li>
+                
+                    <li><a class="toctree-l4" href="#job-completed-route">Job Completed Route</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Architecture &raquo;</li>
+        
+      
+    
+    <li>Workflow Manager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="workflow-manager-overview">Workflow Manager Overview</h1>
+<p>The OpenMPF consists of three major pieces:</p>
+<ol>
+<li>A collection of <strong>Components</strong> which process media</li>
+<li>A <strong>Node Manager</strong>, which launches and monitors running components in the system</li>
+<li>The <strong>Workflow Manager</strong> (WFM), which allows for the creation of jobs and manages the flow through active components</li>
+</ol>
+<p>These pieces are supported by a number of modules which provide shared functionality, as shown in the dependency diagram below:</p>
+<p><img alt="Dependency Diagram" src="../img/dependencies.png" title="Dependency Diagram" /></p>
+<p>There are three general functional areas in the WFM:</p>
+<ol>
+<li>The <strong>Controllers</strong> are the primary entry point, accepting REST requests which trigger actions by the WFM</li>
+<li>The <strong>WFM Services</strong>, which handle administrative tasks such as pipeline creation, node management, and log retrieval</li>
+<li><strong>Job Management</strong>, which uses Camel routes to pass a job through the levels of processing</li>
+</ol>
+<p>There are two different databases used by the WFM:</p>
+<ol>
+<li>A <strong>MySQL database</strong> stores persistent data about jobs. This data includes:<ul>
+<li>The job ID</li>
+<li>The start and stop time of the job</li>
+<li>The exit status of the job</li>
+<li>Job priority</li>
+<li>Job input/outputs</li>
+</ul>
+</li>
+<li>A <strong>Redis database</strong> for storing transient data that is only necessary while the job is being run. Some of this data is used to generate the output which will later be persisted in long-term storage, and some is a temporary duplication of previously persisted data in active memory to avoid race conditions. This data includes:<ul>
+<li>Job and media properties</li>
+<li>Detections</li>
+<li>Tracks</li>
+<li>Pipeline/Track/Action/Algorithm data duplicated from the system at job start time</li>
+<li>REST Callback information</li>
+</ul>
+</li>
+</ol>
+<p>The diagram below shows the functional areas of the WFM, the databases used by the WFM, and communication with components:</p>
+<p><img alt="Workflow Manager Overview" src="../img/WFM_Overview.png" title="Workflow Manager Overview" /></p>
+<h1 id="controllers-services">Controllers / Services</h1>
+<p>The controllers are all located  <a href="https://github.com/openmpf/openmpf/tree/master/trunk/workflow-manager/src/main/java/org/mitre/mpf/mvc/controller">here</a>.</p>
+<p>Every controller provides a collection of REST endpoints which allow access either to a WFM service or to the job management flow. Only the JobController enters the job management flow.</p>
+<h2 id="basic-controllers">Basic Controllers</h2>
+<p>The table below lists the basic controllers:</p>
+<table>
+<thead>
+<tr>
+<th>Controller Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AdminLogsController</td>
+<td>Accesses the log content via REST</td>
+</tr>
+<tr>
+<td>AdminErrorsController</td>
+<td>Gets admin errors</td>
+</tr>
+<tr>
+<td>AdminPropertySettingsController</td>
+<td>Allows access and modification of system properties</td>
+</tr>
+<tr>
+<td>AdminStatisticsController</td>
+<td>Generates job statistics</td>
+</tr>
+<tr>
+<td>AtmosphereController</td>
+<td>Uses Atmosphere to manage server-side push</td>
+</tr>
+<tr>
+<td>BootoutController</td>
+<td>Handles bootouts when a second session is opened by the same user</td>
+</tr>
+<tr>
+<td>HomeController</td>
+<td>Manages index page and version information</td>
+</tr>
+<tr>
+<td>LoginController</td>
+<td>Manages login/logout and authentication</td>
+</tr>
+<tr>
+<td>ServerMediaController</td>
+<td>Enables selection and deselection of files at a directory level</td>
+</tr>
+<tr>
+<td>SystemMessageController</td>
+<td>Manages system level messages, such as notifying users that a server restart is needed</td>
+</tr>
+<tr>
+<td>TimeoutController</td>
+<td>Manages session timeouts</td>
+</tr>
+</tbody>
+</table>
+<p>The following sections list the rest of the constrollers in more detail.</p>
+<h2 id="admincomponentregistrationcontroller">AdminComponentRegistrationController</h2>
+<p>Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read <a href="../API-Overview">OpenMPF Component API Overview</a>.</p>
+<p>The <strong>AdminComponentRegistrationController</strong> provides endpoints which allow:</p>
+<ol>
+<li>Access to current component information</li>
+<li>Upload of new components</li>
+<li>Registration and unregistration of components (note that components must be registered to be included in pipelines)</li>
+<li>Deletion of components</li>
+</ol>
+<h2 id="jobcontroller">JobController</h2>
+<p>A job is a specific pipeline's tasks and actions applied to a set of media. The <strong>JobController</strong> allows:</p>
+<ol>
+<li>Access to information about jobs in the system</li>
+<li>Creation of new jobs</li>
+<li>Cancellation of existing jobs</li>
+<li>Download of job output data</li>
+<li>Resubmission of jobs (regardless of initial job status)</li>
+</ol>
+<h2 id="markupcontroller">MarkupController</h2>
+<p>Markup files are copies of the initial media input to a job with detections visually highlighted in the image or video frames. The <strong>MarkupController</strong> can provide lists of available Markup files, or it can download a specific file.</p>
+<h2 id="mediacontroller">MediaController</h2>
+<p>The <strong>MediaController</strong> enables upload and organization of media files within the WFM. It provides endpoints for media upload, and also for creation of folders to organize media files in the system. At this time, there are no endpoints which allow for deletion or reorganization of media files, since all media is shared by all users.</p>
+<h2 id="nodecontroller">NodeController</h2>
+<p>The OpenMPF uses multiple hosts to enable scalability and parallel processing. The <strong>NodeController</strong> provides access to host information and allows components to be deployed on nodes. One or more components can be installed on a node. The same component can be installed on multiple nodes. Each node can manage one or more services for each component.</p>
+<p>The <strong>NodeController</strong> provides host information and component service deployment status. It also provides an endpoint to deploy a service on a node and an endpoint to stop a service.</p>
+<p>For more information on nodes, please read the <a href="../Admin-Manual#node-configuration-and-status">Node Configuration and Status</a> section in the Admin Guide.</p>
+<h2 id="pipelinecontroller">PipelineController</h2>
+<p>The <strong>Pipeline Controller</strong> allows for the creation, retrieval, and deletion of pipelines or any of their constituent parts. While actions, tasks, and pipelines may not be directly modified, they may be deleted and recreated.</p>
+<p>For more information on pipelines, please read the <a href="../User-Guide#create-custom-pipelines">Create Custom Pipelines</a> section in the User Guide.</p>
+<h1 id="job-management">Job Management</h1>
+<p>The request to create a job begins at the <a href="#JobController"><code>JobController</code></a>. From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.</p>
+<p>The diagram below shows the sequence of WFM operations. It does not show the ActiveMQ messages that are sent to and from the component services.</p>
+<p><img alt="Job_Creation_Diagram" src="../img/Job_Creation_Diagram.png" title="Job Creation Diagram" /></p>
+<p>After the job request is validated and saved to the MySQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.</p>
+<p><a href="http://camel.apache.org/">Apache Camel</a> is an open-source framework that allows developers to build rule-based routing engines. Within the OpenMPF, we use a <a href="http://camel.apache.org/dsl.html">Java DSL</a> to define the routes. Every route functions independently, and communication between the routes is URI-based. The OpenMPF uses ActiveMQ to handle its message traffic.</p>
+<h2 id="job-creator-route">Job Creator Route</h2>
+<p>The <strong>Job Creator Route</strong> sets up the job in memory. By the time this route is invoked, the job has been persisted in the permanent MySQL database. The Job Creator Route sets up the transient objects in Redis that will be used for aggregating job data across pipeline stages. By the time this route exits, the particulars of the pipeline and job request will be stored in Redis.</p>
+<h2 id="media-retriever-route">Media Retriever Route</h2>
+<p>The <strong>Media Retriever Route</strong> ensures that the media for the job can all be found and accessed. It stores the media information on the server to ensure continued access.</p>
+<h2 id="media-inspection-route">Media Inspection Route</h2>
+<p>The <strong>Media Inspection Route</strong> splits a single job with multiple media inputs into separate messages, one for each piece of media. For each piece of media, it collects metadata about the media, including MIME type, duration, frame rate, and orientation data.</p>
+<h2 id="job-router-route">Job Router Route</h2>
+<p>The <strong>Job Router Route</strong> uses the pipeline's flow to create the messages that are sent to the components. For large media files, it splits the job into smaller sub-jobs by logically breaking the media up into segments. Each segment has a start point and an end point (specified as a frame or time offset).</p>
+<p>This route compiles properties for the job, media, and algorithm, and determines the next component that needs to be invoked. It then marshals the job into a serialized protobuf format and sends the message off to the component for processing.</p>
+<p>Unlike Job Creation, Media Retriever, and Media Inspection, this route may be invoked multiple times as future routes redirect back to the Job Router so that the job can be processed by the next component in the pipeline.</p>
+<h2 id="detection-response-route">Detection Response Route</h2>
+<p>The <strong>Detection Response Route</strong> is the re-entry point to the WFM. It unmarshals the protobuf responses, converts them into the Track and Detection objects used within the WFM, and stores them in the Redis database. Over multiple calls to the DetectionResponseProcessor, all data is eventually added into the transient Job object.</p>
+<h2 id="stage-response-aggregation-route">Stage Response Aggregation Route</h2>
+<p>The <strong>Stage Response Aggregation Route</strong> is the exit point for the response processors. It waits until all the sub-job responses have been retrieved for the current stage of the pipeline, then it invokes the Job Router Route to see if any additional processing needs to be done.</p>
+<h2 id="markup-response-route">Markup Response Route</h2>
+<p>Markup files are copies of the initial media input to a job with any detections visually highlighted in the image. The <strong>Markup Response Route</strong> persists the locations of these markup files in the MySQL database.</p>
+<h2 id="job-completed-route">Job Completed Route</h2>
+<p>Once the Job is completed, the <strong>Job Completed Route</strong> converts the aggregated transient data structure into a JSON output format. It then clears out any lingering transient objects, updates the final job status, and sends the output object to anything that needs to access it.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../REST-API/" class="btn btn-neutral" title="REST API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../REST-API/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+
+</body>
+</html>

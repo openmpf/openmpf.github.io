@@ -18,3 +18,5 @@ pages:
     - Java Component API: Java-Component-API.md
     - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
 - REST API: REST-API.md
+- Architecture:
+    - Workflow Manager: Workflow-Manager.md
