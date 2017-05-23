@@ -57,7 +57,7 @@ Detection components are implemented by:
 
 # OpenMPF API Specification
 
-The figure below presents a high-level component diagram of the OpenMPF API.
+The figure below presents a high-level component diagram of the OpenMPF API:
 
 ![OpenMPF Component Diagram](img/component_diagram_java.png "OpenMPF Component Diagram")
 
