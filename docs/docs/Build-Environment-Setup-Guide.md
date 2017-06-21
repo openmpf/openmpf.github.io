@@ -771,14 +771,12 @@ Run these commands to build the OpenMPF and run the integration tests:
     ```
     cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
     ```
-
 3. Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
 4. If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
     ```
     [mpf-child]
     localhost.localdomain
     ```
-
 5. Save and close the file.
 6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=<configFile> -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false`
 7. `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/`
@@ -800,14 +798,12 @@ Run these commands to build the OpenMPF and launch the web application:
     ```
     cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
     ```
-- Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
-- If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
-
-```
-  [mpf-child]
-  localhost.localdomain
-```
-
+3. Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
+4. If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
+   ```
+   [mpf-child]
+   localhost.localdomain
+   ```
 5. Save and close the file.
 6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
 7. `cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager`
