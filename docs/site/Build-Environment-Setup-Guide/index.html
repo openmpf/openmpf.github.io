@@ -1077,13 +1077,21 @@
 <p>Run these commands to build the OpenMPF and run the integration tests:</p>
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
-<li>Copy the development properties file into place:
-    <code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
-<li>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</li>
-<li>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):
-    <code>[mpf-child]
-    localhost.localdomain</code></li>
-<li>Save and close the file.</li>
+<li>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+</li>
+<li>
+<p>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
+</li>
+<li>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
 <li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=&lt;configFile&gt; -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false</code></li>
 <li><code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/</code></li>
 <li><code>sudo systemctl daemon-reload</code></li>
@@ -1101,13 +1109,21 @@
 <p>Run these commands to build the OpenMPF and launch the web application:</p>
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
-<li>Copy the development properties file into place:
-    <code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
-<li>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</li>
-<li>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):
-   <code>[mpf-child]
-   localhost.localdomain</code></li>
-<li>Save and close the file.</li>
+<li>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+</li>
+<li>
+<p>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
+</li>
+<li>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
 <li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager</code></li>
 <li><code>rm -rf /opt/apache-tomcat/webapps/workflow-manager*</code></li>
