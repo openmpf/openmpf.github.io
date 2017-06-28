@@ -419,18 +419,22 @@ The following source packages will need to be downloaded, built, and installed:
     7. `cd opencv_contrib`
     8. `git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738`
     9. `cd ..`
-    10. `cd opencv`
-    11. `mkdir release`
-    12. `cd release`
-    13. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
-    14. `make -j4`
-    15. `sudo make install`
-    16. `sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-    17. `sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0`
-    18. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2`
-    19. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv`
-    20. `sudo ldconfig`
-    21. `export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV`
+    10. Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
+    <pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
+    Above:
+    <pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code>
+    11. `cd opencv`
+    12. `mkdir release`
+    13. `cd release`
+    14. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
+    15. `make -j4`
+    16. `sudo make install`
+    17. `sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
+    18. `sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0`
+    19. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2`
+    20. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv`
+    21. `sudo ldconfig`
+    22. `export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV`
 8. Leptonica 1.72:
     <br>For reference only: <https://github.com/DanBloomberg/leptonica>
     1. `cd /apps/source/openalpr_sources`

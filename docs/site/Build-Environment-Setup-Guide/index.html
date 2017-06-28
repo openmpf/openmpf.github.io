@@ -751,6 +751,10 @@
 <li><code>cd opencv_contrib</code></li>
 <li><code>git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738</code></li>
 <li><code>cd ..</code></li>
+<li>Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
+<pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
+Above:
+<pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code></li>
 <li><code>cd opencv</code></li>
 <li><code>mkdir release</code></li>
 <li><code>cd release</code></li>
