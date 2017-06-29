@@ -59,33 +59,10 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-version-010-tbd">OpenMPF Version 0.10:  TBD</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-version-09-april-2017">OpenMPF Version 0.9:  April 2017</a></li>
-                
-                    <li><a class="toctree-l4" href="#documentation">Documentation</a></li>
-                
-                    <li><a class="toctree-l4" href="#workflow-manager">Workflow Manager</a></li>
-                
-                    <li><a class="toctree-l4" href="#web-user-interface">Web User Interface</a></li>
-                
-                    <li><a class="toctree-l4" href="#rest-api">REST API</a></li>
-                
-                    <li><a class="toctree-l4" href="#flipping-rotation-and-region-of-interest">Flipping, Rotation, and Region of Interest</a></li>
-                
-                    <li><a class="toctree-l4" href="#component-api">Component API</a></li>
-                
-                    <li><a class="toctree-l4" href="#json-output-objects">JSON Output Objects</a></li>
-                
-                    <li><a class="toctree-l4" href="#caffe-component">Caffe Component</a></li>
-                
-                    <li><a class="toctree-l4" href="#new-pipelines">New Pipelines</a></li>
-                
-                    <li><a class="toctree-l4" href="#packaging-and-deployment">Packaging and Deployment</a></li>
-                
-                    <li><a class="toctree-l4" href="#upgrade-to-opencv-31">Upgrade to OpenCV 3.1</a></li>
-                
-                    <li><a class="toctree-l4" href="#bug-fixes">Bug Fixes</a></li>
-                
-                    <li><a class="toctree-l4" href="#known-issues">Known Issues</a></li>
                 
             
             </ul>
@@ -221,13 +198,84 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="openmpf-version-010-tbd">OpenMPF Version 0.10:  TBD</h1>
+<blockquote>
+<p><strong>WARNING:</strong> There is no longer a “DEFAULT CAFFE ACTION”, “DEFAULT CAFFE TASK”, or “DEFAULT CAFFE PIPELINE”. There is now a “CAFFE GOOGLENET DETECTION PIPELINE” and “CAFFE YAHOO NSFW DETECTION PIPELINE”, which each have a respective action and task.</p>
+<p><strong>NOTE:</strong> MPFImageReader has been re-enabled in this version of OpenMPF since we upgraded to OpenCV 3.2, which addressed the known issues with imread(), auto-orientation, and jpeg files in OpenCV 3.1.</p>
+</blockquote>
+<h2>Documentation</h2>
+
+<ul>
+<li>Added a <a href="../Contributor-Guide/">Contributor Guide</a> that provides guidelines for contributing to the OpenMPF codebase.</li>
+<li>Updated the <a href="../Java-Component-API/">Java Component API</a> with links to the example Java components.</li>
+<li>Updated the <a href="../Build-Environment-Setup-Guide/">Build Guide</a> with instructions for OpenCV 3.2.</li>
+</ul>
+<h2>Upgrade to OpenCV 3.2</h2>
+
+<ul>
+<li>Updated core framework and components from OpenCV 3.1 to OpenCV 3.2.</li>
+</ul>
+<h2>Support for Animated gifs</h2>
+
+<ul>
+<li>All gifs are now treated as videos. Each gif will be handled as an MPFVideoJob.</li>
+<li>Unanimated gifs are treated as 1-frame videos.</li>
+<li>The WFM Media Inspector now populates the <code>media_properties</code> map with a "FRAME_COUNT" entry (in addition to the "DURATION, and "FPS" entries).</li>
+</ul>
+<h2>Caffe Component</h2>
+
+<ul>
+<li>Added support for the Yahoo Not Suitable for Work (NSFW) Caffe model for explicit material detection.</li>
+<li>Updated the Caffe component to support the OpenCV 3.2 Deep Neural Network (DNN) module.</li>
+</ul>
+<h2>Future Support for Streaming Video</h2>
+
+<blockquote>
+<p><strong>NOTE:</strong> At this time, OpenMPF does not support streaming video. This section details what's being / has been done so far to prepare for that feature.</p>
+</blockquote>
+<ul>
+<li>The codebase is being updated / refactored to support both the current "batch" job functionality and new "streaming" job functionality.<ul>
+<li>batch job: complete video files are written to disk before they are processed</li>
+<li>streaming job: video frames are read from a streaming endpoint (such as RTSP) and processed in near real time</li>
+</ul>
+</li>
+<li>The REST API is being updated with endpoints for streaming jobs:<ul>
+<li>[POST] /rest/streaming/jobs: Creates and submits a streaming job</li>
+<li>[POST] /rest/streaming/jobs/{id}/cancel: Cancels a streaming job</li>
+<li>[GET] /rest/streaming/jobs/{id}: Gets information about a streaming job</li>
+</ul>
+</li>
+<li>The Redis and mySQL databases are being updated to support streaming video jobs.<ul>
+<li>A batch job will never have the same id as a streaming job. The integer ids will always be unique.</li>
+</ul>
+</li>
+</ul>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>The MOG and SuBSENSE component services could segfault and terminate if the “USE_MOTION_TRACKING” property was set to “1” and a detection was found close to the edge of the frame. Specifically, this would only happen if the video had a width and/or height dimension that was not an exact power of two.<ul>
+<li>The reason was because the code downsamples each frame by a power of two and rounds the value of the width and height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.</li>
+</ul>
+</li>
+</ul>
+<h2>Known Issues</h2>
+
+<ul>
+<li>If a job is submitted through the REST API, and a user to logged into the web UI and looking at the job status page, the WFM may generate "Error retrieving the SingleJobInfo model for the job with id" messages.<ul>
+<li>This is because the job status is only added to the HTTP session object if the job is submitted through the web UI. When the UI queries the job status it inspects this object.</li>
+<li>This message does not appear if job status is obtained using the [GET] /rest/jobs/{id} endpoint.</li>
+</ul>
+</li>
+<li>The [GET] /rest/jobs/stats endpoint aggregates information about all of the jobs ever run on the system. If thousands of jobs have been run, this call could take minutes to complete. The code should be improved to execute a direct mySQL query.</li>
+</ul>
 <h1 id="openmpf-version-09-april-2017">OpenMPF Version 0.9:  April 2017</h1>
 <blockquote>
-<p><strong>WARNING:</strong> MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the <a href="#known-issues">Known Issues</a> section for more information.</p>
+<p><strong>WARNING:</strong> MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the Known Issues section for more information.</p>
 <p><strong>WARNING:</strong> The OALPR Text Detection Component has been renamed to OALPR <strong>License Plate</strong> Text Detection Component. This affects the name of the component package and the name of the actions, tasks, and pipelines. When upgrading from R0.8 to R0.9, if the old OALPR Text Detection Component is installed in R0.8 then you will be prompted to install it again at the end of the upgrade path script. We recommend declining this prompt because the old component will conflict with the new component.</p>
 <p><strong>WARNING:</strong> Action, task, and pipeline names that started with "MOTION DETECTION PREPROCESSOR" have been renamed "MOG MOTION DETECTION PREPROCESSOR". Similarly, "WITH MOTION PREPROCESSOR" has changed to "WITH MOG MOTION PREPROCESSOR".</p>
 </blockquote>
-<h2 id="documentation">Documentation</h2>
+<h2>Documentation</h2>
+
 <ul>
 <li>Updated the <a href="../REST-API/">REST API</a> to reflect job properties, algorithm-specific properties, and media-specific properties.</li>
 <li>Streamlined the <a href="../CPP-Component-API/">C++ Component API</a> document for clarity and simplicity.</li>
@@ -235,14 +283,16 @@
 <li>Updated the <a href="../Admin-Manual/">Admin Manual</a> and <a href="../User-Guide/">User Guide</a> to reflect web UI changes.</li>
 <li>Updated the <a href="../Build-Environment-Setup-Guide/">Build Guide</a> with instructions for GitHub repositories.</li>
 </ul>
-<h2 id="workflow-manager">Workflow Manager</h2>
+<h2>Workflow Manager</h2>
+
 <ul>
 <li>Added support for job properties, which will override pre-defined pipeline properties.</li>
 <li>Added support for algorithm-specific properties, which will apply to a single stage of the pipeline and will override job properties and pre-defined pipeline properties.</li>
 <li>Added support for media-specific properties, which will apply to a single piece and media and will override job properties, algorithm-specific properties, and pre-defined pipeline properties.</li>
 <li>Components can now be automatically registered and installed when the web application starts in Tomcat.</li>
 </ul>
-<h2 id="web-user-interface">Web User Interface</h2>
+<h2>Web User Interface</h2>
+
 <ul>
 <li>The "Close All" button on pop-up notifications now dismisses all notifications from the queue, not just the visible ones.</li>
 <li>Job completion notifications now only appear for jobs created during the current login session instead of all jobs.</li>
@@ -252,19 +302,22 @@
 <li>The File Manager UI has been improved to handle large numbers of files and symbolic links.</li>
 <li>The side navigation menu is now replaced by a top navigation bar.</li>
 </ul>
-<h2 id="rest-api">REST API</h2>
+<h2>REST API</h2>
+
 <ul>
 <li>Added an optional jobProperties object to the /rest/jobs/ request which contains String key-value pairs which override the pipeline's pre-configured job properties.</li>
 <li>Added an optional algorithmProperties object to the /rest/jobs/ request which can be used to configure properties for specific algorithms in the pipeline. These properties override the pipeline's pre-configured job properties. They also override the values in the jobProperties object.</li>
 <li>Updated the /rest/jobs/ request to add more detail to media, replacing a list of mediaUri Strings with a list of media objects, each of which contains a mediaUri and an optional mediaProperties map. The mediaProperties map can be used to configure properties for the specific piece of media. These properties override the pipeline's pre-configured job properties, values in the jobProperties object, and values in the algorithmProperties object.</li>
 <li>Streamlined the actions, tasks, and pipelines endpoints that are used by the web UI.</li>
 </ul>
-<h2 id="flipping-rotation-and-region-of-interest">Flipping, Rotation, and Region of Interest</h2>
+<h2>Flipping, Rotation, and Region of Interest</h2>
+
 <ul>
 <li>The ROTATION, HORIZONTAL_FLIP, and SEARCH_REGION_* properties will no longer appear in the detectionProperties map in the JSON detection output object. When applied to an algorithm these properties now appear in the pipeline.stages.actions.properties element. When applied to a piece of media these properties will now appear in the the media.mediaProperties element.</li>
 <li>The OpenMPF now supports multiple regions of interest in a single media file.  Each region will produce tracks separately, and the tracks for each region will be listed in the JSON output as if from a separate media file.</li>
 </ul>
-<h2 id="component-api">Component API</h2>
+<h2>Component API</h2>
+
 <ul>
 <li>Java Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.</li>
 <li>Re-architected the Java component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:<ul>
@@ -276,23 +329,27 @@
 <li>Created examples for the Java Component API.</li>
 <li>Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which will simplify component development and streamline the code base.</li>
 </ul>
-<h2 id="json-output-objects">JSON Output Objects</h2>
+<h2>JSON Output Objects</h2>
+
 <ul>
 <li>The JSON output object for the job now contains a jobProperties map which contains all properties defined for the job in the job request.  For example, if the job request specifies a CONFIDENCE_THRESHOLD of then the jobProperties map in the output will also list a CONFIDENCE_THRESHOLD of 5.</li>
 <li>The JSON output object for the job now contains a algorithmProperties element which contains all algorithm-specific properties defined for the job in the job request.  For example, if the job request specifies a FRAME_INTERVAL of 2 for FACECV then the algorithmProperties element in the output will contain an entry for "FACECV" and that entry will list a FRAME_INTERVAL of 2.</li>
 <li>Each JSON media output object now contains a mediaProperties map which contains all media-specific properties defined by the job request.  For example, if the job request specifies a ROTATION of 90 degrees for a single piece of media then the mediaProperties map for that piece of piece will list a ROTATION of 90.</li>
 <li>The content of JSON output objects are now organized by detection type (e.g. MOTION, FACE, PERSON, TEXT, etc.) rather than action type.</li>
 </ul>
-<h2 id="caffe-component">Caffe Component</h2>
+<h2>Caffe Component</h2>
+
 <ul>
 <li>Added support for flip, rotation, and cropping to regions of interest.</li>
 <li>Added support for returning multiple classifications per detection based on user-defined settings. The classification list is in order of decreasing confidence value.</li>
 </ul>
-<h2 id="new-pipelines">New Pipelines</h2>
+<h2>New Pipelines</h2>
+
 <ul>
 <li>New SuBSENSE motion preprocessor pipelines have been added to components that perform detection on video.</li>
 </ul>
-<h2 id="packaging-and-deployment">Packaging and Deployment</h2>
+<h2>Packaging and Deployment</h2>
+
 <ul>
 <li>Actions.xml, Algorithms.xml, nodeManagerConfig.xml, nodeServicesPalette.json, Pipelines.xml, and Tasks.xml are no longer stored within the Workflow Manager WAR file. They are now stored under <code>$MPF_HOME/data</code>. This makes it easier to upgrade the Workflow Manager and makes it easier for users to access these files.</li>
 <li>Each component can now be optionally installed and registered during deployment. Components not registered are set to the UPLOADED state. They can then be removed or registered through the Component Registration page.</li>
@@ -304,11 +361,13 @@
 </li>
 <li>Reorganized source code repositories so that component SDKs can be downloaded separately from the OpenMPF core and so that components are grouped by license and maturity. Build scripts have been created to streamline and simplify the build process across the various repositories.</li>
 </ul>
-<h2 id="upgrade-to-opencv-31">Upgrade to OpenCV 3.1</h2>
+<h2>Upgrade to OpenCV 3.1</h2>
+
 <ul>
 <li>The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica libraries were also upgraded to openalpr-2.3.0, tesseract-3.0.4, and leptonica-1.7.2.  For the SuBSENSE motion component, the version of the SuBSENSE library was upgraded to use the code found at this location: <a href="https://bitbucket.org/pierre_luc_st_charles/subsense/src">https://bitbucket.org/pierre_luc_st_charles/subsense/src</a>.</li>
 </ul>
-<h2 id="bug-fixes">Bug Fixes</h2>
+<h2>Bug Fixes</h2>
+
 <ul>
 <li>MOG motion detection always detected motion in frame 0 of a video. Because motion can only be detected between two adjacent frames, frame 1 is now the first frame in which motion can be detected.</li>
 <li>MOG motion detection never detected motion in the first frame of a video segment (other than the first video segment because of the frame 0 bug described above). Now, motion is detected using the first frame before the start of a segment, rather than the first frame of the segment.</li>
@@ -318,7 +377,8 @@
 <li>A job would fail when processing images with an invalid metadata tag for the camera flash setting.</li>
 <li>Users were permitted to select invalid file types using the File Manager UI.</li>
 </ul>
-<h2 id="known-issues">Known Issues</h2>
+<h2>Known Issues</h2>
+
 <ul>
 <li><strong>MPFImageReader does not work reliably with the current release version of OpenCV 3.1</strong>: In OpenCV 3.1, new functionality was introduced to interpret EXIF information when reading jpeg files.</li>
 <li>There are two issues with this new functionality that impact our ability to use the OpenCV <code>imread()</code> function with MPFImageReader:<ul>
