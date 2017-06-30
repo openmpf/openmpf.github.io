@@ -19,6 +19,14 @@
 
     
     <url>
+     <loc>/Contributor-Guide/</loc>
+     <lastmod>2017-06-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>/Build-Environment-Setup-Guide/</loc>
      <lastmod>2017-06-30</lastmod>
      <changefreq>daily</changefreq>
@@ -83,6 +91,16 @@
      <lastmod>2017-06-30</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    
+
+    
+        
+    <url>
+     <loc>/Workflow-Manager/</loc>
+     <lastmod>2017-06-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>

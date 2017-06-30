@@ -59,7 +59,7 @@ Detection components are implemented by:
 
 # OpenMPF API Specification
 
-The figure below presents a high-level component diagram of the OpenMPF API.
+The figure below presents a high-level component diagram of the OpenMPF API:
 
 ![OpenMPF Component Diagram](img/component_diagram.png "OpenMPF Component Diagram")
 
@@ -454,7 +454,7 @@ Structure containing data used for detection of objects in a video file.
 	|  start_frame | `const int`  | The first frame number (0-based index) of the video that should be processed to look for detections.  |
 	| stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
 	| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li></ul> |
+	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
 
 
 >**IMPORTANT:** For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.

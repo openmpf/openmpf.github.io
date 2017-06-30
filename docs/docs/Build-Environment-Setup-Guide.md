@@ -408,25 +408,33 @@ The following source packages will need to be downloaded, built, and installed:
     9. `make distclean`
     10. `sudo ldconfig`
     11. `sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so`
-7. openCV 3.1.0:
+7. OpenCV 3.2.0:
     <br>For reference only: <http://opencv.org>
     1. `cd /apps/source/opencv_sources`
-    2. `wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"`
-    3. `unzip -o opencv-3.1.0.zip`
-    4. `wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"`
-    5. `tar xvzf opencv_contrib-3.1.0.tar.gz`
-    6. `cd opencv-3.1.0`
-    7. `mkdir release`
-    8. `cd release`
-    9. `cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
-    10. `make -j4`
-    11. `sudo make install`
-    12. `sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-    13. `sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0`
-    14. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2`
-    15. `sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv`
-    16. `sudo ldconfig`
-    17. `export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV`
+    2. `git clone https://github.com/opencv/opencv.git`
+    3. `cd opencv`
+    4. `git checkout 26e9b42a44a62e00e0c1237f778040169162116c`
+    5. `cd ..`
+    6. `git clone https://github.com/opencv/opencv_contrib.git`
+    7. `cd opencv_contrib`
+    8. `git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738`
+    9. `cd ..`
+    10. Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
+    <pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
+    Above:
+    <pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code>
+    11. `cd opencv`
+    12. `mkdir release`
+    13. `cd release`
+    14. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
+    15. `make -j4`
+    16. `sudo make install`
+    17. `sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
+    18. `sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0`
+    19. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2`
+    20. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv`
+    21. `sudo ldconfig`
+    22. `export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV`
 8. Leptonica 1.72:
     <br>For reference only: <https://github.com/DanBloomberg/leptonica>
     1. `cd /apps/source/openalpr_sources`
@@ -768,12 +776,14 @@ Run these commands to build the OpenMPF and run the integration tests:
 
 1. `cd /home/mpf/openmpf-projects/openmpf`
 2. Copy the development properties file into place:
+
     ```
     cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
     ```
 
 3. Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
 4. If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
+
     ```
     [mpf-child]
     localhost.localdomain
@@ -797,16 +807,18 @@ Run these commands to build the OpenMPF and launch the web application:
 
 1. `cd /home/mpf/openmpf-projects/openmpf`
 2. Copy the development properties file into place:
+
     ```
     cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties
     ```
-- Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
-- If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
 
-```
-  [mpf-child]
-  localhost.localdomain
-```
+3. Open the file `/etc/ansible/hosts` in a text editor. `sudo` is required to edit this file.
+4. If they do not already exist, add these two lines above `# Ex 1: Ungrouped hosts, specify before any group headers.` (line 11):
+
+    ```
+    [mpf-child]
+    localhost.localdomain
+    ```
 
 5. Save and close the file.
 6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`

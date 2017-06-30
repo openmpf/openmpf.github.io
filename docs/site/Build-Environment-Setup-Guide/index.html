@@ -61,6 +61,13 @@
 <li>
           
             <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Contributor-Guide/">Contributor Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
     <li class="toctree-l1 current">
         <a class="current" href="./">Build Guide</a>
         
@@ -208,6 +215,21 @@
         <a class="" href="../REST-API/">REST API</a>
         
     </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Architecture</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Workflow-Manager/">Workflow Manager</a>
+        
+    </li>
+
+        
+    </ul>
 <li>
           
         </ul>
@@ -718,25 +740,33 @@
 <li><code>sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so</code></li>
 </ol>
 </li>
-<li>openCV 3.1.0:
+<li>OpenCV 3.2.0:
     <br>For reference only: <a href="http://opencv.org">http://opencv.org</a><ol>
 <li><code>cd /apps/source/opencv_sources</code></li>
-<li><code>wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"</code></li>
-<li><code>unzip -o opencv-3.1.0.zip</code></li>
-<li><code>wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"</code></li>
-<li><code>tar xvzf opencv_contrib-3.1.0.tar.gz</code></li>
-<li><code>cd opencv-3.1.0</code></li>
+<li><code>git clone https://github.com/opencv/opencv.git</code></li>
+<li><code>cd opencv</code></li>
+<li><code>git checkout 26e9b42a44a62e00e0c1237f778040169162116c</code></li>
+<li><code>cd ..</code></li>
+<li><code>git clone https://github.com/opencv/opencv_contrib.git</code></li>
+<li><code>cd opencv_contrib</code></li>
+<li><code>git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738</code></li>
+<li><code>cd ..</code></li>
+<li>Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
+<pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
+Above:
+<pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code></li>
+<li><code>cd opencv</code></li>
 <li><code>mkdir release</code></li>
 <li><code>cd release</code></li>
-<li><code>cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..</code></li>
+<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..</code></li>
 <li><code>make -j4</code></li>
 <li><code>sudo make install</code></li>
-<li><code>sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv</code></li>
+<li><code>sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv</code></li>
 <li><code>sudo ldconfig</code></li>
-<li><code>export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV</code></li>
+<li><code>export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV</code></li>
 </ol>
 </li>
 <li>Leptonica 1.72:
@@ -1056,16 +1086,16 @@
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
 <li>
-<p>Copy the development properties file into place:
-    <code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
 </li>
 <li>
 <p>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
 </li>
 <li>
-<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):
-    <code>[mpf-child]
-    localhost.localdomain</code></p>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
 </li>
 <li>
 <p>Save and close the file.</p>
@@ -1087,17 +1117,21 @@
 <p>Run these commands to build the OpenMPF and launch the web application:</p>
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
-<li>Copy the development properties file into place:
-    <code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
-<li>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</li>
-<li>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</li>
-</ol>
-<pre><code>  [mpf-child]
-  localhost.localdomain
-</code></pre>
-
-<ol>
-<li>Save and close the file.</li>
+<li>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+</li>
+<li>
+<p>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
+</li>
+<li>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
 <li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager</code></li>
 <li><code>rm -rf /opt/apache-tomcat/webapps/workflow-manager*</code></li>
@@ -1532,7 +1566,7 @@ java.lang.InterruptedException: null
         <a href="../Installation/" class="btn btn-neutral float-right" title="Install Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Release-Notes/" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Contributor-Guide/" class="btn btn-neutral" title="Contributor Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1560,7 +1594,7 @@ java.lang.InterruptedException: null
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Release-Notes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Contributor-Guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../Installation/" style="color: #fcfcfc">Next &raquo;</a></span>
