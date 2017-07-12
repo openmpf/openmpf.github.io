@@ -130,12 +130,24 @@ git push
 
 # Versioning a New Release
 
-When the OpenMPF team agrees that it's time to version a new release of the system, a project administrator will merge the develop branch into the master branch for each repository. The master branch commit of each repository will then be tagged with the release number. The decision to version a new release is based on the following factors:
+The decision to version a new release is based on the following factors:
 
 - The system has been updated with major features and/or enhancements
 - The system has been updated to work with new versions of critical system dependencies, such as OpenCV and Spring
 - The packaging and/or deployment process has changed significantly
 - It's been a long time since the last release and many small updates have been made to the system
+
+When the OpenMPF team agrees that it's time to version a new release of the system, a project administrator will create a release branch in each repository off of the develop branch. The name of a release branch takes the form `r<major>.<minor>.<bugfix>`. For example, `r0.10.0`. Also, the first commit in the release branch will be tagged as release candidate 1. For example, `r0.10.0-rc1`. Beta testers will then have the opportunity to test the release candidate 1 code.
+
+If a bug is found in the release candidate code, then developers should land the bug fix to the release branch via a pull request. Once it has landed, the most recent commit will be tagged as release candidate 2. For example, `r0.10.0-rc2`. Beta testers will then have the opportunity to test the release candidate 2 code. The release candidate number will increase by one each time bugs are fixed. The bug fix code should be merged into the develop branch after it lands to the release branch.
+
+If no bugs are found in the release candidate code for a period of time (generally, a month) then the release candidate will be finalized. The release candidate branch for each repo will be merged into the master branch for that repo. That commit on the master branch will be tagged with the release number. For example, `r0.10.0`.
+
+If a critical bug fix needs to be made to the master branch, this is known has a "hot fix". Developers should land a hot fix to the master branch via a pull request. Once the code lands, the commit will be tagged by incrementing the `<bugfix>` number. For example, `r0.10.1`. The bug fix code should be merged into the develop branch after it lands to the master branch.
+
+Note that you should not use the `--no-ff` option when merging one branch into another. Doing so will make the commit history more verbose and difficult to follow.
+
+This process is based on [GitFlow](https://datasift.github.io/gitflow/IntroducingGitFlow.html).
 
 # Adding New Components
 

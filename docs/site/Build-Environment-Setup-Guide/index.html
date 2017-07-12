@@ -549,8 +549,10 @@
 </blockquote>
 <p>The following source packages will need to be downloaded, built, and installed:</p>
 <ol>
-<li>Cmake 2.8.12.2:
-    <br>For reference only: <a href="https://cmake.org">https://cmake.org</a><ol>
+<li>
+<p>Cmake 2.8.12.2:
+    <br>For reference only: <a href="https://cmake.org">https://cmake.org</a></p>
+<ol>
 <li><code>cd /apps/source/cmake_sources</code></li>
 <li><code>wget -O /apps/source/cmake_sources/cmake-2.8.12.2.tar.gz "https://cmake.org/files/v2.8/cmake-2.8.12.2.tar.gz"</code></li>
 <li><code>tar xvzf cmake-2.8.12.2.tar.gz</code></li>
@@ -563,12 +565,10 @@
 <li><code>sudo ln -s /apps/install/bin/cmake /usr/local/bin/cmake</code></li>
 </ol>
 </li>
-</ol>
-<blockquote>
-<p><strong>NOTE:</strong> FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.    </p>
-</blockquote>
+<li>
+<p>FFmpeg 2.6.3:
+    <br><br><strong>NOTE:</strong> FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.   </p>
 <ol>
-<li>FFmpeg 2.6.3:<ol>
 <li>xvidcore:
     <br>For reference only: <a href="https://labs.xvid.com">https://labs.xvid.com</a><ol>
 <li><code>cd /apps/source/ffmpeg_sources</code></li>
@@ -725,8 +725,10 @@
 <li><code>sudo ldconfig</code></li>
 </ol>
 </li>
-<li>Activemqcpp 3.9.0:
-    <br>For reference only: <a href="http://activemq.apache.org/cms">http://activemq.apache.org/cms</a><ol>
+<li>
+<p>Activemqcpp 3.9.0:
+    <br>For reference only: <a href="http://activemq.apache.org/cms">http://activemq.apache.org/cms</a></p>
+<ol>
 <li><code>cd /apps/source/apache_sources</code></li>
 <li><code>wget -O /apps/source/apache_sources/activemq-cpp-library-3.9.0-src.tar.gz "https://archive.apache.org/dist/activemq/activemq-cpp/3.9.0/activemq-cpp-library-3.9.0-src.tar.gz"</code></li>
 <li><code>tar zxvf activemq-cpp-library-3.9.0-src.tar.gz</code></li>
@@ -740,8 +742,37 @@
 <li><code>sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so</code></li>
 </ol>
 </li>
-<li>OpenCV 3.2.0:
-    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a><ol>
+<li>
+<p>OpenCV:
+    <br><br><strong>IMPORTANT:</strong> If building the master branch as of <a href="https://github.com/openmpf/openmpf-projects/commit/8527d4e303559a14eb7df9ce9f1d5eeee285238b">this commit</a> or earlier, then follow the instructions below for OpenCV 3.1.0. If building the develop branch, "r0.10.0" branch, or a branch for a later release, then follow the instructions below for OpenCV 3.2.0. Don't install both.</p>
+<ol>
+<li>
+<p>OpenCV 3.1.0
+    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a></p>
+<ol>
+<li><code>cd /apps/source/opencv_sources</code></li>
+<li><code>wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"</code></li>
+<li><code>unzip -o opencv-3.1.0.zip</code></li>
+<li><code>wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"</code></li>
+<li><code>tar xvzf opencv_contrib-3.1.0.tar.gz</code></li>
+<li><code>cd opencv-3.1.0</code></li>
+<li><code>mkdir release</code></li>
+<li><code>cd release</code></li>
+<li><code>cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..</code></li>
+<li><code>make -j4</code></li>
+<li><code>sudo make install</code></li>
+<li><code>sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv</code></li>
+<li><code>sudo ldconfig</code></li>
+<li><code>export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV</code></li>
+</ol>
+</li>
+<li>
+<p>OpenCV 3.2.0
+    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a></p>
+<ol>
 <li><code>cd /apps/source/opencv_sources</code></li>
 <li><code>git clone https://github.com/opencv/opencv.git</code></li>
 <li><code>cd opencv</code></li>
@@ -769,8 +800,12 @@ Above:
 <li><code>export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV</code></li>
 </ol>
 </li>
-<li>Leptonica 1.72:
-    <br>For reference only: <a href="https://github.com/DanBloomberg/leptonica">https://github.com/DanBloomberg/leptonica</a><ol>
+</ol>
+</li>
+<li>
+<p>Leptonica 1.72:
+    <br>For reference only: <a href="https://github.com/DanBloomberg/leptonica">https://github.com/DanBloomberg/leptonica</a></p>
+<ol>
 <li><code>cd /apps/source/openalpr_sources</code></li>
 <li><code>wget -O /apps/source/openalpr_sources/leptonica-1.72.tar.gz "https://github.com/DanBloomberg/leptonica/archive/v1.72.tar.gz"</code></li>
 <li><code>tar xvzf leptonica-1.72.tar.gz</code></li>
