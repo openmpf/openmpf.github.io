@@ -3,28 +3,31 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  
-  <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Packaging and Registering a Component - OpenMPF</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+
   
   <script>
     // Current page data
     var mkdocs_page_name = "Packaging and Registering a Component";
-    var mkdocs_page_input_path = "Packaging-and-Registering-a-Component.md";
-    var mkdocs_page_url = "/Packaging-and-Registering-a-Component/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
   <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
   
 </head>
 
@@ -44,7 +47,7 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
+        <ul class="current">
           
             <li>
     <li class="toctree-l1 ">
@@ -327,6 +330,16 @@ Java: Required; can be empty.</p>
   Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
 </li>
 <li>
+<p><strong>supportsBatchProcessing:</strong>
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports batch processing.</p>
+</li>
+<li>
+<p><strong>supportsStreamProcessing:</strong>
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports stream processing.</p>
+</li>
+<li>
 <p><strong>requiresCollection:</strong>
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
   <br/>This value should be empty <em>unless</em> the component depends on the results of another algorithm.</p>
@@ -500,7 +513,7 @@ The default pipeline will use the default task. This will only be generated if t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../REST-API/" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../REST-API/" class="btn btn-neutral float-right" title="REST API"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../Java-Component-API/" class="btn btn-neutral" title="Java Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -524,10 +537,10 @@ The default pipeline will use the default task. This will only be generated if t
       </div>
 
     </section>
-    
+
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+<div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -538,7 +551,6 @@ The default pipeline will use the default task. This will only be generated if t
       
     </span>
 </div>
-    <script src="../js/theme.js"></script>
 
 </body>
 </html>
