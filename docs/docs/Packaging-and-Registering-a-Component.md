@@ -123,6 +123,13 @@ Contains the following sub-fields:
 * **actionType:**
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
+* **supportsBatchProcessing:**
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports batch processing.
+  
+* **supportsStreamProcessing:**
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports stream processing.
 
 * **requiresCollection:**
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.

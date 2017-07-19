@@ -327,6 +327,16 @@ Java: Required; can be empty.</p>
   Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
 </li>
 <li>
+<p><strong>supportsBatchProcessing:</strong>
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports batch processing.</p>
+</li>
+<li>
+<p><strong>supportsStreamProcessing:</strong>
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  algorithm supports stream processing.</p>
+</li>
+<li>
 <p><strong>requiresCollection:</strong>
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
   <br/>This value should be empty <em>unless</em> the component depends on the results of another algorithm.</p>
