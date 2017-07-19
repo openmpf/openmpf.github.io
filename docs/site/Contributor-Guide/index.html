@@ -88,6 +88,9 @@
                 <li class="toctree-l3"><a href="#coding-style">Coding Style</a></li>
                 
             
+                <li class="toctree-l3"><a href="#updating-online-documentation">Updating Online Documentation</a></li>
+                
+            
             </ul>
         
     </li>
@@ -349,10 +352,11 @@ git push
 <h1 id="versioning-a-new-release">Versioning a New Release</h1>
 <p>The decision to version a new release is based on the following factors:</p>
 <ul>
-<li>The system has been updated with major features and/or enhancements</li>
-<li>The system has been updated to work with new versions of critical system dependencies, such as OpenCV and Spring</li>
-<li>The packaging and/or deployment process has changed significantly</li>
-<li>It's been a long time since the last release and many small updates have been made to the system</li>
+<li>Changes have been made to the API which break backwards compatibility. Refer to the <a href="http://semver.org">Semantic Versioning Guide</a>.</li>
+<li>The system has been updated with major features and/or enhancements.</li>
+<li>The system has been updated to work with new versions of critical system dependencies, such as OpenCV and Spring.</li>
+<li>The packaging and/or deployment process has changed significantly.</li>
+<li>It's been a long time since the last release and many small updates have been made to the system.</li>
 </ul>
 <p>When the OpenMPF team agrees that it's time to version a new release of the system, a project administrator will create a release branch in each repository off of the develop branch. The name of a release branch takes the form <code>r&lt;major&gt;.&lt;minor&gt;.&lt;bugfix&gt;</code>. For example, <code>r0.10.0</code>. Also, the first commit in the release branch will be tagged as release candidate 1. For example, <code>r0.10.0-rc1</code>. Beta testers will then have the opportunity to test the release candidate 1 code.</p>
 <p>If a bug is found in the release candidate code, then developers should land the bug fix to the release branch via a pull request. Once it has landed, the most recent commit will be tagged as release candidate 2. For example, <code>r0.10.0-rc2</code>. Beta testers will then have the opportunity to test the release candidate 2 code. The release candidate number will increase by one each time bugs are fixed. The bug fix code should be merged into the develop branch after it lands to the release branch.</p>
@@ -377,6 +381,10 @@ git push
 <li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
 </ul>
 <p>Generally speaking, when writing new code, please refer to existing code in the repositories and match the style. Most style issues boil down to inconsistency. Not all of our code adheres to these style guidelines, but we are striving to improve it.</p>
+<h1 id="updating-online-documentation">Updating Online Documentation</h1>
+<p>We use <a href="http://www.mkdocs.org">mkdocs</a> to generate HTML files from Markdown (.md) files stored in the <a href="https://github.com/openmpf/openmpf.github.io/tree/master/docs/docs">openmpf.github.io repo</a>. When modifying the files locally we run <code>mkdocs serve</code> within the openmpf.github.io/docs directory. That spawns a local webserver so that you can view changes to the doc in real time by browsing to <a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>When the changes look good, generate the HTML and associated files by running <code>mkdocs build</code> within the same directy. Commit all of the generated files and generate a pull request to merge them into the master branch. Once your code is merged into the master branch in the GitHub repo, the <a href="https://openmpf.github.io/docs/site/">https://openmpf.github.io/docs/site/</a> page will automatically update (often within 5 minutes). Our repo is forked from <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>, which takes care of this process.</p>
+<p>Note that we do not have a develop branch for the documentation. We decided to consolidate information into one set of documentation for convenience and simplicity and annotate it with branch-specific information where appropriate.</p>
               
             </div>
           </div>

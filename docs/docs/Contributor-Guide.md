@@ -132,10 +132,11 @@ git push
 
 The decision to version a new release is based on the following factors:
 
-- The system has been updated with major features and/or enhancements
-- The system has been updated to work with new versions of critical system dependencies, such as OpenCV and Spring
-- The packaging and/or deployment process has changed significantly
-- It's been a long time since the last release and many small updates have been made to the system
+- Changes have been made to the API which break backwards compatibility. Refer to the [Semantic Versioning Guide](http://semver.org).
+- The system has been updated with major features and/or enhancements.
+- The system has been updated to work with new versions of critical system dependencies, such as OpenCV and Spring.
+- The packaging and/or deployment process has changed significantly.
+- It's been a long time since the last release and many small updates have been made to the system.
 
 When the OpenMPF team agrees that it's time to version a new release of the system, a project administrator will create a release branch in each repository off of the develop branch. The name of a release branch takes the form `r<major>.<minor>.<bugfix>`. For example, `r0.10.0`. Also, the first commit in the release branch will be tagged as release candidate 1. For example, `r0.10.0-rc1`. Beta testers will then have the opportunity to test the release candidate 1 code.
 
@@ -169,3 +170,11 @@ The following list of style guides provide a comprehensive explanation of some o
 - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 
 Generally speaking, when writing new code, please refer to existing code in the repositories and match the style. Most style issues boil down to inconsistency. Not all of our code adheres to these style guidelines, but we are striving to improve it.
+
+# Updating Online Documentation
+
+We use [mkdocs](http://www.mkdocs.org) to generate HTML files from Markdown (.md) files stored in the [openmpf.github.io repo](https://github.com/openmpf/openmpf.github.io/tree/master/docs/docs). When modifying the files locally we run `mkdocs serve` within the openmpf.github.io/docs directory. That spawns a local webserver so that you can view changes to the doc in real time by browsing to <http://localhost:8000>.
+
+When the changes look good, generate the HTML and associated files by running `mkdocs build` within the same directy. Commit all of the generated files and generate a pull request to merge them into the master branch. Once your code is merged into the master branch in the GitHub repo, the <https://openmpf.github.io/docs/site/> page will automatically update (often within 5 minutes). Our repo is forked from [Beautiful Jekyll](http://deanattali.com/beautiful-jekyll/), which takes care of this process.
+
+Note that we do not have a develop branch for the documentation. We decided to consolidate information into one set of documentation for convenience and simplicity and annotate it with branch-specific information where appropriate.
