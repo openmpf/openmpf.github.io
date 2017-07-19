@@ -132,28 +132,6 @@
             
                 <li class="toctree-l3"><a href="#component-descriptor-data-elements">Component Descriptor Data Elements</a></li>
                 
-                    <li><a class="toctree-l4" href="#componentname">componentName</a></li>
-                
-                    <li><a class="toctree-l4" href="#componentversion">componentVersion</a></li>
-                
-                    <li><a class="toctree-l4" href="#componentapiversion">componentAPIVersion</a></li>
-                
-                    <li><a class="toctree-l4" href="#sourcelanguage">sourceLanguage</a></li>
-                
-                    <li><a class="toctree-l4" href="#pathname">pathName</a></li>
-                
-                    <li><a class="toctree-l4" href="#launchargs">launchArgs</a></li>
-                
-                    <li><a class="toctree-l4" href="#environmentvariables">environmentVariables</a></li>
-                
-                    <li><a class="toctree-l4" href="#algorithm">algorithm</a></li>
-                
-                    <li><a class="toctree-l4" href="#actions">actions</a></li>
-                
-                    <li><a class="toctree-l4" href="#tasks">tasks</a></li>
-                
-                    <li><a class="toctree-l4" href="#pipelines">pipelines</a></li>
-                
             
                 <li class="toctree-l3"><a href="#packaging-a-component">Packaging a Component</a></li>
                 
@@ -234,30 +212,35 @@
 <h2 id="component-descriptor-overview">Component Descriptor Overview</h2>
 <p>In order to registered within OpenMPF, each component must provide a JavaScript Object Notation (JSON) descriptor file which provides contextual information about the component.</p>
 <p>This file must be named "descriptor.json".</p>
-<p>For an example, please see: <a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json"><strong>Hello World JSON Descriptor</strong></a></p>
+<p>For an example, please see: <a href="https://github.com/openmpf/openmpf/blob/develop/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json"><strong>Hello World JSON Descriptor</strong></a></p>
 <h2 id="component-descriptor-data-elements">Component Descriptor Data Elements</h2>
 <p>Contained within the JSON file should be the following elements:</p>
-<h3 id="componentname">componentName</h3>
+<h3>componentName</h3>
+
 <p>Required.</p>
 <p>Contains the component’s name. Should follow CamelCaseFormat.</p>
 <p>Example:
 <code>"componentName" : "SampleComponent"</code></p>
-<h3 id="componentversion">componentVersion</h3>
+<h3>componentVersion</h3>
+
 <p>Required.</p>
 <p>Contains the component’s version. Does not need to match the <code>componentAPIVersion</code>.</p>
 <p>Example:
 <code>"componentVersion" : "0.1.0"</code></p>
-<h3 id="componentapiversion">componentAPIVersion</h3>
+<h3>componentAPIVersion</h3>
+
 <p>Required.</p>
 <p>Contains the version of the MPF Component API that the component was built with.</p>
 <p>Example:
 <code>"middlewareVersion" :  "0.9.0"</code></p>
-<h3 id="sourcelanguage">sourceLanguage</h3>
+<h3>sourceLanguage</h3>
+
 <p>Required.</p>
 <p>Contains the language the component is coded in. Should be either “java” or “c++”.</p>
 <p>Example:
 <code>"sourceLanguage" : "c++"</code></p>
-<h3 id="pathname">pathName</h3>
+<h3>pathName</h3>
+
 <p>Required.</p>
 <p>For C++ components, this contains the name of the Component Executable that will be used to run the component. Generally, this is <code>amq_detection_component</code> (where “amq” stands for ActiveMQ) for all C++ detection components.</p>
 <p>For Java components, this contains the path to the jar which contains the component implementation.</p>
@@ -265,7 +248,8 @@
 <code>"pathName" : "amq_detection_component"</code></p>
 <p>Example (Java):
 <code>"pathName" : "sample-component-0.1.0.jar"</code></p>
-<h3 id="launchargs">launchArgs</h3>
+<h3>launchArgs</h3>
+
 <p>C++: Required.
 Java: Required; can be empty.</p>
 <p>Holds the command line arguments in string format that should be passed to the Component Executable when it is launched.</p>
@@ -275,7 +259,8 @@ Java: Required; can be empty.</p>
 <code>"launchArgs" : ["${MPF_HOME}/plugins/SampleComponent/lib/libsampleComponent.so"]</code></p>
 <p>Example (Java):
 <code>"launchArgs" : []</code></p>
-<h3 id="environmentvariables">environmentVariables</h3>
+<h3>environmentVariables</h3>
+
 <p>Required; can be empty.</p>
 <p>Defines a collection of environment variables that will be set when executing the MPF Component Executable.</p>
 <p>Contains the following sub-fields:</p>
@@ -307,7 +292,8 @@ Java: Required; can be empty.</p>
   ]
 </code></pre>
 
-<h3 id="algorithm">algorithm</h3>
+<h3>algorithm</h3>
+
 <p>Required.</p>
 <p>Specifies information about the component’s algorithm.</p>
 <p>Contains the following sub-fields:
@@ -328,12 +314,12 @@ Java: Required; can be empty.</p>
 </li>
 <li>
 <p><strong>supportsBatchProcessing:</strong>
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
   algorithm supports batch processing.</p>
 </li>
 <li>
 <p><strong>supportsStreamProcessing:</strong>
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
   algorithm supports stream processing.</p>
 </li>
 <li>
@@ -374,7 +360,8 @@ Java: Required; can be empty.</p>
 </ul>
 </li>
 </ul>
-<h3 id="actions">actions</h3>
+<h3>actions</h3>
+
 <p>Optional.</p>
 <p>Actions are used in the development of pipelines. Provides a list of custom actions that will be added during component registration.</p>
 <blockquote>
@@ -410,7 +397,8 @@ Java: Required; can be empty.</p>
 ]
 </code></pre>
 
-<h3 id="tasks">tasks</h3>
+<h3>tasks</h3>
+
 <p>Optional.</p>
 <p>A list of custom tasks that will be added during component registration.</p>
 <blockquote>
@@ -443,7 +431,8 @@ Java: Required; can be empty.</p>
 ]
 </code></pre>
 
-<h3 id="pipelines">pipelines</h3>
+<h3>pipelines</h3>
+
 <p>Optional.</p>
 <p>A list of custom pipelines that will be added during component registration.</p>
 <blockquote>

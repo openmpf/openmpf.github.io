@@ -5,13 +5,13 @@ In order to registered within OpenMPF, each component must provide a JavaScript 
 
 This file must be named "descriptor.json".
 
-For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json)
+For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf/blob/develop/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json)
 
 ## Component Descriptor Data Elements
 
 Contained within the JSON file should be the following elements:
 
-### componentName
+<h3>componentName</h3>
 Required.
 
 Contains the component’s name. Should follow CamelCaseFormat.
@@ -19,7 +19,7 @@ Contains the component’s name. Should follow CamelCaseFormat.
 Example:
 `"componentName" : "SampleComponent"`
 
-### componentVersion
+<h3>componentVersion</h3>
 Required.
 
 Contains the component’s version. Does not need to match the `componentAPIVersion`.
@@ -27,7 +27,7 @@ Contains the component’s version. Does not need to match the `componentAPIVers
 Example:
 ``"componentVersion" : "0.1.0"``
 
-### componentAPIVersion
+<h3>componentAPIVersion</h3>
 Required.
 
 Contains the version of the MPF Component API that the component was built with.
@@ -35,7 +35,7 @@ Contains the version of the MPF Component API that the component was built with.
 Example:
 `"middlewareVersion" :  "0.9.0"`
 
-### sourceLanguage
+<h3>sourceLanguage</h3>
 Required.
 
 Contains the language the component is coded in. Should be either “java” or “c++”.
@@ -43,7 +43,7 @@ Contains the language the component is coded in. Should be either “java” or 
 Example:
 `"sourceLanguage" : "c++"`
 
-### pathName
+<h3>pathName</h3>
 Required.
 
 For C++ components, this contains the name of the Component Executable that will be used to run the component. Generally, this is `amq_detection_component` (where “amq” stands for ActiveMQ) for all C++ detection components.
@@ -56,7 +56,7 @@ Example (C++):
 Example (Java):
 `"pathName" : "sample-component-0.1.0.jar"`
 
-### launchArgs
+<h3>launchArgs</h3>
 C++: Required.
 Java: Required; can be empty.
 
@@ -72,7 +72,7 @@ Example (C++):
 Example (Java):
 `"launchArgs" : []`
 
-### environmentVariables
+<h3>environmentVariables</h3>
 Required; can be empty.
 
 Defines a collection of environment variables that will be set when executing the MPF Component Executable.
@@ -102,7 +102,7 @@ Example:
   ]
 ```
 
-### algorithm
+<h3>algorithm</h3>
 Required.
 
 Specifies information about the component’s algorithm.
@@ -124,11 +124,11 @@ Contains the following sub-fields:
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
 * **supportsBatchProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
   algorithm supports batch processing.
-  
+
 * **supportsStreamProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the 
+  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
   algorithm supports stream processing.
 
 * **requiresCollection:**
@@ -167,7 +167,7 @@ Contains the following sub-fields:
       Required.
       Description of the property. By convention, the default value for a property should be described in its description text.
 
-### actions
+<h3>actions</h3>
 Optional.
 
 Actions are used in the development of pipelines. Provides a list of custom actions that will be added during component registration.
@@ -200,7 +200,7 @@ Contains the following sub-fields:
 ]
 ```
 
-### tasks
+<h3>tasks</h3>
 Optional.
 
 A list of custom tasks that will be added during component registration.
@@ -231,7 +231,7 @@ Example:
 ]
 ```
 
-### pipelines
+<h3>pipelines</h3>
 Optional.
 
 A list of custom pipelines that will be added during component registration.
