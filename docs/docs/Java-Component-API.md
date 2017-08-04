@@ -46,12 +46,12 @@ As an alternative to extending [`MPFDetectionComponentBase`](#detection-componen
 
 ## Getting Started
 
-The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf-java-component-sdk/tree/develop/detection/examples) for example OpenMPF Java detection components.
+The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview) and then [review the source](https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/examples) for example OpenMPF Java detection components.
 
 Detection components are implemented by:
 
 1. Extending [`MPFDetectionComponentBase`](#detection-component-interface).
-2. Building the component into a jar. (See [HelloWorldComponent pom.xml](https://github.com/openmpf/openmpf-java-component-sdk/blob/develop/detection/examples/HelloWorldComponent/pom.xml)).
+2. Building the component into a jar. (See [HelloWorldComponent pom.xml](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/examples/HelloWorldComponent/pom.xml)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
 4. Registering the component with OpenMPF (see [Packaging and Registering a Component](Packaging-and-Registering-a-Component/)).
 
