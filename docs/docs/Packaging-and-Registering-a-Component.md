@@ -5,7 +5,7 @@ In order to registered within OpenMPF, each component must provide a JavaScript 
 
 This file must be named "descriptor.json".
 
-For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf/blob/develop/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json)
+For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf/blob/master/trunk/detection/test-components/java/JavaTestDetection/plugin-files/descriptor/JavaTestDetection.json)
 
 ## Component Descriptor Data Elements
 
@@ -123,13 +123,6 @@ Contains the following sub-fields:
 * **actionType:**
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
-* **supportsBatchProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports batch processing.
-
-* **supportsStreamProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports stream processing.
 
 * **requiresCollection:**
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
