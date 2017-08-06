@@ -743,33 +743,6 @@
 </ol>
 </li>
 <li>
-<p>OpenCV:
-    <br><br><strong>IMPORTANT:</strong> If building the master branch as of <a href="https://github.com/openmpf/openmpf-projects/commit/8527d4e303559a14eb7df9ce9f1d5eeee285238b">this commit</a> or earlier, then follow the instructions below for OpenCV 3.1.0. If building the develop branch, "r0.10.0" branch, or a branch for a later release, then follow the instructions below for OpenCV 3.2.0. Don't install both.</p>
-<ol>
-<li>
-<p>OpenCV 3.1.0
-    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a></p>
-<ol>
-<li><code>cd /apps/source/opencv_sources</code></li>
-<li><code>wget -O /apps/source/opencv_sources/opencv-3.1.0.zip "https://github.com/Itseez/opencv/archive/3.1.0.zip"</code></li>
-<li><code>unzip -o opencv-3.1.0.zip</code></li>
-<li><code>wget -O /apps/source/opencv_sources/opencv_contrib-3.1.0.tar.gz "https://github.com/Itseez/opencv_contrib/archive/3.1.0.tar.gz"</code></li>
-<li><code>tar xvzf opencv_contrib-3.1.0.tar.gz</code></li>
-<li><code>cd opencv-3.1.0</code></li>
-<li><code>mkdir release</code></li>
-<li><code>cd release</code></li>
-<li><code>cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.1.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib-3.1.0/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..</code></li>
-<li><code>make -j4</code></li>
-<li><code>sudo make install</code></li>
-<li><code>sudo sh -c 'echo "/apps/install/opencv3.1.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0 /opt/opencv-3.1.0</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv2 /usr/local/include/opencv2</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.1.0/include/opencv /usr/local/include/opencv</code></li>
-<li><code>sudo ldconfig</code></li>
-<li><code>export OpenCV_DIR=/opt/opencv-3.1.0/share/OpenCV</code></li>
-</ol>
-</li>
-<li>
 <p>OpenCV 3.2.0
     <br>For reference only: <a href="http://opencv.org">http://opencv.org</a></p>
 <ol>
@@ -798,8 +771,6 @@ Above:
 <li><code>sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv</code></li>
 <li><code>sudo ldconfig</code></li>
 <li><code>export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV</code></li>
-</ol>
-</li>
 </ol>
 </li>
 <li>
