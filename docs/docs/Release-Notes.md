@@ -1,6 +1,6 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
-# OpenMPF Version 0.10:  TBD
+# OpenMPF Version 0.10.0:  July 2017
 
 > **WARNING:** There is no longer a “DEFAULT CAFFE ACTION”, “DEFAULT CAFFE TASK”, or “DEFAULT CAFFE PIPELINE”. There is now a “CAFFE GOOGLENET DETECTION PIPELINE” and “CAFFE YAHOO NSFW DETECTION PIPELINE”, which each have a respective action and task.
 
@@ -54,7 +54,7 @@
 - The [GET] /rest/jobs/stats endpoint aggregates information about all of the jobs ever run on the system. If thousands of jobs have been run, this call could take minutes to complete. The code should be improved to execute a direct mySQL query.
 
 
-# OpenMPF Version 0.9:  April 2017
+# OpenMPF Version 0.9.0:  April 2017
 
 > **WARNING:** MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the Known Issues section for more information.
 
