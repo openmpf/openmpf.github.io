@@ -8,9 +8,10 @@ markdown_extensions:
 pages:
 - Home: index.md
 - Release Notes: Release-Notes.md
+- Acknowledgements: Acknowledgements.md
 - Contributor Guide: Contributor-Guide.md
 - Build Guide: Build-Environment-Setup-Guide.md
-- Install Guide: Installation.md
+- Install Guide: Installation-Guide.md
 - User Guide: User-Guide.md
 - Admin Guide: Admin-Manual.md
 - Component Documentation:

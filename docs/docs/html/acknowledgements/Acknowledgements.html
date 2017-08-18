@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>OpenMPF Acknowledgements</title>
+  </head>
+  <body>
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src="js/mustache.js"></script>
+
+    <script>
+      $.getJSON('https://raw.githubusercontent.com/openmpf/openmpf/separate-about/trunk/workflow-manager/src/main/webapp/resources/mytheme/json/dependencies.json', function(data) {
+
+          // sort dependencies in each group by name
+          jQuery.each(data.groups, function() {
+            this.dependencies.sort( function(a, b) {
+              a = a.name.toLowerCase();
+              b = b.name.toLowerCase();
+              return a < b ? -1 : a > b ? 1 : 0;
+            });
+          });
+
+          var template =
+            "{{#groups}}" +
+              "<h3>{{groupName}}</h3>" +
+              "<table cellspacing=\"15\" style=\"width: 100%;\">" +
+                "<tr>" +
+                  "<th align=\"left\">Name</th>" +
+                  "<th align=\"left\">Copyright</th>" +
+                  "<th align=\"left\">Project URL</th>" +
+                  "<th align=\"left\">Source URL</th>" +
+                  "<th align=\"left\">License</th>" +
+                "</tr>" +
+                "{{#dependencies}}" +
+                  "<tr>" +
+                    "<td>{{name}}</td>" +
+                    "<td>{{copyright}}</td>" +
+                    "<td><a href=\"{{projectUrl}}\" target=\"_blank\">{{projectUrl}}</a></td>" +
+                    "<td><a href=\"{{sourceUrl}}\" target=\"_blank\">{{sourceUrl}}</a></td>" +
+                    "<td>" +
+                      "{{licenseType}}" + // option A (if this exists, "customLicenseName" should not exist for this element)
+                      "{{customLicenseName}}" + // or option B
+                    "</td>" +
+                  "</tr>" +
+                "{{/dependencies}}" +
+              "</table><br><br>" +
+            "{{/groups}}";
+
+          var html = Mustache.to_html(template, data);
+          $('#dependencies').html(html);
+      });
+    </script>
+
+    <h2>GNU General Public License Acknowledgment</h2>
+     <p>
+         When compiled into an executable form the OpenMPF software may link against one or more libraries that are
+         licensed under the GNU General Public License (GPLv2, GPLv3, and/or AGPL). Thus, the executable form of
+         OpenMPF becomes a derived work, as defined by the strictest interpretation of the terms of that license.
+
+         Note that some OpenMPF components make use of modified source code published under the GNU General Public License,
+         or another copyleft license. These components will be licensed separately from the OpenMPF core under
+         a compatible copyleft license.
+     </p>
+
+     <br/><h2>Third Party Acknowledgments</h2>
+     <p>Portions of this software may utilize the following copyrighted material, the use of which is hereby
+       acknowledged.</p><br/>
+
+    <div id="dependencies"></div>
+  </body>
+</html>
