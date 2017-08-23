@@ -3,6 +3,7 @@ _site
 .sass-cache
 .vagrant
 *.iml
+*.idea*
 
 # general
 .DS_Store
