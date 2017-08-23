@@ -3,12 +3,12 @@
     <title>OpenMPF Acknowledgements</title>
   </head>
   <body>
-    <script src="../../js/jquery-2.1.1.min.js"></script>
-    <script src="../../js/mustache.js"></script>
+    <script src="../js/jquery-2.1.1.min.js"></script>
+    <script src="../js/mustache.js"></script>
 
     <script>
       // TODO: Update this link to point to master
-      $.getJSON('https://raw.githubusercontent.com/openmpf/openmpf/separate-about/trunk/workflow-manager/src/main/webapp/resources/mytheme/json/dependencies.json', function(data) {
+      $.getJSON('https://raw.githubusercontent.com/openmpf/openmpf/develop/trunk/workflow-manager/src/main/webapp/resources/mytheme/json/dependencies.json', function(data) {
 
           // sort dependencies in each group by name
           jQuery.each(data.groups, function() {
