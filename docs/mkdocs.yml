@@ -5,6 +5,8 @@ copyright: OpenMPF
 markdown_extensions:
 - toc
 
+extra_javascript: [js/mustache.js]
+
 pages:
 - Home: index.md
 - Release Notes: Release-Notes.md
