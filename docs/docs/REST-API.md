@@ -1,4 +1,4 @@
-The OpenMPF REST API is provided by Swagger and is available within the OpenMPF Workflow Manager server.
+The OpenMPF REST API is provided by Swagger and is available within the OpenMPF Workflow Manager web application.
 
-A static version of the API is available here:
-<a href="../html/REST-API.html" target="_blank">OpenMPF REST API</a>
+A static version of the content is available here:
+<a href="../html/rest-api/REST-API.html" target="_blank">OpenMPF REST API</a>
