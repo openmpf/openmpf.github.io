@@ -357,7 +357,7 @@
     <br> <code>sudo yum groups install -y "GNOME Desktop"</code></li>
 <li>Install packages needed for the Virtual Box Guest Additions:
     <br> <code>sudo yum install gcc kernel-devel bzip2</code><blockquote>
-<p><strong>NOTE:</strong> You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: <code>sudo yum install kernel-devel-3.10.0-327.el7.x86_64</code>.</p>
+<p><br> <strong>NOTE:</strong> You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: <code>sudo yum install kernel-devel-3.10.0-327.el7.x86_64</code>.</p>
 </blockquote>
 </li>
 <li>Reboot the system:
@@ -476,11 +476,11 @@
 <li><code>sudo alternatives --set javaws /usr/java/jdk1.8.0_144/jre/bin/javaws</code></li>
 <li><code>sudo alternatives --set javac /usr/java/jdk1.8.0_144/bin/javac</code></li>
 <li><code>sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar</code><blockquote>
-<p><strong>NOTE:</strong> If this command to set the <code>jar</code> alternative fails with the following error:</p>
+<p><br> <strong>NOTE:</strong> If this command to set the <code>jar</code> alternative fails with the following error:</p>
 <p><em>failed to read link /usr/bin/jar: No such file or directory</em></p>
-<p>You should run the following commands again:
-- <code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000</code>
-- <code>sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar</code></p>
+<p>Then you should run the following commands again:
+<br> <code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000</code>
+<br> <code>sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar</code></p>
 </blockquote>
 </li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>

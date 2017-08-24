@@ -77,7 +77,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
     <br> `sudo yum groups install -y "GNOME Desktop"`
 29. Install packages needed for the Virtual Box Guest Additions:
     <br> `sudo yum install gcc kernel-devel bzip2`
-   > **NOTE:** You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: `sudo yum install kernel-devel-3.10.0-327.el7.x86_64`.
+   > <br> **NOTE:** You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: `sudo yum install kernel-devel-3.10.0-327.el7.x86_64`.
 30. Reboot the system:
     <br> `sudo reboot now`
 31. Follow the on screen instructions to accept the license agreement.
@@ -184,13 +184,13 @@ The following binary packages will need to be downloaded and installed:
     11. `sudo alternatives --set javaws /usr/java/jdk1.8.0_144/jre/bin/javaws`
     12. `sudo alternatives --set javac /usr/java/jdk1.8.0_144/bin/javac`
     13. `sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar`
-   > **NOTE:** If this command to set the `jar` alternative fails with the following error:
+   > <br> **NOTE:** If this command to set the `jar` alternative fails with the following error:
    >
    > *failed to read link /usr/bin/jar: No such file or directory*
    >
-   > You should run the following commands again:
-   > - `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000`
-   > - `sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar`
+   > Then you should run the following commands again:
+   > <br> `sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000`
+   > <br> `sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar`
     14. `. /etc/profile.d/mpf.sh`
 
 2. Apache ActiveMQ 5.13.0:
