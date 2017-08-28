@@ -86,56 +86,54 @@
                 <li class="toctree-l3"><a href="#set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</a></li>
                 
             
-                <li class="toctree-l3"><a href="#installing-centos-7">Installing CentOS 7</a></li>
+                <li class="toctree-l3"><a href="#install-centos-7">Install CentOS 7</a></li>
                 
             
                 <li class="toctree-l3"><a href="#set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</a></li>
                 
                     <li><a class="toctree-l4" href="#configure-additional-repositories">Configure Additional Repositories</a></li>
                 
-                    <li><a class="toctree-l4" href="#rpm-dependencies">RPM Dependencies</a></li>
+                    <li><a class="toctree-l4" href="#install-rpm-dependencies">Install RPM Dependencies</a></li>
                 
                     <li><a class="toctree-l4" href="#get-the-openmpf-source-code">Get the OpenMPF Source Code</a></li>
                 
-                    <li><a class="toctree-l4" href="#binary-packages">Binary Packages</a></li>
+                    <li><a class="toctree-l4" href="#install-binary-packages">Install Binary Packages</a></li>
                 
-                    <li><a class="toctree-l4" href="#python-packages">Python Packages</a></li>
+                    <li><a class="toctree-l4" href="#install-python-packages">Install Python Packages</a></li>
                 
-                    <li><a class="toctree-l4" href="#building-dependencies">Building Dependencies</a></li>
+                    <li><a class="toctree-l4" href="#build-dependencies">Build Dependencies</a></li>
                 
-                    <li><a class="toctree-l4" href="#configuring-mysql">Configuring MySQL</a></li>
+                    <li><a class="toctree-l4" href="#configure-mysql">Configure MySQL</a></li>
                 
-                    <li><a class="toctree-l4" href="#configuring-activemq">Configuring ActiveMQ</a></li>
+                    <li><a class="toctree-l4" href="#configure-activemq">Configure ActiveMQ</a></li>
                 
-                    <li><a class="toctree-l4" href="#configuring-redis">Configuring Redis</a></li>
+                    <li><a class="toctree-l4" href="#configure-redis">Configure Redis</a></li>
                 
-                    <li><a class="toctree-l4" href="#https-configuration">HTTPS Configuration</a></li>
+                    <li><a class="toctree-l4" href="#configure-https">Configure HTTPS</a></li>
                 
-                    <li><a class="toctree-l4" href="#optional-http-configuration">(Optional) HTTP Configuration</a></li>
+                    <li><a class="toctree-l4" href="#optional-configure-http">(Optional) Configure HTTP</a></li>
                 
-                    <li><a class="toctree-l4" href="#adding-additional-maven-dependencies">Adding Additional Maven Dependencies</a></li>
+                    <li><a class="toctree-l4" href="#add-maven-dependencies">Add Maven Dependencies</a></li>
                 
             
-                <li class="toctree-l3"><a href="#building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</a></li>
+                <li class="toctree-l3"><a href="#build-and-package-the-openmpf">Build and Package the OpenMPF</a></li>
                 
-                    <li><a class="toctree-l4" href="#build-environment">Build Environment</a></li>
+                    <li><a class="toctree-l4" href="#directory-structure">Directory Structure</a></li>
                 
-                    <li><a class="toctree-l4" href="#third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</a></li>
-                
-                    <li><a class="toctree-l4" href="#build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</a></li>
+                    <li><a class="toctree-l4" href="#download-dependencies-for-the-openmpf-package">Download Dependencies for the OpenMPF Package</a></li>
                 
                     <li><a class="toctree-l4" href="#build-the-openmpf-package">Build the OpenMPF Package</a></li>
                 
             
-                <li class="toctree-l3"><a href="#optional-testing-the-openmpf">(Optional) Testing the OpenMPF</a></li>
+                <li class="toctree-l3"><a href="#optional-test-the-openmpf">(Optional) Test the OpenMPF</a></li>
                 
             
-                <li class="toctree-l3"><a href="#optional-building-and-running-the-web-application">(Optional) Building and running the web application</a></li>
+                <li class="toctree-l3"><a href="#optional-build-and-run-the-web-application">(Optional) Build and Run the Web Application</a></li>
                 
                     <li><a class="toctree-l4" href="#default-credentials">Default Credentials</a></li>
                 
             
-                <li class="toctree-l3"><a href="#deploying-the-openmpf">Deploying the OpenMPF</a></li>
+                <li class="toctree-l3"><a href="#deploy-the-openmpf">Deploy the OpenMPF</a></li>
                 
             
                 <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
@@ -148,8 +146,6 @@
                 
             
                 <li class="toctree-l3"><a href="#ssl-inspection">SSL Inspection</a></li>
-                
-                    <li><a class="toctree-l4" href="#package-lists">Package Lists</a></li>
                 
             
                 <li class="toctree-l3"><a href="#build-and-test-environment">Build and Test Environment</a></li>
@@ -315,7 +311,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="installing-centos-7">Installing CentOS 7</h1>
+<h1 id="install-centos-7">Install CentOS 7</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure the yum package manager before continuing.</p>
 </blockquote>
@@ -361,7 +357,7 @@
     <br> <code>sudo yum groups install -y "GNOME Desktop"</code></li>
 <li>Install packages needed for the Virtual Box Guest Additions:
     <br> <code>sudo yum install gcc kernel-devel bzip2</code><blockquote>
-<p><strong>NOTE:</strong> You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: <code>sudo yum install kernel-devel-3.10.0-327.el7.x86_64</code>.</p>
+<p><br> <strong>NOTE:</strong> You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: <code>sudo yum install kernel-devel-3.10.0-327.el7.x86_64</code>.</p>
 </blockquote>
 </li>
 <li>Reboot the system:
@@ -438,7 +434,7 @@
 <li>Update the shared library cache:
     <br><code>sudo ldconfig</code></li>
 </ol>
-<h2 id="rpm-dependencies">RPM Dependencies</h2>
+<h2 id="install-rpm-dependencies">Install RPM Dependencies</h2>
 <p>The following RPM packages will need to be downloaded and installed. Use of the yum package manager is recommended:</p>
 <p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <h2 id="get-the-openmpf-source-code">Get the OpenMPF Source Code</h2>
@@ -458,32 +454,33 @@
     <br> <code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></p>
 </li>
 </ol>
-<h2 id="binary-packages">Binary Packages</h2>
+<h2 id="install-binary-packages">Install Binary Packages</h2>
 <blockquote>
 <p><strong>NOTE:</strong> If your environment is behind a proxy server that performs SSL inspection, please read the appendix section <a href="#ssl-inspection">SSL Inspection</a> before continuing.</p>
 </blockquote>
 <p>The following binary packages will need to be downloaded and installed:</p>
 <ol>
 <li>
-<p>Oracle JDK:
-    <br>For reference only: <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></p>
+<p>Oracle JDK:</p>
 <ol>
-<li><code>cd /home/mpf</code></li>
-<li><code>wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /apps/bin/jdk-8u60-linux-x64.rpm</code></li>
-<li><code>sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u60-linux-x64.rpm</code></li>
-<li><code>sudo alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_60/jre/bin/java 20000</code></li>
-<li><code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000</code></li>
-<li><code>sudo alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_60/bin/javac 20000</code></li>
-<li><code>sudo alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0_60/jre/bin/javaws 20000</code></li>
-<li><code>sudo alternatives --set java /usr/java/jdk1.8.0_60/jre/bin/java</code></li>
-<li><code>sudo alternatives --set javaws /usr/java/jdk1.8.0_60/jre/bin/javaws</code></li>
-<li><code>sudo alternatives --set javac /usr/java/jdk1.8.0_60/bin/javac</code></li>
-<li><code>sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar</code><blockquote>
-<p><strong>NOTE:</strong> If this command to set the <code>jar</code> alternative fails with the following error:</p>
+<li>Open a web browser and navigate to <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a>.</li>
+<li>In the "Java SE Development Kit 8u144" section, click the radio button to "Accept License Agreement".</li>
+<li>Click on the "jdk-8u144-linux-x64.rpm" link to begin the download.</li>
+<li>Move the downloaded file to <code>/apps/bin/jdk-8u144-linux-x64.rpm</code>.</li>
+<li><code>sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u144-linux-x64.rpm</code></li>
+<li><code>sudo alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_144/jre/bin/java 20000</code></li>
+<li><code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000</code></li>
+<li><code>sudo alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_144/bin/javac 20000</code></li>
+<li><code>sudo alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0_144/jre/bin/javaws 20000</code></li>
+<li><code>sudo alternatives --set java /usr/java/jdk1.8.0_144/jre/bin/java</code></li>
+<li><code>sudo alternatives --set javaws /usr/java/jdk1.8.0_144/jre/bin/javaws</code></li>
+<li><code>sudo alternatives --set javac /usr/java/jdk1.8.0_144/bin/javac</code></li>
+<li><code>sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar</code><blockquote>
+<p><br> <strong>NOTE:</strong> If this command to set the <code>jar</code> alternative fails with the following error:</p>
 <p><em>failed to read link /usr/bin/jar: No such file or directory</em></p>
-<p>You should run the following commands again:
-- <code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_60/bin/jar 20000</code>
-- <code>sudo alternatives --set jar /usr/java/jdk1.8.0_60/bin/jar</code></p>
+<p>Then you should run the following commands again:
+<br> <code>sudo alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_144/bin/jar 20000</code>
+<br> <code>sudo alternatives --set jar /usr/java/jdk1.8.0_144/bin/jar</code></p>
 </blockquote>
 </li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>
@@ -540,7 +537,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="python-packages">Python Packages</h2>
+<h2 id="install-python-packages">Install Python Packages</h2>
 <ol>
 <li>C Foreign Function Interface (CFFI):<ol>
 <li><code>cd /home/mpf</code></li>
@@ -550,7 +547,7 @@
 <li>OpenMPF Administrative Tools:
     <br> <code>sudo -E pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></li>
 </ol>
-<h2 id="building-dependencies">Building Dependencies</h2>
+<h2 id="build-dependencies">Build Dependencies</h2>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure git before continuing.</p>
 </blockquote>
@@ -876,7 +873,7 @@ Above:
 </ol>
 </li>
 </ol>
-<h2 id="configuring-mysql">Configuring MySQL</h2>
+<h2 id="configure-mysql">Configure MySQL</h2>
 <ol>
 <li><code>sudo systemctl start mysqld</code></li>
 <li><code>mysql -u root --execute "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';flush privileges;"</code></li>
@@ -888,7 +885,7 @@ Above:
 <li><code>sudo systemctl enable mysqld.service</code></li>
 <li><code>sudo chkconfig --level 2345 mysqld on</code></li>
 </ol>
-<h2 id="configuring-activemq">Configuring ActiveMQ</h2>
+<h2 id="configure-activemq">Configure ActiveMQ</h2>
 <p>Some additional manual configuration of ActiveMQ is required. For each step, open the specified file in a text editor, make the change, and save the file. If ActiveMQ is running, please stop it before making these changes.</p>
 <p><strong>Use Additional Memory</strong></p>
 <p>In <code>/opt/activemq/bin/env</code> (line 27), comment out the line:</p>
@@ -935,7 +932,7 @@ Above:
 <pre><code>log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n
 </code></pre>
 
-<h2 id="configuring-redis">Configuring Redis</h2>
+<h2 id="configure-redis">Configure Redis</h2>
 <p>Redis should be set to run in the background (i.e. as a daemon process).</p>
 <p>In <code>/etc/redis.conf</code> (line 128), change the line:</p>
 <pre><code>daemonize no
@@ -945,7 +942,7 @@ Above:
 <pre><code>daemonize yes
 </code></pre>
 
-<h2 id="https-configuration">HTTPS Configuration</h2>
+<h2 id="configure-https">Configure HTTPS</h2>
 <p><strong>Generate a self-signed certificate and keystore</strong></p>
 <blockquote>
 <p><strong>NOTE:</strong>  A valid keystore is required to run the OpenMPF with HTTPS support. These instructions will generate a keystore that should be used for local builds only. When deploying OpenMPF, a keystore containing a valid certificate trust chain should be used.</p>
@@ -984,7 +981,7 @@ Above:
 </ol>
 <p><strong>Using an IDE</strong></p>
 <p>If running Tomcat from an IDE, such as IntelliJ, then <code>-Dtransport.guarantee="CONFIDENTIAL" -Dweb.rest.protocol="https"</code> should be added at the end of the Tomcat VM arguments for your Tomcat run configuration. It is not necessary to add these arguments when running tomcat from the command line or a systemd command because of configured <code>CATALINA_OPTS</code> variable.</p>
-<h2 id="optional-http-configuration">(Optional) HTTP Configuration</h2>
+<h2 id="optional-configure-http">(Optional) Configure HTTP</h2>
 <p>The OpenMPF can also be run using HTTP instead of HTTPS.</p>
 <ol>
 <li>Open the file <code>/opt/apache-tomcat/conf/server.xml</code> in a text editor.</li>
@@ -1000,7 +997,7 @@ Above:
 <pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$LD_LIBRARY_PATH -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
 <li>Save and close the file.</li>
 </ol>
-<h2 id="adding-additional-maven-dependencies">Adding Additional Maven Dependencies</h2>
+<h2 id="add-maven-dependencies">Add Maven Dependencies</h2>
 <p>Some Maven dependencies needed for the OpenMPF were not publicly available at the time this guide was written. These have been provided with the the OpenMPF source code located here <a href="https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz">https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz</a>. These steps assume the archive <code>mpf-maven-deps.tar.gz</code> is at <code>/home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz</code>.</p>
 <ol>
 <li>Set up the local Maven repository:<ol>
@@ -1011,9 +1008,9 @@ Above:
 <li>Extract the archive to the local Maven repository:
 <br><code>tar xvzf /home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz -C /home/mpf/.m2/repository/</code></li>
 </ol>
-<h1 id="building-and-packaging-the-openmpf">Building and Packaging the OpenMPF</h1>
+<h1 id="build-and-package-the-openmpf">Build and Package the OpenMPF</h1>
 <p>The OpenMPF uses Apache Maven to automate software builds. The <code>mvn</code> commands in this guide are assumed to be run at the command line.</p>
-<h2 id="build-environment">Build Environment</h2>
+<h2 id="directory-structure">Directory Structure</h2>
 <p>The OpenMPF packaging script makes use of a directory /mpfdata with the following structure:</p>
 <pre><code>  mpfdata - the top level directory containing the structure and non-source code artifacts to be packaged for distribution.
   ├── ansible
@@ -1040,31 +1037,31 @@ Above:
 <li><code>sudo mkdir /mpfdata/releases</code></li>
 <li><code>sudo chown -R mpf:mpf /mpfdata</code></li>
 </ol>
-<h2 id="third-party-rpms-tars-and-python-pip-packages-included-with-an-openmpf-package">Third-party RPMs, Tars, and Python Pip packages included with an OpenMPF Package</h2>
-<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. The <a href="#package-lists">Package Lists</a> section lists required third-party dependencies that are packaged with the OpenMPF installation files by the <code>CreateCustomPackage.pl</code> script. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may not be needed. The script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory to the package.</p>
-<p>The following commands can be used to populate the dependency packages into the <code>/mpfdata/ansible/install/repo</code> directory:</p>
+<h2 id="download-dependencies-for-the-openmpf-package">Download Dependencies for the OpenMPF Package</h2>
+<p>As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a minimal install of CentOS 7. Required third-party dependencies are packaged with the OpenMPF installation files. The <code>CreateCustomPackage.pl</code> script will only add the dependencies present in the <code>/mpfdata/ansible/install/repo/</code> directory.</p>
+<p>The following steps place dependency packages in <code>/mpfdata/ansible/install/repo</code>. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may or may not be needed:</p>
 <ol>
 <li><code>yumdownloader --exclude=*.i?86 --archlist=x86_64 adwaita-cursor-theme adwaita-icon-theme at-spi2-atk at-spi2-core cairo-gobject colord-libs createrepo deltarpm ebtables gcc glibc glibc-common glibc-devel glibc-headers gtk3 httpd httpd-tools json-glib kernel-headers lcms2 libffi-devel libgusb libmng libselinux-python libtomcrypt libtommath libXevie libxml2 libxml2-python libXtst libyaml mailcap mpfr openssh openssh-askpass openssh-clients openssh-server pciutils py-bcrypt python python2-crypto python-babel python-backports python-backports-ssl_match_hostname python-cffi python-chardet python-crypto python-deltarpm python-devel python-ecdsa python-httplib2 python-jinja2 python-keyczar python-kitchen python-libs python-markupsafe python-paramiko python-passlib python-pip python-ply python-ptyprocess python-pyasn1 python-pycparser python-setuptools python-simplejson python-six python-slip python-slip-dbus PyYAML qt qt-settings qt-x11 rest sshpass yum-utils --destdir /mpfdata/ansible/install/repo/rpms/management -C</code></li>
 <li><code>yumdownloader --exclude=*.i?86 --archlist=x86_64 apr apr-util apr-util-ldap atk avahi-libs cairo cdparanoia-libs cpp cups-libs fontconfig fontpackages-filesystem gdk-pixbuf2 graphite2 gsm gstreamer gstreamer1 gstreamer1-plugins-base gstreamer-plugins-base gstreamer-tools gtk2 gtk3 harfbuzz hicolor-icon-theme iso-codes jasper-libs jbigkit-libs jemalloc libdc1394 libICE libjpeg-turbo libmng libmpc libogg libpng libraw1394 libSM libthai libtheora libtiff libusbx libv4l libvisual libvorbis libvpx libX11 libX11-common libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXft libXi libXinerama libxml2 libXrandr libXrender libxshmfence libXv libXxf86vm log4cxx mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi mesa-libGLU mysql-community-client mysql-community-common mysql-community-libs mysql-community-server mysql-connector-python MySQL-python net-tools openjpeg-libs openssh openssh-clients openssh-server opus orc pango perl perl-Carp perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-constant perl-Data-Dumper perl-DBD-MySQL perl-DBI perl-Encode perl-Exporter perl-File-Path perl-File-Temp perl-Filter perl-Getopt-Long perl-HTTP-Tiny perl-IO-Compress perl-libs perl-macros perl-Net-Daemon perl-parent perl-PathTools perl-PlRPC perl-Pod-Escapes perl-podlators perl-Pod-Perldoc perl-Pod-Simple perl-Pod-Usage perl-Scalar-List-Utils perl-Socket perl-Storable perl-Text-ParseWords perl-threads perl-threads-shared perl-Time-HiRes perl-Time-Local pixman redis SDL speex unzip xml-common --destdir /mpfdata/ansible/install/repo/rpms/mpf-deps -C</code></li>
 <li><code>cp /apps/source/ansible_sources/ansible/rpm-build/ansible-*.noarch.rpm /mpfdata/ansible/install/repo/rpms/management/</code></li>
-<li><code>wget --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-linux-x64.rpm" -O /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u60-linux-x64.rpm</code><blockquote>
-<p><strong>NOTE:</strong> Oracle may require an account to download archived versions of the JRE.</p>
-</blockquote>
-</li>
-<li>Download jre-8u60-linux-x64.rpm and place it in <code>/mpfdata/ansible/install/repo/rpms/mpf-deps</code> : <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jre-8u60-oth-JPR">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jre-8u60-oth-JPR</a></li>
+<li>Assuming you've followed the steps in the <a href="#install-binary-packages">Install Binary Packages</a> section to download the JDK:
+   <br> <code>cp /apps/bin/jdk-8u144-linux-x64.rpm /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u144-linux-x64.rpm</code></li>
+<li>Open a web browser and navigate to <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html</a>.</li>
+<li>In the "Java SE Runtime Environment 8u144" section, click the radio button to "Accept License Agreement".</li>
+<li>Click on the "jre-8u144-linux-x64.rpm" link to begin the download.</li>
+<li>Move the downloaded file to <code>/mpfdata/ansible/install/repo/rpms/mpf-deps/jre-8u144-linux-x64.rpm</code>.</li>
 <li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"</code></li>
 <li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"</code></li>
 <li><code>cd /mpfdata/ansible/install/repo/pip</code></li>
 <li><code>pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six</code></li>
 </ol>
-<h2 id="build-the-open-source-openmpf-package">Build the Open Source OpenMPF Package</h2>
-<p>Follow the instructions in the <strong>Build the OpenMPF Package</strong> section below. Use the following value for <code>&lt;configFile&gt;</code>:
-<br><code>/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/mpf-open-source-package.json</code></p>
 <h2 id="build-the-openmpf-package">Build the OpenMPF Package</h2>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure Maven before continuing.</p>
 </blockquote>
 <p>In the instructions below, provide a positive integer value for <code>&lt;buildNum&gt;</code>. If this is your first build, provide a "1". If this is your second build then provide a "2", so on and so forth. The build number will be displayed on the login screen.</p>
+<p>Use the following value for <code>&lt;configFile&gt;</code>:
+<br><code>/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/mpf-open-source-package.json</code></p>
 <ol>
 <li>
 <p>Remove the development properties file:</p>
@@ -1091,7 +1088,7 @@ Above:
 <li>(Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
 <br><code>cp /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></li>
 </ol>
-<h1 id="optional-testing-the-openmpf">(Optional) Testing the OpenMPF</h1>
+<h1 id="optional-test-the-openmpf">(Optional) Test the OpenMPF</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure Firefox before continuing.</p>
 </blockquote>
@@ -1123,7 +1120,7 @@ localhost.localdomain</code></p>
 <blockquote>
 <p><strong>NOTE:</strong> Please see the appendix section <a href="#known-issues">Known Issues</a> regarding any <code>java.lang.InterruptedException: null</code> warning log messages observed when running the tests.</p>
 </blockquote>
-<h1 id="optional-building-and-running-the-web-application">(Optional) Building and running the web application</h1>
+<h1 id="optional-build-and-run-the-web-application">(Optional) Build and Run the Web Application</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure Firefox before continuing.</p>
 </blockquote>
@@ -1198,7 +1195,7 @@ sudo systemctl stop mysqld
 </ul>
 </li>
 </ul>
-<h1 id="deploying-the-openmpf">Deploying the OpenMPF</h1>
+<h1 id="deploy-the-openmpf">Deploy the OpenMPF</h1>
 <p>Please see the <a href="../Installation/">OpenMPF Installation Guide</a>.</p>
 <hr />
 <h1 id="appendices"><strong>Appendices</strong></h1>
@@ -1329,246 +1326,14 @@ java.lang.InterruptedException: null
 <li>Save and close the file.</li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>
 </ol>
-<h2 id="package-lists">Package Lists</h2>
-<ul>
-<li>
-<p><strong>/mpfdata/ansible/install/repo/rpms/management</strong></p>
-<ul>
-<li>adwaita-cursor-theme-3.14.1-1.el7.noarch.rpm</li>
-<li>adwaita-icon-theme-3.14.1-1.el7.noarch.rpm</li>
-<li>ansible-2.1.1.0-0.git201608081816.e71cce7.HEAD.el7.centos.noarch.rpm</li>
-<li>at-spi2-atk-2.14.1-1.el7.x86_64.rpm</li>
-<li>at-spi2-core-2.14.1-2.el7.x86_64.rpm</li>
-<li>cairo-gobject-1.14.2-1.el7.x86_64.rpm</li>
-<li>colord-libs-1.2.7-2.el7.x86_64.rpm</li>
-<li>createrepo-0.9.9-26.el7.noarch.rpm</li>
-<li>deltarpm-3.6-3.el7.x86_64.rpm</li>
-<li>ebtables-2.0.10-15.el7.x86_64.rpm</li>
-<li>gcc-4.8.5-11.el7.x86_64.rpm</li>
-<li>glibc-2.17-157.el7_3.1.x86_64.rpm</li>
-<li>glibc-common-2.17-157.el7_3.1.x86_64.rpm</li>
-<li>glibc-devel-2.17-157.el7_3.1.x86_64.rpm</li>
-<li>glibc-headers-2.17-157.el7_3.1.x86_64.rpm</li>
-<li>gtk3-3.14.13-20.el7.x86_64.rpm</li>
-<li>httpd-2.4.6-45.el7.centos.4.x86_64.rpm</li>
-<li>httpd-tools-2.4.6-45.el7.centos.4.x86_64.rpm</li>
-<li>json-glib-1.0.2-1.el7.x86_64.rpm</li>
-<li>kernel-headers-3.10.0-514.16.1.el7.x86_64.rpm</li>
-<li>lcms2-2.6-3.el7.x86_64.rpm</li>
-<li>libffi-devel-3.0.13-18.el7.x86_64.rpm</li>
-<li>libgusb-0.1.6-3.el7.x86_64.rpm</li>
-<li>libmng-1.0.10-14.el7.x86_64.rpm</li>
-<li>libselinux-python-2.5-6.el7.x86_64.rpm</li>
-<li>libtomcrypt-1.17-23.el7.x86_64.rpm</li>
-<li>libtommath-0.42.0-4.el7.x86_64.rpm</li>
-<li>libXevie-1.0.3-7.1.el7.x86_64.rpm</li>
-<li>libxml2-2.9.1-6.el7_2.3.x86_64.rpm</li>
-<li>libxml2-python-2.9.1-6.el7_2.3.x86_64.rpm</li>
-<li>libXtst-1.2.2-2.1.el7.x86_64.rpm</li>
-<li>libyaml-0.1.4-11.el7_0.x86_64.rpm</li>
-<li>mailcap-2.1.41-2.el7.noarch.rpm</li>
-<li>mpfr-3.1.1-4.el7.x86_64.rpm</li>
-<li>openssh-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>openssh-askpass-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>openssh-clients-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>openssh-server-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>pciutils-3.5.1-1.el7.x86_64.rpm</li>
-<li>py-bcrypt-0.4-4.el7.x86_64.rpm</li>
-<li>python-2.7.5-48.el7.x86_64.rpm</li>
-<li>python2-crypto-2.6.1-13.el7.x86_64.rpm</li>
-<li>python2-pip-8.1.2-5.el7.noarch.rpm</li>
-<li>python2-ptyprocess-0.5.1-6.el7.noarch.rpm</li>
-<li>python2-pyasn1-0.1.9-7.el7.noarch.rpm</li>
-<li>python2-simplejson-3.10.0-1.el7.x86_64.rpm</li>
-<li>python-babel-0.9.6-8.el7.noarch.rpm</li>
-<li>python-backports-1.0-8.el7.x86_64.rpm</li>
-<li>python-backports-ssl_match_hostname-3.4.0.2-4.el7.noarch.rpm</li>
-<li>python-cffi-1.6.0-5.el7.x86_64.rpm</li>
-<li>python-chardet-2.2.1-1.el7_1.noarch.rpm</li>
-<li>python-crypto-2.6.1-1.el7.centos.x86_64.rpm</li>
-<li>python-deltarpm-3.6-3.el7.x86_64.rpm</li>
-<li>python-devel-2.7.5-48.el7.x86_64.rpm</li>
-<li>python-ecdsa-0.11-3.el7.centos.noarch.rpm</li>
-<li>python-httplib2-0.7.7-3.el7.noarch.rpm</li>
-<li>python-jinja2-2.7.2-2.el7.noarch.rpm</li>
-<li>python-keyczar-0.71c-2.el7.noarch.rpm</li>
-<li>python-kitchen-1.1.1-5.el7.noarch.rpm</li>
-<li>python-libs-2.7.5-48.el7.x86_64.rpm</li>
-<li>python-markupsafe-0.11-10.el7.x86_64.rpm</li>
-<li>python-paramiko-1.12.4-1.el7.centos.noarch.rpm</li>
-<li>python-passlib-1.6.2-2.el7.noarch.rpm</li>
-<li>python-ply-3.4-10.el7.noarch.rpm</li>
-<li>python-pycparser-2.14-1.el7.noarch.rpm</li>
-<li>python-setuptools-0.9.8-4.el7.noarch.rpm</li>
-<li>python-six-1.9.0-2.el7.noarch.rpm</li>
-<li>python-slip-0.4.0-2.el7.noarch.rpm</li>
-<li>python-slip-dbus-0.4.0-2.el7.noarch.rpm</li>
-<li>PyYAML-3.10-11.el7.x86_64.rpm</li>
-<li>qt-4.8.5-13.el7.x86_64.rpm</li>
-<li>qt-settings-19-23.5.el7.centos.noarch.rpm</li>
-<li>qt-x11-4.8.5-13.el7.x86_64.rpm</li>
-<li>rest-0.7.92-5.el7.x86_64.rpm</li>
-<li>sshpass-1.06-1.el7.x86_64.rpm</li>
-<li>yum-utils-1.1.31-40.el7.noarch.rpm</li>
-</ul>
-</li>
-<li>
-<p><strong>/mpfdata/ansible/install/repo/rpms/mpf-deps</strong></p>
-<ul>
-<li>apr-1.4.8-3.el7.x86_64.rpm</li>
-<li>apr-util-1.5.2-6.el7.x86_64.rpm</li>
-<li>apr-util-ldap-1.5.2-6.el7.x86_64.rpm</li>
-<li>atk-2.14.0-1.el7.x86_64.rpm</li>
-<li>avahi-libs-0.6.31-17.el7.x86_64.rpm</li>
-<li>cairo-1.14.2-1.el7.x86_64.rpm</li>
-<li>cdparanoia-libs-10.2-17.el7.x86_64.rpm</li>
-<li>cpp-4.8.5-11.el7.x86_64.rpm</li>
-<li>cups-libs-1.6.3-26.el7.x86_64.rpm</li>
-<li>fontconfig-2.10.95-10.el7.x86_64.rpm</li>
-<li>fontpackages-filesystem-1.44-8.el7.noarch.rpm</li>
-<li>gdk-pixbuf2-2.31.6-3.el7.x86_64.rpm</li>
-<li>graphite2-1.3.6-1.el7_2.x86_64.rpm</li>
-<li>gsm-1.0.13-11.el7.x86_64.rpm</li>
-<li>gstreamer-0.10.36-7.el7.x86_64.rpm</li>
-<li>gstreamer1-1.4.5-1.el7.x86_64.rpm</li>
-<li>gstreamer1-plugins-base-1.4.5-2.el7.x86_64.rpm</li>
-<li>gstreamer-plugins-base-0.10.36-10.el7.x86_64.rpm</li>
-<li>gstreamer-tools-0.10.36-7.el7.x86_64.rpm</li>
-<li>gtk2-2.24.28-8.el7.x86_64.rpm</li>
-<li>gtk3-3.14.13-20.el7.x86_64.rpm</li>
-<li>harfbuzz-0.9.36-1.el7.x86_64.rpm</li>
-<li>hicolor-icon-theme-0.12-7.el7.noarch.rpm</li>
-<li>iso-codes-3.46-2.el7.noarch.rpm</li>
-<li>jasper-libs-1.900.1-29.el7.x86_64.rpm</li>
-<li>jbigkit-libs-2.0-11.el7.x86_64.rpm</li>
-<li>jdk-8u60-linux-x64.rpm</li>
-<li>jemalloc-3.6.0-1.el7.x86_64.rpm</li>
-<li>jre-8u60-linux-x64.rpm</li>
-<li>libdc1394-2.2.2-3.el7.x86_64.rpm</li>
-<li>libICE-1.0.9-2.el7.x86_64.rpm</li>
-<li>libjpeg-turbo-1.2.90-5.el7.x86_64.rpm</li>
-<li>libmng-1.0.10-14.el7.x86_64.rpm</li>
-<li>libmpc-1.0.1-3.el7.x86_64.rpm</li>
-<li>libogg-1.3.0-7.el7.x86_64.rpm</li>
-<li>libpng-1.5.13-7.el7_2.x86_64.rpm</li>
-<li>libraw1394-2.1.0-2.el7.x86_64.rpm</li>
-<li>libSM-1.2.2-2.el7.x86_64.rpm</li>
-<li>libthai-0.1.14-9.el7.x86_64.rpm</li>
-<li>libtheora-1.1.1-8.el7.x86_64.rpm</li>
-<li>libtiff-4.0.3-27.el7_3.x86_64.rpm</li>
-<li>libusbx-1.0.20-1.el7.x86_64.rpm</li>
-<li>libv4l-0.9.5-4.el7.x86_64.rpm</li>
-<li>libvisual-0.4.0-16.el7.x86_64.rpm</li>
-<li>libvorbis-1.3.3-8.el7.x86_64.rpm</li>
-<li>libvpx-1.3.0-5.el7_0.x86_64.rpm</li>
-<li>libX11-1.6.3-3.el7.x86_64.rpm</li>
-<li>libX11-common-1.6.3-3.el7.noarch.rpm</li>
-<li>libXau-1.0.8-2.1.el7.x86_64.rpm</li>
-<li>libxcb-1.11-4.el7.x86_64.rpm</li>
-<li>libXcomposite-0.4.4-4.1.el7.x86_64.rpm</li>
-<li>libXcursor-1.1.14-2.1.el7.x86_64.rpm</li>
-<li>libXdamage-1.1.4-4.1.el7.x86_64.rpm</li>
-<li>libXext-1.3.3-3.el7.x86_64.rpm</li>
-<li>libXfixes-5.0.1-2.1.el7.x86_64.rpm</li>
-<li>libXft-2.3.2-2.el7.x86_64.rpm</li>
-<li>libXi-1.7.4-2.el7.x86_64.rpm</li>
-<li>libXinerama-1.1.3-2.1.el7.x86_64.rpm</li>
-<li>libxml2-2.9.1-6.el7_2.3.x86_64.rpm</li>
-<li>libXrandr-1.4.2-2.el7.x86_64.rpm</li>
-<li>libXrender-0.9.8-2.1.el7.x86_64.rpm</li>
-<li>libxshmfence-1.2-1.el7.x86_64.rpm</li>
-<li>libXv-1.0.10-2.el7.x86_64.rpm</li>
-<li>libXxf86vm-1.1.3-2.1.el7.x86_64.rpm</li>
-<li>log4cxx-0.10.0-16.el7.x86_64.rpm</li>
-<li>mesa-libEGL-11.2.2-2.20160614.el7.x86_64.rpm</li>
-<li>mesa-libgbm-11.2.2-2.20160614.el7.x86_64.rpm</li>
-<li>mesa-libGL-11.2.2-2.20160614.el7.x86_64.rpm</li>
-<li>mesa-libglapi-11.2.2-2.20160614.el7.x86_64.rpm</li>
-<li>mesa-libGLU-9.0.0-4.el7.x86_64.rpm</li>
-<li>mysql-community-client-5.6.36-2.el7.x86_64.rpm</li>
-<li>mysql-community-common-5.6.36-2.el7.x86_64.rpm</li>
-<li>mysql-community-libs-5.6.36-2.el7.x86_64.rpm</li>
-<li>mysql-community-server-5.6.36-2.el7.x86_64.rpm</li>
-<li>mysql-connector-python-2.0.4-1.el7.noarch.rpm</li>
-<li>mysql-connector-python-2.1.6-1.el7.x86_64.rpm</li>
-<li>MySQL-python-1.2.5-1.el7.x86_64.rpm</li>
-<li>net-tools-2.0-0.17.20131004git.el7.x86_64.rpm</li>
-<li>openjpeg-libs-1.5.1-16.el7_3.x86_64.rpm</li>
-<li>openssh-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>openssh-clients-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>openssh-server-6.6.1p1-35.el7_3.x86_64.rpm</li>
-<li>opus-1.0.2-6.el7.x86_64.rpm</li>
-<li>orc-0.4.22-5.el7.x86_64.rpm</li>
-<li>pango-1.36.8-2.el7.x86_64.rpm</li>
-<li>perl-5.16.3-291.el7.x86_64.rpm</li>
-<li>perl-Carp-1.26-244.el7.noarch.rpm</li>
-<li>perl-Compress-Raw-Bzip2-2.061-3.el7.x86_64.rpm</li>
-<li>perl-Compress-Raw-Zlib-2.061-4.el7.x86_64.rpm</li>
-<li>perl-constant-1.27-2.el7.noarch.rpm</li>
-<li>perl-Data-Dumper-2.145-3.el7.x86_64.rpm</li>
-<li>perl-DBD-MySQL-4.023-5.el7.x86_64.rpm</li>
-<li>perl-DBI-1.627-4.el7.x86_64.rpm</li>
-<li>perl-Encode-2.51-7.el7.x86_64.rpm</li>
-<li>perl-Exporter-5.68-3.el7.noarch.rpm</li>
-<li>perl-File-Path-2.09-2.el7.noarch.rpm</li>
-<li>perl-File-Temp-0.23.01-3.el7.noarch.rpm</li>
-<li>perl-Filter-1.49-3.el7.x86_64.rpm</li>
-<li>perl-Getopt-Long-2.40-2.el7.noarch.rpm</li>
-<li>perl-HTTP-Tiny-0.033-3.el7.noarch.rpm</li>
-<li>perl-IO-Compress-2.061-2.el7.noarch.rpm</li>
-<li>perl-libs-5.16.3-291.el7.x86_64.rpm</li>
-<li>perl-macros-5.16.3-291.el7.x86_64.rpm</li>
-<li>perl-Net-Daemon-0.48-5.el7.noarch.rpm</li>
-<li>perl-parent-0.225-244.el7.noarch.rpm</li>
-<li>perl-PathTools-3.40-5.el7.x86_64.rpm</li>
-<li>perl-PlRPC-0.2020-14.el7.noarch.rpm</li>
-<li>perl-Pod-Escapes-1.04-291.el7.noarch.rpm</li>
-<li>perl-podlators-2.5.1-3.el7.noarch.rpm</li>
-<li>perl-Pod-Perldoc-3.20-4.el7.noarch.rpm</li>
-<li>perl-Pod-Simple-3.28-4.el7.noarch.rpm</li>
-<li>perl-Pod-Usage-1.63-3.el7.noarch.rpm</li>
-<li>perl-Scalar-List-Utils-1.27-248.el7.x86_64.rpm</li>
-<li>perl-Socket-2.010-4.el7.x86_64.rpm</li>
-<li>perl-Storable-2.45-3.el7.x86_64.rpm</li>
-<li>perl-Text-ParseWords-3.29-4.el7.noarch.rpm</li>
-<li>perl-threads-1.87-4.el7.x86_64.rpm</li>
-<li>perl-threads-shared-1.43-6.el7.x86_64.rpm</li>
-<li>perl-Time-HiRes-1.9725-3.el7.x86_64.rpm</li>
-<li>perl-Time-Local-1.2300-2.el7.noarch.rpm</li>
-<li>pixman-0.34.0-1.el7.x86_64.rpm</li>
-<li>redis-3.2.8-1.el7.remi.x86_64.rpm</li>
-<li>SDL-1.2.15-14.el7.x86_64.rpm</li>
-<li>speex-1.2-0.19.rc1.el7.x86_64.rpm</li>
-<li>unzip-6.0-16.el7.x86_64.rpm</li>
-<li>xml-common-0.6.3-39.el7.noarch.rpm</li>
-</ul>
-</li>
-<li>
-<p><strong>/mpfdata/ansible/install/repo/tars</strong></p>
-<ul>
-<li>apache-activemq-5.13.0-bin.tar.gz</li>
-<li>apache-tomcat-7.0.72.tar.gz</li>
-</ul>
-</li>
-<li>
-<p><strong>/mpfdata/ansible/install/repo/pip</strong></p>
-<ul>
-<li>argcomplete-1.8.2-py2.py3-none-any.whl</li>
-<li>argh-0.26.2-py2.py3-none-any.whl</li>
-<li>bcrypt-3.1.3-cp27-cp27mu-manylinux1_x86_64.whl</li>
-<li>cffi-1.10.0-cp27-cp27mu-manylinux1_x86_64.whl</li>
-<li>pycparser-2.17.tar.gz</li>
-<li>PyMySQL-0.7.11-py2.py3-none-any.whl</li>
-<li>six-1.10.0-py2.py3-none-any.whl</li>
-</ul>
-</li>
-</ul>
 <h1 id="build-and-test-environment">Build and Test Environment</h1>
-<p>When developing for the OpenMPF, you may find the following collaboration and continuous integration tools helpful.</p>
-<p><strong>Jenkins</strong></p>
-<p><a href="https://jenkins.io">https://jenkins.io</a></p>
-<p><strong>Phabricator</strong></p>
-<p><a href="https://www.phacility.com/phabricator">https://www.phacility.com/phabricator</a></p>
+<p>When developing for the OpenMPF, you may find the following tools helpful:</p>
+<ul>
+<li><strong>Jenkins</strong>: <a href="https://jenkins.io">https://jenkins.io</a></li>
+<li><strong>Phabricator</strong>: <a href="https://www.phacility.com/phabricator">https://www.phacility.com/phabricator</a></li>
+<li><strong>IntelliJ</strong>: <a href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a></li>
+<li><strong>CLion</strong>: <a href="https://www.jetbrains.com/clion">https://www.jetbrains.com/clion</a></li>
+</ul>
               
             </div>
           </div>
