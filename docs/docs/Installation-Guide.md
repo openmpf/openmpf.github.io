@@ -28,6 +28,15 @@ A browser is required in order to utilize the OpenMPF Web User Interface (UI). T
 
 ## Pre-Installation Checklist
 
+1. OpenMPF must be installed on CentOS 7.
+
+2. DNS or host entries for the master node and child nodes must be present on all hosts.
+
+3. Shared storage must be mounted to /opt/mpf/share on all hosts. OpenMPF relies on the use of shared storage to transmit media between nodes. The "mpf" user (id=376) must be able to read/write from the shared storage.
+
+4. NTP should be set up on each of the hosts in the OpenMPF cluster so that their times are synchronized; otherwise, the log viewer may behave incorrectly when it updates in real time.
+
+5. If using HTTPS, a valid keystore must exist on the master node. Self signed certificates can be used but are not recommended for use in production environment. For instructions for created a self-signed certificate and keystore, see [Creating a Keystore](#creating-a-keystore).
 
 ## OpenMPF Installation
 
