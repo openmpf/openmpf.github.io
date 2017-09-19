@@ -237,6 +237,23 @@ Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 <p><strong>Important:</strong> Please verify that all steps in the Pre-installation Checklist are completed <strong>prior</strong> to cluster configuration.</p>
 </blockquote>
 <h2 id="pre-installation-checklist">Pre-Installation Checklist</h2>
+<ol>
+<li>
+<p>OpenMPF must be installed on CentOS 7.</p>
+</li>
+<li>
+<p>DNS or host entries for the master node and child nodes must be present on all hosts.</p>
+</li>
+<li>
+<p>Shared storage must be mounted to /opt/mpf/share on all hosts. OpenMPF relies on the use of shared storage to transmit media between nodes. The "mpf" user (id=376) must be able to read/write from the shared storage.</p>
+</li>
+<li>
+<p>NTP should be set up on each of the hosts in the OpenMPF cluster so that their times are synchronized; otherwise, the log viewer may behave incorrectly when it updates in real time.</p>
+</li>
+<li>
+<p>If using HTTPS, a valid keystore must exist on the master node. Self signed certificates can be used but are not recommended for use in production environment. For instructions for created a self-signed certificate and keystore, see <a href="#creating-a-keystore">Creating a Keystore</a>.</p>
+</li>
+</ol>
 <h2 id="openmpf-installation">OpenMPF Installation</h2>
 <blockquote>
 <p>You only need to complete the following steps on the OpenMPF master node.</p>
