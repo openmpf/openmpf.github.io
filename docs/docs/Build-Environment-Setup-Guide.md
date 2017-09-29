@@ -86,11 +86,11 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
     <br> `sudo su -`
 34. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’
 35. Install the Virtual Box Guest Additions:
-    1. `mount /dev/cdrom /mnt`
+    1. `sudo mount /dev/cdrom /mnt`
     2. `cd /mnt`
-    3. `./VBoxLinuxAdditions.run`
-36. `systemctl set-default graphical.target`
-37. `reboot now`
+    3. `sudo ./VBoxLinuxAdditions.run`
+36. `sudo systemctl set-default graphical.target`
+37. `sudo reboot now`
 38. At the graphical login screen, select the 'mpf' user.
 39. Enter 'mpf' as the password.
 40. A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.
@@ -261,46 +261,33 @@ The following source packages will need to be downloaded, built, and installed:
     9. `sudo ldconfig`
     10. `sudo ln -s /apps/install/bin/cmake /usr/local/bin/cmake`
 
-2. FFmpeg 2.6.3:
+2. FFmpeg 3.3.3:
     <br><br>**NOTE:** FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.   
-    1. xvidcore:
-        <br>For reference only: <https://labs.xvid.com>
-        1. `cd /apps/source/ffmpeg_sources`
-        2. `wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.2.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz"`
-        3. `tar zxvf xvidcore-1.3.2.tar.gz`
-        4. `cd xvidcore/build/generic`
-        5. `./configure --prefix="/apps/install"`
-        6. `make`
-        7. `sudo make install`
-        8. `make distclean`
-        9. `sudo ldconfig`
-    2. libx264:
-        <br>For reference only: <http://www.videolan.org/developers/x264.html>
-        1. `cd /apps/source/ffmpeg_sources`
-        2. `wget -O /apps/source/ffmpeg_sources/x264-snapshot-20140223-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20140223-2245-stable.tar.bz2"`
-        3. `tar xvjf x264-snapshot-20140223-2245-stable.tar.bz2`
-        4. `cd x264-snapshot-20140223-2245-stable`
-        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared`
-        6. `sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh`
-        7. `sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" >> /etc/profile.d/mpf.sh'`
-        8. `. /etc/profile.d/mpf.sh`
-        9. `make`
-        10. `sudo make install`
-        11. `make distclean`
-        12. `sudo ldconfig`
-    3. opencore-amr:
+    1. opencore-amr:
         <br>For reference only: <https://sourceforge.net/projects/opencore-amr>
         1. `cd /apps/source/ffmpeg_sources`
-        2. `wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.3.tar.gz "http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.3.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopencore-amr%2Ffiles%2Fopencore-amr%2F&ts=1467223123&use_mirror=tenet"`
-        3. `tar xvzf opencore-amr-0.1.3.tar.gz`
-        4. `cd opencore-amr-0.1.3`
+        2. `wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.4.tar.gz "https://downloads.sf.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.4.tar.gz"`
+        3. `tar xvzf opencore-amr-0.1.4.tar.gz`
+        4. `cd opencore-amr-0.1.4`
         5. `autoreconf -fiv`
         6. `./configure --prefix="/apps/install" --enable-shared`
         7. `make`
         8. `sudo make install`
         9. `make distclean`
         10. `sudo ldconfig`
-    4. libmp3lame:
+    2. libfdk_aac:
+        <br>For reference only: <https://github.com/mstorsjo/fdk-aac>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/fdk-aac-0.1.5.tar.gz "https://github.com/mstorsjo/fdk-aac/archive/v0.1.5.tar.gz"`
+        3. `tar xvzf fdk-aac-0.1.5.tar.gz`
+        4. `cd fdk-aac-0.1.5`
+        5. `autoreconf -fiv`
+        6. `./configure --prefix="/apps/install" --enable-shared`
+        7. `make`
+        8. `sudo make install`
+        9. `make distclean`
+        10. `sudo ldconfig`
+    3. libmp3lame:
         <br>For reference only: <http://lame.sourceforge.net>
         1. `cd /apps/source/ffmpeg_sources`
         2. `wget -O /apps/source/ffmpeg_sources/lame-3.99.5.tar.gz "http://downloads.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz"`
@@ -311,7 +298,7 @@ The following source packages will need to be downloaded, built, and installed:
         7. `sudo make install`
         8. `make distclean`
         9. `sudo ldconfig`
-    5. libogg:
+    4. libogg:
         <br>For reference only: <https://www.xiph.org/ogg>
         1. `cd /apps/source/ffmpeg_sources`
         2. `wget -O /apps/source/ffmpeg_sources/libogg-1.3.2.tar.gz "http://downloads.xiph.org/releases/ogg/libogg-1.3.2.tar.gz"`
@@ -322,35 +309,110 @@ The following source packages will need to be downloaded, built, and installed:
         7. `sudo make install`
         8. `make distclean`
         9. `sudo ldconfig`
-    6. libvorbis:
+    5. libopus:
+        <br>For reference only: <https://www.opus-codec.org>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/libopus-1.2.tar.gz "https://archive.mozilla.org/pub/opus/opus-1.2.tar.gz"`
+        3. `tar xzvf libopus-1.2.tar.gz`
+        4. `cd opus-1.2`
+        5. `autoreconf -fiv`
+        6. `./configure --prefix="/apps/install" --enable-shared`
+        7. `make`
+        8. `sudo make install`
+        9. `make distclean`
+        10. `sudo ldconfig`
+    6. libspeex:
+        <br>For reference only: <https://www.speex.org>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/speex-1.2rc2.tar.gz "http://downloads.xiph.org/releases/speex/speex-1.2rc2.tar.gz"`
+        3. `tar xvzf speex-1.2rc2.tar.gz`
+        4. `cd speex-1.2rc2`
+        5. `LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --enable-shared`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    7. libvorbis:
         <br>For reference only: <https://xiph.org/vorbis>
         1. `cd /apps/source/ffmpeg_sources`
-        2. `wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.4.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.gz"`
-        3. `tar xzvf libvorbis-1.3.4.tar.gz`
-        4. `cd libvorbis-1.3.4`
+        2. `wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.5.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz"`
+        3. `tar xzvf libvorbis-1.3.5.tar.gz`
+        4. `cd libvorbis-1.3.5`
         5. `LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared`
         6. `make`
         7. `sudo make install`
         8. `make distclean`
         9. `sudo ldconfig`
-    7. libtheora:
+    8. libtheora:
         <br>For reference only: <https://www.theora.org>
         1. `cd /apps/source/ffmpeg_sources`
-        2. `wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.bz2 "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.bz2"`
-        3. `tar -xvjf libtheora-1.1.1.tar.bz2`
+        2. `wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.gz "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz"`
+        3. `tar xzvf libtheora-1.1.1.tar.gz`
         4. `cd libtheora-1.1.1`
-        5. `./configure --prefix="/apps/install" --enable-shared`
+        5. `./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared`
         6. `make`
         7. `sudo make install`
         8. `make distclean`
         9. `sudo ldconfig`
-    8. FFmpeg:
+    9. libvpx:
+        <br>For reference only: <https://www.webmproject.org/code/>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/v1.6.1.tar.gz "https://codeload.github.com/webmproject/libvpx/tar.gz/v1.6.1"`
+        3. `tar xvzf v1.6.1.tar.gz`
+        4. `cd libvpx-1.6.1`
+        5. `./configure --prefix="/apps/install" --enable-shared --enable-vp8 --enable-vp9 --enable-pic --disable-debug --disable-examples --disable-docs`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    10. libx264:
+        <br>For reference only: <http://www.videolan.org/developers/x264.html>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/x264-snapshot-20170226-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20170226-2245-stable.tar.bz2"`
+        3. `tar xvjf x264-snapshot-20170226-2245-stable.tar.bz2`
+        4. `cd x264-snapshot-20170226-2245-stable`
+        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared --disable-cli`
+        6. `sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh`
+        7. `sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" >> /etc/profile.d/mpf.sh'`
+        8. `. /etc/profile.d/mpf.sh`
+        9. `make`
+        10. `sudo make install`
+        11. `make distclean`
+        12. `sudo ldconfig`
+    11. libx265:
+        <br>For reference only: <http://x265.org>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O x265_2.3.tar.gz "https://download.videolan.org/pub/videolan/x265/x265_2.3.tar.gz"`
+        3. `tar xzvf x265_2.3.tar.gz`
+        4. `cd x265_2.3/build/linux`
+        5. `MAKEFLAGS="-j" ./multilib.sh`
+        6. `cd 8bit`
+        7. `cmake ../../../source -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_10BIT=ON -DLINKED_12BIT=ON -DCMAKE_INSTALL_PREFIX="/apps/install"`
+        8. `sudo  make install`
+        9. `make clean`
+        10. `cd ../10bit`
+        11. `make clean`
+        12. `cd ../12bit`
+        13. `make clean`
+        14. `sudo ldconfig`
+    12. xvidcore:
+        <br>For reference only: <https://labs.xvid.com>
+        1. `cd /apps/source/ffmpeg_sources`
+        2. `wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.4.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.4.tar.gz"`
+        3. `tar zxvf xvidcore-1.3.4.tar.gz`
+        4. `cd xvidcore/build/generic`
+        5. `./configure --prefix="/apps/install"`
+        6. `make`
+        7. `sudo make install`
+        8. `make distclean`
+        9. `sudo ldconfig`
+    13. FFmpeg:
         <br>For reference only: <https://ffmpeg.org>
         1. `cd /apps/source/ffmpeg_sources`
         2. `git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg`
         3. `cd ffmpeg`
-        4. `git checkout af5917698bd44f136fd0ff00a9e5f8b5f92f2d58`
-        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --bindir="/apps/install/bin" --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr --enable-avresample`
+        4. `git checkout release/3.3`
+        5. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --bindir="/apps/install/bin" --disable-libsoxr --enable-avresample --enable-gpl --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libxvid --enable-nonfree --enable-openssl --enable-shared --enable-version3 --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --extra-libs=-ldl --prefix="/apps/install"`
         6. `make`
         7. `sudo make install`
         8. `make distclean`
@@ -408,35 +470,23 @@ The following source packages will need to be downloaded, built, and installed:
     9. `make distclean`
     10. `sudo ldconfig`
     11. `sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so`
-
-7. OpenCV 3.2.0
+7. OpenCV 3.3.0
     <br>For reference only: <http://opencv.org>
     1. `cd /apps/source/opencv_sources`
     2. `git clone https://github.com/opencv/opencv.git`
     3. `cd opencv`
-    4. `git checkout 26e9b42a44a62e00e0c1237f778040169162116c`
-    5. `cd ..`
-    6. `git clone https://github.com/opencv/opencv_contrib.git`
-    7. `cd opencv_contrib`
-    8. `git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738`
-    9. `cd ..`
-    10. Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
-    <pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
-    Above:
-    <pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code>
-    11. `cd opencv`
-    12. `mkdir release`
-    13. `cd release`
-    14. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..`
-    15. `make -j4`
-    16. `sudo make install`
-    17. `sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-    18. `sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0`
-    19. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2`
-    20. `sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv`
-    21. `sudo ldconfig`
-    22. `export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV`
-
+    4. `git checkout 3.3.0`
+    5. `mkdir release`
+    6. `cd release`
+    7. `PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -DCMAKE_BUILD_TYPE=Release -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.3.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" -DENABLE_CXX11:BOOL=“1” ..`
+    8. `make -j4`
+    9. `sudo make install`
+    10. `sudo sh -c 'echo "/apps/install/opencv3.3.0/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
+    11. `sudo ln -sf /apps/install/opencv3.3.0 /opt/opencv-3.3.0`
+    12. `sudo ln -sf /apps/install/opencv3.3.0/include/opencv2 /usr/local/include/opencv2`
+    13. `sudo ln -sf /apps/install/opencv3.3.0/include/opencv /usr/local/include/opencv`
+    14. `sudo ldconfig`
+    15. `export OpenCV_DIR=/opt/opencv-3.3.0/share/OpenCV`
 8. Leptonica 1.72:
     <br>For reference only: <https://github.com/DanBloomberg/leptonica>
     1. `cd /apps/source/openalpr_sources`
