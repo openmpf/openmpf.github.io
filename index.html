@@ -5,32 +5,118 @@ subtitle: Bridging the Gap in Media Analytics
 ---
 
 <div class="main-explain-area jumbotron">
-  <p>The Open Media Processing Framework, is a scalable, web-friendly platform designed to bring modern algorithms to media analytics.</p>
-  <p><img src="img/funnel.png"/></p>
-  <p>Customizable pipelines allow users to combine multiple algorithms based on performance (fast to slow) to increase throughput on large datasets</p>
+<p>
+  <b>The Open Media Processing Framework</b> provides a platform to perform content detection and extraction on bulk multimedia, enabling users to <b>analyze</b>, <b>search</b>, and <b>share</b> information through the extraction of objects, keywords, thumbnails, and other contextual data.
+</p>
+<p >
+OpenMPF enables users to build configurable media processing pipelines, enabling the rapid development and deployment of analytic algorithms and large-scale media processing applications.
+</p>
 
-	<strong>System Design</strong>
-	<img src="img/arch1.png"/>
+<!-- <h2 style="text-align:center">Why OpenMPF?</h2> -->
+<div class="grid">
+  <div class="col-1-3">
+    <div class="module">
+      <div class="feature_icon" style="margin-bottom:10px">
+        <center><img src="img/icon/iconmonstr-cloud-32-72.png"/></center>
+      </div>
+      <b>Search and Share</b><br/>
+      Simplify large-scale media processing and enable the extraction of meaningful content
+    </div></div>
+  <div class="col-1-3">
+    <div class="module">
+      <div class="feature_icon" style="margin-bottom:10px">
+        <center><img src="img/icon/iconmonstr-idea-12-72.png"/></center>
+      </div>
+      <b>Open API</b><br/>
+      Apply cutting-edge algorithms such as face detection and object classification
+    </div></div>
+  <div class="col-1-3">
+    <div class="module">
+      <div class="feature_icon" style="margin-bottom:10px">
+        <center><img src="img/icon/iconmonstr-sitemap-14-72.png"/></center>
+      </div>
+      <b>Flexible Architecture</b><br/>
+      Integrate into your <br />existing environment or use OpenMPF as a standalone application
+    </div>
+  </div>
+</div>
 
-	<p>Provides a C++ component plugin architecture for:</p>
-	
-	<ul>
-		<li>Detection</li>
-		<li>Tracking</li>
-		<li>Classification</li>
-	</ul>
-	
-	<p>And available components for OpenCV Face Detection, Caffe Deep Learning, and many more...</p>
-	
-	<p>For questions, contact the OpenMPF Dev Team @ <a href="mailto:openmpf@googlegroups.com">openmpf@googlegroups.com</a></p>
-	
-	<p>Head over to <a href="https://github.com/openmpf">the GitHub project</a> to get started.</p>
-	
-	
+
+<!-- <p><center><img src="img/funnel.png"/></center></p> -->
+
+
+<!-- <p>
+  <hr/>
+  <hr/>
+  <hr/>
+  Design and develop data processing workflows
+  <hr/>
+  Easily import and export data existing systems
+  <hr/>
+  <br/>
+</p> -->
+
+<h2>Features</h2>
+<hr/>
+<h3>Web Interface & REST API</h3>
+A modern <a href="https://openmpf.github.io/docs/site/User-Guide/" target="_blank">Web UI</a> enables users to easily process bulk media and:<br/><br/>
+<ul>
+  <li>Build configurable pipelines</li>
+  <li>Create and monitor jobs</li>
+  <li>Upload files for processing</li>
+  <li>Monitor system logs and node status</li>
+  <li>Administer configuration properties</li>
+  <li>View processing statistics</li>
+</ul>
+<p><center><img src="img/web-ui.png" /></center></p>
+
+
+<br/>
+Additionally, the <a href="https://openmpf.github.io/docs/site/html/REST-API.html" target="_blank">REST API</a> exposes the same core functionality as the Web UI and enables applications to be built on top of OpenMPF.
+
+
+<h3>Open Plugin API</h3>
+The OpenMPF Plugin Architecture provides the ability to seamlessly integrate <b>detection</b>, <b>tracking</b>, and <b>classification</b> algorithms in both <a href="https://openmpf.github.io/docs/site/CPP-Component-API/" target="_blank">C++</a> and <a href="https://openmpf.github.io/docs/site/Java-Component-API/" target="_blank">Java</a>.
+<br/><br/>New processing nodes can easily be added to increase processing throughput and new algorithms can be dynamically loaded and scaled to meet user needs.
+
+<p><center><img src="img/plugins.png" height="200px"/></center></p>
+
+OpenMPF includes open-source algorithms for detecting and tracking:<br/><br/>
+<ul>
+  <li>Objects - Caffe</li>
+  <li>Faces - Dlib, LBP-Based OpenCV</li>
+  <li>People - HOG-Based OpenCV</li>
+  <li>Text - OpenALPR</li>
+  <li>Speech - Sphinx</li>
+  <li>Motion - STRUCK, MOG, SuBSENSE</li>
+</ul>
+
+<h3>Customizable Pipelines</h3>
+
+OpenMPF provides the ability to organize algorithms sequentially or in parallel. This enables users to create pipelines based on performance (fast to slow) to increase throughput on large datasets or run multiple concurrent algorithms (e.g., two competing face detection algorithms) to compare performance.
+
+
+<p><center><img src="img/pipelines.png"/></center></p>
+
+Customizable pipelines allow users to combine multiple algorithms based on performance (fast to slow) to increase throughput on large datasets
+
+
+<h2>Getting Started</h2>
+<hr/>
+To start using OpenMPF:
+<ul>
+  <li>Download and build the source using the <a href="https://openmpf.github.io/docs/site/Build-Environment-Setup-Guide/" target="_blank">OpenMPF Build Guide</a></li>
+  <li>Follow the <a href="https://openmpf.github.io/docs/site/Installation-Guide/" target="_blank">OpenMPF Installation Guide</a></li>
+</ul>
   <!--<div class="get-started-wrap">
     <a class="btn btn-success btn-lg get-started-btn" href="">Get Started!</a>
   </div>
   -->
+
+<h2>Contact Us!</h2>
+<hr/>
+
+For questions, contact the <a href="mailto:openmpf@googlegroups.com">OpenMPF Dev Team</a> and we'd be happy to help!
 </div>
 
 

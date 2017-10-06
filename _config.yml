@@ -17,17 +17,19 @@ baseurl: ""
 title: OpenMPF
 
 # Short description of your site
-description: OpenMPF - Open Media Processing Framework 
+description: OpenMPF - Open Media Processing Framework
 
 # --- Navigation bar options --- #
 
 # List of links in the navigation bar
 
 navbar-links:
-  About OpenMPF: "aboutmpf"
+  Home: ""
   Resources:
+    - Get Started!: "getting-started"
     - Documentation: "documentation"
-    - Get Started!: "https://github.com/openmpf"
+    - GitHub: "https://github.com/openmpf"
+  About: "aboutmpf"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
