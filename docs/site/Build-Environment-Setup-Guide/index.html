@@ -282,9 +282,9 @@
 <p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../Installation/">OpenMPF Installation Guide</a>.</p>
 <ul>
 <li>This guide assumes a starting point of CentOS 7 with a minimal installation.</li>
-<li>At the time of writing this, the available minimal .iso file is CentOS-7-x86_64-Minimal-1611.iso. It should be downloaded from <a href="https://www.centos.org/download/">https://www.centos.org/download/</a> prior to starting these steps.</li>
+<li>CentOS-7-x86_64-Minimal-1611.iso should be downloaded from one of the links <a href="http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso">here</a> prior to starting these steps.</li>
 <li>
-<p>Oracle Virtual Box 5.0.20-106931 is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported.</p>
+<p>Oracle Virtual Box 5.1.28 r117968 is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported.</p>
 </li>
 <li>
 <p>Create a new VM with these settings:</p>
@@ -368,13 +368,13 @@
     <br> <code>sudo su -</code></li>
 <li>On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’</li>
 <li>Install the Virtual Box Guest Additions:<ol>
-<li><code>mount /dev/cdrom /mnt</code></li>
+<li><code>sudo mount /dev/cdrom /mnt</code></li>
 <li><code>cd /mnt</code></li>
-<li><code>./VBoxLinuxAdditions.run</code></li>
+<li><code>sudo ./VBoxLinuxAdditions.run</code></li>
 </ol>
 </li>
-<li><code>systemctl set-default graphical.target</code></li>
-<li><code>reboot now</code></li>
+<li><code>sudo systemctl set-default graphical.target</code></li>
+<li><code>sudo reboot now</code></li>
 <li>At the graphical login screen, select the 'mpf' user.</li>
 <li>Enter 'mpf' as the password.</li>
 <li>A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.</li>
@@ -436,7 +436,7 @@
 </ol>
 <h2 id="install-rpm-dependencies">Install RPM Dependencies</h2>
 <p>The following RPM packages will need to be downloaded and installed. Use of the yum package manager is recommended:</p>
-<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
+<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <h2 id="get-the-openmpf-source-code">Get the OpenMPF Source Code</h2>
 <p>Open a terminal window and perform the following steps:</p>
 <ol>
@@ -570,44 +570,29 @@
 </ol>
 </li>
 <li>
-<p>FFmpeg 2.6.3:
-    <br><br><strong>NOTE:</strong> FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.   </p>
+<p>FFmpeg 3.3.3:
+    <br><br><strong>NOTE:</strong> FFmpeg can be built with different encoders and modules that are individually licensed. It is recommended to check each developer’s documentation for the most up-to-date licensing information.</p>
 <ol>
-<li>xvidcore:
-    <br>For reference only: <a href="https://labs.xvid.com">https://labs.xvid.com</a><ol>
-<li><code>cd /apps/source/ffmpeg_sources</code></li>
-<li><code>wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.2.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.2.tar.gz"</code></li>
-<li><code>tar zxvf xvidcore-1.3.2.tar.gz</code></li>
-<li><code>cd xvidcore/build/generic</code></li>
-<li><code>./configure --prefix="/apps/install"</code></li>
-<li><code>make</code></li>
-<li><code>sudo make install</code></li>
-<li><code>make distclean</code></li>
-<li><code>sudo ldconfig</code></li>
-</ol>
-</li>
-<li>libx264:
-    <br>For reference only: <a href="http://www.videolan.org/developers/x264.html">http://www.videolan.org/developers/x264.html</a><ol>
-<li><code>cd /apps/source/ffmpeg_sources</code></li>
-<li><code>wget -O /apps/source/ffmpeg_sources/x264-snapshot-20140223-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20140223-2245-stable.tar.bz2"</code></li>
-<li><code>tar xvjf x264-snapshot-20140223-2245-stable.tar.bz2</code></li>
-<li><code>cd x264-snapshot-20140223-2245-stable</code></li>
-<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared</code></li>
-<li><code>sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh</code></li>
-<li><code>sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
-<li><code>. /etc/profile.d/mpf.sh</code></li>
-<li><code>make</code></li>
-<li><code>sudo make install</code></li>
-<li><code>make distclean</code></li>
-<li><code>sudo ldconfig</code></li>
-</ol>
-</li>
 <li>opencore-amr:
     <br>For reference only: <a href="https://sourceforge.net/projects/opencore-amr">https://sourceforge.net/projects/opencore-amr</a><ol>
 <li><code>cd /apps/source/ffmpeg_sources</code></li>
-<li><code>wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.3.tar.gz "http://downloads.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.3.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fopencore-amr%2Ffiles%2Fopencore-amr%2F&amp;ts=1467223123&amp;use_mirror=tenet"</code></li>
-<li><code>tar xvzf opencore-amr-0.1.3.tar.gz</code></li>
-<li><code>cd opencore-amr-0.1.3</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/opencore-amr-0.1.4.tar.gz "https://downloads.sf.net/project/opencore-amr/opencore-amr/opencore-amr-0.1.4.tar.gz"</code></li>
+<li><code>tar xvzf opencore-amr-0.1.4.tar.gz</code></li>
+<li><code>cd opencore-amr-0.1.4</code></li>
+<li><code>autoreconf -fiv</code></li>
+<li><code>./configure --prefix="/apps/install" --enable-shared</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>libfdk_aac:
+    <br>For reference only: <a href="https://github.com/mstorsjo/fdk-aac">https://github.com/mstorsjo/fdk-aac</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/fdk-aac-0.1.5.tar.gz "https://github.com/mstorsjo/fdk-aac/archive/v0.1.5.tar.gz"</code></li>
+<li><code>tar xvzf fdk-aac-0.1.5.tar.gz</code></li>
+<li><code>cd fdk-aac-0.1.5</code></li>
 <li><code>autoreconf -fiv</code></li>
 <li><code>./configure --prefix="/apps/install" --enable-shared</code></li>
 <li><code>make</code></li>
@@ -642,12 +627,39 @@
 <li><code>sudo ldconfig</code></li>
 </ol>
 </li>
+<li>libopus:
+    <br>For reference only: <a href="https://www.opus-codec.org">https://www.opus-codec.org</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/libopus-1.2.tar.gz "https://archive.mozilla.org/pub/opus/opus-1.2.tar.gz"</code></li>
+<li><code>tar xzvf libopus-1.2.tar.gz</code></li>
+<li><code>cd opus-1.2</code></li>
+<li><code>autoreconf -fiv</code></li>
+<li><code>./configure --prefix="/apps/install" --enable-shared</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>libspeex:
+    <br>For reference only: <a href="https://www.speex.org">https://www.speex.org</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/speex-1.2rc2.tar.gz "http://downloads.xiph.org/releases/speex/speex-1.2rc2.tar.gz"</code></li>
+<li><code>tar xvzf speex-1.2rc2.tar.gz</code></li>
+<li><code>cd speex-1.2rc2</code></li>
+<li><code>LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --enable-shared</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
 <li>libvorbis:
     <br>For reference only: <a href="https://xiph.org/vorbis">https://xiph.org/vorbis</a><ol>
 <li><code>cd /apps/source/ffmpeg_sources</code></li>
-<li><code>wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.4.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.4.tar.gz"</code></li>
-<li><code>tar xzvf libvorbis-1.3.4.tar.gz</code></li>
-<li><code>cd libvorbis-1.3.4</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/libvorbis-1.3.5.tar.gz "http://downloads.xiph.org/releases/vorbis/libvorbis-1.3.5.tar.gz"</code></li>
+<li><code>tar xzvf libvorbis-1.3.5.tar.gz</code></li>
+<li><code>cd libvorbis-1.3.5</code></li>
 <li><code>LDFLAGS="-L/apps/install/lib" CPPFLAGS="-I/apps/install/include" ./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared</code></li>
 <li><code>make</code></li>
 <li><code>sudo make install</code></li>
@@ -658,10 +670,73 @@
 <li>libtheora:
     <br>For reference only: <a href="https://www.theora.org">https://www.theora.org</a><ol>
 <li><code>cd /apps/source/ffmpeg_sources</code></li>
-<li><code>wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.bz2 "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.bz2"</code></li>
-<li><code>tar -xvjf libtheora-1.1.1.tar.bz2</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/libtheora-1.1.1.tar.gz "http://downloads.xiph.org/releases/theora/libtheora-1.1.1.tar.gz"</code></li>
+<li><code>tar xzvf libtheora-1.1.1.tar.gz</code></li>
 <li><code>cd libtheora-1.1.1</code></li>
-<li><code>./configure --prefix="/apps/install" --enable-shared</code></li>
+<li><code>./configure --prefix="/apps/install" --with-ogg="/apps/install" --enable-shared</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>libvpx:
+    <br>For reference only: <a href="https://www.webmproject.org/code/">https://www.webmproject.org/code/</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/v1.6.1.tar.gz "https://codeload.github.com/webmproject/libvpx/tar.gz/v1.6.1"</code></li>
+<li><code>tar xvzf v1.6.1.tar.gz</code></li>
+<li><code>cd libvpx-1.6.1</code></li>
+<li><code>./configure --prefix="/apps/install" --enable-shared --enable-vp8 --enable-vp9 --enable-pic --disable-debug --disable-examples --disable-docs</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>libx264:
+    <br>For reference only: <a href="http://www.videolan.org/developers/x264.html">http://www.videolan.org/developers/x264.html</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/x264-snapshot-20170226-2245-stable.tar.bz2 "ftp://ftp.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20170226-2245-stable.tar.bz2"</code></li>
+<li><code>tar xvjf x264-snapshot-20170226-2245-stable.tar.bz2</code></li>
+<li><code>cd x264-snapshot-20170226-2245-stable</code></li>
+<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --bindir="/apps/install" --enable-shared --disable-cli</code></li>
+<li><code>sudo sed -i '/^PATH/s/$/:\/apps\/install\/lib\/pkgconfig/' /etc/profile.d/mpf.sh</code></li>
+<li><code>sudo sh -c 'echo "export PKG_CONFIG_PATH=/apps/install/lib/pkgconfig" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+<li><code>make</code></li>
+<li><code>sudo make install</code></li>
+<li><code>make distclean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>libx265:
+    <br>For reference only: <a href="http://x265.org">http://x265.org</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O x265_2.3.tar.gz "https://download.videolan.org/pub/videolan/x265/x265_2.3.tar.gz"</code></li>
+<li><code>tar xzvf x265_2.3.tar.gz</code></li>
+<li><code>cd x265_2.3/build/linux</code></li>
+<li><code>MAKEFLAGS="-j" ./multilib.sh</code><blockquote>
+<p><br> <strong>NOTE:</strong>  The above command will take some time to complete and will appear to do nothing after printing out <code>[100%] Built target encoder</code>. Please be patient and wait for the command to complete.</b></p>
+</blockquote>
+</li>
+<li><code>cd 8bit</code></li>
+<li><code>cmake ../../../source -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_10BIT=ON -DLINKED_12BIT=ON -DCMAKE_INSTALL_PREFIX="/apps/install"</code></li>
+<li><code>sudo  make install</code></li>
+<li><code>make clean</code></li>
+<li><code>cd ../10bit</code></li>
+<li><code>make clean</code></li>
+<li><code>cd ../12bit</code></li>
+<li><code>make clean</code></li>
+<li><code>sudo ldconfig</code></li>
+</ol>
+</li>
+<li>xvidcore:
+    <br>For reference only: <a href="https://labs.xvid.com">https://labs.xvid.com</a><ol>
+<li><code>cd /apps/source/ffmpeg_sources</code></li>
+<li><code>wget -O /apps/source/ffmpeg_sources/xvidcore-1.3.4.tar.gz "http://downloads.xvid.org/downloads/xvidcore-1.3.4.tar.gz"</code></li>
+<li><code>tar zxvf xvidcore-1.3.4.tar.gz</code></li>
+<li><code>cd xvidcore/build/generic</code></li>
+<li><code>./configure --prefix="/apps/install"</code></li>
 <li><code>make</code></li>
 <li><code>sudo make install</code></li>
 <li><code>make distclean</code></li>
@@ -673,8 +748,8 @@
 <li><code>cd /apps/source/ffmpeg_sources</code></li>
 <li><code>git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg</code></li>
 <li><code>cd ffmpeg</code></li>
-<li><code>git checkout af5917698bd44f136fd0ff00a9e5f8b5f92f2d58</code></li>
-<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --prefix="/apps/install" --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --bindir="/apps/install/bin" --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr --enable-avresample</code></li>
+<li><code>git checkout release/3.3</code></li>
+<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" ./configure --bindir="/apps/install/bin" --disable-libsoxr --enable-avresample --enable-gpl --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libfdk_aac --enable-libmp3lame --enable-libopus --enable-libspeex --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-libxvid --enable-nonfree --enable-openssl --enable-shared --enable-version3 --extra-cflags="-I/apps/install/include" --extra-ldflags="-L/apps/install/lib" --extra-libs=-ldl --prefix="/apps/install"</code></li>
 <li><code>make</code></li>
 <li><code>sudo make install</code></li>
 <li><code>make distclean</code></li>
@@ -698,7 +773,6 @@
 <li><code>sudo make install</code></li>
 <li><code>make distclean</code></li>
 <li><code>sudo ldconfig</code></li>
-<li><code>sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
 <li><code>sudo ln -s /apps/install/bin/protoc /usr/local/bin/protoc</code></li>
 <li><code>sudo ln -s /usr/lib64/libuuid.so.1.3.0 /usr/lib64/libuuid.so</code></li>
 </ol>
@@ -729,10 +803,8 @@
 <li><code>sudo ldconfig</code></li>
 </ol>
 </li>
-<li>
-<p>Activemqcpp 3.9.0:
-    <br>For reference only: <a href="http://activemq.apache.org/cms">http://activemq.apache.org/cms</a></p>
-<ol>
+<li>Activemqcpp 3.9.0:
+    <br>For reference only: <a href="http://activemq.apache.org/cms">http://activemq.apache.org/cms</a><ol>
 <li><code>cd /apps/source/apache_sources</code></li>
 <li><code>wget -O /apps/source/apache_sources/activemq-cpp-library-3.9.0-src.tar.gz "https://archive.apache.org/dist/activemq/activemq-cpp/3.9.0/activemq-cpp-library-3.9.0-src.tar.gz"</code></li>
 <li><code>tar zxvf activemq-cpp-library-3.9.0-src.tar.gz</code></li>
@@ -746,45 +818,31 @@
 <li><code>sudo ln -s /apps/install/lib/libactivemq-cpp.so.19.0.0 /usr/lib/libactivemq-cpp.so</code></li>
 </ol>
 </li>
-<li>
-<p>OpenCV 3.2.0
-    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a></p>
-<ol>
+<li>OpenCV 3.3.0
+    <br>For reference only: <a href="http://opencv.org">http://opencv.org</a><ol>
 <li><code>cd /apps/source/opencv_sources</code></li>
 <li><code>git clone https://github.com/opencv/opencv.git</code></li>
 <li><code>cd opencv</code></li>
-<li><code>git checkout 26e9b42a44a62e00e0c1237f778040169162116c</code></li>
-<li><code>cd ..</code></li>
-<li><code>git clone https://github.com/opencv/opencv_contrib.git</code></li>
-<li><code>cd opencv_contrib</code></li>
-<li><code>git checkout 009d2efb75fbb0eded127864cb1ca932d58d1738</code></li>
-<li><code>cd ..</code></li>
-<li>Open "/apps/source/opencv_sources/opencv_contrib/modules/dnn_modern/CMakeLists.txt" and add the following lines:
-<pre><code># OpenMPF CUSTOM<br/>set(Protobuf_INCLUDE_DIR /apps/install/include)<br/>set(Protobuf_LIBRARY /apps/install/lib/libprotobuf.so)</pre></code>
-Above:
-<pre><code># NOTE: In case that proto files already exist,<br/>#       this is not needed anymore.<br/>find_package(Protobuf QUIET)</pre></code></li>
-<li><code>cd opencv</code></li>
+<li><code>git checkout 3.3.0</code></li>
 <li><code>mkdir release</code></li>
 <li><code>cd release</code></li>
-<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -D CMAKE_BUILD_TYPE=Release -D -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.2.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DOPENCV_EXTRA_MODULES_PATH:PATH="/apps/source/opencv_sources/opencv_contrib/modules" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" ..</code></li>
+<li><code>PKG_CONFIG_PATH="/apps/install/lib/pkgconfig" cmake3 -DCMAKE_BUILD_TYPE=Release -DWITH_GSTREAMER:BOOL="0" -DWITH_OPENMP:BOOL="1" -DBUILD_opencv_apps:BOOL="0" -DWITH_OPENCLAMDBLAS:BOOL="0" -DWITH_CUDA:BOOL="0" -DCLAMDFFT_ROOT_DIR:PATH="CLAMDFFT_ROOT_DIR-NOTFOUND" -DBUILD_opencv_aruco:BOOL="0" -DCMAKE_INSTALL_PREFIX:PATH="/apps/install/opencv3.3.0" -DWITH_WEBP:BOOL="0" -DBZIP2_LIBRARIES:FILEPATH="BZIP2_LIBRARIES-NOTFOUND" -DWITH_GIGEAPI:BOOL="0" -DWITH_JPEG:BOOL="1" -DWITH_CUFFT:BOOL="0" -DWITH_IPP:BOOL="0" -DWITH_V4L:BOOL="1" -DWITH_GDAL:BOOL="0" -DWITH_OPENCLAMDFFT:BOOL="0" -DWITH_GPHOTO2:BOOL="0" -DWITH_VTK:BOOL="0" -DWITH_GTK_2_X:BOOL="0" -DBUILD_opencv_world:BOOL="0" -DWITH_TIFF:BOOL="1" -DWITH_1394:BOOL="0" -DWITH_EIGEN:BOOL="0" -DWITH_LIBV4L:BOOL="0" -DBUILD_opencv_ts:BOOL="0" -DWITH_MATLAB:BOOL="0" -DWITH_OPENCL:BOOL="0" -DWITH_PVAPI:BOOL="0" -DENABLE_CXX11:BOOL=“1” ..</code></li>
 <li><code>make -j4</code></li>
 <li><code>sudo make install</code></li>
-<li><code>sudo sh -c 'echo "/apps/install/opencv3.2.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.2.0 /opt/opencv-3.2.0</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.2.0/include/opencv2 /usr/local/include/opencv2</code></li>
-<li><code>sudo ln -sf /apps/install/opencv3.2.0/include/opencv /usr/local/include/opencv</code></li>
+<li><code>sudo sh -c 'echo "/apps/install/opencv3.3.0/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.3.0 /opt/opencv-3.3.0</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.3.0/include/opencv2 /usr/local/include/opencv2</code></li>
+<li><code>sudo ln -sf /apps/install/opencv3.3.0/include/opencv /usr/local/include/opencv</code></li>
 <li><code>sudo ldconfig</code></li>
-<li><code>export OpenCV_DIR=/opt/opencv-3.2.0/share/OpenCV</code></li>
+<li><code>export OpenCV_DIR=/opt/opencv-3.3.0/share/OpenCV</code></li>
 </ol>
 </li>
-<li>
-<p>Leptonica 1.72:
-    <br>For reference only: <a href="https://github.com/DanBloomberg/leptonica">https://github.com/DanBloomberg/leptonica</a></p>
-<ol>
+<li>Leptonica 1.72:
+    <br>For reference only: <a href="https://github.com/DanBloomberg/leptonica">https://github.com/DanBloomberg/leptonica</a><ol>
 <li><code>cd /apps/source/openalpr_sources</code></li>
 <li><code>wget -O /apps/source/openalpr_sources/leptonica-1.72.tar.gz "https://github.com/DanBloomberg/leptonica/archive/v1.72.tar.gz"</code></li>
 <li><code>tar xvzf leptonica-1.72.tar.gz</code></li>
-<li><code>sudo mkdir /usr/local/src/openalpr</code>    </li>
+<li><code>sudo mkdir /usr/local/src/openalpr</code></li>
 <li><code>sudo cp -R /apps/source/openalpr_sources/leptonica-1.72 /usr/local/src/openalpr/</code></li>
 <li><code>sudo chown -R mpf:mpf /usr/local/src/openalpr</code></li>
 <li><code>sudo chmod -R 755 /usr/local/src/openalpr</code></li>
@@ -851,7 +909,6 @@ Above:
 <li><code>cd build</code></li>
 <li><code>cmake3 ../</code></li>
 <li><code>cmake3 --build . --config Release</code></li>
-<li>Make sure libdlib.so and libdlib.so.18.18.0 are present in /apps/source/dlib-sources/dlib-18.18/dlib/build</li>
 <li><code>sudo make install</code></li>
 </ol>
 </li>
@@ -915,7 +972,7 @@ Above:
 </code></pre>
 
 <p><strong>Enable JMX</strong></p>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 71), change the line:</p>
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 72, after making the above addition), change the line:</p>
 <pre><code>&lt;managementContext createConnector=&quot;false&quot;/&gt;
 </code></pre>
 
@@ -934,7 +991,7 @@ Above:
 
 <h2 id="configure-redis">Configure Redis</h2>
 <p>Redis should be set to run in the background (i.e. as a daemon process).</p>
-<p>In <code>/etc/redis.conf</code> (line 128), change the line:</p>
+<p>In <code>/etc/redis.conf</code> (line 136), change the line:</p>
 <pre><code>daemonize no
 </code></pre>
 
@@ -1050,8 +1107,10 @@ Above:
 <li>In the "Java SE Runtime Environment 8u144" section, click the radio button to "Accept License Agreement".</li>
 <li>Click on the "jre-8u144-linux-x64.rpm" link to begin the download.</li>
 <li>Move the downloaded file to <code>/mpfdata/ansible/install/repo/rpms/mpf-deps/jre-8u144-linux-x64.rpm</code>.</li>
-<li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"</code></li>
-<li><code>wget -O /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz "http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.72/bin/apache-tomcat-7.0.72.tar.gz"</code></li>
+<li>Assuming you've followed the steps in the <a href="#install-binary-packages">Install Binary Packages</a> section to download Apache ActiveMQ:
+   <br> <code>cp /apps/bin/apache/apache-activemq-5.13.0-bin.tar.gz /mpfdata/ansible/install/repo/tars/apache-activemq-5.13.0-bin.tar.gz</code></li>
+<li>Assuming you've followed the steps in the <a href="#install-binary-packages">Install Binary Packages</a> section to download Apache Tomcat:
+      <br> <code>cp /apps/bin/apache/apache-tomcat-7.0.72.tar.gz /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz</code></li>
 <li><code>cd /mpfdata/ansible/install/repo/pip</code></li>
 <li><code>pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six</code></li>
 </ol>
@@ -1081,7 +1140,11 @@ Above:
 </li>
 <li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
-<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master &lt;buildNum&gt; &lt;configFile&gt;</code></li>
+<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master &lt;buildNum&gt; &lt;configFile&gt;</code><blockquote>
+<p><strong>NOTE:</strong> The following warning is acceptable and can be safely ignored:
+<br><code>[WARNING] The requested profile "create-tar" could not be activated because it does not exist.</code></p>
+</blockquote>
+</li>
 </ol>
 </li>
 <li>The package <code>openmpf-*+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.</li>
