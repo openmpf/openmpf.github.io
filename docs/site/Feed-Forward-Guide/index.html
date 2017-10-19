@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Feed Forward Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Feed Forward Guide";
+    var mkdocs_page_input_path = "Feed-Forward-Guide.md";
+    var mkdocs_page_url = "/Feed-Forward-Guide/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/">Release Notes</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/">Acknowledgements</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Contributor-Guide/">Contributor Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Build-Environment-Setup-Guide/">Build Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Installation-Guide/">Install Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/">User Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Feed Forward Guide</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#motivation">Motivation</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#first-stage-and-combining-properties">First Stage and Combining Properties</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#feed-forward-properties">Feed Forward Properties</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#superset-region">Superset Region</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#mpfvideocapture-and-mpfimagereader-tools">MPFVideoCapture and MPFImageReader Tools</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#caffe-tracking">Caffe Tracking</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#feed-forward-pipeline-examples">Feed Forward Pipeline Examples</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Component Documentation</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../API-Overview/">Component Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Component-API/">Java Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/">REST API</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Architecture</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Workflow-Manager/">Workflow Manager</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Feed Forward Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:</p>
+<ol>
+<li>
+<p>The next stage will only look at the frames from the previous stage which had detections. The default segmenting behavior results in “filling the gaps” so that the next stage looks at all the frames from the between the start and end frames of the feed forward track, regardless if a detection was actually found in those frames.</p>
+</li>
+<li>
+<p>The next stage can be configured to only look at the detection regions for the frames in the feed forward track. The default segmenting behavior does not pass the detection region information to the next stage, so the next stage looks at the whole frame region for every frame in the segment.</p>
+</li>
+<li>
+<p>The next stage will process one sub-job per track generated in the previous stage. If the previous stage generated more than one track in a frame, say 3 tracks, then the next stage will process that frame a total of 3 times. Feed forward can be configured such that only the detection regions for those tracks are processed. If they are non-overlapping then there is no duplication of work. The default segmenting behavior will result one sub-job that captures the frame associated with all 3 tracks.</p>
+</li>
+</ol>
+<h1 id="motivation">Motivation</h1>
+<p>Consider using feed forward for the following reasons:</p>
+<ol>
+<li>
+<p>You have an algorithm that isn’t capable of breaking down a frame into regions of interest. For example, face detection can take a whole frame and generate a separate detection region for each face in the frame. On the other hand, Caffe classification will take that whole frame and generate a single detection that’s the size of the frame’s width and height. Caffe will produce better results if it operates on smaller regions that only capture the desired object to be classified. Using feed forward, you can create a pipeline so that Caffe only processes regions with motion in them.</p>
+</li>
+<li>
+<p>You wish to reduce processing time by creating a pipeline in which algorithms are chained from fastest to slowest. For example, a pipeline that starts motion detection will only feed regions with motion to the next stage, which may be a compute-intensive face detection algorithm. Reducing the amount of data that algorithm needs to process will speed up run times.</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>NOTE:</strong> Enabling feed forward results in more sub-jobs and more message passing between the workflow manager and components than the default segmenting behavior. Generally speaking, the more feed forward tracks, the greater the overhead cost. The cost may be outweighed by how feed forward can “filter out” pixel data that doesn’t need to be processed. Often, the greater the media resolution, the more pixel data is filtered out, and the greater the benefit.</p>
+</blockquote>
+<p>The output of a feed forward pipeline is the intersection of each stage's output. For example, running a feed forward pipeline that contains a motion detector and a face detector will ultimately output detections where motion was detected in the first stage and a face was detected in the second stage.</p>
+<h1 id="first-stage-and-combining-properties">First Stage and Combining Properties</h1>
+<p>When feed forward is enabled on a job, there is no change in behavior for the first stage of the pipeline because there is no track to feed in. In other words, the first stage will process the media file as though feed forward was not enabled. The tracks generated by the first stage will be passed to the second stage which will then be able to take advantage of the feed forward behavior.</p>
+<blockquote>
+<p><strong>NOTE:</strong> When <code>FEED_FORWARD_TYPE</code> is set to anything other than <code>NONE</code>, the following properties will be ignored: <code>FRAME_INTERVAL</code>, <code>USE_KEY_FRAMES</code>, <code>SEARCH_REGION_*</code>.</p>
+</blockquote>
+<p>If you wish to use the above properties, then you can configure them for the first stage of the pipeline, making sure that <code>FEED_FORWARD_TYPE</code> is set to <code>NONE</code>, or not specified, for the first stage. You can then configure each subsequent stage to use feed forward. Because only the frames with detections, and those detection regions, are passed forward from the first stage, the subsequent stages will inherit the effects of those properties set on the first stage.  </p>
+<h1 id="feed-forward-properties">Feed Forward Properties</h1>
+<p>Components that support feed forward have two algorithm properties that control the feed forward behavior: <code>FEED_FORWARD_TYPE</code> and <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code>.</p>
+<p><code>FEED_FORWARD_TYPE</code> can be set to the following values:
+- <code>NONE</code>: Feed forward is disabled (default setting).
+-   <code>FRAME</code>: For each detection in the feed forward track, search the entire frame associated with that detection, discarding the track’s detection regions.
+- <code>SUPERSET_REGION</code>: Using the feed forward track, generate a superset region (minimum area rectangle) that captures all of the detection regions in that track across all of the frames in that track. Refer to the <a href="#superset-region">Superset Region</a> section for more details. For each detection in the feed forward track, search the superset region in the frame associated with that detection, discarding the track’s detection regions.
+- <code>REGION</code>: For each detection in the feed forward track, search the exact detection region.</p>
+<blockquote>
+<p><strong>NOTE:</strong> When using <code>REGION</code>, the location of the region within the frame, and the size of the region, may be different for each detection in the feed forward track. Thus, <code>REGION</code> should not be used by algorithms that perform region tracking and require a consistent coordinate space from detection to detection. For those algorithms, use <code>SUPERSET_REGION</code> instead. That will ensure that each detection region is relative to the upper right corner of the superset region for that track.</p>
+</blockquote>
+<p><code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> allows you to drop low confidence detections from feed forward tracks. Setting the property to a value less than or equal to 0 has no effect. In that case all detections in the feed forward track will be processed.</p>
+<p>When <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> is set to a number greater than 0, say 5, then the top 5 detections in the feed forward track (based on highest confidence) will be processed. If the track contains less than 5 detections then all of the detections in the track will be processed. If one or more detections have the same confidence value, then the detection(s) with the lower frame index take precedence.</p>
+<h1 id="superset-region">Superset Region</h1>
+<p>A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a track. This is also known as a “union” or <a href="https://en.wikipedia.org/wiki/Minimum_bounding_rectangle">“minimum bounding rectangle"</a>.</p>
+<p>For example, if frame 1 of a 2-frame track has rect <code>`(x = 0, y = 0, width = 10, height = 10)</code>, and frame 2 has a rect <code>(x = 5, y = 5, width = 10, height = 10)</code>, then the superset region is <code>(x = 0, y = 0, width = 15, height = 15)</code>.</p>
+<p>The major advantage is that the superset region is a constant size. Some algorithms require the search space to be a constant size in order to successfully track objects.</p>
+<p>A disadvantage is that the superset region will be larger than any specific detection region, so the search space is not restricted to the smallest possible size, but in many cases the search space will be significantly reduced compared to the whole frame.</p>
+<p>For example, in the worst case, a feed forward track may capture a person moving from the lower right corner of a video to the upper left corner. In that case the superset region will be the entire width and height of the frame, so <code>SUPERSET_REGION</code> devolves into <code>FRAME</code>.</p>
+<p>For example, in the average case, a feed forward track may capture a person moving in the upper left quadrant of a video. In that case <code>SUPERSET_REGION</code> is able to filter out 75% of the rest of the video.</p>
+<h1 id="mpfvideocapture-and-mpfimagereader-tools">MPFVideoCapture and MPFImageReader Tools</h1>
+<p>The <a href="../CPP-Component-API/">OpenMPF C++ SDK</a> includes utilities that make it easier to support feed forward in your components. The <code>MPFVideoCapture</code> class is wrapper around OpenCV's <code>cv::VideoCapture</code> class. <code>MPFVideoCapture</code> works very similarly to <code>cv::VideoCapture</code>, except that it might modify the video frames based on job properties. From the point of view of someone using <code>MPFVideoCapture</code>, these modifications are mostly transparent. <code>MPFVideoCapture</code> makes it look like you are reading the original video file.</p>
+<p>Conceptually, consider generating a new video from a feed forward track. The new video would have fewer frames (unless there was a detection in every frame) and possibly a smaller frame size.</p>
+<p>For example, the original video file might be 30 frames long with 640x480 resolution. If the feed forward track found detections in frames 4, 7, and 10, then <code>MPFVideoCapture</code> will make it look like the video only has those 3 frames. If the feed forward type is <code>SUPERSET_REGION</code> or <code>REGION,</code> and each detection is 30x50 pixels, then <code>MPFVideoCapture</code> will make it look like the video's original resolution was 30x50 pixels.</p>
+<p>One issue with this approach is that the detection frame numbers and bounding box will be relative to the modified video, not the original. To make the detections relative to the original video the <code>MPFVideoCapture::ReverseTransform(MPFVideoTrack &amp;videoTrack)</code> function must be used.</p>
+<p>The general pattern for using <code>MPFVideoCapture</code> is as follows:</p>
+<pre><code>MPFDetectionError CaffeDetection::GetDetections(
+    const MPFVideoJob &amp;job, std::vector&lt;MPFVideoTrack&gt; &amp;tracks) {
+
+    MPFVideoCapture video_cap(job);
+
+    cv::Mat frame;
+    while (video_cap.Read(frame)) {
+        // Process frames and detections to tracks vector
+    }
+
+    for (MPFVideoTrack &amp;track : tracks) {
+        video_cap.ReverseTransform(track);
+    }
+
+    return MPF_DETECTION_SUCCESS;
+}
+</code></pre>
+
+<p><code>MPFVideoCapture</code> makes it look like the user is processing the original video, when in reality they are processing a modified version. To avoid confusion, this means that <code>MPFVideoCapture</code> should always be returning frames that are the same size because most users expect each frame of a video to be the same size.</p>
+<p>When using <code>SUPERSET_REGION</code> this is not an issue, since one bounding box is used for the entire track. However, when using <code>REGION</code>, each detection can be a different size, so it is not possible for <code>MPFVideoCapture</code> to return frames that are always the same size. Since this is a deviation from the expected behavior, and breaks the transparency of <code>MPFVideoCapture</code>, <code>SUPERSET_REGION</code> should usually be preferred over <code>REGION</code>. The <code>REGION</code> setting should only be used with components that explicitly state they support it (e.g. Caffe). Those components may not perform region tracking, so processing frames of various sizes is not a problem.</p>
+<p>The <code>MPFImageReader</code> class is similar to <code>MPFVideoCapture</code>, but it works on images instead of videos. <code>MPFImageReader</code> makes it look like the user is processing an original image, when in reality they are processing a modified version where the frame region is generated based on a detection (<code>MPFImageLocation</code>) fed forward from the previous stage of a pipeline. Note that <code>SUPERSET_REGION</code> and <code>REGION</code> have the same effect when working with images. <code>MPFImageReader</code> also has a reverse transform function.</p>
+<h1 id="caffe-tracking">Caffe Tracking</h1>
+<p>Caffe does not generate detection regions of its own. Its tracking behavior depends on whether feed forward is enabled or not. When feed forward is disabled, Caffe will process the entire region of each frame of a video. If one or more consecutive frames has the same highest confidence classification, then a new track is generated that contains those frames.</p>
+<p>When feed forward is enabled, Caffe will process the region of each frame of feed forward track according to the <code>FEED_FORWARD_TYPE</code>. It will generate one track that contains the same frames as the feed forward track. If <code>FEED_FORWARD_TYPE</code> is set to <code>REGION</code> then the Caffe track will contain (inherit) the same detection regions as the feed forward track. In any case, the <code>detectionProperties</code> map for the detections in the Caffe track will include the classification entries and possibly other Caffe properties.</p>
+<h1 id="feed-forward-pipeline-examples">Feed Forward Pipeline Examples</h1>
+<p><b>Caffe Classification with MOG Motion Detection and Feed Forward Region</b></p>
+<p>First, create the following action:</p>
+<pre><code>CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) ACTION
++ Algorithm: CAFFE
++ MODEL_NAME: googlenet
++ SUBTRACT_BLUE_VALUE: 104.0
++ SUBTRACT_GREEN_VALUE: 117.0
++ SUBTRACT_RED_VALUE: 123.0
++ FEED_FORWARD_TYPE: REGION
+</code></pre>
+
+<p>Then create the following task:</p>
+<pre><code>CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) TASK
++ CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) ACTION
+</code></pre>
+
+<p>Then create the following pipeline:</p>
+<pre><code>CAFFE GOOGLENET DETECTION (WITH MOG MOTION TRACKING AND FEED FORWARD REGION) PIPELINE
++ MOG MOTION DETECTION (WITH TRACKING) TASK
++ CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) TASK
+</code></pre>
+
+<p>Running this pipeline will result in Caffe tracks that contain detections where there was MOG motion. Each detection in each track will have a Caffe classification. Each track has a 1-to-1 correspondence with a MOG motion track.</p>
+<p>Refer to <code>runMogThenCaffeFeedForwardExactRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior. Refer to <code>runMogThenCaffeFeedForwardSupersetRegionTest()</code> in that class for a system test that uses <code>SUPERSET_REGION</code> instead. Refer to <code>runMogThenCaffeFeedForwardFullFrameTest()</code> for a system test that uses <code>FRAME</code> instead.</p>
+<blockquote>
+<p><strong>NOTE:</strong> Short and/or spurious MOG motion tracks will result in more overhead work when performing feed forward. To mitigate this, consider setting the <code>MERGE_TRACKS</code>, <code>MIN_GAP_BETWEEN_TRACKS</code>, and <code>MIN_TRACK_LENGTH</code> properties to generate longer motion tracks and discard short and/or spurious motion tracks.</p>
+<p><strong>NOTE:</strong> It doesn’t make sense to use <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> on a pipeline stage that follows a MOG or SuBSENSE motion detection stage. That’s because those motion detectors don’t generate tracks with confidence values. Instead, <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> could potentially be used when feeding person tracks into a face detector, for example, if those person tracks have confidence values.</p>
+</blockquote>
+<p><b>OCV Face Detection with MOG Motion Detection and Feed Forward Superset Region</b></p>
+<p>First, create the following action:</p>
+<pre><code>OCV FACE DETECTION (WITH FEED FORWARD SUPERSET REGION) ACTION
++ Algorithm: FACECV
++ FEED_FORWARD_TYPE: SUPERSET_REGION
+</code></pre>
+
+<p>Then create the following task:</p>
+<pre><code>OCV FACE DETECTION (WITH FEED FORWARD SUPERSET REGION) TASK
++ OCV FACE DETECTION (WITH FEED FORWARD SUPERSET REGION) ACTION
+</code></pre>
+
+<p>Then create the following pipeline:</p>
+<pre><code>OCV FACE DETECTION (WITH MOG MOTION TRACKING AND FEED FORWARD SUPERSET REGION) PIPELINE
++ MOG MOTION DETECTION (WITH TRACKING) TASK
++ OCV FACE DETECTION (WITH FEED FORWARD SUPERSET REGION) TASK
+</code></pre>
+
+<p>Running this pipeline will result in OCV face tracks that contain detections where there was MOG motion. Each track has a 1-to-1 correspondence with a MOG motion track.</p>
+<p>Refer to <code>runMogThenOcvFaceFeedForwardRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../API-Overview/" class="btn btn-neutral float-right" title="Component Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Admin-Manual/" class="btn btn-neutral" title="Admin Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Admin-Manual/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../API-Overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+
+</body>
+</html>

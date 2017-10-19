@@ -803,7 +803,7 @@ The following steps place dependency packages in `/mpfdata/ansible/install/repo`
 In the instructions below, provide a positive integer value for ``<buildNum>``. If this is your first build, provide a "1". If this is your second build then provide a "2", so on and so forth. The build number will be displayed on the login screen.
 
 Use the following value for `<configFile>`:
-<br>`/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/mpf-open-source-package.json`
+<br>`/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/openmpf-open-source-package.json`
 
 1. Remove the development properties file:
     1. `cd /home/mpf/openmpf-projects/openmpf`
