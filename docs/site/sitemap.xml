@@ -3,7 +3,7 @@
 
     
     <url>
-     <loc>/</loc>
+     <loc>/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -11,7 +11,7 @@
 
     
     <url>
-     <loc>/Release-Notes/</loc>
+     <loc>/Release-Notes/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -19,7 +19,7 @@
 
     
     <url>
-     <loc>/Acknowledgements/</loc>
+     <loc>/Acknowledgements/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -27,7 +27,7 @@
 
     
     <url>
-     <loc>/Contributor-Guide/</loc>
+     <loc>/Contributor-Guide/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -35,7 +35,7 @@
 
     
     <url>
-     <loc>/Build-Environment-Setup-Guide/</loc>
+     <loc>/Build-Environment-Setup-Guide/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -43,7 +43,7 @@
 
     
     <url>
-     <loc>/Installation-Guide/</loc>
+     <loc>/Installation-Guide/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -51,7 +51,7 @@
 
     
     <url>
-     <loc>/User-Guide/</loc>
+     <loc>/User-Guide/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -59,7 +59,7 @@
 
     
     <url>
-     <loc>/Admin-Manual/</loc>
+     <loc>/Admin-Manual/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -67,43 +67,7 @@
 
     
     <url>
-     <loc>/Feed-Forward-Guide/</loc>
-     <lastmod>2017-10-20</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-        
-    <url>
-     <loc>/API-Overview/</loc>
-     <lastmod>2017-10-20</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/CPP-Component-API/</loc>
-     <lastmod>2017-10-20</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/Java-Component-API/</loc>
-     <lastmod>2017-10-20</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/Packaging-and-Registering-a-Component/</loc>
-     <lastmod>2017-10-20</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-    <url>
-     <loc>/REST-API/</loc>
+     <loc>/Feed-Forward-Guide/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -112,7 +76,43 @@
     
         
     <url>
-     <loc>/Workflow-Manager/</loc>
+     <loc>/API-Overview/index.html</loc>
+     <lastmod>2017-10-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/CPP-Component-API/index.html</loc>
+     <lastmod>2017-10-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Java-Component-API/index.html</loc>
+     <lastmod>2017-10-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Packaging-and-Registering-a-Component/index.html</loc>
+     <lastmod>2017-10-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>/REST-API/index.html</loc>
+     <lastmod>2017-10-20</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>/Workflow-Manager/index.html</loc>
      <lastmod>2017-10-20</lastmod>
      <changefreq>daily</changefreq>
     </url>

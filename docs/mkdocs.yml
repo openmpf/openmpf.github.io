@@ -7,6 +7,8 @@ markdown_extensions:
 
 extra_javascript: [js/mustache.js]
 
+use_directory_urls: false
+
 pages:
 - Home: index.md
 - Release Notes: Release-Notes.md

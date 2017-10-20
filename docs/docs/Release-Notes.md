@@ -6,10 +6,10 @@
 
 <h2>Documentation</h2>
 
-- Updated the [Build Guide](Build-Environment-Setup-Guide) with instructions for installing the latest JDK, latest JRE, FFmpeg 3.3.3, new codecs, and OpenCV 3.3.
-- Added an [Acknowledgements](Acknowledgements/) section that provides information on third party dependencies leveraged by the OpenMPF.
-- Added a [Feed Forward Guide](Feed-Forward-Guide) that explains feed forward processing and how to use it.
-- Added missing requirements checklist content to the [Install Guide](Installation-Guide/#pre-installation-checklist).
+- Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for installing the latest JDK, latest JRE, FFmpeg 3.3.3, new codecs, and OpenCV 3.3.
+- Added an [Acknowledgements](Acknowledgements/index.html) section that provides information on third party dependencies leveraged by the OpenMPF.
+- Added a [Feed Forward Guide](Feed-Forward-Guide/index.html) that explains feed forward processing and how to use it.
+- Added missing requirements checklist content to the [Install Guide](Installation-Guide/index.html#pre-installation-checklist).
 - Updated the README at the top level of each of the primary repositories to help with user navigation and provide general information.
 
 <h2>Upgrade to FFmpeg 3.3.3 and OpenCV 3.3</h2>
@@ -83,9 +83,9 @@
 
 <h2>Documentation</h2>
 
-- Added a [Contributor Guide](Contributor-Guide/) that provides guidelines for contributing to the OpenMPF codebase.
-- Updated the [Java Component API](Java-Component-API/) with links to the example Java components.
-- Updated the [Build Guide](Build-Environment-Setup-Guide/) with instructions for OpenCV 3.2.
+- Added a [Contributor Guide](Contributor-Guide/index.html) that provides guidelines for contributing to the OpenMPF codebase.
+- Updated the [Java Component API](Java-Component-API/index.html) with links to the example Java components.
+- Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for OpenCV 3.2.
 
 <h2>Upgrade to OpenCV 3.2</h2>
 
@@ -139,11 +139,11 @@
 
 <h2>Documentation</h2>
 
-  - Updated the [REST API](REST-API/) to reflect job properties, algorithm-specific properties, and media-specific properties.
-  - Streamlined the [C++ Component API](CPP-Component-API/) document for clarity and simplicity.
-  - Completed the [Java Component API](Java-Component-API/) document.
-  - Updated the [Admin Manual](Admin-Manual/) and [User Guide](User-Guide/) to reflect web UI changes.
-  - Updated the [Build Guide](Build-Environment-Setup-Guide/) with instructions for GitHub repositories.
+  - Updated the [REST API](REST-API/index.html) to reflect job properties, algorithm-specific properties, and media-specific properties.
+  - Streamlined the [C++ Component API](CPP-Component-API/index.html) document for clarity and simplicity.
+  - Completed the [Java Component API](Java-Component-API/index.html) document.
+  - Updated the [Admin Manual](Admin-Manual/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
+  - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for GitHub repositories.
 
 <h2>Workflow Manager</h2>
 
