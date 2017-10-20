@@ -16,6 +16,7 @@ pages:
 - Install Guide: Installation-Guide.md
 - User Guide: User-Guide.md
 - Admin Guide: Admin-Manual.md
+- Feed Forward Guide: Feed-Forward-Guide.md
 - Component Documentation:
     - Component Overview: API-Overview.md
     - C++ Component API: CPP-Component-API.md
