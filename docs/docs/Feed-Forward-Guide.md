@@ -4,11 +4,11 @@
 
 Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:
 
-1. The next stage will only look at the frames from the previous stage which had detections. The default segmenting behavior results in “filling the gaps” so that the next stage looks at all the frames from the between the start and end frames of the feed forward track, regardless if a detection was actually found in those frames.
+1. The next stage will only look at the frames that had detections in the previous stage. The default segmenting behavior results in “filling the gaps” so that the next stage looks at all the frames between the start and end frames of the feed forward track, regardless of whether a detection was actually found in those frames.
 
 2. The next stage can be configured to only look at the detection regions for the frames in the feed forward track. The default segmenting behavior does not pass the detection region information to the next stage, so the next stage looks at the whole frame region for every frame in the segment.
 
-3. The next stage will process one sub-job per track generated in the previous stage. If the previous stage generated more than one track in a frame, say 3 tracks, then the next stage will process that frame a total of 3 times. Feed forward can be configured such that only the detection regions for those tracks are processed. If they are non-overlapping then there is no duplication of work. The default segmenting behavior will result one sub-job that captures the frame associated with all 3 tracks.
+3. The next stage will process one sub-job per track generated in the previous stage. If the previous stage generated more than one track in a frame, say 3 tracks, then the next stage will process that frame a total of 3 times. Feed forward can be configured such that only the detection regions for those tracks are processed. If they are non-overlapping then there is no duplication of work. The default segmenting behavior will result in one sub-job that captures the frame associated with all 3 tracks.
 
 
 # Motivation
@@ -17,7 +17,7 @@ Consider using feed forward for the following reasons:
 
 1. You have an algorithm that isn’t capable of breaking down a frame into regions of interest. For example, face detection can take a whole frame and generate a separate detection region for each face in the frame. On the other hand, Caffe classification will take that whole frame and generate a single detection that’s the size of the frame’s width and height. Caffe will produce better results if it operates on smaller regions that only capture the desired object to be classified. Using feed forward, you can create a pipeline so that Caffe only processes regions with motion in them.
 
-2. You wish to reduce processing time by creating a pipeline in which algorithms are chained from fastest to slowest. For example, a pipeline that starts motion detection will only feed regions with motion to the next stage, which may be a compute-intensive face detection algorithm. Reducing the amount of data that algorithm needs to process will speed up run times.
+2. You wish to reduce processing time by creating a pipeline in which algorithms are chained from fastest to slowest. For example, a pipeline that starts with motion detection will only feed regions with motion to the next stage, which may be a compute-intensive face detection algorithm. Reducing the amount of data that algorithm needs to process will speed up run times.
 
 > **NOTE:** Enabling feed forward results in more sub-jobs and more message passing between the workflow manager and components than the default segmenting behavior. Generally speaking, the more feed forward tracks, the greater the overhead cost. The cost may be outweighed by how feed forward can “filter out” pixel data that doesn’t need to be processed. Often, the greater the media resolution, the more pixel data is filtered out, and the greater the benefit.
 
@@ -54,7 +54,7 @@ When `FEED_FORWARD_TOP_CONFIDENCE_COUNT` is set to a number greater than 0, say 
 
 A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a track. This is also known as a “union” or [“minimum bounding rectangle"](https://en.wikipedia.org/wiki/Minimum_bounding_rectangle).
 
-For example, if frame 1 of a 2-frame track has rect ``(x = 0, y = 0, width = 10, height = 10)`, and frame 2 has a rect `(x = 5, y = 5, width = 10, height = 10)`, then the superset region is `(x = 0, y = 0, width = 15, height = 15)`.
+For example, if frame 1 of a 2-frame track has rect `(x = 0, y = 0, width = 10, height = 10)`, and frame 2 has a rect `(x = 5, y = 5, width = 10, height = 10)`, then the superset region is `(x = 0, y = 0, width = 15, height = 15)`.
 
 The major advantage is that the superset region is a constant size. Some algorithms require the search space to be a constant size in order to successfully track objects.
 
@@ -67,7 +67,7 @@ For example, in the average case, a feed forward track may capture a person movi
 
 # MPFVideoCapture and MPFImageReader Tools
 
-The [OpenMPF C++ SDK](CPP-Component-API/) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
+The [OpenMPF C++ SDK](CPP-Component-API/) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
 
 Conceptually, consider generating a new video from a feed forward track. The new video would have fewer frames (unless there was a detection in every frame) and possibly a smaller frame size.
 
