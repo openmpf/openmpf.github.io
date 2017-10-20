@@ -8,6 +8,7 @@
 
 - Updated the [Build Guide](Build-Environment-Setup-Guide) with instructions for installing the latest JDK, latest JRE, FFmpeg 3.3.3, new codecs, and OpenCV 3.3.
 - Added an [Acknowledgements](Acknowledgements/) section that provides information on third party dependencies leveraged by the OpenMPF.
+- Added a [Feed Forward Guide](Feed-Forward-Guide) that explains feed forward processing and how to use it.
 - Added missing requirements checklist content to the [Install Guide](Installation-Guide/#pre-installation-checklist).
 - Updated the README at the top level of each of the primary repositories to help with user navigation and provide general information.
 
@@ -20,7 +21,7 @@
 <h2>Feed Forward Behavior</h2>
 
 - Updated the workflow manager (WFM) and all video components to optionally perform feed forward processing for batch jobs. This allows tracks to be passed forward from one pipeline stage to the next. Components in the next stage will only process the frames associated with the detections in those tracks. This differs from the default segmenting behavior, which does not preserve detection regions or track information between stages.
-- To enable this behavior, the optional FEED_FORWARD_TYPE property must be set to "FRAME", or "SUPERSET_REGION". If set to "FRAME" then the components in the next stage will process the whole frame region associated with each detection in the track passed forward. If set to "SUPERSET_REGION" then the components in the next stage will determine the bounding box that encapsulates all of the detection regions in the track, and only process the pixel data within that superset region.
+- To enable this behavior, the optional FEED_FORWARD_TYPE property must be set to "FRAME", "SUPERSET_REGION", or "REGION". If set to "FRAME" then the components in the next stage will process the whole frame region associated with each detection in the track passed forward. If set to "SUPERSET_REGION" then the components in the next stage will determine the bounding box that encapsulates all of the detection regions in the track, and only process the pixel data within that superset region. If set to "REGION" then the components in the next stage will process the region associated with each detection in the track passed forward, which may vary in size and position from frame to frame.
 - The optional FEED_FORWARD_TOP_CONFIDENCE_COUNT property can be set to a number to limit the number of detections passed forward in a track. For example, if set to "5", then only the top 5 detections in the track will be passed forward and processed by the next stage. The top detections are defined as those with the highest confidence values, or if the confidence values are the same, those with the lowest frame index.
 - Note that setting the feed forward properties has no effect on the first pipeline stage because there is no prior stage that can pass tracks to it.
 
@@ -30,6 +31,7 @@
 - Added support for processing videos.
 - Added support for an optional ACTIVATION_LAYER_LIST property. For each network layer specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is an encoded string of the JSON representation of an OpenCV matrix of the activation values for that layer. The activation values are obtained after the Caffe network has processed the frame data.
 - Added support for an optional SPECTRAL_HASH_FILE_LIST property. For each JSON file specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is a string of 0's and 1's representing the spectral hash calculated using the information in the spectral hash JSON file. The spectral hash is calculated using activation values after the Caffe network has processed the frame data.
+- Added a pipeline to showcase the above two features for the GoogLeNet Caffe model.
 - Removed the TRANSPOSE property from the Caffe component since it was not necessary.
 - Added red, green, and blue mean subtraction values to the GoogLeNet pipeline.
 
@@ -44,10 +46,19 @@
 - Updated all existing components to leverage these tools as much as possible.
 - We encourage component developers to use these tools to automatically take care of common frame grabbing and frame manipulation behaviors, and not to reinvent the wheel.
 
+<h2>Dead Letter Queue</h2>
+
+- If for some reason a sub-job request that should have gone to a component ends up on the ActiveMQ Dead Letter Queue (DLQ), then the WFM will now process that failed request so that the job can complete. The ActiveMQ management page will now show that ActiveMQ.DLQ has 1 consumer. It will also show unconsumed messages in MPF.PROCESSED_DLQ_MESSAGES. Those are left for auditing purposes. The "Message Detail" for these shows the string representation of the original job request protobuf message.
+
 <h2>Upgrade Path</h2>
 
 - Removed the Release 0.8 to Release 0.9 upgrade path in the deployment scripts.
 - Added support for a Release 0.9 to Release 1.0.0 upgrade path, and a Release 0.10.0 to Release 1.0.0 upgrade path.
+
+<h2>Markup</h2>
+
+- Bounding boxes are now drawn along the interpolated path between detection regions whenever there are one or more frames in a track which do not have detections associated with them.
+- For each track, the color of the bounding box is now a randomly selected hue in the HSV color space. The colors are evenly distributed using the golden ratio.
 
 <h2>Bug Fixes</h2>
 
@@ -57,10 +68,11 @@
 - Fixed a bug in the build order of the OpenMPF project so that test modules that the WFM depends on are built before the WFM itself.
 - The Markup component draws bounding boxes between detections when a FRAME_INTERVAL is specified. This is so that the bounding box in the marked-up video appears in every frame. Fixed a bug where the bounding boxes drawn on non-detection frames appeared to stand still rather than move along the interpolated path between detection regions.
 - Fixed a bug on the OALPR license plate detection component where it was not properly handling the SEARCH_REGION* properties.
+- Support for the MIN_GAP_BETWEEN_SEGMENTS property was not implemented properly. When the gap between two segments is less than this property value then the segments should be merged; otherwise, the segments should remain separate. In some cases, the exact opposite was happening. This bug has been fixed.
 
 <h2>Known Issues</h2>
 
-- Support for the MIN_GAP_BETWEEN_SEGMENTS property is not implemented properly. When the gap between two segments is less than this property value then the segments should be merged; otherwise, the segments should remain separate. In some cases, the exact opposite happens.
+- Because of the number of additional ActiveMQ messages involved, enabling feed forward for low resolution video may take longer than the non-feed-forward behavior.
 
 
 # OpenMPF 0.10.0: July 2017
