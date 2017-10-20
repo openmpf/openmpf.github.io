@@ -65,7 +65,7 @@ The following sections list the rest of the constrollers in more detail.
 
 ## AdminComponentRegistrationController
 
-Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](API-Overview).
+Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](API-Overview/index.html).
 
 The **AdminComponentRegistrationController** provides endpoints which allow:
 
@@ -98,13 +98,13 @@ The OpenMPF uses multiple hosts to enable scalability and parallel processing. T
 
 The **NodeController** provides host information and component service deployment status. It also provides an endpoint to deploy a service on a node and an endpoint to stop a service.
 
-For more information on nodes, please read the [Node Configuration and Status](Admin-Manual#node-configuration-and-status) section in the Admin Guide.
+For more information on nodes, please read the [Node Configuration and Status](Admin-Manual/index.html#node-configuration-and-status) section in the Admin Guide.
 
 ## PipelineController
 
 The **Pipeline Controller** allows for the creation, retrieval, and deletion of pipelines or any of their constituent parts. While actions, tasks, and pipelines may not be directly modified, they may be deleted and recreated.
 
-For more information on pipelines, please read the [Create Custom Pipelines](User-Guide#create-custom-pipelines) section in the User Guide.
+For more information on pipelines, please read the [Create Custom Pipelines](User-Guide/index.html#create-custom-pipelines) section in the User Guide.
 
 # Job Management
 

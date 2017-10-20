@@ -19,7 +19,7 @@
     // Current page data
     var mkdocs_page_name = "Build Guide";
     var mkdocs_page_input_path = "Build-Environment-Setup-Guide.md";
-    var mkdocs_page_url = "/Build-Environment-Setup-Guide/";
+    var mkdocs_page_url = "/Build-Environment-Setup-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -35,7 +35,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> OpenMPF</a>
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -48,35 +48,35 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
+        <a class="" href="../index.html">Home</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Release-Notes/">Release Notes</a>
+        <a class="" href="../Release-Notes/index.html">Release Notes</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/">Acknowledgements</a>
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/">Contributor Guide</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 current">
-        <a class="current" href="./">Build Guide</a>
+        <a class="current" href="index.html">Build Guide</a>
         
             <ul>
             
@@ -158,28 +158,28 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Installation-Guide/">Install Guide</a>
+        <a class="" href="../Installation-Guide/index.html">Install Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../User-Guide/">User Guide</a>
+        <a class="" href="../User-Guide/index.html">User Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Admin-Manual/">Admin Guide</a>
+        <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
         
     </li>
 <li>
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/">Feed Forward Guide</a>
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
 <li>
@@ -191,28 +191,28 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/">Component Overview</a>
+        <a class="" href="../API-Overview/index.html">Component Overview</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/">C++ Component API</a>
+        <a class="" href="../CPP-Component-API/index.html">C++ Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/">Java Component API</a>
+        <a class="" href="../Java-Component-API/index.html">Java Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/">Packaging and Registering a Component</a>
+        <a class="" href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>
         
     </li>
 
@@ -222,7 +222,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/">REST API</a>
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 <li>
@@ -234,7 +234,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Workflow-Manager/">Workflow Manager</a>
+        <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
         
     </li>
 
@@ -252,7 +252,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">OpenMPF</a>
+        <a href="../index.html">OpenMPF</a>
       </nav>
 
       
@@ -260,7 +260,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
+    <li><a href="../index.html">Docs</a> &raquo;</li>
     
       
     
@@ -286,7 +286,7 @@
 <p>In general, it is only acceptable to use and distribute the executable form of the OpenMPF "in house", which is loosely defined as internally with an organization. The OpenMPF should only be distributed to third parties in raw source code form and those parties will be responsible for creating their own executable.</p>
 <p>This guide provides comprehensive instructions for setting up a build environment and generating an OpenMPF deployment package that contains the executable form of the software. This package is self-contained so that it can be installed on a minimal CentOS 7 system without Internet connectivity. This package can be freely distributed and installed in-house, but not distributed to third parties.</p>
 <h1 id="set-up-the-minimal-centos-7-vm">Set Up the Minimal CentOS 7 VM</h1>
-<p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../Installation/">OpenMPF Installation Guide</a>.</p>
+<p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../Installation-Guide/index.html">OpenMPF Installation Guide</a>.</p>
 <ul>
 <li>This guide assumes a starting point of CentOS 7 with a minimal installation.</li>
 <li>CentOS-7-x86_64-Minimal-1611.iso should be downloaded from one of the links <a href="http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso">here</a> prior to starting these steps.</li>
@@ -1226,11 +1226,11 @@ localhost.localdomain</code></p>
 </code></pre>
 
 <p>After startup, the workflow-manager will be available at <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.</p>
-<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the <a href="../User-Guide/">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Manual/">OpenMPF Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
+<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Manual/index.html">OpenMPF Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
 <blockquote>
 <p><strong>NOTE:</strong> Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <a href="https://www.virtualbox.org/manual/ch06.html#natforward">https://www.virtualbox.org/manual/ch06.html#natforward</a> for configuring port forwarding.</p>
 </blockquote>
-<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Manual/#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Manual/">OpenMPF Admin Manual</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
+<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Manual/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Manual/index.html">OpenMPF Admin Manual</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
 <p><strong>Starting</strong></p>
 <pre><code>/opt/activemq/bin/activemq start
 sudo systemctl start mysqld
@@ -1266,7 +1266,7 @@ sudo systemctl stop mysqld
 </li>
 </ul>
 <h1 id="deploy-the-openmpf">Deploy the OpenMPF</h1>
-<p>Please see the <a href="../Installation/">OpenMPF Installation Guide</a>.</p>
+<p>Please see the <a href="../Installation-Guide/index.html">OpenMPF Installation Guide</a>.</p>
 <hr />
 <h1 id="appendices"><strong>Appendices</strong></h1>
 <h1 id="known-issues">Known Issues</h1>
@@ -1411,10 +1411,10 @@ java.lang.InterruptedException: null
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Installation-Guide/" class="btn btn-neutral float-right" title="Install Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Installation-Guide/index.html" class="btn btn-neutral float-right" title="Install Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Contributor-Guide/" class="btn btn-neutral" title="Contributor Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Contributor-Guide/index.html" class="btn btn-neutral" title="Contributor Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1442,10 +1442,10 @@ java.lang.InterruptedException: null
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Contributor-Guide/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Contributor-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Installation-Guide/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Installation-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

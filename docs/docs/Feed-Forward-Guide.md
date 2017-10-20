@@ -67,7 +67,7 @@ For example, in the average case, a feed forward track may capture a person movi
 
 # MPFVideoCapture and MPFImageReader Tools
 
-The [OpenMPF C++ SDK](CPP-Component-API/) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
+The [OpenMPF C++ SDK](CPP-Component-API/index.html) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
 
 Conceptually, consider generating a new video from a feed forward track. The new video would have fewer frames (unless there was a detection in every frame) and possibly a smaller frame size.
 
