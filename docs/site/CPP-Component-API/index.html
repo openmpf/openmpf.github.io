@@ -279,7 +279,7 @@ component-&gt;Close()
 <li>Extending <a href="#openmpf-detection-component-api"><code>MPFDetectionComponent</code></a>.</li>
 <li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt">HelloWorldComponent CMakeLists.txt</a>).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF (see <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
+<li>Registering the component with OpenMPF. (See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
 </ol>
 <h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
 <p>The figure below presents a high-level component diagram of the OpenMPF API:</p>
@@ -387,8 +387,8 @@ component-&gt;Close()
 <ul>
 <li>Function Definition:
 <code>void SetRunDirectory(const string &amp;run_dir)</code></li>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -405,10 +405,8 @@ component-&gt;Close()
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Returns: void</p>
-</li>
+<ul>
+<li>Returns: void</li>
 </ul>
 <blockquote>
 <p><strong>IMPORTANT:</strong> <code>SetRunDirectory</code> is called by the Component Executable to set the correct path. This function should not be called within your implementation.</p>
@@ -456,8 +454,8 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Function Definition:
 <code>bool Supports(MPFDetectionDataType data_type)</code></li>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -474,10 +472,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Returns: (bool) True if the component supports the data type, otherwise false.</p>
-</li>
+<ul>
+<li>Returns: (bool) True if the component supports the data type, otherwise false.</li>
 <li>Example:</li>
 </ul>
 <pre><code class="c++">    // Sample component that supports only image and video files
@@ -514,8 +510,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <ul>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -537,10 +533,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
+<ul>
+<li>Returns: <code>MPFDetectionError</code></li>
 <li>Example:</li>
 </ul>
 <pre><code class="c++">    MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
@@ -559,8 +553,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <ul>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -582,10 +576,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
+<ul>
+<li>Returns: <code>MPFDetectionError</code></li>
 <li>Example:</li>
 </ul>
 <pre><code class="c++">    MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
@@ -604,8 +596,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <ul>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -627,10 +619,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
+<ul>
+<li>Returns: <code>MPFDetectionError</code></li>
 <li>Example:</li>
 </ul>
 <pre><code class="c++">    MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
@@ -666,8 +656,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -699,8 +689,6 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <h4 id="mpfimagejob">MPFImageJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in an image file.</p>
@@ -714,9 +702,17 @@ A simple detector that operates on videos may simply go through the video frame-
         const Properties &amp;media_properties)
 </code></pre>
 
+<pre><code class="c++">    MPFImageJob(
+        const string &amp;job_name,
+        const string &amp;data_uri,
+        const MPFImageLocation &amp;location,
+        const Properties &amp;job_properties,
+        const Properties &amp;media_properties)
+</code></pre>
+
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -737,6 +733,11 @@ A simple detector that operates on videos may simply go through the video frame-
 <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
 </tr>
 <tr>
+<td>location</td>
+<td><code>const MPFImageLocation &amp;</code></td>
+<td>An <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
+<tr>
 <td>job_properties</td>
 <td><code>const Properties &amp;</code></td>
 <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
@@ -748,8 +749,6 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <h4 id="mpfvideojob">MPFVideoJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in a video file.</p>
@@ -765,9 +764,19 @@ A simple detector that operates on videos may simply go through the video frame-
       const Properties &amp;media_properties)
 </code></pre>
 
+<pre><code class="c++">    MPFVideoJob(
+      const string &amp;job_name,
+      const string &amp;data_uri,
+      int start_frame,
+      int stop_frame,
+      const MPFVideoTrack &amp;track,
+      const Properties &amp;job_properties,
+      const Properties &amp;media_properties)
+</code></pre>
+
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -798,6 +807,11 @@ A simple detector that operates on videos may simply go through the video frame-
 <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
 </tr>
 <tr>
+<td>track</td>
+<td><code>const MPFVideoTrack &amp;</code></td>
+<td>An <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
+<tr>
 <td>job_properties</td>
 <td><code>const Properties &amp;</code></td>
 <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
@@ -809,8 +823,6 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <blockquote>
 <p><strong>IMPORTANT:</strong> For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </blockquote>
@@ -829,9 +841,19 @@ A simple detector that operates on videos may simply go through the video frame-
       const Properties &amp;media_properties)
 </code></pre>
 
+<pre><code class="c++">    MPFAudioJob(
+      const string &amp;job_name,
+      const string &amp;data_uri,
+      int start_time,
+      int stop_time,
+      const MPFAudioTrack &amp;track,    
+      const Properties &amp;job_properties,
+      const Properties &amp;media_properties)
+</code></pre>
+
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -862,6 +884,11 @@ A simple detector that operates on videos may simply go through the video frame-
 <td>The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
 </tr>
 <tr>
+<td>track</td>
+<td><code>const MPFAudioTrack &amp;</code></td>
+<td>An <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
+<tr>
 <td>job_properties</td>
 <td><code>const Properties &amp;</code></td>
 <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
@@ -873,8 +900,6 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <h3 id="detection-job-result-classes">Detection Job Result Classes</h3>
 <h4 id="mpfimagelocation">MPFImageLocation</h4>
 <p>Structure used to store the location of detected objects in a image file.</p>
@@ -892,8 +917,8 @@ A simple detector that operates on videos may simply go through the video frame-
 </code></pre>
 
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -935,8 +960,6 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <blockquote>
 <p><strong>EXAMPLE - Using detection_properties</strong>: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.</p>
 <p>Source:</p>
@@ -965,8 +988,8 @@ detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot
 </code></pre>
 
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -989,7 +1012,7 @@ detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot
 <tr>
 <td>frame_locations</td>
 <td><code>map&lt;int, MPFImageLocation&gt;</code></td>
-<td>A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a <a href="../mpfimagelocation"><code>MPFImageLocation</code></a> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame.</td>
+<td>A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame.</td>
 </tr>
 <tr>
 <td>confidence</td>
@@ -1003,8 +1026,6 @@ detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <blockquote>
 <p><strong>EXAMPLE - Using detection_properties</strong>: A component that detects text could add an entry to the detection_properties map where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.
 <code>c++
@@ -1029,8 +1050,8 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 </code></pre>
 
 <ul>
-<li>
-<p>Members:</p>
+<li>Members:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -1062,8 +1083,6 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
 <h3 id="enumeration-types">Enumeration Types</h3>
 <h4 id="mpfdetectionerror">MPFDetectionError</h4>
 <p>Enum used to indicate the status of a <code>GetDetections</code> call. A component is not required to support all error types.</p>

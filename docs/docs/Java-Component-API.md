@@ -53,7 +53,7 @@ Detection components are implemented by:
 1. Extending [`MPFDetectionComponentBase`](#detection-component-interface).
 2. Building the component into a jar. (See [HelloWorldComponent pom.xml](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/examples/HelloWorldComponent/pom.xml)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF (see [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
+4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
 
 # OpenMPF API Specification
 
@@ -346,7 +346,7 @@ public List<MPFAudioTrack> getDetections(MPFAudioJob job)
 
 An exception that occurs in a component.  The exception must contain a reference to a valid [`MPFDetectionError`](#mpfdetectionerror).
 
-* Constructor:
+* Constructor(s):
 
 ```java
 public MPFComponentDetectionError (
@@ -382,7 +382,7 @@ The following data structures contain details about detection results:
 
 Structure containing data used for detection of objects.
 
-* Constructor:
+* Constructor(s):
 
 ```java
 protected MPFJob(
@@ -409,13 +409,21 @@ Extends [`MPFJob`](#mpfjob)
 
 Structure containing data used for detection of objects in image files.
 
-* Constructor:
+* Constructor(s):
 ```java
 public MPFImageJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
 	final Map <String, String> mediaProperties)
+```
+```java
+public MPFImageJob(
+	String jobName,
+	String dataUri,
+	final Map<String, String> jobProperties,
+	final Map <String, String> mediaProperties,
+	MPFImageLocation location)
 ```
 * Members:
 
@@ -425,13 +433,14 @@ public MPFImageJob(
 | dataUri  | String  | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | Map<String, String> | See [MPFJob.jobProperties](#job-properties) for description. |
 | mediaProperties | Map<String, String> | See [MPFJob.mediaProperties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| location | MPFImageLocation | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
 
 Structure containing data used for detection of objects in video files.
 
-* Constructor:
+* Constructor(s):
 ```java
 public MPFVideoJob(
 	String jobName,
@@ -440,6 +449,16 @@ public MPFVideoJob(
 	final Map<String, String> mediaProperties,
 	int startFrame,
 	int stopFrame)
+```
+```java
+public MPFVideoJob(
+	String jobName,
+	String dataUri,
+	final Map<String, String> jobProperties,
+	final Map<String, String> mediaProperties,
+	int startFrame,
+	int stopFrame,
+	MPFVideoTrack track)
 ```
 * Members:
 
@@ -451,7 +470,7 @@ public MPFVideoJob(
 | stopFrame  | int | The last frame number (0-based index) of the video that should be processed to look for detections.|
 | jobProperties | Map<String, String> | See [MPFJob.jobProperties](#job-properties) for description. |
 | mediaProperties | Map<String, String> | See [MPFJob.mediaProperties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
-
+| track | MPFVideoTrack | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 >**IMPORTANT:** For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
 
@@ -461,10 +480,9 @@ Extends [`MPFJob`](#mpfjob)
 
 Structure containing data used for detection of objects in video files.
 
-* Constructor:
+* Constructor(s):
 
 ```java
-MPFAudioJob()
 public MPFAudioJob(
 	String jobName,
 	String dataUri,
@@ -472,6 +490,16 @@ public MPFAudioJob(
 	final Map<String, String> mediaProperties,
 	int startTime,
 	int stopTime)
+```
+```java
+public MPFAudioJob(
+	String jobName,
+	String dataUri,
+	final Map<String, String> jobProperties,
+	final Map<String, String> mediaProperties,
+	int startTime,
+	int stopTime,
+	MPFAudioTrack track)
 ```
 * Members:
 
@@ -483,6 +511,7 @@ public MPFAudioJob(
 | stopTime  | int | The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | jobProperties | Map<String, String> | See [MPFJob.jobProperties](#job-properties) for description. |
 | mediaProperties | Map<String, String> | See [MPFJob.mediaProperties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| track | MPFAudioTrack | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 ### Detection Job Result Classes
 
@@ -491,7 +520,7 @@ public MPFAudioJob(
 
 Structure used to store the location of detected objects in an image.
 
-* Constructor:
+* Constructor(s):
 
 ```java
 public MPFImageLocation(
@@ -520,7 +549,7 @@ public MPFImageLocation(
 
 Structure used to store the location of detected objects in an image.
 
-* Constructor:
+* Constructor(s):
 
 ```java
 public MPFVideoTrack(
@@ -547,7 +576,7 @@ public MPFVideoTrack(
 
 Structure used to store the location of detected objects in an image.
 
-* Constructor:
+* Constructor(s):
 
 ```java
 public MPFAudioTrack(

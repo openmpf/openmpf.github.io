@@ -55,7 +55,7 @@ Detection components are implemented by:
 1. Extending [`MPFDetectionComponent`](#openmpf-detection-component-api).
 2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF (see [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
+4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
 
 # OpenMPF API Specification
 
@@ -184,9 +184,9 @@ Sets the value of the private `run_directory` data member which contains the ful
 `void SetRunDirectory(const string &run_dir)`
 * Parameters:
 
-	| Parameter  | Data Type  | Description  |
-	|---|---|---|
-	| run_dir  | `const string &`  | Full path of the parent folder above where the component is installed. |
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+| run_dir  | `const string &`  | Full path of the parent folder above where the component is installed. |
 
 * Returns: void
 
@@ -254,9 +254,9 @@ Returns true or false depending on the data type is supported or not.
 `bool Supports(MPFDetectionDataType data_type)`
 * Parameters:
 
-	| Parameter  | Data Type  | Description  |
-	|---|---|---|
-	| data_type| `MPFDetectionDataType`  | Component should only return true for IMAGE, VIDEO, and/or AUDIO. |
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+| data_type| `MPFDetectionDataType`  | Component should only return true for IMAGE, VIDEO, and/or AUDIO. |
 
 * Returns: (bool) True if the component supports the data type, otherwise false.
 * Example:
@@ -298,10 +298,10 @@ Currently, the data_uri is always a local file path. For example, "/opt/mpf/shar
 ```
 * Parameters:
 
-	| Parameter  | Data Type  | Description  |
-	|---|---|---|
-	|  job | `const MPFImageJob &`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
-	|  locations | `vector<MPFImageLocation> &` | The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.   |
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+|  job | `const MPFImageJob &`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
+|  locations | `vector<MPFImageLocation> &` | The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.   |
 
 * Returns: `MPFDetectionError`
 * Example:
@@ -325,10 +325,10 @@ Used to detect objects in a video file. Prior to being sent to the component, vi
 ```
 * Parameters:
 
-	| Parameter  | Data Type  | Description  |
-	|---|---|---|
-	| job  | `const MPFVideoJob &`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
-	| tracks  | `vector<MPFVideoTrack> &` | The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  |
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+| job  | `const MPFVideoJob &`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
+| tracks  | `vector<MPFVideoTrack> &` | The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  |
 
 * Returns: `MPFDetectionError`
 * Example:
@@ -352,10 +352,10 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 ```
 * Parameters:
 
-	| Parameter  | Data Type  | Description  |
-	|---|---|---|
-	| job  | `const MPFAudioJob &`  | Structure containing details about the work to be performed. See [`MPFAudioJob`](#mpfaudiojob) |
-	| tracks  | `vector<MPFAudioTrack> &` |  The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object  |
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+| job  | `const MPFAudioJob &`  | Structure containing details about the work to be performed. See [`MPFAudioJob`](#mpfaudiojob) |
+| tracks  | `vector<MPFAudioTrack> &` |  The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object  |
 
 * Returns: `MPFDetectionError`
 * Example:
@@ -398,12 +398,12 @@ Structure containing information about about a job to be performed on a piece of
 
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
-	| data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
-	| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
-	| media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
+| Member  | Data Type  | Description  |
+|---|---|---|
+|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
+| data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
+| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
+| media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
 #### MPFImageJob
@@ -420,14 +420,23 @@ Structure containing data used for detection of objects in an image file.
 		const Properties &job_properties,
 		const Properties &media_properties)
 ```
+```c++
+	MPFImageJob(
+		const string &job_name,
+		const string &data_uri,
+		const MPFImageLocation &location,
+		const Properties &job_properties,
+		const Properties &media_properties)
+```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
-	| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-	| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| Member  | Data Type  | Description  |
+|---|---|---|
+|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
+| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
+| location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -445,16 +454,27 @@ Structure containing data used for detection of objects in a video file.
 	  const Properties &job_properties,
 	  const Properties &media_properties)
 ```
+```c++
+	MPFVideoJob(
+	  const string &job_name,
+	  const string &data_uri,
+	  int start_frame,
+	  int stop_frame,
+	  const MPFVideoTrack &track,
+	  const Properties &job_properties,
+	  const Properties &media_properties)
+```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	|  job_name | `const string &`  | See [MPFJob.job_name](#job-name) for description.  |
-	| data_uri  | `const string &`  | See [MPFJob.data_uri](#data-uri) for description. |
-	|  start_frame | `const int`  | The first frame number (0-based index) of the video that should be processed to look for detections.  |
-	| stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
-	| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
+| Member  | Data Type  | Description  |
+|---|---|---|
+|  job_name | `const string &`  | See [MPFJob.job_name](#job-name) for description.  |
+| data_uri  | `const string &`  | See [MPFJob.data_uri](#data-uri) for description. |
+|  start_frame | `const int`  | The first frame number (0-based index) of the video that should be processed to look for detections.  |
+| stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
+| track | `const MPFVideoTrack &` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
 
 
 >**IMPORTANT:** For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
@@ -476,16 +496,27 @@ Structure containing data used for detection of objects in an audio file. Curren
 	  const Properties &job_properties,
 	  const Properties &media_properties)
 ```
+```c++
+	MPFAudioJob(
+	  const string &job_name,
+	  const string &data_uri,
+	  int start_time,
+	  int stop_time,
+	  const MPFAudioTrack &track,    
+	  const Properties &job_properties,
+	  const Properties &media_properties)
+```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
-	| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-	|  start_time | `const int`  | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
-	| stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
-	| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-	| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| Member  | Data Type  | Description  |
+|---|---|---|
+|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
+| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
+|  start_time | `const int`  | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
+| stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
+| track | `const MPFAudioTrack &` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
 
 ### Detection Job Result Classes
 
@@ -507,14 +538,14 @@ Structure used to store the location of detected objects in a image file.
 ```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	| x_left_upper| `int` | Upper left X coordinate of the detected object. |
-	| y_left_upper | `int` | Upper left Y coordinate of the detected object. |
-	| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
-	| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
-	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+| Member  | Data Type  | Description  |
+|---|---|---|
+| x_left_upper| `int` | Upper left X coordinate of the detected object. |
+| y_left_upper | `int` | Upper left Y coordinate of the detected object. |
+| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
+| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
+| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.
 >
@@ -546,13 +577,13 @@ Structure used to store the location of detected objects in a video file.
 ```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	| start_frame| `int` | The first frame number (0-based index) that contained the detected object. |
-	| stop_frame| `int` | The last frame number (0-based index) that contained the detected object. |
-	| frame_locations| `map<int, MPFImageLocation>` | A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a [`MPFImageLocation`](mpfimagelocation) calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
-	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-	| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+| Member  | Data Type  | Description  |
+|---|---|---|
+| start_frame| `int` | The first frame number (0-based index) that contained the detected object. |
+| stop_frame| `int` | The last frame number (0-based index) that contained the detected object. |
+| frame_locations| `map<int, MPFImageLocation>` | A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a [`MPFImageLocation`](#mpfimagelocation) calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
+| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 > **EXAMPLE - Using detection_properties**: A component that detects text could add an entry to the detection_properties map where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
 >```c++
@@ -580,12 +611,12 @@ Structure used to store the location of detected objects in an audio file.
 ```
 * Members:
 
-	| Member  | Data Type  | Description  |
-	|---|---|---|
-	| start_time| `int` | The time (0-based index, in ms) when the audio detection event started.  |
-	| stop_time| `int` | The time (0-based index, in ms) when the audio detection event stopped. |
-	| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-	| detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+| Member  | Data Type  | Description  |
+|---|---|---|
+| start_time| `int` | The time (0-based index, in ms) when the audio detection event started.  |
+| stop_time| `int` | The time (0-based index, in ms) when the audio detection event stopped. |
+| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
+| detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 ### Enumeration Types
 

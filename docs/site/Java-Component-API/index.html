@@ -278,7 +278,7 @@ component.close()
 <li>Extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</li>
 <li>Building the component into a jar. (See <a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/examples/HelloWorldComponent/pom.xml">HelloWorldComponent pom.xml</a>).</li>
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF (see <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
+<li>Registering the component with OpenMPF. (See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
 </ol>
 <h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
 <p>The figure below presents a high-level component diagram of the OpenMPF API:</p>
@@ -660,7 +660,7 @@ public boolean supports(MPFDataType dataType) {
 <h3 id="mpfcomponentdetectionerror">MPFComponentDetectionError</h3>
 <p>An exception that occurs in a component.  The exception must contain a reference to a valid <a href="#mpfdetectionerror"><code>MPFDetectionError</code></a>.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFComponentDetectionError (
     MPFDetectionError error,
@@ -714,7 +714,7 @@ public boolean supports(MPFDataType dataType) {
 <h4 id="mpfjob">MPFJob</h4>
 <p>Structure containing data used for detection of objects.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">protected MPFJob(
     String jobName,
@@ -762,13 +762,21 @@ public boolean supports(MPFDataType dataType) {
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in image files.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFImageJob(
     String jobName,
     String dataUri,
     final Map&lt;String, String&gt; jobProperties,
     final Map &lt;String, String&gt; mediaProperties)
+</code></pre>
+
+<pre><code class="java">public MPFImageJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map &lt;String, String&gt; mediaProperties,
+    MPFImageLocation location)
 </code></pre>
 
 <ul>
@@ -803,13 +811,18 @@ public boolean supports(MPFDataType dataType) {
 <td>Map<String, String></td>
 <td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
 </tr>
+<tr>
+<td>location</td>
+<td>MPFImageLocation</td>
+<td>An <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
 </tbody>
 </table>
 <h4 id="mpfvideojob">MPFVideoJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in video files.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFVideoJob(
     String jobName,
@@ -818,6 +831,16 @@ public boolean supports(MPFDataType dataType) {
     final Map&lt;String, String&gt; mediaProperties,
     int startFrame,
     int stopFrame)
+</code></pre>
+
+<pre><code class="java">public MPFVideoJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map&lt;String, String&gt; mediaProperties,
+    int startFrame,
+    int stopFrame,
+    MPFVideoTrack track)
 </code></pre>
 
 <ul>
@@ -862,6 +885,11 @@ public boolean supports(MPFDataType dataType) {
 <td>Map<String, String></td>
 <td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul></td>
 </tr>
+<tr>
+<td>track</td>
+<td>MPFVideoTrack</td>
+<td>An <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
 </tbody>
 </table>
 <blockquote>
@@ -871,16 +899,25 @@ public boolean supports(MPFDataType dataType) {
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Structure containing data used for detection of objects in video files.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
-<pre><code class="java">MPFAudioJob()
-public MPFAudioJob(
+<pre><code class="java">public MPFAudioJob(
     String jobName,
     String dataUri,
     final Map&lt;String, String&gt; jobProperties,
     final Map&lt;String, String&gt; mediaProperties,
     int startTime,
     int stopTime)
+</code></pre>
+
+<pre><code class="java">public MPFAudioJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map&lt;String, String&gt; mediaProperties,
+    int startTime,
+    int stopTime,
+    MPFAudioTrack track)
 </code></pre>
 
 <ul>
@@ -925,13 +962,18 @@ public MPFAudioJob(
 <td>Map<String, String></td>
 <td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
 </tr>
+<tr>
+<td>track</td>
+<td>MPFAudioTrack</td>
+<td>An <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="detection-job-result-classes">Detection Job Result Classes</h3>
 <h4 id="mpfimagelocation">MPFImageLocation</h4>
 <p>Structure used to store the location of detected objects in an image.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFImageLocation(
         int xLeftUpper,
@@ -993,7 +1035,7 @@ public MPFAudioJob(
 <h4 id="mpfvideotrack">MPFVideoTrack</h4>
 <p>Structure used to store the location of detected objects in an image.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFVideoTrack(
   int startFrame,
@@ -1049,7 +1091,7 @@ public MPFAudioJob(
 <h4 id="mpfaudiotrack">MPFAudioTrack</h4>
 <p>Structure used to store the location of detected objects in an image.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFAudioTrack(
   int startTime,
