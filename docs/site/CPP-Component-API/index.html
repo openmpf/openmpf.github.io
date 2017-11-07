@@ -240,7 +240,7 @@
 </blockquote>
 <h1 id="c-component-api-overview">C++ Component API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
-<p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, or audio files.</p>
+<p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, audio, or other (generic) files.</p>
 <p>Using this API, detection components can be built to provide:</p>
 <ul>
 <li>Detection (Localizing an object)</li>
@@ -299,6 +299,7 @@ component-&gt;Close()
 <li><a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfgenericjob"><code>MPFGenericJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 </ul>
 <p><strong>Job Results</strong></p>
 <p>The following classes define the results of a component's processing:</p>
@@ -306,6 +307,7 @@ component-&gt;Close()
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
 <li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
 <li><a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a></li>
+<li><a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a></li>
 </ul>
 <p>Components must also include two <a href="#component-factory-functions">Component Factory Functions</a>.</p>
 <h2 id="openmpf-component-api">OpenMPF Component API</h2>
@@ -441,6 +443,7 @@ MPF_COMPONENT_DELETER();
 <li>Image and Video Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h">source</a>)</li>
 <li>Audio Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioDetectionComponentAdapter.h">source</a>)</li>
 <li>Audio and Video Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h">source</a>)</li>
+<li>Generic Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFGenericDetectionComponentAdapter.h">source</a>)</li>
 </ul>
 <blockquote>
 <p><strong>Example: Creating Adaptors to Perform Naive Tracking:</strong>
@@ -468,7 +471,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <tr>
 <td>data_type</td>
 <td><code>MPFDetectionDataType</code></td>
-<td>Component should only return true for IMAGE, VIDEO, and/or AUDIO.</td>
+<td>Return true if the component supports IMAGE, VIDEO, AUDIO, and/or UNKNOWN (generic) processing.</td>
 </tr>
 </tbody>
 </table>
@@ -630,18 +633,65 @@ A simple detector that operates on videos may simply go through the video frame-
     }
 </code></pre>
 
+<h4 id="getdetectionsmpfgenericjob">GetDetections(MPFGenericJob …)</h4>
+<p>Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and handled generically. These files are not logically segmented, so a job will contain the entirety of the file.</p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">    MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks)
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><code>const MPFGenericJob &amp;</code></td>
+<td>Structure containing details about the work to be performed. See <a href="#mpfgenericjob"><code>MPFGenericJob</code></a></td>
+</tr>
+<tr>
+<td>tracks</td>
+<td><code>vector&lt;MPFGenericTrack&gt; &amp;</code></td>
+<td>The <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> data for each detected object</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Returns: <code>MPFDetectionError</code></p>
+</li>
+<li>Example:</li>
+</ul>
+<pre><code class="c++">    MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks) {
+        // Parse job
+        // Generate tracks
+        return MPF_DETECTION_SUCCESS;
+    }
+</code></pre>
+
 <h3 id="detection-job-data-structures">Detection Job Data Structures</h3>
 <p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):</p>
 <ul>
 <li><a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
+<li><a href="#mpfgenericjob"><code>MPFGenericJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 </ul>
 <p>The following data structures contain details about detection results:</p>
 <ul>
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
 <li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
 <li><a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a></li>
+<li><a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a></li>
 </ul>
 <h4 id="mpfjob">MPFJob</h4>
 <p>Structure containing information about about a job to be performed on a piece of media.</p>
@@ -900,6 +950,53 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
+<h4 id="mpfgenericjob">MPFGenericJob</h4>
+<p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
+<p>Structure containing data used for detection of objects in a file that isn't a video, image, or audio file. The file is of the UNKNOWN type and handled generically. The file is not logically segmented, so a job will contain the entirety of the file.</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">  MPFGenericJob(
+    const string &amp;job_name,
+    const string &amp;data_uri,
+    const Properties &amp;job_properties,
+    const Properties &amp;media_properties)
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job_name</td>
+<td><code>const string &amp;</code></td>
+<td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+</tr>
+<tr>
+<td>data_uri</td>
+<td><code>const string &amp;</code></td>
+<td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
+</tr>
+<tr>
+<td>job_properties</td>
+<td><code>const Properties &amp;</code></td>
+<td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
+</tr>
+<tr>
+<td>media_properties</td>
+<td><code>const Properties &amp;</code></td>
+<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="detection-job-result-classes">Detection Job Result Classes</h3>
 <h4 id="mpfimagelocation">MPFImageLocation</h4>
 <p>Structure used to store the location of detected objects in a image file.</p>
@@ -1083,6 +1180,41 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 </tr>
 </tbody>
 </table>
+<h4 id="mpfgenerictrack">MPFGenericTrack</h4>
+<p>Structure used to store the location of detected objects in a file that is not a video, image, or audio file. The file is of the UNKNOWN type and handled generically.</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">  MPFGenericTrack()
+  MPFGenericTrack(
+    float confidence = -1,
+    const Properties &amp;detection_properties = {})
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>confidence</td>
+<td><code>float</code></td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detection_properties</td>
+<td><code>Properties &amp;</code></td>
+<td>Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="enumeration-types">Enumeration Types</h3>
 <h4 id="mpfdetectionerror">MPFDetectionError</h4>
 <p>Enum used to indicate the status of a <code>GetDetections</code> call. A component is not required to support all error types.</p>
@@ -1191,7 +1323,7 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <h3 id="utility-classes">Utility Classes</h3>
 <p>For convenience, the OpenMPF provides the <code>MPFImageReader</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFImageReader.h">source</a>) and <code>MPFVideoCapture</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFVideoCapture.h">source</a>) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.</p>
 <h1 id="c-component-build-environment">C++ Component Build Environment</h1>
-<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-4).</p>
+<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).</p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
 <h2 id="single-threaded-operation">Single-threaded Operation</h2>

@@ -4,7 +4,7 @@
 
 In OpenMPF, a **component** is a plugin that receives jobs (containing media), processes that  media, and returns results.
 
-The OpenMPF Component API currently supports the development of **detection components**, which are used detect objects in image, video, or audio files.
+The OpenMPF Component API currently supports the development of **detection components**, which are used detect objects in image, video, audio, or other (generic) files.
 
 Using this API, detection components can be built to provide:
 
@@ -80,6 +80,7 @@ The following data structures contain details about a specific job (work unit):
 * [`MPFImageJob`](#mpfimagejob) extends [`MPFJob`](#mpfjob)
 * [`MPFVideoJob`](#mpfvideojob) extends [`MPFJob`](#mpfjob)
 * [`MPFAudioJob`](#mpfaudiojob) extends [`MPFJob`](#mpfjob)
+* [`MPFGenericJob`](#mpfgenericjob) extends [`MPFJob`](#mpfjob)
 
 **Job Results**
 
@@ -88,6 +89,7 @@ The following classes define the results of a component's processing:
 * [`MPFImageLocation`](#mpfimagelocation)
 * [`MPFVideoTrack`](#mpfvideotrack)
 * [`MPFAudioTrack`](#mpfaudiotrack)
+* [`MPFGenericTrack`](#mpfgenerictrack)
 
 Components must also include two [Component Factory Functions](#component-factory-functions).
 
@@ -235,7 +237,8 @@ The following adapters are provided:
 * Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFVideoDetectionComponentAdapter.h))
 * Image and Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h))
 * Audio Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioDetectionComponentAdapter.h))
-*	Audio and Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h))
+* Audio and Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h))
+* Generic Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFGenericDetectionComponentAdapter.h))
 
 >**Example: Creating Adaptors to Perform Naive Tracking:**
 >A simple detector that operates on videos may simply go through the video frame-by-frame, extract each frame’s data, and perform detections on that data as though it were processing a new unrelated image each time. As each frame is processed, one or more `MPFImageLocations` are generated.
@@ -256,7 +259,7 @@ Returns true or false depending on the data type is supported or not.
 
 | Parameter  | Data Type  | Description  |
 |---|---|---|
-| data_type| `MPFDetectionDataType`  | Component should only return true for IMAGE, VIDEO, and/or AUDIO. |
+| data_type| `MPFDetectionDataType`  | Return true if the component supports IMAGE, VIDEO, AUDIO, and/or UNKNOWN (generic) processing. |
 
 * Returns: (bool) True if the component supports the data type, otherwise false.
 * Example:
@@ -368,6 +371,33 @@ Used to detect objects in an audio file. Currently, audio files are not logicall
 	}
 ```
 
+#### GetDetections(MPFGenericJob …)
+
+Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and handled generically. These files are not logically segmented, so a job will contain the entirety of the file.
+
+* Function Definition:
+
+```c++
+	MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks)
+```
+* Parameters:
+
+	| Parameter  | Data Type  | Description  |
+	|---|---|---|
+	| job  | `const MPFGenericJob &`  | Structure containing details about the work to be performed. See [`MPFGenericJob`](#mpfgenericjob) |
+	| tracks  | `vector<MPFGenericTrack> &` |  The [`MPFGenericTrack`](#mpfgenerictrack) data for each detected object  |
+
+* Returns: `MPFDetectionError`
+* Example:
+
+```c++
+	MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks) {
+	    // Parse job
+	    // Generate tracks
+	    return MPF_DETECTION_SUCCESS;
+	}
+```
+
 ### Detection Job Data Structures
 
 The `MPFDetectionComponent` data structures contain details about a specific job (work unit):
@@ -375,12 +405,14 @@ The `MPFDetectionComponent` data structures contain details about a specific job
 * [`MPFImageJob`](#mpfimagejob) extends [`MPFJob`](#mpfjob)
 * [`MPFVideoJob`](#mpfvideojob) extends [`MPFJob`](#mpfjob)
 * [`MPFAudioJob`](#mpfaudiojob) extends [`MPFJob`](#mpfjob)
+* [`MPFGenericJob`](#mpfgenericjob) extends [`MPFJob`](#mpfjob)
 
 The following data structures contain details about detection results:
 
 * [`MPFImageLocation`](#mpfimagelocation)
 * [`MPFVideoTrack`](#mpfvideotrack)
 * [`MPFAudioTrack`](#mpfaudiotrack)
+* [`MPFGenericTrack`](#mpfgenerictrack)
 
 #### MPFJob
 
@@ -510,13 +542,36 @@ Structure containing data used for detection of objects in an audio file. Curren
 
 | Member  | Data Type  | Description  |
 |---|---|---|
-|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
+| job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-|  start_time | `const int`  | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
+| start_time | `const int`  | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
 | stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | track | `const MPFAudioTrack &` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
 | media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+
+#### MPFGenericJob
+Extends [`MPFJob`](#mpfjob)
+
+Structure containing data used for detection of objects in a file that isn't a video, image, or audio file. The file is of the UNKNOWN type and handled generically. The file is not logically segmented, so a job will contain the entirety of the file.
+
+* Constructor(s):
+
+```c++
+  MPFGenericJob(
+  	const string &job_name,
+  	const string &data_uri,
+  	const Properties &job_properties,
+  	const Properties &media_properties)
+```
+* Members:
+
+| Member  | Data Type  | Description  |
+|---|---|---|
+| job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
+| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
+| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description. |
 
 ### Detection Job Result Classes
 
@@ -618,6 +673,25 @@ Structure used to store the location of detected objects in an audio file.
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
+#### MPFGenericTrack
+
+Structure used to store the location of detected objects in a file that is not a video, image, or audio file. The file is of the UNKNOWN type and handled generically.
+
+* Constructor(s):
+
+```c++
+  MPFGenericTrack()
+  MPFGenericTrack(
+  	float confidence = -1,
+  	const Properties &detection_properties = {})
+```
+* Members:
+
+| Member  | Data Type  | Description  |
+|---|---|---|
+| confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
+| detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+
 ### Enumeration Types
 
 #### MPFDetectionError
@@ -656,7 +730,7 @@ For convenience, the OpenMPF provides the `MPFImageReader` ([source](https://git
 
 
 # C++ Component Build Environment
-A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-4).
+A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.
 
