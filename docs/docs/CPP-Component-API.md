@@ -564,12 +564,22 @@ Structure containing data used for detection of objects in a file that isn't a v
   	const Properties &job_properties,
   	const Properties &media_properties)
 ```
+```c++
+  MPFGenericJob(
+  	const std::string &job_name,
+  	const std::string &data_uri,
+  	const MPFGenericTrack &track,
+  	const Properties &job_properties,
+  	const Properties &media_properties)
+}
+```
 * Members:
 
 | Member  | Data Type  | Description  |
 |---|---|---|
 | job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
+| track | `const MPFGenericTrack &` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
 | media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description. |
 

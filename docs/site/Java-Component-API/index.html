@@ -958,8 +958,7 @@ public boolean supports(MPFDataType dataType) {
 <ul>
 <li>Constructor:</li>
 </ul>
-<pre><code class="java">MPFAudioJob()
-public MPFAudioJob(
+<pre><code class="java">public MPFAudioJob(
     String jobName,
     String dataUri,
     final Map&lt;String, String&gt; jobProperties,
@@ -1033,12 +1032,19 @@ public MPFAudioJob(
 <ul>
 <li>Constructor:</li>
 </ul>
-<pre><code class="java">MPGenericJob()
-public MPGenericJob(
+<pre><code class="java">public MPGenericJob(
     String jobName,
     String dataUri,
     final Map&lt;String, String&gt; jobProperties,
     final Map&lt;String, String&gt; mediaProperties)
+</code></pre>
+
+<pre><code class="java">public MPFGenericJob(
+    String jobName,
+    String dataUri,
+    final Map&lt;String, String&gt; jobProperties,
+    final Map &lt;String, String&gt; mediaProperties,
+    MPFGenericTrack track) {
 </code></pre>
 
 <ul>
@@ -1073,6 +1079,11 @@ public MPGenericJob(
 <td><code>Map&lt;String, String&gt;</code></td>
 <td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.</td>
 </tr>
+<tr>
+<td>track</td>
+<td><code>MPFGenericTrack</code></td>
+<td>An <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="detection-job-result-classes">Detection Job Result Classes</h3>
@@ -1082,12 +1093,12 @@ public MPGenericJob(
 <li>Constructor(s):</li>
 </ul>
 <pre><code class="java">public MPFImageLocation(
-        int xLeftUpper,
-        int yLeftUpper,
-        int width,
-        int height,
-        float confidence,
-        Map&lt;String, String&gt; detectionProperties
+  int xLeftUpper,
+  int yLeftUpper,
+  int width,
+  int height,
+  float confidence,
+  Map&lt;String, String&gt; detectionProperties
 )
 </code></pre>
 

@@ -517,7 +517,6 @@ Structure containing data used for detection of objects in video files.
 * Constructor:
 
 ```java
-MPFAudioJob()
 public MPFAudioJob(
 	String jobName,
 	String dataUri,
@@ -556,12 +555,19 @@ Structure containing data used for detection of objects in a file that isn't a v
 * Constructor:
 
 ```java
-MPGenericJob()
 public MPGenericJob(
 	String jobName,
 	String dataUri,
 	final Map<String, String> jobProperties,
 	final Map<String, String> mediaProperties)
+```
+```java
+public MPFGenericJob(
+	String jobName,
+	String dataUri,
+	final Map<String, String> jobProperties,
+	final Map <String, String> mediaProperties,
+	MPFGenericTrack track) {
 ```
 * Members:
 
@@ -571,6 +577,7 @@ public MPGenericJob(
 | dataUri  | `String` | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
 | mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description. |
+| track | `MPFGenericTrack` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 ### Detection Job Result Classes
 
@@ -583,12 +590,12 @@ Structure used to store the location of detected objects in an image.
 
 ```java
 public MPFImageLocation(
-		int xLeftUpper,
-		int yLeftUpper,
-		int width,
-		int height,
-		float confidence,
-		Map<String, String> detectionProperties
+  int xLeftUpper,
+  int yLeftUpper,
+  int width,
+  int height,
+  float confidence,
+  Map<String, String> detectionProperties
 )
 ```
 * Members:

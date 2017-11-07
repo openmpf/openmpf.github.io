@@ -963,6 +963,15 @@ A simple detector that operates on videos may simply go through the video frame-
     const Properties &amp;media_properties)
 </code></pre>
 
+<pre><code class="c++">  MPFGenericJob(
+    const std::string &amp;job_name,
+    const std::string &amp;data_uri,
+    const MPFGenericTrack &amp;track,
+    const Properties &amp;job_properties,
+    const Properties &amp;media_properties)
+}
+</code></pre>
+
 <ul>
 <li>Members:</li>
 </ul>
@@ -984,6 +993,11 @@ A simple detector that operates on videos may simply go through the video frame-
 <td>data_uri</td>
 <td><code>const string &amp;</code></td>
 <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
+</tr>
+<tr>
+<td>track</td>
+<td><code>const MPFGenericTrack &amp;</code></td>
+<td>An <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
 </tr>
 <tr>
 <td>job_properties</td>
