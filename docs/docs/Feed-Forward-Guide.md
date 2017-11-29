@@ -143,7 +143,7 @@ CAFFE GOOGLENET DETECTION (WITH MOG MOTION TRACKING AND FEED FORWARD REGION) PIP
 
 Running this pipeline will result in Caffe tracks that contain detections where there was MOG motion. Each detection in each track will have a Caffe classification. Each track has a 1-to-1 correspondence with a MOG motion track.
 
-Refer to `runMogThenCaffeFeedForwardExactRegionTest()` in the [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java) class for a system test that demonstrates this behavior. Refer to `runMogThenCaffeFeedForwardSupersetRegionTest()` in that class for a system test that uses `SUPERSET_REGION` instead. Refer to `runMogThenCaffeFeedForwardFullFrameTest()` for a system test that uses `FRAME` instead.
+Refer to `runMogThenCaffeFeedForwardExactRegionTest()` in the [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java) class for a system test that demonstrates this behavior. Refer to `runMogThenCaffeFeedForwardSupersetRegionTest()` in that class for a system test that uses `SUPERSET_REGION` instead. Refer to `runMogThenCaffeFeedForwardFullFrameTest()` for a system test that uses `FRAME` instead.
 
 > **NOTE:** Short and/or spurious MOG motion tracks will result in more overhead work when performing feed forward. To mitigate this, consider setting the `MERGE_TRACKS`, `MIN_GAP_BETWEEN_TRACKS`, and `MIN_TRACK_LENGTH` properties to generate longer motion tracks and discard short and/or spurious motion tracks.
 
@@ -177,4 +177,4 @@ OCV FACE DETECTION (WITH MOG MOTION TRACKING AND FEED FORWARD SUPERSET REGION) P
 
 Running this pipeline will result in OCV face tracks that contain detections where there was MOG motion. Each track has a 1-to-1 correspondence with a MOG motion track.
 
-Refer to `runMogThenOcvFaceFeedForwardRegionTest()` in the [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java) class for a system test that demonstrates this behavior.
+Refer to `runMogThenOcvFaceFeedForwardRegionTest()` in the [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java) class for a system test that demonstrates this behavior.

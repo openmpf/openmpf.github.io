@@ -336,7 +336,7 @@
 </code></pre>
 
 <p>Running this pipeline will result in Caffe tracks that contain detections where there was MOG motion. Each detection in each track will have a Caffe classification. Each track has a 1-to-1 correspondence with a MOG motion track.</p>
-<p>Refer to <code>runMogThenCaffeFeedForwardExactRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior. Refer to <code>runMogThenCaffeFeedForwardSupersetRegionTest()</code> in that class for a system test that uses <code>SUPERSET_REGION</code> instead. Refer to <code>runMogThenCaffeFeedForwardFullFrameTest()</code> for a system test that uses <code>FRAME</code> instead.</p>
+<p>Refer to <code>runMogThenCaffeFeedForwardExactRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior. Refer to <code>runMogThenCaffeFeedForwardSupersetRegionTest()</code> in that class for a system test that uses <code>SUPERSET_REGION</code> instead. Refer to <code>runMogThenCaffeFeedForwardFullFrameTest()</code> for a system test that uses <code>FRAME</code> instead.</p>
 <blockquote>
 <p><strong>NOTE:</strong> Short and/or spurious MOG motion tracks will result in more overhead work when performing feed forward. To mitigate this, consider setting the <code>MERGE_TRACKS</code>, <code>MIN_GAP_BETWEEN_TRACKS</code>, and <code>MIN_TRACK_LENGTH</code> properties to generate longer motion tracks and discard short and/or spurious motion tracks.</p>
 <p><strong>NOTE:</strong> It doesn’t make sense to use <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> on a pipeline stage that follows a MOG or SuBSENSE motion detection stage. That’s because those motion detectors don’t generate tracks with confidence values. Instead, <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> could potentially be used when feeding person tracks into a face detector, for example, if those person tracks have confidence values.</p>
@@ -360,7 +360,7 @@
 </code></pre>
 
 <p>Running this pipeline will result in OCV face tracks that contain detections where there was MOG motion. Each track has a 1-to-1 correspondence with a MOG motion track.</p>
-<p>Refer to <code>runMogThenOcvFaceFeedForwardRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/develop/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior.</p>
+<p>Refer to <code>runMogThenOcvFaceFeedForwardRegionTest()</code> in the <a href="https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a> class for a system test that demonstrates this behavior.</p>
               
             </div>
           </div>

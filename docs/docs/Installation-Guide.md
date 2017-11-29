@@ -24,15 +24,15 @@ OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) di
 A browser is required in order to utilize the OpenMPF Web User Interface (UI). The officially supported browsers are FireFox and Chrome. Although other browsers might work, they have not been thoroughly tested and might not display or function properly.
 
 ## OpenMPF Pre-Installation
-> **Important:** Please verify that all steps in the Pre-installation Checklist are completed **prior** to cluster configuration.
+> **IMPORTANT:** Please verify that all steps in the Pre-installation Checklist are completed **prior** to cluster configuration.
 
 ## Pre-Installation Checklist
 
 1. OpenMPF must be installed on CentOS 7.
 
-2. DNS or host entries for the master node and child nodes must be present on all hosts.
+2. DNS or host entries for the master node and child nodes must be present on all hosts in the OpenMPF cluster.
 
-3. Shared storage must be mounted to /opt/mpf/share on all hosts. OpenMPF relies on the use of shared storage to transmit media between nodes. The "mpf" user (id=376) must be able to read/write from the shared storage.
+3. If this is a multi-node setup, create a shared storage space that all of the hosts in the OpenMPF cluster can access. Once the "mpf" user is created, you will need to mount this space on all of the hosts.
 
 4. NTP should be set up on each of the hosts in the OpenMPF cluster so that their times are synchronized; otherwise, the log viewer may behave incorrectly when it updates in real time.
 
@@ -40,9 +40,9 @@ A browser is required in order to utilize the OpenMPF Web User Interface (UI). T
 
 ## OpenMPF Installation
 
-> You only need to complete the following steps on the OpenMPF master node.
+> **NOTE:** You only need to complete the following steps on the OpenMPF master node:
 
-** 1. Install and Configure OpenMPF Management Software **
+**1. Install and Configure OpenMPF Management Software **
 
 Copy the OpenMPF release package .tar.gz, (e.g. openmpf-open-source-0.9.0+master.tar.gz) to the OpenMPF master node.
 
@@ -56,19 +56,32 @@ sudo sh install-mpf.sh
 
 ** 2. Configure the OpenMPF Cluster **
 
-> Note: A master node will __**not**__ run any services unless it is also designated and configured as a child. Think of a child as a worker in the OpenMPF cluster. Thus, in a single server environment it is mandatory to designate the host as both a master and child in order to do any meaningful processing (e.g. detection). By default, the master only runs the workflow manager web app, AMQ, Redis and MySQL.
+> **NOTE:** A master node will __**not**__ run any services unless it is also designated and configured as a child. Think of a child as a worker in the OpenMPF cluster. Thus, in a single server environment it is mandatory to designate the host as both a master and child in order to do any meaningful processing (e.g. detection). By default, the master only runs the workflow manager web app, AMQ, Redis and MySQL.
 
-> Note: When prompted for username and password, use the same username and password you used to log in to the master node.
+When prompted for username and password, use the same username and password you used to log in to the master node.
 
-> Note: When prompted for hostnames, only put in the hostnames (e.g., node-1), DO NOT put in the fully qualified domain name (e.g., node-1.example.org) or OpenMPF will behave in strange ways.
+When prompted for hostnames, only put in the hostnames (e.g., node-1), DO NOT put in the fully qualified domain name (e.g., node-1.example.org) or OpenMPF will behave in strange ways.
 
 ```
 sudo sh /opt/mpf/manage/configure-cluster.sh
 ```
 
-** 3. Push OpenMPF Configuration to OpenMPF Nodes**
+** 3. Ensure the Shared Storage Space Exists**
 
-> Note: Early in the script you will be prompted for the OpenMPF password. Use "mpf".
+By default, OpenMPF uses the /opt/mpf/share directory to share data between nodes. If that directory doesn't exist, then create it now:
+
+If this is a single-node setup, then run: 
+
+```
+mkdir /opt/mpf/share
+```
+
+If this is a multi-node setup, then shared storage must be mounted to /opt/mpf/share on all the hosts in the OpenMPF cluster. OpenMPF relies on the use of shared storage to transmit media between nodes. The "mpf" user (id=376) must be able to read/write from/to the shared storage. If the "mpf" user did not previously exist on the hosts, it was created in the previous step.
+
+
+** 4. Push OpenMPF Configuration to OpenMPF Nodes**
+
+Early in the script you will be prompted for the OpenMPF password. Use "mpf".
 
 
 ```
@@ -76,7 +89,7 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
 . /opt/mpf/manage/push-configuration.sh
 ```
 
-** 4. Complete Node Configuration **
+** 5. Complete Node Configuration **
 
 OpenMPF is now running (no reboot required).
 
@@ -99,7 +112,7 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
 
 ## Creating a Keystore
 
-> IMPORTANT: This is not recommended for a production environment.
+> **IMPORTANT:** Using a self-signed certificate is not recommended for a production environment.
 
 These instructions will create a keystore with a self-signed certificate at /home/mpf/.keystore.
 

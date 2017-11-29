@@ -173,6 +173,7 @@ The following binary packages will need to be downloaded and installed:
 1. Oracle JDK:
     1. Open a web browser and navigate to <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>.
     2. In the "Java SE Development Kit 8u144" section, click the radio button to "Accept License Agreement".
+   > <br> **NOTE:** If that version of the JDK is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>.
     3. Click on the "jdk-8u144-linux-x64.rpm" link to begin the download.
     4. Move the downloaded file to `/apps/bin/jdk-8u144-linux-x64.rpm`.
     5. `sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u144-linux-x64.rpm`
@@ -786,6 +787,7 @@ The following steps place dependency packages in `/mpfdata/ansible/install/repo`
    <br> `cp /apps/bin/jdk-8u144-linux-x64.rpm /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u144-linux-x64.rpm`
 5. Open a web browser and navigate to <http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html>.
 6. In the "Java SE Runtime Environment 8u144" section, click the radio button to "Accept License Agreement".
+   > <br> **NOTE:** If that version of the JRE is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>.
 7. Click on the "jre-8u144-linux-x64.rpm" link to begin the download.
 8. Move the downloaded file to `/mpfdata/ansible/install/repo/rpms/mpf-deps/jre-8u144-linux-x64.rpm`.
 9. Assuming you've followed the steps in the [Install Binary Packages](#install-binary-packages) section to download Apache ActiveMQ:
