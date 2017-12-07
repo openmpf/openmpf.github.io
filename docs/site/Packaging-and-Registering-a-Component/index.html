@@ -226,7 +226,7 @@
 <h2 id="component-descriptor-overview">Component Descriptor Overview</h2>
 <p>In order to be registered within OpenMPF, each component must provide a JavaScript Object Notation (JSON) descriptor file which provides contextual information about the component.</p>
 <p>This file must be named "descriptor.json".</p>
-<p>For an example, please see: <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json"><strong>Hello World JSON Descriptor</strong></a></p>
+<p>For an example, please see: <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/remove-launchargs/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json"><strong>Hello World JSON Descriptor</strong></a></p>
 <h2 id="component-descriptor-data-elements">Component Descriptor Data Elements</h2>
 <p>Contained within the JSON file should be the following elements:</p>
 <h3>componentName</h3>
@@ -246,33 +246,31 @@
 <p>Required.</p>
 <p>Contains the version of the MPF Component API that the component was built with.</p>
 <p>Example:
-<code>"middlewareVersion" :  "0.9.0"</code></p>
+<code>"middlewareVersion" :  "1.0.0"</code></p>
 <h3>sourceLanguage</h3>
 
 <p>Required.</p>
 <p>Contains the language the component is coded in. Should be either “java” or “c++”.</p>
 <p>Example:
 <code>"sourceLanguage" : "c++"</code></p>
-<h3>pathName</h3>
+<h3>batchLibraryPath</h3>
 
-<p>Required.</p>
-<p>For C++ components, this contains the name of the Component Executable that will be used to run the component. Generally, this is <code>amq_detection_component</code> (where “amq” stands for ActiveMQ) for all C++ detection components.</p>
-<p>For Java components, this contains the path to the jar which contains the component implementation.</p>
+<p>Optional. At least one of <code>batchLibraryPath</code> or <code>streamLibraryPath</code> must be provided.</p>
+<p>For C++ components, this contains the full path to the Component Logic shared object library used for batch processing once the component is deployed.</p>
+<p>For Java components, this contains the name of the jar which contains the component implementation used for batch processing.</p>
 <p>Example (C++):
-<code>"pathName" : "amq_detection_component"</code></p>
+<code>"batchLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so</code></p>
 <p>Example (Java):
-<code>"pathName" : "sample-component-0.1.0.jar"</code></p>
-<h3>launchArgs</h3>
+<code>"batchLibraryPath" : "batch-sample-component-1.0.0.jar"</code></p>
+<h3>streamLibraryPath</h3>
 
-<p>C++: Required.
-Java: Required; can be empty.</p>
-<p>Holds the command line arguments in string format that should be passed to the Component Executable when it is launched.</p>
-<p>For C++ detection components the one and only argument should be the full path to the Component Logic shared object library. The library must reside in a location that is accessible by each of the machines on which the component is deployed.</p>
-<p>For Java detection components, this can be empty.</p>
+<p>Optional. At least one of <code>batchLibraryPath</code> or <code>streamLibraryPath</code> must be provided.</p>
+<p>For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.</p>
+<p>For Java components, this contains the name of the jar which contains the component implementation used for stream processing.</p>
 <p>Example (C++):
-<code>"launchArgs" : ["${MPF_HOME}/plugins/SampleComponent/lib/libsampleComponent.so"]</code></p>
+<code>"streamLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
 <p>Example (Java):
-<code>"launchArgs" : []</code></p>
+<code>"streamLibraryPath" : "stream-sample-component-1.0.0.jar"</code></p>
 <h3>environmentVariables</h3>
 
 <p>Required; can be empty.</p>
@@ -327,16 +325,6 @@ Java: Required; can be empty.</p>
   Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
 </li>
 <li>
-<p><strong>supportsBatchProcessing:</strong>
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports batch processing.</p>
-</li>
-<li>
-<p><strong>supportsStreamProcessing:</strong>
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports stream processing.</p>
-</li>
-<li>
 <p><strong>requiresCollection:</strong>
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
   <br/>This value should be empty <em>unless</em> the component depends on the results of another algorithm.</p>
@@ -345,21 +333,27 @@ Java: Required; can be empty.</p>
 <p><strong>providesCollection:</strong></p>
 </li>
 </ul>
-<p>Contains the following sub-fields:
-  * <strong>states:</strong> Required. Contains the state(s) that the algorithm provides.
-  Should contain the following values:
-    * <code>DETECTION</code>
-    * <code>DETECTION_TYPE</code>, where <code>TYPE</code> is the <code>algorithm.detectionType</code>
-    * <code>DETECTION_TYPE_ALGORITHM</code>, where <code>TYPE</code> is the value of <code>algorithm.detectionType</code> and <code>ALGORITHM</code> is the value of <code>algorithm.name</code>
-    Example:
-      <code>"states": [
-        "DETECTION",
-        "DETECTION_FACE",
-        "DETECTION_FACE_SAMPLECOMPONENT"]</code></p>
+<p>Contains the following sub-fields:</p>
 <ul>
-<li><strong>properties:</strong>
+<li>
+<p><strong>states:</strong> Required. Contains the state(s) that the algorithm provides.
+  Should contain the following values:</p>
+<ul>
+<li><code>DETECTION</code></li>
+<li><code>DETECTION_TYPE</code>, where <code>TYPE</code> is the <code>algorithm.detectionType</code></li>
+<li><code>DETECTION_TYPE_ALGORITHM</code>, where <code>TYPE</code> is the value of <code>algorithm.detectionType</code> and <code>ALGORITHM</code> is the value of <code>algorithm.name</code>
+Example:
+  <code>"states": [
+    "DETECTION",
+    "DETECTION_FACE",
+    "DETECTION_FACE_SAMPLECOMPONENT"]</code></li>
+</ul>
+</li>
+<li>
+<p><strong>properties:</strong>
   Required; can be empty. Declares a list of the configurable properties that the algorithm exposes.
-  Contains the following sub-fields:<ul>
+  Contains the following sub-fields:</p>
+<ul>
 <li><strong>name:</strong>
   Required.</li>
 <li><strong>type:</strong>
@@ -484,7 +478,7 @@ Java: Required; can be empty.</p>
 <p>The package should contain a top-level directory with a unique name that will (hopefully) not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the <code>componentName</code>.</p>
 <p>Within the top-level directory there must be a directory named “descriptor” with the descriptor JSON file in it. The name of the file must be “descriptor.json”.</p>
 <p>Example:</p>
-<pre><code>//sample-component-0.1.0-tar.gz contents
+<pre><code>//sample-component-1.0.0-tar.gz contents
 SampleComponent/
   config/
   descriptor/
