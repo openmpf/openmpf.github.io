@@ -43,31 +43,31 @@ Contains the language the component is coded in. Should be either “java” or 
 Example:
 `"sourceLanguage" : "c++"`
 
-<h3>batchLibraryPath</h3>
-Optional. At least one of `batchLibraryPath` or `streamLibraryPath` must be provided.
+<h3>batchLibrary</h3>
+Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
 
 For C++ components, this contains the full path to the Component Logic shared object library used for batch processing once the component is deployed.
 
 For Java components, this contains the name of the jar which contains the component implementation used for batch processing.
 
 Example (C++):
-`"batchLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so`
+`"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so`
 
 Example (Java):
-`"batchLibraryPath" : "batch-sample-component-1.0.0.jar"`
+`"batchLibrary" : "batch-sample-component-1.0.0.jar"`
 
-<h3>streamLibraryPath</h3>
-Optional. At least one of `batchLibraryPath` or `streamLibraryPath` must be provided.
+<h3>streamLibrary</h3>
+Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
 
 For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.
 
 For Java components, this contains the name of the jar which contains the component implementation used for stream processing.
 
 Example (C++):
-`"streamLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so`
+`"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so`
 
 Example (Java):
-`"streamLibraryPath" : "stream-sample-component-1.0.0.jar"`
+`"streamLibrary" : "stream-sample-component-1.0.0.jar"`
 
 <h3>environmentVariables</h3>
 Required; can be empty.

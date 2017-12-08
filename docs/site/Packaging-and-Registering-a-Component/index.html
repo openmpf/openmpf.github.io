@@ -253,24 +253,24 @@
 <p>Contains the language the component is coded in. Should be either “java” or “c++”.</p>
 <p>Example:
 <code>"sourceLanguage" : "c++"</code></p>
-<h3>batchLibraryPath</h3>
+<h3>batchLibrary</h3>
 
-<p>Optional. At least one of <code>batchLibraryPath</code> or <code>streamLibraryPath</code> must be provided.</p>
+<p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
 <p>For C++ components, this contains the full path to the Component Logic shared object library used for batch processing once the component is deployed.</p>
 <p>For Java components, this contains the name of the jar which contains the component implementation used for batch processing.</p>
 <p>Example (C++):
-<code>"batchLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so</code></p>
+<code>"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so</code></p>
 <p>Example (Java):
-<code>"batchLibraryPath" : "batch-sample-component-1.0.0.jar"</code></p>
-<h3>streamLibraryPath</h3>
+<code>"batchLibrary" : "batch-sample-component-1.0.0.jar"</code></p>
+<h3>streamLibrary</h3>
 
-<p>Optional. At least one of <code>batchLibraryPath</code> or <code>streamLibraryPath</code> must be provided.</p>
+<p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
 <p>For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.</p>
 <p>For Java components, this contains the name of the jar which contains the component implementation used for stream processing.</p>
 <p>Example (C++):
-<code>"streamLibraryPath" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
+<code>"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
 <p>Example (Java):
-<code>"streamLibraryPath" : "stream-sample-component-1.0.0.jar"</code></p>
+<code>"streamLibrary" : "stream-sample-component-1.0.0.jar"</code></p>
 <h3>environmentVariables</h3>
 
 <p>Required; can be empty.</p>
