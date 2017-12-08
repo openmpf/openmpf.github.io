@@ -5,7 +5,7 @@ In order to be registered within OpenMPF, each component must provide a JavaScri
 
 This file must be named "descriptor.json".
 
-For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json)
+For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json)
 
 ## Component Descriptor Data Elements
 
@@ -33,7 +33,7 @@ Required.
 Contains the version of the MPF Component API that the component was built with.
 
 Example:
-`"middlewareVersion" :  "0.9.0"`
+`"middlewareVersion" :  "1.0.0"`
 
 <h3>sourceLanguage</h3>
 Required.
@@ -43,34 +43,31 @@ Contains the language the component is coded in. Should be either “java” or 
 Example:
 `"sourceLanguage" : "c++"`
 
-<h3>pathName</h3>
-Required.
+<h3>batchLibrary</h3>
+Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
 
-For C++ components, this contains the name of the Component Executable that will be used to run the component. Generally, this is `amq_detection_component` (where “amq” stands for ActiveMQ) for all C++ detection components.
+For C++ components, this contains the full path to the Component Logic shared object library used for batch processing once the component is deployed.
 
-For Java components, this contains the path to the jar which contains the component implementation.
-
-Example (C++):
-`"pathName" : "amq_detection_component"`
-
-Example (Java):
-`"pathName" : "sample-component-0.1.0.jar"`
-
-<h3>launchArgs</h3>
-C++: Required.
-Java: Required; can be empty.
-
-Holds the command line arguments in string format that should be passed to the Component Executable when it is launched.
-
-For C++ detection components the one and only argument should be the full path to the Component Logic shared object library. The library must reside in a location that is accessible by each of the machines on which the component is deployed.
-
-For Java detection components, this can be empty.
+For Java components, this contains the name of the jar which contains the component implementation used for batch processing.
 
 Example (C++):
-`"launchArgs" : ["${MPF_HOME}/plugins/SampleComponent/lib/libsampleComponent.so"]`
+`"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so`
 
 Example (Java):
-`"launchArgs" : []`
+`"batchLibrary" : "batch-sample-component-1.0.0.jar"`
+
+<h3>streamLibrary</h3>
+Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
+
+For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.
+
+For Java components, this contains the name of the jar which contains the component implementation used for stream processing.
+
+Example (C++):
+`"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so`
+
+Example (Java):
+`"streamLibrary" : "stream-sample-component-1.0.0.jar"`
 
 <h3>environmentVariables</h3>
 Required; can be empty.
@@ -124,16 +121,6 @@ Contains the following sub-fields:
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
 
-* **supportsBatchProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports batch processing.
-
-
-* **supportsStreamProcessing:**
-  At least one of supportsBatchProcessing or supportsStreamProcessing must be true. Indicates whether or not the
-  algorithm supports stream processing.
-
-
 * **requiresCollection:**
   Required, can be empty. Contains the state(s) that must be produced by previous algorithms in the pipeline.
   <br/>This value should be empty *unless* the component depends on the results of another algorithm.
@@ -142,6 +129,7 @@ Contains the following sub-fields:
 * **providesCollection:**
 
   Contains the following sub-fields:
+
   * **states:** Required. Contains the state(s) that the algorithm provides.
   Should contain the following values:
     * `DETECTION`
@@ -275,7 +263,7 @@ Within the top-level directory there must be a directory named “descriptor” 
 
 Example:
 ```
-//sample-component-0.1.0-tar.gz contents
+//sample-component-1.0.0-tar.gz contents
 SampleComponent/
   config/
   descriptor/
