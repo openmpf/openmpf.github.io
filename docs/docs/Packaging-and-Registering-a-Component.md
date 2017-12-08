@@ -5,7 +5,7 @@ In order to be registered within OpenMPF, each component must provide a JavaScri
 
 This file must be named "descriptor.json".
 
-For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/remove-launchargs/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json)
+For an example, please see: [**Hello World JSON Descriptor**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/plugin-files/descriptor/descriptor.json)
 
 ## Component Descriptor Data Elements
 
