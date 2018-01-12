@@ -54,10 +54,18 @@
 <li>
           
             <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
     <li class="toctree-l1 current">
         <a class="current" href="index.html">Release Notes</a>
         
             <ul>
+            
+                <li class="toctree-l3"><a href="#openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</a></li>
+                
             
                 <li class="toctree-l3"><a href="#openmpf-100-october-2017">OpenMPF 1.0.0: October 2017</a></li>
                 
@@ -71,79 +79,82 @@
             </ul>
         
     </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+
         
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
         <a class="" href="../Build-Environment-Setup-Guide/index.html">Build Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Installation-Guide/index.html">Install Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../User-Guide/index.html">User Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
 <li>
           
             <li>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
+    <li><span>Components</span></li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/index.html">Component Overview</a>
+        <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/index.html">C++ Component API</a>
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/index.html">Java Component API</a>
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
         
     </li>
 
@@ -155,14 +166,14 @@
     </li>
 
         
-    </ul>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/index.html">REST API</a>
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
+
+        
+    </ul>
 <li>
           
             <li>
@@ -173,6 +184,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 
@@ -201,6 +219,10 @@
     <li><a href="../index.html">Docs</a> &raquo;</li>
     
       
+        
+          <li>General &raquo;</li>
+        
+      
     
     <li>Release Notes</li>
     <li class="wy-breadcrumbs-aside">
@@ -215,10 +237,11 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="openmpf-100-october-2017">OpenMPF 1.0.0: October 2017</h1>
+<h1 id="openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</h1>
 <blockquote>
-<p><strong>NOTE:</strong> Postponed streaming video support until a future release.</p>
+<p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs cannot be created or monitored through the web UI.</p>
 </blockquote>
+<h1 id="openmpf-100-october-2017">OpenMPF 1.0.0: October 2017</h1>
 <h2>Documentation</h2>
 
 <ul>
@@ -309,7 +332,7 @@
 
 <ul>
 <li>Added a <a href="../Contributor-Guide/index.html">Contributor Guide</a> that provides guidelines for contributing to the OpenMPF codebase.</li>
-<li>Updated the <a href="../Java-Component-API/index.html">Java Component API</a> with links to the example Java components.</li>
+<li>Updated the <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> with links to the example Java components.</li>
 <li>Updated the <a href="../Build-Environment-Setup-Guide/index.html">Build Guide</a> with instructions for OpenCV 3.2.</li>
 </ul>
 <h2>Upgrade to OpenCV 3.2</h2>
@@ -380,8 +403,8 @@
 
 <ul>
 <li>Updated the <a href="../REST-API/index.html">REST API</a> to reflect job properties, algorithm-specific properties, and media-specific properties.</li>
-<li>Streamlined the <a href="../CPP-Component-API/index.html">C++ Component API</a> document for clarity and simplicity.</li>
-<li>Completed the <a href="../Java-Component-API/index.html">Java Component API</a> document.</li>
+<li>Streamlined the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a> document for clarity and simplicity.</li>
+<li>Completed the <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> document.</li>
 <li>Updated the <a href="../Admin-Manual/index.html">Admin Manual</a> and <a href="../User-Guide/index.html">User Guide</a> to reflect web UI changes.</li>
 <li>Updated the <a href="../Build-Environment-Setup-Guide/index.html">Build Guide</a> with instructions for GitHub repositories.</li>
 </ul>
@@ -421,14 +444,14 @@
 <h2>Component API</h2>
 
 <ul>
-<li>Java Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.</li>
-<li>Re-architected the Java component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:<ul>
+<li>Java Batch Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.</li>
+<li>Re-architected the Java Batch Component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:<ul>
 <li><code>List&lt;MPFVideoTrack&gt; getDetections(MPFVideoJob job) throws MPFComponentDetectionError</code></li>
 <li><code>List&lt;MPFAudioTrack&gt; getDetections(MPFAudioJob job) throws MPFComponentDetectionError</code></li>
 <li><code>List&lt;MPFImageLocation&gt; getDetections(MPFImageJob job) throws MPFComponentDetectionError</code></li>
 </ul>
 </li>
-<li>Created examples for the Java Component API.</li>
+<li>Created examples for the Java Batch Component API.</li>
 <li>Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which will simplify component development and streamline the code base.</li>
 </ul>
 <h2>JSON Output Objects</h2>
@@ -501,7 +524,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Build-Environment-Setup-Guide/index.html" class="btn btn-neutral float-right" title="Build Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../index.html" class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -535,7 +558,7 @@
         <span><a href="../index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Build-Environment-Setup-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

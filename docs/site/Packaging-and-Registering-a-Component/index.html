@@ -54,83 +54,91 @@
 <li>
           
             <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Release-Notes/index.html">Release Notes</a>
         
     </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+
         
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
         <a class="" href="../Build-Environment-Setup-Guide/index.html">Build Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Installation-Guide/index.html">Install Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../User-Guide/index.html">User Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
 <li>
           
             <li>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
+    <li><span>Components</span></li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/index.html">Component Overview</a>
+        <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/index.html">C++ Component API</a>
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/index.html">Java Component API</a>
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
         
     </li>
 
@@ -159,14 +167,14 @@
     </li>
 
         
-    </ul>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/index.html">REST API</a>
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
+
+        
+    </ul>
 <li>
           
             <li>
@@ -177,6 +185,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 
@@ -206,7 +221,7 @@
     
       
         
-          <li>Component Documentation &raquo;</li>
+          <li>Components &raquo;</li>
         
       
     
@@ -266,11 +281,18 @@
 
 <p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
 <p>For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.</p>
-<p>For Java components, this contains the name of the jar which contains the component implementation used for stream processing.</p>
+<p>Note that Java components currently do not support stream processing, so this field should be omitted from Java component descriptor files.</p>
+<!-- For future use:
+For Java components, this contains the name of the jar which contains the component implementation used for stream processing.
+-->
+
 <p>Example (C++):
 <code>"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
-<p>Example (Java):
-<code>"streamLibrary" : "stream-sample-component-1.0.0.jar"</code></p>
+<!-- For future use:
+Example (Java):
+`"streamLibrary" : "stream-sample-component-1.0.0.jar"`
+-->
+
 <h3>environmentVariables</h3>
 
 <p>Required; can be empty.</p>
@@ -507,10 +529,10 @@ The default pipeline will use the default task. This will only be generated if t
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Feed-Forward-Guide/index.html" class="btn btn-neutral float-right" title="Feed Forward Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Java-Component-API/index.html" class="btn btn-neutral" title="Java Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Java-Batch-Component-API/index.html" class="btn btn-neutral" title="Java Batch Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -538,10 +560,10 @@ The default pipeline will use the default task. This will only be generated if t
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Java-Component-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Java-Batch-Component-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Feed-Forward-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -1,5 +1,7 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
+> **IMPORTANT:** This document describes the Workflow Manager architecture for batch processing. There is a separate architecture for stream processing that uses many of the same elements and concepts.
+
 # Workflow Manager Overview
 
 The OpenMPF consists of three major pieces:
@@ -65,7 +67,7 @@ The following sections list the rest of the constrollers in more detail.
 
 ## AdminComponentRegistrationController
 
-Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](API-Overview/index.html).
+Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](Component-API-Overview/index.html).
 
 The **AdminComponentRegistrationController** provides endpoints which allow:
 

@@ -1,10 +1,10 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
-# C++ Component API Overview
+# API Overview
 
 In OpenMPF, a **component** is a plugin that receives jobs (containing media), processes that  media, and returns results.
 
-The OpenMPF Component API currently supports the development of **detection components**, which are used detect objects in image, video, audio, or other (generic) files.
+The OpenMPF Batch Component API currently supports the development of **detection components**, which are used detect objects in image, video, audio, or other (generic) files that reside on disk.
 
 Using this API, detection components can be built to provide:
 
@@ -48,7 +48,7 @@ As an alternative to extending [`MPFDetectionComponent`](#openmpf-detection-comp
 
 ## Getting Started
 
-The quickest way to get started with the OpenMPF Component API is to first read the [OpenMPF Component API Overview](API-Overview/index.html) and then [review the source](https://github.com/openmpf/openmpf-cpp-component-sdk/tree/master/detection/examples) for example OpenMPF C++ detection components.
+The quickest way to get started with the C++ Batch Component API is to first read the [OpenMPF Component API Overview](Component-API-Overview/index.html) and then [review the source](https://github.com/openmpf/openmpf-cpp-component-sdk/tree/master/detection/examples) for example OpenMPF C++ detection components.
 
 Detection components are implemented by:
 
@@ -57,9 +57,9 @@ Detection components are implemented by:
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
 4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
 
-# OpenMPF API Specification
+# API Specification
 
-The figure below presents a high-level component diagram of the OpenMPF API:
+The figure below presents a high-level component diagram of the C++ Batch Component API:
 
 ![OpenMPF Component Diagram](img/component_diagram.png "OpenMPF Component Diagram")
 
@@ -94,7 +94,8 @@ The following classes define the results of a component's processing:
 Components must also include two [Component Factory Functions](#component-factory-functions).
 
 
-## OpenMPF Component API
+## Component Interface
+
 The [`MPFComponent`](#openmpf-component-api) class is the abstract base class utilized by all OpenMPF components.
 
 **[See the latest source here.](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/interface/include/MPFComponentInterface.h)**
@@ -130,7 +131,7 @@ bool SampleComponent::Init() {
 The component should perform all shutdown operations in the `Close` member function.
 `Close` will be called once by the OpenMPF Component Executable prior to component shutdown.
 
-This method is called before the component instance is deleted (see [Component Factory Functions](CPP-Component-API/index.html#component-factory-functions)).
+This method is called before the component instance is deleted (see [Component Factory Functions](CPP-Batch-Component-API/index.html#component-factory-functions)).
 
 * Function Definition:
 `bool Close()`
@@ -147,7 +148,7 @@ This method is called before the component instance is deleted (see [Component F
 
 ### GetComponentType()
 
-The GetComponentType() member function allows the OpenMPF Component API to determine the component "type." Currently `MPF_DETECTION_COMPONENT` is the only supported component type. APIs for other component types may be developed in the future.
+The GetComponentType() member function allows the C++ Batch Component API to determine the component "type." Currently `MPF_DETECTION_COMPONENT` is the only supported component type. APIs for other component types may be developed in the future.
 
 * Function Definition:
 `MPFComponentType GetComponentType()`
@@ -213,7 +214,7 @@ MPF_COMPONENT_CREATOR(ComponentNameHere);
 MPF_COMPONENT_DELETER();
 ```
 
-## OpenMPF Detection Component API
+## Detection Component Interface
 
 The [`MPFDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.
 
@@ -238,7 +239,7 @@ The following adapters are provided:
 * Image and Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageAndVideoDetectionComponentAdapter.h))
 * Audio Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioDetectionComponentAdapter.h))
 * Audio and Video Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFAudioAndVideoDetectionComponentAdapter.h))
-* Generic Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFGenericDetectionComponentAdapter.h))
+* Generic Detection ([source](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/adapters/MPFGenericDetectionComponentAdapter.h))
 
 >**Example: Creating Adaptors to Perform Naive Tracking:**
 >A simple detector that operates on videos may simply go through the video frame-by-frame, extract each frame’s data, and perform detections on that data as though it were processing a new unrelated image each time. As each frame is processed, one or more `MPFImageLocations` are generated.
@@ -246,8 +247,6 @@ The following adapters are provided:
 >Generally, it is preferred that a detection component that supports `VIDEO` data is able to perform tracking across video frames to appropriately correlate `MPFImageLocation` detections across frames.
 >
 >An adapter could be developed to perform simple tracking. This would correlate `MPFImageLocation` detections across frames by naïvely looking for bounding box regions in each contiguous frame that overlap by a given threshold such as 50%.
-
-### Detection Component Interface
 
 #### Supports(MPFDetectionDataType)
 

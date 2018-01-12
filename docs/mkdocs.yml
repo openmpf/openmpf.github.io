@@ -11,19 +11,21 @@ use_directory_urls: false
 
 pages:
 - Home: index.md
-- Release Notes: Release-Notes.md
-- Acknowledgements: Acknowledgements.md
-- Contributor Guide: Contributor-Guide.md
-- Build Guide: Build-Environment-Setup-Guide.md
-- Install Guide: Installation-Guide.md
-- User Guide: User-Guide.md
-- Admin Guide: Admin-Manual.md
-- Feed Forward Guide: Feed-Forward-Guide.md
-- Component Documentation:
-    - Component Overview: API-Overview.md
-    - C++ Component API: CPP-Component-API.md
-    - Java Component API: Java-Component-API.md
+- General:
+    - Release Notes: Release-Notes.md
+    - Build Guide: Build-Environment-Setup-Guide.md
+    - Install Guide: Installation-Guide.md
+    - User Guide: User-Guide.md
+    - Admin Guide: Admin-Manual.md
+    - Contributor Guide: Contributor-Guide.md
+    - Acknowledgements: Acknowledgements.md
+- Components:
+    - Component API Overview: Component-API-Overview.md
+    - C++ Batch Component API: CPP-Batch-Component-API.md
+    - C++ Streaming Component API: CPP-Streaming-Component-API.md
+    - Java Batch Component API: Java-Batch-Component-API.md
     - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
-- REST API: REST-API.md
+    - Feed Forward Guide: Feed-Forward-Guide.md
 - Architecture:
     - Workflow Manager: Workflow-Manager.md
+    - REST API: REST-API.md

@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Component Overview - OpenMPF</title>
+  <title>Component API Overview - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Component Overview";
-    var mkdocs_page_input_path = "API-Overview.md";
-    var mkdocs_page_url = "/API-Overview/index.html";
+    var mkdocs_page_name = "Component API Overview";
+    var mkdocs_page_input_path = "Component-API-Overview.md";
+    var mkdocs_page_url = "/Component-API-Overview/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -54,75 +54,83 @@
 <li>
           
             <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Release-Notes/index.html">Release Notes</a>
         
     </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+
         
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
         <a class="" href="../Build-Environment-Setup-Guide/index.html">Build Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Installation-Guide/index.html">Install Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../User-Guide/index.html">User Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
 <li>
           
             <li>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
+    <li><span>Components</span></li>
 
         
             
     <li class="toctree-l1 current">
-        <a class="current" href="index.html">Component Overview</a>
+        <a class="current" href="index.html">Component API Overview</a>
         
             <ul>
             
-                <li class="toctree-l3"><a href="#openmpf-api-overview">OpenMPF API Overview</a></li>
+                <li class="toctree-l3"><a href="#goals">Goals</a></li>
                 
-                    <li><a class="toctree-l4" href="#background">Background</a></li>
+            
+                <li class="toctree-l3"><a href="#terminology">Terminology</a></li>
+                
+                    <li><a class="toctree-l4" href="#workflow-manager">Workflow Manager</a></li>
+                
+                    <li><a class="toctree-l4" href="#node-manager">Node Manager</a></li>
+                
+                    <li><a class="toctree-l4" href="#components">Components</a></li>
                 
             
             </ul>
@@ -132,14 +140,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/index.html">C++ Component API</a>
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Java-Component-API/index.html">Java Component API</a>
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
         
     </li>
 
@@ -151,14 +166,14 @@
     </li>
 
         
-    </ul>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/index.html">REST API</a>
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
+
+        
+    </ul>
 <li>
           
             <li>
@@ -169,6 +184,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 
@@ -198,11 +220,11 @@
     
       
         
-          <li>Component Documentation &raquo;</li>
+          <li>Components &raquo;</li>
         
       
     
-    <li>Component Overview</li>
+    <li>Component API Overview</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -215,13 +237,15 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="openmpf-api-overview">OpenMPF API Overview</h1>
-<p>The OpenMPF Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:
-<em>   Provide an overview of OpenMPF and its API
-</em>   Define a <em>component</em> in the context of the MPF
-*   Explain the use of the API</p>
-<p><strong>Terminology:</strong>
-In order to talk about OpenMPF, readers should be familiar with the following key OpenMPF-specific terms:</p>
+<h1 id="goals">Goals</h1>
+<p>The OpenMPF Component Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:</p>
+<ul>
+<li>Provide an overview of OpenMPF and its Component API</li>
+<li>Define a <em>component</em> in the context of OpenMPF</li>
+<li>Explain the use of the Component API</li>
+</ul>
+<h1 id="terminology">Terminology</h1>
+<p>In order to talk about OpenMPF, readers should be familiar with the following key OpenMPF-specific terms:</p>
 <ul>
 <li><strong>Job</strong> - An OpenMPF work unit. A job contains a list of media files and the pipeline that will be used to process that media.</li>
 <li><strong>Pipeline</strong> - A logical flow of processes that will be performed on a piece of media. For instance, a pipeline may perform motion tracking on a video and feed the results into a face detection algorithm.</li>
@@ -230,28 +254,33 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
 <li><strong>Node</strong> - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.</li>
 <li><strong>Service</strong> - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.</li>
 </ul>
-<h2 id="background">Background</h2>
+<h1> Background </h1>
+
 <p>OpenMPF consists of the Workflow Manager, a Node Manager, components, and a message passing mechanism that enables communication between the Workflow Manager and the components.</p>
-<h3 id="workflow-manager">Workflow Manager</h3>
-<p>The Workflow Manager (WFM) receives job requests from user interface and external systems through the REST API. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
+<h2 id="workflow-manager">Workflow Manager</h2>
+<p>The Workflow Manager (WFM) receives job requests from user interface and external systems through the <a href="../REST-API/index.html">REST API</a>. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
 <p>The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.</p>
 <p>The WFM provides work to a component service by placing a job request on the request queue, and it retrieves the component’s response by monitoring the appropriate response queue. The WFM may generate one or more job requests for a large video file, depending on how it segments the file into chunks. The segmentation properties can be specified system-wide using configuration files, or specified on a per-job basis.</p>
 <blockquote>
-<p><strong>Note:</strong> All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.</p>
+<p><strong>NOTE:</strong> All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.</p>
 </blockquote>
-<h3 id="node-manager">Node Manager</h3>
+<h2 id="node-manager">Node Manager</h2>
 <p>The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.</p>
 <p>After the Node Manager spawns a service, the service waits for job requests from the Workflow Manager and produces a response for each request.</p>
-<h3 id="components">Components</h3>
-<p>Components are identified by seven key characteristics:
-<em>   The </em>type of action<em> the component performs
-</em>   The <em>types of data</em> it supports
-<em>   The </em>type of objects<em> it detects
-</em>   The <em>name</em> of the algorithm or vendor
-<em>   The user-configurable </em>properties<em> that the component exposes
-</em>   The <em>required states</em> associated with a job prior to the execution of the component
-<em>   The </em>provided states* associated with a job following the execution of the component</p>
+<h2 id="components">Components</h2>
+<p>Components are identified by eight key characteristics:</p>
+<ul>
+<li>The <em>type of action</em> the component performs</li>
+<li>The <em>type of processing</em> the component performs</li>
+<li>The <em>types of data</em> it supports</li>
+<li>The <em>type of objects</em> it detects</li>
+<li>The <em>name</em> of the algorithm or vendor</li>
+<li>The user-configurable <em>properties</em> that the component exposes</li>
+<li>The <em>required states</em> associated with a job prior to the execution of the component</li>
+<li>The <em>provided states</em> associated with a job following the execution of the component</li>
+</ul>
 <p>A component’s action type corresponds to the operation which the algorithm performs. Generally, this is <code>DETECTION</code>.</p>
+<p>A component can perform batch processing, stream processing, or both. Batch processing handles complete image, audio, and video files that reside on disk. Stream processing handles live video streams. Refer to the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>.</p>
 <p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code>.</p>
 <p>As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.</p>
 <p>The type of objects produced depends on the input type. For example, video files produce video tracks, audio files produce audio tracks, and images produce image locations.</p>
@@ -271,10 +300,10 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../CPP-Component-API/index.html" class="btn btn-neutral float-right" title="C++ Component API">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../CPP-Batch-Component-API/index.html" class="btn btn-neutral float-right" title="C++ Batch Component API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Feed-Forward-Guide/index.html" class="btn btn-neutral" title="Feed Forward Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Acknowledgements/index.html" class="btn btn-neutral" title="Acknowledgements"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -302,10 +331,10 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Feed-Forward-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Acknowledgements/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../CPP-Component-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../CPP-Batch-Component-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

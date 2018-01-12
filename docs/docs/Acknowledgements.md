@@ -1,4 +1,4 @@
 The OpenMPF acknowledgements are listed on the About page available within the OpenMPF Workflow Manager web application.
 
-A static version of the content is available here:
+This page lists the acknowledgements from the master branch of the open source repository:
 <a href="../html/Acknowledgements.html" target="_blank">OpenMPF Acknowledgements</a>

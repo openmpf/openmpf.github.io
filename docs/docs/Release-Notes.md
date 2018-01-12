@@ -1,8 +1,11 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
-# OpenMPF 1.0.0: October 2017
+# OpenMPF 2.0.0: February 2018
 
-> **NOTE:** Postponed streaming video support until a future release.
+> **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs cannot be created or monitored through the web UI.
+
+
+# OpenMPF 1.0.0: October 2017
 
 <h2>Documentation</h2>
 
@@ -84,7 +87,7 @@
 <h2>Documentation</h2>
 
 - Added a [Contributor Guide](Contributor-Guide/index.html) that provides guidelines for contributing to the OpenMPF codebase.
-- Updated the [Java Component API](Java-Component-API/index.html) with links to the example Java components.
+- Updated the [Java Batch Component API](Java-Batch-Component-API/index.html) with links to the example Java components.
 - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for OpenCV 3.2.
 
 <h2>Upgrade to OpenCV 3.2</h2>
@@ -140,8 +143,8 @@
 <h2>Documentation</h2>
 
   - Updated the [REST API](REST-API/index.html) to reflect job properties, algorithm-specific properties, and media-specific properties.
-  - Streamlined the [C++ Component API](CPP-Component-API/index.html) document for clarity and simplicity.
-  - Completed the [Java Component API](Java-Component-API/index.html) document.
+  - Streamlined the [C++ Batch Component API](CPP-Batch-Component-API/index.html) document for clarity and simplicity.
+  - Completed the [Java Batch Component API](Java-Batch-Component-API/index.html) document.
   - Updated the [Admin Manual](Admin-Manual/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
   - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for GitHub repositories.
 
@@ -176,12 +179,12 @@
 
 <h2>Component API</h2>
 
-  - Java Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.
-  - Re-architected the Java component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:
+  - Java Batch Component API is functionally complete for third-party development, with the exception of Component Adapter and frame transformation utilities classes.
+  - Re-architected the Java Batch Component API to use a more traditional Java method structure of returning track lists and throwing exceptions (rather than modifying input track lists and returning statuses), and encapsulating job properties into MPFJob objects:
     - `List<MPFVideoTrack> getDetections(MPFVideoJob job) throws MPFComponentDetectionError`
     - `List<MPFAudioTrack> getDetections(MPFAudioJob job) throws MPFComponentDetectionError`
     - `List<MPFImageLocation> getDetections(MPFImageJob job) throws MPFComponentDetectionError`
-  - Created examples for the Java Component API.
+  - Created examples for the Java Batch Component API.
   - Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which will simplify component development and streamline the code base.
 
 <h2>JSON Output Objects</h2>

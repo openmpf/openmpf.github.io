@@ -4,6 +4,6 @@ title: OpenMPF Documentation
 subtitle: Documentation and User Guides
 ---
 
-Find the latest documentation, including Overviews, Build Instructions, and APIs: [here](https://openmpf.github.io/docs/site/).
+Find the latest documentation, including Overviews, Build Instructions, and APIs [here](/docs/site/).
 
-See the one-page overview: [here]({{ site.url }}/pdf/OpenMPF One-Pager.pdf).
+See the one-page overview [here](/pdf/OpenMPF One-Pager.pdf).

@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Java Component API - OpenMPF</title>
+  <title>Java Batch Component API - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Java Component API";
-    var mkdocs_page_input_path = "Java-Component-API.md";
-    var mkdocs_page_url = "/Java-Component-API/index.html";
+    var mkdocs_page_name = "Java Batch Component API";
+    var mkdocs_page_input_path = "Java-Batch-Component-API.md";
+    var mkdocs_page_url = "/Java-Batch-Component-API/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -54,98 +54,106 @@
 <li>
           
             <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Release-Notes/index.html">Release Notes</a>
         
     </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+
         
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
-        
-    </li>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
         <a class="" href="../Build-Environment-Setup-Guide/index.html">Build Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Installation-Guide/index.html">Install Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../User-Guide/index.html">User Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
         
     </li>
-<li>
-          
-            <li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
 <li>
           
             <li>
     <ul class="subnav">
-    <li><span>Component Documentation</span></li>
+    <li><span>Components</span></li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../API-Overview/index.html">Component Overview</a>
+        <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Component-API/index.html">C++ Component API</a>
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
         
     </li>
 
         
             
     <li class="toctree-l1 current">
-        <a class="current" href="index.html">Java Component API</a>
+        <a class="current" href="index.html">Java Batch Component API</a>
         
             <ul>
             
-                <li class="toctree-l3"><a href="#java-component-api-overview">Java Component API Overview</a></li>
+                <li class="toctree-l3"><a href="#api-overview">API Overview</a></li>
                 
                     <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
                 
                     <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
                 
             
-                <li class="toctree-l3"><a href="#openmpf-api-specification">OpenMPF API Specification</a></li>
+                <li class="toctree-l3"><a href="#api-specification">API Specification</a></li>
                 
-                    <li><a class="toctree-l4" href="#openmpf-component-api">OpenMPF Component API</a></li>
+                    <li><a class="toctree-l4" href="#component-interface">Component Interface</a></li>
                 
-                    <li><a class="toctree-l4" href="#openmpf-detection-component-api">OpenMPF Detection Component API</a></li>
+                    <li><a class="toctree-l4" href="#detection-component-interface">Detection Component Interface</a></li>
                 
             
                 <li class="toctree-l3"><a href="#java-component-build-environment">Java Component Build Environment</a></li>
@@ -174,14 +182,14 @@
     </li>
 
         
-    </ul>
-<li>
-          
-            <li>
+            
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/index.html">REST API</a>
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
+
+        
+    </ul>
 <li>
           
             <li>
@@ -192,6 +200,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 
@@ -221,11 +236,11 @@
     
       
         
-          <li>Component Documentation &raquo;</li>
+          <li>Components &raquo;</li>
         
       
     
-    <li>Java Component API</li>
+    <li>Java Batch Component API</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -238,9 +253,9 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="java-component-api-overview">Java Component API Overview</h1>
+<h1 id="api-overview">API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
-<p>The OpenMPF Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, audio, or other (generic) files.</p>
+<p>The OpenMPF Batch Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, audio, or other (generic) files that reside on disk.</p>
 <p>Using this API, detection components can be built to provide:</p>
 <ul>
 <li>Detection (Localizing an object)</li>
@@ -272,7 +287,7 @@ component.close()
 <p>A component developer implements a detection component by extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</p>
 <p>As an alternative to extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a> directly, a developer may extend one of several convenience adapter classes provided by OpenMPF. See <a href="#convenience-adapters">Convenience Adapters</a> for more information.</p>
 <h2 id="getting-started">Getting Started</h2>
-<p>The quickest way to get started with the OpenMPF Component API is to first read the <a href="../API-Overview/index.html">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/examples">review the source</a> for example OpenMPF Java detection components.</p>
+<p>The quickest way to get started with the Java Batch Component API is to first read the <a href="../Component-API-Overview/index.html">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/examples">review the source</a> for example OpenMPF Java detection components.</p>
 <p>Detection components are implemented by:</p>
 <ol>
 <li>Extending <a href="#detection-component-interface"><code>MPFDetectionComponentBase</code></a>.</li>
@@ -280,10 +295,10 @@ component.close()
 <li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
 <li>Registering the component with OpenMPF. (See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
 </ol>
-<h1 id="openmpf-api-specification">OpenMPF API Specification</h1>
-<p>The figure below presents a high-level component diagram of the OpenMPF API:</p>
+<h1 id="api-specification">API Specification</h1>
+<p>The figure below presents a high-level component diagram of the Java Batch Component API:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_java.png" title="OpenMPF Component Diagram" /></p>
-<p>The API consists of <em>Component Interfaces</em>, which provide interfaces and abstract classes for developing components; <em>Job Definitions</em>, which define the work to be performed by a component; <em>Job Results</em>, which define the results generated by the component; and <a href="#convenience-adapters"><em>Component Adapters</em></a>, which provide default implementations of several of the <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> methods (See the <a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/main/java/org/mitre/mpf/component/api/detection/adapters/MPFAudioAndVideoDetectionComponentAdapter.java">MPFAudioAndVideoDetectionComponentAdapter</a> for an example; TODO: implement those shown in the diagram). In the future, the API will also include <a href="#utility-classes"><em>Component Utilities</em></a>, which perform actions such as image flipping, rotation, and cropping.</p>
+<p>The API consists of <em>Component Interfaces</em>, which provide interfaces and abstract classes for developing components; <em>Job Definitions</em>, which define the work to be performed by a component; <em>Job Results</em>, which define the results generated by the component; and <a href="#convenience-adapters"><em>Component Adapters</em></a>, which provide default implementations of several of the <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> methods (See the <a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/java-component-api/src/test/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapterTest.java">MPFAudioAndVideoDetectionComponentAdapter</a> for an example; TODO: implement those shown in the diagram). In the future, the API will also include <a href="#utility-classes"><em>Component Utilities</em></a>, which perform actions such as image flipping, rotation, and cropping.</p>
 <p><strong>Component Interfaces</strong></p>
 <ul>
 <li><a href="#openmpf-component-api"><code>MPFComponentInterface</code></a> - Baseline interface for all potential components.</li>
@@ -310,7 +325,7 @@ component.close()
 <li><a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a></li>
 <li><a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a></li>
 </ul>
-<h2 id="openmpf-component-api">OpenMPF Component API</h2>
+<h2 id="component-interface">Component Interface</h2>
 <p>The OpenMPF Component class structure consists of:</p>
 <ul>
 <li><code>MPFComponentInterface</code> - Baseline interface for all potential components.</li>
@@ -319,7 +334,7 @@ component.close()
 <blockquote>
 <p><strong>IMPORTANT:</strong> This interface and abstract class should not be directly implemented, because no mechanism exists for launching components based off of it. Instead, it defines the contract that all types of components must follow. Currently, the only supported type of component is "DETECTION", and all components should extend <code>MPFDetectionComponentBase</code></p>
 </blockquote>
-<p><strong><a href="https://github.com/openmpf/openmpf-java-component-sdk/tree/master/java-component-api/src/main/java/org/mitre/mpf/component/api">See the latest source here.</a></strong></p>
+<p><strong><a href="https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/java-component-api/src/main/java/org/mitre/mpf/component/api">See the latest source here.</a></strong></p>
 <h3 id="init">init()</h3>
 <p>Performs any necessary startup tasks for the component. This will be executed once, on component startup, and not for every job.</p>
 <ul>
@@ -403,7 +418,7 @@ component.close()
 <blockquote>
 <p><strong>IMPORTANT:</strong> <code>setRunDirectory</code> is called by the Component Executor to set the correct path. It is not necessary to call this method in your component implementation.</p>
 </blockquote>
-<h2 id="openmpf-detection-component-api">OpenMPF Detection Component API</h2>
+<h2 id="detection-component-interface">Detection Component Interface</h2>
 <p>The <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> must be utilized by all MPF detection components.</p>
 <p>Every Java detection component must define a <em>component</em> class which implements the MPFComponentInterface. This is typically performed by extending <code>MPFDetectionComponentBase</code> which extends <code>MPFComponentBase</code> and implements <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a>.</p>
 <p>To designate the component class, every Java detection component should include an applicationContext.xml which defines the <code>component</code> bean.  The <code>component</code> bean class must implement <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a>.</p>
@@ -417,7 +432,7 @@ component.close()
 <p>These adapters provide default implementations of several methods in <a href="#detection-component-interface"><code>MPFDetectionComponentInterface</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
 <p>The following adapter is provided:</p>
 <ul>
-<li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/java-component-api/src/main/java/org/mitre/mpf/component/api/detection/adapters/MPFAudioAndVideoDetectionComponentAdapter.java">source</a>)</li>
+<li>Audio And Video Detection Component Adapter (<a href="https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/java-component-api/src/test/java/org/mitre/mpf/component/api/adapters/MPFAudioAndVideoDetectionComponentAdapterTest.java">source</a>)</li>
 </ul>
 <blockquote>
 <p><strong>Example: Using Adaptors to Provide Simple AudioVisual Handling:</strong>
@@ -426,7 +441,6 @@ Many components designed to work on audio files, such as speech detection, are r
 <p>Since only audio and video files are relevant to this adapter, it provides a default implementation of the <code>getDetections(MPFImageJob)</code> method which throws <code>new MPFComponentDetectionError(MPFDetectionError.MPF_UNSUPPORTED_DATA_TYPE)</code>.</p>
 <p>The Sphinx speech detection component uses this adapter to run Sphinx speech detection on video files.  Other components that need to process video files as audio may also use the adapter.</p>
 </blockquote>
-<h3 id="detection-component-interface">Detection Component Interface</h3>
 <h4 id="supportsmpfdatatype">supports(MPFDataType)</h4>
 <p>Returns the supported data types of the component.</p>
 <ul>
@@ -1499,7 +1513,7 @@ public boolean supports(MPFDataType dataType) {
         <a href="../Packaging-and-Registering-a-Component/index.html" class="btn btn-neutral float-right" title="Packaging and Registering a Component">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../CPP-Component-API/index.html" class="btn btn-neutral" title="C++ Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../CPP-Streaming-Component-API/index.html" class="btn btn-neutral" title="C++ Streaming Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1527,7 +1541,7 @@ public boolean supports(MPFDataType dataType) {
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../CPP-Component-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../CPP-Streaming-Component-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../Packaging-and-Registering-a-Component/index.html" style="color: #fcfcfc">Next &raquo;</a></span>

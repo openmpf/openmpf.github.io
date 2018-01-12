@@ -4,116 +4,108 @@
     
     <url>
      <loc>/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
     <url>
      <loc>/Release-Notes/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>/Acknowledgements/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/Contributor-Guide/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
+        
     <url>
      <loc>/Build-Environment-Setup-Guide/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
+        
     <url>
      <loc>/Installation-Guide/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
+        
     <url>
      <loc>/User-Guide/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
+        
     <url>
      <loc>/Admin-Manual/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>/Contributor-Guide/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Acknowledgements/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
-    <url>
-     <loc>/Feed-Forward-Guide/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
         
     <url>
-     <loc>/API-Overview/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <loc>/Component-API-Overview/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/CPP-Component-API/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <loc>/CPP-Batch-Component-API/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/Java-Component-API/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <loc>/CPP-Streaming-Component-API/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Java-Batch-Component-API/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/Packaging-and-Registering-a-Component/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
-    
-
-    
     <url>
-     <loc>/REST-API/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <loc>/Feed-Forward-Guide/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
     
 
     
         
     <url>
      <loc>/Workflow-Manager/index.html</loc>
-     <lastmod>2018-01-03</lastmod>
+     <lastmod>2018-01-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/REST-API/index.html</loc>
+     <lastmod>2018-01-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

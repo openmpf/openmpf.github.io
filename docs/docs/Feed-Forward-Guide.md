@@ -1,5 +1,7 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
+> **IMPORTANT:** Currently, only the [C++ Batch Component API](CPP-Batch-Component-API/index.html) supports feed forward processing.
+
 # Introduction
 
 Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:
@@ -67,7 +69,7 @@ For example, in the average case, a feed forward track may capture a person movi
 
 # MPFVideoCapture and MPFImageReader Tools
 
-The [OpenMPF C++ SDK](CPP-Component-API/index.html) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
+The [C++ Batch Component API](CPP-Batch-Component-API/index.html) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
 
 Conceptually, consider generating a new video from a feed forward track. The new video would have fewer frames (unless there was a detection in every frame) and possibly a smaller frame size.
 

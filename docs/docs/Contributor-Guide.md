@@ -4,7 +4,7 @@
 
 We're excited that you're considering contributing to the OpenMPF project! If you have any questions about the process or how to get involved, please feel free to send us an [e-mail](mailto:openmpf@googlegroups.com) with your question.
 
-We encourage you to read the remainder of the guide as well as review the project's [License](https://github.com/openmpf/openmpf/blob/master/LICENSE) and other [Documentation](https://openmpf.github.io/docs/site/index.html).
+We encourage you to read the remainder of the guide as well as review the project's [License](https://github.com/openmpf/openmpf/blob/master/LICENSE) and other [Documentation](index.html).
 
 The OpenMPF project consists of the following repositories:
 
@@ -27,7 +27,7 @@ We welcome all contributions that are made in a good faith effort to meet the fo
 - Functionally correct and logically sound. All code must pass a code review and round of regression tests.
 - Designed to use existing interfaces, super classes, and utilities
 - Makes use of well-known design patterns, polymorphism, and encapsulation where possible
-- Employs best practices for integrating with the OpenMPF architecture. Refer to the [C++ Component API](CPP-Component-API/index.html) and [Java Component API](Java-Component-API/index.html).
+- Employs best practices for integrating with the OpenMPF architecture. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 - Employs [standard coding style](#coding-style) that is consistent with the rest of the project
 - Sufficiently commented and, if necessary, comes with appropriate documentation
 - Comes with sufficient test cases

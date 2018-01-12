@@ -1,13 +1,15 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
 
-# OpenMPF API Overview
+# Goals
 
-The OpenMPF Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:
-*	Provide an overview of OpenMPF and its API
-*	Define a *component* in the context of the MPF
-*	Explain the use of the API
+The OpenMPF Component Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:
 
-**Terminology:**
+*	Provide an overview of OpenMPF and its Component API
+*	Define a *component* in the context of OpenMPF
+*	Explain the use of the Component API
+
+# Terminology
+
 In order to talk about OpenMPF, readers should be familiar with the following key OpenMPF-specific terms:
 
 * **Job** - An OpenMPF work unit. A job contains a list of media files and the pipeline that will be used to process that media.
@@ -17,27 +19,29 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
 * **Node** - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.
 * **Service** - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.
 
-## Background
+<h1> Background </h1> 
 OpenMPF consists of the Workflow Manager, a Node Manager, components, and a message passing mechanism that enables communication between the Workflow Manager and the components.
 
-### Workflow Manager
-The Workflow Manager (WFM) receives job requests from user interface and external systems through the REST API. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.
+## Workflow Manager
+The Workflow Manager (WFM) receives job requests from user interface and external systems through the [REST API](REST-API/index.html). The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.
 
 The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.
 
 The WFM provides work to a component service by placing a job request on the request queue, and it retrieves the component’s response by monitoring the appropriate response queue. The WFM may generate one or more job requests for a large video file, depending on how it segments the file into chunks. The segmentation properties can be specified system-wide using configuration files, or specified on a per-job basis.
 
->**Note:** All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.
+>**NOTE:** All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.
 
-### Node Manager
+## Node Manager
 The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.
 
 After the Node Manager spawns a service, the service waits for job requests from the Workflow Manager and produces a response for each request.
 
-### Components
+## Components
 
-Components are identified by seven key characteristics:
+Components are identified by eight key characteristics:
+
 *	The *type of action* the component performs
+*   The *type of processing* the component performs
 *	The *types of data* it supports
 *	The *type of objects* it detects
 *	The *name* of the algorithm or vendor
@@ -46,6 +50,8 @@ Components are identified by seven key characteristics:
 *	The *provided states* associated with a job following the execution of the component
 
 A component’s action type corresponds to the operation which the algorithm performs. Generally, this is `DETECTION`.
+
+A component can perform batch processing, stream processing, or both. Batch processing handles complete image, audio, and video files that reside on disk. Stream processing handles live video streams. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 
 The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO`.
 
