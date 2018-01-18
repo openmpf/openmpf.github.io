@@ -253,12 +253,14 @@
 <li><strong>Detection Component</strong> - A component that performs either detection (with or without tracking), or classification on a piece of media.</li>
 <li><strong>Node</strong> - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.</li>
 <li><strong>Service</strong> - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.</li>
+<li><strong>Batch Processing</strong> - Process complete image, audio, and video files that reside on disk.</li>
+<li><strong>Stream Processing</strong> - Process live video streams.</li>
 </ul>
 <h1> Background </h1>
 
-<p>OpenMPF consists of the Workflow Manager, a Node Manager, components, and a message passing mechanism that enables communication between the Workflow Manager and the components.</p>
+<p>OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components.</p>
 <h2 id="workflow-manager">Workflow Manager</h2>
-<p>The Workflow Manager (WFM) receives job requests from user interface and external systems through the <a href="../REST-API/index.html">REST API</a>. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
+<p>The WFM receives job requests from user interface and external systems through the <a href="../REST-API/index.html">REST API</a>. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
 <p>The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.</p>
 <p>The WFM provides work to a component service by placing a job request on the request queue, and it retrieves the component’s response by monitoring the appropriate response queue. The WFM may generate one or more job requests for a large video file, depending on how it segments the file into chunks. The segmentation properties can be specified system-wide using configuration files, or specified on a per-job basis.</p>
 <blockquote>
@@ -266,7 +268,11 @@
 </blockquote>
 <h2 id="node-manager">Node Manager</h2>
 <p>The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.</p>
-<p>After the Node Manager spawns a service, the service waits for job requests from the Workflow Manager and produces a response for each request.</p>
+<p>A service behaves differently based on the kind of processing that needs to be performed. After the Node Manager spawns a service:</p>
+<ul>
+<li><em>Batch processing</em> - The service waits for job requests from the WFM and produces a response for each request.</li>
+<li><em>Stream processing</em> - The service waits for the next frame from the stream and produces activity alerts and segment summary reports.</li>
+</ul>
 <h2 id="components">Components</h2>
 <p>Components are identified by eight key characteristics:</p>
 <ul>
@@ -280,7 +286,7 @@
 <li>The <em>provided states</em> associated with a job following the execution of the component</li>
 </ul>
 <p>A component’s action type corresponds to the operation which the algorithm performs. Generally, this is <code>DETECTION</code>.</p>
-<p>A component can perform batch processing, stream processing, or both. Batch processing handles complete image, audio, and video files that reside on disk. Stream processing handles live video streams. Refer to the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>.</p>
+<p>A component can perform batch processing, stream processing, or both. Refer to the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>.</p>
 <p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code>.</p>
 <p>As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.</p>
 <p>The type of objects produced depends on the input type. For example, video files produce video tracks, audio files produce audio tracks, and images produce image locations.</p>

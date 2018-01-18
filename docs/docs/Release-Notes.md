@@ -2,7 +2,7 @@
 
 # OpenMPF 2.0.0: February 2018
 
-> **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs cannot be created or monitored through the web UI.
+> **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI.
 
 
 # OpenMPF 1.0.0: October 2017

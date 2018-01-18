@@ -137,6 +137,17 @@
             
                 <li class="toctree-l3"><a href="#api-overview">API Overview</a></li>
                 
+                    <li><a class="toctree-l4" href="#how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</a></li>
+                
+                    <li><a class="toctree-l4" href="#getting-started">Getting Started</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#api-specification">API Specification</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-factory-functions">Component Factory Functions</a></li>
+                
+                    <li><a class="toctree-l4" href="#detection-component-interface">Detection Component Interface</a></li>
+                
             
             </ul>
         
@@ -238,6 +249,109 @@
 <li>Classification (Detecting the type of object and optionally localizing that object)</li>
 </ul>
 <p>Each frame of the video is processed as it is read from the stream. After processing enough frames to form a segment (for example, 100 frames), the component starts starts processing the next segment. Like with batch processing, each segment read from the stream is processed independently of the rest. No detection or track information is carried over between segments. Tracks are not merged across segments.</p>
+<h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
+<p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>. Developers create component libraries that encapsulate the component detection logic. Each instance of the Component Executable loads one of these libraries and uses it to service job requests sent by the OpenMPF Workflow Manager (WFM).</p>
+<p>The Component Executable:</p>
+<ol>
+<li>Receives and parses job requests from the WFM</li>
+<li>Invokes functions on the component library to obtain detection results</li>
+<li>Populates and sends the respective responses to the WFM</li>
+</ol>
+<p>The basic psuedocode for the Component Executable is as follows:</p>
+<pre><code class="c++">while (has_next_frame) {
+  if (is_new_segment) {
+    component-&gt;BeginSegment(video_segment_info)
+  }
+  activity_found = component-&gt;ProcessFrame(frame, frame_number) // Component logic does the work here
+  if (activity_found &amp;&amp; !already_sent_new_activity_alert_for_this_segment) {
+    SendActivityAlert(frame_number)
+  }
+  if (is_end_of_segment) {
+    streaming_video_tracks = component-&gt;EndSegment()
+    SendSummaryReport(frame_number, component-&gt;getDetectionType(), streaming_video_tracks)
+  }
+}
+</code></pre>
+
+<p>Each instance of a Component Executable runs as a separate process. Generally, each process will execute a different detection algorithm that corresponds to a single stage in a detection pipeline. Each instance is started by the Node Manager as needed in order to execute a streaming video job. The Node Manager will monitor the process status and eventually stop it.</p>
+<p>The Component Executable invokes functions on the Component Logic to get detection objects, and subsequently generates new track alerts and segment summary reports based on the output. These alerts and reports are sent to the WFM.</p>
+<p>A component developer implements a detection component by extending <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a>.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>The quickest way to get started with the C++ Streaming Component API is to first read the <a href="../Component-API-Overview/index.html">OpenMPF Component API Overview</a> and then <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/tree/develop/detection/examples/HelloWorldComponent/">review the source</a> of an example OpenMPF C++ detection component that supports stream processing.</p>
+<p>Detection components are implemented by:</p>
+<ol>
+<li>Extending <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a>.</li>
+<li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt">HelloWorldComponent CMakeLists.txt</a>).</li>
+<li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
+<li>Registering the component with OpenMPF. (See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
+</ol>
+<h1 id="api-specification">API Specification</h1>
+<p>The figure below presents a high-level component diagram of the C++ Streaming Component API:</p>
+<p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_cpp_streaming.png" title="OpenMPF Component Diagram" /></p>
+<p>The API consists of a <em>Detection Component Interface</em> and related input and output structures.</p>
+<p><strong>Detection Component Interface</strong></p>
+<ul>
+<li><a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> - Abstract class that should be extended by all OpenMPF detection components.</li>
+</ul>
+<p><strong>Inputs</strong></p>
+<p>The following data structures contain details about a specific job, and a video segment (work unit) associated with that job:</p>
+<ul>
+<li><a href="#mpfstreamingvideojob"><code>MPFStreamingVideoJob</code></a></li>
+<li><a href="#videosegmentinfo"><code>VideoSegmentInfo</code></a></li>
+</ul>
+<p><strong>Outputs</strong></p>
+<p>The following data structures define the results of a component's processing:</p>
+<ul>
+<li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
+<li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
+</ul>
+<h2 id="component-factory-functions">Component Factory Functions</h2>
+<p>Every detection component must include the following macro in its implementation:</p>
+<p><code>EXPORT_MPF_STREAMING_COMPONENT(TYPENAME);</code></p>
+<p>This creator macro takes the <code>TYPENAME</code> of the detection component (for example, “StreamingHelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.</p>
+<p>This macro also creates the factory function that the Component Executable will use to delete that instance of the detection component. </p>
+<p>This macro must be used outside of a class declaration, preferably at the bottom or top of a component header file.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="c++">// Note: Do not put the TypeName/Class Name in quotes
+EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
+</code></pre>
+
+<h2 id="detection-component-interface">Detection Component Interface</h2>
+<p>The <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.</p>
+<p><a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/MPFStreamingDetectionComponent.h"><strong>See the latest source here.</strong></a></p>
+<h3 id="mpfstreamingdetectioncomponent">MPFStreamingDetectionComponent()</h3>
+<pre><code>MPFStreamingDetectionComponent(const MPFStreamingVideoJob &amp;job) { };
+</code></pre>
+
+<h3 id="getdetectiontype">GetDetectionType()</h3>
+<p>Returns the type of object detected by the component.</p>
+<ul>
+<li>Function Definition:
+<code>string GetDetectionType()</code></li>
+<li>
+<p>Parameters: None</p>
+</li>
+<li>
+<p>Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
+</li>
+<li>Example:</li>
+</ul>
+<pre><code class="c++">    string SampleComponent::GetDetectionType() {
+        return &quot;FACE&quot;;
+    }
+</code></pre>
+
+<h3 id="beginsegment">BeginSegment()</h3>
+<pre><code>void BeginSegment(const VideoSegmentInfo &amp;segment_info) { };
+</code></pre>
+
+<h3 id="processframe">ProcessFrame()</h3>
+<pre><code>bool ProcessFrame(const cv::Mat &amp;frame, int frame_number) = 0;
+</code></pre>
+
+<h3 id="endsegment">EndSegment()</h3>
+<pre><code>std::vector&lt;MPFVideoTrack&gt; EndSegment() = 0;
+</code></pre>
               
             </div>
           </div>

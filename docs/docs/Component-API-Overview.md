@@ -18,12 +18,14 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
 * **Detection Component** - A component that performs either detection (with or without tracking), or classification on a piece of media.
 * **Node** - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.
 * **Service** - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.
+* **Batch Processing** - Process complete image, audio, and video files that reside on disk.
+* **Stream Processing** - Process live video streams.
 
 <h1> Background </h1> 
-OpenMPF consists of the Workflow Manager, a Node Manager, components, and a message passing mechanism that enables communication between the Workflow Manager and the components.
+OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components.
 
 ## Workflow Manager
-The Workflow Manager (WFM) receives job requests from user interface and external systems through the [REST API](REST-API/index.html). The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.
+The WFM receives job requests from user interface and external systems through the [REST API](REST-API/index.html). The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.
 
 The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.
 
@@ -34,7 +36,10 @@ The WFM provides work to a component service by placing a job request on the req
 ## Node Manager
 The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.
 
-After the Node Manager spawns a service, the service waits for job requests from the Workflow Manager and produces a response for each request.
+A service behaves differently based on the kind of processing that needs to be performed. After the Node Manager spawns a service:
+ 
+*   *Batch processing* - The service waits for job requests from the WFM and produces a response for each request.
+*   *Stream processing* - The service waits for the next frame from the stream and produces activity alerts and segment summary reports.
 
 ## Components
 
@@ -51,7 +56,7 @@ Components are identified by eight key characteristics:
 
 A component’s action type corresponds to the operation which the algorithm performs. Generally, this is `DETECTION`.
 
-A component can perform batch processing, stream processing, or both. Batch processing handles complete image, audio, and video files that reside on disk. Stream processing handles live video streams. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
+A component can perform batch processing, stream processing, or both. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 
 The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO`.
 
