@@ -809,7 +809,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 </thead>
 <tbody>
 <tr>
-<td>job_name <a name="job-name"></a></td>
+<td>job_name</td>
 <td><code>const string  &amp;</code></td>
 <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
 </tr>
@@ -1055,8 +1055,8 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 </code></pre>
 
 <pre><code class="c++">MPFGenericJob(
-  const std::string &amp;job_name,
-  const std::string &amp;data_uri,
+  const string &amp;job_name,
+  const string &amp;data_uri,
   const MPFGenericTrack &amp;track,
   const Properties &amp;job_properties,
   const Properties &amp;media_properties)
@@ -1143,12 +1143,12 @@ MPFImageLocation(
 <tr>
 <td>width</td>
 <td><code>int</code></td>
-<td>The width of the detected object. If the detection consists of the entire image, use 0.</td>
+<td>The width of the detected object.</td>
 </tr>
 <tr>
 <td>height</td>
 <td><code>int</code></td>
-<td>The height of the detected object. If the detection consists of the entire image, use 0.</td>
+<td>The height of the detected object.</td>
 </tr>
 <tr>
 <td>confidence</td>
@@ -1430,7 +1430,7 @@ MPFGenericTrack(
 <h3 id="utility-classes">Utility Classes</h3>
 <p>For convenience, the OpenMPF provides the <code>MPFImageReader</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFImageReader.h">source</a>) and <code>MPFVideoCapture</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFVideoCapture.h">source</a>) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.</p>
 <h1 id="c-component-build-environment">C++ Component Build Environment</h1>
-<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).</p>
+<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).</p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
 <h2 id="single-threaded-operation">Single-threaded Operation</h2>

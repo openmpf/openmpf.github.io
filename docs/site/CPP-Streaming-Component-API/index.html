@@ -153,7 +153,20 @@
                     <li><a class="toctree-l4" href="#detection-job-result-classes">Detection Job Result Classes</a></li>
                 
             
-                <li class="toctree-l3"><a href="#delete-me">DELETE ME!</a></li>
+                <li class="toctree-l3"><a href="#c-component-build-environment">C++ Component Build Environment</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#component-development-best-practices">Component Development Best Practices</a></li>
+                
+                    <li><a class="toctree-l4" href="#throw-exceptions">Throw Exceptions</a></li>
+                
+                    <li><a class="toctree-l4" href="#single-threaded-operation">Single-threaded Operation</a></li>
+                
+                    <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
+                
+                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+                
+                    <li><a class="toctree-l4" href="#logging">Logging</a></li>
                 
             
             </ul>
@@ -464,7 +477,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <tr>
 <td>frame_number</td>
 <td><code>int</code></td>
-<td>A unique frame id. Guaranteed to be greater than the frame id passed to the last invocation of this function.</td>
+<td>A unique frame number (0-based index). Guaranteed to be greater than the frame number passed to the last invocation of this function.</td>
 </tr>
 </tbody>
 </table>
@@ -524,8 +537,8 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <li>Constructor(s):</li>
 </ul>
 <pre><code class="c++">MPFStreamingVideoJob(
-  const std::string &amp;job_name,
-  const std::string &amp;run_directory,
+  const string &amp;job_name,
+  const string &amp;run_directory,
   const Properties &amp;job_properties,
   const Properties &amp;media_properties)
 }
@@ -544,7 +557,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 </thead>
 <tbody>
 <tr>
-<td>job_name <a name="job-name"></a></td>
+<td>job_name</td>
 <td><code>const string  &amp;</code></td>
 <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
 </tr>
@@ -562,6 +575,59 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <td>media_properties <a name="media-properties"></a></td>
 <td><code>const Properties &amp;</code></td>
 <td>Contains a map of <code>&lt;string, string&gt;</code> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="videosegmentinfo">VideoSegmentInfo</h3>
+<p>Structure containing information about a segment of a video stream to be processed. A segment is a subset of contiguous video frames.</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">VideoSegmentInfo(
+  int segment_number,
+  int start_frame,
+  int end_frame,
+  int frame_width,
+  int frame_height
+}
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>segment_number</td>
+<td><code>int</code></td>
+<td>A unique segment number (0-based index).</td>
+</tr>
+<tr>
+<td>start_frame</td>
+<td><code>int</code></td>
+<td>The frame number (0-based index) corresponding to the first frame in this segment.</td>
+</tr>
+<tr>
+<td>end_frame</td>
+<td><code>int</code></td>
+<td>The frame number (0-based index) corresponding to the last frame in this segment.</td>
+</tr>
+<tr>
+<td>frame_width</td>
+<td><code>int</code></td>
+<td>The height of each frame in this segment.</td>
+</tr>
+<tr>
+<td>frame_height</td>
+<td><code>int</code></td>
+<td>The width of each frame in this segment.</td>
 </tr>
 </tbody>
 </table>
@@ -606,12 +672,12 @@ MPFImageLocation(
 <tr>
 <td>width</td>
 <td><code>int</code></td>
-<td>The width of the detected object. If the detection consists of the entire image, use 0.</td>
+<td>The width of the detected object.</td>
 </tr>
 <tr>
 <td>height</td>
 <td><code>int</code></td>
-<td>The height of the detected object. If the detection consists of the entire image, use 0.</td>
+<td>The height of the detected object.</td>
 </tr>
 <tr>
 <td>confidence</td>
@@ -703,11 +769,64 @@ track.frame_locations = frame_locations;
 track.detection_properties[&quot;TRANSCRIPTION&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
 </code></pre>
 
-<h1 id="delete-me">DELETE ME!</h1>
-<ul>
-<li>TODO: Throw exceptions</li>
-<li>TODO: Update Build Guide iso link</li>
-</ul>
+<h1 id="c-component-build-environment">C++ Component Build Environment</h1>
+<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).</p>
+<p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
+<h1 id="component-development-best-practices">Component Development Best Practices</h1>
+<h2 id="throw-exceptions">Throw Exceptions</h2>
+<p>Unlike the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, none of the the C++ Streaming Component API functions return an <a href="../CPP-Batch-Component-API/index.html#mpfdetectionerror"><code>MPFDetectionError</code></a>. Instead, streaming components should throw an exception when a non-recoverable error occurs. The exception should be an instantiation or subclass of <code>std::exception</code> and provide a descriptive error message that can be retrieved using <code>what()</code>. For example:</p>
+<pre><code class="c++">bool SampleComponent::ProcessFrame(const cv::Mat &amp;frame, int frame_number) {
+    // Something bad happened
+    throw std::exception(&quot;Error: Cannot do X with value Y.&quot;);
+}
+</code></pre>
+
+<p>The exception will be handled by the <strong>Component Executable</strong>. It will immediately invoke <code>EndSegment()</code> to retrieve the current tracks. Then the component process and streaming job will be terminated.</p>
+<h2 id="single-threaded-operation">Single-threaded Operation</h2>
+<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.</p>
+<h2 id="stateless-behavior">Stateless Behavior</h2>
+<p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing a segment with the same <code>VideoSegmentInfo</code>).</p>
+<h2 id="component-packaging">Component Packaging</h2>
+<p>It is recommended that C++ components are organized according to the following directory structure:</p>
+<pre><code>componentName
+├── config - Logging and other component-specific configuration
+├── descriptor
+│   └── descriptor.json
+└── lib
+    └──libComponentName.so - Compiled component library
+</code></pre>
+
+<p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
+<h2 id="logging">Logging</h2>
+<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for OpenMPF Component logging.</p>
+<p>Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.</p>
+<p>Log files should be output to:
+<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code></p>
+<p>Each log statement must take the form:
+<code>DATE TIME LEVEL CONTENT</code></p>
+<p>The following log LEVELs are supported:
+<code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.</p>
+<p>For example:
+<code>2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]</code></p>
+<p>The following configuration can be used to match the format of other OpenMPF logs:</p>
+<pre><code class="xml">&lt;log4j:configuration xmlns:log4j=&quot;http://jakarta.apache.org/log4j/&quot;&gt;
+
+  &lt;!-- Output the log message to log file--&gt;
+  &lt;appender name=&quot;SAMPLECOMPONENT-FILE&quot; class=&quot;org.apache.log4j.DailyRollingFileAppender&quot;&gt;
+    &lt;param name=&quot;file&quot; value=&quot;${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log&quot; /&gt;
+    &lt;param name=&quot;DatePattern&quot; value=&quot;'.'yyyy-MM-dd&quot; /&gt;
+    &lt;layout class=&quot;org.apache.log4j.PatternLayout&quot;&gt;
+      &lt;param name=&quot;ConversionPattern&quot; value=&quot;%d %p [%t] %c{36}:%L - %m%n&quot; /&gt;
+    &lt;/layout&gt;
+  &lt;/appender&gt;
+
+  &lt;logger name= &quot;SampleComponent&quot; additivity=&quot;false&quot;&gt;
+    &lt;level value=&quot;INFO&quot;/&gt;
+    &lt;appender-ref ref=&quot;SAMPLECOMPONENT-FILE&quot;/&gt;
+  &lt;/logger&gt;
+
+&lt;/log4j:configuration&gt;
+</code></pre>
               
             </div>
           </div>

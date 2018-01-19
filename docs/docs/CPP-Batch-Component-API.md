@@ -471,7 +471,7 @@ MPFJob(
 
 | Member  | Data Type  | Description  |
 |---|---|---|
-|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
+| job_name | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.  |
 | data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
 | job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
@@ -604,8 +604,8 @@ MPFGenericJob(
 ```
 ```c++
 MPFGenericJob(
-  const std::string &job_name,
-  const std::string &data_uri,
+  const string &job_name,
+  const string &data_uri,
   const MPFGenericTrack &track,
   const Properties &job_properties,
   const Properties &media_properties)
@@ -646,8 +646,8 @@ MPFImageLocation(
 |---|---|---|
 | x_left_upper| `int` | Upper left X coordinate of the detected object. |
 | y_left_upper | `int` | Upper left Y coordinate of the detected object. |
-| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
-| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
+| width | `int` | The width of the detected object. |
+| height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
@@ -783,7 +783,8 @@ For convenience, the OpenMPF provides the `MPFImageReader` ([source](https://git
 
 
 # C++ Component Build Environment
-A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.2-1511 (kernel version 3.10.0-327), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
+
+A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.
 

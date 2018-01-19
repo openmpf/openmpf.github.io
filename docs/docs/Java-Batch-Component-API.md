@@ -437,7 +437,7 @@ protected MPFJob(
 
 | Member  | Data Type  | Description  |
 |---|---|---|
-|  jobName <a name="job-name"></a> | `String`  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
+| jobName | `String`  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
 | dataUri <a name="data-uri"></a> | `String`  | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".  |
 | jobProperties <a name="job-properties"></a> | `Map<String, String>`  | The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br /><br /> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value. |
 | mediaProperties <a name="media-properties"></a> | `Map<String, String>` | Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description. |
@@ -611,8 +611,8 @@ public MPFImageLocation(
 |---|---|---|
 | xLeftUpper| `int` | Upper left X coordinate of the detected object. |
 | yLeftUpper | `int` | Upper left Y coordinate of the detected object. |
-| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
-| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
+| width | `int` | The width of the detected object. |
+| height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | `Map<String, String>` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the properties map. For best practice, keys should be in all CAPS. |
 

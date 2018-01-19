@@ -203,7 +203,7 @@ bool ProcessFrame(const cv::Mat &frame, int frame_number)
 | Parameter  | Data Type  | Description  |
 |---|---|---|
 | frame  | `const cv::Mat &`  | OpenCV class containing frame data. See [`cv::Mat`](https://docs.opencv.org/3.3.0/d3/d63/classcv_1_1Mat.html) |
-| frame_number  | `int`  | A unique frame id. Guaranteed to be greater than the frame id passed to the last invocation of this function. |
+| frame_number  | `int`  | A unique frame number (0-based index). Guaranteed to be greater than the frame number passed to the last invocation of this function. |
 
 * Returns: (`bool`) True if any detections were found in this frame; false otherwise.
 
@@ -256,8 +256,8 @@ Structure containing information about a job to be performed on a video stream.
 * Constructor(s):
 ```c++
 MPFStreamingVideoJob(
-  const std::string &job_name,
-  const std::string &run_directory,
+  const string &job_name,
+  const string &run_directory,
   const Properties &job_properties,
   const Properties &media_properties)
 }
@@ -267,10 +267,35 @@ MPFStreamingVideoJob(
 
 | Member  | Data Type  | Description  |
 |---|---|---|
-|  job_name <a name="job-name"></a> | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
+| job_name | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
 |  run_directory <a name="job-name"></a> | `const string  &` | Contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder. |
 | job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
+
+### VideoSegmentInfo
+
+Structure containing information about a segment of a video stream to be processed. A segment is a subset of contiguous video frames.
+
+* Constructor(s):
+```c++
+VideoSegmentInfo(
+  int segment_number,
+  int start_frame,
+  int end_frame,
+  int frame_width,
+  int frame_height
+}
+```
+
+* Members:
+
+| Member  | Data Type  | Description  |
+|---|---|---|
+| segment_number | `int` | A unique segment number (0-based index). |
+| start_frame | `int` | The frame number (0-based index) corresponding to the first frame in this segment. |
+| end_frame | `int` | The frame number (0-based index) corresponding to the last frame in this segment. |
+| frame_width | `int` | The height of each frame in this segment. |
+| frame_height | `int` | The width of each frame in this segment. |
 
 ## Detection Job Result Classes
 
@@ -296,8 +321,8 @@ MPFImageLocation(
 |---|---|---|
 | x_left_upper| `int` | Upper left X coordinate of the detected object. |
 | y_left_upper | `int` | Upper left Y coordinate of the detected object. |
-| width | `int` | The width of the detected object. If the detection consists of the entire image, use 0. |
-| height | `int` | The height of the detected object. If the detection consists of the entire image, use 0. |
+| width | `int` | The width of the detected object. |
+| height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
@@ -353,6 +378,85 @@ track.frame_locations = frame_locations;
 track.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER";
 ```
 
-# DELETE ME!
-* TODO: Throw exceptions
-* TODO: Update Build Guide iso link
+# C++ Component Build Environment
+
+A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
+
+Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.
+
+# Component Development Best Practices
+
+## Throw Exceptions
+
+Unlike the [C++ Batch Component API](CPP-Batch-Component-API/index.html), none of the the C++ Streaming Component API functions return an [`MPFDetectionError`](CPP-Batch-Component-API/index.html#mpfdetectionerror). Instead, streaming components should throw an exception when a non-recoverable error occurs. The exception should be an instantiation or subclass of `std::exception` and provide a descriptive error message that can be retrieved using `what()`. For example:
+
+```c++
+bool SampleComponent::ProcessFrame(const cv::Mat &frame, int frame_number) {
+    // Something bad happened
+    throw std::exception("Error: Cannot do X with value Y.");
+}
+```
+
+The exception will be handled by the **Component Executable**. It will immediately invoke `EndSegment()` to retrieve the current tracks. Then the component process and streaming job will be terminated.
+
+## Single-threaded Operation
+
+Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.
+
+## Stateless Behavior
+OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing a segment with the same `VideoSegmentInfo`).
+
+## Component Packaging
+It is recommended that C++ components are organized according to the following directory structure:
+
+```
+componentName
+├── config - Logging and other component-specific configuration
+├── descriptor
+│   └── descriptor.json
+└── lib
+    └──libComponentName.so - Compiled component library
+```  
+
+Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
+
+
+## Logging
+
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for OpenMPF Component logging.
+
+Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.
+
+Log files should be output to:
+`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`
+
+Each log statement must take the form:
+`DATE TIME LEVEL CONTENT`
+
+The following log LEVELs are supported:
+`FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
+
+For example:
+`2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]`
+
+The following configuration can be used to match the format of other OpenMPF logs:
+
+```xml
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+  <!-- Output the log message to log file-->
+  <appender name="SAMPLECOMPONENT-FILE" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="file" value="${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log" />
+    <param name="DatePattern" value="'.'yyyy-MM-dd" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d %p [%t] %c{36}:%L - %m%n" />
+    </layout>
+  </appender>
+
+  <logger name= "SampleComponent" additivity="false">
+    <level value="INFO"/>
+    <appender-ref ref="SAMPLECOMPONENT-FILE"/>
+  </logger>
+
+</log4j:configuration>
+```

@@ -17,8 +17,8 @@ This guide provides comprehensive instructions for setting up a build environmen
 The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [OpenMPF Installation Guide](Installation-Guide/index.html).
 
 - This guide assumes a starting point of CentOS 7 with a minimal installation.
-- CentOS-7-x86_64-Minimal-1611.iso should be downloaded from one of the links [here](http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso) prior to starting these steps.
-- Oracle Virtual Box 5.1.28 r117968 is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported.
+- Download the CentOS 7 minimal iso from [here](https://www.centos.org/download/) (click on the "Minimal ISO" button) prior to starting these steps. As of writing this guide, the last version of the iso we tested is CentOS-7-x86_64-Minimal-1708.iso.
+- Oracle Virtual Box is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported. As of writing this guide, the last version of Virtual Box we tested is 5.2.4 r119785.
 
 
 1. Create a new VM with these settings:
