@@ -72,7 +72,7 @@ The API consists of a *Detection Component Interface* and related input and outp
 
 **Detection Component Interface**
 
-* [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) - Abstract class that should be extended by all OpenMPF detection components.
+* [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) - Abstract class that should be extended by all OpenMPF C++ detection components that perform stream processing.
 
 **Inputs**
 
@@ -110,7 +110,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 
 ## Detection Component Interface
 
-The [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.
+The [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF C++ detection components that perform stream processing. This class provides functions for developers to integrate detection logic into OpenMPF.
 
 [**See the latest source here.**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/MPFStreamingDetectionComponent.h)
 

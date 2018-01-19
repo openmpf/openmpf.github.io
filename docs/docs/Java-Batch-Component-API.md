@@ -65,7 +65,7 @@ The API consists of *Component Interfaces*, which provide interfaces and abstrac
 
 **Component Interfaces**
 
-* [`MPFComponentInterface`](#openmpf-component-api) - Baseline interface for all potential components.
+* [`MPFComponentInterface`](#openmpf-component-api) - Interface for all Java components that perform batch processing.
 * `MPFComponentBase` - An abstract baseline for components. Provides default implementations for [`MPFComponentInterface`](#openmpf-component-api).
 
 **Detection Component Interfaces**
@@ -95,10 +95,10 @@ The following classes define the results of a component's processing:
 
 The OpenMPF Component class structure consists of:
 
-* `MPFComponentInterface` - Baseline interface for all potential components.
+* `MPFComponentInterface` - Interface for all OpenMPF Java components that perform batch processing.
 * `MPFComponentBase` - An abstract baseline for components. Provides default implementations for `MPFComponentInterface`.
 
->**IMPORTANT:** This interface and abstract class should not be directly implemented, because no mechanism exists for launching components based off of it. Instead, it defines the contract that all types of components must follow. Currently, the only supported type of component is "DETECTION", and all components should extend `MPFDetectionComponentBase`
+>**IMPORTANT:** This interface and abstract class should not be directly implemented because no mechanism exists for launching components based off of it. Instead, it defines the contract that components must follow. Currently, the only supported type of batch component is "DETECTION". Those components should extend `MPFDetectionComponentBase`
 
 **[See the latest source here.](https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/java-component-api/src/main/java/org/mitre/mpf/component/api)**
 
@@ -179,13 +179,13 @@ Sets the value to the full path of the parent folder above where the component i
 
 ## Detection Component Interface
 
-The [`MPFDetectionComponentInterface`](#detection-component-interface) must be utilized by all MPF detection components.
+The [`MPFDetectionComponentInterface`](#detection-component-interface) must be utilized by all OpenMPF Java detection components that perform batch processing.
 
-Every Java detection component must define a *component* class which implements the MPFComponentInterface. This is typically performed by extending `MPFDetectionComponentBase` which extends `MPFComponentBase` and implements [`MPFDetectionComponentInterface`](#detection-component-interface).
+Every batch detection component must define a *component* class which implements the MPFComponentInterface. This is typically performed by extending `MPFDetectionComponentBase`, which extends `MPFComponentBase` and implements [`MPFDetectionComponentInterface`](#detection-component-interface).
 
-To designate the component class, every Java detection component should include an applicationContext.xml which defines the `component` bean.  The `component` bean class must implement [`MPFDetectionComponentInterface`](#detection-component-interface).
+To designate the component class, every batch detection component should include an applicationContext.xml which defines the `component` bean.  The `component` bean class must implement [`MPFDetectionComponentInterface`](#detection-component-interface).
 
->**IMPORTANT:** Each detection component must implement all of the `getDetections()` methods or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
+>**IMPORTANT:** Each batch detection component must implement all of the `getDetections()` methods or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
 >
 >If your component does not support a particular data type, it should simply:
 >

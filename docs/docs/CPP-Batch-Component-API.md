@@ -71,7 +71,7 @@ The API consists of *Component Interfaces*, which provide interfaces and abstrac
 
 **Detection Component Interface**
 
-* [`MPFDetectionComponent`](#openmpf-detection-component-api) extends [`MPFComponent`](#openmpf-component-api) - Abstract class that should be extended by all OpenMPF detection components.
+* [`MPFDetectionComponent`](#openmpf-detection-component-api) extends [`MPFComponent`](#openmpf-component-api) - Abstract class that should be extended by all OpenMPF C++ detection components that perform batch processing.
 
 **Job Definitions**
 
@@ -96,11 +96,11 @@ Components must also include two [Component Factory Functions](#component-factor
 
 ## Component Interface
 
-The [`MPFComponent`](#openmpf-component-api) class is the abstract base class utilized by all OpenMPF components.
+The [`MPFComponent`](#openmpf-component-api) class is the abstract base class utilized by all OpenMPF C++ components that perform batch processing.
 
 **[See the latest source here.](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/interface/include/MPFComponentInterface.h)**
 
->**IMPORTANT:** This interface should not be directly implemented, because no mechanism exists for launching components based off of it. Currently, the only supported type of component is detection, and all components should instead extend [`MPFDetectionComponent`](#openmpf-detection-component-api).
+>**IMPORTANT:** This interface should not be directly implemented, because no mechanism exists for launching components based off of it. Currently, the only supported type of component is detection, and all batch detection components should instead extend [`MPFDetectionComponent`](#openmpf-detection-component-api).
 
 ### Init()
 
@@ -218,11 +218,11 @@ MPF_COMPONENT_DELETER();
 
 ## Detection Component Interface
 
-The [`MPFDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.
+The [`MPFDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF C++ detection components that perform batch processing. This class provides functions for developers to integrate detection logic into OpenMPF.
 
 [**See the latest source here.**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFDetectionComponent.h)
 
->**IMPORTANT:** Each detection component must implement all of the `GetDetections()` functions or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
+>**IMPORTANT:** Each batch detection component must implement all of the `GetDetections()` functions or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
 >
 >If your component does not support a particular data type, it should simply:
 >`return MPF_UNSUPPORTED_DATA_TYPE;`

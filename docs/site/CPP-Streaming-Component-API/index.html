@@ -291,7 +291,7 @@
 <p>The API consists of a <em>Detection Component Interface</em> and related input and output structures.</p>
 <p><strong>Detection Component Interface</strong></p>
 <ul>
-<li><a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> - Abstract class that should be extended by all OpenMPF detection components.</li>
+<li><a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> - Abstract class that should be extended by all OpenMPF C++ detection components that perform stream processing.</li>
 </ul>
 <p><strong>Inputs</strong></p>
 <p>The following data structures contain details about a specific job, and a video segment (work unit) associated with that job:</p>
@@ -317,7 +317,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 </code></pre>
 
 <h2 id="detection-component-interface">Detection Component Interface</h2>
-<p>The <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> class is the abstract class utilized by all OpenMPF detection components. This class provides functions for developers to integrate detection logic into OpenMPF.</p>
+<p>The <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> class is the abstract class utilized by all OpenMPF C++ detection components that perform stream processing. This class provides functions for developers to integrate detection logic into OpenMPF.</p>
 <p><a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/MPFStreamingDetectionComponent.h"><strong>See the latest source here.</strong></a></p>
 <h3 id="mpfstreamingdetectioncomponent">MPFStreamingDetectionComponent()</h3>
 <pre><code>MPFStreamingDetectionComponent(const MPFStreamingVideoJob &amp;job) { };

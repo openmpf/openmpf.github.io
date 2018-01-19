@@ -240,9 +240,9 @@
 <h1 id="goals">Goals</h1>
 <p>The OpenMPF Component Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:</p>
 <ul>
-<li>Provide an overview of OpenMPF and its Component API</li>
+<li>Provide an overview of OpenMPF concepts</li>
 <li>Define a <em>component</em> in the context of OpenMPF</li>
-<li>Explain the use of the Component API</li>
+<li>Explain the role of the Component API</li>
 </ul>
 <h1 id="terminology">Terminology</h1>
 <p>In order to talk about OpenMPF, readers should be familiar with the following key OpenMPF-specific terms:</p>
@@ -274,7 +274,7 @@
 <li><em>Stream processing</em> - The service waits for the next frame from the stream and produces activity alerts and segment summary reports.</li>
 </ul>
 <h2 id="components">Components</h2>
-<p>Components are identified by eight key characteristics:</p>
+<p>Components are identified by nine key characteristics:</p>
 <ul>
 <li>The <em>type of action</em> the component performs</li>
 <li>The <em>type of processing</em> the component performs</li>
@@ -284,14 +284,15 @@
 <li>The user-configurable <em>properties</em> that the component exposes</li>
 <li>The <em>required states</em> associated with a job prior to the execution of the component</li>
 <li>The <em>provided states</em> associated with a job following the execution of the component</li>
+<li>The <em>programming language</em> used to implement the component</li>
 </ul>
 <p>A component’s action type corresponds to the operation which the algorithm performs. Generally, this is <code>DETECTION</code>.</p>
 <p>A component can perform batch processing, stream processing, or both. Refer to the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>.</p>
-<p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code>.</p>
+<p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code> for components that support batch processing, or just <code>VIDEO</code> for components that only support stream processing.</p>
 <p>As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.</p>
 <p>The type of objects produced depends on the input type. For example, video files produce video tracks, audio files produce audio tracks, and images produce image locations.</p>
 <p><img alt="OpenMPF Component IO" src="../img/component_io_diagram.png" title="OpenMPF Component IO" /></p>
-<p>The OpenMPF Component Interface API presented provides developers an interface for developing new components for OpenMPF without requiring the developers to understand the internals of the framework.</p>
+<p>The OpenMPF Component API presented provides developers an interface for developing new components for OpenMPF without requiring the developers to understand the internals of the framework.</p>
 <p>The figure below depicts a high-level block diagram of the OpenMPF architecture with components.</p>
 <p><img alt="OpenMPF System Block Diagram" src="../img/block_diagram.png" title="OpenMPF System Block Diagram" /></p>
 <p>The Component Registry serves as a central location for information about the components registered with the OpenMPF instance. A future goal is to develop a web page that can be used to browse the registry and display the metadata associated with each available component.</p>

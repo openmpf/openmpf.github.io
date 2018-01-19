@@ -4,9 +4,9 @@
 
 The OpenMPF Component Application Programming Interface (API) provides a mechanism for integrating components into OpenMPF. The goals of the document are to:
 
-*	Provide an overview of OpenMPF and its Component API
+*	Provide an overview of OpenMPF concepts
 *	Define a *component* in the context of OpenMPF
-*	Explain the use of the Component API
+*	Explain the role of the Component API
 
 # Terminology
 
@@ -43,7 +43,7 @@ A service behaves differently based on the kind of processing that needs to be p
 
 ## Components
 
-Components are identified by eight key characteristics:
+Components are identified by nine key characteristics:
 
 *	The *type of action* the component performs
 *   The *type of processing* the component performs
@@ -53,12 +53,13 @@ Components are identified by eight key characteristics:
 *	The user-configurable *properties* that the component exposes
 *	The *required states* associated with a job prior to the execution of the component
 *	The *provided states* associated with a job following the execution of the component
+*   The *programming language* used to implement the component
 
 A component’s action type corresponds to the operation which the algorithm performs. Generally, this is `DETECTION`.
 
 A component can perform batch processing, stream processing, or both. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 
-The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO`.
+The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO` for components that support batch processing, or just `VIDEO` for components that only support stream processing.
 
 As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.
 
@@ -66,7 +67,7 @@ The type of objects produced depends on the input type. For example, video files
 
  ![OpenMPF Component IO](img/component_io_diagram.png "OpenMPF Component IO")
 
-The OpenMPF Component Interface API presented provides developers an interface for developing new components for OpenMPF without requiring the developers to understand the internals of the framework.
+The OpenMPF Component API presented provides developers an interface for developing new components for OpenMPF without requiring the developers to understand the internals of the framework.
 
 The figure below depicts a high-level block diagram of the OpenMPF architecture with components.
 
