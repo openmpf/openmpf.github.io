@@ -148,6 +148,13 @@
                 
                     <li><a class="toctree-l4" href="#detection-component-interface">Detection Component Interface</a></li>
                 
+                    <li><a class="toctree-l4" href="#detection-job-data-structures">Detection Job Data Structures</a></li>
+                
+                    <li><a class="toctree-l4" href="#detection-job-result-classes">Detection Job Result Classes</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#delete-me">DELETE ME!</a></li>
+                
             
             </ul>
         
@@ -259,17 +266,17 @@
 </ol>
 <p>The basic psuedocode for the Component Executable is as follows:</p>
 <pre><code class="c++">while (has_next_frame) {
-  if (is_new_segment) {
-    component-&gt;BeginSegment(video_segment_info)
-  }
-  activity_found = component-&gt;ProcessFrame(frame, frame_number) // Component logic does the work here
-  if (activity_found &amp;&amp; !already_sent_new_activity_alert_for_this_segment) {
-    SendActivityAlert(frame_number)
-  }
-  if (is_end_of_segment) {
-    streaming_video_tracks = component-&gt;EndSegment()
-    SendSummaryReport(frame_number, component-&gt;getDetectionType(), streaming_video_tracks)
-  }
+    if (is_new_segment) {
+        component-&gt;BeginSegment(video_segment_info)
+    }
+    activity_found = component-&gt;ProcessFrame(frame, frame_number) // Component logic does the work here
+    if (activity_found &amp;&amp; !already_sent_new_activity_alert_for_this_segment) {
+        SendActivityAlert(frame_number)
+    }
+    if (is_end_of_segment) {
+        streaming_video_tracks = component-&gt;EndSegment()
+        SendSummaryReport(frame_number, component-&gt;getDetectionType(), streaming_video_tracks)
+    }
 }
 </code></pre>
 
@@ -300,14 +307,16 @@
 <li><a href="#videosegmentinfo"><code>VideoSegmentInfo</code></a></li>
 </ul>
 <p><strong>Outputs</strong></p>
-<p>The following data structures define the results of a component's processing:</p>
+<p>The following data structures define detection results:</p>
 <ul>
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
 <li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
 </ul>
 <h2 id="component-factory-functions">Component Factory Functions</h2>
 <p>Every detection component must include the following macro in its implementation:</p>
-<p><code>EXPORT_MPF_STREAMING_COMPONENT(TYPENAME);</code></p>
+<pre><code class="c++">EXPORT_MPF_STREAMING_COMPONENT(TYPENAME);
+</code></pre>
+
 <p>This creator macro takes the <code>TYPENAME</code> of the detection component (for example, “StreamingHelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.</p>
 <p>This macro also creates the factory function that the Component Executable will use to delete that instance of the detection component. </p>
 <p>This macro must be used outside of a class declaration, preferably at the bottom or top of a component header file.</p>
@@ -319,39 +328,386 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <h2 id="detection-component-interface">Detection Component Interface</h2>
 <p>The <a href="#openmpf-detection-component-api"><code>MPFStreamingDetectionComponent</code></a> class is the abstract class utilized by all OpenMPF C++ detection components that perform stream processing. This class provides functions for developers to integrate detection logic into OpenMPF.</p>
 <p><a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/MPFStreamingDetectionComponent.h"><strong>See the latest source here.</strong></a></p>
-<h3 id="mpfstreamingdetectioncomponent">MPFStreamingDetectionComponent()</h3>
-<pre><code>MPFStreamingDetectionComponent(const MPFStreamingVideoJob &amp;job) { };
+<h3 id="constructor">Constructor</h3>
+<p>Superclass constructor that must be invoked by the constructor of the component subclass. </p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">MPFStreamingDetectionComponent(const MPFStreamingVideoJob &amp;job)
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job</td>
+<td><code>const MPFStreamingVideoJob &amp;</code></td>
+<td>Structure containing details about the work to be performed. See <a href="#mpfstreamingvideojob"><code>MPFStreamingVideoJob</code></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Returns: none</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">SampleComponent::SampleComponent(const MPFStreamingVideoJob &amp;job)
+        : MPFStreamingDetectionComponent(job)
+        , hw_logger_(GetLogger(job.run_directory))
+        , job_name_(job.job_name) {
+
+    LOG4CXX_INFO(hw_logger_, &quot;[&quot; &lt;&lt; job_name_ &lt;&lt; &quot;] Initialized SampleComponent component.&quot;)
+}
 </code></pre>
 
 <h3 id="getdetectiontype">GetDetectionType()</h3>
 <p>Returns the type of object detected by the component.</p>
 <ul>
-<li>Function Definition:
-<code>string GetDetectionType()</code></li>
-<li>
-<p>Parameters: None</p>
-</li>
-<li>
-<p>Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
-</li>
-<li>Example:</li>
+<li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    string SampleComponent::GetDetectionType() {
-        return &quot;FACE&quot;;
-    }
+<pre><code class="c++">string GetDetectionType()
 </code></pre>
 
-<h3 id="beginsegment">BeginSegment()</h3>
-<pre><code>void BeginSegment(const VideoSegmentInfo &amp;segment_info) { };
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>string</code>) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">string SampleComponent::GetDetectionType() {
+    return &quot;FACE&quot;;
+}
 </code></pre>
 
-<h3 id="processframe">ProcessFrame()</h3>
-<pre><code>bool ProcessFrame(const cv::Mat &amp;frame, int frame_number) = 0;
+<h3 id="beginsegmentvideosegmentinfo">BeginSegment(VideoSegmentInfo)</h3>
+<p>Indicate the beginning of a new video segment. The next call to <code>ProcessFrame()</code> will be the first frame of the new segment. <code>ProcessFrame()</code> will never be called before this function.</p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">void BeginSegment(const VideoSegmentInfo &amp;segment_info)
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>segment_info</td>
+<td><code>const VideoSegmentInfo &amp;</code></td>
+<td>Structure containing details about next video segment to process. See <a href="#videosegmentinfo"><code>VideoSegmentInfo</code></a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Returns: none</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">void SampleComponent::BeginSegment(const VideoSegmentInfo &amp;segment_info) {
+    // Prepare for next segment
+}
+</code></pre>
+
+<h3 id="processframemat">ProcessFrame(Mat ...)</h3>
+<p>Process a single video frame for the current segment. </p>
+<ul>
+<li>Function Definition:   </li>
+</ul>
+<pre><code class="c++">bool ProcessFrame(const cv::Mat &amp;frame, int frame_number)
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>frame</td>
+<td><code>const cv::Mat &amp;</code></td>
+<td>OpenCV class containing frame data. See <a href="https://docs.opencv.org/3.3.0/d3/d63/classcv_1_1Mat.html"><code>cv::Mat</code></a></td>
+</tr>
+<tr>
+<td>frame_number</td>
+<td><code>int</code></td>
+<td>A unique frame id. Guaranteed to be greater than the frame id passed to the last invocation of this function.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>Returns: (<code>bool</code>) True if any detections were found in this frame; false otherwise.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">bool SampleComponent::ProcessFrame(const cv::Mat &amp;frame, int frame_number) {
+    // Look for detections. Generate tracks and store them until the end of the segment.
+}
 </code></pre>
 
 <h3 id="endsegment">EndSegment()</h3>
-<pre><code>std::vector&lt;MPFVideoTrack&gt; EndSegment() = 0;
+<p>Indicate the end of the current video segment. This will always be called after <code>BeginSegment()</code>. Generally, <code>ProcessFrame()</code> will be called one or more times before this function, depending on the number of frames in the segment and the number of frames actually read from the stream.</p>
+<p>Note that the next time <code>BeginSegment()</code> is called, this component should start generating new tracks. Each time <code>EndSegment()</code> is called, it should return only the most recent track data for that segment. Tracks should not be carried over between segments. Do not append new detections to a preexisting track from the previous segment and return that cumulative track when this function is called.</p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">vector&lt;MPFVideoTrack&gt; EndSegment()
 </code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>vector&lt;MPFVideoTrack&gt;</code>) The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">vector&lt;MPFVideoTrack&gt; SampleComponent::EndSegment() {
+    // Perform any necessary cleanup before processing the next segment.
+    // Return the collection of tracks generated for this segment only.
+}
+</code></pre>
+
+<h2 id="detection-job-data-structures">Detection Job Data Structures</h2>
+<p>The following data structures contain details about a specific job, and a video segment (work unit) associated with that job:</p>
+<ul>
+<li><a href="#mpfstreamingvideojob"><code>MPFStreamingVideoJob</code></a></li>
+<li><a href="#videosegmentinfo"><code>VideoSegmentInfo</code></a></li>
+</ul>
+<p>The following data structures define detection results:</p>
+<ul>
+<li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
+<li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
+</ul>
+<h3 id="mpfstreamingvideojob">MPFStreamingVideoJob</h3>
+<p>Structure containing information about a job to be performed on a video stream.</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">MPFStreamingVideoJob(
+  const std::string &amp;job_name,
+  const std::string &amp;run_directory,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
+}
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>job_name <a name="job-name"></a></td>
+<td><code>const string  &amp;</code></td>
+<td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
+</tr>
+<tr>
+<td>run_directory <a name="job-name"></a></td>
+<td><code>const string  &amp;</code></td>
+<td>Contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder.</td>
+</tr>
+<tr>
+<td>job_properties <a name="job-properties"></a></td>
+<td><code>const Properties &amp;</code></td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
+</tr>
+<tr>
+<td>media_properties <a name="media-properties"></a></td>
+<td><code>const Properties &amp;</code></td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detection-job-result-classes">Detection Job Result Classes</h2>
+<h3 id="mpfimagelocation">MPFImageLocation</h3>
+<p>Structure used to store the location of detected objects in a single video frame (image).</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">MPFImageLocation()
+MPFImageLocation(
+  int x_left_upper,
+  int y_left_upper,
+  int width,
+  int height,
+  float confidence = -1,
+  const Properties &amp;detection_properties = {})
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x_left_upper</td>
+<td><code>int</code></td>
+<td>Upper left X coordinate of the detected object.</td>
+</tr>
+<tr>
+<td>y_left_upper</td>
+<td><code>int</code></td>
+<td>Upper left Y coordinate of the detected object.</td>
+</tr>
+<tr>
+<td>width</td>
+<td><code>int</code></td>
+<td>The width of the detected object. If the detection consists of the entire image, use 0.</td>
+</tr>
+<tr>
+<td>height</td>
+<td><code>int</code></td>
+<td>The height of the detected object. If the detection consists of the entire image, use 0.</td>
+</tr>
+<tr>
+<td>confidence</td>
+<td><code>float</code></td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detection_properties</td>
+<td><code>Properties &amp;</code></td>
+<td>Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Example:</li>
+</ul>
+<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
+<pre><code class="c++">MPFImageLocation detection;
+detection.x_left_upper = 0;
+detection.y_left_upper = 0;
+detection.width = 100;
+detection.height = 100;
+detection.confidence = 1.0;
+detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot;;
+</code></pre>
+
+<h3 id="mpfvideotrack">MPFVideoTrack</h3>
+<p>Structure used to store the location of detected objects in a video file.</p>
+<ul>
+<li>Constructor(s):</li>
+</ul>
+<pre><code class="c++">MPFVideoTrack()
+MPFVideoTrack(
+  int start_frame,
+  int stop_frame,
+  float confidence = -1,
+  map&lt;int, MPFImageLocation&gt; frame_locations,
+  const Properties &amp;detection_properties = {})
+</code></pre>
+
+<ul>
+<li>Members:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>start_frame</td>
+<td><code>int</code></td>
+<td>The first frame number (0-based index) that contained the detected object.</td>
+</tr>
+<tr>
+<td>stop_frame</td>
+<td><code>int</code></td>
+<td>The last frame number (0-based index) that contained the detected object.</td>
+</tr>
+<tr>
+<td>frame_locations</td>
+<td><code>map&lt;int, MPFImageLocation&gt;</code></td>
+<td>A map of individual detections. The key for each map entry is the frame number where the detection was generated, and the value is a <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame.</td>
+</tr>
+<tr>
+<td>confidence</td>
+<td><code>float</code></td>
+<td>Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0.</td>
+</tr>
+<tr>
+<td>detection_properties</td>
+<td><code>Properties &amp;</code></td>
+<td>Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Example:</li>
+</ul>
+<p>A component that detects text can add an entry to <code>detection_properties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
+<pre><code class="c++">MPFVideoTrack track;
+track.start_frame = 0;
+track.stop_frame = 5;
+track.confidence = 1.0;
+track.frame_locations = frame_locations;
+track.detection_properties[&quot;TRANSCRIPTION&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
+</code></pre>
+
+<h1 id="delete-me">DELETE ME!</h1>
+<ul>
+<li>TODO: Throw exceptions</li>
+<li>TODO: Update Build Guide iso link</li>
+</ul>
               
             </div>
           </div>

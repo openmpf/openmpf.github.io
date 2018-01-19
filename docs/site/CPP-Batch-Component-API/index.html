@@ -275,10 +275,10 @@
 <pre><code class="c++">component-&gt;SetRunDirectory(...)
 component-&gt;Init()
 while (true) {
-  job = ReceiveJob()
-  if (component-&gt;Supports(job.data_type))
-    component-&gt;GetDetections(...) // Component logic does the work here
-  SendJobResponse()
+    job = ReceiveJob()
+    if (component-&gt;Supports(job.data_type))
+        component-&gt;GetDetections(...) // Component logic does the work here
+    SendJobResponse()
 }
 component-&gt;Close()
 </code></pre>
@@ -317,7 +317,7 @@ component-&gt;Close()
 <li><a href="#mpfgenericjob"><code>MPFGenericJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 </ul>
 <p><strong>Job Results</strong></p>
-<p>The following data structures define the results of a component's processing:</p>
+<p>The following data structures define detection results:</p>
 <ul>
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
 <li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
@@ -335,11 +335,21 @@ component-&gt;Close()
 <p>The component should perform all initialization operations in the <code>Init</code> member function.
 <code>Init</code> will be called once by the OpenMPF Component Executable before any other member functions.</p>
 <ul>
-<li>Function Definition:
-<code>bool Init()</code></li>
-<li>Parameters: none</li>
-<li>Returns: (bool) Return true if initialization is successful, otherwise return false.</li>
-<li>Example:</li>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">bool Init()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>bool</code>) Return true if initialization is successful, otherwise return false.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
 <pre><code class="c++">bool SampleComponent::Init() {
   // Get component paths
@@ -358,52 +368,86 @@ component-&gt;Close()
 <code>Close</code> will be called once by the OpenMPF Component Executable prior to component shutdown.</p>
 <p>This method is called before the component instance is deleted (see <a href="../CPP-Batch-Component-API/index.html#component-factory-functions">Component Factory Functions</a>).</p>
 <ul>
-<li>Function Definition:
-<code>bool Close()</code></li>
-<li>Parameters: none</li>
-<li>Returns: (bool) Return true if successful, otherwise return false.</li>
-<li>Example:</li>
+<li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    bool SampleComponent::Close() {
-        // Free memory, etc.
-        return true;
-    }
+<pre><code class="c++">bool Close()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>bool</code>) Return true if successful, otherwise return false.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">bool SampleComponent::Close() {
+    // Free memory, etc.
+    return true;
+}
 </code></pre>
 
 <h3 id="getcomponenttype">GetComponentType()</h3>
 <p>The GetComponentType() member function allows the C++ Batch Component API to determine the component "type." Currently <code>MPF_DETECTION_COMPONENT</code> is the only supported component type. APIs for other component types may be developed in the future.</p>
 <ul>
-<li>Function Definition:
-<code>MPFComponentType GetComponentType()</code></li>
-<li>Parameters: none</li>
-<li>Returns: (MPFComponentType) Currently, <code>MPF_DETECTION_COMPONENT</code> is the only supported return value.</li>
-<li>Example:</li>
+<li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    MPFComponentType SampleComponent::GetComponentType() {
-        return MPF_DETECTION_COMPONENT;
-    };
+<pre><code class="c++">MPFComponentType GetComponentType()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>MPFComponentType</code>) Currently, <code>MPF_DETECTION_COMPONENT</code> is the only supported return value.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">MPFComponentType SampleComponent::GetComponentType() {
+    return MPF_DETECTION_COMPONENT;
+};
 </code></pre>
 
 <h3 id="getrundirectory">GetRunDirectory()</h3>
 <p>Returns the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder.</p>
 <ul>
-<li>Function Definition:
-<code>string GetRunDirectory()</code></li>
-<li>Parameters: none</li>
-<li>Returns: (string) Full path of the parent folder above where the component is installed.</li>
-<li>Sample Usage:</li>
+<li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    string run_dir = GetRunDirectory();
-    string plugin_path = run_dir + &quot;/SampleComponent&quot;;
-    string config_path = plugin_path + &quot;/config&quot;;
-    string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
+<pre><code class="c++">string GetRunDirectory()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>string</code>) Full path of the parent folder above where the component is installed.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">string run_dir = GetRunDirectory();
+string plugin_path = run_dir + &quot;/SampleComponent&quot;;
+string config_path = plugin_path + &quot;/config&quot;;
+string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
 </code></pre>
 
 <h3 id="setrundirectorystring">SetRunDirectory(string)</h3>
 <p>Sets the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed.</p>
 <ul>
-<li>Function Definition:
-<code>void SetRunDirectory(const string &amp;run_dir)</code></li>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">void SetRunDirectory(const string &amp;run_dir)
+</code></pre>
+
+<ul>
 <li>Parameters:</li>
 </ul>
 <table>
@@ -423,15 +467,19 @@ component-&gt;Close()
 </tbody>
 </table>
 <ul>
-<li>Returns: void</li>
+<li>Returns: none</li>
 </ul>
 <blockquote>
 <p><strong>IMPORTANT:</strong> <code>SetRunDirectory</code> is called by the Component Executable to set the correct path. This function should not be called within your implementation.</p>
 </blockquote>
 <h3 id="component-factory-functions">Component Factory Functions</h3>
 <p>Every detection component must include the following macros in its implementation:</p>
-<p><code>MPF_COMPONENT_CREATOR(TYPENAME);</code></p>
-<p><code>MPF_COMPONENT_DELETER();</code></p>
+<pre><code class="c++">MPF_COMPONENT_CREATOR(TYPENAME);
+</code></pre>
+
+<pre><code class="c++">MPF_COMPONENT_DELETER();
+</code></pre>
+
 <p>The creator macro takes the <code>TYPENAME</code> of the detection component (for example, “HelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.</p>
 <p>The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component. </p>
 <p>These macros must be used outside of a class declaration, preferably at the bottom or top of a component header file.</p>
@@ -470,8 +518,12 @@ A simple detector that operates on videos may simply go through the video frame-
 <h4 id="supportsmpfdetectiondatatype">Supports(MPFDetectionDataType)</h4>
 <p>Returns true or false depending on the data type is supported or not.</p>
 <ul>
-<li>Function Definition:
-<code>bool Supports(MPFDetectionDataType data_type)</code></li>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">bool Supports(MPFDetectionDataType data_type)
+</code></pre>
+
+<ul>
 <li>Parameters:</li>
 </ul>
 <table>
@@ -491,31 +543,41 @@ A simple detector that operates on videos may simply go through the video frame-
 </tbody>
 </table>
 <ul>
-<li>Returns: (bool) True if the component supports the data type, otherwise false.</li>
-<li>Example:</li>
+<li>
+<p>Returns: (<code>bool</code>) True if the component supports the data type, otherwise false.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
-<pre><code class="c++">    // Sample component that supports only image and video files
-    bool SampleComponent::Supports(MPFDetectionDataType data_type) {
-        return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
-    }
+<pre><code class="c++">// Sample component that supports only image and video files
+bool SampleComponent::Supports(MPFDetectionDataType data_type) {
+    return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
+}
 </code></pre>
 
 <h4 id="getdetectiontype">GetDetectionType()</h4>
 <p>Returns the type of object detected by the component.</p>
 <ul>
-<li>Function Definition:
-<code>string GetDetectionType()</code></li>
-<li>
-<p>Parameters: None</p>
-</li>
-<li>
-<p>Returns: (string) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
-</li>
-<li>Example:</li>
+<li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    string SampleComponent::GetDetectionType() {
-        return &quot;FACE&quot;;
-    }
+<pre><code class="c++">string GetDetectionType()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>string</code>) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">string SampleComponent::GetDetectionType() {
+    return &quot;FACE&quot;;
+}
 </code></pre>
 
 <h4 id="getdetectionsmpfimagejob">GetDetections(MPFImageJob …)</h4>
@@ -524,7 +586,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations)
+<pre><code class="c++">MPFDetectionError GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations)
 </code></pre>
 
 <ul>
@@ -552,14 +614,18 @@ A simple detector that operates on videos may simply go through the video frame-
 </tbody>
 </table>
 <ul>
-<li>Returns: <code>MPFDetectionError</code></li>
-<li>Example:</li>
+<li>
+<p>Returns: <code>MPFDetectionError</code></p>
+</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
-        // Parse job
-        // Generate image locations
-        return MPF_DETECTION_SUCCESS;
-    }
+<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
+    // Parse job
+    // Generate image locations
+    return MPF_DETECTION_SUCCESS;
+}
 </code></pre>
 
 <h4 id="getdetectionsmpfvideojob">GetDetections(MPFVideoJob …)</h4>
@@ -567,7 +633,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError getDetections(const MPFVideoJob &amp;job, vector&lt;MPFVideoTrack&gt; tracks);
+<pre><code class="c++">MPFDetectionError getDetections(const MPFVideoJob &amp;job, vector&lt;MPFVideoTrack&gt; tracks);
 </code></pre>
 
 <ul>
@@ -595,14 +661,18 @@ A simple detector that operates on videos may simply go through the video frame-
 </tbody>
 </table>
 <ul>
-<li>Returns: <code>MPFDetectionError</code></li>
-<li>Example:</li>
+<li>
+<p>Returns: <code>MPFDetectionError</code></p>
+</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
-        // Parse job
-        // Generate tracks
-        return MPF_DETECTION_SUCCESS;
-    }
+<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
+    // Parse job
+    // Generate tracks
+    return MPF_DETECTION_SUCCESS;
+}
 </code></pre>
 
 <h4 id="getdetectionsmpfaudiojob">GetDetections(MPFAudioJob …)</h4>
@@ -610,7 +680,7 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks)
+<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks)
 </code></pre>
 
 <ul>
@@ -638,14 +708,18 @@ A simple detector that operates on videos may simply go through the video frame-
 </tbody>
 </table>
 <ul>
-<li>Returns: <code>MPFDetectionError</code></li>
-<li>Example:</li>
+<li>
+<p>Returns: <code>MPFDetectionError</code></p>
+</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
-        // Parse job
-        // Generate tracks
-        return MPF_DETECTION_SUCCESS;
-    }
+<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
+    // Parse job
+    // Generate tracks
+    return MPF_DETECTION_SUCCESS;
+}
 </code></pre>
 
 <h4 id="getdetectionsmpfgenericjob">GetDetections(MPFGenericJob …)</h4>
@@ -653,12 +727,12 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks)
+<pre><code class="c++">MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks)
 </code></pre>
 
 <ul>
-<li>
-<p>Parameters:</p>
+<li>Parameters:</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -680,28 +754,30 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-</li>
+<ul>
 <li>
 <p>Returns: <code>MPFDetectionError</code></p>
 </li>
-<li>Example:</li>
+<li>
+<p>Example:</p>
+</li>
 </ul>
-<pre><code class="c++">    MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks) {
-        // Parse job
-        // Generate tracks
-        return MPF_DETECTION_SUCCESS;
-    }
+<pre><code class="c++">MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks) {
+    // Parse job
+    // Generate tracks
+    return MPF_DETECTION_SUCCESS;
+}
 </code></pre>
 
 <h3 id="detection-job-data-structures">Detection Job Data Structures</h3>
-<p>The <code>MPFDetectionComponent</code> data structures contain details about a specific job (work unit):</p>
+<p>The following data structures contain details about a specific job (work unit):</p>
 <ul>
 <li><a href="#mpfimagejob"><code>MPFImageJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfvideojob"><code>MPFVideoJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfaudiojob"><code>MPFAudioJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 <li><a href="#mpfgenericjob"><code>MPFGenericJob</code></a> extends <a href="#mpfjob"><code>MPFJob</code></a></li>
 </ul>
-<p>The following data structures contain details about detection results:</p>
+<p>The following data structures define detection results:</p>
 <ul>
 <li><a href="#mpfimagelocation"><code>MPFImageLocation</code></a></li>
 <li><a href="#mpfvideotrack"><code>MPFVideoTrack</code></a></li>
@@ -709,15 +785,15 @@ A simple detector that operates on videos may simply go through the video frame-
 <li><a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a></li>
 </ul>
 <h4 id="mpfjob">MPFJob</h4>
-<p>Structure containing information about about a job to be performed on a piece of media.</p>
+<p>Structure containing information about a job to be performed on a piece of media.</p>
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFJob(
-      const string &amp;job_name,
-      const string &amp;data_uri,
-      const Properties &amp;job_properties,
-      const Properties &amp;media_properties)
+<pre><code class="c++">MPFJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
 <ul>
@@ -760,19 +836,19 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFImageJob(
-        const string &amp;job_name,
-        const string &amp;data_uri,
-        const Properties &amp;job_properties,
-        const Properties &amp;media_properties)
+<pre><code class="c++">MPFImageJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
-<pre><code class="c++">    MPFImageJob(
-        const string &amp;job_name,
-        const string &amp;data_uri,
-        const MPFImageLocation &amp;location,
-        const Properties &amp;job_properties,
-        const Properties &amp;media_properties)
+<pre><code class="c++">MPFImageJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  const MPFImageLocation &amp;location,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
 <ul>
@@ -820,23 +896,23 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFVideoJob(
-      const string &amp;job_name,
-      const string &amp;data_uri,
-      int start_frame,
-      int stop_frame,
-      const Properties &amp;job_properties,
-      const Properties &amp;media_properties)
+<pre><code class="c++">MPFVideoJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  int start_frame,
+  int stop_frame,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
-<pre><code class="c++">    MPFVideoJob(
-      const string &amp;job_name,
-      const string &amp;data_uri,
-      int start_frame,
-      int stop_frame,
-      const MPFVideoTrack &amp;track,
-      const Properties &amp;job_properties,
-      const Properties &amp;media_properties)
+<pre><code class="c++">MPFVideoJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  int start_frame,
+  int stop_frame,
+  const MPFVideoTrack &amp;track,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
 <ul>
@@ -897,23 +973,23 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFAudioJob(
-      const string &amp;job_name,
-      const string &amp;data_uri,
-      int start_time,
-      int stop_time,
-      const Properties &amp;job_properties,
-      const Properties &amp;media_properties)
+<pre><code class="c++">MPFAudioJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  int start_time,
+  int stop_time,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
-<pre><code class="c++">    MPFAudioJob(
-      const string &amp;job_name,
-      const string &amp;data_uri,
-      int start_time,
-      int stop_time,
-      const MPFAudioTrack &amp;track,    
-      const Properties &amp;job_properties,
-      const Properties &amp;media_properties)
+<pre><code class="c++">MPFAudioJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  int start_time,
+  int stop_time,
+  const MPFAudioTrack &amp;track,    
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
 <ul>
@@ -971,19 +1047,19 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">  MPFGenericJob(
-    const string &amp;job_name,
-    const string &amp;data_uri,
-    const Properties &amp;job_properties,
-    const Properties &amp;media_properties)
+<pre><code class="c++">MPFGenericJob(
+  const string &amp;job_name,
+  const string &amp;data_uri,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 </code></pre>
 
-<pre><code class="c++">  MPFGenericJob(
-    const std::string &amp;job_name,
-    const std::string &amp;data_uri,
-    const MPFGenericTrack &amp;track,
-    const Properties &amp;job_properties,
-    const Properties &amp;media_properties)
+<pre><code class="c++">MPFGenericJob(
+  const std::string &amp;job_name,
+  const std::string &amp;data_uri,
+  const MPFGenericTrack &amp;track,
+  const Properties &amp;job_properties,
+  const Properties &amp;media_properties)
 }
 </code></pre>
 
@@ -1032,14 +1108,14 @@ A simple detector that operates on videos may simply go through the video frame-
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFImageLocation()
-    MPFImageLocation(
-      int x_left_upper,
-      int y_left_upper,
-      int width,
-      int height,
-      float confidence = -1,
-      const Properties &amp;detection_properties = {})
+<pre><code class="c++">MPFImageLocation()
+MPFImageLocation(
+  int x_left_upper,
+  int y_left_upper,
+  int width,
+  int height,
+  float confidence = -1,
+  const Properties &amp;detection_properties = {})
 </code></pre>
 
 <ul>
@@ -1086,31 +1162,31 @@ A simple detector that operates on videos may simply go through the video frame-
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>EXAMPLE - Using detection_properties</strong>: A component that performs generic object classification could add an entry to the detection_properties which corresponds to the type of object detected.</p>
-<p>Source:</p>
-</blockquote>
+<ul>
+<li>Example:</li>
+</ul>
+<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
 <pre><code class="c++">MPFImageLocation detection;
 detection.x_left_upper = 0;
 detection.y_left_upper = 0;
-detection.width = 0;
-detection.height = 0;
-detection.confidence = probability;
+detection.width = 100;
+detection.height = 100;
+detection.confidence = 1.0;
 detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot;;
 </code></pre>
 
 <h4 id="mpfvideotrack">MPFVideoTrack</h4>
 <p>Structure used to store the location of detected objects in a video file.</p>
 <ul>
-<li>Constructor:</li>
+<li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFVideoTrack()
-    MPFVideoTrack(
-      int start_frame,
-      int stop_frame,
-      float confidence = -1,
-      map&lt;int, MPFImageLocation&gt; frame_locations,
-      const Properties &amp;detection_properties = {})
+<pre><code class="c++">MPFVideoTrack()
+MPFVideoTrack(
+  int start_frame,
+  int stop_frame,
+  float confidence = -1,
+  map&lt;int, MPFImageLocation&gt; frame_locations,
+  const Properties &amp;detection_properties = {})
 </code></pre>
 
 <ul>
@@ -1152,27 +1228,29 @@ detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>EXAMPLE - Using detection_properties</strong>: A component that detects text could add an entry to the detection_properties map where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.
-<code>c++
-MPFImageLocation detection;
-detection.x_left_upper = 10;
-detection.y_left_upper = 40;
-detection.width = 500;
-detection.height = 600;
-detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER";</code></p>
-</blockquote>
+<ul>
+<li>Example:</li>
+</ul>
+<p>A component that detects text can add an entry to <code>detection_properties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
+<pre><code class="c++">MPFVideoTrack track;
+track.start_frame = 0;
+track.stop_frame = 5;
+track.confidence = 1.0;
+track.frame_locations = frame_locations;
+track.detection_properties[&quot;TRANSCRIPTION&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
+</code></pre>
+
 <h4 id="mpfaudiotrack">MPFAudioTrack</h4>
 <p>Structure used to store the location of detected objects in an audio file.</p>
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">    MPFAudioTrack()
-    MPFAudioTrack(
-      int start_time,
-      int stop_time,
-      float confidence = -1,
-      const Properties &amp;detection_properties = {})
+<pre><code class="c++">MPFAudioTrack()
+MPFAudioTrack(
+  int start_time,
+  int stop_time,
+  float confidence = -1,
+  const Properties &amp;detection_properties = {})
 </code></pre>
 
 <ul>
@@ -1214,10 +1292,10 @@ detection.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER"
 <ul>
 <li>Constructor(s):</li>
 </ul>
-<pre><code class="c++">  MPFGenericTrack()
-  MPFGenericTrack(
-    float confidence = -1,
-    const Properties &amp;detection_properties = {})
+<pre><code class="c++">MPFGenericTrack()
+MPFGenericTrack(
+  float confidence = -1,
+  const Properties &amp;detection_properties = {})
 </code></pre>
 
 <ul>
