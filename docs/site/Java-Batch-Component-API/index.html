@@ -1213,6 +1213,9 @@ MPFImageLocation imageLocation = new MPFImageLocation(0, 0, 100, 100, 1.0, detec
 <ul>
 <li>Example: </li>
 </ul>
+<blockquote>
+<p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detectionProperties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+</blockquote>
 <p>A component that detects text could add an entry to <code>detectionProperties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
 <pre><code class="java">Map&lt;String, String&gt; detectionProperties = new HashMap&lt;String, String&gt;();
 detectionProperties.put(&quot;TRANSCRIPTION&quot;, &quot;RE5ULTS FR0M A TEXT DETECTER&quot;);

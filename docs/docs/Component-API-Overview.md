@@ -18,7 +18,7 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
 * **Detection Component** - A component that performs either detection (with or without tracking), or classification on a piece of media.
 * **Node** - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.
 * **Service** - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.
-* **Batch Processing** - Process complete image, audio, and video files that reside on disk.
+* **Batch Processing** - Process complete image, audio, video, and/or other files that reside on disk.
 * **Stream Processing** - Process live video streams.
 
 <h1> Background </h1> 
@@ -59,7 +59,7 @@ A component’s action type corresponds to the operation which the algorithm per
 
 A component can perform batch processing, stream processing, or both. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 
-The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO` for components that support batch processing, or just `VIDEO` for components that only support stream processing.
+The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO` for components that support batch processing, or just `VIDEO` for components that only support stream processing. Batch components can also support the `UNKNOWN` data type, meaning that they can accept jobs for any kind of media file.
 
 As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.
 

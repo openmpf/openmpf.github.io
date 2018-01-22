@@ -653,6 +653,8 @@ public MPFVideoTrack(
 
 * Example: 
 
+>**NOTE:** Currently, `MPFVideoTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way. 
+
 A component that detects text could add an entry to `detectionProperties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
 
 ```java

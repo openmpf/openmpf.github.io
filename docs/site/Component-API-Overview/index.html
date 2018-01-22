@@ -253,7 +253,7 @@
 <li><strong>Detection Component</strong> - A component that performs either detection (with or without tracking), or classification on a piece of media.</li>
 <li><strong>Node</strong> - An OpenMPF host that launches components. There may be more than one node in an OpenMPF cluster, thus forming a distributed system. There is always a master node that runs the OpenMPF web application.</li>
 <li><strong>Service</strong> - An instance of an OpenMPF component process. Each OpenMPF node may run one or more services at a time. Multiple services may run in parallel to process a job. For example, each service may process a different piece of media, or a segment of the same video.</li>
-<li><strong>Batch Processing</strong> - Process complete image, audio, and video files that reside on disk.</li>
+<li><strong>Batch Processing</strong> - Process complete image, audio, video, and/or other files that reside on disk.</li>
 <li><strong>Stream Processing</strong> - Process live video streams.</li>
 </ul>
 <h1> Background </h1>
@@ -288,7 +288,7 @@
 </ul>
 <p>A component’s action type corresponds to the operation which the algorithm performs. Generally, this is <code>DETECTION</code>.</p>
 <p>A component can perform batch processing, stream processing, or both. Refer to the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>.</p>
-<p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code> for components that support batch processing, or just <code>VIDEO</code> for components that only support stream processing.</p>
+<p>The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of <code>IMAGE</code>, <code>AUDIO</code>, and <code>VIDEO</code> for components that support batch processing, or just <code>VIDEO</code> for components that only support stream processing. Batch components can also support the <code>UNKNOWN</code> data type, meaning that they can accept jobs for any kind of media file.</p>
 <p>As depicted in the figure below, detection components accept an input media file (or segment of the file in the case of video files) and produce a collection of object detections discovered in the data.</p>
 <p>The type of objects produced depends on the input type. For example, video files produce video tracks, audio files produce audio tracks, and images produce image locations.</p>
 <p><img alt="OpenMPF Component IO" src="../img/component_io_diagram.png" title="OpenMPF Component IO" /></p>

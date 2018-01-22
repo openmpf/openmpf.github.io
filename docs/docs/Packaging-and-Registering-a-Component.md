@@ -111,6 +111,7 @@ Required.
 Specifies information about the component’s algorithm.
 
 Contains the following sub-fields:
+
 * **name:**
   Required. Contains the algorithm’s name. Should be unique and all CAPS.
 
@@ -133,36 +134,34 @@ Contains the following sub-fields:
 
 
 * **providesCollection:**
-
   Contains the following sub-fields:
-
-  * **states:** Required. Contains the state(s) that the algorithm provides.
+    * **states:** Required. Contains the state(s) that the algorithm provides.
   Should contain the following values:
-    * `DETECTION`
-    * `DETECTION_TYPE`, where `TYPE` is the `algorithm.detectionType`
-    * `DETECTION_TYPE_ALGORITHM`, where `TYPE` is the value of `algorithm.detectionType` and `ALGORITHM` is the value of `algorithm.name`
-    Example:
-      ```
-      "states": [
-        "DETECTION",
-        "DETECTION_FACE",
-        "DETECTION_FACE_SAMPLECOMPONENT"]
-      ```
-
-  * **properties:**
-  Required; can be empty. Declares a list of the configurable properties that the algorithm exposes.
-  Contains the following sub-fields:
-    * **name:**
-      Required.
-    * **type:**
-      Required.
-      `BOOLEAN`, `FLOAT`, `DOUBLE`, `INT`, `LONG`, or `STRING`.
-    * **defaultValue:**
-      Required.
-      Must be provided in order to create a default action associated with the algorithm, where an action is a specific instance of an algorithm configured with a set of property values.
-    * **description:**
-      Required.
-      Description of the property. By convention, the default value for a property should be described in its description text.
+        * `DETECTION`
+        * `DETECTION_TYPE`, where `TYPE` is the `algorithm.detectionType`
+        * `DETECTION_TYPE_ALGORITHM`, where `TYPE` is the value of `algorithm.detectionType` and `ALGORITHM` is the value of `algorithm.name`<br/><br/>
+        Example:<br/>
+        ```
+        "states": [
+          "DETECTION",
+          "DETECTION_FACE",
+          "DETECTION_FACE_SAMPLECOMPONENT"]
+        ```
+        <br/><br/>
+    * **properties:**
+    Required; can be empty. Declares a list of the configurable properties that the algorithm exposes.
+    Contains the following sub-fields:
+        * **name:**
+          Required.
+        * **type:**
+          Required.
+          `BOOLEAN`, `FLOAT`, `DOUBLE`, `INT`, `LONG`, or `STRING`.
+        * **defaultValue:**
+          Required.
+          Must be provided in order to create a default action associated with the algorithm, where an action is a specific instance of an algorithm configured with a set of property values.
+        * **description:**
+          Required.
+          Description of the property. By convention, the default value for a property should be described in its description text.
 
 <h3>actions</h3>
 Optional.
