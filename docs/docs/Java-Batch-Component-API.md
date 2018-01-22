@@ -65,8 +65,8 @@ The API consists of *Component Interfaces*, which provide interfaces and abstrac
 
 **Component Interfaces**
 
-* [`MPFComponentInterface`](#openmpf-component-api) - Interface for all Java components that perform batch processing.
-* `MPFComponentBase` - An abstract baseline for components. Provides default implementations for [`MPFComponentInterface`](#openmpf-component-api).
+* [`MPFComponentInterface`](#component-interface) - Interface for all Java components that perform batch processing.
+* `MPFComponentBase` - An abstract baseline for components. Provides default implementations for [`MPFComponentInterface`](#component-interface).
 
 **Detection Component Interfaces**
 
@@ -197,11 +197,11 @@ public void setRunDirectory(String runDirectory);
 
 ## Detection Component Interface
 
-The [`MPFDetectionComponentInterface`](#detection-component-interface) must be utilized by all OpenMPF Java detection components that perform batch processing.
+The `MPFDetectionComponentInterface` must be utilized by all OpenMPF Java detection components that perform batch processing.
 
-Every batch detection component must define a *component* class which implements the MPFComponentInterface. This is typically performed by extending `MPFDetectionComponentBase`, which extends `MPFComponentBase` and implements [`MPFDetectionComponentInterface`](#detection-component-interface).
+Every batch detection component must define a *component* class which implements the MPFComponentInterface. This is typically performed by extending `MPFDetectionComponentBase`, which extends `MPFComponentBase` and implements `MPFDetectionComponentInterface`.
 
-To designate the component class, every batch detection component should include an applicationContext.xml which defines the `component` bean.  The `component` bean class must implement [`MPFDetectionComponentInterface`](#detection-component-interface).
+To designate the component class, every batch detection component should include an applicationContext.xml which defines the `component` bean.  The `component` bean class must implement `MPFDetectionComponentInterface`.
 
 >**IMPORTANT:** Each batch detection component must implement all of the `getDetections()` methods or extend from a superclass which provides implementations for them (see [convenience adapters](#convenience-adapters)).
 >
@@ -715,7 +715,7 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_DETECTION_SUCCESS  | The execution of any component method has completed normally with no errors.       |
 | MPF_OTHER_DETECTION_ERROR_TYPE | The component method has failed for a reason that is not captured by any of the other error codes. |
 | MPF_DETECTION_NOT_INITIALIZED | The initialization of the component, or the initialization of any of its dependencies, has failed for any reason. |
-| MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the `MPFDataType` enum.  Note that this failure is normally caught by the component executor before a job is passed to the component logic. |
+| MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the `MPFDataType` enum.  Note that this failure is normally caught by the Component Executor before a job is passed to the component logic. |
 | MPF_UNSUPPORTED_DATA_TYPE | The job passed to a component requests processing of a job of an unsupported type. For instance, a component that is only capable of processing audio files should return this error code if a video or image job request is received. |
 | MPF_INVALID_DATAFILE_URI | The string containing the URI location of the input data file is invalid or empty. |
 | MPF_COULD_NOT_OPEN_DATAFILE | The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. |

@@ -12,7 +12,7 @@ Using this API, detection components can be built to provide:
 * Tracking (Localizing an object across multiple frames)
 * Classification (Detecting the type of object and optionally localizing that object)
 
-Each frame of the video is processed as it is read from the stream. After processing enough frames to form a segment (for example, 100 frames), the component starts starts processing the next segment. Like with batch processing, each segment read from the stream is processed independently of the rest. No detection or track information is carried over between segments. Tracks are not merged across segments.
+Each frame of the video is processed as it is read from the stream. After processing enough frames to form a segment (for example, 100 frames), the component starts processing the next segment. Like with batch processing, each segment read from the stream is processed independently of the rest. No detection or track information is carried over between segments. Tracks are not merged across segments.
 
 ## How Components Integrate into OpenMPF
 
@@ -46,7 +46,7 @@ Each instance of a Component Executable runs as a separate process. Generally, e
 
 The Component Executable invokes functions on the Component Logic to get detection objects, and subsequently generates new track alerts and segment summary reports based on the output. These alerts and reports are sent to the WFM.
 
-A component developer implements a detection component by extending [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api).
+A component developer implements a detection component by extending [`MPFStreamingDetectionComponent`](#detection-component-interface).
 
 
 ## Getting Started
@@ -55,8 +55,8 @@ The quickest way to get started with the C++ Streaming Component API is to first
 
 Detection components are implemented by:
 
-1. Extending [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api).
-2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt)).
+1. Extending [`MPFStreamingDetectionComponent`](#detection-component-interface).
+2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/CMakeLists.txt)).
 3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
 4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
 
@@ -72,7 +72,7 @@ The API consists of a *Detection Component Interface* and related input and outp
 
 **Detection Component Interface**
 
-* [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) - Abstract class that should be extended by all OpenMPF C++ detection components that perform stream processing.
+* [`MPFStreamingDetectionComponent`](#detection-component-interface) - Abstract class that should be extended by all OpenMPF C++ detection components that perform stream processing.
 
 **Inputs**
 
@@ -112,7 +112,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 
 ## Detection Component Interface
 
-The [`MPFStreamingDetectionComponent`](#openmpf-detection-component-api) class is the abstract class utilized by all OpenMPF C++ detection components that perform stream processing. This class provides functions for developers to integrate detection logic into OpenMPF.
+The `MPFStreamingDetectionComponent` class is the abstract class utilized by all OpenMPF C++ detection components that perform stream processing. This class provides functions for developers to integrate detection logic into OpenMPF.
 
 [**See the latest source here.**](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/api/include/MPFStreamingDetectionComponent.h)
 
@@ -211,6 +211,11 @@ bool ProcessFrame(const cv::Mat &frame, int frame_number)
 ```c++
 bool SampleComponent::ProcessFrame(const cv::Mat &frame, int frame_number) {
     // Look for detections. Generate tracks and store them until the end of the segment.
+    if (found_detection) {
+        return true;        
+    } else {
+        return false;
+    }
 }
 ```   
 
@@ -380,7 +385,7 @@ track.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER";
 
 # C++ Component Build Environment
 
-A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ component executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
+A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ Component Executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.
 
@@ -397,7 +402,7 @@ bool SampleComponent::ProcessFrame(const cv::Mat &frame, int frame_number) {
 }
 ```
 
-The exception will be handled by the **Component Executable**. It will immediately invoke `EndSegment()` to retrieve the current tracks. Then the component process and streaming job will be terminated.
+The exception will be handled by the Component Executable. It will immediately invoke `EndSegment()` to retrieve the current tracks. Then the component process and streaming job will be terminated.
 
 ## Single-threaded Operation
 

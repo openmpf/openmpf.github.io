@@ -239,8 +239,114 @@
 </blockquote>
 <h1 id="openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</h1>
 <blockquote>
-<p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI.</p>
+<p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the Subsense component has been updated to support streaming. Only single-stage pipelines are supported at this time. </p>
 </blockquote>
+<h2>Documentation</h2>
+
+<ul>
+<li>Added the <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>. </li>
+<li>Updated documents to distinguish between the batch component APIs and streaming component API.</li>
+<li>Updated the <a href="../REST-API/index.html">REST API</a> with endpoints for streaming jobs.</li>
+</ul>
+<h2>Web User Interface</h2>
+
+<ul>
+<li>Added column names to the table that appears when the user clicks in the Media button associated with a job on the Job Status page. Now descriptive comments are provided when table cells are empty.</li>
+</ul>
+<h2>Streaming REST API</h2>
+
+<ul>
+<li>Added the following REST endpoints for streaming jobs:<ul>
+<li><code>[GET] /rest/streaming/jobs</code>: Returns a list of streaming job ids.</li>
+<li><code>[POST] /rest/streaming/jobs</code>: Creates and submits a streaming job. Users can register for health report and summary report callbacks.</li>
+<li><code>[GET] /rest/streaming/jobs/{id}</code>: Gets information about a streaming job.</li>
+<li><code>[POST] /rest/streaming/jobs/{id}/cancel</code>: Cancels a streaming job.</li>
+</ul>
+</li>
+</ul>
+<h2>Workflow Manager</h2>
+
+<ul>
+<li>Updated Redis to store information about streaming jobs.</li>
+<li>Added controllers for streaming job REST endpoints.</li>
+<li>Added ability to generate health reports and segment summary reports for streaming jobs.</li>
+<li>Improved code flow between the Workflow Manager and master Node Manager to support streaming jobs.</li>
+<li>Added ActiveMQ queues to enable the C++ Streaming Component Executor to send reports and job status to the Workflow Manager.</li>
+</ul>
+<h2>Node Manager</h2>
+
+<ul>
+<li>Updated the master Node Manager and child Node Managers to spawn component services on demand to handle streaming jobs, cancel those jobs, and to monitor the status of those processes.</li>
+<li>Using .ini files to represent streaming job properties and enable better communication between a child Node Manager and C++ Streaming Component Executor. </li>
+</ul>
+<h2>C++ Streaming Component API</h2>
+
+<ul>
+<li>Developed the C++ Streaming Component API with the following functions:<ul>
+<li><code>MPFStreamingDetectionComponent(const MPFStreamingVideoJob &amp;job)</code>: Constructor that takes a streaming video job.</li>
+<li><code>string GetDetectionType()</code>: Returns the type of detection (i.e. "FACE").</li>
+<li><code>void BeginSegment(const VideoSegmentInfo &amp;segment_info)</code>: Indicates the beginning of a new video segment.</li>
+<li><code>bool ProcessFrame(const cv::Mat &amp;frame, int frame_number)</code>: Processes a single frame for the current video segment.</li>
+<li><code>vector&lt;MPFVideoTrack&gt; EndSegment()</code>: Indicates the end of the current video segment.</li>
+</ul>
+</li>
+<li>Updated the C++ Hello World component to support streaming jobs.</li>
+</ul>
+<h2>C++ Streaming Component Executor</h2>
+
+<ul>
+<li>Developed the C++ Streaming Component Executor to load a streaming component logic library, read frames from a video stream, and exercise the component logic through the C++ Streaming Component API.</li>
+<li>TODO: Describe how stalls are handled.</li>
+</ul>
+<h2>Frame Ids</h2>
+
+<ul>
+<li>TODO: Describe switch from <code>int</code> to <code>long</code>, and impact on REST API and component developers, if appropriate.</li>
+</ul>
+<h2>Interoperability Package</h2>
+
+<ul>
+<li>Added the following Java classes to the interoperability package to simplify third party integration:<ul>
+<li><code>JsonHealthReportDataCallbackBody</code>: Represents the JSON content of a health report callback.</li>
+<li>TODO: Describe Segment Summary Report JSON.</li>
+</ul>
+</li>
+</ul>
+<h2>Subsense Component</h2>
+
+<ul>
+<li>TODO: Describe streaming support.</li>
+</ul>
+<h2>Packaging and Deployment</h2>
+
+<ul>
+<li>Updated descriptor.json fields to allow components to support batch and/or streaming jobs.</li>
+<li>Batch component logic and streaming component logic are compiled into separate libraries.</li>
+<li>TODO: Describe mySQL update to support error detail.</li>
+</ul>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>Upgraded Tika to 1.17 to resolve an issue with improper indentation in a Python file (rotation.py) that resulted in generating at least one error message per image processed. When processing a large number of images, this would generate may error messages, causing the Automatic Bug Reporting Tool daemon (abrtd) process to run at 100% CPU. Once in that state, that process would stay there, essentially wasting on CPU core. This resulted in some of the Jenkins virtual machines we used for testing to become unresponsive.</li>
+</ul>
+<h2>Known Issues</h2>
+
+<ul>
+<li>Tika 1.17 does not come pre-packaged with support for some embedded image formats in PDF files, possibly to avoid patent issues. OpenMPF does not handle embedded images in PDFs, so that's not a problem. Tika will print out the following warnings, which can be safely ignored:</li>
+</ul>
+<pre><code>Jan 22, 2018 11:02:15 AM org.apache.tika.config.InitializableProblemHandler$3 handleInitializableProblem
+WARNING: JBIG2ImageReader not loaded. jbig2 files will be ignored
+See https://pdfbox.apache.org/2.0/dependencies.html#jai-image-io
+for optional dependencies.
+TIFFImageWriter not loaded. tiff files will not be processed
+See https://pdfbox.apache.org/2.0/dependencies.html#jai-image-io
+for optional dependencies.
+J2KImageReader not loaded. JPEG2000 files will not be processed.
+See https://pdfbox.apache.org/2.0/dependencies.html#jai-image-io
+for optional dependencies.
+
+</code></pre>
+
 <h1 id="openmpf-100-october-2017">OpenMPF 1.0.0: October 2017</h1>
 <h2>Documentation</h2>
 
@@ -365,9 +471,9 @@
 </ul>
 </li>
 <li>The REST API is being updated with endpoints for streaming jobs:<ul>
-<li>[POST] /rest/streaming/jobs: Creates and submits a streaming job</li>
-<li>[POST] /rest/streaming/jobs/{id}/cancel: Cancels a streaming job</li>
-<li>[GET] /rest/streaming/jobs/{id}: Gets information about a streaming job</li>
+<li><code>[POST] /rest/streaming/jobs</code>: Creates and submits a streaming job</li>
+<li><code>[POST] /rest/streaming/jobs/{id}/cancel</code>: Cancels a streaming job</li>
+<li><code>[GET] /rest/streaming/jobs/{id}</code>: Gets information about a streaming job</li>
 </ul>
 </li>
 <li>The Redis and mySQL databases are being updated to support streaming video jobs.<ul>
@@ -388,10 +494,10 @@
 <ul>
 <li>If a job is submitted through the REST API, and a user to logged into the web UI and looking at the job status page, the WFM may generate "Error retrieving the SingleJobInfo model for the job with id" messages.<ul>
 <li>This is because the job status is only added to the HTTP session object if the job is submitted through the web UI. When the UI queries the job status it inspects this object.</li>
-<li>This message does not appear if job status is obtained using the [GET] /rest/jobs/{id} endpoint.</li>
+<li>This message does not appear if job status is obtained using the <code>[GET] /rest/jobs/{id}</code> endpoint.</li>
 </ul>
 </li>
-<li>The [GET] /rest/jobs/stats endpoint aggregates information about all of the jobs ever run on the system. If thousands of jobs have been run, this call could take minutes to complete. The code should be improved to execute a direct mySQL query.</li>
+<li>The <code>[GET] /rest/jobs/stats</code> endpoint aggregates information about all of the jobs ever run on the system. If thousands of jobs have been run, this call could take minutes to complete. The code should be improved to execute a direct mySQL query.</li>
 </ul>
 <h1 id="openmpf-090-april-2017">OpenMPF 0.9.0: April 2017</h1>
 <blockquote>
