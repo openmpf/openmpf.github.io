@@ -331,9 +331,67 @@ component-&gt;Close()
 <blockquote>
 <p><strong>IMPORTANT:</strong> This interface should not be directly implemented, because no mechanism exists for launching components based off of it. Currently, the only supported type of component is detection, and all batch detection components should instead extend <a href="#detection-component-interface"><code>MPFDetectionComponent</code></a>.</p>
 </blockquote>
+<h3 id="setrundirectorystring">SetRunDirectory(string)</h3>
+<p>Sets the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed.</p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">void SetRunDirectory(const string &amp;run_dir)
+</code></pre>
+
+<ul>
+<li>Parameters:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>run_dir</td>
+<td><code>const string &amp;</code></td>
+<td>Full path of the parent folder above where the component is installed.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Returns: none</li>
+</ul>
+<blockquote>
+<p><strong>IMPORTANT:</strong> <code>SetRunDirectory</code> is called by the Component Executable to set the correct path. This function should not be called within your implementation.</p>
+</blockquote>
+<h3 id="getrundirectory">GetRunDirectory()</h3>
+<p>Returns the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder.</p>
+<ul>
+<li>Function Definition:</li>
+</ul>
+<pre><code class="c++">string GetRunDirectory()
+</code></pre>
+
+<ul>
+<li>
+<p>Parameters: none</p>
+</li>
+<li>
+<p>Returns: (<code>string</code>) Full path of the parent folder above where the component is installed.</p>
+</li>
+<li>
+<p>Example:</p>
+</li>
+</ul>
+<pre><code class="c++">string run_dir = GetRunDirectory();
+string plugin_path = run_dir + &quot;/SampleComponent&quot;;
+string config_path = plugin_path + &quot;/config&quot;;
+string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
+</code></pre>
+
 <h3 id="init">Init()</h3>
 <p>The component should perform all initialization operations in the <code>Init</code> member function.
-<code>Init</code> will be called once by the OpenMPF Component Executable before any other member functions.</p>
+This will be executed once by the Component Executable, on component startup, before the first job, after <code>SetRunDirectory</code>.</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
@@ -365,8 +423,8 @@ component-&gt;Close()
 
 <h3 id="close">Close()</h3>
 <p>The component should perform all shutdown operations in the <code>Close</code> member function.
-<code>Close</code> will be called once by the OpenMPF Component Executable prior to component shutdown.</p>
-<p>This method is called before the component instance is deleted (see <a href="../CPP-Batch-Component-API/index.html#component-factory-functions">Component Factory Functions</a>).</p>
+This will be executed once by the Component Executable, on component shutdown, usually after the last job.</p>
+<p>This function is called before the component instance is deleted (see <a href="../CPP-Batch-Component-API/index.html#component-factory-functions">Component Factory Functions</a>).</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
@@ -414,64 +472,6 @@ component-&gt;Close()
 };
 </code></pre>
 
-<h3 id="getrundirectory">GetRunDirectory()</h3>
-<p>Returns the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder.</p>
-<ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="c++">string GetRunDirectory()
-</code></pre>
-
-<ul>
-<li>
-<p>Parameters: none</p>
-</li>
-<li>
-<p>Returns: (<code>string</code>) Full path of the parent folder above where the component is installed.</p>
-</li>
-<li>
-<p>Example:</p>
-</li>
-</ul>
-<pre><code class="c++">string run_dir = GetRunDirectory();
-string plugin_path = run_dir + &quot;/SampleComponent&quot;;
-string config_path = plugin_path + &quot;/config&quot;;
-string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
-</code></pre>
-
-<h3 id="setrundirectorystring">SetRunDirectory(string)</h3>
-<p>Sets the value of the private <code>run_directory</code> data member which contains the full path of the parent folder above where the component is installed.</p>
-<ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="c++">void SetRunDirectory(const string &amp;run_dir)
-</code></pre>
-
-<ul>
-<li>Parameters:</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Data Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>run_dir</td>
-<td><code>const string &amp;</code></td>
-<td>Full path of the parent folder above where the component is installed.</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Returns: none</li>
-</ul>
-<blockquote>
-<p><strong>IMPORTANT:</strong> <code>SetRunDirectory</code> is called by the Component Executable to set the correct path. This function should not be called within your implementation.</p>
-</blockquote>
 <h3 id="component-factory-functions">Component Factory Functions</h3>
 <p>Every detection component must include the following macros in its implementation:</p>
 <pre><code class="c++">MPF_COMPONENT_CREATOR(TYPENAME);
@@ -482,7 +482,7 @@ string logconfig_file = config_path + &quot;/Log4cxxConfig.xml&quot;;
 
 <p>The creator macro takes the <code>TYPENAME</code> of the detection component (for example, “HelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.</p>
 <p>The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component. </p>
-<p>These macros must be used outside of a class declaration, preferably at the bottom or top of a component header file.</p>
+<p>These macros must be used outside of a class declaration, preferably at the bottom or top of a component source (.cpp) file.</p>
 <p><strong>Example:</strong></p>
 <pre><code class="c++">// Note: Do not put the TypeName/Class Name in quotes
 MPF_COMPONENT_CREATOR(HelloWorld);
@@ -499,7 +499,7 @@ MPF_COMPONENT_DELETER();
 </blockquote>
 <h3 id="convenience-adapters">Convenience Adapters</h3>
 <p>As an alternative to extending <a href="#detection-component-interface"><code>MPFDetectionComponent</code></a> directly, developers may extend one of several convenience adapter classes provided by OpenMPF.</p>
-<p>These adapters provide default implementations of several methods in <a href="#detection-component-interface"><code>MPFDetectionComponent</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
+<p>These adapters provide default implementations of several functions in <a href="#detection-component-interface"><code>MPFDetectionComponent</code></a> and ensure that the component's logic properly extends from the Component API. This enables developers to concentrate on implementation of the detection algorithm.</p>
 <p>The following adapters are provided:</p>
 <ul>
 <li>Image Detection (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/adapters/MPFImageDetectionComponentAdapter.h">source</a>)</li>

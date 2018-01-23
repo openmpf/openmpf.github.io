@@ -101,7 +101,7 @@ This creator macro takes the `TYPENAME` of the detection component (for example,
 
 This macro also creates the factory function that the Component Executable will use to delete that instance of the detection component. 
 
-This macro must be used outside of a class declaration, preferably at the bottom or top of a component header file.
+This macro must be used outside of a class declaration, preferably at the bottom or top of a component source (.cpp) file.
 
 **Example:**
 

@@ -102,10 +102,41 @@ The OpenMPF Component class structure consists of:
 
 **[See the latest source here.](https://github.com/openmpf/openmpf-java-component-sdk/tree/master/detection/java-component-api/src/main/java/org/mitre/mpf/component/api)**
 
+### setRunDirectory(String)
+
+Sets the value to the full path of the parent folder above where the component is installed.
+
+* Method Definition:
+```java
+public void setRunDirectory(String runDirectory);
+```
+
+* Parameters:
+
+| Parameter  | Data Type  | Description  |
+|---|---|---|
+| runDirectory  | `String`  | Full path of the parent folder above where the component is installed. |
+
+* Returns: none
+
+>**IMPORTANT:** `setRunDirectory` is called by the Component Executor to set the correct path. It is not necessary to call this method in your component implementation.
+
+### getRunDirectory()
+
+Returns the full path of the parent folder above where the component is installed.
+
+* Method Definition:
+```java
+public String getRunDirectory()
+```
+
+* Parameters: none
+
+* Returns: (`String`) Full path of the parent folder above where the component is installed.
 
 ### init()
 
-Performs any necessary startup tasks for the component. This will be executed once, on component startup, and not for every job.
+Performs any necessary startup tasks for the component. This will be executed once by the Component Executor, on component startup, before the first job, after `setRunDirectory`.
 
 * Method Definition:
 ```java
@@ -125,7 +156,7 @@ public void init() {
 
 ### close()
 
-Performs any necessary shutdown tasks for the component. This will be executed once, on component shutdown, and not for every job.
+Performs any necessary shutdown tasks for the component. This will be executed once by the Component Executor, on component shutdown, usually after the last job.
 
 * Method Definition:
 ```java
@@ -162,38 +193,6 @@ public MPFComponentType getComponentType() {
     return MPFComponentType.DETECTION;
 }
 ```
-
-### getRunDirectory()
-
-Returns the full path of the parent folder above where the component is installed.
-
-* Method Definition:
-```java
-public String getRunDirectory()
-```
-
-* Parameters: none
-
-* Returns: (`String`) Full path of the parent folder above where the component is installed.
-
-### setRunDirectory(String)
-
-Sets the value to the full path of the parent folder above where the component is installed.
-
-* Method Definition:
-```java
-public void setRunDirectory(String runDirectory);
-```
-
-* Parameters:
-
-| Parameter  | Data Type  | Description  |
-|---|---|---|
-| runDirectory  | `String`  | Full path of the parent folder above where the component is installed. |
-
-* Returns: none
-
->**IMPORTANT:** `setRunDirectory` is called by the Component Executor to set the correct path. It is not necessary to call this method in your component implementation.
 
 ## Detection Component Interface
 
