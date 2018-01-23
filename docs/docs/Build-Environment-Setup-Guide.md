@@ -857,6 +857,12 @@ Run these commands to build the OpenMPF and run the integration tests:
 
 > **NOTE:** Please see the appendix section [Known Issues](#known-issues) regarding any `java.lang.InterruptedException: null` warning log messages observed when running the tests.
 
+Run this command to clean up and remove all traces of the test run:
+
+1. `mpf clean --delete-uploaded-media --delete-logs`
+2. Type "Y" and press Enter.
+
+If you choose not to clean up before following the steps below to build and run the web application, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.
 
 # (Optional) Build and Run the Web Application
 
@@ -895,7 +901,7 @@ The web application should start running in the background as a daemon. Look for
 INFO: Server startup in 39030 ms
 ```
 
-After startup, the workflow-manager will be available at <http://localhost:8080/workflow-manager>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
+After startup, the workflow-manager will be available at <http://localhost:8443/workflow-manager> (or <http://localhost:8080/workflow-manager> if configured to use HTTP instead of HTTPS). Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
 
 If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/index.html) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Manual](Admin-Manual/index.html) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
 

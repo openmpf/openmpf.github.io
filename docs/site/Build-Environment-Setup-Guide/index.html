@@ -1215,6 +1215,12 @@ localhost.localdomain</code></p>
 <blockquote>
 <p><strong>NOTE:</strong> Please see the appendix section <a href="#known-issues">Known Issues</a> regarding any <code>java.lang.InterruptedException: null</code> warning log messages observed when running the tests.</p>
 </blockquote>
+<p>Run this command to clean up and remove all traces of the test run:</p>
+<ol>
+<li><code>mpf clean --delete-uploaded-media --delete-logs</code></li>
+<li>Type "Y" and press Enter.</li>
+</ol>
+<p>If you choose not to clean up before following the steps below to build and run the web application, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.</p>
 <h1 id="optional-build-and-run-the-web-application">(Optional) Build and Run the Web Application</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure Firefox before continuing.</p>
@@ -1250,7 +1256,7 @@ localhost.localdomain</code></p>
 <pre><code>INFO: Server startup in 39030 ms
 </code></pre>
 
-<p>After startup, the workflow-manager will be available at <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>. Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.</p>
+<p>After startup, the workflow-manager will be available at <a href="http://localhost:8443/workflow-manager">http://localhost:8443/workflow-manager</a> (or <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a> if configured to use HTTP instead of HTTPS). Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.</p>
 <p>If you want to test regular user capabilities, log in as 'mpf'. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Manual/index.html">OpenMPF Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
 <blockquote>
 <p><strong>NOTE:</strong> Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <a href="https://www.virtualbox.org/manual/ch06.html#natforward">https://www.virtualbox.org/manual/ch06.html#natforward</a> for configuring port forwarding.</p>
