@@ -1,4 +1,4 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2017 The MITRE Corporation. All Rights Reserved.
+> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.
 
 > **IMPORTANT:** This document describes the Workflow Manager architecture for batch processing. There is a separate architecture for stream processing that uses many of the same elements and concepts.
 
