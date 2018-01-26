@@ -451,6 +451,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 
 <h3 id="processframemat">ProcessFrame(Mat ...)</h3>
 <p>Process a single video frame for the current segment. </p>
+<p>Must return true when the component begins generating the first track for the current segment. After it returns true, the Component Executable will ignore the return value until the component begins processing the next segment.</p>
 <ul>
 <li>Function Definition:   </li>
 </ul>
@@ -483,7 +484,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 </table>
 <ul>
 <li>
-<p>Returns: (<code>bool</code>) True if any detections were found in this frame; false otherwise.</p>
+<p>Returns: (<code>bool</code>) True when the component begins generating the first track for the current segment; false otherwise.</p>
 </li>
 <li>
 <p>Example:</p>
