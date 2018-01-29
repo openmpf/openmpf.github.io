@@ -93,6 +93,8 @@ for optional dependencies.
 
 ``` 
 
+- OpenCV 3.3.0 `cv::imread()` does not properly decode some TIFF images that have EXIF orientation metadata. It can handle images that are flipped horizontally, but not vertically. It also has issues with rotated images. Since most components rely on that function to read image data, those components may silently fail to generate detections for those kinds of images.
+
 
 # OpenMPF 1.0.0: October 2017
 

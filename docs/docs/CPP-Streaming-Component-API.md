@@ -192,6 +192,8 @@ void SampleComponent::BeginSegment(const VideoSegmentInfo &segment_info) {
 ### ProcessFrame(Mat ...)
    
 Process a single video frame for the current segment. 
+
+Must return true when the component begins generating the first track for the current segment. After it returns true, the Component Executable will ignore the return value until the component begins processing the next segment.
    
 * Function Definition:   
 ```c++
@@ -205,7 +207,7 @@ bool ProcessFrame(const cv::Mat &frame, int frame_number)
 | frame  | `const cv::Mat &`  | OpenCV class containing frame data. See [`cv::Mat`](https://docs.opencv.org/3.3.0/d3/d63/classcv_1_1Mat.html) |
 | frame_number  | `int`  | A unique frame number (0-based index). Guaranteed to be greater than the frame number passed to the last invocation of this function. |
 
-* Returns: (`bool`) True if any detections were found in this frame; false otherwise.
+* Returns: (`bool`) True when the component begins generating the first track for the current segment; false otherwise.
 
 * Example:
 ```c++
