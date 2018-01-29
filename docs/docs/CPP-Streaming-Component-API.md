@@ -213,7 +213,7 @@ bool ProcessFrame(const cv::Mat &frame, int frame_number)
 ```c++
 bool SampleComponent::ProcessFrame(const cv::Mat &frame, int frame_number) {
     // Look for detections. Generate tracks and store them until the end of the segment.
-    if (found_detection) {
+    if (started_first_track_in_current_segment) {
         return true;        
     } else {
         return false;
