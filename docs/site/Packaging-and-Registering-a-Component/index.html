@@ -255,13 +255,13 @@
 <p>Required.</p>
 <p>Contains the component’s version. Does not need to match the <code>componentAPIVersion</code>.</p>
 <p>Example:
-<code>"componentVersion" : "0.1.0"</code></p>
-<h3>componentAPIVersion</h3>
+<code>"componentVersion" : "2.0.1"</code></p>
+<h3>middlewareVersion</h3>
 
 <p>Required.</p>
-<p>Contains the version of the MPF Component API that the component was built with.</p>
+<p>Contains the version of the OpenMPF Component API that the component was built with.</p>
 <p>Example:
-<code>"middlewareVersion" :  "1.0.0"</code></p>
+<code>"middlewareVersion" :  "2.0.0"</code></p>
 <h3>sourceLanguage</h3>
 
 <p>Required.</p>
@@ -276,7 +276,7 @@
 <p>Example (C++):
 <code>"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so</code></p>
 <p>Example (Java):
-<code>"batchLibrary" : "batch-sample-component-1.0.0.jar"</code></p>
+<code>"batchLibrary" : "batch-sample-component-2.0.1.jar"</code></p>
 <h3>streamLibrary</h3>
 
 <p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
@@ -290,13 +290,13 @@ For Java components, this contains the name of the jar which contains the compon
 <code>"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
 <!-- For future use:
 Example (Java):
-`"streamLibrary" : "stream-sample-component-1.0.0.jar"`
+`"streamLibrary" : "stream-sample-component-2.0.1.jar"`
 -->
 
 <h3>environmentVariables</h3>
 
 <p>Required; can be empty.</p>
-<p>Defines a collection of environment variables that will be set when executing the MPF Component Executable.</p>
+<p>Defines a collection of environment variables that will be set when executing the OpenMPF Component Executable.</p>
 <p>Contains the following sub-fields:</p>
 <ul>
 <li>
@@ -508,9 +508,9 @@ SampleComponent/
 </code></pre>
 
 <h3 id="installing-and-registering-a-component">Installing and registering a component</h3>
-<p>The Component Registration web page, located in the Admin section of the MPF web user interface, can be used to upload and register the component.</p>
+<p>The Component Registration web page, located in the Admin section of the OpenMPF web user interface, can be used to upload and register the component.</p>
 <p>Drag and drop the .tar.gz file containing the component onto the dropzone area of that page. The component will automatically be uploaded and registered.</p>
-<p>Upon successful registration, the component will be available for deployment onto MPF nodes via the Node Configuration web page and <code>/rest/nodes/config</code> end point.</p>
+<p>Upon successful registration, the component will be available for deployment onto OpenMPF nodes via the Node Configuration web page and <code>/rest/nodes/config</code> end point.</p>
 <p>If the descriptor contains custom actions, tasks, or pipelines, then they will be automatically added to the system upon registration.</p>
 <blockquote>
 <p><strong>NOTE:</strong> If the descriptor does not contain custom actions, tasks, or pipelines, then a default action, task, and pipeline will be generated and added to the system.</p>

@@ -25,15 +25,15 @@ Required.
 Contains the component’s version. Does not need to match the `componentAPIVersion`.
 
 Example:
-``"componentVersion" : "0.1.0"``
+``"componentVersion" : "2.0.1"``
 
-<h3>componentAPIVersion</h3>
+<h3>middlewareVersion</h3>
 Required.
 
-Contains the version of the MPF Component API that the component was built with.
+Contains the version of the OpenMPF Component API that the component was built with.
 
 Example:
-`"middlewareVersion" :  "1.0.0"`
+`"middlewareVersion" :  "2.0.0"`
 
 <h3>sourceLanguage</h3>
 Required.
@@ -54,7 +54,7 @@ Example (C++):
 `"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so`
 
 Example (Java):
-`"batchLibrary" : "batch-sample-component-1.0.0.jar"`
+`"batchLibrary" : "batch-sample-component-2.0.1.jar"`
 
 <h3>streamLibrary</h3>
 Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
@@ -72,13 +72,13 @@ Example (C++):
 
 <!-- For future use:
 Example (Java):
-`"streamLibrary" : "stream-sample-component-1.0.0.jar"`
+`"streamLibrary" : "stream-sample-component-2.0.1.jar"`
 -->
 
 <h3>environmentVariables</h3>
 Required; can be empty.
 
-Defines a collection of environment variables that will be set when executing the MPF Component Executable.
+Defines a collection of environment variables that will be set when executing the OpenMPF Component Executable.
 
 Contains the following sub-fields:
 
@@ -277,11 +277,11 @@ SampleComponent/
 ```
 
 ### Installing and registering a component
-The Component Registration web page, located in the Admin section of the MPF web user interface, can be used to upload and register the component.
+The Component Registration web page, located in the Admin section of the OpenMPF web user interface, can be used to upload and register the component.
 
 Drag and drop the .tar.gz file containing the component onto the dropzone area of that page. The component will automatically be uploaded and registered.
 
-Upon successful registration, the component will be available for deployment onto MPF nodes via the Node Configuration web page and `/rest/nodes/config` end point.
+Upon successful registration, the component will be available for deployment onto OpenMPF nodes via the Node Configuration web page and `/rest/nodes/config` end point.
 
 If the descriptor contains custom actions, tasks, or pipelines, then they will be automatically added to the system upon registration.
 
