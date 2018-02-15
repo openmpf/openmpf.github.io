@@ -3,17 +3,13 @@
 
 # OpenMPF 2.0.0: February 2018
 
-> **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the Subsense component has been updated to support streaming. Only single-stage pipelines are supported at this time. 
+> **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time. 
 
 <h2>Documentation</h2>
 
 - Added the [C++ Streaming Component API](CPP-Streaming-Component-API/index.html). 
 - Updated documents to distinguish between the batch component APIs and streaming component API.
 - Updated the [REST API](REST-API/index.html) with endpoints for streaming jobs.
-
-<h2>Web User Interface</h2>
-
-- Added column names to the table that appears when the user clicks in the Media button associated with a job on the Job Status page. Now descriptive comments are provided when table cells are empty.
 
 <h2>Streaming REST API</h2>
 
@@ -49,27 +45,33 @@
 <h2>C++ Streaming Component Executor</h2>
 
 - Developed the C++ Streaming Component Executor to load a streaming component logic library, read frames from a video stream, and exercise the component logic through the C++ Streaming Component API.
-- TODO: Describe how stalls are handled.
-
-<h2>Frame Ids</h2>
-
-- TODO: Describe switch from `int` to `long`, and impact on REST API and component developers, if appropriate.
+- When the C++ Streaming Component Executor cannot read a frame from the stream, it will sleep for at least 1 millisecond, doubling the amount of sleep time per attempt until it reaches the  `stallTimeout` value specified when the job was created. While stalled, the job status will be STALLED. After the timeout is exceeded, the job will be TERMINATED.
+- The C++ Streaming Component Executor supports FRAME_INTERVAL, as well as rotation, horizontal flipping, and cropping (region of interest) properties. Does not support USE_KEY_FRAMES.
 
 <h2>Interoperability Package</h2>
 
 - Added the following Java classes to the interoperability package to simplify third party integration:
-    - `JsonHealthReportDataCallbackBody`: Represents the JSON content of a health report callback.
-    - TODO: Describe Segment Summary Report JSON.
+    - `JsonHealthReportCollection`: Represents the JSON content of a health report callback. Contains one or more `JsonHealthReport` objects.
+    - `JsonSegmentSummaryReport`: Represents the JSON content of a summary report callback. Content is similar to the JSON output object used for batch processing.
 
-<h2>Subsense Component</h2>
+<h2>SuBSENSE Component</h2>
 
-- TODO: Describe streaming support.
+- The SuBSENSE component now supports both batch processing and stream processing.
+- Each video segment will be processed independently of the rest. In other words, tracks will be generated on a segment-by-segment basis and tracks will not carry over between segments.
+- Note that the last frame in the previous segment will be used to determine if there is motion in the first frame of the next segment.
 
 <h2>Packaging and Deployment</h2>
 
 - Updated descriptor.json fields to allow components to support batch and/or streaming jobs.
 - Batch component logic and streaming component logic are compiled into separate libraries.
-- TODO: Describe mySQL update to support error detail.
+- The mySQL `streaming_job_request` table has been updated with the following fields, which are used to populate the JSON health reports:
+    - `status_detail`: (Optional) A user-friendly description of the current job status.
+    - `activity_frame_id`: The frame id associated with the last job activity. Activity is defined as the start of a new track for the current segment.
+    - `activity_timestamp`: The timestamp associated with the last job activity.
+
+<h2>Web User Interface</h2>
+
+- Added column names to the table that appears when the user clicks in the Media button associated with a job on the Job Status page. Now descriptive comments are provided when table cells are empty.
 
 <h2>Bug Fixes</h2>
 

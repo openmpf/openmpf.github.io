@@ -45,7 +45,7 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
 3. In the ‘Storage Tree’ section under the ‘Controller: IDE’ item, select the optical disc icon.
 4. Under the ‘Attributes’ section, select the optical disc icon with a small black arrow. This will bring up a menu.
 5. Select ‘Choose Virtual Optical Disc file…’
-6. Choose the ‘CentOS-7-x86_64-Minimal-1611.iso’ file.
+6. Choose the CentOS 7 minimal iso file.
 7. Press the ‘OK’ button to exit the OpenMPF Build VM settings.
 8. Right click on the OpenMPF Build VM and select ‘Start’ and ‘Normal Start’. A new window will open with the running VM.
 9. On the ‘CentOS 7’ screen, select ‘Install CentOS 7’ with the keyboard and press the Enter key.
