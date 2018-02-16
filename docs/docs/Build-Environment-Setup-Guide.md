@@ -561,15 +561,14 @@ The following source packages will need to be downloaded, built, and installed:
     2. `git clone https://github.com/ansible/ansible.git --recursive`
     3. `cd ansible`
     4. `git checkout e71cce777685f96223856d5e6cf506a9ea2ef3ff`
-    5. `git pull --rebase`
-    6. `git submodule update --init --recursive`
-    7. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/core`
-    8. `git checkout 36f512abc1a75b01ae7207c74cdfbcb54a84be54`
-    9. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/extras`
-    10. `git checkout 32338612b38d1ddfd0d42b1245c597010da02970`
-    11. `cd /apps/source/ansible_sources/ansible`
-    12. `make rpm`
-    13. `sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm`
+    5. `git submodule update --init --recursive`
+    6. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/core`
+    7. `git checkout 36f512abc1a75b01ae7207c74cdfbcb54a84be54`
+    8. `cd /apps/source/ansible_sources/ansible/lib/ansible/modules/extras`
+    9. `git checkout 32338612b38d1ddfd0d42b1245c597010da02970`
+    10. `cd /apps/source/ansible_sources/ansible`
+    11. `make rpm`
+    12. `sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm`
 
 ## Configure MySQL
 

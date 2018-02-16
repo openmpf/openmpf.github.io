@@ -3,13 +3,31 @@
 
 # OpenMPF 2.0.0: February 2018
 
+> **NOTE:** Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the descriptor.json file to support stream processing.
+
 > **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time. 
 
 <h2>Documentation</h2>
 
+- Updated documents to distinguish the batch component APIs from the streaming component API.
 - Added the [C++ Streaming Component API](CPP-Streaming-Component-API/index.html). 
-- Updated documents to distinguish between the batch component APIs and streaming component API.
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API/index.html) to describe support for generic detections.
 - Updated the [REST API](REST-API/index.html) with endpoints for streaming jobs.
+
+<h2>Support for Generic Detections</h2>
+
+- C++ and Java components can now declare support for the UNKNOWN data type. The respective batch APIs have been updated with a function that will enable a component to process an `MPFGenericJob`, which represents a piece of media that is not a video, image, or audio file.
+- Note that these API changes make OpenMPF R2.0.0 incompatible with components built for previous releases of OpenMPF. Specifically, the new component executor will not be able to load the component logic library.
+
+<h2>C++ Batch Component API</h2>
+
+- Added the following function to support generic detections:
+    - `MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks)`
+
+<h2>Java Batch Component API</h2>
+
+- Added the following method to support generic detections:
+    - `List<MPFGenericTrack> getDetections(MPFGenericJob job)`
 
 <h2>Streaming REST API</h2>
 
@@ -21,6 +39,7 @@
 
 <h2>Workflow Manager</h2>
 
+- Updated to support generic detections.
 - Updated Redis to store information about streaming jobs.
 - Added controllers for streaming job REST endpoints.
 - Added ability to generate health reports and segment summary reports for streaming jobs.
@@ -62,7 +81,7 @@
 
 <h2>Packaging and Deployment</h2>
 
-- Updated descriptor.json fields to allow components to support batch and/or streaming jobs.
+- Updated descriptor.json fields to allow components to support batch and/or streaming jobs. Components that use the old descriptor.json file format cannot be registered through the web UI.  
 - Batch component logic and streaming component logic are compiled into separate libraries.
 - The mySQL `streaming_job_request` table has been updated with the following fields, which are used to populate the JSON health reports:
     - `status_detail`: (Optional) A user-friendly description of the current job status.
@@ -79,6 +98,62 @@
 
 <h2>Known Issues</h2>
 
+- OpenCV 3.3.0 `cv::imread()` does not properly decode some TIFF images that have EXIF orientation metadata. It can handle images that are flipped horizontally, but not vertically. It also has issues with rotated images. Since most components rely on that function to read image data, those components may silently fail to generate detections for those kinds of images.
+
+- Using single quotes, apsotrophes, or double quotes in the name of an algorithm, action, task, or pipeline configured on an existing OpenMPF system will result in a failure to perform an OpenMPF upgrade on that system. Specifically, the step where pre-existing custom actions, tasks, and pipelines are carried over to the upgraded version of OpenMPF will fail. Please do not use those special characters while naming those elements. If this has been done already, then those elements should be manually renamed in the XML files prior to an upgrade attempt.
+
+- OpenMPF uses OpenCV, which  uses FFmpeg, to connect to video streams. If a proxy and/or firewall prevents the network connection from succeeding, then OpenCV, or the underlying FFmpeg library, will segfault. This causes the C++ Streaming Component Executor process to fail. In turn, the job status will be set to ERROR with a status detail message of "Unexpected error. See logs for details". In this case, the logs will not contain any useful information. You can identify a segfault by the following line in the node-manager log:
+
+```
+2018-02-15 16:01:21,814 INFO [pool-3-thread-4] o.m.m.nms.streaming.StreamingProcess - Process: Component exited with exit code 139 
+```
+
+   > To determine if FFmpeg can connect to the stream or not, run `ffmpeg -i <stream-uri>` in a terminal window. Here's an example when it's successful:
+
+```bash
+[mpf@localhost bin]$ ffmpeg -i rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov
+ffmpeg version n3.3.3-1-ge51e07c Copyright (c) 2000-2017 the FFmpeg developers
+  built with gcc 4.8.5 (GCC) 20150623 (Red Hat 4.8.5-4)
+  configuration: --prefix=/apps/install --extra-cflags=-I/apps/install/include --extra-ldflags=-L/apps/install/lib --bindir=/apps/install/bin --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr --enable-avresample
+  libavutil      55. 58.100 / 55. 58.100
+  libavcodec     57. 89.100 / 57. 89.100
+  libavformat    57. 71.100 / 57. 71.100
+  libavdevice    57.  6.100 / 57.  6.100
+  libavfilter     6. 82.100 /  6. 82.100
+  libavresample   3.  5.  0 /  3.  5.  0
+  libswscale      4.  6.100 /  4.  6.100
+  libswresample   2.  7.100 /  2.  7.100
+  libpostproc    54.  5.100 / 54.  5.100
+[rtsp @ 0x1924240] UDP timeout, retrying with TCP
+Input #0, rtsp, from 'rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov':
+  Metadata:
+    title           : BigBuckBunny_115k.mov
+  Duration: 00:09:56.48, start: 0.000000, bitrate: N/A
+    Stream #0:0: Audio: aac (LC), 12000 Hz, stereo, fltp
+    Stream #0:1: Video: h264 (Constrained Baseline), yuv420p(progressive), 240x160, 24 fps, 24 tbr, 90k tbn, 48 tbc
+At least one output file must be specified
+```
+
+   > Here's an example when it's not successful, so there may be network issues:
+
+```bash
+[mpf@localhost bin]$ ffmpeg -i rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov
+ffmpeg version n3.3.3-1-ge51e07c Copyright (c) 2000-2017 the FFmpeg developers
+  built with gcc 4.8.5 (GCC) 20150623 (Red Hat 4.8.5-4)
+  configuration: --prefix=/apps/install --extra-cflags=-I/apps/install/include --extra-ldflags=-L/apps/install/lib --bindir=/apps/install/bin --enable-gpl --enable-nonfree --enable-libtheora --enable-libfreetype --enable-libmp3lame --enable-libvorbis --enable-libx264 --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-version3 --enable-shared --disable-libsoxr --enable-avresample
+  libavutil      55. 58.100 / 55. 58.100
+  libavcodec     57. 89.100 / 57. 89.100
+  libavformat    57. 71.100 / 57. 71.100
+  libavdevice    57.  6.100 / 57.  6.100
+  libavfilter     6. 82.100 /  6. 82.100
+  libavresample   3.  5.  0 /  3.  5.  0
+  libswscale      4.  6.100 /  4.  6.100
+  libswresample   2.  7.100 /  2.  7.100
+  libpostproc    54.  5.100 / 54.  5.100
+[tcp @ 0x171c300] Connection to tcp://184.72.239.149:554?timeout=0 failed: Invalid argument
+rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov: Invalid argument
+```
+
 - Tika 1.17 does not come pre-packaged with support for some embedded image formats in PDF files, possibly to avoid patent issues. OpenMPF does not handle embedded images in PDFs, so that's not a problem. Tika will print out the following warnings, which can be safely ignored:
 
 ```
@@ -94,8 +169,6 @@ See https://pdfbox.apache.org/2.0/dependencies.html#jai-image-io
 for optional dependencies.
 
 ``` 
-
-- OpenCV 3.3.0 `cv::imread()` does not properly decode some TIFF images that have EXIF orientation metadata. It can handle images that are flipped horizontally, but not vertically. It also has issues with rotated images. Since most components rely on that function to read image data, those components may silently fail to generate detections for those kinds of images.
 
 
 # OpenMPF 1.0.0: October 2017
