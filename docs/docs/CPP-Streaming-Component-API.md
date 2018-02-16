@@ -195,9 +195,11 @@ Process a single video frame for the current segment.
 
 Must return true when the component begins generating the first track for the current segment. After it returns true, the Component Executable will ignore the return value until the component begins processing the next segment.
 
+If the `job_properties` map contained in the `MPFStreamingVideoJob` struct passed to the component constructor contains a CONFIDENCE_THRESHOLD entry, then this function should only return true for a detection with a confidence value that meets or exceeds that threshold. After the Component Executable invokes `EndSegment()` to retrieve the segment tracks, it will discard detections that are below the threshold. If all the detections in a track are below the threshold, then the entire track will be discarded. 
+
 Note that this function may not be invoked for every frame in the current segment. For example, if FRAME_INTERVAL = 2, then this function will only be invoked for every other frame since those are the only ones that need to be processed.
 
-Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment.
+Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment. 
    
 * Function Definition:   
 ```c++
