@@ -815,11 +815,11 @@ Use the following value for `<configFile>`:
 3. Run the Perl `PackageRPMS.pl` script. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.
     1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
     2. `perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 <buildNum> <configFile>`
+    > **NOTE:** The following warning is acceptable and can be safely ignored:
+    <br>`[WARNING] The requested profile "create-tar" could not be activated because it does not exist.`
 4. After the build is complete, the final package is created by running the Perl script `CreateCustomPackage.pl`:
     1. `cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts`
     2. `perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master <buildNum> <configFile>`
-    > **NOTE:** The following warning is acceptable and can be safely ignored:
-    <br>`[WARNING] The requested profile "create-tar" could not be activated because it does not exist.`
 5. The package `openmpf-*+master-0.tar.gz` will be under `/mpfdata/releases/`.
 6. (Optional) Copy the development properties file back if you wish to run the OpenMPF on the OpenMPF Build VM:
 <br>`cp /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/mpf-private.properties`

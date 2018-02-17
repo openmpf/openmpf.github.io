@@ -1166,16 +1166,16 @@
 </li>
 <li>Run the Perl <code>PackageRPMS.pl</code> script. This will compile the code artifacts, place them in the local maven repository, and create the necessary component RPMs and tar files.<ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
-<li><code>perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 &lt;buildNum&gt; &lt;configFile&gt;</code></li>
-</ol>
-</li>
-<li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ol>
-<li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
-<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master &lt;buildNum&gt; &lt;configFile&gt;</code><blockquote>
+<li><code>perl PackageRPMS.pl /home/mpf/openmpf-projects/openmpf master 0 &lt;buildNum&gt; &lt;configFile&gt;</code><blockquote>
 <p><strong>NOTE:</strong> The following warning is acceptable and can be safely ignored:
 <br><code>[WARNING] The requested profile "create-tar" could not be activated because it does not exist.</code></p>
 </blockquote>
 </li>
+</ol>
+</li>
+<li>After the build is complete, the final package is created by running the Perl script <code>CreateCustomPackage.pl</code>:<ol>
+<li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts</code></li>
+<li><code>perl CreateCustomPackage.pl /home/mpf/openmpf-projects/openmpf master &lt;buildNum&gt; &lt;configFile&gt;</code></li>
 </ol>
 </li>
 <li>The package <code>openmpf-*+master-0.tar.gz</code> will be under <code>/mpfdata/releases/</code>.</li>
