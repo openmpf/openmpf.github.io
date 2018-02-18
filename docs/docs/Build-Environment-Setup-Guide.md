@@ -133,14 +133,11 @@ At the time of writing, all URLs provided in this section were verified as worki
     11. `sudo mkdir /apps/source/ansible_sources`
     12. `sudo chown -R mpf:mpf /apps`
     13. `sudo chmod -R 755 /apps`
-4. Add /apps/install/bin to the system PATH variable:
-    1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
-    2. `. /etc/profile.d/mpf.sh`
-5. Create the OpenMPF ldconfig file:
+4. Create the OpenMPF ldconfig file:
     <br>`sudo touch /etc/ld.so.conf.d/mpf-x86_64.conf`
-6. Add /apps/install/lib to the OpenMPF ldconfig file:
+5. Add /apps/install/lib to the OpenMPF ldconfig file:
     <br>`sudo sh -c 'echo "/apps/install/lib" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
-7. Update the shared library cache:
+6. Update the shared library cache:
     <br>`sudo ldconfig`
 
 
@@ -163,6 +160,10 @@ Open a terminal window and perform the following steps:
 
 2. Copy the mpf user profile script from the extracted source code:
     <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
+    
+3. Add /apps/install/bin to the system PATH variable:
+    1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
+    2. `. /etc/profile.d/mpf.sh`
 
 ## Install Binary Packages
 
@@ -419,10 +420,9 @@ The following source packages will need to be downloaded, built, and installed:
         7. `sudo make install`
         8. `make distclean`
         9. `sudo ln -s /apps/install/bin/ffmpeg /usr/bin/ffmpeg`
-        10. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
-        11. `sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" >> /etc/profile.d/mpf.sh'`
-        12. `. /etc/profile.d/mpf.sh`
-        13. `sudo ldconfig`
+        10. `sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" >> /etc/profile.d/mpf.sh'`
+        11. `. /etc/profile.d/mpf.sh`
+        12. `sudo ldconfig`
 3. Google protocol buffers 2.5.0:
     <br>For reference only: <https://developers.google.com/protocol-buffers>
     1. `cd /apps/source/google_sources`

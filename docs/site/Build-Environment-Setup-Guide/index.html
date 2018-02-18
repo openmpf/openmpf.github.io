@@ -448,11 +448,6 @@
 <li><code>sudo chmod -R 755 /apps</code></li>
 </ol>
 </li>
-<li>Add /apps/install/bin to the system PATH variable:<ol>
-<li><code>sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
-<li><code>. /etc/profile.d/mpf.sh</code></li>
-</ol>
-</li>
 <li>Create the OpenMPF ldconfig file:
     <br><code>sudo touch /etc/ld.so.conf.d/mpf-x86_64.conf</code></li>
 <li>Add /apps/install/lib to the OpenMPF ldconfig file:
@@ -478,6 +473,13 @@
 <li>
 <p>Copy the mpf user profile script from the extracted source code:
     <br> <code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></p>
+</li>
+<li>
+<p>Add /apps/install/bin to the system PATH variable:</p>
+<ol>
+<li><code>sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
 </li>
 </ol>
 <h2 id="install-binary-packages">Install Binary Packages</h2>
@@ -783,7 +785,6 @@
 <li><code>sudo make install</code></li>
 <li><code>make distclean</code></li>
 <li><code>sudo ln -s /apps/install/bin/ffmpeg /usr/bin/ffmpeg</code></li>
-<li><code>sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
 <li><code>sudo sh -c 'echo "export CXXFLAGS=-isystem\ /apps/install/include" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>
 <li><code>sudo ldconfig</code></li>
