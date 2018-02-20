@@ -78,7 +78,8 @@ For example, in the average case, a feed forward track may capture a person movi
 <div>
   <video width="700" controls>
     <source src="../vid/superset_region.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+    <p><b>Your browser does not support the embedded video tag.</b>
+    <a href="../vid/superset_region.mp4">Click here to download the video.</a></p>
   </video>
 </div>
 
