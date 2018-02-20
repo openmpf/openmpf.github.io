@@ -66,49 +66,48 @@ The following instructions are for setting up a VM for building an OpenMPF deplo
     - **User Name**: mpf
         - Check the box for ‘Make this user administrator’
     - **Password**: mpf
-23. When installation is finished, press the ‘Finish Configuration’ button.
-24. When configuration is finished, press the ‘Reboot’ button.
-25. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
-26. Install the epel repository and Delta RPM:
+23. When installation is finished, press the ‘Reboot’ button.
+24. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
+25. Install the epel repository and Delta RPM:
     <br> `sudo yum install -y epel-release deltarpm`
-27. Perform an initial system update:
+26. Perform an initial system update:
     <br> `sudo yum update -y`
-28. Install Gnome Desktop Environment and some packages needed for the Virtual Box Guest Additions:
+27. Install Gnome Desktop Environment and some packages needed for the Virtual Box Guest Additions:
     <br> `sudo yum groups install -y "GNOME Desktop"`
-29. Install packages needed for the Virtual Box Guest Additions:
+28. Install packages needed for the Virtual Box Guest Additions:
     <br> `sudo yum install gcc kernel-devel bzip2`
    > <br> **NOTE:** You may have to specify a kernel version when installing ‘kernel-devel‘ as a Virtual Box guest addition. For example: `sudo yum install kernel-devel-3.10.0-327.el7.x86_64`.
-30. Reboot the system:
+29. Reboot the system:
     <br> `sudo reboot now`
-31. Follow the on screen instructions to accept the license agreement.
-32. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
-33. Switch user to root with this command:
-    <br> `sudo su -`
-34. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’
-35. Install the Virtual Box Guest Additions:
+30. To accept the license agreement, enter ‘1’, then enter ‘2’, then enter ‘c’ to continue.
+31. At the login prompt, login as user ‘mpf’ and password ‘mpf’.
+32. On your host system, click the top border of the window running the OpenMPF Build VM, then select ‘Devices’ from the top menu bar, and then ‘Insert Guest Additions CD Image...’
+33. Install the Virtual Box Guest Additions:
     1. `sudo mount /dev/cdrom /mnt`
     2. `cd /mnt`
     3. `sudo ./VBoxLinuxAdditions.run`
-36. `sudo systemctl set-default graphical.target`
-37. `sudo reboot now`
-38. At the graphical login screen, select the 'mpf' user.
-39. Enter 'mpf' as the password.
-40. A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.
-41. Press the 'Next' button on the 'Typing' page.
-42. Press the 'Skip' button on the 'Online Accounts' page.
-43. Press the 'Start using CentOS Linux' button.
-44. Close the 'Getting Started' window that appears.
-45. On the desktop, right click the 'VBOXADDITIONS_5.0.22_108108' icon and select 'Eject'.
-46. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Shared Clipboard’, then "Bidirectional". This will enable the ability to copy and paste commands from this document into the VM.
-47. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Drag and Drop’, then "Bidirectional". This will enable the ability to drag files from the host system to the guest VM.
+34. `sudo systemctl set-default graphical.target`
+35. `sudo reboot now`
+36. At the graphical login screen, select the 'mpf' user.
+37. Enter 'mpf' as the password.
+38. A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.
+39. Press the 'Next' button on the 'Typing' page.
+40. Press the 'Next' button on the 'Privacy' page.
+41. Press the 'Skip' button on the 'Online Accounts' page.
+42. Press the 'Start using CentOS Linux' button.
+43. Close the 'Getting Started' window that appears.
+44. On the desktop, right click the 'VBOXADDITIONS_5.0.22_108108' icon and select 'Eject'.
+45. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Shared Clipboard’, then "Bidirectional". This will enable the ability to copy and paste commands from this document into the VM.
+46. On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’, then ‘Drag and Drop’, then "Bidirectional". This will enable the ability to drag files from the host system to the guest VM.
 
 # Set Up the OpenMPF Build Environment
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure the yum package manager before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure the yum package manager, as well as the appendix section [SSL Inspection](#ssl-inspection), before continuing.
 
 At the time of writing, all URLs provided in this section were verified as working.
 
 ## Configure Additional Repositories
+Open a terminal window and perform the following steps:
 
 1. Install the Oracle MySQL Community Release Repository:
     1. `wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"`
@@ -174,7 +173,7 @@ The following binary packages will need to be downloaded and installed:
 1. Oracle JDK:
     1. Open a web browser and navigate to <http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html>.
     2. In the "Java SE Development Kit 8u144" section, click the radio button to "Accept License Agreement".
-   > <br> **NOTE:** If that version of the JDK is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>.
+   > <br> **NOTE:** If that version of the JDK is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>. You will be required to either sign in with an existing account, or create a new account.
     3. Click on the "jdk-8u144-linux-x64.rpm" link to begin the download.
     4. Move the downloaded file to `/apps/bin/jdk-8u144-linux-x64.rpm`.
     5. `sudo yum -y localinstall --nogpgcheck /apps/bin/jdk-8u144-linux-x64.rpm`
@@ -246,7 +245,7 @@ The following binary packages will need to be downloaded and installed:
 
 ## Build Dependencies
 
-> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure git before continuing.
+> **NOTE:** If your build environment is behind a proxy server, please read the appendix section [Proxy Configuration](#proxy-configuration) for instructions to configure the yum package manager, as well as the appendix section [SSL Inspection](#ssl-inspection), before continuing.
 
 The following source packages will need to be downloaded, built, and installed:
 
@@ -786,7 +785,7 @@ The following steps place dependency packages in `/mpfdata/ansible/install/repo`
    <br> `cp /apps/bin/jdk-8u144-linux-x64.rpm /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u144-linux-x64.rpm`
 5. Open a web browser and navigate to <http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html>.
 6. In the "Java SE Runtime Environment 8u144" section, click the radio button to "Accept License Agreement".
-   > <br> **NOTE:** If that version of the JRE is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>.
+   > <br> **NOTE:** If that version of the JRE is not available on that page, then look for it on <http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html>. You will be required to either sign in with an existing account, or create a new account.
 7. Click on the "jre-8u144-linux-x64.rpm" link to begin the download.
 8. Move the downloaded file to `/mpfdata/ansible/install/repo/rpms/mpf-deps/jre-8u144-linux-x64.rpm`.
 9. Assuming you've followed the steps in the [Install Binary Packages](#install-binary-packages) section to download Apache ActiveMQ:

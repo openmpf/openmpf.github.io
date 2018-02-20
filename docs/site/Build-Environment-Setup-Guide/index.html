@@ -372,8 +372,7 @@
 <li><strong>Password</strong>: mpf</li>
 </ul>
 </li>
-<li>When installation is finished, press the ‘Finish Configuration’ button.</li>
-<li>When configuration is finished, press the ‘Reboot’ button.</li>
+<li>When installation is finished, press the ‘Reboot’ button.</li>
 <li>At the login prompt, login as user ‘mpf’ and password ‘mpf’.</li>
 <li>Install the epel repository and Delta RPM:
     <br> <code>sudo yum install -y epel-release deltarpm</code></li>
@@ -388,11 +387,9 @@
 </li>
 <li>Reboot the system:
     <br> <code>sudo reboot now</code></li>
-<li>Follow the on screen instructions to accept the license agreement.</li>
+<li>To accept the license agreement, enter ‘1’, then enter ‘2’, then enter ‘c’ to continue.</li>
 <li>At the login prompt, login as user ‘mpf’ and password ‘mpf’.</li>
-<li>Switch user to root with this command:
-    <br> <code>sudo su -</code></li>
-<li>On your host system in the Virtual Box Application, select the OpenMPF Build VM menu item ‘Devices’ and then ‘Insert Guest Additions CD image…’</li>
+<li>On your host system, click the top border of the window running the OpenMPF Build VM, then select ‘Devices’ from the top menu bar, and then ‘Insert Guest Additions CD Image...’</li>
 <li>Install the Virtual Box Guest Additions:<ol>
 <li><code>sudo mount /dev/cdrom /mnt</code></li>
 <li><code>cd /mnt</code></li>
@@ -405,6 +402,7 @@
 <li>Enter 'mpf' as the password.</li>
 <li>A welcome screen will come up on the first launch of the Gnome desktop environment. Press the 'Next' button on the 'Language' page.</li>
 <li>Press the 'Next' button on the 'Typing' page.</li>
+<li>Press the 'Next' button on the 'Privacy' page.</li>
 <li>Press the 'Skip' button on the 'Online Accounts' page.</li>
 <li>Press the 'Start using CentOS Linux' button.</li>
 <li>Close the 'Getting Started' window that appears.</li>
@@ -414,10 +412,11 @@
 </ol>
 <h1 id="set-up-the-openmpf-build-environment">Set Up the OpenMPF Build Environment</h1>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure the yum package manager before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure the yum package manager, as well as the appendix section <a href="#ssl-inspection">SSL Inspection</a>, before continuing.</p>
 </blockquote>
 <p>At the time of writing, all URLs provided in this section were verified as working.</p>
 <h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
+<p>Open a terminal window and perform the following steps:</p>
 <ol>
 <li>Install the Oracle MySQL Community Release Repository:<ol>
 <li><code>wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"</code></li>
@@ -493,7 +492,7 @@
 <ol>
 <li>Open a web browser and navigate to <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a>.</li>
 <li>In the "Java SE Development Kit 8u144" section, click the radio button to "Accept License Agreement".<blockquote>
-<p><br> <strong>NOTE:</strong> If that version of the JDK is not available on that page, then look for it on <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html</a>.</p>
+<p><br> <strong>NOTE:</strong> If that version of the JDK is not available on that page, then look for it on <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html</a>. You will be required to either sign in with an existing account, or create a new account.</p>
 </blockquote>
 </li>
 <li>Click on the "jdk-8u144-linux-x64.rpm" link to begin the download.</li>
@@ -580,7 +579,7 @@
 </ol>
 <h2 id="build-dependencies">Build Dependencies</h2>
 <blockquote>
-<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure git before continuing.</p>
+<p><strong>NOTE:</strong> If your build environment is behind a proxy server, please read the appendix section <a href="#proxy-configuration">Proxy Configuration</a> for instructions to configure the yum package manager, as well as the appendix section <a href="#ssl-inspection">SSL Inspection</a>, before continuing.</p>
 </blockquote>
 <p>The following source packages will need to be downloaded, built, and installed:</p>
 <ol>
@@ -1134,7 +1133,7 @@
    <br> <code>cp /apps/bin/jdk-8u144-linux-x64.rpm /mpfdata/ansible/install/repo/rpms/mpf-deps/jdk-8u144-linux-x64.rpm</code></li>
 <li>Open a web browser and navigate to <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html</a>.</li>
 <li>In the "Java SE Runtime Environment 8u144" section, click the radio button to "Accept License Agreement".<blockquote>
-<p><br> <strong>NOTE:</strong> If that version of the JRE is not available on that page, then look for it on <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html</a>.</p>
+<p><br> <strong>NOTE:</strong> If that version of the JRE is not available on that page, then look for it on <a href="http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html</a>. You will be required to either sign in with an existing account, or create a new account.</p>
 </blockquote>
 </li>
 <li>Click on the "jre-8u144-linux-x64.rpm" link to begin the download.</li>
