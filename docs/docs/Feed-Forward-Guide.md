@@ -57,20 +57,32 @@ When `FEED_FORWARD_TOP_CONFIDENCE_COUNT` is set to a number greater than 0, say 
 
 A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a track. This is also known as a “union” or [“minimum bounding rectangle"](https://en.wikipedia.org/wiki/Minimum_bounding_rectangle).
 
- ![Superset Region](img/superset_region.png "Superset Region")
+![Superset Region](img/superset_region.png "Superset Region")
 
-For example, if frame 1 of a 2-frame track has rect `(x = 0, y = 0, width = 10, height = 10)`, and frame 2 has a rect `(x = 5, y = 5, width = 10, height = 10)`, then the superset region is `(x = 0, y = 0, width = 15, height = 15)`.
+For example, consider a track representing a person moving from the upper left to the lower right. The track consists of 3 frames that have the following detection regions:
 
+- Frame 0: `(x = 10, y = 10, width = 10, height = 10)`
+- Frame 1: `(x = 15, y = 15, width = 10, height = 10)`
+- Frame 2: `(x = 20, y = 20, width = 10, height = 10)`
 
+Each detection region is drawn with a solid green line in the above diagram. The blue line represents the full frame region. The superset region for the track is `(x = 10, y = 10, width = 20, height = 20)`, and is drawn with a dotted red line.
 
-The major advantage is that the superset region is a constant size. Some algorithms require the search space to be a constant size in order to successfully track objects.
+The major advantage of using a superset region is constant size. Some algorithms require the search space in each frame to be a constant size in order to successfully track objects.
 
-A disadvantage is that the superset region will be larger than any specific detection region, so the search space is not restricted to the smallest possible size, but in many cases the search space will be significantly reduced compared to the whole frame.
+A disadvantage is that the superset region will often be larger than any specific detection region, so the search space is not restricted to the smallest possible size in each frame; however, in many cases the search space will be significantly smaller than the whole frame.
 
-For example, in the worst case, a feed forward track may capture a person moving from the lower right corner of a video to the upper left corner. In that case the superset region will be the entire width and height of the frame, so `SUPERSET_REGION` devolves into `FRAME`.
+For example, in the worst case, a feed forward track may capture a person moving from the upper left corner of a video to the lower right corner. In that case the superset region will be the entire width and height of the frame, so `SUPERSET_REGION` devolves into `FRAME`.
 
-For example, in the average case, a feed forward track may capture a person moving in the upper left quadrant of a video. In that case `SUPERSET_REGION` is able to filter out 75% of the rest of the video.
+For example, in the average case, a feed forward track may capture a person moving in the upper left quadrant of a video. In that case `SUPERSET_REGION` is able to filter out 75% of the rest of the frame data. In the example shown in the above diagram, `SUPERSET_REGION` is able to filter out 83% of the rest of the frame data.
 
+<div>
+  <video width="700" controls>
+    <source src="../vid/superset_region.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+The above video shows three faces. For each face there is an inner bounding box that moves and an outer bounding box that does not. The inner bounding box represents the face detection in that frame, while the outer bounding box represents the superset region for the track associated with that face. Note that the bounding box for each face uses a different color. The colors are not related to those used in the above diagram.
 
 # MPFVideoCapture and MPFImageReader Tools
 
