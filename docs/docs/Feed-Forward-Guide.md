@@ -71,9 +71,9 @@ The major advantage of using a superset region is constant size. Some algorithms
 
 A disadvantage is that the superset region will often be larger than any specific detection region, so the search space is not restricted to the smallest possible size in each frame; however, in many cases the search space will be significantly smaller than the whole frame.
 
-For example, in the worst case, a feed forward track may capture a person moving from the upper left corner of a video to the lower right corner. In that case the superset region will be the entire width and height of the frame, so `SUPERSET_REGION` devolves into `FRAME`.
+In the worst case, a feed forward track might, for example, capture a person moving from the upper left corner of a video to the lower right corner. In that case the superset region will be the entire width and height of the frame, so `SUPERSET_REGION` devolves into `FRAME`.
 
-For example, in the average case, a feed forward track may capture a person moving in the upper left quadrant of a video. In that case `SUPERSET_REGION` is able to filter out 75% of the rest of the frame data. In the example shown in the above diagram, `SUPERSET_REGION` is able to filter out 83% of the rest of the frame data.
+In a more typical case, a feed forward track might capture a person moving in the upper left quadrant of a video. In that case `SUPERSET_REGION` is able to filter out 75% of the rest of the frame data. In the example shown in the above diagram, `SUPERSET_REGION` is able to filter out 83% of the rest of the frame data.
 
 <div>
   <video width="700" controls>
