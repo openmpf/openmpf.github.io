@@ -735,6 +735,7 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_JOB_PROPERTY_IS_NOT_FLOAT | A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value. |
 | MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}. |
 | MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
+| MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
 | MPF_DETECTION_FAILED | General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects. |
 
 ### Utility Classes
