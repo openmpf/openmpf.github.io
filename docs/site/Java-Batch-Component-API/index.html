@@ -1376,6 +1376,10 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <td>The component receives an invalid stop frame number. For example, if the stop frame is less than the start frame, or greater than the number of the last frame in a video segment, this error code should be used.</td>
 </tr>
 <tr>
+<td>MPF_DETECTION_FAILED</td>
+<td>General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects.</td>
+</tr>
+<tr>
 <td>MPF_DETECTION_TRACKING_FAILED</td>
 <td>General failure of a tracking algorithm.  This does not indicate a lack of tracks generated for the media, but rather a break down in the algorithm that makes it impossible to continue to try to track objects.</td>
 </tr>
@@ -1406,10 +1410,6 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <tr>
 <td>MPF_GPU_ERROR</td>
 <td>The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected.</td>
-</tr>
-<tr>
-<td>MPF_DETECTION_FAILED</td>
-<td>General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects.</td>
 </tr>
 </tbody>
 </table>

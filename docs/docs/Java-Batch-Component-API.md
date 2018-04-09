@@ -728,6 +728,7 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_INVALID_FRAME_INTERVAL | An invalid or unsupported frame interval was received. |
 | MPF_INVALID_START_FRAME | The component received an invalid start frame number. For example, if the start frame is less than zero, or greater than the stop frame, this error code should be used. |
 | MPF_INVALID_STOP_FRAME | The component receives an invalid stop frame number. For example, if the stop frame is less than the start frame, or greater than the number of the last frame in a video segment, this error code should be used. |
+| MPF_DETECTION_FAILED | General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects. |
 | MPF_DETECTION_TRACKING_FAILED | General failure of a tracking algorithm.  This does not indicate a lack of tracks generated for the media, but rather a break down in the algorithm that makes it impossible to continue to try to track objects. |
 | MPF_INVALID_PROPERTY | The component received a property that is unrecognized or has an invalid/out-of-bounds value. |
 | MPF_MISSING_PROPERTY | The component received a job that is missing a required property. |
@@ -736,7 +737,6 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}. |
 | MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
-| MPF_DETECTION_FAILED | General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects. |
 
 ### Utility Classes
 
