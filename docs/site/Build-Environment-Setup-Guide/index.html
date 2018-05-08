@@ -94,6 +94,8 @@
                 
                     <li><a class="toctree-l4" href="#build-dependencies">Build Dependencies</a></li>
                 
+                    <li><a class="toctree-l4" href="#install-the-nvidia-cuda-toolkit">Install the NVIDIA CUDA toolkit</a></li>
+                
                     <li><a class="toctree-l4" href="#configure-mysql">Configure MySQL</a></li>
                 
                     <li><a class="toctree-l4" href="#configure-activemq">Configure ActiveMQ</a></li>
@@ -957,6 +959,27 @@
 <li><code>sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm</code></li>
 </ol>
 </li>
+</ol>
+<h2 id="install-the-nvidia-cuda-toolkit">Install the NVIDIA CUDA toolkit</h2>
+<ol>
+<li>Download the NVIDIA CUDA Toolkit 9.0 from <a href="https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal">https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></li>
+<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run</code><ol>
+<li>Accept the EULA</li>
+<li>Decline the installation of the NVIDIA Accelerated Graphics Driver</li>
+<li>Accept the CUDA 9.0 Toolkit installation</li>
+<li>Accept the default location</li>
+<li>Accept the installation of a symbolic link at /usr/local/cuda</li>
+<li>Installation of the CUDA 9.0 Samples is optional</li>
+</ol>
+</li>
+<li>After the install finishes, make sure /usr/local/cuda is a symbolic link to <code>/usr/local/cuda-9.0</code></li>
+<li>Add /usr/local/cuda/bin to the system PATH variable:<ol>
+<li><code>sudo sh -c 'echo "PATH=\$PATH:/usr/local/cuda/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+</li>
+<li>Add /usr/local/cuda/lib64 to the OpenMPF ldconfig file:
+    <code>sudo sh -c 'echo "/usr/local/cuda/lib64" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
 </ol>
 <h2 id="configure-mysql">Configure MySQL</h2>
 <ol>
