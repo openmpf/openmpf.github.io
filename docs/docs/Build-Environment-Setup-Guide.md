@@ -569,21 +569,21 @@ The following source packages will need to be downloaded, built, and installed:
     11. `make rpm`
     12. `sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm`
 
-##Install the NVIDIA CUDA toolkit
+##Install the NVIDIA CUDA Toolkit
 
-1. Download the NVIDIA CUDA Toolkit 9.0 from <https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal>
-2. Run `sudo sh cuda_9.0.176_384.81_linux.run`
-    1. Accept the EULA
-    2. Decline the installation of the NVIDIA Accelerated Graphics Driver
-    3. Accept the CUDA 9.0 Toolkit installation
-    4. Accept the default location
-    5. Accept the installation of a symbolic link at /usr/local/cuda
-    6. Installation of the CUDA 9.0 Samples is optional
-3. After the install finishes, make sure /usr/local/cuda is a symbolic link to `/usr/local/cuda-9.0`
-4. Add /usr/local/cuda/bin to the system PATH variable:
+> **NOTE:** Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. All components that support GPU processing also support execution on the CPU, and if the this toolkit is not found on the build system, the build will automatically build those components for CPU processing. For a discussion of NVIDIA GPU support in OpenMPF components, see the [GPU Support Guide](GPU-Support-Guide/index.html).
+
+1. `cd /apps/source/cuda`
+2. `wget -O cuda_9.0.176_384.81_linux.run "https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run"`
+
+> **NOTE:** If this URI fails, you can also download the installer from <https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal>
+
+3. Run `sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose`
+4. After the install finishes, make sure /usr/local/cuda is a symbolic link to `/apps/install/cuda-9.0`
+5. Add /usr/local/cuda/bin to the system PATH variable:
     1. `sudo sh -c 'echo "PATH=\$PATH:/usr/local/cuda/bin" >> /etc/profile.d/mpf.sh'`
     2. `. /etc/profile.d/mpf.sh`
-5. Add /usr/local/cuda/lib64 to the OpenMPF ldconfig file:
+6. Add /usr/local/cuda/lib64 to the OpenMPF ldconfig file:
     `sudo sh -c 'echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/mpf-x86_64.conf'`
 
 

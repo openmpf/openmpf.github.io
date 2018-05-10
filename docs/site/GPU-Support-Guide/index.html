@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Acknowledgements - OpenMPF</title>
+  <title>GPU Support Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Acknowledgements";
-    var mkdocs_page_input_path = "Acknowledgements.md";
-    var mkdocs_page_url = "/Acknowledgements/index.html";
+    var mkdocs_page_name = "GPU Support Guide";
+    var mkdocs_page_input_path = "GPU-Support-Guide.md";
+    var mkdocs_page_url = "/GPU-Support-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -101,12 +101,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="index.html">Acknowledgements</a>
-        
-            <ul>
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
         
     </li>
 
@@ -162,8 +158,20 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">GPU Support Guide</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#building-a-component">Building a Component</a></li>
+                
+                    <li><a class="toctree-l4" href="#customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -215,11 +223,11 @@
     
       
         
-          <li>General &raquo;</li>
+          <li>Components &raquo;</li>
         
       
     
-    <li>Acknowledgements</li>
+    <li>GPU Support Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -229,9 +237,21 @@
           <div role="main">
             <div class="section">
               
-                <p>The OpenMPF acknowledgements are listed on the About page available within the OpenMPF Workflow Manager web application.</p>
-<p>This page lists the acknowledgements from the master branch of the open source repository:
-<a href="../html/Acknowledgements.html" target="_blank">OpenMPF Acknowledgements</a></p>
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>A subset of OpenMPF components are capable of running on NVIDIA GPUs. GPU support is through the NVIDIA CUDA libraries and runtime. This guide provides information needed for new component developers that would like to use NVIDIA GPUs to accelerate their component processing, and for users of the existing components that provide GPU support.</p>
+<h1 id="building-a-component">Building a Component</h1>
+<p>OpenMPF components that use GPUs are built with the NVIDIA nvcc compiler. Information about the nvcc compiler can be found <a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html">here</a>. The compiler accepts a number of flags to optimize the code generated, and the output of the compiler is called a "fatbin", since it may contain versions of the CUDA code compiled for multiple GPU architectures. This section discusses the nvcc compiler flags that are used within OpenMPF to tell the nvcc compiler what to include in the compiled output.</p>
+<p>The nvcc compiler will generate two types of code: ELF code for a specific GPU architecture, and PTX code, which is the NVIDIA virtual machine and instruction set architecture that is generated in the first phase of nvcc compilation. You can learn more about PTX <a href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html">here</a>. A fatbin may have one or the other type of code, or both, for one or a set of different architectures. </p>
+<p>By default, the OpenMPF components are built for maximum portability across NVIDIA GPU architectures. The nvcc flags to accomplish this are described in this <a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation">table</a>. OpenMPF uses the "-gencode" flag, with the "-arch=compute_30" and "-code=compute_30" flags. This generates PTX code for the minimum compute capability; at runtime, the NVIDIA driver will just-in-time compile the PTX code for the architecture the code is running on.</p>
+<h2 id="customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</h2>
+<p>OpenMPF currently has only one GPU component. Our testing with this component on a variety of NVIDIA GPU architectures has found an insignificant difference in the run time for different architectures using this approach, and so we have opted to provide maximum runtime portability. For other components, this may not be the case, and similar testing should be undertaken to determine the correct set of flags for that component. We discuss here how to change these flag settings from the default for a specific component in that event.</p>
+<p>The nvcc compiler flags are defined in the ComponentSetup.cmake helper file that is part of each of the OpenMPF repositories containing component code. See <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/ComponentSetup.cmake">here</a> for the file that is currently set up to build a GPU component. This file defines a CMake variable called GPU_ARCH_BUILD_FLAGS, which is visible to every component built in that repository. If a new component where added to the repository, then this CMake variable may be redefined to a custom value inside the CMakeLists.txt file local to the component.</p>
+<blockquote>
+<p><strong>NOTE:</strong> OpenMPF GPU components are written so that they can run on the CPU only, as well as using GPU hardware. If the component is built on a system that does not have the NVIDIA CUDA Toolkit installed, then the build will default to compiling for the CPU. It is recommended that developers of new GPU components make every attempt to follow this model, so that other users are not burdened with installing the NVIDIA CUDA Toolkit when they have no plans to run on GPU hardware.</p>
+</blockquote>
               
             </div>
           </div>
@@ -239,10 +259,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Component-API-Overview/index.html" class="btn btn-neutral float-right" title="Component API Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Workflow-Manager/index.html" class="btn btn-neutral float-right" title="Workflow Manager">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Contributor-Guide/index.html" class="btn btn-neutral" title="Contributor Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Feed-Forward-Guide/index.html" class="btn btn-neutral" title="Feed Forward Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -270,10 +290,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Contributor-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Feed-Forward-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Component-API-Overview/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Workflow-Manager/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
