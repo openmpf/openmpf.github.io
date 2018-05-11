@@ -151,6 +151,8 @@
                 
                     <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
                 
+                    <li><a class="toctree-l4" href="#gpu-support">GPU Support</a></li>
+                
                     <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
                 
                     <li><a class="toctree-l4" href="#logging">Logging</a></li>
@@ -177,6 +179,13 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>
         
     </li>
@@ -185,13 +194,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
         
     </li>
 
@@ -1451,6 +1453,8 @@ MPFGenericTrack(
 <p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.</p>
 <h2 id="stateless-behavior">Stateless Behavior</h2>
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same <code>MPFJob</code>).</p>
+<h2 id="gpu-support">GPU Support</h2>
+<p>For components that want to take advantage of NVIDA GPU processors, please read the <a href="../GPU-Support-Guide/index.html">GPU Support Guide</a>. Also ensure that your build environment has the NVIDIA CUDA Toolkit 9.0 installed, as described in the <a href="../Build-Environment-Setup-Guide/index.html">Build Environment Setup Guide</a>.</p>
 <h2 id="component-packaging">Component Packaging</h2>
 <p>It is recommended that C++ components are organized according to the following directory structure:</p>
 <pre><code>componentName
