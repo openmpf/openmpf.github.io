@@ -94,6 +94,8 @@
                 
                     <li><a class="toctree-l4" href="#build-dependencies">Build Dependencies</a></li>
                 
+                    <li><a class="toctree-l4" href="#optional-install-the-nvidia-cuda-toolkit">(Optional) Install the NVIDIA CUDA Toolkit</a></li>
+                
                     <li><a class="toctree-l4" href="#configure-mysql">Configure MySQL</a></li>
                 
                     <li><a class="toctree-l4" href="#configure-activemq">Configure ActiveMQ</a></li>
@@ -214,6 +216,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
         
     </li>
 
@@ -957,6 +966,27 @@
 <li><code>sudo rpm -Uvh ./rpm-build/ansible-*.noarch.rpm</code></li>
 </ol>
 </li>
+</ol>
+<h2 id="optional-install-the-nvidia-cuda-toolkit">(Optional) Install the NVIDIA CUDA Toolkit</h2>
+<blockquote>
+<p><strong>NOTE:</strong> Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. All components that support GPU processing also support execution on the CPU, and if this toolkit is not found in the build environment, the build system will automatically build those components for CPU processing only. For a discussion of NVIDIA GPU support in OpenMPF components, see the <a href="../GPU-Support-Guide/index.html">GPU Support Guide</a>.</p>
+</blockquote>
+<ol>
+<li><code>cd /apps/source/cuda</code></li>
+<li><code>wget -O cuda_9.0.176_384.81_linux.run "https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run"</code><blockquote>
+<p><br>  <strong>NOTE:</strong> If this URI fails, you can also download the installer from <a href="https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal">https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></p>
+</blockquote>
+</li>
+<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose</code></li>
+<li>After the install finishes, make sure <code>/usr/local/cuda</code> is a symbolic link to <code>/apps/install/cuda-9.0</code>:
+    <br><code>ls -l /usr/local/cuda</code></li>
+<li>Add <code>/usr/local/cuda/bin</code> to the system PATH variable:<ol>
+<li><code>sudo sh -c 'echo "PATH=\$PATH:/usr/local/cuda/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+</li>
+<li>Add <code>/usr/local/cuda/lib64</code> to the OpenMPF ldconfig file:
+    <br><code>sudo sh -c 'echo "/usr/local/cuda/lib64" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
 </ol>
 <h2 id="configure-mysql">Configure MySQL</h2>
 <ol>
