@@ -423,7 +423,7 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 ## GPU Support
 
-For components that want to take advantage of NVIDA GPU processors, please read the [GPU Support Guide](GPU-Support-Guide/index.html). Also ensure that your build environment has the NVIDIA CUDA Toolkit 9.0 installed, as described in the [Build Environment Setup Guide](Build-Environment-Setup-Guide/index.html).
+For components that want to take advantage of NVIDA GPU processors, please read the [GPU Support Guide](GPU-Support-Guide/index.html). Also ensure that your build environment has the NVIDIA CUDA Toolkit installed, as described in the [Build Environment Setup Guide](Build-Environment-Setup-Guide/index.html).
 
 ## Component Packaging
 It is recommended that C++ components are organized according to the following directory structure:
