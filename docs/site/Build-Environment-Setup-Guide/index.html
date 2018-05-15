@@ -970,6 +970,7 @@
 <h2 id="optional-install-the-nvidia-cuda-toolkit">(Optional) Install the NVIDIA CUDA Toolkit</h2>
 <blockquote>
 <p><strong>NOTE:</strong> Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. All components that support GPU processing also support execution on the CPU, and if this toolkit is not found in the build environment, the build system will automatically build those components for CPU processing only. For a discussion of NVIDIA GPU support in OpenMPF components, see the <a href="../GPU-Support-Guide/index.html">GPU Support Guide</a>.</p>
+<p><strong>NOTE:</strong> To run OpenMPF components that use the NVIDIA GPUs, you must ensure that the deployment machine has the same version of this Toolkit installed, including the NVIDIA GPU drivers. The instructions here are for a build environment only, and thus do not include steps to install the drivers. If you also need to set up the deployment machine, please see the full instructions at <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html">https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html</a>.</p>
 </blockquote>
 <ol>
 <li><code>cd /apps/source/cuda</code></li>

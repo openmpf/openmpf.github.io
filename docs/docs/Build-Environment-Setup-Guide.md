@@ -573,6 +573,8 @@ The following source packages will need to be downloaded, built, and installed:
 
 > **NOTE:** Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. All components that support GPU processing also support execution on the CPU, and if this toolkit is not found in the build environment, the build system will automatically build those components for CPU processing only. For a discussion of NVIDIA GPU support in OpenMPF components, see the [GPU Support Guide](GPU-Support-Guide/index.html).
 
+> **NOTE:** To run OpenMPF components that use the NVIDIA GPUs, you must ensure that the deployment machine has the same version of this Toolkit installed, including the NVIDIA GPU drivers. The instructions here are for a build environment only, and thus do not include steps to install the drivers. If you also need to set up the deployment machine, please see the full instructions at <https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html>.
+
 1. `cd /apps/source/cuda`
 2. `wget -O cuda_9.0.176_384.81_linux.run "https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run"`
    > <br>  **NOTE:** If this URI fails, you can also download the installer from <https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal>
