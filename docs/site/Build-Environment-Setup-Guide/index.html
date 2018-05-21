@@ -1092,7 +1092,7 @@
 <li>Save and close the file.</li>
 <li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
 <li>Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre></li>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.file_ping.location=$MPF_HOME/share/nodes -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre></li>
 <li>Save and close the file.</li>
 </ol>
 <p><strong>Using an IDE</strong></p>
@@ -1110,7 +1110,7 @@
 <li>Save and close the file.</li>
 <li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
 <li>Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.file_ping.location=$MPF_HOME/share/nodes -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
 <li>Save and close the file.</li>
 </ol>
 <h2 id="add-maven-dependencies">Add Maven Dependencies</h2>
