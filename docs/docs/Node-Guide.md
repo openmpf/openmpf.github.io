@@ -76,6 +76,8 @@ Once you have selected a suitable child node to clone, and the child node is a V
 
 9. In the editor, look for the line that begins with `IPADDR0=`. Change the IP address after the `=` to a different IP address on the same subnet as the other nodes in the OpenMPF cluster. Save your changes and exit the editor.
 
+    >**NOTE**: This step is used to set a static IP address. If not already the case, change `BOOTPROTO=dhcp` to `BOOTPROTO=none` in this file.
+
 10. Run: `sudo systemctl restart network`
 
 12. Run: `ifconfig`. Verify that the IP addressed assigned to the network interface is correct. For example:
@@ -101,8 +103,6 @@ Once you have selected a suitable child node to clone, and the child node is a V
         Active: active (running) since Tue 2018-05-22 14:29:05 EDT; 18min ago
 
 Your spare node is now running and should be able to join the OpenMPF cluster within a minute. 
-
->**NOTE**: If you have more than on OpenMPF cluster running a compatible version of OpenMPF, you can follow the above instructions, starting at step 6, to configure the spare node to run on a different cluster. The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline.
 
 # Verifying that a Spare Node is Connected
 
@@ -141,3 +141,14 @@ Spare nodes: ['10.0.2.101']
 The screenshot belows shows an OpenMPF cluster configured with one core node and two spare nodes. One spare node is online, and one is offline. The Nodes web UI will automatically be updated when a configured node joins or leaves the OpenMPF cluster.
 
 ![Nodes Web UI](img/spare_node_config.png "Nodes Web UI")
+
+# Moving Spare Nodes Between OpenMPF Clusters
+
+If you have more than one OpenMPF cluster running a compatible version of OpenMPF, you can follow the above [instructions](Node-Guide/index.html#setting-up-a-spare-node), starting at step 6, to configure the spare node to run on a different cluster, with the following additions:
+
+- In step 9, additional changes to the `ifcfg-<INTERFACE>` file may be required to configure the node to connect to the proper subnet and gateway. 
+- In step 14, you will also need to update the value of `ACTIVE_MQ_HOST` to use the correct IP address of the master node in the new cluster. 
+- You will need to remap `$MPF_HOME/share` to use the new cluster's shared network storage space.
+
+
+The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline. 
