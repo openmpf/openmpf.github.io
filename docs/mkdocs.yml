@@ -17,6 +17,7 @@ pages:
     - Install Guide: Installation-Guide.md
     - User Guide: User-Guide.md
     - Admin Guide: Admin-Manual.md
+    - Node Guide: Node-Guide.md
     - Contributor Guide: Contributor-Guide.md
     - Acknowledgements: Acknowledgements.md
 - Components:
