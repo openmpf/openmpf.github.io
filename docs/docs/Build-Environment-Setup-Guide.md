@@ -921,11 +921,11 @@ INFO: Server startup in 39030 ms
 
 After startup, the workflow-manager will be available at <http://localhost:8443/workflow-manager> (or <http://localhost:8080/workflow-manager> if configured to use HTTP instead of HTTPS). Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
 
-If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/index.html) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Manual](Admin-Manual/index.html) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
+If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/index.html) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Guide](Admin-Guide/index.html) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
 
 > **NOTE:** Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <https://www.virtualbox.org/manual/ch06.html#natforward> for configuring port forwarding.
 
-The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Manual/index.html#command-line-tools) section of the [OpenMPF Admin Manual](Admin-Manual/index.html). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
+The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Guide/index.html#command-line-tools) section of the [OpenMPF Admin Guide](Admin-Guide/index.html). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
 
 **Starting**
 
