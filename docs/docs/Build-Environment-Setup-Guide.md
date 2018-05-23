@@ -725,7 +725,7 @@ daemonize yes
 3. Save and close the file.
 4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
 5. Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.file_ping.location=$MPF_HOME/share/nodes -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre>
 6. Save and close the file.
 
 **Using an IDE**
@@ -745,7 +745,7 @@ The OpenMPF can also be run using HTTP instead of HTTPS.
 3. Save and close the file.
 4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
 5. Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.file_ping.location=$MPF_HOME/share/nodes -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre>
 6. Save and close the file.
 
 ## Add Maven Dependencies

@@ -147,7 +147,7 @@ The screenshot belows shows an OpenMPF cluster configured with one core node and
 If you have more than one OpenMPF cluster running a compatible version of OpenMPF, you can follow the above [instructions](Node-Guide/index.html#setting-up-a-spare-node), starting at step 6, to configure the spare node to run on a different cluster, with the following additions:
 
 - In step 9, additional changes to the `ifcfg-<INTERFACE>` file may be required to configure the node to connect to the proper subnet and gateway. 
-- In step 14, you will also need to update the value of `ACTIVE_MQ_HOST` to use the correct IP address of the master node in the new cluster. 
+- In step 14, you will also need to update the value of `MASTER_MPF_NODE` to use the correct IP address of the master node in the new cluster. 
 - You will need to remap `$MPF_HOME/share` to use the new cluster's shared network storage space.
 
 

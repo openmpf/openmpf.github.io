@@ -409,7 +409,7 @@ Spare nodes: ['10.0.2.101']
 <p>If you have more than one OpenMPF cluster running a compatible version of OpenMPF, you can follow the above <a href="../Node-Guide/index.html#setting-up-a-spare-node">instructions</a>, starting at step 6, to configure the spare node to run on a different cluster, with the following additions:</p>
 <ul>
 <li>In step 9, additional changes to the <code>ifcfg-&lt;INTERFACE&gt;</code> file may be required to configure the node to connect to the proper subnet and gateway. </li>
-<li>In step 14, you will also need to update the value of <code>ACTIVE_MQ_HOST</code> to use the correct IP address of the master node in the new cluster. </li>
+<li>In step 14, you will also need to update the value of <code>MASTER_MPF_NODE</code> to use the correct IP address of the master node in the new cluster. </li>
 <li>You will need to remap <code>$MPF_HOME/share</code> to use the new cluster's shared network storage space.</li>
 </ul>
 <p>The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline. </p>
