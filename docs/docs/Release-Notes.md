@@ -4,6 +4,8 @@
 
 <h2 style="color:red">NOTE: Address TODOs.</h2>
 
+> **NOTE:** If building this release on a machine used to build a previous version of OpenMPF, then please run `sudo pip install --upgrade pip` to update to at least pip 10.0.1. If not, the OpenMPF build script will fail to properly download .whl files for Python modules.
+
 <h2>Documentation</h2>
 
 - TODO: Added the [Python Batch Component API](Python-Batch-Component-API/index.html).
