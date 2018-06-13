@@ -285,11 +285,11 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 </ol>
 <p>When a node first starts up it will be in its own JGroups cluster. Within a minute it will be merged into the cluster with the other OpenMPF nodes. At that time it will be recognized by the WFM and become available for running services and processing jobs. </p>
 <h1 id="setting-up-a-spare-node">Setting up a Spare Node</h1>
-<p>A spare node is defined as a node that is not configured during the OpenMPF installation process, which means that the only way to create a spare node is to configure it manually, or clone it from an existing child node. We recommend the latter, which is easy to do if your nodes are VMs. Make sure not to clone the master node because only one node in the OpenMPF cluster should be running the WFM. Instead, clone a child node. If the cluster only consists of the master node, then please follow the <em>Configure the OpenMPF Cluster</em> step in the <a href="../Installation-Guide/index.html#openmpf-installation">Installation Guide</a> again to add a new child node.</p>
+<p>A spare node is defined as a node that is not configured during the OpenMPF installation process. Currently, the recommended way to create a spare node is to clone it from an existing child node. This is easy to do if your nodes are VMs. Make sure not to clone the master node because only one node in the OpenMPF cluster should be running the WFM. Instead, clone a child node. If the cluster only consists of the master node, then please follow the <em>Configure the OpenMPF Cluster</em> step in the <a href="../Installation-Guide/index.html#openmpf-installation">Installation Guide</a> again to add a new child node.</p>
 <blockquote>
 <p><strong>IMPORTANT</strong>: A spare node will only be able to run the same plugins that were installed on the child node from which it was cloned. Spare nodes are not updated as part of the OpenMPF upgrade process. We recommended discarding spare nodes with old versions of OpenMPF installed on them, and cloning new spare nodes from core child nodes that have been updated as part of the OpenMPF upgrade process.</p>
 </blockquote>
-<p>Once you have selected a suitable child node to clone, and the child node is a VirtualBox VM, you can perform the following steps to create a spare node:</p>
+<p>Once you have selected a suitable child node to clone, you can perform the following steps to create a spare node. These steps assume that the child node is a VirtualBox VM. If you are using different VM software, then the cloning process will be different. These steps will have you disable DHCP and configure a static IP address on the spare node. This is not required. Alternatively, you can configure the node with a unique hostname, and add it to your domain name registry, if you would rather use DNS and DHCP. If you decide to do that, then skip to step 13 and use the node's hostname instead of IP address in the mpf.sh file.</p>
 <ol>
 <li>
 <p>Shutdown the VM you wish to clone.</p>
@@ -301,7 +301,7 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 <p>Use the dialog to give the machine a new name. Be sure to check the "Reinitialize the MAC address of all network cards" box. Then click "Continue".</p>
 </li>
 <li>
-<p>Select "Full clone" or "Linked clone", depending on your preference. Eventually, click the "Clone" button.</p>
+<p>Select "Full clone". Eventually, click the "Clone" button.</p>
 </li>
 <li>
 <p>Start the VM, log in, and open a terminal session.</p>
@@ -409,7 +409,7 @@ Spare nodes: ['10.0.2.101']
 <p>If you have more than one OpenMPF cluster running a compatible version of OpenMPF, you can follow the above <a href="../Node-Guide/index.html#setting-up-a-spare-node">instructions</a>, starting at step 6, to configure the spare node to run on a different cluster, with the following additions:</p>
 <ul>
 <li>In step 9, additional changes to the <code>ifcfg-&lt;INTERFACE&gt;</code> file may be required to configure the node to connect to the proper subnet and gateway. </li>
-<li>In step 14, you will also need to update the value of <code>MASTER_MPF_NODE</code> to use the correct IP address of the master node in the new cluster. </li>
+<li>In step 14, you will also need to update the value of <code>MASTER_MPF_NODE</code> to use the correct IP address (or hostname) of the master node in the new cluster. </li>
 <li>You will need to remap <code>$MPF_HOME/share</code> to use the new cluster's shared network storage space.</li>
 </ul>
 <p>The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline. </p>
