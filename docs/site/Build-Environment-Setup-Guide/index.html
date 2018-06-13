@@ -165,7 +165,14 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Admin-Manual/index.html">Admin Guide</a>
+        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Node-Guide/index.html">Node Guide</a>
         
     </li>
 
@@ -1092,7 +1099,7 @@
 <li>Save and close the file.</li>
 <li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
 <li>Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre></li>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre></li>
 <li>Save and close the file.</li>
 </ol>
 <p><strong>Using an IDE</strong></p>
@@ -1110,7 +1117,7 @@
 <li>Save and close the file.</li>
 <li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
 <li>Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
 <li>Save and close the file.</li>
 </ol>
 <h2 id="add-maven-dependencies">Add Maven Dependencies</h2>
@@ -1287,11 +1294,11 @@ localhost.localdomain</code></p>
 </code></pre>
 
 <p>After startup, the workflow-manager will be available at <a href="http://localhost:8443/workflow-manager">http://localhost:8443/workflow-manager</a> (or <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a> if configured to use HTTP instead of HTTPS). Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.</p>
-<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Manual/index.html">OpenMPF Admin Manual</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
+<p>If you want to test regular user capabilities, log in as 'mpf'. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a> for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command <code>mpf stop</code>.</p>
 <blockquote>
 <p><strong>NOTE:</strong> Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <a href="https://www.virtualbox.org/manual/ch06.html#natforward">https://www.virtualbox.org/manual/ch06.html#natforward</a> for configuring port forwarding.</p>
 </blockquote>
-<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Manual/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Manual/index.html">OpenMPF Admin Manual</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
+<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Guide/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a>. These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:</p>
 <p><strong>Starting</strong></p>
 <pre><code>/opt/activemq/bin/activemq start
 sudo systemctl start mysqld
