@@ -50,11 +50,22 @@ For C++ components, this contains the full path to the Component Logic shared ob
 
 For Java components, this contains the name of the jar which contains the component implementation used for batch processing.
 
+For setuptools-based Python components, this contains the component's distribution name which is declared in the 
+component's `setup.py` file. The distribution name is usually the same name as the component.
+
+For basic Python components, this contains the full path to the Python file containing the component class.
+
 Example (C++):
 `"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libbatchSampleComponent.so`
 
 Example (Java):
 `"batchLibrary" : "batch-sample-component-2.0.1.jar"`
+
+Example (setuptools-based Python):
+`"batchLibrary" : "SampleComponent"`
+
+Example (basic Python):
+`"batchLibrary" : "${MPF_HOME}/plugins/SampleComponent/sample_component.py"`
 
 <h3>streamLibrary</h3>
 Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
