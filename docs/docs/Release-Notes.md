@@ -27,15 +27,15 @@
 - Spare nodes can join and leave an OpenMPF cluster while the Workflow Manager is running. You can create a spare node by cloning an existing OpenMPF child node. Refer to the [Node Guide](Node-Guide/index.html).
 - Note that changes made using the Component Registration web page only affect core nodes, not spare nodes. Core nodes are those configured during the OpenMPF installation process.
 - Added `mpf list-nodes` command to list the core nodes and available spare nodes.
-- Now using JGroups FILE_PING protocol for peer discovery instead of TCPPING. This means that the list of OpenMPF nodes no longer needs to be fully specified when the Workflow Manager starts. Instead, the files in `$MPF_HOME/share/nodes` are used by the Node Manager process on each node, and the Workflow Manager, to determine which nodes are currently available.
+- OpenMPF now uses the JGroups FILE_PING protocol for peer discovery instead of TCPPING. This means that the list of OpenMPF nodes no longer needs to be fully specified when the Workflow Manager starts. Instead, the Workflow Manager, and Node Manager process on each node, use the files in `$MPF_HOME/share/nodes` to determine which nodes are currently available.
 - Updated JGroups from 3.6.4. to 4.0.11.
 - The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified.
 
 <h2>Default Detection System Properties</h2>
 
-- Some system properties can now be updated at runtime without restarting the Workflow Manager. Specifically, they are the properties that specify the default values when creating new jobs. Changing these properties will only have an effect on new jobs, not jobs that are currently running.
-- These default detection system properties are separated from the general system properties in the Properties web page. The latter still require the Workflow Manager to be restarted to take effect.
-- The Apache Commons Configuration library is now used to read and write properties files. When defining a property value using an environment variable, be sure to prepend the variable name with `env:`. For example:
+- The properties that specify the default values when creating new jobs can now be updated at runtime without restarting the Workflow Manager. Changing these properties will only have an effect on new jobs, not jobs that are currently running.
+- These default detection system properties are separated from the general system properties in the Properties web page. The latter still require the Workflow Manager to be restarted for changes to take effect.
+- The Apache Commons Configuration library is now used to read and write properties files. When defining a property value using an environment variable in the Properties web page, or `$MPF_HOME/config/mpf-custom.properties`, be sure to prepend the variable name with `env:`. For example:
 
 ```
 detection.models.dir.path=${env:MPF_HOME}/models/
@@ -61,18 +61,18 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 
 <h2>Darknet Component</h2>
 
-- Implemented a component that uses the [Darknet neural network framework](https://pjreddie.com/darknet/) to perform detection and classification of objects using trained models.
+- This release includes a component that uses the [Darknet neural network framework](https://pjreddie.com/darknet/) to perform detection and classification of objects using trained models.
 - Pipelines for the Tiny YOLO and YOLOv2 models are provided. Due to its large size, the YOLOv2 weights file must be downloaded separately and placed in `$MPF_HOME/share/models/DarknetDetection` in order to use the YOLOv2 pipelines. Refer to `DarknetDetection/plugin-files/models/models.ini` for more information.
-- Supports a preprocessor mode and default mode of operation. If preprocessor mode is enabled, and multiple Darknet detections in a frame share the same classification, then those are merged into a single detection where the region corresponds to the superset region that encapsulates all of the original detections, and the confidence value is the probability that at least one of the original detections is a true positive. If disabled, multiple Darknet detections in a frame are not merged together.
+- This component supports a preprocessor mode and default mode of operation. If preprocessor mode is enabled, and multiple Darknet detections in a frame share the same classification, then those are merged into a single detection where the region corresponds to the superset region that encapsulates all of the original detections, and the confidence value is the probability that at least one of the original detections is a true positive. If disabled, multiple Darknet detections in a frame are not merged together.
 - Detections are not tracked across frames. One track is generated per detection.
-- Supports an optional CLASS_WHITELIST_FILE property. When provided, only detections with class names listed in the file will be generated.
-- Can be compiled with GPU support if the NVIDIA CUDA Toolkit is installed on the build machine. Refer to the [GPU Support Guide](GPU-Support-Guide). If the toolkit is not found, then the component will compile with CPU support only.
-- To run on a GPU, set CUDA_DEVICE_ID >= 0, or set the detection.cuda.device.id system property.
-- When CUDA_DEVICE_ID >= 0, set FALLBACK_TO_CPU_WHEN_GPU_PROBLEM, or the detection.use.cpu.when.gpu.problem system property, to true to run the component logic on the CPU instead of the GPU when a GPU problem is detected.
+- This component supports an optional CLASS_WHITELIST_FILE property. When provided, only detections with class names listed in the file will be generated.
+- This component can be compiled with GPU support if the NVIDIA CUDA Toolkit is installed on the build machine. Refer to the [GPU Support Guide](GPU-Support-Guide). If the toolkit is not found, then the component will compile with CPU support only.
+- To run on a GPU, set the CUDA_DEVICE_ID job property, or set the detection.cuda.device.id system property, >= 0.
+- When CUDA_DEVICE_ID >= 0, you can set the FALLBACK_TO_CPU_WHEN_GPU_PROBLEM job property, or the detection.use.cpu.when.gpu.problem system property, to `TRUE` if you want to run the component logic on the CPU instead of the GPU when a GPU problem is detected.
 
 <h2>Models Directory</h2>
 
-- The`$MPF_HOME/share/models` directory is now used by the Darknet and Caffe components to store model files and associated files, such as classification names files, weights files, etc. This allows users to more easily add model files post-deployment. Instead of copying the model files to `$MPF_HOME/plugins/<component-name>/models` directory on each node in the OpenMPF cluster, they only need to be placed in the shared directory once.
+- The`$MPF_HOME/share/models` directory is now used by the Darknet and Caffe components to store model files and associated files, such as classification names files, weights files, etc. This allows users to more easily add model files post-deployment. Instead of copying the model files to `$MPF_HOME/plugins/<component-name>/models` directory on each node in the OpenMPF cluster, they only need to copy them to the shared directory once.
 - To add new models to the Darknet and Caffe component, add an entry to the respective `<component-name>/plugin-files/models/models.ini` file.
 
 <h2>Packaging and Deployment</h2>
@@ -88,11 +88,11 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 
 <h2>Bug Fixes</h2>
 
-- Custom Action, task, and pipeline names can now contain "(" and ")" characters, again.
-- Detection elements for audio tracks and generic tracks in a JSON output object will now have a y value of 0 instead of 1.
+- Custom Action, task, and pipeline names can now contain "(" and ")" characters again.
+- Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of `0` instead of `1`.
 - Streaming health report and summary report timestamps have been corrected to represent hours in the 1-24 range instead of 0-23.
 - Single-frame .gif files are now segmented properly and no longer result in a NullPointerException. 
-- Now setting LD_LIBRARY_PATH at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running "yum update" on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed. 
+- LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed. 
 
 <h2>Known Issues</h2>
 
