@@ -17,7 +17,7 @@ This guide provides comprehensive instructions for setting up a build environmen
 The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the [OpenMPF Installation Guide](Installation-Guide/index.html).
 
 - This guide assumes a starting point of CentOS 7 with a minimal installation.
-- Download the CentOS 7 minimal iso from [here](https://www.centos.org/download/) (click on the "Minimal ISO" button) prior to starting these steps. As of writing this guide, the last version of the iso we tested is CentOS-7-x86_64-Minimal-1708.iso.
+- Download the CentOS 7 (1708) minimal iso from [here](http://archive.kernel.org/centos-vault/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso) prior to starting these steps. As of writing this guide, the last version of the iso we tested is CentOS-7-x86_64-Minimal-1708.iso. If a more modern version of CentOS is available, we recommend not using it; otherwise, you may encounter library dependency issues during deployment.
 - Oracle Virtual Box is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported. As of writing this guide, the last version of Virtual Box we tested is 5.2.4 r119785.
 
 
@@ -725,7 +725,7 @@ daemonize yes
 3. Save and close the file.
 4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
 5. Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre>
 6. Save and close the file.
 
 **Using an IDE**
@@ -745,7 +745,7 @@ The OpenMPF can also be run using HTTP instead of HTTPS.
 3. Save and close the file.
 4. Create the file `/opt/apache-tomcat/bin/setenv.sh` and open it in a text editor.
 5. Add the following line:
-<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djgroups.tcp.port=7800 -Djava.library.path=$MPF_HOME/lib -Djgroups.tcpping.initial_hosts='$ALL_MPF_NODES' -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre>
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre>
 6. Save and close the file.
 
 ## Add Maven Dependencies
@@ -921,11 +921,11 @@ INFO: Server startup in 39030 ms
 
 After startup, the workflow-manager will be available at <http://localhost:8443/workflow-manager> (or <http://localhost:8080/workflow-manager> if configured to use HTTP instead of HTTPS). Connect to this URL with FireFox. Chrome is also supported, but is not pre-installed on the VM.
 
-If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/index.html) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Manual](Admin-Manual/index.html) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
+If you want to test regular user capabilities, log in as 'mpf'. Please see the [OpenMPF User Guide](User-Guide/index.html) for more information. Alternatively, if you want to test admin capabilities then log in as 'admin'. Please see the [OpenMPF Admin Guide](Admin-Guide/index.html) for more information. When finished testing using the browser (or other external clients), go back to the terminal window used to launch Tomcat and enter the stop command `mpf stop`.
 
 > **NOTE:** Through the use of port forwarding, the workflow-manager can also be accessed from your guest operating system. Please see the Virtual Box documentation <https://www.virtualbox.org/manual/ch06.html#natforward> for configuring port forwarding.
 
-The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Manual/index.html#command-line-tools) section of the [OpenMPF Admin Manual](Admin-Manual/index.html). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
+The preferred method to start and stop services for OpenMPF is with the `mpf start` and `mpf stop` commands. For additional information on these commands, please see the [Command Line Tools](Admin-Guide/index.html#command-line-tools) section of the [OpenMPF Admin Guide](Admin-Guide/index.html). These will start and stop ActiveMQ, MySQL, Redis, node-manager, and Tomcat, respectively. Alternatively, to perform these actions manually, the following commands can be used in a terminal window:
 
 **Starting**
 

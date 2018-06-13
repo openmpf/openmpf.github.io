@@ -29,11 +29,11 @@
 - Added `mpf list-nodes` command to list the core nodes and available spare nodes.
 - OpenMPF now uses the JGroups FILE_PING protocol for peer discovery instead of TCPPING. This means that the list of OpenMPF nodes no longer needs to be fully specified when the Workflow Manager starts. Instead, the Workflow Manager, and Node Manager process on each node, use the files in `$MPF_HOME/share/nodes` to determine which nodes are currently available.
 - Updated JGroups from 3.6.4. to 4.0.11.
-- The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified.
+- The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified. Of note, ALL_MPF_NODES has been replaced by CORE_MPF_NODES.
 
 <h2>Default Detection System Properties</h2>
 
-- The properties that specify the default values when creating new jobs can now be updated at runtime without restarting the Workflow Manager. Changing these properties will only have an effect on new jobs, not jobs that are currently running.
+- The detection properties that specify the default values when creating new jobs can now be updated at runtime without restarting the Workflow Manager. Changing these properties will only have an effect on new jobs, not jobs that are currently running.
 - These default detection system properties are separated from the general system properties in the Properties web page. The latter still require the Workflow Manager to be restarted for changes to take effect.
 - The Apache Commons Configuration library is now used to read and write properties files. When defining a property value using an environment variable in the Properties web page, or `$MPF_HOME/config/mpf-custom.properties`, be sure to prepend the variable name with `env:`. For example:
 
@@ -421,7 +421,7 @@ for optional dependencies.
   - Updated the [REST API](REST-API/index.html) to reflect job properties, algorithm-specific properties, and media-specific properties.
   - Streamlined the [C++ Batch Component API](CPP-Batch-Component-API/index.html) document for clarity and simplicity.
   - Completed the [Java Batch Component API](Java-Batch-Component-API/index.html) document.
-  - Updated the [Admin Manual](Admin-Manual/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
+  - Updated the [Admin Guide](Admin-Guide/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
   - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for GitHub repositories.
 
 <h2>Workflow Manager</h2>
