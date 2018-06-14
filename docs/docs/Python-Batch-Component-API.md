@@ -26,13 +26,8 @@ sent by the OpenMPF Workflow Manager (WFM).
 The Component Executable:
 
 1. Receives and parses job requests from the WFM
-2. Invokes functions on the component library to obtain detection results
+2. Invokes methods on the component library to obtain detection results
 3. Populates and sends the respective responses to the WFM
-
-Each instance of a Component Executable runs as a separate process.
-
-The Component Executable receives and parses requests from the WFM, invokes functions on the Component Logic to get 
-detection objects, and subsequently populates responses with the component output and sends them to the WFM.
 
 The basic psuedocode for the Component Executable is as follows:
 ```python
@@ -62,14 +57,14 @@ while True:
 
 Each instance of a Component Executable runs as a separate process.
 
-The Component Executable receives and parses requests from the WFM, invokes functions on the Component Logic to get 
+The Component Executable receives and parses requests from the WFM, invokes methods on the Component Logic to get 
 detection objects, and subsequently populates responses with the component output and sends them to the WFM.
 
 A component developer implements a detection component by creating a class that defines one or more of the
 get_detections_from_* methods and has a detection_type field.
 
-During a component registration a [virtualenv](http://virtualenv.pypa.io) is created for each component. 
-The virtualenv has access to the built in Python libraries, but does not have access to any third party packages 
+During component registration a [virtualenv](http://virtualenv.pypa.io) is created for each component. 
+The virtualenv has access to the built-in Python libraries, but does not have access to any third party packages 
 that might be installed on the system. When creating the virtualenv for a setuptools-based component the only packages 
 that get installed are the component itself and any dependencies specified in the setup.py 
 file (including their transitive dependencies). When creating the virtualenv for a basic Python component the only 
@@ -78,7 +73,7 @@ package that gets installed is `mpf_component_api`.
 
 # How to Create a Python Component
 There are two types of Python components that are supported, setuptools-based components and basic Python components.
-Basic Python components quicker to set up, but have no form of dependency management. Setuptools-based components 
+Basic Python components are quicker to set up, but have no form of dependency management. Setuptools-based components 
 are recommended since they use setuptools and pip for dependency management.
 
 ## Get openmpf-python-component-sdk
@@ -88,8 +83,8 @@ already have it. While not technically required, it is recommended to also clone
 [openmpf-build-tools repository](https://github.com/openmpf/openmpf-build-tools).
 The rest of the steps assume you cloned openmpf-python-component-sdk and put in 
 `~/openmpf-projects/openmpf-python-component-sdk`. The rest of the steps also assume that if you cloned the 
-openmpf-build-tools repository, you put in `~/openmpf-projects/openmpf-build-tools`
-
+openmpf-build-tools repository, you cloned it to `~/openmpf-projects/openmpf-build-tools`.
+ 
 
 ## Setup Python Component Libraries
 The component packaging steps require that wheel files for mpf_component_api, mpf_component_util, and 
@@ -172,7 +167,7 @@ the descriptor format.
 **4\. Implement your component class:**
 
 Below is an example of the structure of simple component. You would replace the call to
-`run_detection_algorithm_on_frame` with your component specific logic.
+`run_detection_algorithm_on_frame` with your component-specific logic.
 ```python
 import mpf_component_api as mpf
 import mpf_component_util as mpf_util
@@ -296,7 +291,7 @@ tar -zcf MyComponent.tar.gz MyComponent
 An OpenMPF Python component is a class that defines one or more of the get_detections_from_\* methods and has a 
 detection_type field. 
 
-All get_detections_from_\* methods are invoked through an instance of component class and the only 
+All get_detections_from_\* methods are invoked through an instance of the component class and the only 
 parameter passed in is an appropriate job object (e.g. `mpf_component_api.ImageJob`, `mpf_component_api.VideoJob`). 
 Since the methods are invoked through an instance, instance methods and class methods end up with two arguments,
 the first is either the instance or the class respectively.
@@ -326,7 +321,7 @@ class MyComponent(object):
         return [mpf_component_api.ImageLocation(...), ...]
 ```
 
-All get_detections_from_\* must return an iterable of the appropriate detection type 
+All get_detections_from_\* methods must return an iterable of the appropriate detection type 
 (e.g. `mpf_component_api.ImageLocation`, `mpf_component_api.VideoTrack`). The return value is normally a list or generator, 
 but any iterable can be used.
 
@@ -348,7 +343,7 @@ class MyComponent(object):
 
 Used to detect objects in an image file.
 
-* Function Definition:
+* Method Definition:
 ```python
 class MyComponent(object):
     def get_detections_from_image(self, image_job):
@@ -404,17 +399,18 @@ def __init__(self, x_left_upper, y_left_upper, width, height, confidence=-1.0, d
 
 #### mpf_component_util.ImageReader
 `mpf_component_util.ImageReader` is an utility class for accessing images. It is the image equivalent to 
-`mpf_component_util.VideoCapture`. Like `mpf_component_util.VideoCapture`, it may modify the image based on 
-job_properties. From the point of view of someone using `mpf_component_util.ImageReader`, these modifications are 
-mostly transparent. `mpf_component_util.ImageReader` makes it look like you are reading the original image file. 
+`mpf_component_util.VideoCapture`. Like `mpf_component_util.VideoCapture`, it may modify the read-in frame data based 
+on job_properties. From the point of view of someone using `mpf_component_util.ImageReader`, these modifications are 
+mostly transparent. `mpf_component_util.ImageReader` makes it look like you are reading the original image file as 
+though it has already been rotated, flipped, cropped, etc.
 
 One issue with this approach is that the detection bounding boxes will be relative to the 
 modified image, not the original. To make the detections relative to the original image 
-the `mpf_component_util.ImageReader.reverse_transform(image_location)` function must be called on each 
+the `mpf_component_util.ImageReader.reverse_transform(image_location)` method must be called on each 
 `mpf_component_api.ImageLocation`. Since the use of `mpf_component_util.ImageReader` is optional, the framework
 cannot just do the reverse transform for the developer. 
-See the documentation for `mpf_component_util.ImageReaderMixin` for a more concise way to use 
-`mpf_component_util.ImageReader`
+See the documentation for [`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin) for a more 
+concise way to use `mpf_component_util.ImageReader`
 
 The general pattern for using `mpf_component_util.ImageReader` is as follows:
 ```python
@@ -437,14 +433,14 @@ A mixin class that can be used to simplify the usage of `mpf_component_util.Imag
 `mpf_component_util.ImageReaderMixin` takes care of initializing a `mpf_component_util.ImageReader` and 
 performing the reverse transform.
 
-There some requirements to properly use `mpf_component_util.ImageReaderMixin`:
+There are some requirements to properly use `mpf_component_util.ImageReaderMixin`:
 
-* The component must extend `mpf_component_util.ImageReaderMixin`
-* The component must implement `get_detections_from_image_reader(image_job, image_reader)`
-* The component must read the image using the `mpf_component_util.ImageReader` 
+* The component must extend `mpf_component_util.ImageReaderMixin`.
+* The component must implement `get_detections_from_image_reader(image_job, image_reader)`.
+* The component must read the image using the `mpf_component_util.ImageReader` .
   that is passed in to `get_detections_from_image_reader(image_job, image_reader)`.
-* The component must NOT implement `get_detections_from_image(image_job)`
-* The component must NOT call `mpf_component_util.ImageReader.reverse_transform`
+* The component must NOT implement `get_detections_from_image(image_job)`.
+* The component must NOT call `mpf_component_util.ImageReader.reverse_transform`.
 
 The general pattern for using `mpf_component_util.ImageReaderMixin` is as follows:
 ```python
@@ -459,10 +455,10 @@ class MyComponent(mpf_component_util.ImageReaderMixin):
         return run_component_specific_algorithm(image)
 ```
 
-`mpf_component_util.ImageReaderMixin` is a mixin class so it designed in a way that does not prevent the subclass
+`mpf_component_util.ImageReaderMixin` is a mixin class so it is designed in a way that does not prevent the subclass
 from extending other classes. If a component supports both videos and images, and it uses 
 `mpf_component_util.VideoCaptureMixin`, it should also use `mpf_component_util.ImageReaderMixin`. 
-See `mpf_component_util.VideoCaptureMixin` documentation for example.
+See [`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin) documentation for an example.
 
 
 
@@ -475,7 +471,7 @@ of video data and each segment (containing a range of frames) is assigned to a d
 guaranteed to receive requests in any order. For example, the first request processed by a component might receive a 
 request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.
 
-* Function Definition:
+* Method Definition:
 ```python
 class MyComponent(object):
     def get_detections_from_video(self, video_job):
@@ -537,15 +533,15 @@ def __init__(self, start_frame, stop_frame, confidence=-1.0, frame_locations=Non
 `mpf_component_util.VideoCapture` works very similarly to `cv2.VideoCapture`, except that it might modify the video 
 frames based on job properties. From the point of view of someone using `mpf_component_util.VideoCapture`, 
 these modifications are mostly transparent. `mpf_component_util.VideoCapture` makes it look like you are reading the 
-original video file. 
+original video file as though it has already been rotated, flipped, cropped, etc.
 
 One issue with this approach is that the detection frame numbers and bounding box will be relative to the 
 modified video, not the original. To make the detections relative to the original video 
-the `mpf_component_util.VideoCapture.reverse_transform(video_track)` function must be called on each 
+the `mpf_component_util.VideoCapture.reverse_transform(video_track)` method must be called on each 
 `mpf_component_api.VideoTrack`. Since the use of `mpf_component_util.VideoCapture` is optional, the framework
 cannot just do the reverse transform for the developer. 
-See the documentation for `mpf_component_util.VideoCaptureMixin` for a more concise way to use 
-`mpf_component_util.VideoCapture`
+See the documentation for [`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin) for a more 
+concise way to use `mpf_component_util.VideoCapture`
 
 The general pattern for using `mpf_component_util.VideoCapture` is as follows:
 ```python
@@ -568,15 +564,14 @@ A mixin class that can be used to simplify the usage of `mpf_component_util.Vide
 `mpf_component_util.VideoCaptureMixin` takes care of initializing a `mpf_component_util.VideoCapture` and 
 performing the reverse transform.
 
-There some requirements to properly use `mpf_component_util.VideoCaptureMixin`:
+There are some requirements to properly use `mpf_component_util.VideoCaptureMixin`:
 
-* The component must extend `mpf_component_util.VideoCaptureMixin`
-* The component must implement `get_detections_from_video_capture(video_job, video_capture)`
-* The component must read the video using the `mpf_component_util.VideoCapture` 
+* The component must extend `mpf_component_util.VideoCaptureMixin`.
+* The component must implement `get_detections_from_video_capture(video_job, video_capture)`.
+* The component must read the video using the `mpf_component_util.VideoCapture`.
   that is passed in to `get_detections_from_video_capture(video_job, video_capture)`.
-
-* The component must NOT implement `get_detections_from_video(video_job)`
-* The component must NOT call `mpf_component_util.VideoCapture.reverse_transform`
+* The component must NOT implement `get_detections_from_video(video_job)`.
+* The component must NOT call `mpf_component_util.VideoCapture.reverse_transform`.
 
 
 The general pattern for using `mpf_component_util.VideoCaptureMixin` is as follows:
@@ -595,7 +590,7 @@ class MyComponent(mpf_component_util.VideoCaptureMixin):
                 yield track
 ```
 
-`mpf_component_util.VideoCaptureMixin` is a mixin class so it designed in a way that does not prevent the subclass
+`mpf_component_util.VideoCaptureMixin` is a mixin class so it is designed in a way that does not prevent the subclass
 from extending other classes. If a component supports both videos and images, and it uses 
 `mpf_component_util.VideoCaptureMixin`, it should also use `mpf_component_util.ImageReaderMixin`.
 For example:
@@ -620,7 +615,7 @@ class MyComponent(mpf_component_util.VideoCaptureMixin, mpf_component_util.Image
 Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain 
 the entirety of the audio file.
 
-* Function Definition:
+* Method Definition:
 ```python
 class MyComponent(object):
     def get_detections_from_audio(self, audio_job):
@@ -685,7 +680,7 @@ def __init__(self, start_time, stop_time, confidence, detection_properties=None)
 Used to detect objects in files that are not video, image, or audio files. Such files are of the UNKNOWN type and 
 handled generically. These files are not logically segmented, so a job will contain the entirety of the file.
 
-* Function Definition:
+* Method Definition:
 ```python
 class MyComponent(object):
     def get_detections_from_generic(self, generic_job):
