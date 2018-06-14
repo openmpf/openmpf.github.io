@@ -49,7 +49,7 @@ detection.models.dir.path=${mpf.share.path}/models/
 
 <h2>Adaptive Frame Interval</h2>
 
-- The FRAME_RATE_CAP property can be used to set a threshold on the maximum number of frames to process within one second of the native video time. This property takes precedence over the user-provided / pipeline-provided value for FRAME_INTERVAL. When the FRAME_RATE_CAP property is specified, an internal frame interval value is calcuated as follows:
+- The FRAME_RATE_CAP property can be used to set a threshold on the maximum number of frames to process within one second of the native video time. This property takes precedence over the user-provided / pipeline-provided value for FRAME_INTERVAL. When the FRAME_RATE_CAP property is specified, an internal frame interval value is calculated as follows:
 
 ```
 calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
