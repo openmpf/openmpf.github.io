@@ -70,6 +70,13 @@ that get installed are the component itself and any dependencies specified in th
 file (including their transitive dependencies). When creating the virtualenv for a basic Python component the only 
 package that gets installed is `mpf_component_api`.
 
+The figures below present high-level component diagrams of the Python Batch Component API. This figure shows
+the basic structure:
+![OpenMPF Component Diagram](img/component_diagram_python_batch_no_mixin.png "OpenMPF Component Diagram")
+
+This figure show the structure when the mixin classes are used:
+![OpenMPF Component Diagram](img/component_diagram_python_batch_with_mixin.png "OpenMPF Component Diagram")
+
 
 # How to Create a Python Component
 There are two types of Python components that are supported, setuptools-based components and basic Python components.
@@ -156,9 +163,11 @@ Any dependencies that component requires should be listed in the `install_requir
 
 The component executor looks in the `entry_points` element and uses the `mpf.exported_component` field to determine 
 the component class. The right hand side of `component = ` should be the dotted module name, followed by a `:`, 
-followed by the name of the class. In the above example, `MyComponent` is the class name. The module is listed as 
-`my_component.my_component` because `MyComponent` is in the `my_component.py` file and `my_component.py` is in the 
-`mpf_component` package.
+followed by the name of the class. The general pattern is 
+` 'mpf.exported_component': 'component = <package-name>.<module-name>:<class-name>'`. In the above example, 
+`MyComponent` is the class name. The module is listed as `my_component.my_component` because the `my_component` 
+package contains the `my_component.py` file and the `my_component.py` file contains the `MyComponent` class.
+ 
 
 
 **3\. Create descriptor.json file in MyComponent/plugin-files/descriptor:**
@@ -171,7 +180,7 @@ the descriptor format.
   
 **4\. Implement your component class:**
 
-Below is an example of the structure of simple component. This component extends 
+Below is an example of the structure of a simple component. This component extends 
 [`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin) to simplify the use of 
 [`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture). You would replace the call to
 `run_detection_algorithm_on_frame` with your component-specific logic.
@@ -256,7 +265,8 @@ the descriptor format.
 
 **3\. Implement your component class:**
 
-Below is an example of the structure of simple component. You would replace the call to
+Below is an example of the structure of a simple component that does not use 
+[`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin). You would replace the call to
 `run_detection_algorithm` with your component-specific logic.
 ```python
 import mpf_component_api as mpf
@@ -385,7 +395,7 @@ Class containing data used for detection of objects in an image file.
 | job_name              | `str`            | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
 | data_uri              | `str`            | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". |
 | job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job.|
+| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 | feed_forward_location | `None` or `mpf_component_api.ImageLocation` | An `mpf_component_api.ImageLocation` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 
@@ -408,6 +418,14 @@ def __init__(self, x_left_upper, y_left_upper, width, height, confidence=-1.0, d
 | height               | `int`     | The height of the detected object. |
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+
+* Example:
+A component that performs generic object classification can add an entry to `detection_properties` where the key is 
+`CLASSIFICATION` and the value is the type of object detected.
+```python
+mpf_component_api.ImageLocation(0, 0, 100, 100, 1.0, {'CLASSIFICATION': 'backpack'})
+```
+
 
 
 #### mpf_component_util.ImageReader
@@ -518,9 +536,14 @@ Class containing data used for detection of objects in a video file.
 | start_frame           | `int`            | The first frame number (0-based index) of the video that should be processed to look for detections. |
 | stop_frame            | `int`            | The last frame number (0-based index) of the video that should be processed to look for detections. |
 | job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job.|
+| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
 | feed_forward_track    | `None` or `mpf_component_api.VideoTrack` | An `mpf_component_api.VideoTrack` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
+> **IMPORTANT:** `"FRAME_INTERVAL"` is a common job property that many components support. 
+> For frame intervals greater than 1, the component must look for detections starting with the first 
+> frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. 
+> For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component 
+> must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
 
 
 #### mpf_component_api.VideoTrack
@@ -542,7 +565,18 @@ def __init__(self, start_frame, stop_frame, confidence=-1.0, frame_locations=Non
 | frame_locations      | `mpf_component_api.FrameLocationMap` |  A dict-like object of individual detections. The key for each entry is the frame number where the detection was generated, and the value is a `mpf_component_api.ImageLocation` calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
 | detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
+> **NOTE:** Currently, `mpf_component_api.VideoTrack.detection_properties` do not show up in the JSON output object or 
+> are used by the WFM in any way. 
 
+* Example:
+A component that performs generic object classification can add an entry to `detection_properties` where the key is 
+`CLASSIFICATION` and the value is the type of object detected.
+```python
+track = mpf_component_api.VideoTrack(0, 1)
+track.frame_locations[0] = mpf_component_api.ImageLocation(0, 0, 100, 100, 0.75, {'CLASSIFICATION': 'backpack'})
+track.frame_locations[1] = mpf_component_api.ImageLocation(10, 10, 110, 110, 0.95, {'CLASSIFICATION': 'backpack'})
+track.confidence = max(il.confidence for il in track.frame_locations.itervalues())
+```
 
 #### mpf_component_util.VideoCapture
 `mpf_component_util.VideoCapture` is a utility class for reading videos. `mpf_component_util.VideoCapture` works very 
@@ -550,8 +584,8 @@ similarly to `cv2.VideoCapture`, except that it might modify the video frames ba
 of view of someone using `mpf_component_util.VideoCapture`, these modifications are mostly transparent. 
 `mpf_component_util.VideoCapture` makes it look like you are reading the original video file as though it has already 
 been rotated, flipped, cropped, etc. Also, if frame skipping is enabled, such as by setting the value of the 
-FRAME_INTERVAL job property, it makes it look like you are reading the video as though it never contained the skipped 
-frames.
+`"FRAME_INTERVAL"` job property, it makes it look like you are reading the video as though it never contained the 
+skipped frames.
 
 
 One issue with this approach is that the detection frame numbers and bounding box will be relative to the 
@@ -671,7 +705,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
 | start_time            | `int`            | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections. |
 | stop_time             | `int`            | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job.|
+| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
 | feed_forward_track    | `None` or `mpf_component_api.AudioTrack` | An `mpf_component_api.AudioTrack` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 
@@ -694,6 +728,8 @@ def __init__(self, start_time, stop_time, confidence, detection_properties=None)
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
+> **NOTE:** Currently, `mpf_component_api.AudioTrack.detection_properties` do not show up in the JSON output object or 
+> are used by the WFM in any way. 
 
 
 ## Generic API
@@ -757,5 +793,68 @@ def __init__(self, confidence=-1.0, detection_properties=None):
 | detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
 
+# Python Component Build Environment
+All Python components must work with CPython 2.7. Python components must work with the Linux version that is used by 
+the OpenMPF Component Executable. Pure Python code should work on any OS, but incompatibility issues can arise
+when using Python libraries that include compiled extension modules. Python libraries are typically distributed
+as wheel files. The wheel format requires that the file name follows the pattern of 
+`<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`. `<python_tag>-<abi_tag>-<platform_tag>` are called
+[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, `mpf_component_api` is pure Python
+so the name of its wheel file is `mpf_component_api-0.1-py2-none-any.whl`. `py2` means it will work with any Python 2
+implementation because it does not use any implementation specific features. `none` means that it does not use the
+Python ABI. `any` means it will work on any platform.
+
+Supported Python Tags:
+
+* `py2`
+* `py27`
+* `cp2`
+* `cp27`
+
+Supported ABI Tags:
+
+* `none`
+* `cp27mu`
+
+Supported Platform Tags:
+
+* `any`
+* `manylinux1_x86_64`
+
+
+Components should be supplied as a tar file, which includes not only the component library, but any other libraries or 
+files needed for execution. This includes all other non-standard libraries used by the component 
+(aside from the standard Python libraries), and any configuration or data files.
+
+
+# Component Development Best Practices
+
+## Single-threaded Operation
+
+Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through 
+multiple instantiations of the component, each running as a separate service.
+
+## Stateless Behavior
+OpenMPF components should be stateless in operation and give identical output for a provided input 
+(i.e. when processing the same job).
+
+
+## Logging
+It recommended that components use the logger returned from:
+<br> `mpf_component_util.configure_logging(log_file_name, is_debug=False)`. When `is_debug` is false, the log messages
+will be written to 
+<br> `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` When `is_debug` is true, the log messages
+will be written to standard out. Note that multiple instances of the same component can log to the same file. 
+Also, logging content can span multiple lines. The following log levels are supported: 
+`FATAL, ERROR, WARN,  INFO,  DEBUG`.
+
+The format of the log messages is:
+```
+DATE TIME LEVEL [SOURCE_FILE:LINE_NUMBER] - MESSAGE
+```
+For example: 
+```
+2018-05-03 14:41:11,703 INFO  [test_component.py:44] - Logged message
+```
 
 

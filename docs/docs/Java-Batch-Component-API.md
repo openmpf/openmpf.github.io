@@ -512,7 +512,7 @@ public MPFVideoJob(
 | mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
 | track | `MPFVideoTrack` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
->**IMPORTANT:** For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
+>**IMPORTANT:** `"FRAME_INTERVAL"` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
 
 
 #### MPFAudioJob
@@ -684,6 +684,8 @@ public MPFAudioTrack(
 | stopTime| `int` | The time (0-based index, in ms) when the audio detection event stopped. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | `Map<String, String>` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the properties map. For best practice, keys should be in all CAPS. |
+
+>**NOTE:** Currently, `MPFAudioTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way. 
 
 #### MPFGenericTrack
 
