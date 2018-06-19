@@ -25,6 +25,7 @@ pages:
     - C++ Batch Component API: CPP-Batch-Component-API.md
     - C++ Streaming Component API: CPP-Streaming-Component-API.md
     - Java Batch Component API: Java-Batch-Component-API.md
+    - Python Batch Component API: Python-Batch-Component-API.md
     - GPU Support Guide: GPU-Support-Guide.md
     - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
     - Feed Forward Guide: Feed-Forward-Guide.md
