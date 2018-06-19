@@ -985,7 +985,10 @@
 <p><br>  <strong>NOTE:</strong> If this URI fails, you can also download the installer from <a href="https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal">https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></p>
 </blockquote>
 </li>
-<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose</code></li>
+<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose</code><blockquote>
+<p><br>  <strong>NOTE:</strong> Using the <code>--silent</code> option implies that you accept all of the end-user license agreements (EULAs). If you wish to review the EULAs, and manually accept them, then don't use this flag.</p>
+</blockquote>
+</li>
 <li>After the install finishes, make sure <code>/usr/local/cuda</code> is a symbolic link to <code>/apps/install/cuda-9.0</code>:
     <br><code>ls -l /usr/local/cuda</code></li>
 <li>Add <code>/usr/local/cuda/bin</code> to the system PATH variable:<ol>

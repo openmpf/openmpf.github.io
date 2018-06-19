@@ -579,6 +579,7 @@ The following source packages will need to be downloaded, built, and installed:
 2. `wget -O cuda_9.0.176_384.81_linux.run "https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run"`
    > <br>  **NOTE:** If this URI fails, you can also download the installer from <https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&target_arch=x86_64&target_distro=CentOS&target_version=7&target_type=runfilelocal>
 3. Run `sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose`
+   > <br>  **NOTE:** Using the `--silent` option implies that you accept all of the end-user license agreements (EULAs). If you wish to review the EULAs, and manually accept them, then don't use this flag.
 4. After the install finishes, make sure `/usr/local/cuda` is a symbolic link to `/apps/install/cuda-9.0`:
     <br>`ls -l /usr/local/cuda`
 5. Add `/usr/local/cuda/bin` to the system PATH variable:
