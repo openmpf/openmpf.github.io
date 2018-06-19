@@ -336,19 +336,20 @@ while True:
 detection objects, and subsequently populates responses with the component output and sends them to the WFM.</p>
 <p>A component developer implements a detection component by creating a class that defines one or more of the
 get_detections_from_* methods and has a <a href="#componentdetection_type"><code>detection_type</code></a> field. 
-See the <a href="#api-specification">API Specification</a> for more information</p>
+See the <a href="#api-specification">API Specification</a> for more information.</p>
 <p>The figures below present high-level component diagrams of the Python Batch Component API. 
 This figure shows the basic structure:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_no_mixin.png" title="OpenMPF Component Diagram" /></p>
 <p>The figure above shows the Node Manager starting the Detection Component Executable. 
-The Detection Component Executable determines that is running a Python component so it creates an instance of the 
+The Detection Component Executable determines that it is running a Python component so it creates an instance of the 
 <a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h"><code>PythonComponentHandle</code></a> 
-class. The <code>PythonComponentHandle</code> class creates an instance of the component class and calls the 
-<a href="#componentget_detections_from_42-methods"><code>get_detections_from_\*</code></a> methods on the component instance. The example
+class. The <code>PythonComponentHandle</code> class creates an instance of the component class and calls one of the 
+<a href="#componentget_detections_from_42-methods">get_detections_from_*</a> methods on the component instance. The example
 above is an image component, so <code>PythonComponentHandle</code> calls <code>ExampleImageFaceDetection.get_detections_from_image</code> 
 on the component instance. The component instance creates an instance of 
-<a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a> to access the image. Components that support
-video would use <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> instead.</p>
+<a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a> to access the image. Components that support video 
+would implement <code>get_detections_from_video</code> and use 
+<a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> instead.</p>
 <p>This figure show the structure when the mixin classes are used:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_with_mixin.png" title="OpenMPF Component Diagram" /></p>
 <p>The figure above shows a video component, <code>ExampleVideoFaceDetection</code>, that extends the
@@ -357,10 +358,11 @@ call <code>get_detections_from_video</code> on an instance of <code>ExampleVideo
 implement <code>get_detections_from_video</code>, so the implementation inherited from <code>mpf_component_util.VideoCaptureMixin</code> 
 gets called. <code>mpf_component_util.VideoCaptureMixin.get_detections_from_video</code> creates an instance of 
 <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> and calls 
-<code>ExampleVideoFaceDetection.get_detections_from_video_capture</code> passing in the <code>mpf_component_util.VideoCapture</code> it 
+<code>ExampleVideoFaceDetection.get_detections_from_video_capture</code>, passing in the <code>mpf_component_util.VideoCapture</code> it 
 just created. <code>ExampleVideoFaceDetection.get_detections_from_video_capture</code> is where the component reads the video 
-using <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images would
-extend <a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a> and access the image using 
+using <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images would extend 
+<a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>, implement 
+<code>get_detections_from_image_reader</code>, and access the image using the passed-in 
 <a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a>.</p>
 <p>During component registration a <a href="http://virtualenv.pypa.io">virtualenv</a> is created for each component. 
 The virtualenv has access to the built-in Python libraries, but does not have access to any third party packages 

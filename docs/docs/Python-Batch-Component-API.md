@@ -62,7 +62,7 @@ detection objects, and subsequently populates responses with the component outpu
 
 A component developer implements a detection component by creating a class that defines one or more of the
 get_detections_from_* methods and has a [`detection_type`](#componentdetection_type) field. 
-See the [API Specification](#api-specification) for more information
+See the [API Specification](#api-specification) for more information.
 
 The figures below present high-level component diagrams of the Python Batch Component API. 
 This figure shows the basic structure:
@@ -70,14 +70,15 @@ This figure shows the basic structure:
 ![OpenMPF Component Diagram](img/component_diagram_python_batch_no_mixin.png "OpenMPF Component Diagram")
 
 The figure above shows the Node Manager starting the Detection Component Executable. 
-The Detection Component Executable determines that is running a Python component so it creates an instance of the 
+The Detection Component Executable determines that it is running a Python component so it creates an instance of the 
 [`PythonComponentHandle`](https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h) 
-class. The `PythonComponentHandle` class creates an instance of the component class and calls the 
-[`get_detections_from_\*`](#componentget_detections_from_42-methods) methods on the component instance. The example
+class. The `PythonComponentHandle` class creates an instance of the component class and calls one of the 
+[get_detections_from_*](#componentget_detections_from_42-methods) methods on the component instance. The example
 above is an image component, so `PythonComponentHandle` calls `ExampleImageFaceDetection.get_detections_from_image` 
 on the component instance. The component instance creates an instance of 
-[`mpf_component_util.ImageReader`](#mpf_component_utilimagereader) to access the image. Components that support
-video would use [`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture) instead.
+[`mpf_component_util.ImageReader`](#mpf_component_utilimagereader) to access the image. Components that support video 
+would implement `get_detections_from_video` and use 
+[`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture) instead.
 
 
 This figure show the structure when the mixin classes are used:
@@ -90,10 +91,11 @@ call `get_detections_from_video` on an instance of `ExampleVideoFaceDetection`. 
 implement `get_detections_from_video`, so the implementation inherited from `mpf_component_util.VideoCaptureMixin` 
 gets called. `mpf_component_util.VideoCaptureMixin.get_detections_from_video` creates an instance of 
 [`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture) and calls 
-`ExampleVideoFaceDetection.get_detections_from_video_capture` passing in the `mpf_component_util.VideoCapture` it 
+`ExampleVideoFaceDetection.get_detections_from_video_capture`, passing in the `mpf_component_util.VideoCapture` it 
 just created. `ExampleVideoFaceDetection.get_detections_from_video_capture` is where the component reads the video 
-using `mpf_component_util.VideoCapture` and attempts to find detections. Components that support images would
-extend [`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin) and access the image using 
+using `mpf_component_util.VideoCapture` and attempts to find detections. Components that support images would extend 
+[`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin), implement 
+`get_detections_from_image_reader`, and access the image using the passed-in 
 [`mpf_component_util.ImageReader`](#mpf_component_utilimagereader).
 
 
