@@ -88,6 +88,12 @@
     </url>
         
     <url>
+     <loc>/Python-Batch-Component-API/index.html</loc>
+     <lastmod>2018-06-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>/GPU-Support-Guide/index.html</loc>
      <lastmod>2018-06-19</lastmod>
      <changefreq>daily</changefreq>
