@@ -36,7 +36,13 @@
     </url>
         
     <url>
-     <loc>/Admin-Manual/index.html</loc>
+     <loc>/Admin-Guide/index.html</loc>
+     <lastmod>2018-06-19</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Node-Guide/index.html</loc>
      <lastmod>2018-06-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -77,12 +83,6 @@
         
     <url>
      <loc>/Java-Batch-Component-API/index.html</loc>
-     <lastmod>2018-06-19</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/Python-Batch-Component-API/index.html</loc>
      <lastmod>2018-06-19</lastmod>
      <changefreq>daily</changefreq>
     </url>

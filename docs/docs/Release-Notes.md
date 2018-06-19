@@ -311,7 +311,7 @@ for optional dependencies.
   - Updated the [REST API](REST-API/index.html) to reflect job properties, algorithm-specific properties, and media-specific properties.
   - Streamlined the [C++ Batch Component API](CPP-Batch-Component-API/index.html) document for clarity and simplicity.
   - Completed the [Java Batch Component API](Java-Batch-Component-API/index.html) document.
-  - Updated the [Admin Manual](Admin-Manual/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
+  - Updated the [Admin Guide](Admin-Guide/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
   - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for GitHub repositories.
 
 <h2>Workflow Manager</h2>

@@ -16,7 +16,8 @@ pages:
     - Build Guide: Build-Environment-Setup-Guide.md
     - Install Guide: Installation-Guide.md
     - User Guide: User-Guide.md
-    - Admin Guide: Admin-Manual.md
+    - Admin Guide: Admin-Guide.md
+    - Node Guide: Node-Guide.md
     - Contributor Guide: Contributor-Guide.md
     - Acknowledgements: Acknowledgements.md
 - Components:
@@ -24,7 +25,6 @@ pages:
     - C++ Batch Component API: CPP-Batch-Component-API.md
     - C++ Streaming Component API: CPP-Streaming-Component-API.md
     - Java Batch Component API: Java-Batch-Component-API.md
-    - Python Batch Component API: Python-Batch-Component-API.md
     - GPU Support Guide: GPU-Support-Guide.md
     - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
     - Feed Forward Guide: Feed-Forward-Guide.md

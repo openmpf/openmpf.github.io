@@ -100,7 +100,7 @@ The OpenMPF uses multiple hosts to enable scalability and parallel processing. T
 
 The **NodeController** provides host information and component service deployment status. It also provides an endpoint to deploy a service on a node and an endpoint to stop a service.
 
-For more information on nodes, please read the [Node Configuration and Status](Admin-Manual/index.html#node-configuration-and-status) section in the Admin Guide.
+For more information on nodes, please read the [Node Configuration and Status](Admin-Guide/index.html#node-configuration-and-status) section in the Admin Guide.
 
 ## PipelineController
 
