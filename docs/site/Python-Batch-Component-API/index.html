@@ -360,8 +360,8 @@ gets called. <code>mpf_component_util.VideoCaptureMixin.get_detections_from_vide
 <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> and calls 
 <code>ExampleVideoFaceDetection.get_detections_from_video_capture</code>, passing in the <code>mpf_component_util.VideoCapture</code> it 
 just created. <code>ExampleVideoFaceDetection.get_detections_from_video_capture</code> is where the component reads the video 
-using <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images would extend 
-<a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>, implement 
+using the passed-in <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images 
+would extend <a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>, implement 
 <code>get_detections_from_image_reader</code>, and access the image using the passed-in 
 <a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a>.</p>
 <p>During component registration a <a href="http://virtualenv.pypa.io">virtualenv</a> is created for each component. 

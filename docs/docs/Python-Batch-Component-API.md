@@ -93,8 +93,8 @@ gets called. `mpf_component_util.VideoCaptureMixin.get_detections_from_video` cr
 [`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture) and calls 
 `ExampleVideoFaceDetection.get_detections_from_video_capture`, passing in the `mpf_component_util.VideoCapture` it 
 just created. `ExampleVideoFaceDetection.get_detections_from_video_capture` is where the component reads the video 
-using `mpf_component_util.VideoCapture` and attempts to find detections. Components that support images would extend 
-[`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin), implement 
+using the passed-in `mpf_component_util.VideoCapture` and attempts to find detections. Components that support images 
+would extend [`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin), implement 
 `get_detections_from_image_reader`, and access the image using the passed-in 
 [`mpf_component_util.ImageReader`](#mpf_component_utilimagereader).
 
