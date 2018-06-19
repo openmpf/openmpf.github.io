@@ -981,7 +981,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 </tbody>
 </table>
 <blockquote>
-<p><strong>IMPORTANT:</strong> For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
+<p><strong>IMPORTANT:</strong> <code>FRAME_INTERVAL</code> is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </blockquote>
 <h4 id="mpfaudiojob">MPFAudioJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
@@ -1306,6 +1306,9 @@ MPFAudioTrack(
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>NOTE:</strong> Currently, <code>MPFAudioTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+</blockquote>
 <h4 id="mpfgenerictrack">MPFGenericTrack</h4>
 <p>Structure used to store the location of detected objects in a file that is not a video, image, or audio file. The file is of the UNKNOWN type and handled generically.</p>
 <ul>
