@@ -146,6 +146,9 @@ The following RPM packages will need to be downloaded and installed. Use of the 
 
 `sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel`
 
+The version of pip available in the yum repository is old and must be upgraded with the following command:
+`sudo pip install --upgrade pip`
+
 ## Get the OpenMPF Source Code
 Open a terminal window and perform the following steps:
 
@@ -240,8 +243,12 @@ The following binary packages will need to be downloaded and installed:
 1. C Foreign Function Interface (CFFI):
     1. `cd /home/mpf`
     2. `sudo -E easy_install -U cffi`
-1. OpenMPF Administrative Tools:
+2. OpenMPF Administrative Tools:
     <br> `sudo -E pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
+3. Virtualenv:
+    <br> `sudo -E pip install virtualenv`
+4. Wheel:
+    <br> `sudo -E pip install wheel`
 
 ## Build Dependencies
 
@@ -799,7 +806,7 @@ As with the OpenMPF Build VM, the OpenMPF deployment package is targeted for a m
 
 The following steps place dependency packages in `/mpfdata/ansible/install/repo`. Depending on which dependencies are already installed on your target system(s), some or all of these dependencies may or may not be needed:
 
-1. `yumdownloader --exclude=*.i?86 --archlist=x86_64 adwaita-cursor-theme adwaita-icon-theme at-spi2-atk at-spi2-core cairo-gobject colord-libs createrepo deltarpm ebtables gcc glibc glibc-common glibc-devel glibc-headers gtk3 httpd httpd-tools json-glib kernel-headers lcms2 libffi-devel libgusb libmng libselinux-python libtomcrypt libtommath libXevie libxml2 libxml2-python libXtst libyaml mailcap mpfr openssh openssh-askpass openssh-clients openssh-server pciutils py-bcrypt python python2-crypto python2-cryptography python-babel python-backports python-backports-ssl_match_hostname python-cffi python-chardet python-crypto python-deltarpm python-devel python-ecdsa python-enum34 python-httplib2 python-idna python-ipaddress python-jinja2 python-keyczar python-kitchen python-libs python-markupsafe python-paramiko python-passlib python-pip python-ply python-ptyprocess python-pyasn1 python-pycparser python-setuptools python-simplejson python-six python-slip python-slip-dbus PyYAML qt qt-settings qt-x11 rest sshpass yum-utils --destdir /mpfdata/ansible/install/repo/rpms/management -C`
+1. `yumdownloader --exclude=*.i?86 --archlist=x86_64 adwaita-cursor-theme adwaita-icon-theme at-spi2-atk at-spi2-core cairo-gobject colord-libs createrepo deltarpm ebtables gcc glibc glibc-common glibc-devel glibc-headers gtk3 httpd httpd-tools json-glib kernel-headers lcms2 libffi-devel libgusb libmng libselinux-python libtomcrypt libtommath libXevie libxml2 libxml2-python libXtst libyaml mailcap mpfr openssh openssh-askpass openssh-clients openssh-server pciutils py-bcrypt python python2-crypto python2-cryptography python-babel python-backports python-backports-ssl_match_hostname python-cffi python-chardet python-crypto python-deltarpm python-devel python-ecdsa python-enum34 python-httplib2 python-idna python-ipaddress python-jinja2 python-keyczar python-kitchen python-libs python-markupsafe python-paramiko python-passlib python-pip python-virtualenv python-ply python-ptyprocess python-pyasn1 python-pycparser python-setuptools python-simplejson python-six python-slip python-slip-dbus PyYAML qt qt-settings qt-x11 rest sshpass yum-utils --destdir /mpfdata/ansible/install/repo/rpms/management -C`
 2. `yumdownloader --exclude=*.i?86 --archlist=x86_64 apr apr-util apr-util-ldap atk avahi-libs cairo cdparanoia-libs cpp cups-libs fontconfig fontpackages-filesystem gdk-pixbuf2 graphite2 gsm gstreamer gstreamer1 gstreamer1-plugins-base gstreamer-plugins-base gstreamer-tools gtk-update-icon-cache gtk2 gtk3 harfbuzz hicolor-icon-theme iso-codes jasper-libs jbigkit-libs jemalloc libdc1394 libICE libjpeg-turbo libmng libmpc libogg libpng libraw1394 libSM libthai libtheora libtiff libusbx libv4l libvisual libvorbis libvpx libX11 libX11-common libXau libxcb libXcomposite libXcursor libXdamage libXext libXfixes libXft libXi libXinerama libxml2 libXrandr libXrender libxshmfence libXv libXxf86vm log4cxx lyx-fonts mesa-libEGL mesa-libgbm mesa-libGL mesa-libglapi mesa-libGLU mysql-community-client mysql-community-common mysql-community-libs mysql-community-server mysql-connector-python MySQL-python net-tools openjpeg-libs openssh openssh-clients openssh-server opus orc pango perl perl-Carp perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-constant perl-Data-Dumper perl-DBD-MySQL perl-DBI perl-Encode perl-Exporter perl-File-Path perl-File-Temp perl-Filter perl-Getopt-Long perl-HTTP-Tiny perl-IO-Compress perl-libs perl-macros perl-Net-Daemon perl-parent perl-PathTools perl-PlRPC perl-Pod-Escapes perl-podlators perl-Pod-Perldoc perl-Pod-Simple perl-Pod-Usage perl-Scalar-List-Utils perl-Socket perl-Storable perl-Text-ParseWords perl-threads perl-threads-shared perl-Time-HiRes perl-Time-Local pixman redis SDL speex unzip xml-common --destdir /mpfdata/ansible/install/repo/rpms/mpf-deps -C`
 3. `cp /apps/source/ansible_sources/ansible/rpm-build/ansible-*.noarch.rpm /mpfdata/ansible/install/repo/rpms/management/`
 4. Assuming you've followed the steps in the [Install Binary Packages](#install-binary-packages) section to download the JDK:
@@ -814,7 +821,7 @@ The following steps place dependency packages in `/mpfdata/ansible/install/repo`
 10. Assuming you've followed the steps in the [Install Binary Packages](#install-binary-packages) section to download Apache Tomcat:
       <br> `cp /apps/bin/apache/apache-tomcat-7.0.72.tar.gz /mpfdata/ansible/install/repo/tars/apache-tomcat-7.0.72.tar.gz`
 11. `cd /mpfdata/ansible/install/repo/pip`
-12. `pip install --download . argcomplete argh bcrypt cffi pycparser PyMySQL six`
+12. `pip download argcomplete argh bcrypt cffi pycparser PyMySQL six`
 
 
 ## Build the OpenMPF Package
