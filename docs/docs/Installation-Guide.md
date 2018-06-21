@@ -19,7 +19,9 @@ Below is an example layout of an OpenMPF cluster consisting of 3 nodes:
 ![System Layout](img/system_layout.png "System Layout")
 
 ## Operating System and Software
-OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity).
+OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity). 
+
+> **IMPORTANT:** Make sure that the machine on which OpenMPF will be deployed is running the same version of CentOS 7 as the machine which generated the OpenMPF deployment package; otherwise you may encounter library dependency issues. For more information about the CentOS 7 version, refer to the [CentOS setup section](Build-Environment-Setup-Guide/index.html#set-up-the-minimal-centos-7-vm) of the Build Guide.
 
 A browser is required in order to utilize the OpenMPF Web User Interface (UI). The officially supported browsers are FireFox and Chrome. Although other browsers might work, they have not been thoroughly tested and might not display or function properly.
 

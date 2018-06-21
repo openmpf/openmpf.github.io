@@ -331,7 +331,7 @@
 <p>The following instructions are for setting up a VM for building an OpenMPF deployment package. This VM is not necessarily a machine on which the OpenMPF will be deployed and run. Those machines may have other requirements. For more information refer to the <a href="../Installation-Guide/index.html">OpenMPF Installation Guide</a>.</p>
 <ul>
 <li>This guide assumes a starting point of CentOS 7 with a minimal installation.</li>
-<li>Download the CentOS 7 minimal iso from <a href="https://www.centos.org/download/">here</a> (click on the "Minimal ISO" button) prior to starting these steps. As of writing this guide, the last version of the iso we tested is CentOS-7-x86_64-Minimal-1708.iso.</li>
+<li>Download the CentOS 7 (1708) minimal iso from <a href="http://archive.kernel.org/centos-vault/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso">here</a> prior to starting these steps. As of writing this guide, the last version of the iso we tested is CentOS-7-x86_64-Minimal-1708.iso. If a more modern version of CentOS is available, we recommend not using it; otherwise, you may encounter library dependency issues during deployment.</li>
 <li>
 <p>Oracle Virtual Box is used as the virtualization platform. Another platform such as VMware or a physical system can be used but are not supported. As of writing this guide, the last version of Virtual Box we tested is 5.2.4 r119785.</p>
 </li>
@@ -998,7 +998,10 @@
 <p><br>  <strong>NOTE:</strong> If this URI fails, you can also download the installer from <a href="https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal">https://developer.nvidia.com/cuda-90-download-archive?target_os=Linux&amp;target_arch=x86_64&amp;target_distro=CentOS&amp;target_version=7&amp;target_type=runfilelocal</a></p>
 </blockquote>
 </li>
-<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose</code></li>
+<li>Run <code>sudo sh cuda_9.0.176_384.81_linux.run --toolkit --toolkitpath=/apps/install/cuda-9.0 --silent --verbose</code><blockquote>
+<p><br>  <strong>NOTE:</strong> Using the <code>--silent</code> option implies that you accept all of the end-user license agreements (EULAs). If you wish to review the EULAs, and manually accept them, then don't use this flag.</p>
+</blockquote>
+</li>
 <li>After the install finishes, make sure <code>/usr/local/cuda</code> is a symbolic link to <code>/apps/install/cuda-9.0</code>:
     <br><code>ls -l /usr/local/cuda</code></li>
 <li>Add <code>/usr/local/cuda/bin</code> to the system PATH variable:<ol>

@@ -64,6 +64,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-210-june-2018">OpenMPF 2.1.0: June 2018</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</a></li>
                 
             
@@ -258,6 +261,124 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="openmpf-210-june-2018">OpenMPF 2.1.0: June 2018</h1>
+<blockquote>
+<p><strong>NOTE:</strong> If building this release on a machine used to build a previous version of OpenMPF, then please run <code>sudo pip install --upgrade pip</code> to update to at least pip 10.0.1. If not, the OpenMPF build script will fail to properly download .whl files for Python modules.</p>
+</blockquote>
+<h2>Documentation</h2>
+
+<ul>
+<li>Added the <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>.</li>
+<li>Added the <a href="../Node-Guide/index.html">Node Guide</a>.</li>
+<li>Added the <a href="../GPU-Support-Guide">GPU Support Guide</a>.</li>
+<li>Updated the <a href="../Installation-Guide/index.html">Install Guide</a> with an "(Optional) Install the NVIDIA CUDA Toolkit" section.</li>
+<li>Renamed Admin Manual to Admin Guide for consistency.</li>
+</ul>
+<h2>Python Batch Component API</h2>
+
+<ul>
+<li>Developers can now write batch components in Python using the mpf_component_api module.</li>
+<li>Dependencies can be specified in a setup.py file. OpenMPF will automatically download the .whl files using pip at build time.</li>
+<li>When deployed, a virtualenv is created for the Python component so that it runs in a sandbox isolated from the rest of the system.</li>
+<li>OpenMPF ImageReader and VideoCapture tools are provided in the mpf_component_util module. </li>
+<li>Example Python components are provided for reference.</li>
+</ul>
+<h2>Spare Nodes</h2>
+
+<ul>
+<li>Spare nodes can join and leave an OpenMPF cluster while the Workflow Manager is running. You can create a spare node by cloning an existing OpenMPF child node. Refer to the <a href="../Node-Guide/index.html">Node Guide</a>.</li>
+<li>Note that changes made using the Component Registration web page only affect core nodes, not spare nodes. Core nodes are those configured during the OpenMPF installation process.</li>
+<li>Added <code>mpf list-nodes</code> command to list the core nodes and available spare nodes.</li>
+<li>OpenMPF now uses the JGroups FILE_PING protocol for peer discovery instead of TCPPING. This means that the list of OpenMPF nodes no longer needs to be fully specified when the Workflow Manager starts. Instead, the Workflow Manager, and Node Manager process on each node, use the files in <code>$MPF_HOME/share/nodes</code> to determine which nodes are currently available.</li>
+<li>Updated JGroups from 3.6.4. to 4.0.11.</li>
+<li>The environment variables specified in <code>/etc/profile.d/mpf.sh</code> have been simplified. Of note, ALL_MPF_NODES has been replaced by CORE_MPF_NODES.</li>
+</ul>
+<h2>Default Detection System Properties</h2>
+
+<ul>
+<li>The detection properties that specify the default values when creating new jobs can now be updated at runtime without restarting the Workflow Manager. Changing these properties will only have an effect on new jobs, not jobs that are currently running.</li>
+<li>These default detection system properties are separated from the general system properties in the Properties web page. The latter still require the Workflow Manager to be restarted for changes to take effect.</li>
+<li>The Apache Commons Configuration library is now used to read and write properties files. When defining a property value using an environment variable in the Properties web page, or <code>$MPF_HOME/config/mpf-custom.properties</code>, be sure to prepend the variable name with <code>env:</code>. For example:</li>
+</ul>
+<pre><code>detection.models.dir.path=${env:MPF_HOME}/models/
+</code></pre>
+
+<blockquote>
+<p>Alternatively, you can define system properties using other system properties:</p>
+</blockquote>
+<pre><code>detection.models.dir.path=${mpf.share.path}/models/
+</code></pre>
+
+<h2>Adaptive Frame Interval</h2>
+
+<ul>
+<li>The FRAME_RATE_CAP property can be used to set a threshold on the maximum number of frames to process within one second of the native video time. This property takes precedence over the user-provided / pipeline-provided value for FRAME_INTERVAL. When the FRAME_RATE_CAP property is specified, an internal frame interval value is calculated as follows:</li>
+</ul>
+<pre><code>calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
+</code></pre>
+
+<ul>
+<li>FRAME_RATE_CAP may be disabled by setting it &lt;= 0. FRAME_INTERVAL can be disabled in the same way.</li>
+<li>If FRAME_RATE_CAP is disabled, then FRAME_INTERVAL will be used instead.</li>
+<li>If both FRAME_RATE_CAP and FRAME_INTERVAL are disabled, then a value of 1 will be used for FRAME_INTERVAL.</li>
+</ul>
+<h2>Darknet Component</h2>
+
+<ul>
+<li>This release includes a component that uses the <a href="https://pjreddie.com/darknet/">Darknet neural network framework</a> to perform detection and classification of objects using trained models.</li>
+<li>Pipelines for the Tiny YOLO and YOLOv2 models are provided. Due to its large size, the YOLOv2 weights file must be downloaded separately and placed in <code>$MPF_HOME/share/models/DarknetDetection</code> in order to use the YOLOv2 pipelines. Refer to <code>DarknetDetection/plugin-files/models/models.ini</code> for more information.</li>
+<li>This component supports a preprocessor mode and default mode of operation. If preprocessor mode is enabled, and multiple Darknet detections in a frame share the same classification, then those are merged into a single detection where the region corresponds to the superset region that encapsulates all of the original detections, and the confidence value is the probability that at least one of the original detections is a true positive. If disabled, multiple Darknet detections in a frame are not merged together.</li>
+<li>Detections are not tracked across frames. One track is generated per detection.</li>
+<li>This component supports an optional CLASS_WHITELIST_FILE property. When provided, only detections with class names listed in the file will be generated.</li>
+<li>This component can be compiled with GPU support if the NVIDIA CUDA Toolkit is installed on the build machine. Refer to the <a href="../GPU-Support-Guide">GPU Support Guide</a>. If the toolkit is not found, then the component will compile with CPU support only.</li>
+<li>To run on a GPU, set the CUDA_DEVICE_ID job property, or set the detection.cuda.device.id system property, &gt;= 0.</li>
+<li>When CUDA_DEVICE_ID &gt;= 0, you can set the FALLBACK_TO_CPU_WHEN_GPU_PROBLEM job property, or the detection.use.cpu.when.gpu.problem system property, to <code>TRUE</code> if you want to run the component logic on the CPU instead of the GPU when a GPU problem is detected.</li>
+</ul>
+<h2>Models Directory</h2>
+
+<ul>
+<li>The<code>$MPF_HOME/share/models</code> directory is now used by the Darknet and Caffe components to store model files and associated files, such as classification names files, weights files, etc. This allows users to more easily add model files post-deployment. Instead of copying the model files to <code>$MPF_HOME/plugins/&lt;component-name&gt;/models</code> directory on each node in the OpenMPF cluster, they only need to copy them to the shared directory once.</li>
+<li>To add new models to the Darknet and Caffe component, add an entry to the respective <code>&lt;component-name&gt;/plugin-files/models/models.ini</code> file.</li>
+</ul>
+<h2>Packaging and Deployment</h2>
+
+<ul>
+<li>Python components are packaged with their respective dependencies as .whl files. This can be automated by providing a setup.py file. An example OpenCV Python component is provided that demonstrates how the component is packaged and deployed with the opencv-python module. When deployed, a virtualenv is created for the component with the .whl files installed in it.</li>
+<li>When deploying OpenMPF, LD_LIBRARY_PATH is no longer set system-wide. Refer to Known Issues.</li>
+</ul>
+<h2>Web User Interface</h2>
+
+<ul>
+<li>Updated the Nodes page to distinguish between core nodes and spare nodes, and to show when a node is online or offline.</li>
+<li>Updated the Component Registration page to list the core nodes as a reminder that changes will not affect spare nodes. </li>
+<li>Updated the Properties page to separate the default detection properties from the general system properties.</li>
+</ul>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>Custom Action, task, and pipeline names can now contain "(" and ")" characters again.</li>
+<li>Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of <code>0</code> instead of <code>1</code>.</li>
+<li>Streaming health report and summary report timestamps have been corrected to represent hours in the 1-24 range instead of 0-23.</li>
+<li>Single-frame .gif files are now segmented properly and no longer result in a NullPointerException. </li>
+<li>LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in <code>/etc/profile.d/mpf.sh</code>. Also, deployments no longer create <code>/etc/ld.so.conf.d/mpf.conf</code>. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running <code>yum update</code> on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.</li>
+<li>The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone is viewing the Job Status page when a job submitted through the REST API is in progress.</li>
+</ul>
+<h2>Known Issues</h2>
+
+<ul>
+<li>When multiple component services of the same type on the same node log to the same file at the same time, sometimes log lines will not be captured in the log file. The logging frameworks (log4j and log4cxx) do not support that usage. This problem happens more frequently on systems running many component services at the same time.</li>
+<li>The following exception was observed:</li>
+</ul>
+<pre><code>com.google.protobuf.InvalidProtocolBufferException: Message missing required fields: data_uri
+
+</code></pre>
+
+<blockquote>
+<p>Further debugging is necessary to determine the reason why that message was missing that field. The situation is not easily reproducible. It may occur when ActiveMQ and / or the system is under heavy load and sends duplicate messages in attempt to ensure message delivery. Some of those messages seem to end up in the dead letter queue (DLQ). For now, we've improved the way we handle messages in the DLQ. If OpenMPF can process a message successfully, the job is marked as COMPLETED_WITH_ERRORS, and the message is moved from ActiveMQ.DLQ to MPF.DLQ_PROCESSED_MESSAGES. If OpenMPF cannot process a message successfully, it is moved from ActiveMQ.DLQ to MPF.DLQ_INVALID_MESSAGES.</p>
+</blockquote>
+<ul>
+<li>The <code>mpf stop</code> command will stop the Workflow Manager, which will in turn send commands to all of the available nodes to stop all running component services. If a service is processing a sub-job when the quit command is received, that service process will not terminate until that sub-job is completely processed. Thus, the service may put a sub-job response on the ActiveMQ response queue after the Workflow Manager has terminated. That will not cause a problem because the queues are flushed the next time the Workflow Manager starts; however, there will be a problem if the service finishes processing the sub-job after the Workflow Manager is restarted. At that time, the Workflow Manager will have no knowledge of the old job and will in turn generate warnings in the log about how the job id is "not known to the system" and/or "not found as a batch or a streaming job". These can be safely ignored. Often, if these messages appear in the log, then C++ services were running after stopping the Workflow Manager. To address this, you may wish to run <code>sudo killall amq_detection_component</code> after running <code>mpf stop</code>.</li>
+</ul>
 <h1 id="openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</h1>
 <blockquote>
 <p><strong>NOTE:</strong> Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the descriptor.json file to support stream processing.</p>

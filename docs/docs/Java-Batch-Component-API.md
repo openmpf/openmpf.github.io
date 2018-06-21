@@ -518,7 +518,7 @@ public MPFVideoJob(
 #### MPFAudioJob
 Extends [`MPFJob`](#mpfjob)
 
-Class containing data used for detection of objects in video files.
+Class containing data used for detection of objects in audio files.
 
 * Constructor(s):
 ```java
