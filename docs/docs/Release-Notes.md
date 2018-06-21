@@ -2,14 +2,12 @@
 
 # OpenMPF 2.1.0: June 2018
 
-<h2 style="color:red">NOTE: Address TODOs.</h2>
-
 > **NOTE:** If building this release on a machine used to build a previous version of OpenMPF, then please run `sudo pip install --upgrade pip` to update to at least pip 10.0.1. If not, the OpenMPF build script will fail to properly download .whl files for Python modules.
 
 <h2>Documentation</h2>
 
-- TODO: Added the [Python Batch Component API](Python-Batch-Component-API/index.html).
-- TODO: Added the [Node Guide](Node-Guide/index.html).
+- Added the [Python Batch Component API](Python-Batch-Component-API/index.html).
+- Added the [Node Guide](Node-Guide/index.html).
 - Added the [GPU Support Guide](GPU-Support-Guide).
 - Updated the [Install Guide](Installation-Guide/index.html) with an "(Optional) Install the NVIDIA CUDA Toolkit" section.
 - Renamed Admin Manual to Admin Guide for consistency.
@@ -92,12 +90,12 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of `0` instead of `1`.
 - Streaming health report and summary report timestamps have been corrected to represent hours in the 1-24 range instead of 0-23.
 - Single-frame .gif files are now segmented properly and no longer result in a NullPointerException. 
-- LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed. 
+- LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.
+- The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone is viewing the Job Status page when a job submitted through the REST API is in progress.
 
 <h2>Known Issues</h2>
 
 - When multiple component services of the same type on the same node log to the same file at the same time, sometimes log lines will not be captured in the log file. The logging frameworks (log4j and log4cxx) do not support that usage. This problem happens more frequently on systems running many component services at the same time.
-
 - The following exception was observed:
 
 ```
@@ -107,8 +105,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 
    > Further debugging is necessary to determine the reason why that message was missing that field. The situation is not easily reproducible. It may occur when ActiveMQ and / or the system is under heavy load and sends duplicate messages in attempt to ensure message delivery. Some of those messages seem to end up in the dead letter queue (DLQ). For now, we've improved the way we handle messages in the DLQ. If OpenMPF can process a message successfully, the job is marked as COMPLETED_WITH_ERRORS, and the message is moved from ActiveMQ.DLQ to MPF.DLQ_PROCESSED_MESSAGES. If OpenMPF cannot process a message successfully, it is moved from ActiveMQ.DLQ to MPF.DLQ_INVALID_MESSAGES.
 
-- TODO: Resubmitting a job does not carry over the ARTIFACT_EXTRACTION_POLICY job property. When the job is resubmitted, that property is omitted from the job properties map.
-- TODO: Resubmitting a job does not remove old extracted artifacts. The extracted artifacts from previous runs are still present in the `$MPF_HOME/share/artifacts/` directory.
+- The `mpf stop` command will stop the Workflow Manager, which will in turn send commands to all of the available nodes to stop all running component services. If a service is processing a sub-job when the quit command is received, that service process will not terminate until that sub-job is completely processed. Thus, the service may put a sub-job response on the ActiveMQ response queue after the Workflow Manager has terminated. That will not cause a problem because the queues are flushed the next time the Workflow Manager starts; however, there will be a problem if the service finishes processing the sub-job after the Workflow Manager is restarted. At that time, the Workflow Manager will have no knowledge of the old job and will in turn generate warnings in the log about how the job id is "not known to the system" and/or "not found as a batch or a streaming job". These can be safely ignored. Often, if these messages appear in the log, then C++ services were running after stopping the Workflow Manager. To address this. you may wish to run `sudo killall amq_detection_component` after running `mpf stop`.
 
 
 # OpenMPF 2.0.0: February 2018
