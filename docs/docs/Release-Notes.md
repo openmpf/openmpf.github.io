@@ -88,7 +88,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 
 - Custom Action, task, and pipeline names can now contain "(" and ")" characters again.
 - Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of `0` instead of `1`.
-- Streaming health report and summary report timestamps have been corrected to represent hours in the 1-24 range instead of 0-23.
+- Streaming health report and summary report timestamps have been corrected to represent hours in the 0-23 range instead of 1-24.
 - Single-frame .gif files are now segmented properly and no longer result in a NullPointerException. 
 - LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.
 - The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone is viewing the Job Status page when a job submitted through the REST API is in progress.
