@@ -22,6 +22,6 @@ A list of open source algorithms currently integrated into the OpenMPF as distri
 | Detection| Classification | Darknet
 | Detection| Scene | OpenCV
 | Detection| Text | Apache Tika
-| Detection| Text | Tesseract OCR, OpenCV
+| Detection| Text | Tesseract OCR
 
 The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.
