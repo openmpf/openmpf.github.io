@@ -156,8 +156,10 @@ ComponentName
 │   ├── __init__.py
 │   └── component_name.py
 └── plugin-files
-    └── descriptor
-        └── descriptor.json
+    ├── descriptor
+    │   └── descriptor.json
+    └── wheelhouse  # optional
+        └── my_prebuilt_lib-0.1-py2-none-any.whl
 ```
 
 **1\. Create directory structure:**
@@ -237,7 +239,17 @@ class MyComponent(mpf_util.VideoCaptureMixin, object):
                 yield result_track
 ```
 
-**5\. Create the plugin package:**
+
+**5\. Optional: Add prebuilt wheel files if not available on PyPi:**
+
+If your component depends on Python libraries that are not available on PyPi, the libraries can be manually added to
+your project. The prebuilt libraries must be placed in your project's `plugin-files/wheelhouse` directory. 
+The prebuilt library names must be listed in your `setup.py` file's `install_requires` field. 
+If any of the prebuilt libraries have transitive dependencies that are not available on PyPi, then those libraries
+must also be added to your project's `plugin-files/wheelhouse` directory. 
+
+
+**6\. Create the plugin package:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -260,12 +272,11 @@ To create the plugin packages you can run the build script as follows:
 The plugin package can also be built manually using the following commands:
 ```bash
 mkdir -p plugin-packages/MyComponent/wheelhouse
-pip wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse ./MyComponent/
 cp -r MyComponent/plugin-files/* plugin-packages/MyComponent/
+pip wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse -f plugin-packages/MyComponent/wheelhouse ./MyComponent/
 cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 ```
-
 
 ## How to Create a Basic Python Component
 In this example we create a basic Python component that supports video. An example of a basic Python component can be 
