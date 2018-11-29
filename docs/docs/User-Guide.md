@@ -288,9 +288,9 @@ Consider the following diagram, which further illustrates the purpose of this pr
    This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three 
    tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the 
    "Preprocessor" and "Track Merger" phases of the diagram.) When two tracks are merged, the confidence value will be 
-   set to to the maximum confidence value of the two tracks. When two tracks are merged, their track properties will 
-   also be merged. If the two tracks both have a track property with the same name but different values, the values 
-   will be concatenated with a semicolon as the separator.
+   set to the maximum confidence value of the two tracks and their track properties will be merged. If the two tracks 
+   both have a track property with the same name but different values, the values will be concatenated with a 
+   semicolon as the separator.
 5. The non-overlapping tracks are then used to form the video segments for the next detection action. This action specifies the following parameters:
     * "TARGET_SEGMENT_LENGTH" = "75"
     * "MIN_SEGMENT_LENGTH" = "25"
