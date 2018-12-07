@@ -64,6 +64,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-300-december-2018">OpenMPF 3.0.0: December 2018</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-210-june-2018">OpenMPF 2.1.0: June 2018</a></li>
                 
             
@@ -261,6 +264,131 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="openmpf-300-december-2018">OpenMPF 3.0.0: December 2018</h1>
+<blockquote>
+<p><strong>NOTE:</strong> The <a href="../Build-Environment-Setup-Guide/index.html">Build Guide</a> and <a href="../Installation-Guide/index.html">Install Guide</a> are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md">README</a>.</p>
+<p><strong>NOTE:</strong> Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container.</p>
+<p><strong>NOTE:</strong> Currently, we do not support persisting state when restarting the Docker swarm stack. Custom property settings, service configuration, and pipelines will be discarded when the stack is stopped. Refer to the <a href="https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#tearing-down-the-stack">Tearing Down the Stack</a> section of the SWARM guide.</p>
+</blockquote>
+<h2>Documentation</h2>
+
+<ul>
+<li>Added a <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md">README</a>, <a href="https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md">SWARM</a> guide, and <a href="https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> guide for Docker deployment.</li>
+<li>Updated the <a href="../User-Guide/index.html#min_gap_between_segments-property">User Guide</a> with information on how track properties and track confidence are handled when merging tracks.</li>
+<li>Added README files for new components. Refer to the component sections below.</li>
+</ul>
+<h2> Docker Support</h2>
+
+<ul>
+<li>OpenMPF can now be built and distributed as 5 Docker images: openmpf_workflow_manager, openmpf_node_manager, openmpf_active_mq, mysql_database, and redis.</li>
+<li>These images can be deployed on a single host using <code>docker-compose up</code>.</li>
+<li>They can also be deployed across multiple hosts in a Docker swarm cluster using <code>docker stack deploy</code>.</li>
+<li>GPU support is enabled through the NVIDIA Docker runtime.</li>
+<li>Both HTTP and HTTPS deployments are supported.</li>
+</ul>
+<p><span id="json-output-object"></span>
+<h2>JSON Output Object</h2></p>
+<ul>
+<li>Added a <code>trackProperties</code> field at the track level that works in much the same way as the <code>detectionProperties</code> field at the detection level. Both are maps that contain zero or more key-value pairs. The component APIs have always supported the ability to return track-level properties, but they were never represented in the JSON output object, until now.</li>
+<li>Similarly, added a track <code>confidence</code> field. The component APIs always supported setting it, but the value was never used in the JSON output object, until now.</li>
+<li>Added <code>jobErrors</code> and<code>jobWarnings</code> fields. The <code>jobErrors</code> field will mention that there are items in <code>detectionProcessingErrors</code> fields.</li>
+<li>The <code>offset</code>, <code>startOffset</code>, and <code>stopOffset</code> fields have been removed in favor of the existing <code>offsetFrame</code>, <code>startOffsetFrame</code>, and <code>stopOffsetFrame</code> fields, respectively. They were redundant and deprecated.</li>
+<li>Added a <code>mpf.output.objects.exemplars.only</code> system property, and <code>EXEMPLARS_ONLY</code> job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.</li>
+</ul>
+<h2>Darknet Component</h2>
+
+<ul>
+<li>The Darknet component can now support processing streaming video. Video frames are prefetched, decoded, and stored in a buffer using a separate thread from the one that performs the detection. The size of the prefetch buffer can be configured by setting <code>FRAME_QUEUE_CAPACITY</code>.</li>
+<li>The Darknet component can now perform basic tracking and generate video tracks with multiple detections. Both the default detection mode and preprocessor detection mode are supported.</li>
+<li>The Darknet component has been updated to support the full and tiny YOLOv3 models. The YOLOv2 models are no longer supported.</li>
+</ul>
+<h2>Tesseract OCR Text Detection Component</h2>
+
+<ul>
+<li>This new component extracts text found in an image and reports it as a single track detection.</li>
+<li>Users may set the language of each track using the <code>TESSERACT_LANGUAGE</code> property as well as adjust other image preprocessing properties for text extraction.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md">README</a>.</li>
+</ul>
+<h2>OpenCV Scene Change Detection Component</h2>
+
+<ul>
+<li>This new component detects and segments a given video by scenes. Each scene change is detected using histogram comparison, edge comparison, brightness (fade outs), and overall hue/saturation/value differences between adjacent frames.</li>
+<li>Users can toggle each type of of scene change detection technique as well as threshold properties for each detection method.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/SceneChangeDetection/README.md">README</a>.</li>
+</ul>
+<h2>Tika Text Detection Component</h2>
+
+<ul>
+<li>This new component extracts text contained in documents and performs language detection. 71 languages and most document formats (.txt, .pptx, .docx, .doc, .pdf, etc.) are supported.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md">README</a>.</li>
+</ul>
+<blockquote>
+<p><span style="color:red"><strong>TODO:</strong> Remove the following section if the Tika Image Detection Component doesn't land in time. <span></p>
+</blockquote>
+<h2>Tika Image Detection Component</h2>
+
+<ul>
+<li>This new component extracts images embedded in document formats (.pdf, .ppt, .doc) and stores them on disk in a specified directory.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/java/TikaImageDetection/README.md">README</a>.</li>
+</ul>
+<h2>Travel-Level Properties and Confidence</h2>
+
+<ul>
+<li>Refer to the addition of track-level properties and confidence in the <a href="#json-output-object">JSON Output Object</a> section.</li>
+<li>Components have been updated to return meaningful track-level properties. Caffe and Darknet include <code>CLASSIFICATION</code>, OALPR includes the exemplar <code>TEXT</code>, and Sphinx includes the <code>TRANSCRIPTION</code>.</li>
+<li>The Workflow Manager will now populate the track-level confidence. It is the same as the exemplar confidence, which is the max of all of the track detections.</li>
+</ul>
+<h2>Custom NGINX HTTP Object Storage</h2>
+
+<ul>
+<li>Added <code>http.object.storage.*</code> system properties for configuring an optional custom NGINX object storage server on which to store generated detection artifacts, JSON output objects, and markup files.</li>
+<li>When a file cannot be uploaded to the server, the Workflow Manager will fall back to storing it in <code>$MPF_HOME/share</code>, which is the default behavior when an object storage server is not specified.</li>
+<li>If and when a failure occurs, the JSON output object will contain a descriptive message in the <code>jobWarnings</code> field, and, if appropriate, the <code>markupResult.message</code> field. If the job completes without other issues, the final status will be <code>COMPLETE_WITH_WARNINGS</code>.</li>
+<li>The NGINX storage server runs custom server-side code which we can make publicly available upon request. In the future, we plan to support more common storage server solutions, such as Amazon S3.</li>
+</ul>
+<p><span id="activemq"></span>
+<h2>ActiveMQ</h2></p>
+<ul>
+<li>The <code>MPF_OUTPUT</code> queue is no longer supported and has been removed. Job producers can specify a callback URL when creating a job so that they are alerted when the job is complete. Users observed heap space issues with ActiveMQ after running thousands of jobs without consuming messages from the <code>MPF_OUTPUT</code> queue.</li>
+<li>The Workflow Manager will now silently discard duplicate sub-job request messages in the ActiveMQ Dead Letter Queue (DLQ). This fixes a bug where the Workflow Manager would prematurely terminate jobs corresponding to the duplicate messages. It's assumed that ActiveMQ will only place a duplicate message in the DLQ if the original message, or another duplicate, can be delivered.</li>
+</ul>
+<h2>Node Auto-Configuration</h2>
+
+<ul>
+<li>Added the <code>node.auto.config.enabled</code>, <code>node.auto.unconfig.enabled</code>, and <code>node.auto.config.num.services.per.component</code> system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF cluster.</li>
+<li>Automatic configuration of services is convenient in a Docker swarm deployment because child Node Manager containers each have a randomly-generated id as part of their hostname.</li>
+</ul>
+<h2>Other Improvements</h2>
+
+<ul>
+<li>Now using variable-length text fields in the mySQL database for string data that may exceed 255 characters.</li>
+<li>Updated the <code>MPFImageReader</code> tool to use OpenCV video capture behind the scenes to support reading data from HTTP URLs.</li>
+<li>Python components can now include pre-built wheel files in the plugin package.</li>
+<li>We now use a <a href="https://github.com/openmpf/openmpf-docker/blob/master/Jenkinsfile">Jenkinsfile</a> Groovy script for our Jenkins build process. This allows us to use revision control for our continuous integration process and share that process with the open source community.</li>
+<li>Added <code>remote.media.download.retries</code> and <code>remote.media.download.sleep</code> system properties that can be used to configure how the Workflow Manager will attempt to retry downloading remote media if it encounters a problem.</li>
+</ul>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>Jobs now properly end in <code>COMPLETE_WITH_ERRORS</code> if an invalid media HTTP URL is provided or there is a problem accessing the remote media.</li>
+<li>Jobs now end in <code>COMPLETE_WITH_ERRORS</code> when a detection splitter error occurs due to missing system properties.</li>
+<li>Components can now include their own version of the Google Protobuf library. It will not conflict with the version used by the rest of OpenMPF.</li>
+<li>The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request id.</li>
+<li>The Java component executor now sets the run directory using <code>setRunDirectory()</code>.</li>
+<li>Actions can now be properly added using an "extras" component. An extras component only includes a <code>descriptor.json</code> file and declares Actions, Tasks, and Pipelines using other compoent algorithms.</li>
+<li>Refer to the items listed in the <a href="#activemq">ActiveMQ</a> section.</li>
+<li>Refer to the addition of track-level properties and confidence in the <a href="#json-output-object">JSON Output Object</a> section.</li>
+</ul>
+<h2>Known Issues</h2>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/745">#745</a>] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. The reason is currently unknown.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/693">#693</a>] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once, This is because the Workflow Manager is constantly broadcasting to <code>jobs-paged</code>.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/544">#544</a>] Image artifacts retain some permissions from source files available on the local host. This can result in some of the image artifacts having executable permissions.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/604">#604</a>] The Sphinx component cannot be unregistered because <code>$MPF_HOME/plugins/SphinxSpeechDetection/lib</code> is owned by root on a deployment machine.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/623">#623</a>] The Nodes UI does not work correctly when <code>[POST] /rest/nodes/config</code> is used at the same time. This is because the UI's state is not automatically updated to reflect changes made through the REST endpoint.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/753">#753</a>] The state of the Docker swarm stack is not persisted when restarting the stack.</li>
+</ul>
 <h1 id="openmpf-210-june-2018">OpenMPF 2.1.0: June 2018</h1>
 <blockquote>
 <p><strong>NOTE:</strong> If building this release on a machine used to build a previous version of OpenMPF, then please run <code>sudo pip install --upgrade pip</code> to update to at least pip 10.0.1. If not, the OpenMPF build script will fail to properly download .whl files for Python modules.</p>
@@ -280,7 +408,7 @@
 <li>Developers can now write batch components in Python using the mpf_component_api module.</li>
 <li>Dependencies can be specified in a setup.py file. OpenMPF will automatically download the .whl files using pip at build time.</li>
 <li>When deployed, a virtualenv is created for the Python component so that it runs in a sandbox isolated from the rest of the system.</li>
-<li>OpenMPF ImageReader and VideoCapture tools are provided in the mpf_component_util module. </li>
+<li>OpenMPF ImageReader and VideoCapture tools are provided in the mpf_component_util module.</li>
 <li>Example Python components are provided for reference.</li>
 </ul>
 <h2>Spare Nodes</h2>
@@ -350,7 +478,7 @@
 
 <ul>
 <li>Updated the Nodes page to distinguish between core nodes and spare nodes, and to show when a node is online or offline.</li>
-<li>Updated the Component Registration page to list the core nodes as a reminder that changes will not affect spare nodes. </li>
+<li>Updated the Component Registration page to list the core nodes as a reminder that changes will not affect spare nodes.</li>
 <li>Updated the Properties page to separate the default detection properties from the general system properties.</li>
 </ul>
 <h2>Bug Fixes</h2>
@@ -359,7 +487,7 @@
 <li>Custom Action, task, and pipeline names can now contain "(" and ")" characters again.</li>
 <li>Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of <code>0</code> instead of <code>1</code>.</li>
 <li>Streaming health report and summary report timestamps have been corrected to represent hours in the 0-23 range instead of 1-24.</li>
-<li>Single-frame .gif files are now segmented properly and no longer result in a NullPointerException. </li>
+<li>Single-frame .gif files are now segmented properly and no longer result in a NullPointerException.</li>
 <li>LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in <code>/etc/profile.d/mpf.sh</code>. Also, deployments no longer create <code>/etc/ld.so.conf.d/mpf.conf</code>. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running <code>yum update</code> on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.</li>
 <li>The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone is viewing the Job Status page when a job submitted through the REST API is in progress.</li>
 </ul>
@@ -382,13 +510,13 @@
 <h1 id="openmpf-200-february-2018">OpenMPF 2.0.0: February 2018</h1>
 <blockquote>
 <p><strong>NOTE:</strong> Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the descriptor.json file to support stream processing.</p>
-<p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time. </p>
+<p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time.</p>
 </blockquote>
 <h2>Documentation</h2>
 
 <ul>
 <li>Updated documents to distinguish the batch component APIs from the streaming component API.</li>
-<li>Added the <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>. </li>
+<li>Added the <a href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>.</li>
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a> to describe support for generic detections.</li>
 <li>Updated the <a href="../REST-API/index.html">REST API</a> with endpoints for streaming jobs.</li>
 </ul>
@@ -439,7 +567,7 @@
 
 <ul>
 <li>Updated the master Node Manager and child Node Managers to spawn component services on demand to handle streaming jobs, cancel those jobs, and to monitor the status of those processes.</li>
-<li>Using .ini files to represent streaming job properties and enable better communication between a child Node Manager and C++ Streaming Component Executor. </li>
+<li>Using .ini files to represent streaming job properties and enable better communication between a child Node Manager and C++ Streaming Component Executor.</li>
 </ul>
 <h2>C++ Streaming Component API</h2>
 

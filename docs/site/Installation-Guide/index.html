@@ -263,6 +263,7 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
+<p><strong>WARNING:</strong> As of Release 3.0.0, this guide is no longer supported. It is left here for historical reasons and will be removed in a future release.  It was last tested with Release 2.1.0. We now support creating Docker images and deploying those containers. Please refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md">README</a>.</p>
 </blockquote>
 <h1 id="minimum-resource-requirements">Minimum Resource Requirements</h1>
 <h2 id="hardware">Hardware</h2>
@@ -277,7 +278,7 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 <p>Below is an example layout of an OpenMPF cluster consisting of 3 nodes:</p>
 <p><img alt="System Layout" src="../img/system_layout.png" title="System Layout" /></p>
 <h2 id="operating-system-and-software">Operating System and Software</h2>
-<p>OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity). </p>
+<p>OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity).</p>
 <blockquote>
 <p><strong>IMPORTANT:</strong> Make sure that the machine on which OpenMPF will be deployed is running the same version of CentOS 7 as the machine which generated the OpenMPF deployment package; otherwise you may encounter library dependency issues. For more information about the CentOS 7 version, refer to the <a href="../Build-Environment-Setup-Guide/index.html#set-up-the-minimal-centos-7-vm">CentOS setup section</a> of the Build Guide.</p>
 </blockquote>
@@ -327,7 +328,7 @@ sudo sh install-mpf.sh
 
 <p><strong> 3. Ensure the Shared Storage Space Exists</strong></p>
 <p>By default, OpenMPF uses the /opt/mpf/share directory to share data between nodes. If that directory doesn't exist, then create it now:</p>
-<p>If this is a single-node setup, then run: </p>
+<p>If this is a single-node setup, then run:</p>
 <pre><code>mkdir /opt/mpf/share
 </code></pre>
 

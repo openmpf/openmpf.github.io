@@ -2,7 +2,7 @@
 
 # OpenMPF 3.0.0: December 2018
 
-> **NOTE:** The [Build Guide](Build-Guide/index.html) and [Install Guide](https://openmpf.github.io/docs/site/Installation-Guide/index.html) are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+> **NOTE:** The [Build Guide](Build-Environment-Setup-Guide/index.html) and [Install Guide](Installation-Guide/index.html) are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
 
 > **NOTE:** Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container.
 
@@ -11,7 +11,7 @@
 <h2>Documentation</h2>
 
 - Added a [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md), [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide, and [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment.
-- Updated the [User Guide](https://openmpf.github.io/docs/site/User-Guide/index.html#min_gap_between_segments-property) with information on how track properties are handled when merging tracks.
+- Updated the [User Guide](User-Guide/index.html#min_gap_between_segments-property) with information on how track properties and track confidence are handled when merging tracks.
 - Added README files for new components. Refer to the component sections below.
 
 <h2> Docker Support</h2>
