@@ -2,13 +2,17 @@
 
 # OpenMPF 3.0.0: December 2018
 
-> **NOTE:** As of this release, the [Build Guide](Build-Guide/index.html) and [Install Guide](https://openmpf.github.io/docs/site/Installation-Guide/index.html) are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+> **NOTE:** The [Build Guide](Build-Guide/index.html) and [Install Guide](https://openmpf.github.io/docs/site/Installation-Guide/index.html) are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+
+> **NOTE:** Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container.
+
+> **NOTE:** Currently, we do not support persisting state when restarting the Docker swarm stack. Custom property settings, service configuration, and pipelines will be discarded when the stack is stopped. Refer to the [Tearing Down the Stack](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#tearing-down-the-stack) section of the SWARM guide.
 
 <h2>Documentation</h2>
 
-- Added a [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md), [SWARM Guide](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md), and [CONTRIBUING Guide](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) for Docker deployment.
+- Added a [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md), [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide, and [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment.
 - Updated the [User Guide](https://openmpf.github.io/docs/site/User-Guide/index.html#min_gap_between_segments-property) with information on how track properties are handled when merging tracks.
-- Added README files for new components.
+- Added README files for new components. Refer to the component sections below.
 
 <h2> Docker Support</h2>
 
@@ -21,33 +25,33 @@
 <span id="json-output-object"></span>
 <h2>JSON Output Object</h2>
 
-- Added a `trackProperties` field at the track level that works in much the same way as the `detectionProperties` field at the detection level. Both are maps that contain zero or more key-value pairs. The component APIs have always supported the ability to return track-level properties, but they were never represented until the JSON output object, until now.
-- Similarly, added a `confidence` field. The component APIs always supported setting it, but the value was never used in the JSON output object, until now.
+- Added a `trackProperties` field at the track level that works in much the same way as the `detectionProperties` field at the detection level. Both are maps that contain zero or more key-value pairs. The component APIs have always supported the ability to return track-level properties, but they were never represented in the JSON output object, until now.
+- Similarly, added a track `confidence` field. The component APIs always supported setting it, but the value was never used in the JSON output object, until now.
 - Added `jobErrors` and`jobWarnings` fields. The `jobErrors` field will mention that there are items in `detectionProcessingErrors` fields.
 - The `offset`, `startOffset`, and `stopOffset` fields have been removed in favor of the existing `offsetFrame`, `startOffsetFrame`, and `stopOffsetFrame` fields, respectively. They were redundant and deprecated.
 - Added a `mpf.output.objects.exemplars.only` system property, and `EXEMPLARS_ONLY` job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.
 
 <h2>Darknet Component</h2>
 
-- The Darknet component can now support processing streaming video. Video frames are prefetched, decoded, and stored in a queue using a separate thread from the one that performs the detection. The size of the prefetch buffer can be configured by setting `FRAME_QUEUE_CAPACITY`.
+- The Darknet component can now support processing streaming video. Video frames are prefetched, decoded, and stored in a buffer using a separate thread from the one that performs the detection. The size of the prefetch buffer can be configured by setting `FRAME_QUEUE_CAPACITY`.
 - The Darknet component can now perform basic tracking and generate video tracks with multiple detections. Both the default detection mode and preprocessor detection mode are supported.
 - The Darknet component has been updated to support the full and tiny YOLOv3 models. The YOLOv2 models are no longer supported.
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
-- This new component extracts text found in an image, reported as a single track detection.
-- Users may set the language of each track using the TESSERACT_LANGUAGE parameter as well as adjust image preprocessing settings for text extraction.
+- This new component extracts text found in an image and reports it as a single track detection.
+- Users may set the language of each track using the `TESSERACT_LANGUAGE` property as well as adjust other image preprocessing properties for text extraction.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md).
 
 <h2>OpenCV Scene Change Detection Component</h2>
 
-- This new component detects and segments a given video by scenes. Each scene change is detected using histogram comparison, edge comparison, brightness (fades outs), and overall hue/saturation/value differences between adjacent frames.
-- Users can toggle each type of of scene change detection technique as well as threshold parameters for each detection method.
+- This new component detects and segments a given video by scenes. Each scene change is detected using histogram comparison, edge comparison, brightness (fade outs), and overall hue/saturation/value differences between adjacent frames.
+- Users can toggle each type of of scene change detection technique as well as threshold properties for each detection method.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/SceneChangeDetection/README.md).
 
 <h2>Tika Text Detection Component</h2>
 
-- This new component extracts text contained in documents and processes text for detected languages (71 languages currently supported). Supports most document formats (.txt, .pptx, .docx, .doc, .pdf, etc.).
+- This new component extracts text contained in documents and performs language detection. 71 languages and most document formats (.txt, .pptx, .docx, .doc, .pdf, etc.) are supported.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md).
 
 > <span style="color:red">**TODO:** Remove the following section if the Tika Image Detection Component doesn't land in time. <span>
@@ -65,9 +69,10 @@
 
 <h2>Custom NGINX HTTP Object Storage</h2>
 
-- Added `http.object.storage.*` system properties for configuring an optional NGINX object storage server on which to store generated detection artifacts, JSON output objects, and markup files.
+- Added `http.object.storage.*` system properties for configuring an optional custom NGINX object storage server on which to store generated detection artifacts, JSON output objects, and markup files.
 - When a file cannot be uploaded to the server, the Workflow Manager will fall back to storing it in `$MPF_HOME/share`, which is the default behavior when an object storage server is not specified.
 - If and when a failure occurs, the JSON output object will contain a descriptive message in the `jobWarnings` field, and, if appropriate, the `markupResult.message` field. If the job completes without other issues, the final status will be `COMPLETE_WITH_WARNINGS`.
+- The NGINX storage server runs custom server-side code which we can make publicly available upon request. In the future, we plan to support more common storage server solutions, such as Amazon S3.
 
 <span id="activemq"></span>
 <h2>ActiveMQ</h2>
@@ -78,7 +83,7 @@
 <h2>Node Auto-Configuration</h2>
 
 - Added the `node.auto.config.enabled`, `node.auto.unconfig.enabled`, and `node.auto.config.num.services.per.component` system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF cluster.
-- Automatic configuration of services is convenient in a Docker swarm deployment because child Node Manager containers each have a unique randomly-generated hostname.
+- Automatic configuration of services is convenient in a Docker swarm deployment because child Node Manager containers each have a randomly-generated id as part of their hostname.
 
 <h2>Other Improvements</h2>
 
@@ -91,13 +96,22 @@
 <h2>Bug Fixes</h2>
 
 - Jobs now properly end in `COMPLETE_WITH_ERRORS` if an invalid media HTTP URL is provided or there is a problem accessing the remote media.
-- Jobs now `COMPLETE_WITH_ERRORS` when a detection splitter error occurs due to missing system properties.
+- Jobs now end in `COMPLETE_WITH_ERRORS` when a detection splitter error occurs due to missing system properties.
 - Components can now include their own version of the Google Protobuf library. It will not conflict with the version used by the rest of OpenMPF.
 - The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request id.
-- Actions can now be properly added using an "extras" component. An extras component only includes a `descriptor.json` file and declares Actions, Tasks, and Pipelines using other compoent algorithms.
 - The Java component executor now sets the run directory using `setRunDirectory()`.
+- Actions can now be properly added using an "extras" component. An extras component only includes a `descriptor.json` file and declares Actions, Tasks, and Pipelines using other compoent algorithms.
 - Refer to the items listed in the [ActiveMQ](#activemq) section.
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object) section.
+
+<h2>Known Issues</h2>
+
+- [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. The reason is currently unknown.
+- [[#693](https://github.com/openmpf/openmpf/issues/693)] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once, This is because the Workflow Manager is constantly broadcasting to `jobs-paged`.
+- [[#544](https://github.com/openmpf/openmpf/issues/544)] Image artifacts retain some permissions from source files available on the local host. This can result in some of the image artifacts having executable permissions.
+- [[#604](https://github.com/openmpf/openmpf/issues/604)] The Sphinx component cannot be unregistered because `$MPF_HOME/plugins/SphinxSpeechDetection/lib` is owned by root on a deployment machine.
+- [[#623](https://github.com/openmpf/openmpf/issues/623)] The Nodes UI does not work correctly when `[POST] /rest/nodes/config` is used at the same time. This is because the UI's state is not automatically updated to reflect changes made through the REST endpoint.
+- [[#753](https://github.com/openmpf/openmpf/issues/753)] The state of the Docker swarm stack is not persisted when restarting the stack.
 
 
 # OpenMPF 2.1.0: June 2018

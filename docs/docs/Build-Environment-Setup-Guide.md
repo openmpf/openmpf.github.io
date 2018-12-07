@@ -1,6 +1,6 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.
 
-> **WARNING:** As of Release 3.0.0, this guide is no longer supported. It is left here for historical reasons and will be removed in a future release. We now support creating Docker images and deploying those containers. Please refer to the [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+> **WARNING:** As of Release 3.0.0, this guide is no longer supported. It is left here for historical reasons and will be removed in a future release. It was last tested with Release 2.1.0. We now support creating Docker images and deploying those containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
 
 # General Information
 
