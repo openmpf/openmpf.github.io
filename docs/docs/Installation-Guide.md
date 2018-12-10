@@ -1,6 +1,8 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2018 The MITRE Corporation. All Rights Reserved.
 
+> **WARNING:** As of Release 3.0.0, this guide is no longer supported. It is left here for reference and will be removed in a future release.  It was last tested with Release 2.1.0. We now support creating Docker images and deploying those containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+
 # Minimum Resource Requirements
 
 ## Hardware
@@ -19,7 +21,7 @@ Below is an example layout of an OpenMPF cluster consisting of 3 nodes:
 ![System Layout](img/system_layout.png "System Layout")
 
 ## Operating System and Software
-OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity). 
+OpenMPF runs on the CentOS 7 operating system, with Linux firewall (iptables) disabled and Linux SELINUX in permissive state (disabled is the preferred state to limit logging activity).
 
 > **IMPORTANT:** Make sure that the machine on which OpenMPF will be deployed is running the same version of CentOS 7 as the machine which generated the OpenMPF deployment package; otherwise you may encounter library dependency issues. For more information about the CentOS 7 version, refer to the [CentOS setup section](Build-Environment-Setup-Guide/index.html#set-up-the-minimal-centos-7-vm) of the Build Guide.
 
@@ -72,7 +74,7 @@ sudo sh /opt/mpf/manage/configure-cluster.sh
 
 By default, OpenMPF uses the /opt/mpf/share directory to share data between nodes. If that directory doesn't exist, then create it now:
 
-If this is a single-node setup, then run: 
+If this is a single-node setup, then run:
 
 ```
 mkdir /opt/mpf/share

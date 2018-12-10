@@ -1,5 +1,7 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.
 
+> **WARNING:** As of Release 3.0.0, this guide is no longer supported. It is left here for reference and will be removed in a future release. It was last tested with Release 2.1.0. We now support creating Docker images and deploying those containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+
 # General Information
 
 The Open Media Processing Framework (OpenMPF) software is distributed to interested parties as a raw source code package. This is to avoid any potential licensing issues that may arise from distributing a pre-compiled executable that is linked to dependencies that are licensed under a copyleft license or have patent restrictions. Generally, it is acceptable build and execute software with these dependencies for non-commercial in-house use.
@@ -162,7 +164,7 @@ Open a terminal window and perform the following steps:
 
 2. Copy the mpf user profile script from the extracted source code:
     <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
-    
+
 3. Add /apps/install/bin to the system PATH variable:
     1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
     2. `. /etc/profile.d/mpf.sh`
