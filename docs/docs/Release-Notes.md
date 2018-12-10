@@ -40,7 +40,7 @@
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
-- This new component extracts text found in an image and reports it as a single track detection.
+- This new component extracts text found in an image and reports it as a single-detection track.
 - Users may set the language of each track using the `TESSERACT_LANGUAGE` property as well as adjust other image preprocessing properties for text extraction.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md).
 
@@ -62,7 +62,7 @@
 - This new component extracts images embedded in document formats (.pdf, .ppt, .doc) and stores them on disk in a specified directory.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaImageDetection/README.md).
 
-<h2>Travel-Level Properties and Confidence</h2>
+<h2>Track-Level Properties and Confidence</h2>
 
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object) section.
 - Components have been updated to return meaningful track-level properties. Caffe and Darknet include `CLASSIFICATION`, OALPR includes the exemplar `TEXT`, and Sphinx includes the `TRANSCRIPTION`.
@@ -73,7 +73,7 @@
 - Added `http.object.storage.*` system properties for configuring an optional custom NGINX object storage server on which to store generated detection artifacts, JSON output objects, and markup files.
 - When a file cannot be uploaded to the server, the Workflow Manager will fall back to storing it in `$MPF_HOME/share`, which is the default behavior when an object storage server is not specified.
 - If and when a failure occurs, the JSON output object will contain a descriptive message in the `jobWarnings` field, and, if appropriate, the `markupResult.message` field. If the job completes without other issues, the final status will be `COMPLETE_WITH_WARNINGS`.
-- The NGINX storage server runs custom server-side code which we can make publicly available upon request. In the future, we plan to support more common storage server solutions, such as Amazon S3.
+- The NGINX storage server runs custom server-side code which we can make available upon request. In the future, we plan to support more common storage server solutions, such as Amazon S3.
 
 <span id="activemq"></span>
 <h2>ActiveMQ</h2>
@@ -84,7 +84,7 @@
 <h2>Node Auto-Configuration</h2>
 
 - Added the `node.auto.config.enabled`, `node.auto.unconfig.enabled`, and `node.auto.config.num.services.per.component` system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF cluster.
-- Automatic configuration of services is convenient in a Docker swarm deployment because child Node Manager containers each have a randomly-generated id as part of their hostname.
+- Docker will assign a a hostname with a randomly-generated id to containers in a swarm deployment. The above properties allow the Workflow Manager to automatically discover and configure services on child Node Manager components, which is convenient since the hostname of those containers cannot be known in advance, and new containers with new hostnames are created when the swarm is restarted.
 
 <h2>Other Improvements</h2>
 
@@ -101,14 +101,14 @@
 - Components can now include their own version of the Google Protobuf library. It will not conflict with the version used by the rest of OpenMPF.
 - The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request id.
 - The Java component executor now sets the run directory using `setRunDirectory()`.
-- Actions can now be properly added using an "extras" component. An extras component only includes a `descriptor.json` file and declares Actions, Tasks, and Pipelines using other compoent algorithms.
+- Actions can now be properly added using an "extras" component. An extras component only includes a `descriptor.json` file and declares Actions, Tasks, and Pipelines using other component algorithms.
 - Refer to the items listed in the [ActiveMQ](#activemq) section.
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object) section.
 
 <h2>Known Issues</h2>
 
 - [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. The reason is currently unknown.
-- [[#693](https://github.com/openmpf/openmpf/issues/693)] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once, This is because the Workflow Manager is constantly broadcasting to `jobs-paged`.
+- [[#693](https://github.com/openmpf/openmpf/issues/693)] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once.
 - [[#544](https://github.com/openmpf/openmpf/issues/544)] Image artifacts retain some permissions from source files available on the local host. This can result in some of the image artifacts having executable permissions.
 - [[#604](https://github.com/openmpf/openmpf/issues/604)] The Sphinx component cannot be unregistered because `$MPF_HOME/plugins/SphinxSpeechDetection/lib` is owned by root on a deployment machine.
 - [[#623](https://github.com/openmpf/openmpf/issues/623)] The Nodes UI does not work correctly when `[POST] /rest/nodes/config` is used at the same time. This is because the UI's state is not automatically updated to reflect changes made through the REST endpoint.
