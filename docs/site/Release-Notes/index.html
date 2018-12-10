@@ -298,7 +298,8 @@
 <h2>Darknet Component</h2>
 
 <ul>
-<li>The Darknet component can now support processing streaming video. Video frames are prefetched, decoded, and stored in a buffer using a separate thread from the one that performs the detection. The size of the prefetch buffer can be configured by setting <code>FRAME_QUEUE_CAPACITY</code>.</li>
+<li>The Darknet component can now support processing streaming video.</li>
+<li>In batch mode, video frames are prefetched, decoded, and stored in a buffer using a separate thread from the one that performs the detection. The size of the prefetch buffer can be configured by setting <code>FRAME_QUEUE_CAPACITY</code>.</li>
 <li>The Darknet component can now perform basic tracking and generate video tracks with multiple detections. Both the default detection mode and preprocessor detection mode are supported.</li>
 <li>The Darknet component has been updated to support the full and tiny YOLOv3 models. The YOLOv2 models are no longer supported.</li>
 </ul>
