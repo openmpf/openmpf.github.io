@@ -423,9 +423,11 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 <p><img alt="Segmenting Diagram" src="../img/min_segment_length_with_adjacent.png" title="Segmenting Diagram" /></p>
 <ol>
 <li>In this example, a preprocessor has completed and produced a single track.</li>
-<li>The next detection action specifies the following parameters:</li>
+<li>The next detection action specifies the following parameters:<ul>
 <li>"TARGET_SEGMENT_LENGTH" = 100</li>
 <li>"MIN_SEGMENT_LENGTH" = 75</li>
+</ul>
+</li>
 <li>Three segments are initially produced from the input track with lengths corresponding to 100 frames, 100 frames, and 50 frames.</li>
 <li>Since the last frame does not exceed the minimum specified segment length, it must either be discarded or merged with an adjacent segment.</li>
 <li>Segments 2 and 3 are determined to be adjacent, so they are merged.</li>
@@ -435,15 +437,19 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 <p><img alt="Segmenting Diagram" src="../img/min_segment_length_no_adjacent.png" title="Segmenting Diagram" /></p>
 <ol>
 <li>In this example, a preprocessor has completed and produced two non-overlapping tracks.</li>
-<li>The next detection action specifies the following parameters:</li>
+<li>The next detection action specifies the following parameters:<ul>
 <li>"TARGET_SEGMENT_LENGTH" = 100</li>
 <li>"MIN_SEGMENT_LENGTH" = 75</li>
 <li>"MIN_GAP_BETWEEN_SEGMENTS" = 50</li>
+</ul>
+</li>
 <li>The segmenter begins by merging any segments which are less than "MIN_GAP_BETWEEN_SEGMENTS" apart. There are none.</li>
 <li>The segmenter then splits the existing segments using the "MIN_SEGMENT_LENGTH" and "TARGET_SEGMENT_LENGTH" values.</li>
-<li>The segmenter iterates through each segment produced. If the segment satisfies the minimum length constraint, it moves to the next segment.</li>
+<li>The segmenter iterates through each segment produced. If the segment satisfies the minimum length constraint, it moves to the next segment.<ul>
 <li>When it reaches the third segment and finds the length of 50 frames does not exceed the minimum length, it merges that segment with the previous adjacent segment.</li>
 <li>When it reaches the final segment and finds that the length of 25 frames does not exceed the minimum length, and that there are no adjacent segments, the segment is destroyed.</li>
+</ul>
+</li>
 <li>Ultimately, only two segments are produced.</li>
 </ol>
 <h2 id="min_gap_between_segments-property">"MIN_GAP_BETWEEN_SEGMENTS" Property</h2>
@@ -452,16 +458,26 @@ Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 <p><img alt="Segmenting Diagram" src="../img/min_frame_gap_example.png" title="Segmenting Diagram" /></p>
 <ol>
 <li>The user submits a video to a pipeline containing a motion preprocessor followed by another extractor (e.g., face).</li>
-<li>The video is initially split into segments using the properties provided by the motion preprocessor. Specifically, the preprocessor action specifies the following parameters and four segments are produced:</li>
+<li>The video is initially split into segments using the properties provided by the motion preprocessor. Specifically, the preprocessor action specifies the following parameters and four segments are produced:<ul>
 <li>"TARGET_SEGMENT_LENGTH" = "250"</li>
 <li>"MIN_SEGMENT_LENGTH" = "150"</li>
 <li>"MERGE_TRACKS" = "true"</li>
+</ul>
+</li>
 <li>The segments are submitted to the motion preprocessor, and five distinct and non-overlapping tracks are returned based on the frames of the segments in which motion is detected.</li>
-<li>Because the "MERGE_TRACKS" property is set to "true", tracks are merged across segment boundaries if applicable. This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the "Preprocessor" and "Track Merger" phases of the diagram.)</li>
-<li>The non-overlapping tracks are then used to form the video segments for the next detection action. This action specifies the following parameters:</li>
+<li>Because the "MERGE_TRACKS" property is set to "true", tracks are merged across segment boundaries if applicable. 
+   This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three 
+   tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the 
+   "Preprocessor" and "Track Merger" phases of the diagram.) When two tracks are merged, the confidence value will be 
+   set to the maximum confidence value of the two tracks and their track properties will be merged. If the two tracks 
+   both have a track property with the same name but different values, the values will be concatenated with a 
+   semicolon as the separator.</li>
+<li>The non-overlapping tracks are then used to form the video segments for the next detection action. This action specifies the following parameters:<ul>
 <li>"TARGET_SEGMENT_LENGTH" = "75"</li>
 <li>"MIN_SEGMENT_LENGTH" = "25"</li>
 <li>"MIN_GAP_BETWEEN_SEGMENTS" = "99"</li>
+</ul>
+</li>
 <li>The segmenting logic merges tracks which are less than "MIN_SEGMENT_LENGTH" frames apart into one long segment. Once all tracks have been merged, each segment is itself segmented while respecting the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties. Ultimately, ten segments are produced. (Track #1 and Track #2 in the "Track Merger" phase of the diagram are combined, which is why Segment #3 in the "Segmenter" phase of the diagram includes the 25 frames that span the gap between those two tracks.)</li>
 </ol>
               
