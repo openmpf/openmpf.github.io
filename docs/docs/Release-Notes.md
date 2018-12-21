@@ -101,7 +101,7 @@
 
 <h2>Bug Fixes</h2>
 
-- Jobs now properly end in `COMPLETE_WITH_ERRORS` if an invalid media HTTP URL is provided or there is a problem accessing the remote media.
+- Jobs now properly end in `ERROR` if an invalid media URL is provided or there is a problem accessing remote media.
 - Jobs now end in `COMPLETE_WITH_ERRORS` when a detection splitter error occurs due to missing system properties.
 - Components can now include their own version of the Google Protobuf library. It will not conflict with the version used by the rest of OpenMPF.
 - The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request id.
