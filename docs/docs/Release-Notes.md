@@ -29,7 +29,8 @@
 - Similarly, added a track `confidence` field. The component APIs always supported setting it, but the value was never used in the JSON output object, until now.
 - Added `jobErrors` and`jobWarnings` fields. The `jobErrors` field will mention that there are items in `detectionProcessingErrors` fields.
 - The `offset`, `startOffset`, and `stopOffset` fields have been removed in favor of the existing `offsetFrame`, `startOffsetFrame`, and `stopOffsetFrame` fields, respectively. They were redundant and deprecated.
-- Added a `mpf.output.objects.exemplars.only` system property, and `EXEMPLARS_ONLY` job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.
+- Added a `mpf.output.objects.exemplars.only` system property, and `OUTPUT_EXEMPLARS_ONLY` job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.
+- Added a `mpf.output.objects.last.stage.only` system property, and `OUTPUT_LAST_STAGE_ONLY` job property, that can be set to reduce the size of the JSON output object by only recording the detections for the last non-markup stage of a pipeline.
 
 <h2>Darknet Component</h2>
 
@@ -54,8 +55,6 @@
 
 - This new component extracts text contained in documents and performs language detection. 71 languages and most document formats (.txt, .pptx, .docx, .doc, .pdf, etc.) are supported.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md).
-
-> <span style="color:red">**TODO:** Remove the following section if the Tika Image Detection Component doesn't land in time. <span>
 
 <h2>Tika Image Detection Component</h2>
 
@@ -86,6 +85,12 @@
 - Added the `node.auto.config.enabled`, `node.auto.unconfig.enabled`, and `node.auto.config.num.services.per.component` system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF cluster.
 - Docker will assign a a hostname with a randomly-generated id to containers in a swarm deployment. The above properties allow the Workflow Manager to automatically discover and configure services on child Node Manager components, which is convenient since the hostname of those containers cannot be known in advance, and new containers with new hostnames are created when the swarm is restarted.
 
+<h2>Job Status Web UI</h2>
+
+- Added the `web.broadcast.job.status.enabled` and `web.job.polling.interval` system properties that can be used to configure if the Workflow Manager automatically broadcasts updates to the Job Status web UI. By default, the broadcasts are enabled.
+- In a production environment that processes hundreds of jobs or more at the same time, this behavior can result in overloading the web UI, causing it to slow down and freeze up. To prevent this, set `web.broadcast.job.status.enabled` to `false`. If `web.job.polling.interval` is set to a non-zero value, the web UI will poll for updates at that interval (specified in milliseconds).
+- To disable broadcasts and polling, set `web.broadcast.job.status.enabled` to `false` and `web.job.polling.interval` to a zero or negative value. Users will then need to manually refresh the Job Status web page using their web browser.
+
 <h2>Other Improvements</h2>
 
 - Now using variable-length text fields in the mySQL database for string data that may exceed 255 characters.
@@ -93,6 +98,7 @@
 - Python components can now include pre-built wheel files in the plugin package.
 - We now use a [Jenkinsfile](https://github.com/openmpf/openmpf-docker/blob/master/Jenkinsfile) Groovy script for our Jenkins build process. This allows us to use revision control for our continuous integration process and share that process with the open source community.
 - Added `remote.media.download.retries` and `remote.media.download.sleep` system properties that can be used to configure how the Workflow Manager will attempt to retry downloading remote media if it encounters a problem.
+- Artifact extraction now uses MPFVideoCapture, which employs various fallback strategies for extracting frames in cases where a video is not well-formed or corrupted. For components that use MPFVideoCapture, this enables better consistency between the frames they process and the artifacts that are later extracted.
 
 <h2>Bug Fixes</h2>
 
@@ -108,11 +114,12 @@
 <h2>Known Issues</h2>
 
 - [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. The reason is currently unknown.
-- [[#693](https://github.com/openmpf/openmpf/issues/693)] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once.
 - [[#544](https://github.com/openmpf/openmpf/issues/544)] Image artifacts retain some permissions from source files available on the local host. This can result in some of the image artifacts having executable permissions.
 - [[#604](https://github.com/openmpf/openmpf/issues/604)] The Sphinx component cannot be unregistered because `$MPF_HOME/plugins/SphinxSpeechDetection/lib` is owned by root on a deployment machine.
 - [[#623](https://github.com/openmpf/openmpf/issues/623)] The Nodes UI does not work correctly when `[POST] /rest/nodes/config` is used at the same time. This is because the UI's state is not automatically updated to reflect changes made through the REST endpoint.
 - [[#753](https://github.com/openmpf/openmpf/issues/753)] The state of the Docker swarm stack is not persisted when restarting the stack.
+- [[#783](https://github.com/openmpf/openmpf/issues/783)] The Tesseract OCR Text Detection Component has a [known issue](https://github.com/tesseract-ocr/tesseract/issues/235) because it uses Tesseract 3. If a combination of languages is specified using `TESSERACT_LANGUAGE`, and one of the languages is Arabic, then Arabic must be specified last. For example, for English and Arabic, `eng+ara` will work, but `ara+eng` will not.
+
 
 
 # OpenMPF 2.1.0: June 2018
