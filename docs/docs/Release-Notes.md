@@ -6,8 +6,6 @@
 
 > **NOTE:** Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container.
 
-> **NOTE:** Currently, we do not support persisting state when restarting the Docker swarm stack. Custom property settings, service configuration, and pipelines will be discarded when the stack is stopped. Refer to the [Tearing Down the Stack](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#tearing-down-the-stack) section of the SWARM guide.
-
 <h2>Documentation</h2>
 
 - Added a [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md), [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide, and [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment.
@@ -42,6 +40,7 @@
 <h2>Tesseract OCR Text Detection Component</h2>
 
 - This new component extracts text found in an image and reports it as a single-detection track.
+- PDF documents can also be processed with one track detection per page.
 - Users may set the language of each track using the `TESSERACT_LANGUAGE` property as well as adjust other image preprocessing properties for text extraction.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md).
 
