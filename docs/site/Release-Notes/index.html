@@ -268,7 +268,6 @@
 <blockquote>
 <p><strong>NOTE:</strong> The <a href="../Build-Environment-Setup-Guide/index.html">Build Guide</a> and <a href="../Installation-Guide/index.html">Install Guide</a> are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md">README</a>.</p>
 <p><strong>NOTE:</strong> Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container.</p>
-<p><strong>NOTE:</strong> Currently, we do not support persisting state when restarting the Docker swarm stack. Custom property settings, service configuration, and pipelines will be discarded when the stack is stopped. Refer to the <a href="https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#tearing-down-the-stack">Tearing Down the Stack</a> section of the SWARM guide.</p>
 </blockquote>
 <h2>Documentation</h2>
 
@@ -293,7 +292,8 @@
 <li>Similarly, added a track <code>confidence</code> field. The component APIs always supported setting it, but the value was never used in the JSON output object, until now.</li>
 <li>Added <code>jobErrors</code> and<code>jobWarnings</code> fields. The <code>jobErrors</code> field will mention that there are items in <code>detectionProcessingErrors</code> fields.</li>
 <li>The <code>offset</code>, <code>startOffset</code>, and <code>stopOffset</code> fields have been removed in favor of the existing <code>offsetFrame</code>, <code>startOffsetFrame</code>, and <code>stopOffsetFrame</code> fields, respectively. They were redundant and deprecated.</li>
-<li>Added a <code>mpf.output.objects.exemplars.only</code> system property, and <code>EXEMPLARS_ONLY</code> job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.</li>
+<li>Added a <code>mpf.output.objects.exemplars.only</code> system property, and <code>OUTPUT_EXEMPLARS_ONLY</code> job property, that can be set to reduce the size of the JSON output object by only recording the track exemplars instead of all of the detections in each track.</li>
+<li>Added a <code>mpf.output.objects.last.stage.only</code> system property, and <code>OUTPUT_LAST_STAGE_ONLY</code> job property, that can be set to reduce the size of the JSON output object by only recording the detections for the last non-markup stage of a pipeline.</li>
 </ul>
 <h2>Darknet Component</h2>
 
@@ -307,6 +307,7 @@
 
 <ul>
 <li>This new component extracts text found in an image and reports it as a single-detection track.</li>
+<li>PDF documents can also be processed with one track detection per page.</li>
 <li>Users may set the language of each track using the <code>TESSERACT_LANGUAGE</code> property as well as adjust other image preprocessing properties for text extraction.</li>
 <li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md">README</a>.</li>
 </ul>
@@ -323,9 +324,6 @@
 <li>This new component extracts text contained in documents and performs language detection. 71 languages and most document formats (.txt, .pptx, .docx, .doc, .pdf, etc.) are supported.</li>
 <li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md">README</a>.</li>
 </ul>
-<blockquote>
-<p><span style="color:red"><strong>TODO:</strong> Remove the following section if the Tika Image Detection Component doesn't land in time. <span></p>
-</blockquote>
 <h2>Tika Image Detection Component</h2>
 
 <ul>
@@ -359,6 +357,13 @@
 <li>Added the <code>node.auto.config.enabled</code>, <code>node.auto.unconfig.enabled</code>, and <code>node.auto.config.num.services.per.component</code> system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF cluster.</li>
 <li>Docker will assign a a hostname with a randomly-generated id to containers in a swarm deployment. The above properties allow the Workflow Manager to automatically discover and configure services on child Node Manager components, which is convenient since the hostname of those containers cannot be known in advance, and new containers with new hostnames are created when the swarm is restarted.</li>
 </ul>
+<h2>Job Status Web UI</h2>
+
+<ul>
+<li>Added the <code>web.broadcast.job.status.enabled</code> and <code>web.job.polling.interval</code> system properties that can be used to configure if the Workflow Manager automatically broadcasts updates to the Job Status web UI. By default, the broadcasts are enabled.</li>
+<li>In a production environment that processes hundreds of jobs or more at the same time, this behavior can result in overloading the web UI, causing it to slow down and freeze up. To prevent this, set <code>web.broadcast.job.status.enabled</code> to <code>false</code>. If <code>web.job.polling.interval</code> is set to a non-zero value, the web UI will poll for updates at that interval (specified in milliseconds).</li>
+<li>To disable broadcasts and polling, set <code>web.broadcast.job.status.enabled</code> to <code>false</code> and <code>web.job.polling.interval</code> to a zero or negative value. Users will then need to manually refresh the Job Status web page using their web browser.</li>
+</ul>
 <h2>Other Improvements</h2>
 
 <ul>
@@ -367,11 +372,12 @@
 <li>Python components can now include pre-built wheel files in the plugin package.</li>
 <li>We now use a <a href="https://github.com/openmpf/openmpf-docker/blob/master/Jenkinsfile">Jenkinsfile</a> Groovy script for our Jenkins build process. This allows us to use revision control for our continuous integration process and share that process with the open source community.</li>
 <li>Added <code>remote.media.download.retries</code> and <code>remote.media.download.sleep</code> system properties that can be used to configure how the Workflow Manager will attempt to retry downloading remote media if it encounters a problem.</li>
+<li>Artifact extraction now uses MPFVideoCapture, which employs various fallback strategies for extracting frames in cases where a video is not well-formed or corrupted. For components that use MPFVideoCapture, this enables better consistency between the frames they process and the artifacts that are later extracted.</li>
 </ul>
 <h2>Bug Fixes</h2>
 
 <ul>
-<li>Jobs now properly end in <code>COMPLETE_WITH_ERRORS</code> if an invalid media HTTP URL is provided or there is a problem accessing the remote media.</li>
+<li>Jobs now properly end in <code>ERROR</code> if an invalid media URL is provided or there is a problem accessing remote media.</li>
 <li>Jobs now end in <code>COMPLETE_WITH_ERRORS</code> when a detection splitter error occurs due to missing system properties.</li>
 <li>Components can now include their own version of the Google Protobuf library. It will not conflict with the version used by the rest of OpenMPF.</li>
 <li>The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request id.</li>
@@ -384,11 +390,12 @@
 
 <ul>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/745">#745</a>] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. The reason is currently unknown.</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/693">#693</a>] The Job Status web UI will become unresponsive if hundreds of jobs are processed at once.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/544">#544</a>] Image artifacts retain some permissions from source files available on the local host. This can result in some of the image artifacts having executable permissions.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/604">#604</a>] The Sphinx component cannot be unregistered because <code>$MPF_HOME/plugins/SphinxSpeechDetection/lib</code> is owned by root on a deployment machine.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/623">#623</a>] The Nodes UI does not work correctly when <code>[POST] /rest/nodes/config</code> is used at the same time. This is because the UI's state is not automatically updated to reflect changes made through the REST endpoint.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/753">#753</a>] The state of the Docker swarm stack is not persisted when restarting the stack.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/783">#783</a>] The Tesseract OCR Text Detection Component has a <a href="https://github.com/tesseract-ocr/tesseract/issues/235">known issue</a> because it uses Tesseract 3. If a combination of languages is specified using <code>TESSERACT_LANGUAGE</code>, and one of the languages is Arabic, then Arabic must be specified last. For example, for English and Arabic, <code>eng+ara</code> will work, but <code>ara+eng</code> will not.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/784">#784</a>] Sometimes services do not start on OpenMPF nodes, and those services cannot be started through the Nodes web UI. This is not a Docker-specific problem, but it has been observed in a Docker swarm deployment when auto-configuration is enabled. The workaround is to restart the Docker swarm deployment, or remove the entire node in the Nodes UI and add it again.</li>
 </ul>
 <h1 id="openmpf-210-june-2018">OpenMPF 2.1.0: June 2018</h1>
 <blockquote>
