@@ -18,6 +18,7 @@ pages:
     - User Guide: User-Guide.md
     - Admin Guide: Admin-Guide.md
     - Node Guide: Node-Guide.md
+    - Object Storage Guide: Object-Storage-Guide.md
     - Contributor Guide: Contributor-Guide.md
     - Acknowledgements: Acknowledgements.md
 - Components:
