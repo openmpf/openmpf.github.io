@@ -1,11 +1,13 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2018 The MITRE Corporation. All Rights Reserved.
 
+> **WARNING:** As of Release 3.0.0, this guide is no longer supported. It is left here for reference and will be removed in a future release. It was last tested with Release 2.1.0. We now support creating Docker images and deploying those containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+
 # Core Nodes Overview
 
 While following the *Configure the OpenMPF Cluster* step in the [Installation Guide](Installation-Guide/index.html#openmpf-installation), an administrator configures a master node and child nodes. A node can be a physical host machine or virtual machine (VM). Nodes configured via the deployment scripts are considered **core nodes**. Generally, OpenMPF expects these nodes to always be available, meaning that each one has an active instance of node-manager process running and a valid network connection so that it can communicate with the master node. Additionally, each core node must be able to access the shared storage space so that it can perform peer discovery, access media files, and generate log and output files. Core nodes are listed in the `CORE_MPF_NODES` environment variable in `/etc/profile.d/mpf.sh`.
 
->**NOTE**: The master node is part of the Workflow Manager (WFM), so often the term "WFM" and "master node" are used interchangeably. 
+>**NOTE**: The master node is part of the Workflow Manager (WFM), so often the term "WFM" and "master node" are used interchangeably.
 
 If for some reason a core node is not available while the WFM is running, then it will not be possible to run any configured services on that node. When the node becomes available and joins the OpenMPF JGroups cluster - possibly because an administrator boots it up and/or starts the node-manager process on it - then the WFM will attempt to start those configured services again.
 
@@ -23,15 +25,15 @@ A **spare node** is simply a node that was not configured during the OpenMPF ins
 
 OpenMPF uses the [JGroups](http://www.jgroups.org) toolkit for passing messages between the node-managers running on each OpenMPF node. There are two primary aspects of JGroups that an OpenMPF administrator needs to be concerned with:
 
-1. OpenMPF uses the JGroups FILE_PING protocol for peer discovery. Each node uses files stored in `$MPF_HOME/share/nodes/MPF_Channel`. A node will write a file to that directory when the node-manager starts up, and read files in that directory to determine what other nodes are in the OpenMPF cluster. 
+1. OpenMPF uses the JGroups FILE_PING protocol for peer discovery. Each node uses files stored in `$MPF_HOME/share/nodes/MPF_Channel`. A node will write a file to that directory when the node-manager starts up, and read files in that directory to determine what other nodes are in the OpenMPF cluster.
 
 2. Each OpenMPF node uses network port 7800 for JGroups TCP communication. Please ensure that this port is open in the network firewall on each OpenMPF node, or the firewall is disabled.
 
-When a node first starts up it will be in its own JGroups cluster. Within a minute it will be merged into the cluster with the other OpenMPF nodes. At that time it will be recognized by the WFM and become available for running services and processing jobs. 
+When a node first starts up it will be in its own JGroups cluster. Within a minute it will be merged into the cluster with the other OpenMPF nodes. At that time it will be recognized by the WFM and become available for running services and processing jobs.
 
- 
+
 # Setting up a Spare Node
- 
+
 A spare node is defined as a node that is not configured during the OpenMPF installation process. Currently, the recommended way to create a spare node is to clone it from an existing child node. This is easy to do if your nodes are VMs. Make sure not to clone the master node because only one node in the OpenMPF cluster should be running the WFM. Instead, clone a child node. If the cluster only consists of the master node, then please follow the *Configure the OpenMPF Cluster* step in the [Installation Guide](Installation-Guide/index.html#openmpf-installation) again to add a new child node.
 
 >**IMPORTANT**: A spare node will only be able to run the same plugins that were installed on the child node from which it was cloned. Spare nodes are not updated as part of the OpenMPF upgrade process. We recommended discarding spare nodes with old versions of OpenMPF installed on them, and cloning new spare nodes from core child nodes that have been updated as part of the OpenMPF upgrade process.
@@ -86,7 +88,7 @@ Once you have selected a suitable child node to clone, you can perform the follo
             inet 10.0.2.101  netmask 255.255.255.0  broadcast 10.0.2.255
             ...
 
-    In this case, the IPv4 address assigned to the eth0 interface is 10.0.2.101. 
+    In this case, the IPv4 address assigned to the eth0 interface is 10.0.2.101.
 
 13. Run: `sudo gedit /etc/profile.d/mpf.sh`
 
@@ -102,7 +104,7 @@ Once you have selected a suitable child node to clone, you can perform the follo
         Loaded: loaded (/etc/rc.d/init.d/node-manager; bad; vendor preset: disabled)
         Active: active (running) since Tue 2018-05-22 14:29:05 EDT; 18min ago
 
-Your spare node is now running and should be able to join the OpenMPF cluster within a minute. 
+Your spare node is now running and should be able to join the OpenMPF cluster within a minute.
 
 # Verifying that a Spare Node is Connected
 
@@ -128,7 +130,7 @@ The first line indicates that the cluster contains three nodes:
     - This is the node-manager process running on the host with the master node. This is what receives commands from the master node process to start and stop services on the machine running the WFM.
 3. `NodeManager:10.0.2.101:NodeManager`
     - This is a node-manager process running on the child node. This also receives commands form the master node. This node just joined the network.
-    
+
 The second line indicates theat the master node accepted a cluster view update from the new node. In other words, the new node reported information about itself, and other nodes it knows about, to the master node.
 
 Once the spare node joins, it will be listed when you run the `mpf list-nodes` command in a terminal:
@@ -146,9 +148,9 @@ The screenshot belows shows an OpenMPF cluster configured with one core node and
 
 If you have more than one OpenMPF cluster running a compatible version of OpenMPF, you can follow the above [instructions](Node-Guide/index.html#setting-up-a-spare-node), starting at step 6, to configure the spare node to run on a different cluster, with the following additions:
 
-- In step 9, additional changes to the `ifcfg-<INTERFACE>` file may be required to configure the node to connect to the proper subnet and gateway. 
-- In step 14, you will also need to update the value of `MASTER_MPF_NODE` to use the correct IP address (or hostname) of the master node in the new cluster. 
+- In step 9, additional changes to the `ifcfg-<INTERFACE>` file may be required to configure the node to connect to the proper subnet and gateway.
+- In step 14, you will also need to update the value of `MASTER_MPF_NODE` to use the correct IP address (or hostname) of the master node in the new cluster.
 - You will need to remap `$MPF_HOME/share` to use the new cluster's shared network storage space.
 
 
-The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline. 
+The first cluster's WFM will remember the spare node's configuration. If and when it joins the cluster again, the WFM will send it commands to start the previously configured services. As far as the first cluster is concerned, the spare node is simply offline.
