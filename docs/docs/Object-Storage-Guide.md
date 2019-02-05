@@ -15,12 +15,6 @@ The following system properties are common to the various types of object storag
 
 - `http.object.storage.type`
     - If `NONE`, then the rest of the `http.object.storage.*` properties are ignored and objects will be stored in `$MPF_HOME/share`.
-- `http.object.storage.service_uri`
-    - The URI to the object storage server. For example:  `https://somehost:123543/somepath`.
-- `http.object.storage.upload.thread.count`
-    - The number of threads used to upload objects to the storage server.
-- `http.object.storage.upload.segment.size`
-    - The chunk size, in bytes, that is used to upload objects to the storage server.
 - `http.object.storage.upload.retry.count`
     - The number of times OpenMPF will attempt to upload an object to the storage server after the first failed attempt.
     - Exponential back off is used between retry attempts. There is a 500ms delay before the first retry. The delay doubles for each subsequent retry.
@@ -29,9 +23,19 @@ The following system properties are common to the various types of object storag
 
 OpenMPF supports a custom NGINX object storage server solution. If you're interested, please contact us. We can make the server-side code available upon request.
 
-For those who choose to run their own custom NGINX object storage server, please configure OpenMPF by setting the `http.object.storage.type` to `CUSTOM_NGINX`. Also, set the `http.object.storage.service_uri` as appropriate.
+For those who choose to run their own custom NGINX object storage server, please configure OpenMPF by setting the `http.object.storage.type` to `CUSTOM_NGINX`. The following system properties are unique to the custom NGINX object storage solution:
 
-The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. It then uses that hash to name of file and returns the file URI to OpenMPF.
+- `http.object.storage.service_uri`
+    - The URI to the custom NGINX object storage server. For example:  `https://somehost:123543/somepath`.
+    - You must provide a valid value.
+- `http.object.storage.upload.thread.count`
+    - The number of threads used to upload objects to the storage server.
+    - In general, the default value is sufficient.
+- `http.object.storage.upload.segment.size`
+    - The chunk size, in bytes, that is used to upload objects to the storage server.
+    - In general, the default value is sufficient.
+
+The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. It then uses that hash to name the file and returns the file URI to OpenMPF.
 
 # Ceph HTTP Object Storage
 
