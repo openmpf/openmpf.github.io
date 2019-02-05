@@ -471,7 +471,7 @@
         </table>
         <br />
     </div>
-    
+
     <div style='page-break-after:always'></div>
 
     <div class="div-container-margin">
@@ -532,7 +532,7 @@
                 <tr style=''>
                     <td style='width:30%;'>callbackURL</td>
                     <td style='width:10%;'>string</td>
-                    <td style='width:30%;'>When the job completes, the callback will perform a GET or POST to the callbackURL with the parameters 'jobId' and 'externalId' of the completed job. For example, on a GET to a callbackURL: /api.example.com/foo?jobId=1&externalId=someid. Another example: /api.example.com/foo?someparam=something&jobId=1&externalId=someid.  Example when no externalId is provided: /api.example.com/foo?jobId=1.</td>
+                    <td style='width:30%;'>A valid (properly encoded) URL for job completion callbacks. When the job completes, the callback will perform a GET or POST to the callbackURL with the 'jobId' and 'externalId' parameters. For example, if the callbackURL provided is `http://api.example.com/foo`, the jobId is '1', and the externalId is 'someid', then a GET callback will be: http://api.example.com/foo?jobId=1&externalId=someid. If callbackURL ends in 'foo?someparam=something', then a GET callback will be: http://api.example.com/foo?someparam=something&jobId=1&externalId=someid. If no externalId is provided, then a GET callback will be: http://api.example.com/foo?jobId=1.</td>
                     <td style='width:30%;'>No</td>
                 </tr>
                 <tr style=';background-color: #EAEAEA'>
@@ -545,7 +545,7 @@
         </table>
         <br />
     </div>
-    
+
     <div class="div-container-margin"><h3>1.5. JobCreationMediaData</h3>
     <hr/>
     <table class='table-margin'>
@@ -577,7 +577,7 @@
         </tbody>
     </table>
     <br/></div>
-    
+
     <div style='page-break-after:always'></div>
 
     <div class="div-container-margin">
@@ -751,9 +751,9 @@
         </table>
         <br />
     </div>
-    
+
     <div style='page-break-after:always'></div>
-    
+
     <div class="div-container-margin">
         <h3>1.10. SingleJobInfo (Response only)</h3>
         <hr />
@@ -1029,13 +1029,13 @@
                 <tr style=''>
                     <td style='width:30%;'>healthReportCallbackUri</td>
                     <td style='width:10%;'>string</td>
-                    <td style='width:30%;'>If specified, the Workflow Manager will include this streaming job in health reports that can be sent to a 3rd party client. If the same healthReportCallbackUri is specified when creating more than one job, the periodically scheduled POST callback will contain health reports for all the jobs created using that healthReportCallbackUri. Health reports that are sent due to status changes and activity alerts for specific jobs will only contain health data for that single job. Monitoring of the OpenMPF health reports are recommended since OpenMPF system may have determined the stream to be stalled. For more information, see <b>HealthReport</b> in the <b>Definitions</b> section.</td>
+                    <td style='width:30%;'>A valid (properly encoded) URI for health report callbacks. If specified, the Workflow Manager will include this streaming job in health reports that can be sent to a 3rd party client. If the same healthReportCallbackUri is specified when creating more than one job, the periodically scheduled POST callback will contain health reports for all the jobs created using that healthReportCallbackUri. Health reports that are sent due to status changes and activity alerts for specific jobs will only contain health data for that single job. Monitoring of the OpenMPF health reports is recommended since OpenMPF may have determined the stream to be stalled. For more information, see <b>HealthReport</b> in the <b>Definitions</b> section.</td>
                     <td style='width:30%;'>No</td>
                 </tr>
                 <tr style=';background-color: #EAEAEA'>
                     <td style='width:30%;'>summaryReportCallbackUri</td>
                     <td style='width:10%;'>string</td>
-                    <td style='width:30%;'>If specified, as each video segment is processed, OpenMPF will deliver the summary report to the 3rd party client via this URI using the POST callback method. See Section 2.21 for an example of a summary report.</td>
+                    <td style='width:30%;'>A valid (properly encoded) URI for summary report callbacks. If specified, as each video segment is processed, OpenMPF will deliver the summary report to the 3rd party client via this URI using the POST callback method. See Section 2.21 for an example of a summary report.</td>
                     <td style='width:30%;'>No</td>
                 </tr>
             </tbody>
@@ -1246,9 +1246,9 @@
         </table>
         <br />
     </div>
-    
+
     <div style='page-break-after:always'></div>
-    
+
     <div class="div-container-margin">
         <h3>1.21. HealthReportData (Response only)</h3>
         <hr />
@@ -1296,24 +1296,24 @@
         </table>
         <br />
     </div>
-    
+
     <div class="div-container-margin">
         <h3>1.22. AllStreamingJobsInfoModel (Response Only)</h3>
         <hr />
-        <table class='table-margin'>   
-            <thead>    
-                <tr>           
-                    <th class='th-heading'><b>Name</b></td>           
-                    <th class='th-heading-small'><b>Type</b></td>           
-                    <th class='th-heading'><b>Description</b></td>           
-                </tr>   
-            </thead>   
-            <tbody>   
-                <tr style=';background-color: #EAEAEA'>       
-                    <td style='width:30%;'>jobIds</td>       
-                    <td style='width:10%;'>array</td>       
-                    <td style='width:30%;'>List of job ids for streaming jobs in OpenMPF. This list may just include the active streaming jobs if the isActive parameter was specified in the original [GET] request. This list will be empty if there are no streaming jobs that satisfy the request conditions in OpenMPF. OpenMPF guarantees uniqueness of all job ids. This includes a guarantee that the jobId of a streaming job will not conflict with the jobId of a batch job.</td>       
-                </tr>   
+        <table class='table-margin'>
+            <thead>
+                <tr>
+                    <th class='th-heading'><b>Name</b></td>
+                    <th class='th-heading-small'><b>Type</b></td>
+                    <th class='th-heading'><b>Description</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style=';background-color: #EAEAEA'>
+                    <td style='width:30%;'>jobIds</td>
+                    <td style='width:10%;'>array</td>
+                    <td style='width:30%;'>List of job ids for streaming jobs in OpenMPF. This list may just include the active streaming jobs if the isActive parameter was specified in the original [GET] request. This list will be empty if there are no streaming jobs that satisfy the request conditions in OpenMPF. OpenMPF guarantees uniqueness of all job ids. This includes a guarantee that the jobId of a streaming job will not conflict with the jobId of a batch job.</td>
+                </tr>
             </tbody>
         </table>
         <br />
@@ -1453,7 +1453,7 @@
                 </tr>
                 <tr style=';background-color: #EAEAEA'>
                     <td class='td-alignment-small'><b>Description</b></td>
-                    <td class='td-alignment-std'>The pipelineName should be one of the values in 'rest/pipelines', and the component associated with that pipeline must support batch processing. The media array should contain objects with a valid mediaUri.  For example: http://localhost/images/image.png. Another example: file:///home/user/images/image.jpg. A callbackURL (optional) and callbackMethod (GET or POST) may be added. When the job completes, the callback will perform a GET or POST to the callbackURL with the parameters 'jobId' and 'externalId' of the completed job. For example, on a GET to a callbackURL: /api.example.com/foo?jobId=1&externalId=1. Another example: /api.example.com/foo?someparam=something&jobId=1&externalId=1. Example when no externalId is provided: /api.example.com/foo?jobId=1. The body of a POST callback will always include the 'jobId' and 'externalId', even if the latter is 'null'. An optional jobProperties object contains String key-value pairs which override the pipeline's job properties for this job. An optional algorithmProperties object containing &lt;String,Map&gt; key-value pairs can override jobProperties for a specific algorithm defined in the pipeline.  For algorithmProperties, the key should be the algorithm name, and the value should be a Map of String key-value pairs representing properties specific to the named algorithm.<br/>
+                    <td class='td-alignment-std'>The pipelineName should be one of the values in 'rest/pipelines', and the component associated with that pipeline must support batch processing. The media array should contain objects with a valid mediaUri.  For example: http://localhost/images/image.png. Another example: file:///home/user/images/image.jpg. A callbackURL (optional) and callbackMethod (GET or POST) may be added. When the job completes, the callback will perform a GET or POST to the callbackURL with the 'jobId' and 'externalId' parameters. For example, if the callbackURL provided is 'http://api.example.com/foo', the jobId is '1', and the externalId is 'someid', then a GET callback will be: http://api.example.com/foo?jobId=1&externalId=someid. If callbackURL ends in 'foo?someparam=something', then a GET callback will be: http://api.example.com/foo?someparam=something&jobId=1&externalId=someid. If no externalId is provided, then a GET callback will be: http://api.example.com/foo?jobId=1. The body of a POST callback will always include the 'jobId' and 'externalId', even if the latter is 'null'. An optional jobProperties object contains String key-value pairs which override the pipeline's job properties for this job. An optional algorithmProperties object containing &lt;String,Map&gt; key-value pairs can override jobProperties for a specific algorithm defined in the pipeline. For algorithmProperties, the key should be the algorithm name, and the value should be a Map of String key-value pairs representing properties specific to the named algorithm. Note that the batch jobs and streaming jobs share a range of valid job ids. OpenMPF guarantees that the ids of a streaming job and a batch job will be unique. Also, note that all provided URIs must be properly encoded."<br/>
                         <br/>
                         The body of a POST job creation request will be similar to this example which uses a OCV FACE DETECTION (WITH MOG MOTION PREPROCESSOR) PIPELINE.  Some unrequired parameters are omitted. Note that this example makes use of overloading by jobProperties, algorithmProperties and mediaProperties:
                         <br/>
@@ -1572,9 +1572,9 @@
             </table>
         </div>
     </div>
-    
+
     <div style='page-break-after:always'></div>
-    
+
     <div class="div-container-margin">
         <pre class="get"><code class="huge"><span>2.4 GET</span>&nbsp;&nbsp;/rest/jobs/{id}</code></pre>
         <div>
@@ -1667,7 +1667,7 @@
             </table>
         </div>
     </div>
-    
+
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.5 POST</span>&nbsp;&nbsp;/rest/jobs/{id}/cancel</code></pre>
         <div>
@@ -3076,37 +3076,37 @@
             </table>
         </div>
     </div>
-   
+
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="get"><code class="huge"><span>2.20 GET</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
         <div>
-            <table class='table-margin'>    
-                <tr>           
-                    <td class='td-alignment-small'><b>Summary</b></td>           
-                    <td class='td-alignment-std'>Gets a list of job ids for streaming jobs.</td>    
-                </tr>    
-                <tr style=';background-color: #EAEAEA'>           
-                    <td class='td-alignment-small'><b>Description</b></td>           
-                    <td class='td-alignment-std'>Gets a list of job ids for streaming jobs. If isActive is true, 
-                    don't include streaming jobs that are terminated, in error or cancelled. If false, return all streaming jobs.</td>    
-                </tr>    
-                <tr>           
-                    <td class='td-alignment-small'><b>Operation Id</b></td>           
-                    <td class='td-alignment-std'></td>    
-                </tr>    
-                <tr style=';background-color: #EAEAEA'>           
-                    <td class='td-alignment-small'><b>Produces</b></td>           
-                    <td class='td-alignment-std'>application/json</td>    
-                </tr>    
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>Gets a list of job ids for streaming jobs.</td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>Gets a list of job ids for streaming jobs. If isActive is true,
+                    don't include streaming jobs that are terminated, in error or cancelled. If false, return all streaming jobs.</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
                 <tr>
                     <td class='td-alignment-small'><b>Consumes</b></td>
                     <td class='td-alignment-std'>
                         application/json
                     </td>
                 </tr>
-                <tr>           
-                    <td class='td-alignment-small'><b>Parameters</b></td>                                           
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
                     <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
                         <table class='table-margin'>
                             <thead>
@@ -3149,50 +3149,50 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </td>                   
-                                        
-                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>    
-                        <tr>           
-                            <td class='td-alignment-small'><b>Tags</b></td>           
-                            <td class='td-alignment-std' style='padding-left:6px'>streaming_jobs</td>    
-                        </tr>      
-                        <tr>           
-                            <td class='td-alignment-small'><b>Responses</b></td>           
-                            <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
-                                <table class='table-margin'>   
-                                    <tr>       
-                                    <td class='td-alignment-small'><b>code</b></td>       
-                                    <td class='td-alignment-std'><b>description</b></td>   
-                                    </tr>   
-                                    <tr>       
-                                    <td class='td-alignment-small'>200</td>       
-                                    <td class='td-alignment-std'>Successful response       
-                                        <table class='table-margin' style='margin-left:-5px!important'>   
-                                            <tr>       
-                                            <td style='width:20%'><b>Schema type</b></td>       
-                                            <td style='width:80%'>array</td>   
-                                            </tr>   
-                                            <tr>       
-                                            <td class='td-alignment-small'>&nbsp;</td>       
-                                            <td class='td-alignment-std'>See <b>AllStreamingJobsInfoModel</b> in the <b>Definitions</b> section.</td>   
-                                            </tr>   
-                                        </table>       
-                                    </td>   
-                                    </tr>   
-                                    <tr>       
-                                    <td class='td-alignment-small'>401</td>       
-                                    <td class='td-alignment-std'>Bad credentials       </td>   
-                                    </tr>
-                                </table>           
-                            </td>    
+                    </td>
+
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <tr>
+                            <td class='td-alignment-small'><b>Tags</b></td>
+                            <td class='td-alignment-std' style='padding-left:6px'>streaming_jobs</td>
                         </tr>
-                    </td>                   
+                        <tr>
+                            <td class='td-alignment-small'><b>Responses</b></td>
+                            <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                                <table class='table-margin'>
+                                    <tr>
+                                    <td class='td-alignment-small'><b>code</b></td>
+                                    <td class='td-alignment-std'><b>description</b></td>
+                                    </tr>
+                                    <tr>
+                                    <td class='td-alignment-small'>200</td>
+                                    <td class='td-alignment-std'>Successful response
+                                        <table class='table-margin' style='margin-left:-5px!important'>
+                                            <tr>
+                                            <td style='width:20%'><b>Schema type</b></td>
+                                            <td style='width:80%'>array</td>
+                                            </tr>
+                                            <tr>
+                                            <td class='td-alignment-small'>&nbsp;</td>
+                                            <td class='td-alignment-std'>See <b>AllStreamingJobsInfoModel</b> in the <b>Definitions</b> section.</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td class='td-alignment-small'>401</td>
+                                    <td class='td-alignment-std'>Bad credentials       </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </td>
                 </tr>
             </table>
-        </div>  
+        </div>
     </div>
-    
-    <div style='page-break-after:always'></div> 
+
+    <div style='page-break-after:always'></div>
     <div class="div-container-margin">
         <pre class="post"><code class="huge"><span>2.21 POST</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
         <div>
@@ -3201,10 +3201,10 @@
                     <td class='td-alignment-small'><b>Summary</b></td>
                     <td class='td-alignment-std'>Creates and submits a streaming job using a JSON StreamingJobCreationRequest object as the request body.</td>
                 </tr>
-                                
+
                 <tr style=';background-color: #EAEAEA'>
                     <td class='td-alignment-small'><b>Description</b></td>
-                    <td class='td-alignment-std'>The pipelineName should be one of the values in 'rest/pipelines', and the component associated with that pipeline must support stream processing. The stream should contain a valid streamUri, for example: rtsp://example.com/media.mp4. Optional segmentSize, mediaProperties, stallTimeout and stallCallbackUri may also be defined for the stream. Additional streaming job options include summaryReportCallbackUri and healthReportCallbackUri. Health and summary reports will always be sent to the callback URIs using the HTTP POST method. Other streaming job options include jobProperties object which contains String key-value pairs which override the pipeline's job properties for this streaming job. An optional algorithmProperties object containing key-value pairs can override jobProperties for a specific algorithm defined in the pipeline. For algorithmProperties, the key should be the algorithm name, and the value should be a Map of String key-value pairs representing properties specific to the named algorithm. Note that the batch jobs and streaming jobs share a range of valid job ids. OpenMPF guarantees that the ids of a streaming job and a batch job will be unique.</br>
+                    <td class='td-alignment-std'>The pipelineName should be one of the values in 'rest/pipelines', and the component associated with that pipeline must support stream processing. The stream should contain a valid streamUri, for example: rtsp://example.com/media.mp4. Optional segmentSize, mediaProperties, stallTimeout and stallCallbackUri may also be defined for the stream. Additional streaming job options include summaryReportCallbackUri and healthReportCallbackUri. Health and summary reports will always be sent to the callback URIs using the HTTP POST method. Other streaming job options include jobProperties object which contains String key-value pairs which override the pipeline's job properties for this streaming job. An optional algorithmProperties object containing key-value pairs can override jobProperties for a specific algorithm defined in the pipeline. For algorithmProperties, the key should be the algorithm name, and the value should be a Map of String key-value pairs representing properties specific to the named algorithm. Note that the batch jobs and streaming jobs share a range of valid job ids. OpenMPF guarantees that the ids of a streaming job and a batch job will be unique. Also, note that all provided URIs must be properly encoded.</br>
                         <br/>
                         The body of a POST streaming job creation request will be similar to this example which uses a HELLOWORLD TEST PIPELINE.  Some unrequired parameters are omitted.:
                         <br/>
@@ -3221,7 +3221,7 @@
   "healthReportCallbackUri": "http://localhost:2000",
   "summaryReportCallbackUri": "http://localhost:2001"
 }
-                        
+
 						</pre>
                         <br/>
                         The body of a health report POST callback will be similar to this example:
@@ -3372,7 +3372,7 @@
                     <br/>
                     </td>
                 </tr>
-                                    									 
+
                 <tr>
                     <td class='td-alignment-small'><b>Operation Id</b></td>
                     <td class='td-alignment-std'></td>
@@ -3385,13 +3385,13 @@
                     <td class='td-alignment-small'><b>Consumes</b></td>
                     <td class='td-alignment-std'>application/json</td>
                 </tr>
-				
-			
 
 
 
 
-			
+
+
+
                 <tr>
                     <td class='td-alignment-small'><b>Parameters</b></td>
                     <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
@@ -3426,7 +3426,7 @@
                             </tbody>
                         </table>
                     </td>
-                </tr> 
+                </tr>
 				<tr>
                     <td class='td-alignment-small'><b>Tags</b></td>
                     <td class='td-alignment-std' style='padding-left:6px'>streaming_jobs</td>
@@ -3460,11 +3460,11 @@
                             </tr>
                         </table>
                     </td>
-                </tr>                 
+                </tr>
             </table>
         </div>
     </div>
-    
+
 <div style='page-break-after:always'></div>
     <br/>
     <div class="div-container-margin">
@@ -3570,11 +3570,11 @@
                 </tr>
                 <tr style=';background-color: #EAEAEA'>
                     <td class='td-alignment-small'><b>Description</b></td>
-                    <td class='td-alignment-std'>Cancels the streaming job with the supplied job id.  
-                    Files created by this streaming job may optionally be cleaned up as part of this 
-                    cancellation request. If streaming job files are not 
-                    cleaned up when the streaming job is cancelled, it is recommended that the files be manually 
-					removed at a later time to avoid overutilization of the disk. 
+                    <td class='td-alignment-std'>Cancels the streaming job with the supplied job id.
+                    Files created by this streaming job may optionally be cleaned up as part of this
+                    cancellation request. If streaming job files are not
+                    cleaned up when the streaming job is cancelled, it is recommended that the files be manually
+					removed at a later time to avoid overutilization of the disk.
                     The path to the output directory associated with this
                     streaming job is provided for later reference in the StreamingJobCancelResponse.</td>
                 </tr>
@@ -3629,7 +3629,7 @@
                                     <td class='td-alignment-small-no-width'></td>
                                     <td class='td-alignment-small-no-width'></td>
                                 </tr>
-                                
+
                             </tbody>
                         </table>
                     </td>
@@ -3671,8 +3671,8 @@
             </table>
         </div>
     </div>
-    
-    
+
+
 
 </body>
 </html>
