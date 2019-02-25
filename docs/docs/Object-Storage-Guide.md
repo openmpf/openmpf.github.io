@@ -59,6 +59,8 @@ The use of S3 is controlled through the following job properties:
 - `S3_UPLOAD_ONLY`
     - When true, S3 authentication will only be used to upload result objects.
     - When false or not provided, S3 authentication will be used when downloading remote media.
+    - If you want to run a job where some media is in S3 and some is hosted elsewhere, 
+      you can set `S3_UPLOAD_ONLY` to `true` as a media specific property on the media that is hosted elsewhere.
 - `S3_ACCESS_KEY`
     - The access key that will be used when downloading and uploading to S3.
 - `S3_SECRET_KEY`
