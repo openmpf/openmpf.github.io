@@ -23,17 +23,17 @@
 <h2>Ceph S3 Object Storage</h2>
 
 - Added support for downloading files from, and uploading files to, an S3 object storage server. The following job properties can be provided: S3_ACCESS_KEY, S3_SECRET_KEY, S3_RESULTS_BUCKET, S3_UPLOAD_ONLY.
-- At this time, only support for Ceph has been tested, although, the Workflow Manager is using the AWS SDK for Java to communicate with the object store, so it is possible that other S3-compatible storage solutions will work as well.
+- At this time, only support for Ceph object storage has been tested. However, the Workflow Manager uses the AWS SDK for Java to communicate with the object store, so it is possible that other S3-compatible storage solutions may work as well.
 
 <h2>ISO-8601 Timestamps</h2>
 
-- All timestamps in the JSON output object, and streaming video callbacks, are now in the ISO-8601 format (e.g. "2011-12-03T10:15:30Z"). This new format includes the timezone, which makes it possible to compare timestamps generated between systems in different time zones.
+- All timestamps in the JSON output object, and streaming video callbacks, are now in the ISO-8601 format (e.g. "2018-12-19T12:12:59.995-05:00"). This new format includes the time zone, which makes it possible to compare timestamps generated between systems in different time zones.
 - This change does not affect the track and detection start and stop offset times, which are still reported in milliseconds since the start of the video.
 
-<h2>Reduced Redis Usage for Batch Jobs</h2>
+<h2>Reduced Redis Usage</h2>
 
-- The Workflow Manager has been refactored to reduce usage of the Redis in-memory database for batch jobs. In general, Redis is not necessary for storing job information and only resulted in introducing potential delays in accessing that data over the network stack.
-- Now, only track and detection data is stored in Redis in order to reduce the amount of memory the Workflow Manager requires of the Java Virtual Machine. Compared to the other job information, track and detection data can potentially be relatively much larger.
+- The Workflow Manager has been refactored to reduce usage of the Redis in-memory database. In general, Redis is not necessary for storing job information and only resulted in introducing potential delays in accessing that data over the network stack.
+- Now, only track and detection data is stored in Redis for batch jobs. This reduces the amount of memory the Workflow Manager requires of the Java Virtual Machine. Compared to the other job information, track and detection data can potentially be relatively much larger. In the future, we plan to store frame data in Redis for streaming jobs as well.
 
 <h2>Caffe Vehicle Color Estimation</h2>
 
@@ -55,7 +55,7 @@
     - MIN_GAP_BETWEEN_TRACKS
     - MIN_TRACK_LENGTH
     - MIN_OVERLAP
-- These system and job properties now only apply to video media. This resolves an issue where users has set `detection.track.min.length=5` which resulted in dropping all image media tracks. By design, each image track can only contain a single detection.
+- These system and job properties now only apply to video media. This resolves an issue where users had set `detection.track.min.length=5`, which resulted in dropping all image media tracks. By design, each image track can only contain a single detection.
 
 <h2>Bug Fixes</h2>
 
