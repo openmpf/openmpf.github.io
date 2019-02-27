@@ -64,6 +64,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-400-february-2019">OpenMPF 4.0.0: February 2019</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-300-december-2018">OpenMPF 3.0.0: December 2018</a></li>
                 
             
@@ -271,6 +274,85 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="openmpf-400-february-2019">OpenMPF 4.0.0: February 2019</h1>
+<h2>Documentation</h2>
+
+<ul>
+<li>Added an <a href="../Object-Storage-Guide/index.html">Object Storage Guide</a> with information on how to configure OpenMPF to work with a custom NGINX object storage server, and how to run jobs that use an S3 object storage server. Note that the system properties for the custom NGINX object storage server have changed since the last release.</li>
+</ul>
+<h2>Upgrade to Tesseract 4.0</h2>
+
+<ul>
+<li>Both the Tesseract OCR Text Detection Component and OpenALPR License Plate Detection Components have been updated to use the new version of Tesseract.</li>
+<li>Additionally, Leptonica has been upgraded from 1.72 to 1.75.</li>
+</ul>
+<h2>Docker Deployment</h2>
+
+<ul>
+<li>The Docker images now use the yum package manager to install ImageMagick6 from a public RPM repository instead of downloading the RPMs directly from imagemagick.org. This resolves an issue with the OpenMPF Docker build where RPMs on <a href="https://imagemagick.org/script/download.php">imagemagick.org</a> were no longer available.</li>
+</ul>
+<h2>Tesseract OCR Text Detection Component</h2>
+
+<ul>
+<li>Updated to allow the user to set a TESSERACT_OEM property in order to select an OCR engine mode (OEM).</li>
+<li>"script/Latin" can now be specified as the TESSERACT_LANGUAGE. When selected, Tesseract will select all Latin characters, which can be from different Latin languages.</li>
+</ul>
+<h2>Ceph S3 Object Storage</h2>
+
+<ul>
+<li>Added support for downloading files from, and uploading files to, an S3 object storage server. The following job properties can be provided: S3_ACCESS_KEY, S3_SECRET_KEY, S3_RESULTS_BUCKET, S3_UPLOAD_ONLY.</li>
+<li>At this time, only support for Ceph object storage has been tested. However, the Workflow Manager uses the AWS SDK for Java to communicate with the object store, so it is possible that other S3-compatible storage solutions may work as well.</li>
+</ul>
+<h2>ISO-8601 Timestamps</h2>
+
+<ul>
+<li>All timestamps in the JSON output object, and streaming video callbacks, are now in the ISO-8601 format (e.g. "2018-12-19T12:12:59.995-05:00"). This new format includes the time zone, which makes it possible to compare timestamps generated between systems in different time zones.</li>
+<li>This change does not affect the track and detection start and stop offset times, which are still reported in milliseconds since the start of the video.</li>
+</ul>
+<h2>Reduced Redis Usage</h2>
+
+<ul>
+<li>The Workflow Manager has been refactored to reduce usage of the Redis in-memory database. In general, Redis is not necessary for storing job information and only resulted in introducing potential delays in accessing that data over the network stack.</li>
+<li>Now, only track and detection data is stored in Redis for batch jobs. This reduces the amount of memory the Workflow Manager requires of the Java Virtual Machine. Compared to the other job information, track and detection data can potentially be relatively much larger. In the future, we plan to store frame data in Redis for streaming jobs as well.</li>
+</ul>
+<h2>Caffe Vehicle Color Estimation</h2>
+
+<ul>
+<li>The Caffe Component <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/CaffeDetection/plugin-files/models/models.ini">models.ini</a> file has been updated with a "vehicle_color" section with links for downloading the <a href="https://github.com/rezafuad/vehicle-color-recognition">Reza Fuad Rachmadi's Vehicle Color Recognition Using Convolutional Neural Network</a> model files.</li>
+<li>The following pipelines have been added. These require the above model files to be placed in <code>$MPF_HOME/share/models/CaffeDetection</code>:<ul>
+<li>CAFFE REZAFUAD VEHICLE COLOR DETECTION PIPELINE,</li>
+<li>CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM TINY YOLO VEHICLE DETECTOR) PIPELINE</li>
+<li>CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM YOLO VEHICLE DETECTOR) PIPELINE</li>
+</ul>
+</li>
+</ul>
+<h2>Track Merging and Minimum Track Length</h2>
+
+<ul>
+<li>The following system properties now have "video" in their names:<ul>
+<li><code>detection.video.track.merging.enabled</code></li>
+<li><code>detection.video.track.min.gap</code></li>
+<li><code>detection.video.track.min.length</code></li>
+<li><code>detection.video.track.overlap.threshold</code></li>
+</ul>
+</li>
+<li>The above properties can be overridden by the following job properties, respectively. These have not been renamed since the last release:<ul>
+<li>MERGE_TRACKS</li>
+<li>MIN_GAP_BETWEEN_TRACKS</li>
+<li>MIN_TRACK_LENGTH</li>
+<li>MIN_OVERLAP</li>
+</ul>
+</li>
+<li>These system and job properties now only apply to video media. This resolves an issue where users had set <code>detection.track.min.length=5</code>, which resulted in dropping all image media tracks. By design, each image track can only contain a single detection.</li>
+</ul>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>Fixed a bug where the Docker entrypoint scripts appended properties to the end of <code>$MPF_HOME/share/config/mpf-custom.properties</code> every time the Docker deployment was restarted, resulting in entries like <code>detection.segment.target.length=5000,5000,5000</code>.</li>
+<li>Upgrading to Tesseract 4 fixes a bug where, when specifying <code>TESSERACT_LANGUAGE</code>, if one of the languages is Arabic, then Arabic must be specified last. Arabic can now be specified first, for example: <code>ara+eng</code>.</li>
+<li>Fixed a bug where the minimum track length property was being applied to image tracks. Now it's only applied to video tracks.</li>
+<li>Fixed a bug where ImageMagick6 installation failed while building Docker images.</li>
+</ul>
 <h1 id="openmpf-300-december-2018">OpenMPF 3.0.0: December 2018</h1>
 <blockquote>
 <p><strong>NOTE:</strong> The <a href="../Build-Environment-Setup-Guide/index.html">Build Guide</a> and <a href="../Installation-Guide/index.html">Install Guide</a> are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md">README</a>.</p>
@@ -283,7 +365,7 @@
 <li>Updated the <a href="../User-Guide/index.html#min_gap_between_segments-property">User Guide</a> with information on how track properties and track confidence are handled when merging tracks.</li>
 <li>Added README files for new components. Refer to the component sections below.</li>
 </ul>
-<h2> Docker Support</h2>
+<h2>Docker Support</h2>
 
 <ul>
 <li>OpenMPF can now be built and distributed as 5 Docker images: openmpf_workflow_manager, openmpf_node_manager, openmpf_active_mq, mysql_database, and redis.</li>
