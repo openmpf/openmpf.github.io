@@ -58,7 +58,8 @@ The use of S3 is controlled through the following job properties:
     - To disable the upload of result objects, do not provide a value for this property.
 - `S3_UPLOAD_ONLY`
     - When true, S3 authentication will only be used to upload result objects.
-    - When false or not provided, S3 authentication will be used when downloading remote media.
+    - When false or not provided, S3 authentication will be used to download remote media. 
+      S3 authentication will also be used to upload result objects if `S3_RESULTS_BUCKET` is set.
     - If you want to run a job where some media is in S3 and some is hosted elsewhere, 
       you can set `S3_UPLOAD_ONLY` to `true` as a media specific property on the media that is hosted elsewhere.
 - `S3_ACCESS_KEY`
