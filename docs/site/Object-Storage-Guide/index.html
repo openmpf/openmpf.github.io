@@ -115,7 +115,7 @@
                 <li class="toctree-l3"><a href="#custom-nginx-http-object-storage">Custom NGINX HTTP Object Storage</a></li>
                 
             
-                <li class="toctree-l3"><a href="#ceph-http-object-storage">Ceph HTTP Object Storage</a></li>
+                <li class="toctree-l3"><a href="#s3-object-storage">S3 Object Storage</a></li>
                 
             
             </ul>
@@ -263,51 +263,83 @@
             <div class="section">
               
                 <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, 
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2018 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="object-storage-overview">Object Storage Overview</h1>
-<p>By default, OpenMPF will write markup files, JSON output objects, and extracted artifacts to directories in <code>$MPF_HOME/share</code>. For multi-node deployments, <code>$MPF_HOME/share</code> points to a directory on a network share. Most often, the share is managed by the Network File System (NFS) protocol, although using NFS is not a requirement.</p>
-<p>Alternatively, OpenMPF supports writing these files to an object storage server. That may be desirable in cloud deployments to better support integration between systems, and/or to consolidate file storage as a cost-saving measure.</p>
-<p>When a file cannot be uploaded to the server, the Workflow Manager will fall back to storing it in <code>$MPF_HOME/share</code>. If and when a failure occurs, the JSON output object will contain a descriptive message in the <code>jobWarnings</code> field. If the job completes without other issues, the final status will be <code>COMPLETE_WITH_WARNINGS</code>.</p>
+<p>By default, OpenMPF will write markup files, JSON output objects, and extracted artifacts to directories in 
+<code>$MPF_HOME/share</code>. For multi-node deployments, <code>$MPF_HOME/share</code> points to a directory on a network share. 
+Most often, the share is managed by the Network File System (NFS) protocol, although using NFS is not a requirement.</p>
+<p>Alternatively, OpenMPF supports writing these files to an object storage server. That may be desirable in cloud 
+deployments to better support integration between systems, and/or to consolidate file storage as a cost-saving measure.</p>
+<p>When a file cannot be uploaded to the server, the Workflow Manager will fall back to storing it in <code>$MPF_HOME/share</code>. 
+If and when a failure occurs, the JSON output object will contain a descriptive message in the <code>jobWarnings</code> field. 
+If the job completes without other issues, the final status will be <code>COMPLETE_WITH_WARNINGS</code>.</p>
 <h1 id="common-object-storage-properties">Common Object Storage Properties</h1>
 <p>The following system properties are common to the various types of object storage solutions that OpenMPF supports:</p>
 <ul>
-<li><code>http.object.storage.type</code><ul>
-<li>If <code>NONE</code>, then the rest of the <code>http.object.storage.*</code> properties are ignored and objects will be stored in <code>$MPF_HOME/share</code>.</li>
-</ul>
-</li>
 <li><code>http.object.storage.upload.retry.count</code><ul>
 <li>The number of times OpenMPF will attempt to upload an object to the storage server after the first failed attempt.</li>
-<li>Exponential back off is used between retry attempts. There is a 500ms delay before the first retry. The delay doubles for each subsequent retry.</li>
+<li>When using NGINX, exponential back off is used between retry attempts. There is a 500ms delay before the 
+  first retry. The delay doubles for each subsequent retry.</li>
+<li>When using S3, the AWS SDK's default retry strategy is used.</li>
 </ul>
 </li>
 </ul>
 <h1 id="custom-nginx-http-object-storage">Custom NGINX HTTP Object Storage</h1>
-<p>OpenMPF supports a custom NGINX object storage server solution. If you're interested, please contact us. We can make the server-side code available upon request.</p>
-<p>For those who choose to run their own custom NGINX object storage server, please configure OpenMPF by setting the <code>http.object.storage.type</code> to <code>CUSTOM_NGINX</code>. The following system properties are unique to the custom NGINX object storage solution:</p>
+<p>OpenMPF supports a custom NGINX object storage server solution. If you're interested, please contact us. 
+We can make the server-side code available upon request.</p>
+<p>For those who choose to run their own custom NGINX object storage server, please configure OpenMPF by setting 
+the <code>http.object.storage.nginx.service.uri</code> property to the URI of the NGINX server. 
+The following system properties are unique to the custom NGINX object storage solution:</p>
 <ul>
-<li><code>http.object.storage.service_uri</code><ul>
+<li><code>http.object.storage.nginx.service.uri</code><ul>
+<li>Enables use of NGINX when provided.</li>
 <li>The URI to the custom NGINX object storage server. For example:  <code>https://somehost:123543/somepath</code>.</li>
 <li>You must provide a valid value.</li>
 </ul>
 </li>
-<li><code>http.object.storage.upload.thread.count</code><ul>
+<li><code>http.object.storage.nginx.upload.thread.count</code><ul>
 <li>The number of threads used to upload objects to the storage server.</li>
 <li>In general, the default value is sufficient.</li>
 </ul>
 </li>
-<li><code>http.object.storage.upload.segment.size</code><ul>
+<li><code>http.object.storage.nginx.upload.segment.size</code><ul>
 <li>The chunk size, in bytes, that is used to upload objects to the storage server.</li>
 <li>In general, the default value is sufficient.</li>
 </ul>
 </li>
 </ul>
-<p>The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. It then uses that hash to name the file and returns the file URI to OpenMPF.</p>
-<h1 id="ceph-http-object-storage">Ceph HTTP Object Storage</h1>
-<blockquote>
-<p><strong>NOTE:</strong> In the future, we plan to support the Ceph object storage server through the Amazon S3 API.</p>
-</blockquote>
+<p>The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. 
+It then uses that hash to name the file and returns the file URI to OpenMPF.</p>
+<h1 id="s3-object-storage">S3 Object Storage</h1>
+<p>OpenMPF supports downloading media and uploading results to an S3 compatible server such as Ceph. 
+The use of S3 is controlled through the following job properties:</p>
+<ul>
+<li><code>S3_RESULTS_BUCKET</code><ul>
+<li>URI to bucket where result objects should be stored. For example: <code>http://s3host/results_bucket</code></li>
+<li>To disable the upload of result objects, do not provide a value for this property.</li>
+</ul>
+</li>
+<li><code>S3_UPLOAD_ONLY</code><ul>
+<li>When true media will not be downloaded using S3 authentication. 
+  If <code>S3_RESULTS_BUCKET</code> is set, S3 authentication will be used to upload result objects.</li>
+<li>When false or not provided, S3 authentication will be used to download remote media. 
+  S3 authentication will also be used to upload result objects if <code>S3_RESULTS_BUCKET</code> is set.</li>
+<li>If you want to run a job where some media is in S3 and some is hosted elsewhere, 
+  you can set <code>S3_UPLOAD_ONLY</code> to <code>true</code> as a media specific property on the media that is hosted elsewhere.</li>
+</ul>
+</li>
+<li><code>S3_ACCESS_KEY</code><ul>
+<li>The access key that will be used when downloading and uploading to S3.</li>
+</ul>
+</li>
+<li><code>S3_SECRET_KEY</code><ul>
+<li>The secret key that will be used when downloading and uploading to S3.</li>
+</ul>
+</li>
+</ul>
               
             </div>
           </div>
