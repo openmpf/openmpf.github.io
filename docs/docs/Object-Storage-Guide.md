@@ -1,6 +1,6 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, 
 > and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
-> Copyright 2018 The MITRE Corporation. All Rights Reserved.
+> Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
 # Object Storage Overview
 
@@ -57,7 +57,7 @@ The use of S3 is controlled through the following job properties:
     - URI to bucket where result objects should be stored. For example: `http://s3host/results_bucket`
     - To disable the upload of result objects, do not provide a value for this property.
 - `S3_UPLOAD_ONLY`
-    - When true media will not be downloaded using S3 authentication. 
+    - When true, media will not be downloaded using S3 authentication. 
       If `S3_RESULTS_BUCKET` is set, S3 authentication will be used to upload result objects.
     - When false or not provided, S3 authentication will be used to download remote media. 
       S3 authentication will also be used to upload result objects if `S3_RESULTS_BUCKET` is set.
