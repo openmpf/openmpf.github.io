@@ -57,7 +57,8 @@ The use of S3 is controlled through the following job properties:
     - URI to bucket where result objects should be stored. For example: `http://s3host/results_bucket`
     - To disable the upload of result objects, do not provide a value for this property.
 - `S3_UPLOAD_ONLY`
-    - When true, S3 authentication will only be used to upload result objects.
+    - When true media will not be downloaded using S3 authentication. 
+      If `S3_RESULTS_BUCKET` is set, S3 authentication will be used to upload result objects.
     - When false or not provided, S3 authentication will be used to download remote media. 
       S3 authentication will also be used to upload result objects if `S3_RESULTS_BUCKET` is set.
     - If you want to run a job where some media is in S3 and some is hosted elsewhere, 

@@ -323,7 +323,8 @@ The use of S3 is controlled through the following job properties:</p>
 </ul>
 </li>
 <li><code>S3_UPLOAD_ONLY</code><ul>
-<li>When true, S3 authentication will only be used to upload result objects.</li>
+<li>When true media will not be downloaded using S3 authentication. 
+  If <code>S3_RESULTS_BUCKET</code> is set, S3 authentication will be used to upload result objects.</li>
 <li>When false or not provided, S3 authentication will be used to download remote media. 
   S3 authentication will also be used to upload result objects if <code>S3_RESULTS_BUCKET</code> is set.</li>
 <li>If you want to run a job where some media is in S3 and some is hosted elsewhere, 
