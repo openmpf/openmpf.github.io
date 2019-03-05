@@ -769,14 +769,13 @@ componentName
 │   └── descriptor.json
 └── lib - All libraries required by the component
 └── libComponentName.jar - Compiled component library
-└── logback.xml - Logging configuration file
 ```
 
 Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 ## Logging
 
-It is recommended to use [slf4j](http://www.slf4j.org/) with [logback](http://logback.qos.ch/) for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.
+It is recommended to use [slf4j](http://www.slf4j.org/) with [log4j2](https://logging.apache.org/log4j/2.x/) for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.
 
 Log files should be output to:
 `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`
@@ -790,70 +789,41 @@ Each log statement must take the form:
 For example:
 `2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]`
 
-The following logback configuration can be used to match the format of other OpenMPF logs:
-
+The following log4j2 configuration can be used to match the format of other OpenMPF logs:
 ```xml
-<configuration>
-    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
-    <if condition='isNull("sampleComponentLogFile")' >
-        <then>
-            <property name="sampleComponentLogFile" value="${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/sample-component-detection.log" />
-        </then>
-    </if>
+<Configuration status="WARN"> <!-- status="WARN" is the logging level for configuration issues in this file. -->
 
-    <!-- Logging configuration -->
-    <appender name="STDOUT-INFO" class="ch.qos.logback.core.ConsoleAppender">
-        <Target>System.out</Target>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
-        <encoder>
-            <pattern>%d %p [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <!-- send everything to stdout -->
-    <appender name="STDOUT-DEBUG" class="ch.qos.logback.core.ConsoleAppender">
-        <Target>System.out</Target>
-        <encoder>
-            <pattern>%d %p [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
-    <!-- send WARN and ERROR to STDERR -->
-    <appender name="STDERR-WARN" class="ch.qos.logback.core.ConsoleAppender">
-        <Target>System.err</Target>
-        <!-- deny all events with a level below WARN, that is INFO, TRACE, and DEBUG -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
-        </filter>
-        <encoder>
-            <pattern>%d %p [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <Properties>
+        <Property name="sampleComponentLogFile">${env:MPF_LOG_PATH}/${env:THIS_MPF_NODE}/log/sample-component-detection.log</Property>
+        <Property name="layoutPattern">%date %level [%thread] %logger{36} - %msg%n</Property>
+    </Properties>
 
-    <appender name="SAMPLE-COMPONENT-DETECTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${sampleComponentLogFile}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${sampleComponentLogFile}.%d{yyyy-MM-dd}.%i</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>50MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%d %p [%thread] %logger{36} - %msg%n</pattern>
-        </encoder>
-    </appender>
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout pattern="${layoutPattern}"/>
+        </Console>
 
-    <logger name="org.dstovall" level="WARN"/>
-    <logger name="org.springframework.context.annotation" level="WARN"/>
-    <logger name="org.springframework.beans.factory" level="WARN"/>
-    <logger name="org.apache.xbean.spring" level="WARN"/>
-    <logger name="org.mitre" level="INFO"/>
+        <RollingFile name="SAMPLE_COMPONENT_FILE" fileName="${sampleComponentLogFile}"
+                     filePattern="${sampleComponentLogFile}.%date{yyyy-MM-dd}.%i">
+            <PatternLayout pattern="${layoutPattern}"/>
+            <Policies>
+                <!-- Causes a rollover once the date/time pattern specified in filePattern no longer applies to the
+                     active file. -->
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50MB"/>
+            </Policies>
+        </RollingFile>
 
-    <root level="INFO">
-        <appender-ref ref="STDERR-WARN" />
-        <appender-ref ref="SAMPLE-COMPONENT-DETECTION"/>
-    </root>
-</configuration>
+    </Appenders>
+
+    <Loggers>
+        <!-- To change the verbosity of MPF's own logging, change the level in the XML element below. -->
+        <Logger name="org.mitre" level="INFO" />
+
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="SAMPLE_COMPONENT_FILE"/>
+        </Root>
+    </Loggers>
+</Configuration>
 ```

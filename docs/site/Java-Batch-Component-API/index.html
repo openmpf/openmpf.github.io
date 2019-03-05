@@ -1462,12 +1462,11 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 │   └── descriptor.json
 └── lib - All libraries required by the component
 └── libComponentName.jar - Compiled component library
-└── logback.xml - Logging configuration file
 </code></pre>
 
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
-<p>It is recommended to use <a href="http://www.slf4j.org/">slf4j</a> with <a href="http://logback.qos.ch/">logback</a> for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.</p>
+<p>It is recommended to use <a href="http://www.slf4j.org/">slf4j</a> with <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.</p>
 <p>Log files should be output to:
 <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code></p>
 <p>Each log statement must take the form:
@@ -1476,70 +1475,42 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
  <code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.</p>
 <p>For example:
 <code>2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]</code></p>
-<p>The following logback configuration can be used to match the format of other OpenMPF logs:</p>
-<pre><code class="xml">&lt;configuration&gt;
-    &lt;statusListener class=&quot;ch.qos.logback.core.status.NopStatusListener&quot; /&gt;
-    &lt;if condition='isNull(&quot;sampleComponentLogFile&quot;)' &gt;
-        &lt;then&gt;
-            &lt;property name=&quot;sampleComponentLogFile&quot; value=&quot;${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/sample-component-detection.log&quot; /&gt;
-        &lt;/then&gt;
-    &lt;/if&gt;
+<p>The following log4j2 configuration can be used to match the format of other OpenMPF logs:</p>
+<pre><code class="xml">&lt;Configuration status=&quot;WARN&quot;&gt; &lt;!-- status=&quot;WARN&quot; is the logging level for configuration issues in this file. --&gt;
 
-    &lt;!-- Logging configuration --&gt;
-    &lt;appender name=&quot;STDOUT-INFO&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
-        &lt;Target&gt;System.out&lt;/Target&gt;
-        &lt;filter class=&quot;ch.qos.logback.classic.filter.LevelFilter&quot;&gt;
-            &lt;level&gt;INFO&lt;/level&gt;
-            &lt;onMatch&gt;ACCEPT&lt;/onMatch&gt;
-            &lt;onMismatch&gt;DENY&lt;/onMismatch&gt;
-        &lt;/filter&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
-    &lt;!-- send everything to stdout --&gt;
-    &lt;appender name=&quot;STDOUT-DEBUG&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
-        &lt;Target&gt;System.out&lt;/Target&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
-    &lt;!-- send WARN and ERROR to STDERR --&gt;
-    &lt;appender name=&quot;STDERR-WARN&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
-        &lt;Target&gt;System.err&lt;/Target&gt;
-        &lt;!-- deny all events with a level below WARN, that is INFO, TRACE, and DEBUG --&gt;
-        &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
-            &lt;level&gt;WARN&lt;/level&gt;
-        &lt;/filter&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
+    &lt;Properties&gt;
+        &lt;Property name=&quot;sampleComponentLogFile&quot;&gt;${env:MPF_LOG_PATH}/${env:THIS_MPF_NODE}/log/sample-component-detection.log&lt;/Property&gt;
+        &lt;Property name=&quot;layoutPattern&quot;&gt;%date %level [%thread] %logger{36} - %msg%n&lt;/Property&gt;
+    &lt;/Properties&gt;
 
-    &lt;appender name=&quot;SAMPLE-COMPONENT-DETECTION&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
-        &lt;file&gt;${sampleComponentLogFile}&lt;/file&gt;
-        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
-            &lt;fileNamePattern&gt;${sampleComponentLogFile}.%d{yyyy-MM-dd}.%i&lt;/fileNamePattern&gt;
-            &lt;timeBasedFileNamingAndTriggeringPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP&quot;&gt;
-                &lt;maxFileSize&gt;50MB&lt;/maxFileSize&gt;
-            &lt;/timeBasedFileNamingAndTriggeringPolicy&gt;
-        &lt;/rollingPolicy&gt;
-        &lt;encoder&gt;
-            &lt;pattern&gt;%d %p [%thread] %logger{36} - %msg%n&lt;/pattern&gt;
-        &lt;/encoder&gt;
-    &lt;/appender&gt;
+    &lt;Appenders&gt;
+        &lt;Console name=&quot;STDOUT&quot;&gt;
+            &lt;PatternLayout pattern=&quot;${layoutPattern}&quot;/&gt;
+        &lt;/Console&gt;
 
-    &lt;logger name=&quot;org.dstovall&quot; level=&quot;WARN&quot;/&gt;
-    &lt;logger name=&quot;org.springframework.context.annotation&quot; level=&quot;WARN&quot;/&gt;
-    &lt;logger name=&quot;org.springframework.beans.factory&quot; level=&quot;WARN&quot;/&gt;
-    &lt;logger name=&quot;org.apache.xbean.spring&quot; level=&quot;WARN&quot;/&gt;
-    &lt;logger name=&quot;org.mitre&quot; level=&quot;INFO&quot;/&gt;
+        &lt;RollingFile name=&quot;SAMPLE_COMPONENT_FILE&quot; fileName=&quot;${sampleComponentLogFile}&quot;
+                     filePattern=&quot;${sampleComponentLogFile}.%date{yyyy-MM-dd}.%i&quot;&gt;
+            &lt;PatternLayout pattern=&quot;${layoutPattern}&quot;/&gt;
+            &lt;Policies&gt;
+                &lt;!-- Causes a rollover once the date/time pattern specified in filePattern no longer applies to the
+                     active file. --&gt;
+                &lt;TimeBasedTriggeringPolicy /&gt;
+                &lt;SizeBasedTriggeringPolicy size=&quot;50MB&quot;/&gt;
+            &lt;/Policies&gt;
+        &lt;/RollingFile&gt;
 
-    &lt;root level=&quot;INFO&quot;&gt;
-        &lt;appender-ref ref=&quot;STDERR-WARN&quot; /&gt;
-        &lt;appender-ref ref=&quot;SAMPLE-COMPONENT-DETECTION&quot;/&gt;
-    &lt;/root&gt;
-&lt;/configuration&gt;
+    &lt;/Appenders&gt;
+
+    &lt;Loggers&gt;
+        &lt;!-- To change the verbosity of MPF's own logging, change the level in the XML element below. --&gt;
+        &lt;Logger name=&quot;org.mitre&quot; level=&quot;INFO&quot; /&gt;
+
+        &lt;Root level=&quot;INFO&quot;&gt;
+            &lt;AppenderRef ref=&quot;STDOUT&quot;/&gt;
+            &lt;AppenderRef ref=&quot;SAMPLE_COMPONENT_FILE&quot;/&gt;
+        &lt;/Root&gt;
+    &lt;/Loggers&gt;
+&lt;/Configuration&gt;
 </code></pre>
               
             </div>
