@@ -795,7 +795,7 @@ The following log4j2 configuration can be used to match the format of other Open
 
     <Properties>
         <Property name="sampleComponentLogFile">${env:MPF_LOG_PATH}/${env:THIS_MPF_NODE}/log/sample-component-detection.log</Property>
-        <Property name="layoutPattern">%date %level [%thread] %logger{36} - %msg%n</Property>
+        <Property name="layoutPattern">%date %level [%thread] %logger{1.} - %msg%n</Property>
     </Properties>
 
     <Appenders>

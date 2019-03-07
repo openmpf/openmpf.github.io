@@ -1480,7 +1480,7 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 
     &lt;Properties&gt;
         &lt;Property name=&quot;sampleComponentLogFile&quot;&gt;${env:MPF_LOG_PATH}/${env:THIS_MPF_NODE}/log/sample-component-detection.log&lt;/Property&gt;
-        &lt;Property name=&quot;layoutPattern&quot;&gt;%date %level [%thread] %logger{36} - %msg%n&lt;/Property&gt;
+        &lt;Property name=&quot;layoutPattern&quot;&gt;%date %level [%thread] %logger{1.} - %msg%n&lt;/Property&gt;
     &lt;/Properties&gt;
 
     &lt;Appenders&gt;
