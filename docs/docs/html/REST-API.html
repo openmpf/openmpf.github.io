@@ -145,7 +145,7 @@
 <body>
     <div style='page-break-after:always'>
         <h1>MPF Workflow Manager REST API</h1>
-        <h2>Version 3.0.0 (build 20181227)</h2>
+        <h2>Version 3.1.0 (build 20190408)</h2>
         <br/>
         <p><i><font size="3">NOTICE</font></i></p>
         <p><i><font size="3">
@@ -158,7 +158,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Thu Dec 27, 2018</div>
+    <div class='footer'>Last updated on: Mon Apr 8, 2019</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -266,6 +266,10 @@
                 <br>
                 <br>
             </div>
+            <div class="div-container-margin"><span><b>1.23.</b> ResponseMessage</span>
+                <br>
+                <br>
+            </div>
             <div style='page-break-after:always'></div>
             <h2>2. Paths</h2>
             <div class="div-container-margin"><span><b>2.1.</b> GET</span>&nbsp;&nbsp;/rest/info
@@ -358,6 +362,15 @@
                 <br>
                 <br>
             </div>
+            <div class="div-container-margin"><span><b>2.24.</b> POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.25.</b> DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}
+                <br>
+                <br>
+            </div>
+
             <div style='page-break-after:always'></div>
         </div>
     </div>
@@ -1314,6 +1327,29 @@
                     <td style='width:10%;'>array</td>
                     <td style='width:30%;'>List of job ids for streaming jobs in OpenMPF. This list may just include the active streaming jobs if the isActive parameter was specified in the original [GET] request. This list will be empty if there are no streaming jobs that satisfy the request conditions in OpenMPF. OpenMPF guarantees uniqueness of all job ids. This includes a guarantee that the jobId of a streaming job will not conflict with the jobId of a batch job.</td>
                 </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.23. ResponseMessage (Response Only)</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>message</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    Message describing result of REST API call.
+                </td>
+            </tr>
             </tbody>
         </table>
         <br />
@@ -3671,7 +3707,225 @@
             </table>
         </div>
     </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.24 POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Register an unmanaged component.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                        An unmanaged component is a component that is not started or stopped by the Node Manager
+                        so it must be done externally. For example, a component that runs in its own Docker container
+                        is considered an unmanaged component. If there is no existing component with the same name,
+                        then the component will be registered. If there is an existing unmanaged component and it has
+                        an identical descriptor, nothing is changed. If there is an existing unmanaged component and
+                        the descriptor is different, the existing component will be replaced. If there is an existing
+                        managed component with the same name, registration will fail with a 409 - Conflict response.
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>application/json</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>descriptor</td>
+                                <td class='td-alignment-small-no-width'>body</td>
+                                <td class='td-alignment-small-no-width'>
+                                    <a href="../Packaging-and-Registering-a-Component">Component Descriptor</a>
+                                    for new component.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    <a href="../Packaging-and-Registering-a-Component">Component Descriptor</a>
+                                </td>
+                                <td class='td-alignment-small-no-width'>application/json</td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Successfully updated existing unmanaged component.
+                                    <br />
+                                    See <b>ResponseMessage</b> in the <b>Definitions</b> section.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>201</td>
+                                <td class='td-alignment-std'>
+                                    Successfully registered new component.
+                                    <br />
+                                    See <b>ResponseMessage</b> in the <b>Definitions</b> section.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>400</td>
+                                <td class='td-alignment-std'>
+                                    The descriptor was invalid.
+                                    <br />
+                                    See <b>ResponseMessage</b> in the <b>Definitions</b> section.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Invalid credentials.
+                                    <br />
+                                    See <b>ResponseMessage</b> in the <b>Definitions</b> section.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>409</td>
+                                <td class='td-alignment-std'>
+                                    The component conflicts with an existing registered component.
+                                    <br />
+                                    See <b>ResponseMessage</b> in the <b>Definitions</b> section.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
+    <div class="div-container-margin">
+        <pre class="delete"><code class="huge"><span>2.25 DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Remove a component.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>componentName</td>
+                                <td class='td-alignment-small-no-width'>path</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Name of component
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    string
+                                </td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>204</td>
+                                <td class='td-alignment-std'>
+                                    The component was successfully removed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>404</td>
+                                <td class='td-alignment-std'>
+                                    There was no component with the specified name.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 
 </body>
