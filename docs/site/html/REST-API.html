@@ -154,7 +154,7 @@
             52.227-14, Alt. IV (DEC 2007).
         </font></i></p>
         <p><i><font size="3">
-            Copyright 2018 The MITRE Corporation. All Rights Reserved.
+            Copyright 2019 The MITRE Corporation. All Rights Reserved.
         </font></i></p>
         <br/>
     </div>
@@ -1105,12 +1105,12 @@
                 <tr style=";background-color: #EAEAEA">
                     <td style="width:40%;">startDate</td>
                     <td style="width:20%;">string</td>
-                    <td style="width:40%;">The date the streaming job started, local system time. Example: 2018-01-07 10:23:04.6.</td>
+                    <td style="width:40%;">The date the streaming job started, local system time. Example: 2018-01-07T10:23:04.6-05:00.</td>
                 </tr>
                 <tr style="">
                     <td style="width:40%;">endDate</td>
                     <td style="width:20%;">string</td>
-                    <td style="width:40%;">The date the streaming job ended, local system time. Example: 2018-01-08 00:00:00.0 or null if the job hasn't completed.</td>
+                    <td style="width:40%;">The date the streaming job ended, local system time. Example: 2018-01-08T00:00:00.0-05:00 or null if the job hasn't completed.</td>
                 </tr>
                 <tr style=";background-color: #EAEAEA">
                     <td style="width:40%;">jobStatus</td>
@@ -1136,7 +1136,7 @@
                 <tr style=';background-color: #EAEAEA'>
                     <td style='width:30%;'>activityTimestamp</td>
                     <td style='width:10%;'>string</td>
-                    <td style='width:30%;'>The detection time associated with the activityFrameId, local system time. Example: 2018-01-07 18:30:00.5 or null if there has been no activity found in the job.</td>
+                    <td style='width:30%;'>The detection time associated with the activityFrameId, local system time. Example: 2018-01-07T18:30:00.5-05:00 or null if there has been no activity found in the job.</td>
                 </tr>
             </tbody>
         </table>
@@ -1873,8 +1873,8 @@
  "priority": 4,
  "siteId": "mpf1",
  "externalJobId": null,
- "timeStart": "2017-04-25 09:47:14.0",
- "timeStop": "2017-04-25 09:47:17.0",
+ "timeStart": "2017-04-25T09:47:14.0-05:00",
+ "timeStop": "2017-04-25T09:47:17.0-05:00",
  "status": "COMPLETE",
  "algorithmProperties": {},
  "jobProperties": {},
@@ -3228,7 +3228,7 @@
                         <br/>
                         <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
 {
-  "reportDate": "2018-02-15 14:51:30.5",
+  "reportDate": "2018-02-15T14:51:30.5-05:00",
   "reports": [{
       "jobId": 244,
       "externalId": "test-run-7",
@@ -3243,7 +3243,7 @@
       "jobStatus": "IN_PROGRESS",
       "jobStatusDetail": null,
       "activityFrameId": "0",
-      "activityTimestamp": "2018-02-15 14:51:30.4"
+      "activityTimestamp": "2018-02-15T14:51:30.4-05:00"
     }
   ]
 }
@@ -3253,7 +3253,7 @@
                         <br/>
                         <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
 {
-  "reportDate": "2018-02-15 14:51:30.8",
+  "reportDate": "2018-02-15T14:51:30.8-05:00",
   "jobId": 245,
   "externalId": "test-run-8",
   "segmentId": 0,
@@ -3265,12 +3265,12 @@
       "id": "0",
       "startOffsetFrame": 0,
       "stopOffsetFrame": 0,
-      "startTimestamp": "2018-02-15 14:51:30.4",
-      "stopTimestamp": "2018-02-15 14:51:30.4",
+      "startTimestamp": "2018-02-15T14:51:30.4-05:00",
+      "stopTimestamp": "2018-02-15T14:51:30.4-05:00",
       "type": "HELLO",
       "exemplar": {
         "offsetFrame": 0,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3282,7 +3282,7 @@
       },
       "detections": [{
         "offsetFrame": 0,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3296,12 +3296,12 @@
       "id": "1",
       "startOffsetFrame": 3,
       "stopOffsetFrame": 6,
-      "startTimestamp": "2018-02-15 14:51:30.4",
-      "stopTimestamp": "2018-02-15 14:51:30.4",
+      "startTimestamp": "2018-02-15T14:51:30.4-05:00",
+      "stopTimestamp": "2018-02-15T14:51:30.4-05:00",
       "type": "HELLO",
       "exemplar": {
         "offsetFrame": 3,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3313,7 +3313,7 @@
       },
       "detections": [{
         "offsetFrame": 3,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3324,7 +3324,7 @@
         }
       }, {
         "offsetFrame": 6,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3338,12 +3338,12 @@
       "id": "2",
       "startOffsetFrame": 9,
       "stopOffsetFrame": 9,
-      "startTimestamp": "2018-02-15 14:51:30.4",
-      "stopTimestamp": "2018-02-15 14:51:30.4",
+      "startTimestamp": "2018-02-15T14:51:30.4-05:00",
+      "stopTimestamp": "2018-02-15T14:51:30.4-05:00",
       "type": "HELLO",
       "exemplar": {
         "offsetFrame": 9,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
@@ -3355,7 +3355,7 @@
       },
       "detections": [{
         "offsetFrame": 9,
-        "timestamp": "2018-02-15 14:51:30.4",
+        "timestamp": "2018-02-15T14:51:30.4-05:00",
         "x": 0,
         "y": 0,
         "width": 960,
