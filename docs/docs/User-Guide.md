@@ -239,7 +239,7 @@ This property indicates the preferred number of frames which will be provided to
 
 ## "MIN_SEGMENT_LENGTH" Property
 
-If a segment length is less than this value, the segment will be merged into the segment that precedes it. If no segment precedes the segment, a work unit will still be generated for it. Short segments are not dropped.
+If a segment length is less than this value, the segment will be merged into the segment that precedes it. If no segment precedes it, the short segment will stand on its own. Short segments are not discarded.
 
 ### Example 1: Adjacent Segment Present
 
