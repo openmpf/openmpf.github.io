@@ -239,7 +239,7 @@ This property indicates the preferred number of frames which will be provided to
 
 ## "MIN_SEGMENT_LENGTH" Property
 
-This property indicates the minimum length of a segment which may be produced. If a segment is less than this value, the segment will be merged into the segment adjacent to it. If no segments are adjacent to the short segment, the segment will be ignored and will not produce a work unit. In other words, the frames associated with that short segment will not be processed by the rest of the pipeline.
+If a segment length is less than this value, the segment will be merged into the segment that precedes it. If no segment precedes the segment, a work unit will still be generated for it. Short segments are not dropped.
 
 ### Example 1: Adjacent Segment Present
 
@@ -250,9 +250,8 @@ This property indicates the minimum length of a segment which may be produced. I
     * "TARGET_SEGMENT_LENGTH" = 100
     * "MIN_SEGMENT_LENGTH" = 75
 3. Three segments are initially produced from the input track with lengths corresponding to 100 frames, 100 frames, and 50 frames.
-4. Since the last frame does not exceed the minimum specified segment length, it must either be discarded or merged with an adjacent segment.
-5. Segments 2 and 3 are determined to be adjacent, so they are merged.
-6. Ultimately, two segments are produced.
+4. Since segment 3 is not at least the minimum specified segment length, it is merged with segment 2.
+5. Ultimately, two segments are produced.
 
 ### Example 2: No Adjacent Segment
 
@@ -266,9 +265,9 @@ This property indicates the minimum length of a segment which may be produced. I
 3. The segmenter begins by merging any segments which are less than "MIN_GAP_BETWEEN_SEGMENTS" apart. There are none.
 4. The segmenter then splits the existing segments using the "MIN_SEGMENT_LENGTH" and "TARGET_SEGMENT_LENGTH" values.
 5. The segmenter iterates through each segment produced. If the segment satisfies the minimum length constraint, it moves to the next segment.
-    * When it reaches the third segment and finds the length of 50 frames does not exceed the minimum length, it merges that segment with the previous adjacent segment.
-    * When it reaches the final segment and finds that the length of 25 frames does not exceed the minimum length, and that there are no adjacent segments, the segment is destroyed.
-6. Ultimately, only two segments are produced.
+    * When it reaches the third segment and finds the length of 50 frames is not at least the minimum length, it merges that segment with the previous adjacent segment.
+    * When it reaches the final segment and finds that the length of 25 frames is not at least the minimum length, it creates a short segment since there is no adjacent preceding segment to merge it with.
+6. Ultimately, three segments are produced.
 
 ## "MIN_GAP_BETWEEN_SEGMENTS" Property
 
@@ -284,15 +283,15 @@ Consider the following diagram, which further illustrates the purpose of this pr
     * "MIN_SEGMENT_LENGTH" = "150"
     * "MERGE_TRACKS" = "true"
 3. The segments are submitted to the motion preprocessor, and five distinct and non-overlapping tracks are returned based on the frames of the segments in which motion is detected.
-4. Because the "MERGE_TRACKS" property is set to "true", tracks are merged across segment boundaries if applicable. 
-   This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three 
-   tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the 
-   "Preprocessor" and "Track Merger" phases of the diagram.) When two tracks are merged, the confidence value will be 
-   set to the maximum confidence value of the two tracks and their track properties will be merged. If the two tracks 
-   both have a track property with the same name but different values, the values will be concatenated with a 
+4. Because the "MERGE_TRACKS" property is set to "true", tracks are merged across segment boundaries if applicable.
+   This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three
+   tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the
+   "Preprocessor" and "Track Merger" phases of the diagram.) When two tracks are merged, the confidence value will be
+   set to the maximum confidence value of the two tracks and their track properties will be merged. If the two tracks
+   both have a track property with the same name but different values, the values will be concatenated with a
    semicolon as the separator.
 5. The non-overlapping tracks are then used to form the video segments for the next detection action. This action specifies the following parameters:
     * "TARGET_SEGMENT_LENGTH" = "75"
-    * "MIN_SEGMENT_LENGTH" = "25"
-    * "MIN_GAP_BETWEEN_SEGMENTS" = "99"
-6. The segmenting logic merges tracks which are less than "MIN_SEGMENT_LENGTH" frames apart into one long segment. Once all tracks have been merged, each segment is itself segmented while respecting the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties. Ultimately, ten segments are produced. (Track #1 and Track #2 in the "Track Merger" phase of the diagram are combined, which is why Segment #3 in the "Segmenter" phase of the diagram includes the 25 frames that span the gap between those two tracks.)
+    * "MIN_SEGMENT_LENGTH" = "26"
+    * "MIN_GAP_BETWEEN_SEGMENTS" = "100"
+6. The segmenting logic merges tracks which are less than "MIN_GAP_BETWEEN_SEGMENTS" frames apart into one long segment. Once all tracks have been merged, each track is segmented with respect to the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties. Ultimately, ten segments are produced. (Track #1 and Track #2 in the "Track Merger" phase of the diagram are combined, which is why Segment #3 in the "Segmenter" phase of the diagram includes the 25 frames that span the gap between those two tracks.)
