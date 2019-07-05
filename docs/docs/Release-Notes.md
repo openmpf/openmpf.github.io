@@ -1,5 +1,57 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 4.1.0: July 2019
+
+<h2>Documentation</h2>
+
+TODO
+
+<h2>Python Component Executor Docker Image</h2>
+
+- Component developers can now use a Python component executor Docker image to write a Python component for OpenMPF that can be encapsulated
+within a Docker container. This isolates the build and execution environment from the rest of OpenMPF. For more information, see the [README](https://github.com/openmpf/openmpf-docker/blob/develop/openmpf_runtime/python_executor/README.md).
+- Components developed with this image are not managed by the Node Manager; rather, they self-register with the Workflow Manager and their lifetime is determined by their own Docker container.
+
+<h2>EAST Text Region Detection Component</h2>
+
+- This new component uses the Efficient and Accurate Scene Text (EAST) detection model to detect text regions in images and videos. It reports their location, angle of rotation, and text type (STRUCTURED or UNSTRUCTURED), and supports a variety of settings to control the behavior of merging text regions into larger regions. It does not perform OCR on the text. For more information, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md).
+- Optionally, this component can be built as a stand-alone Docker image using the Python component executor Docker image, allowing it to exist apart from the Node Manager image.
+
+<h2>Tesseract OCR Text Detection Component</h2>
+
+- Updated to support reading tessdata `*.traineddata` files at a specified MODELS_DIR_PATH. This allows users to install new `*.traineddata` files post deployment.
+- Updated to optionally perform Tesseract Orientation and Script Detection (OSD). When enabled, the component will attempt to use the orientation results of OSD to automatically rotate the image, as well as perform OCR using the scripts detected by OSD.
+- <span style="color:red">TODO: Updated to optionally rotate a feed-forward text region 180 degrees to account for upside down text.
+- <span style="color:red">TODO: Now supports the following preprocessing properties for both structured and unstructured text:
+  - Text sharpening
+  - Text rescaling
+  - Otsu image thresholding
+  - Adaptive thresholding
+  - Histogram equalization
+  - Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))
+- <span style="color:red">TODO: Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.
+
+<h2>ActiveMQ Profiles</h2>
+
+- The ActiveMQ Docker image now supports custom profiles. The container to select an `activemq.xml` and `env` file to use at runtime based the value of the `ACTIVE_MQ_PROFILE` environment variable. These files contain configuration settings for Java heap space, component queue memory limits, and others.
+- This release only supports a `default` profile setting, as defined by `activemq-default.xml` and `env.default`; however, developers are free to add other `activemq-<profile>.xml` and `env.<profile>` files to the AciveMQ Docker image to suit their needs.
+
+<h2>Disabled ActiveMQ Prefetch</h2>
+
+- Disabled ActiveMQ prefetching on all component queues. Previously, a prefetch value of one was resulting in situations where one component service could be dispatched two sub-jobs, thereby starving other available component services which could process one of those sub-jobs in parallel.
+
+<h2>Other Improvements</h2>
+
+TODO
+
+<h2>Bug Fixes</h2>
+
+TODO
+
+<h2>Known Issues</h2>
+
+TODO
+
 # OpenMPF 4.0.0: February 2019
 
 <h2>Documentation</h2>
