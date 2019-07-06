@@ -4,30 +4,30 @@
 
 <h2>Documentation</h2>
 
-- <span style="color:red">TODO: Updated the [C++ Batch Component API](https://github.com/openmpf/openmpf.github.io/blob/develop/docs/docs/CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [Arbitrary Rotation](#arbitrary-rotation) section below.
-- Updated the [REST API](https://github.com/openmpf/openmpf.github.io/blob/develop/docs/docs/html/REST-API.html) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-REST-endpoints) section below.
-- Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the  [EAST Text Region Detection Component](east-text-region-detection-component) section below.
-- Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](tesseract-ocr-text-detection-component) section below.
+- <span style="color:red">TODO: Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [Arbitrary Rotation](#arbitrary-rotation) section below.
+- Updated the [REST API](REST-API) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
+- Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the [EAST Text Region Detection Component](#east-text-region-detection-component) section below.
+- Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](#tesseract-ocr-text-detection-component) section below.
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/develop/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md) guide to describe the new streamlined approach to using `docker-compose config`. See the [Docker Deployment](#docker-deployment) section below.
-- Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](https://github.com/openmpf/openmpf.github.io/blob/develop/docs/docs/User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
-- Updated the [Java Batch Component API](https://github.com/openmpf/openmpf.github.io/blob/develop/docs/docs/Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#889](https://github.com/openmpf/openmpf/issues/855).
+- Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
+- Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#889](https://github.com/openmpf/openmpf/issues/855).
 
 <span id="arbitrary-rotation"></span>
 <h2>Arbitrary Rotation</h2>
 
 - The C++ MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted.
 - When using those tools to read frame data, they will automatically correct for rotation so that the returned frame is horizontally oriented toward the normal 3 o'clock position.
-- When FEED_FORWARD_TYPE=REGION, these tools will look for a ROTATION detection property in the feed-forward detections and automatically correct for rotation. For example, a detection property of ROTATION=90 represents that the region is rotated 90 degrees counter clockwise, and therefore must be rotated 90 degrees clockwise to correct for it.
-- When FEED_FORWARD_TYPE=SUPERSET_REGION, these tools will properly account for the ROTATION detection property associated with each feed-forward detection when calculating the bounding box that encapsulates all of those regions.
-- When FEED_FORWARD_TYPE=FRAME, these tools will rotate the frame according to the ROTATION job property. It's important to note that for rotations other than 0, 90, 180, and 270 degrees the rotated frame dimensions will be larger than the original frame dimensions. This is because the  frame needs to be expanded to encapsulate the entirety of the original rotated frame region. Black pixels are used to fill the empty space near the edges of the original frame.
+    - When FEED_FORWARD_TYPE=REGION, these tools will look for a ROTATION detection property in the feed-forward detections and automatically correct for rotation. For example, a detection property of ROTATION=90 represents that the region is rotated 90 degrees counter clockwise, and therefore must be rotated 90 degrees clockwise to correct for it.
+    - When FEED_FORWARD_TYPE=SUPERSET_REGION, these tools will properly account for the ROTATION detection property associated with each feed-forward detection when calculating the bounding box that encapsulates all of those regions.
+    - When FEED_FORWARD_TYPE=FRAME, these tools will rotate the frame according to the ROTATION job property. It's important to note that for rotations other than 0, 90, 180, and 270 degrees the rotated frame dimensions will be larger than the original frame dimensions. This is because the  frame needs to be expanded to encapsulate the entirety of the original rotated frame region. Black pixels are used to fill the empty space near the edges of the original frame.
 - The Markup component now places a colored dot at the upper-left corner of each detection region so that users can determine the rotation of the region relative to the entire frame.
 
 <span id="component-registration-rest-endpoints"></span>
 <h2>Component Registration REST Endpoints</h2>
 
 - Added a `[POST] /rest/components/registerUnmanaged` endpoint so that components running as separate Docker containers can self-register with the Workflow Manager.
-  - Since these components are not managed by the Node Manager, they are considered unmanaged OpenMPF components. These components are not displayed in Nodes web UI and are tagged as unmanaged in the Component Registration web UI where they can only be removed.
-  - Note that components uploaded to the Component Registration web UI as .tar.gz files are considered managed components.
+    - Since these components are not managed by the Node Manager, they are considered unmanaged OpenMPF components. These components are not displayed in Nodes web UI and are tagged as unmanaged in the Component Registration web UI where they can only be removed.
+    - Note that components uploaded to the Component Registration web UI as .tar.gz files are considered managed components.
 - Added a `[DELETE] /rest/components/{componentName}` endpoint that can be used to removed managed and unmanaged components.
 
 <h2>Python Component Executor Docker Image</h2>
@@ -40,7 +40,7 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Docker Deployment</h2>
 
 - Streamlined single-host `docker-compose up` deployments and multi-host `docker stack deploy` swarm deployments. Now users are instructed to create a single `docker-compose.yml` file for both types of deployments.
-- Removed the `docker-generate-compose-files.sh` script in favor of allowing users the flexibility of combining multiple `docker-compose.*.yml` fixes together using `docker-compose config`.
+- Removed the `docker-generate-compose-files.sh` script in favor of allowing users the flexibility of combining multiple `docker-compose.*.yml` fixes together using `docker-compose config`. See the [Generate docker-compose.yml](https://github.com/openmpf/openmpf-docker/blob/develop/README.md#generate-docker-composeyml) section of the README.
 - Components based on the Python component executor Docker image can now be defined and configured directly in `docker-compose.yml`.
 - OpenMPF Docker images now make use of Docker labels.
 
@@ -57,12 +57,12 @@ within a Docker container. This isolates the build and execution environment fro
 - Updated to optionally perform Tesseract Orientation and Script Detection (OSD). When enabled, the component will attempt to use the orientation results of OSD to automatically rotate the image, as well as perform OCR using the scripts detected by OSD.
 - <span style="color:red">TODO: Updated to optionally rotate a feed-forward text region 180 degrees to account for upside-down text.
 - <span style="color:red">TODO: Now supports the following preprocessing properties for both structured and unstructured text:
-  - Text sharpening
-  - Text rescaling
-  - Otsu image thresholding
-  - Adaptive thresholding
-  - Histogram equalization
-  - Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))
+    - Text sharpening
+    - Text rescaling
+    - Otsu image thresholding
+    - Adaptive thresholding
+    - Histogram equalization
+    - Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))
 - <span style="color:red">TODO: Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.
 - For more information on these new features, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md).
 
@@ -78,10 +78,10 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Search Region Percentages</h2>
 
 - In addition to using exact pixel values, users can now use percentages for the following properties when specifying search regions for C++ and Python components:
-  - SEARCH_REGION_TOP_LEFT_X_DETECTION
-  - SEARCH_REGION_TOP_LEFT_Y_DETECTION
-  - SEARCH_REGION_BOTTOM_RIGHT_X_DETECTION
-  - SEARCH_REGION_BOTTOM_RIGHT_Y_DETECTION
+    - SEARCH_REGION_TOP_LEFT_X_DETECTION
+    - SEARCH_REGION_TOP_LEFT_Y_DETECTION
+    - SEARCH_REGION_BOTTOM_RIGHT_X_DETECTION
+    - SEARCH_REGION_BOTTOM_RIGHT_Y_DETECTION
 - For example, setting SEARCH_REGION_TOP_LEFT_X_DETECTION=50% will result in components only processing the right half of an image or video.
 - Optionally, users can specify exact pixel values of some of these properties and percentages for others.
 
