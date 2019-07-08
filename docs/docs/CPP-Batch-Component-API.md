@@ -649,7 +649,14 @@ MPFImageLocation(
 | width | `int` | The width of the detected object. |
 | height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
+
+When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval 
+`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction. 
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the 
+clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of 
+the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented 
+detection.
 
 * Example:
  
@@ -660,7 +667,7 @@ MPFImageLocation detection;
 detection.x_left_upper = 0;
 detection.y_left_upper = 0;
 detection.width = 100;
-detection.height = 100;
+detection.height = 50;
 detection.confidence = 1.0;
 detection.detection_properties["CLASSIFICATION"] = "backpack";
 ```
