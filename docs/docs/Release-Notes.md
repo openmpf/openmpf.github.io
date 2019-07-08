@@ -28,7 +28,7 @@
 - Added a `[POST] /rest/components/registerUnmanaged` endpoint so that components running as separate Docker containers can self-register with the Workflow Manager.
     - Since these components are not managed by the Node Manager, they are considered unmanaged OpenMPF components. These components are not displayed in Nodes web UI and are tagged as unmanaged in the Component Registration web UI where they can only be removed.
     - Note that components uploaded to the Component Registration web UI as .tar.gz files are considered managed components.
-- Added a `[DELETE] /rest/components/{componentName}` endpoint that can be used to removed managed and unmanaged components.
+- Added a `[DELETE] /rest/components/{componentName}` endpoint that can be used to remove managed and unmanaged components.
 
 <h2>Python Component Executor Docker Image</h2>
 
