@@ -659,6 +659,24 @@ the correctly oriented detection. Similarly, `width` and `height` indicate the d
 detection.
 
 * Example:
+
+![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
+
+
+In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.
+
+
+```c++
+MPFImageLocation detection;
+detection.x_left_upper = 156;
+detection.y_left_upper = 339;
+detection.width = 194;
+detection.height = 243;
+detection.confidence = 1.0;
+detection.detection_properties["ROTATION"] = "90.0";
+```
+
+* Example:
  
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
