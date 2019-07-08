@@ -507,7 +507,7 @@ MPFImageJob(
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 | location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -778,7 +778,6 @@ Enum used to indicate the status of a `GetDetections` call. A component is not r
 | MPF_MISSING_PROPERTY | The component received a job that is missing a required property. |
 | MPF_JOB_PROPERTY_IS_NOT_INT | A job property is supposed to be an integer type, but it is of some other type, such as a boolean or a floating point value. |
 | MPF_JOB_PROPERTY_IS_NOT_FLOAT | A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value. |
-| MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  If the component is using the MPF::COMPONENT::FrameRotator class, the set of acceptable values is {0, 90, 180, 270}. |
 | MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
 
