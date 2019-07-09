@@ -507,7 +507,7 @@ MPFImageJob(
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 | location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -649,7 +649,32 @@ MPFImageLocation(
 | width | `int` | The width of the detected object. |
 | height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
+
+When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval 
+`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction. 
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the 
+clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of 
+the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented 
+detection.
+
+* Example:
+
+![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
+
+
+In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.
+
+
+```c++
+MPFImageLocation detection;
+detection.x_left_upper = 156;
+detection.y_left_upper = 339;
+detection.width = 194;
+detection.height = 243;
+detection.confidence = 1.0;
+detection.detection_properties["ROTATION"] = "90.0";
+```
 
 * Example:
  
@@ -660,7 +685,7 @@ MPFImageLocation detection;
 detection.x_left_upper = 0;
 detection.y_left_upper = 0;
 detection.width = 100;
-detection.height = 100;
+detection.height = 50;
 detection.confidence = 1.0;
 detection.detection_properties["CLASSIFICATION"] = "backpack";
 ```
@@ -778,7 +803,6 @@ Enum used to indicate the status of a `GetDetections` call. A component is not r
 | MPF_MISSING_PROPERTY | The component received a job that is missing a required property. |
 | MPF_JOB_PROPERTY_IS_NOT_INT | A job property is supposed to be an integer type, but it is of some other type, such as a boolean or a floating point value. |
 | MPF_JOB_PROPERTY_IS_NOT_FLOAT | A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value. |
-| MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  If the component is using the MPF::COMPONENT::FrameRotator class, the set of acceptable values is {0, 90, 180, 270}. |
 | MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
 
