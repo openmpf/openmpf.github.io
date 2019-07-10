@@ -337,8 +337,8 @@ within a Docker container. This isolates the build and execution environment fro
 <ul>
 <li>Updated to support reading tessdata <code>*.traineddata</code> files at a specified MODELS_DIR_PATH. This allows users to install new <code>*.traineddata</code> files post deployment.</li>
 <li>Updated to optionally perform Tesseract Orientation and Script Detection (OSD). When enabled, the component will attempt to use the orientation results of OSD to automatically rotate the image, as well as perform OCR using the scripts detected by OSD.</li>
-<li><span style="color:red">TODO: Updated to optionally rotate a feed-forward text region 180 degrees to account for upside-down text.</li>
-<li><span style="color:red">TODO: Now supports the following preprocessing properties for both structured and unstructured text:<ul>
+<li>Updated to optionally rotate a feed-forward text region 180 degrees to account for upside-down text.</li>
+<li>Now supports the following preprocessing properties for both structured and unstructured text:<ul>
 <li>Text sharpening</li>
 <li>Text rescaling</li>
 <li>Otsu image thresholding</li>
@@ -347,8 +347,9 @@ within a Docker container. This isolates the build and execution environment fro
 <li>Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))</li>
 </ul>
 </li>
-<li><span style="color:red">TODO: Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.</li>
+<li>Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.</li>
 <li>For more information on these new features, see the <a href="https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md">README</a>.</li>
+<li>Removed gibberish filters since they only worked on English text.</li>
 </ul>
 <h2>ActiveMQ Profiles</h2>
 
