@@ -231,7 +231,7 @@ MPF_COMPONENT_DELETER();
 
 The creator macro takes the `TYPENAME` of the detection component (for example, “HelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.
 
-The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component. 
+The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component.
 
 These macros must be used outside of a class declaration, preferably at the bottom or top of a component source (.cpp) file.
 
@@ -507,7 +507,7 @@ MPFImageJob(
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 | location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -545,7 +545,7 @@ MPFVideoJob(
 | stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
 | track | `const MPFVideoTrack &` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul> |
 
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
@@ -587,7 +587,7 @@ MPFAudioJob(
 | stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | track | `const MPFAudioTrack &` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
 
 #### MPFGenericJob
 Extends [`MPFJob`](#mpfjob)
@@ -651,11 +651,11 @@ MPFImageLocation(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
 
-When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval 
-`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction. 
-In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the 
-clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of 
-the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented 
+When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
+`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
+clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of
+the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented
 detection.
 
 * Example:
@@ -677,7 +677,7 @@ detection.detection_properties["ROTATION"] = "90.0";
 ```
 
 * Example:
- 
+
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
 ```c++
@@ -716,9 +716,9 @@ MPFVideoTrack(
 | detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
 * Example:
- 
->**NOTE:** Currently, `MPFVideoTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way. 
- 
+
+>**NOTE:** Currently, `MPFVideoTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way.
+
 A component that detects text can add an entry to `detection_properties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
 
 ```c++
@@ -752,8 +752,8 @@ MPFAudioTrack(
 | stop_time| `int` | The time (0-based index, in ms) when the audio detection event stopped. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
- 
->**NOTE:** Currently, `MPFAudioTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way. 
+
+>**NOTE:** Currently, `MPFAudioTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way.
 
 #### MPFGenericTrack
 

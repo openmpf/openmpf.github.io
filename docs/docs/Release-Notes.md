@@ -1,5 +1,107 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 4.1.0: July 2019
+
+<h2>Documentation</h2>
+
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [Arbitrary Rotation](#arbitrary-rotation) section below.
+- Updated the [REST API](REST-API) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
+- Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the [EAST Text Region Detection Component](#east-text-region-detection-component) section below.
+- Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](#tesseract-ocr-text-detection-component) section below.
+- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/develop/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md) guide to describe the new streamlined approach to using `docker-compose config`. See the [Docker Deployment](#docker-deployment) section below.
+- Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
+- Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#889](https://github.com/openmpf/openmpf/issues/855).
+
+<span id="arbitrary-rotation"></span>
+<h2>Arbitrary Rotation</h2>
+
+- The C++ MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted.
+- When using those tools to read frame data, they will automatically correct for rotation so that the returned frame is horizontally oriented toward the normal 3 o'clock position.
+    - When FEED_FORWARD_TYPE=REGION, these tools will look for a ROTATION detection property in the feed-forward detections and automatically correct for rotation. For example, a detection property of ROTATION=90 represents that the region is rotated 90 degrees counter clockwise, and therefore must be rotated 90 degrees clockwise to correct for it.
+    - When FEED_FORWARD_TYPE=SUPERSET_REGION, these tools will properly account for the ROTATION detection property associated with each feed-forward detection when calculating the bounding box that encapsulates all of those regions.
+    - When FEED_FORWARD_TYPE=FRAME, these tools will rotate the frame according to the ROTATION job property. It's important to note that for rotations other than 0, 90, 180, and 270 degrees the rotated frame dimensions will be larger than the original frame dimensions. This is because the  frame needs to be expanded to encapsulate the entirety of the original rotated frame region. Black pixels are used to fill the empty space near the edges of the original frame.
+- The Markup component now places a colored dot at the upper-left corner of each detection region so that users can determine the rotation of the region relative to the entire frame.
+
+<span id="component-registration-rest-endpoints"></span>
+<h2>Component Registration REST Endpoints</h2>
+
+- Added a `[POST] /rest/components/registerUnmanaged` endpoint so that components running as separate Docker containers can self-register with the Workflow Manager.
+    - Since these components are not managed by the Node Manager, they are considered unmanaged OpenMPF components. These components are not displayed in Nodes web UI and are tagged as unmanaged in the Component Registration web UI where they can only be removed.
+    - Note that components uploaded to the Component Registration web UI as .tar.gz files are considered managed components.
+- Added a `[DELETE] /rest/components/{componentName}` endpoint that can be used to remove managed and unmanaged components.
+
+<h2>Python Component Executor Docker Image</h2>
+
+- Component developers can now use a Python component executor Docker image to write a Python component for OpenMPF that can be encapsulated
+within a Docker container. This isolates the build and execution environment from the rest of OpenMPF. For more information, see the [README](https://github.com/openmpf/openmpf-docker/blob/develop/openmpf_runtime/python_executor/README.md).
+- Components developed with this image are not managed by the Node Manager; rather, they self-register with the Workflow Manager and their lifetime is determined by their own Docker container.
+
+<span id="docker-deployment"></span>
+<h2>Docker Deployment</h2>
+
+- Streamlined single-host `docker-compose up` deployments and multi-host `docker stack deploy` swarm deployments. Now users are instructed to create a single `docker-compose.yml` file for both types of deployments.
+- Removed the `docker-generate-compose-files.sh` script in favor of allowing users the flexibility of combining multiple `docker-compose.*.yml` fixes together using `docker-compose config`. See the [Generate docker-compose.yml](https://github.com/openmpf/openmpf-docker/blob/develop/README.md#generate-docker-composeyml) section of the README.
+- Components based on the Python component executor Docker image can now be defined and configured directly in `docker-compose.yml`.
+- OpenMPF Docker images now make use of Docker labels.
+
+<span id="east-text-region-detection-component"></span>
+<h2>EAST Text Region Detection Component</h2>
+
+- This new component uses the Efficient and Accurate Scene Text (EAST) detection model to detect text regions in images and videos. It reports their location, angle of rotation, and text type (STRUCTURED or UNSTRUCTURED), and supports a variety of settings to control the behavior of merging text regions into larger regions. It does not perform OCR on the text or track detections across video frames. Thus, each video track is at most one detection long. For more information, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md).
+- Optionally, this component can be built as a Docker image using the Python component executor Docker image, allowing it to exist apart from the Node Manager image.
+
+<span id="tesseract-ocr-text-detection-component"></span>
+<h2>Tesseract OCR Text Detection Component</h2>
+
+- Updated to support reading tessdata `*.traineddata` files at a specified MODELS_DIR_PATH. This allows users to install new `*.traineddata` files post deployment.
+- Updated to optionally perform Tesseract Orientation and Script Detection (OSD). When enabled, the component will attempt to use the orientation results of OSD to automatically rotate the image, as well as perform OCR using the scripts detected by OSD.
+- Updated to optionally rotate a feed-forward text region 180 degrees to account for upside-down text.
+- Now supports the following preprocessing properties for both structured and unstructured text:
+    - Text sharpening
+    - Text rescaling
+    - Otsu image thresholding
+    - Adaptive thresholding
+    - Histogram equalization
+    - Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))
+- Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.
+- For more information on these new features, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md).
+- Removed gibberish and string filters since they only worked on English text.
+
+<h2>ActiveMQ Profiles</h2>
+
+- The ActiveMQ Docker image now supports custom profiles. The container selects an `activemq.xml` and `env` file to use at runtime based the value of the `ACTIVE_MQ_PROFILE` environment variable. Among others, these files contain configuration settings for Java heap space and component queue memory limits.
+- This release only supports a `default` profile setting, as defined by `activemq-default.xml` and `env.default`; however, developers are free to add other `activemq-<profile>.xml` and `env.<profile>` files to the ActiveMQ Docker image to suit their needs.
+
+<h2>Disabled ActiveMQ Prefetch</h2>
+
+- Disabled ActiveMQ prefetching on all component queues. Previously, a prefetch value of one was resulting in situations where one component service could be dispatched two sub-jobs, thereby starving other available component services which could process one of those sub-jobs in parallel.
+
+<h2>Search Region Percentages</h2>
+
+- In addition to using exact pixel values, users can now use percentages for the following properties when specifying search regions for C++ and Python components:
+    - SEARCH_REGION_TOP_LEFT_X_DETECTION
+    - SEARCH_REGION_TOP_LEFT_Y_DETECTION
+    - SEARCH_REGION_BOTTOM_RIGHT_X_DETECTION
+    - SEARCH_REGION_BOTTOM_RIGHT_Y_DETECTION
+- For example, setting SEARCH_REGION_TOP_LEFT_X_DETECTION=50% will result in components only processing the right half of an image or video.
+- Optionally, users can specify exact pixel values of some of these properties and percentages for others.
+
+<h2>Other Improvements</h2>
+
+- Increased the number of ActiveMQ maxConcurrentConsumers for the MPF.COMPLETED_DETECTIONS queue from 30 to 60.
+- The Create Job web UI now only displays the content of the `$MPF_HOME/share/remote-media` directory instead of all of `$MPF_HOME/share`, which prevents the Workflow Manager from indexing generated JSON output files, artifacts, and markup. Indexing the latter resulted in Java heap space issues for large scale production systems. This is a mitigation for issue [#897](https://github.com/openmpf/openmpf/issues/897).
+- The Job Status web UI now makes proper use of pagination in SQL/Hibernate through the Workflow Manager to avoid retrieving the entire jobs table, which was inefficient.
+
+<h2>Bug Fixes</h2>
+
+- [[#891](https://github.com/openmpf/openmpf/issues/891)] Fixed a bug where the Workflow Manager media segmenter generated short segments that were minimally MIN_SEGMENT_LENGTH+1 in size instead of MIN_SEGMENT_LENGTH.
+- [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. This seems to have been resolved by disabling ActiveMQ prefetch behavior on component queues.
+- [[#889](https://github.com/openmpf/openmpf/issues/855)] A logback circular reference suppressed exception no longer throws a StackOverflowError. This was resolved by transitioning the Workflow Manager and Java components from the Logback framework to Log4j2.
+
+<h2>Known Issues</h2>
+
+- [[#897](https://github.com/openmpf/openmpf/issues/897)] OpenMPF will attempt to index files located in `$MPF_HOME/share` as soon as the webapp is started by Tomcat. This is so that those files can be listed in a directory tree in the Create Job web UI. The main problem is that once a file gets indexed it's never removed from the cache, even if the file is manually deleted, resulting in a memory leak.
+
 # OpenMPF 4.0.0: February 2019
 
 <h2>Documentation</h2>
@@ -528,7 +630,7 @@ for optional dependencies.
 - Resubmitting jobs now properly carries over configured job properties.
 - Fixed a bug in the build order of the OpenMPF project so that test modules that the WFM depends on are built before the WFM itself.
 - The Markup component draws bounding boxes between detections when a FRAME_INTERVAL is specified. This is so that the bounding box in the marked-up video appears in every frame. Fixed a bug where the bounding boxes drawn on non-detection frames appeared to stand still rather than move along the interpolated path between detection regions.
-- Fixed a bug on the OALPR license plate detection component where it was not properly handling the SEARCH_REGION* properties.
+- Fixed a bug on the OALPR license plate detection component where it was not properly handling the SEARCH_REGION_* properties.
 - Support for the MIN_GAP_BETWEEN_SEGMENTS property was not implemented properly. When the gap between two segments is less than this property value then the segments should be merged; otherwise, the segments should remain separate. In some cases, the exact opposite was happening. This bug has been fixed.
 
 <h2>Known Issues</h2>

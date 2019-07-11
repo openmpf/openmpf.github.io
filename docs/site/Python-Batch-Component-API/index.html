@@ -294,13 +294,13 @@
             <div class="section">
               
                 <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to 
-the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). 
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to
+the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="api-overview">API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
-<p>The OpenMPF Batch Component API currently supports the development of <strong>detection components</strong>, which are used detect 
+<p>The OpenMPF Batch Component API currently supports the development of <strong>detection components</strong>, which are used detect
 objects in image, video, audio, or other (generic) files that reside on disk.</p>
 <p>Using this API, detection components can be built to provide:</p>
 <ul>
@@ -310,9 +310,9 @@ objects in image, video, audio, or other (generic) files that reside on disk.</p
 <li>Transcription (Detecting speech and transcribing it into text)</li>
 </ul>
 <h2 id="how-components-integrate-into-openmpf">How Components Integrate into OpenMPF</h2>
-<p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>. 
-Developers create component libraries that encapsulate the component detection logic. 
-Each instance of the Component Executable loads one of these libraries and uses it to service job requests 
+<p>Components are integrated into OpenMPF through the use of OpenMPF's <strong>Component Executable</strong>.
+Developers create component libraries that encapsulate the component detection logic.
+Each instance of the Component Executable loads one of these libraries and uses it to service job requests
 sent by the OpenMPF Workflow Manager (WFM).</p>
 <p>The Component Executable:</p>
 <ol>
@@ -346,63 +346,63 @@ while True:
 </code></pre>
 
 <p>Each instance of a Component Executable runs as a separate process.</p>
-<p>The Component Executable receives and parses requests from the WFM, invokes methods on the Component Logic to get 
+<p>The Component Executable receives and parses requests from the WFM, invokes methods on the Component Logic to get
 detection objects, and subsequently populates responses with the component output and sends them to the WFM.</p>
 <p>A component developer implements a detection component by creating a class that defines one or more of the
-get_detections_from_* methods and has a <a href="#componentdetection_type"><code>detection_type</code></a> field. 
+get_detections_from_* methods and has a <a href="#componentdetection_type"><code>detection_type</code></a> field.
 See the <a href="#api-specification">API Specification</a> for more information.</p>
-<p>The figures below present high-level component diagrams of the Python Batch Component API. 
+<p>The figures below present high-level component diagrams of the Python Batch Component API.
 This figure shows the basic structure:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_no_mixin.png" title="OpenMPF Component Diagram" /></p>
-<p>The figure above shows the Node Manager starting the Detection Component Executable. 
-The Detection Component Executable determines that it is running a Python component so it creates an instance of the 
-<a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h"><code>PythonComponentHandle</code></a> 
-class. The <code>PythonComponentHandle</code> class creates an instance of the component class and calls one of the 
+<p>The figure above shows the Node Manager starting the Detection Component Executable.
+The Detection Component Executable determines that it is running a Python component so it creates an instance of the
+<a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h"><code>PythonComponentHandle</code></a>
+class. The <code>PythonComponentHandle</code> class creates an instance of the component class and calls one of the
 <a href="#componentget_detections_from_42-methods">get_detections_from_*</a> methods on the component instance. The example
-above is an image component, so <code>PythonComponentHandle</code> calls <code>ExampleImageFaceDetection.get_detections_from_image</code> 
-on the component instance. The component instance creates an instance of 
-<a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a> to access the image. Components that support video 
-would implement <code>get_detections_from_video</code> and use 
+above is an image component, so <code>PythonComponentHandle</code> calls <code>ExampleImageFaceDetection.get_detections_from_image</code>
+on the component instance. The component instance creates an instance of
+<a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a> to access the image. Components that support video
+would implement <code>get_detections_from_video</code> and use
 <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> instead.</p>
 <p>This figure show the structure when the mixin classes are used:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_with_mixin.png" title="OpenMPF Component Diagram" /></p>
 <p>The figure above shows a video component, <code>ExampleVideoFaceDetection</code>, that extends the
-<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a> class. <code>PythonComponentHandle</code> will 
-call <code>get_detections_from_video</code> on an instance of <code>ExampleVideoFaceDetection</code>. <code>ExampleVideoFaceDetection</code> does not 
-implement <code>get_detections_from_video</code>, so the implementation inherited from <code>mpf_component_util.VideoCaptureMixin</code> 
-gets called. <code>mpf_component_util.VideoCaptureMixin.get_detections_from_video</code> creates an instance of 
-<a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> and calls 
-<code>ExampleVideoFaceDetection.get_detections_from_video_capture</code>, passing in the <code>mpf_component_util.VideoCapture</code> it 
-just created. <code>ExampleVideoFaceDetection.get_detections_from_video_capture</code> is where the component reads the video 
-using the passed-in <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images 
-would extend <a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>, implement 
-<code>get_detections_from_image_reader</code>, and access the image using the passed-in 
+<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a> class. <code>PythonComponentHandle</code> will
+call <code>get_detections_from_video</code> on an instance of <code>ExampleVideoFaceDetection</code>. <code>ExampleVideoFaceDetection</code> does not
+implement <code>get_detections_from_video</code>, so the implementation inherited from <code>mpf_component_util.VideoCaptureMixin</code>
+gets called. <code>mpf_component_util.VideoCaptureMixin.get_detections_from_video</code> creates an instance of
+<a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a> and calls
+<code>ExampleVideoFaceDetection.get_detections_from_video_capture</code>, passing in the <code>mpf_component_util.VideoCapture</code> it
+just created. <code>ExampleVideoFaceDetection.get_detections_from_video_capture</code> is where the component reads the video
+using the passed-in <code>mpf_component_util.VideoCapture</code> and attempts to find detections. Components that support images
+would extend <a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>, implement
+<code>get_detections_from_image_reader</code>, and access the image using the passed-in
 <a href="#mpf_component_utilimagereader"><code>mpf_component_util.ImageReader</code></a>.</p>
-<p>During component registration a <a href="http://virtualenv.pypa.io">virtualenv</a> is created for each component. 
-The virtualenv has access to the built-in Python libraries, but does not have access to any third party packages 
-that might be installed on the system. When creating the virtualenv for a setuptools-based component the only packages 
-that get installed are the component itself and any dependencies specified in the setup.py 
-file (including their transitive dependencies). When creating the virtualenv for a basic Python component the only 
+<p>During component registration a <a href="http://virtualenv.pypa.io">virtualenv</a> is created for each component.
+The virtualenv has access to the built-in Python libraries, but does not have access to any third party packages
+that might be installed on the system. When creating the virtualenv for a setuptools-based component the only packages
+that get installed are the component itself and any dependencies specified in the setup.py
+file (including their transitive dependencies). When creating the virtualenv for a basic Python component the only
 package that gets installed is <code>mpf_component_api</code>. <code>mpf_component_api</code> is the package containing the job classes
-(e.g. <a href="#mpf_component_apiimagejob"><code>mpf_component_api.ImageJob</code></a>, 
-<a href="#mpf_component_apivideojob"><code>mpf_component_api.VideoJob</code></a>) and detection result classes 
-(e.g. <a href="#mpf_component_apiimagelocation"><code>mpf_component_api.ImageLocation</code></a>, 
+(e.g. <a href="#mpf_component_apiimagejob"><code>mpf_component_api.ImageJob</code></a>,
+<a href="#mpf_component_apivideojob"><code>mpf_component_api.VideoJob</code></a>) and detection result classes
+(e.g. <a href="#mpf_component_apiimagelocation"><code>mpf_component_api.ImageLocation</code></a>,
 <a href="#mpf_component_apivideotrack"><code>mpf_component_api.VideoTrack</code></a>).</p>
 <h1 id="how-to-create-a-python-component">How to Create a Python Component</h1>
 <p>There are two types of Python components that are supported, setuptools-based components and basic Python components.
-Basic Python components are quicker to set up, but have no built-in support for dependency management. 
-All dependencies must be handled by the developer. Setuptools-based components are recommended since they use 
+Basic Python components are quicker to set up, but have no built-in support for dependency management.
+All dependencies must be handled by the developer. Setuptools-based components are recommended since they use
 setuptools and pip for dependency management.</p>
 <h2 id="get-openmpf-python-component-sdk">Get openmpf-python-component-sdk</h2>
-<p>In order to create a Python component you will need to clone the 
-<a href="https://github.com/openmpf/openmpf-python-component-sdk">openmpf-python-component-sdk repository</a> if you don't 
-already have it. While not technically required, it is recommended to also clone the 
+<p>In order to create a Python component you will need to clone the
+<a href="https://github.com/openmpf/openmpf-python-component-sdk">openmpf-python-component-sdk repository</a> if you don't
+already have it. While not technically required, it is recommended to also clone the
 <a href="https://github.com/openmpf/openmpf-build-tools">openmpf-build-tools repository</a>.
 The rest of the steps assume you cloned openmpf-python-component-sdk to
-<code>~/openmpf-projects/openmpf-python-component-sdk</code>. The rest of the steps also assume that if you cloned the 
+<code>~/openmpf-projects/openmpf-python-component-sdk</code>. The rest of the steps also assume that if you cloned the
 openmpf-build-tools repository, you cloned it to <code>~/openmpf-projects/openmpf-build-tools</code>.</p>
 <h2 id="setup-python-component-libraries">Setup Python Component Libraries</h2>
-<p>The component packaging steps require that wheel files for <code>mpf_component_api</code>, <code>mpf_component_util</code>, and 
+<p>The component packaging steps require that wheel files for <code>mpf_component_api</code>, <code>mpf_component_util</code>, and
 their dependencies are available in the <code>~/mpf-sdk-install/python/wheelhouse</code> directory.</p>
 <p>If you have openmpf-build-tools, then you can run:</p>
 <pre><code class="bash">~/openmpf-projects/openmpf-build-tools/build-openmpf-components/build_components.py -psdk ~/openmpf-projects/openmpf-python-component-sdk
@@ -414,8 +414,8 @@ pip wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-pyth
 </code></pre>
 
 <h2 id="how-to-create-a-setuptools-based-python-component">How to Create a Setuptools-based Python Component</h2>
-<p>In this example we create a setuptools-based video component named "MyComponent". An example of a setuptools-based 
-Python component can be found 
+<p>In this example we create a setuptools-based video component named "MyComponent". An example of a setuptools-based
+Python component can be found
 <a href="https://github.com/openmpf/openmpf-python-component-sdk/tree/master/detection/examples/PythonOcvComponent">here</a>.</p>
 <p>This is the recommended project structure:</p>
 <pre><code>ComponentName
@@ -461,20 +461,20 @@ setuptools.setup(
 
 <p>The <code>name</code> parameter defines the distribution name. Typically the distribution name matches the component name.</p>
 <p>Any dependencies that component requires should be listed in the <code>install_requires</code> field.</p>
-<p>The component executor looks in the <code>entry_points</code> element and uses the <code>mpf.exported_component</code> field to determine 
-the component class. The right hand side of <code>component =</code> should be the dotted module name, followed by a <code>:</code>, 
-followed by the name of the class. The general pattern is 
-<code>'mpf.exported_component': 'component = &lt;package_name&gt;.&lt;module_name&gt;:&lt;class_name&gt;'</code>. In the above example, 
-<code>MyComponent</code> is the class name. The module is listed as <code>my_component.my_component</code> because the <code>my_component</code> 
+<p>The component executor looks in the <code>entry_points</code> element and uses the <code>mpf.exported_component</code> field to determine
+the component class. The right hand side of <code>component =</code> should be the dotted module name, followed by a <code>:</code>,
+followed by the name of the class. The general pattern is
+<code>'mpf.exported_component': 'component = &lt;package_name&gt;.&lt;module_name&gt;:&lt;class_name&gt;'</code>. In the above example,
+<code>MyComponent</code> is the class name. The module is listed as <code>my_component.my_component</code> because the <code>my_component</code>
 package contains the <code>my_component.py</code> file and the <code>my_component.py</code> file contains the <code>MyComponent</code> class.</p>
 <p><strong>3. Create descriptor.json file in MyComponent/plugin-files/descriptor:</strong></p>
-<p>The <code>batchLibrary</code> field should match the distribution name from the setup.py file. In this example the 
-field should be: <code>"batchLibrary" : "MyComponent"</code>. 
-See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a> for details about 
+<p>The <code>batchLibrary</code> field should match the distribution name from the setup.py file. In this example the
+field should be: <code>"batchLibrary" : "MyComponent"</code>.
+See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a> for details about
 the descriptor format.</p>
 <p><strong>4. Implement your component class:</strong></p>
-<p>Below is an example of the structure of a simple component. This component extends 
-<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a> to simplify the use of 
+<p>Below is an example of the structure of a simple component. This component extends
+<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a> to simplify the use of
 <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a>. You would replace the call to
 <code>run_detection_algorithm_on_frame</code> with your component-specific logic.</p>
 <pre><code class="python">import mpf_component_api as mpf
@@ -497,10 +497,10 @@ class MyComponent(mpf_util.VideoCaptureMixin, object):
 
 <p><strong>5. Optional: Add prebuilt wheel files if not available on PyPi:</strong></p>
 <p>If your component depends on Python libraries that are not available on PyPi, the libraries can be manually added to
-your project. The prebuilt libraries must be placed in your project's <code>plugin-files/wheelhouse</code> directory. 
-The prebuilt library names must be listed in your <code>setup.py</code> file's <code>install_requires</code> field. 
+your project. The prebuilt libraries must be placed in your project's <code>plugin-files/wheelhouse</code> directory.
+The prebuilt library names must be listed in your <code>setup.py</code> file's <code>install_requires</code> field.
 If any of the prebuilt libraries have transitive dependencies that are not available on PyPi, then those libraries
-must also be added to your project's <code>plugin-files/wheelhouse</code> directory. </p>
+must also be added to your project's <code>plugin-files/wheelhouse</code> directory.</p>
 <p><strong>6. Create the plugin package:</strong></p>
 <p>The directory structure of the .tar.gz file will be:</p>
 <pre><code>MyComponent
@@ -527,8 +527,8 @@ tar -zcf MyComponent.tar.gz MyComponent
 </code></pre>
 
 <h2 id="how-to-create-a-basic-python-component">How to Create a Basic Python Component</h2>
-<p>In this example we create a basic Python component that supports video. An example of a basic Python component can be 
-found 
+<p>In this example we create a basic Python component that supports video. An example of a basic Python component can be
+found
 <a href="https://github.com/openmpf/openmpf-python-component-sdk/tree/master/detection/examples/PythonTestComponent">here</a>.</p>
 <p>This is the recommended project structure:</p>
 <pre><code>ComponentName
@@ -546,12 +546,12 @@ touch MyComponent/my_component.py
 </code></pre>
 
 <p><strong>2. Create descriptor.json file in MyComponent/descriptor:</strong></p>
-<p>The <code>batchLibrary</code> field should be the full path to the Python file containing your component class. 
+<p>The <code>batchLibrary</code> field should be the full path to the Python file containing your component class.
 In this example the field should be: <code>"batchLibrary" : "${MPF_HOME}/plugins/MyComponent/my_component.py"</code>.
 See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a> for details about
 the descriptor format.</p>
 <p><strong>3. Implement your component class:</strong></p>
-<p>Below is an example of the structure of a simple component that does not use 
+<p>Below is an example of the structure of a simple component that does not use
 <a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a>. You would replace the call to
 <code>run_detection_algorithm</code> with your component-specific logic.</p>
 <pre><code class="python">import mpf_component_api as mpf
@@ -569,7 +569,7 @@ class MyComponent(object):
 EXPORT_MPF_COMPONENT = MyComponent
 </code></pre>
 
-<p>The component executor looks for a module-level variable named <code>EXPORT_MPF_COMPONENT</code> to specify which class 
+<p>The component executor looks for a module-level variable named <code>EXPORT_MPF_COMPONENT</code> to specify which class
 is the component.</p>
 <p><strong>4. Create the plugin package:</strong></p>
 <p>The directory structure of the .tar.gz file will be:</p>
@@ -589,15 +589,15 @@ is the component.</p>
 </code></pre>
 
 <h1 id="api-specification">API Specification</h1>
-<p>An OpenMPF Python component is a class that defines one or more of the get_detections_from_* methods and has a 
-<code>detection_type</code> field. </p>
+<p>An OpenMPF Python component is a class that defines one or more of the get_detections_from_* methods and has a
+<code>detection_type</code> field.</p>
 <h4 id="componentget_detections_from_42-methods">component.get_detections_from_* methods</h4>
-<p>All get_detections_from_* methods are invoked through an instance of the component class. The only parameter passed 
-in is an appropriate job object (e.g. <code>mpf_component_api.ImageJob</code>, <code>mpf_component_api.VideoJob</code>). Since the methods 
-are invoked through an instance, instance methods and class methods end up with two arguments, the first is either the 
-instance or the class, respectively. All get_detections_from_* methods can be implemented either as an instance method, 
+<p>All get_detections_from_* methods are invoked through an instance of the component class. The only parameter passed
+in is an appropriate job object (e.g. <code>mpf_component_api.ImageJob</code>, <code>mpf_component_api.VideoJob</code>). Since the methods
+are invoked through an instance, instance methods and class methods end up with two arguments, the first is either the
+instance or the class, respectively. All get_detections_from_* methods can be implemented either as an instance method,
 a static method, or a class method.
-For example: </p>
+For example:</p>
 <p>instance method:</p>
 <pre><code class="python">class MyComponent(object):
     def get_detections_from_image(self, image_job):
@@ -618,12 +618,12 @@ For example: </p>
         return [mpf_component_api.ImageLocation(...), ...]
 </code></pre>
 
-<p>All get_detections_from_* methods must return an iterable of the appropriate detection type 
-(e.g. <code>mpf_component_api.ImageLocation</code>, <code>mpf_component_api.VideoTrack</code>). The return value is normally a list or generator, 
+<p>All get_detections_from_* methods must return an iterable of the appropriate detection type
+(e.g. <code>mpf_component_api.ImageLocation</code>, <code>mpf_component_api.VideoTrack</code>). The return value is normally a list or generator,
 but any iterable can be used.</p>
 <h4 id="componentdetection_type">component.detection_type</h4>
 <ul>
-<li><code>str</code> field describing the type of object that is detected by the component. Should be in all CAPS. 
+<li><code>str</code> field describing the type of object that is detected by the component. Should be in all CAPS.
 Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</li>
 <li>Example:</li>
 </ul>
@@ -644,7 +644,7 @@ Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <
 </code></pre>
 
 <p><code>get_detections_from_image</code>, like all get_detections_from_* methods, can be implemented either as an instance method,
-a static method, or a class method. </p>
+a static method, or a class method.</p>
 <ul>
 <li>Parameters:</li>
 </ul>
@@ -699,7 +699,7 @@ a static method, or a class method. </p>
 <tr>
 <td>media_properties</td>
 <td><code>dict[str, str]</code></td>
-<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
+<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br/><br/>This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
 </tr>
 <tr>
 <td>feed_forward_location</td>
@@ -764,22 +764,22 @@ a static method, or a class method. </p>
 <ul>
 <li>Example:</li>
 </ul>
-<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is 
+<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is
 <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
 <pre><code class="python">mpf_component_api.ImageLocation(0, 0, 100, 100, 1.0, {'CLASSIFICATION': 'backpack'})
 </code></pre>
 
 <h4 id="mpf_component_utilimagereader">mpf_component_util.ImageReader</h4>
-<p><code>mpf_component_util.ImageReader</code> is a utility class for accessing images. It is the image equivalent to 
-<code>mpf_component_util.VideoCapture</code>. Like <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a>, 
-it may modify the read-in frame data based on job_properties. From the point of view of someone using 
-<code>mpf_component_util.ImageReader</code>, these modifications are mostly transparent. <code>mpf_component_util.ImageReader</code> makes 
+<p><code>mpf_component_util.ImageReader</code> is a utility class for accessing images. It is the image equivalent to
+<code>mpf_component_util.VideoCapture</code>. Like <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a>,
+it may modify the read-in frame data based on job_properties. From the point of view of someone using
+<code>mpf_component_util.ImageReader</code>, these modifications are mostly transparent. <code>mpf_component_util.ImageReader</code> makes
 it look like you are reading the original image file as though it has already been rotated, flipped, cropped, etc.</p>
-<p>One issue with this approach is that the detection bounding boxes will be relative to the 
-modified frame data, not the original. To make the detections relative to the original image 
-the <code>mpf_component_util.ImageReader.reverse_transform(image_location)</code> method must be called on each 
+<p>One issue with this approach is that the detection bounding boxes will be relative to the
+modified frame data, not the original. To make the detections relative to the original image
+the <code>mpf_component_util.ImageReader.reverse_transform(image_location)</code> method must be called on each
 <code>mpf_component_api.ImageLocation</code>. Since the use of <code>mpf_component_util.ImageReader</code> is optional, the framework
-cannot automatically perform the reverse transform for the developer. </p>
+cannot automatically perform the reverse transform for the developer.</p>
 <p>The general pattern for using <code>mpf_component_util.ImageReader</code> is as follows:</p>
 <pre><code class="python">class MyComponent(object):
 
@@ -787,7 +787,7 @@ cannot automatically perform the reverse transform for the developer. </p>
     def get_detections_from_image(image_job):
         image_reader = mpf_component_util.ImageReader(image_job)
         image = image_reader.get_image()
-        # run_component_specific_algorithm is a placeholder for this example. 
+        # run_component_specific_algorithm is a placeholder for this example.
         # Replace run_component_specific_algorithm with your component's detection logic
         result_image_locations = run_component_specific_algorithm(image)
         for result in result_image_locations:
@@ -795,11 +795,11 @@ cannot automatically perform the reverse transform for the developer. </p>
             yield result
 </code></pre>
 
-<p>Alternatively, see the documentation for <code>mpf_component_util.ImageReaderMixin</code> for a more concise way to use 
+<p>Alternatively, see the documentation for <code>mpf_component_util.ImageReaderMixin</code> for a more concise way to use
 <code>mpf_component_util.ImageReader</code> below.</p>
 <h4 id="mpf_component_utilimagereadermixin">mpf_component_util.ImageReaderMixin</h4>
-<p>A mixin class that can be used to simplify the usage of <code>mpf_component_util.ImageReader</code>. 
-<code>mpf_component_util.ImageReaderMixin</code> takes care of initializing a <code>mpf_component_util.ImageReader</code> and 
+<p>A mixin class that can be used to simplify the usage of <code>mpf_component_util.ImageReader</code>.
+<code>mpf_component_util.ImageReaderMixin</code> takes care of initializing a <code>mpf_component_util.ImageReader</code> and
 performing the reverse transform.</p>
 <p>There are some requirements to properly use <code>mpf_component_util.ImageReaderMixin</code>:</p>
 <ul>
@@ -811,26 +811,26 @@ performing the reverse transform.</p>
 <li>The component must NOT call <code>mpf_component_util.ImageReader.reverse_transform</code>.</li>
 </ul>
 <p>The general pattern for using <code>mpf_component_util.ImageReaderMixin</code> is as follows:</p>
-<pre><code class="python">class MyComponent(mpf_component_util.ImageReaderMixin, object): 
+<pre><code class="python">class MyComponent(mpf_component_util.ImageReaderMixin, object):
 
     @staticmethod # Can also be a regular instance method or a class method
     def get_detections_from_image_reader(image_job, image_reader):
-        image = image_reader.get_image() 
+        image = image_reader.get_image()
 
-        # run_component_specific_algorithm is a placeholder for this example. 
+        # run_component_specific_algorithm is a placeholder for this example.
         # Replace run_component_specific_algorithm with your component's detection logic
         return run_component_specific_algorithm(image)
 </code></pre>
 
 <p><code>mpf_component_util.ImageReaderMixin</code> is a mixin class so it is designed in a way that does not prevent the subclass
-from extending other classes. If a component supports both videos and images, and it uses 
-<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a>, it should also use 
-<code>mpf_component_util.ImageReaderMixin</code>. </p>
+from extending other classes. If a component supports both videos and images, and it uses
+<a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a>, it should also use
+<code>mpf_component_util.ImageReaderMixin</code>.</p>
 <h2 id="video-api">Video API</h2>
 <h4 id="componentget_detections_from_videovideo_job">component.get_detections_from_video(video_job)</h4>
-<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" 
-of video data and each segment (containing a range of frames) is assigned to a different job. Components are not 
-guaranteed to receive requests in any order. For example, the first request processed by a component might receive a 
+<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments"
+of video data and each segment (containing a range of frames) is assigned to a different job. Components are not
+guaranteed to receive requests in any order. For example, the first request processed by a component might receive a
 request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
 <ul>
 <li>Method Definition:</li>
@@ -906,7 +906,7 @@ a static method, or a class method.</p>
 <tr>
 <td>media_properties</td>
 <td><code>dict[str, str]</code></td>
-<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br /> <br />Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul></td>
+<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br/> <br/>Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li></ul></td>
 </tr>
 <tr>
 <td>feed_forward_track</td>
@@ -916,10 +916,10 @@ a static method, or a class method.</p>
 </tbody>
 </table>
 <blockquote>
-<p><strong>IMPORTANT:</strong> <code>FRAME_INTERVAL</code> is a common job property that many components support. 
-For frame intervals greater than 1, the component must look for detections starting with the first 
-frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. 
-For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component 
+<p><strong>IMPORTANT:</strong> <code>FRAME_INTERVAL</code> is a common job property that many components support.
+For frame intervals greater than 1, the component must look for detections starting with the first
+frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame.
+For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component
 must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </blockquote>
 <h4 id="mpf_component_apivideotrack">mpf_component_api.VideoTrack</h4>
@@ -971,13 +971,13 @@ must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </tbody>
 </table>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>mpf_component_api.VideoTrack.detection_properties</code> do not show up in the JSON output object or 
-are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>mpf_component_api.VideoTrack.detection_properties</code> do not show up in the JSON output object or
+are used by the WFM in any way.</p>
 </blockquote>
 <ul>
 <li>Example:</li>
 </ul>
-<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is 
+<p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is
 <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
 <pre><code class="python">track = mpf_component_api.VideoTrack(0, 1)
 track.frame_locations[0] = mpf_component_api.ImageLocation(0, 0, 100, 100, 0.75, {'CLASSIFICATION': 'backpack'})
@@ -986,18 +986,18 @@ track.confidence = max(il.confidence for il in track.frame_locations.itervalues(
 </code></pre>
 
 <h4 id="mpf_component_utilvideocapture">mpf_component_util.VideoCapture</h4>
-<p><code>mpf_component_util.VideoCapture</code> is a utility class for reading videos. <code>mpf_component_util.VideoCapture</code> works very 
-similarly to <code>cv2.VideoCapture</code>, except that it might modify the video frames based on job properties. From the point 
-of view of someone using <code>mpf_component_util.VideoCapture</code>, these modifications are mostly transparent. 
-<code>mpf_component_util.VideoCapture</code> makes it look like you are reading the original video file as though it has already 
-been rotated, flipped, cropped, etc. Also, if frame skipping is enabled, such as by setting the value of the 
-<code>FRAME_INTERVAL</code> job property, it makes it look like you are reading the video as though it never contained the 
+<p><code>mpf_component_util.VideoCapture</code> is a utility class for reading videos. <code>mpf_component_util.VideoCapture</code> works very
+similarly to <code>cv2.VideoCapture</code>, except that it might modify the video frames based on job properties. From the point
+of view of someone using <code>mpf_component_util.VideoCapture</code>, these modifications are mostly transparent.
+<code>mpf_component_util.VideoCapture</code> makes it look like you are reading the original video file as though it has already
+been rotated, flipped, cropped, etc. Also, if frame skipping is enabled, such as by setting the value of the
+<code>FRAME_INTERVAL</code> job property, it makes it look like you are reading the video as though it never contained the
 skipped frames.</p>
-<p>One issue with this approach is that the detection frame numbers and bounding box will be relative to the 
-modified video, not the original. To make the detections relative to the original video 
-the <code>mpf_component_util.VideoCapture.reverse_transform(video_track)</code> method must be called on each 
+<p>One issue with this approach is that the detection frame numbers and bounding box will be relative to the
+modified video, not the original. To make the detections relative to the original video
+the <code>mpf_component_util.VideoCapture.reverse_transform(video_track)</code> method must be called on each
 <code>mpf_component_api.VideoTrack</code>. Since the use of <code>mpf_component_util.VideoCapture</code> is optional, the framework
-cannot automatically perform the reverse transform for the developer. </p>
+cannot automatically perform the reverse transform for the developer.</p>
 <p>The general pattern for using <code>mpf_component_util.VideoCapture</code> is as follows:</p>
 <pre><code class="python">class MyComponent(object):
 
@@ -1006,7 +1006,7 @@ cannot automatically perform the reverse transform for the developer. </p>
         video_capture = mpf_component_util.VideoCapture(video_job)
         # If frame index is not required, you can just loop over video_capture directly
         for frame_index, frame in enumerate(video_capture):
-            # run_component_specific_algorithm is a placeholder for this example. 
+            # run_component_specific_algorithm is a placeholder for this example.
             # Replace run_component_specific_algorithm with your component's detection logic
             result_tracks = run_component_specific_algorithm(frame_index, frame)
             for track in result_tracks:
@@ -1014,11 +1014,11 @@ cannot automatically perform the reverse transform for the developer. </p>
                 yield track
 </code></pre>
 
-<p>Alternatively, see the documentation for <code>mpf_component_util.VideoCaptureMixin</code> for a more concise way to use 
+<p>Alternatively, see the documentation for <code>mpf_component_util.VideoCaptureMixin</code> for a more concise way to use
 <code>mpf_component_util.VideoCapture</code> below.</p>
 <h4 id="mpf_component_utilvideocapturemixin">mpf_component_util.VideoCaptureMixin</h4>
-<p>A mixin class that can be used to simplify the usage of <code>mpf_component_util.VideoCapture</code>. 
-<code>mpf_component_util.VideoCaptureMixin</code> takes care of initializing a <code>mpf_component_util.VideoCapture</code> and 
+<p>A mixin class that can be used to simplify the usage of <code>mpf_component_util.VideoCapture</code>.
+<code>mpf_component_util.VideoCaptureMixin</code> takes care of initializing a <code>mpf_component_util.VideoCapture</code> and
 performing the reverse transform.</p>
 <p>There are some requirements to properly use <code>mpf_component_util.VideoCaptureMixin</code>:</p>
 <ul>
@@ -1035,8 +1035,8 @@ performing the reverse transform.</p>
     @staticmethod # Can also be a regular instance method or a class method
     def get_detections_from_video_capture(video_job, video_capture):
         # If frame index is not required, you can just loop over video_capture directly
-        for frame_index, frame in enumerate(video_capture): 
-            # run_component_specific_algorithm is a placeholder for this example. 
+        for frame_index, frame in enumerate(video_capture):
+            # run_component_specific_algorithm is a placeholder for this example.
             # Replace run_component_specific_algorithm with your component's detection logic
             result_tracks = run_component_specific_algorithm(frame_index, frame)
             for track in result_tracks:
@@ -1045,24 +1045,24 @@ performing the reverse transform.</p>
 </code></pre>
 
 <p><code>mpf_component_util.VideoCaptureMixin</code> is a mixin class so it is designed in a way that does not prevent the subclass
-from extending other classes. If a component supports both videos and images, and it uses 
-<code>mpf_component_util.VideoCaptureMixin</code>, it should also use 
+from extending other classes. If a component supports both videos and images, and it uses
+<code>mpf_component_util.VideoCaptureMixin</code>, it should also use
 <a href="#mpf_component_utilimagereadermixin"><code>mpf_component_util.ImageReaderMixin</code></a>.
 For example:</p>
 <pre><code class="python">class MyComponent(mpf_component_util.VideoCaptureMixin, mpf_component_util.ImageReaderMixin, object):
 
-    @staticmethod 
+    @staticmethod
     def get_detections_from_video_capture(video_job, video_capture):
         ...
 
-    @staticmethod 
+    @staticmethod
     def get_detections_from_image_reader(image_job, image_reader):
        ...
 </code></pre>
 
 <h2 id="audio-api">Audio API</h2>
 <h4 id="componentget_detections_from_audioaudio_job">component.get_detections_from_audio(audio_job)</h4>
-<p>Used to detect objects in an audio file. </p>
+<p>Used to detect objects in an audio file.</p>
 <ul>
 <li>Method Definition:</li>
 </ul>
@@ -1072,7 +1072,7 @@ For example:</p>
 </code></pre>
 
 <p><code>get_detections_from_audio</code>, like all get_detections_from_* methods, can be implemented either as an instance method,
-a static method, or a class method. </p>
+a static method, or a class method.</p>
 <ul>
 <li>Parameters:</li>
 </ul>
@@ -1096,7 +1096,7 @@ a static method, or a class method. </p>
 <li>Returns: An iterable of <code>mpf_component_api.AudioTrack</code></li>
 </ul>
 <h4 id="mpf_component_apiaudiojob">mpf_component_api.AudioJob</h4>
-<p>Class containing data used for detection of objects in an audio file. 
+<p>Class containing data used for detection of objects in an audio file.
 Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.</p>
 <ul>
 <li>Members:</li>
@@ -1138,7 +1138,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
 <tr>
 <td>media_properties</td>
 <td><code>dict[str, str]</code></td>
-<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br /> <br />Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
+<td>Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job. <br/> <br/>Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
 </tr>
 <tr>
 <td>feed_forward_track</td>
@@ -1191,12 +1191,12 @@ Currently, audio files are not logically segmented, so a job will contain the en
 </tbody>
 </table>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>mpf_component_api.AudioTrack.detection_properties</code> do not show up in the JSON output object or 
-are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>mpf_component_api.AudioTrack.detection_properties</code> do not show up in the JSON output object or
+are used by the WFM in any way.</p>
 </blockquote>
 <h2 id="generic-api">Generic API</h2>
 <h4 id="componentget_detections_from_genericgeneric_job">component.get_detections_from_generic(generic_job)</h4>
-<p>Used to detect objects in files that are not video, image, or audio files. Such files are of the UNKNOWN type and 
+<p>Used to detect objects in files that are not video, image, or audio files. Such files are of the UNKNOWN type and
 handled generically.</p>
 <ul>
 <li>Method Definition:</li>
@@ -1207,7 +1207,7 @@ handled generically.</p>
 </code></pre>
 
 <p><code>get_detections_from_generic</code>, like all get_detections_from_* methods, can be implemented either as an instance method,
-a static method, or a class method. </p>
+a static method, or a class method.</p>
 <ul>
 <li>Parameters:</li>
 </ul>
@@ -1231,7 +1231,7 @@ a static method, or a class method. </p>
 <li>Returns: An iterable of <code>mpf_component_api.GenericTrack</code></li>
 </ul>
 <h4 id="mpf_component_apigenericjob">mpf_component_api.GenericJob</h4>
-<p>Class containing data used for detection of objects in a file that isn't a video, image, or audio file. The file is not 
+<p>Class containing data used for detection of objects in a file that isn't a video, image, or audio file. The file is not
 logically segmented, so a job will contain the entirety of the file.</p>
 <ul>
 <li>Members:</li>
@@ -1273,7 +1273,7 @@ logically segmented, so a job will contain the entirety of the file.</p>
 </tbody>
 </table>
 <h4 id="mpf_component_apigenerictrack">mpf_component_api.GenericTrack</h4>
-<p>Class used to store the location of detected objects in a file that is not a video, image, or audio file. </p>
+<p>Class used to store the location of detected objects in a file that is not a video, image, or audio file.</p>
 <ul>
 <li>Constructor:</li>
 </ul>
@@ -1306,11 +1306,11 @@ logically segmented, so a job will contain the entirety of the file.</p>
 </tbody>
 </table>
 <h1 id="python-component-build-environment">Python Component Build Environment</h1>
-<p>All Python components must work with CPython 2.7. Also, Python components must work with the Linux version that is 
+<p>All Python components must work with CPython 2.7. Also, Python components must work with the Linux version that is
 used by the OpenMPF Component Executable. At this writing, OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693).
-Pure Python code should work on any OS, but incompatibility issues can arise when using Python libraries that include 
-compiled extension modules. Python libraries are typically distributed as wheel files. The wheel format requires that 
-the file name follows the pattern of 
+Pure Python code should work on any OS, but incompatibility issues can arise when using Python libraries that include
+compiled extension modules. Python libraries are typically distributed as wheel files. The wheel format requires that
+the file name follows the pattern of
 <code>&lt;dist_name&gt;-&lt;version&gt;-&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;.whl</code>. <code>&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;</code> are called
 <a href="https://www.python.org/dev/peps/pep-0425">compatibility tags</a>. For example, <code>mpf_component_api</code> is pure Python
 so the name of its wheel file is <code>mpf_component_api-0.1-py2-none-any.whl</code>. <code>py2</code> means it will work with any Python 2
@@ -1333,29 +1333,29 @@ Python ABI. <code>any</code> means it will work on any platform.</p>
 <li><code>any</code></li>
 <li><code>manylinux1_x86_64</code></li>
 </ul>
-<p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or 
-files needed for execution. This includes all other non-standard libraries used by the component 
+<p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
+files needed for execution. This includes all other non-standard libraries used by the component
 (aside from the standard Python libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
 <h2 id="single-threaded-operation">Single-threaded Operation</h2>
-<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through 
+<p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through
 multiple instantiations of the component, each running as a separate service.</p>
 <h2 id="stateless-behavior">Stateless Behavior</h2>
-<p>OpenMPF components should be stateless in operation and give identical output for a provided input 
+<p>OpenMPF components should be stateless in operation and give identical output for a provided input
 (i.e. when processing the same job).</p>
 <h2 id="logging">Logging</h2>
 <p>It recommended that components use the logger returned from:
 <br> <code>mpf_component_util.configure_logging(log_file_name, is_debug=False)</code>. When <code>is_debug</code> is false, the log messages
-will be written to 
+will be written to
 <br> <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;log_file_name&gt;.log</code> When <code>is_debug</code> is true, the log messages
-will be written to standard out. Note that multiple instances of the same component can log to the same file. 
-Also, logging content can span multiple lines. The following log levels are supported: 
+will be written to standard out. Note that multiple instances of the same component can log to the same file.
+Also, logging content can span multiple lines. The following log levels are supported:
 <code>FATAL, ERROR, WARN, INFO, DEBUG</code>.</p>
 <p>The format of the log messages is:</p>
 <pre><code>DATE TIME LEVEL [SOURCE_FILE:LINE_NUMBER] - MESSAGE
 </code></pre>
 
-<p>For example: </p>
+<p>For example:</p>
 <pre><code>2018-05-03 14:41:11,703 INFO  [test_component.py:44] - Logged message
 </code></pre>
               

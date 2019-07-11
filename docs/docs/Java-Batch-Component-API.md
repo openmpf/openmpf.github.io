@@ -438,7 +438,7 @@ protected MPFJob(
 |---|---|---|
 | jobName | `String`  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
 | dataUri <a name="data-uri"></a> | `String`  | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".  |
-| jobProperties <a name="job-properties"></a> | `Map<String, String>`  | The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br /><br /> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value. |
+| jobProperties <a name="job-properties"></a> | `Map<String, String>`  | The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br/><br/> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value. |
 | mediaProperties <a name="media-properties"></a> | `Map<String, String>` | Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description. |
 
 
@@ -471,7 +471,7 @@ public MPFImageJob(
 |  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
 | dataUri  | `String`  | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br /><br />This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 | location | `MPFImageLocation` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFVideoJob
@@ -509,7 +509,7 @@ public MPFVideoJob(
 |  startFrame | `int` | The first frame number (0-based index) of the video that should be processed to look for detections.  |
 | stopFrame  | `int` | The last frame number (0-based index) of the video that should be processed to look for detections.|
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br /> <br />Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li></ul> |
 | track | `MPFVideoTrack` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
@@ -550,7 +550,7 @@ public MPFAudioJob(
 |  startTime | `int` | The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
 | stopTime  | `int` | The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br /> <br />Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
 | track | `MPFAudioTrack` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFGenericJob
@@ -615,7 +615,7 @@ public MPFImageLocation(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | `Map<String, String>` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the properties map. For best practice, keys should be in all CAPS. |
 
-* Example: 
+* Example:
 
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
@@ -650,9 +650,9 @@ public MPFVideoTrack(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | `Map<String, String>` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the properties map. For best practice, keys should be in all CAPS. |
 
-* Example: 
+* Example:
 
->**NOTE:** Currently, `MPFVideoTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way. 
+>**NOTE:** Currently, `MPFVideoTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way.
 
 A component that detects text could add an entry to `detectionProperties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
 
@@ -685,7 +685,7 @@ public MPFAudioTrack(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detectionProperties | `Map<String, String>` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the properties map. For best practice, keys should be in all CAPS. |
 
->**NOTE:** Currently, `MPFAudioTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way. 
+>**NOTE:** Currently, `MPFAudioTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way.
 
 #### MPFGenericTrack
 
