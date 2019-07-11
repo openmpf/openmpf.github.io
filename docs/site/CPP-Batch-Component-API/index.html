@@ -511,7 +511,7 @@ This will be executed once by the Component Executable, on component shutdown, u
 </code></pre>
 
 <p>The creator macro takes the <code>TYPENAME</code> of the detection component (for example, “HelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.</p>
-<p>The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component. </p>
+<p>The deleter macro creates the factory function that the Component Executable will use to delete that instance of the detection component.</p>
 <p>These macros must be used outside of a class declaration, preferably at the bottom or top of a component source (.cpp) file.</p>
 <p><strong>Example:</strong></p>
 <pre><code class="c++">// Note: Do not put the TypeName/Class Name in quotes
@@ -916,7 +916,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <tr>
 <td>media_properties</td>
 <td><code>const Properties &amp;</code></td>
-<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br/><br/>This may include the following key-value pairs:<ul><li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -990,7 +990,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <tr>
 <td>media_properties</td>
 <td><code>const Properties &amp;</code></td>
-<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br /> <br />Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br/><br/>Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -1067,7 +1067,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <tr>
 <td>media_properties</td>
 <td><code>const Properties &amp;</code></td>
-<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br /> <br />Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.media_properties</a> for description.<br/> <br/>Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
 </tr>
 </tbody>
 </table>
@@ -1192,11 +1192,11 @@ MPFImageLocation(
 </tr>
 </tbody>
 </table>
-<p>When the <code>detection_properties</code> map contains a <code>ROTATION</code> key, it should be a floating point value in the interval 
-<code>[0.0, 360.0)</code> indicating the orientation of the detection in degrees in the counter-clockwise direction. 
-In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the 
-clockwise direction. When the <code>ROTATION</code> key is present, <code>x_left_upper</code> and <code>y_left_upper</code> indicate the top left of 
-the correctly oriented detection. Similarly, <code>width</code> and <code>height</code> indicate the dimensions of the correctly oriented 
+<p>When the <code>detection_properties</code> map contains a <code>ROTATION</code> key, it should be a floating point value in the interval
+<code>[0.0, 360.0)</code> indicating the orientation of the detection in degrees in the counter-clockwise direction.
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
+clockwise direction. When the <code>ROTATION</code> key is present, <code>x_left_upper</code> and <code>y_left_upper</code> indicate the top left of
+the correctly oriented detection. Similarly, <code>width</code> and <code>height</code> indicate the dimensions of the correctly oriented
 detection.</p>
 <ul>
 <li>Example:</li>
@@ -1282,7 +1282,7 @@ MPFVideoTrack(
 <li>Example:</li>
 </ul>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way.</p>
 </blockquote>
 <p>A component that detects text can add an entry to <code>detection_properties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
 <pre><code class="c++">MPFVideoTrack track;
@@ -1341,7 +1341,7 @@ MPFAudioTrack(
 </tbody>
 </table>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>MPFAudioTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>MPFAudioTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way.</p>
 </blockquote>
 <h4 id="mpfgenerictrack">MPFGenericTrack</h4>
 <p>Structure used to store the location of detected objects in a file that is not a video, image, or audio file. The file is of the UNKNOWN type and handled generically.</p>

@@ -836,7 +836,7 @@ public boolean supports(MPFDataType dataType) {
 <tr>
 <td>jobProperties <a name="job-properties"></a></td>
 <td><code>Map&lt;String, String&gt;</code></td>
-<td>The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br /><br /> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value.</td>
+<td>The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br/><br/> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value.</td>
 </tr>
 <tr>
 <td>mediaProperties <a name="media-properties"></a></td>
@@ -896,7 +896,7 @@ public boolean supports(MPFDataType dataType) {
 <tr>
 <td>mediaProperties</td>
 <td><code>Map&lt;String, String&gt;</code></td>
-<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /><br />This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br/><br/>This may include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li><li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li><li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li></ul></td>
 </tr>
 <tr>
 <td>location</td>
@@ -970,7 +970,7 @@ public boolean supports(MPFDataType dataType) {
 <tr>
 <td>mediaProperties</td>
 <td><code>Map&lt;String, String&gt;</code></td>
-<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br/> <br/>Includes the following key-value pairs:<ul><li><code>DURATION</code> : length of video in milliseconds</li><li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li><li><code>FRAME_COUNT</code> : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li><code>ROTATION</code> : 0, 90, 180, or 270 degrees</li></ul></td>
 </tr>
 <tr>
 <td>track</td>
@@ -1047,7 +1047,7 @@ public boolean supports(MPFDataType dataType) {
 <tr>
 <td>mediaProperties</td>
 <td><code>Map&lt;String, String&gt;</code></td>
-<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br /> <br />Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
+<td>See <a href="#media-properties">MPFJob.mediaProperties</a> for description.<br/> <br/>Includes the following key-value pair:<ul><li><code>DURATION</code> : length of audio file in milliseconds</li></ul></td>
 </tr>
 <tr>
 <td>track</td>
@@ -1177,7 +1177,7 @@ public boolean supports(MPFDataType dataType) {
 </tbody>
 </table>
 <ul>
-<li>Example: </li>
+<li>Example:</li>
 </ul>
 <p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
 <pre><code class="java">Map&lt;String, String&gt; detectionProperties = new HashMap&lt;String, String&gt;();
@@ -1239,10 +1239,10 @@ MPFImageLocation imageLocation = new MPFImageLocation(0, 0, 100, 100, 1.0, detec
 </tbody>
 </table>
 <ul>
-<li>Example: </li>
+<li>Example:</li>
 </ul>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detectionProperties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detectionProperties</code> do not show up in the JSON output object or are used by the WFM in any way.</p>
 </blockquote>
 <p>A component that detects text could add an entry to <code>detectionProperties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
 <pre><code class="java">Map&lt;String, String&gt; detectionProperties = new HashMap&lt;String, String&gt;();
@@ -1298,7 +1298,7 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 </tbody>
 </table>
 <blockquote>
-<p><strong>NOTE:</strong> Currently, <code>MPFAudioTrack.detectionProperties</code> do not show up in the JSON output object or are used by the WFM in any way. </p>
+<p><strong>NOTE:</strong> Currently, <code>MPFAudioTrack.detectionProperties</code> do not show up in the JSON output object or are used by the WFM in any way.</p>
 </blockquote>
 <h4 id="mpfgenerictrack">MPFGenericTrack</h4>
 <p>Class used to store the location of detected objects in a file that is not a video, image, or audio file. The file is of the UNKNOWN type and handled generically.</p>
