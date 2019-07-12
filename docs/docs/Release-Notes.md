@@ -5,12 +5,12 @@
 <h2>Documentation</h2>
 
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [Arbitrary Rotation](#arbitrary-rotation) section below.
-- Updated the [REST API](REST-API) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
+- Updated the [REST API](REST-API.md) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
 - Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the [EAST Text Region Detection Component](#east-text-region-detection-component) section below.
 - Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](#tesseract-ocr-text-detection-component) section below.
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/develop/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md) guide to describe the new streamlined approach to using `docker-compose config`. See the [Docker Deployment](#docker-deployment) section below.
 - Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
-- Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#889](https://github.com/openmpf/openmpf/issues/855).
+- Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#855](https://github.com/openmpf/openmpf/issues/855).
 
 <span id="arbitrary-rotation"></span>
 <h2>Arbitrary Rotation</h2>
@@ -96,7 +96,7 @@ within a Docker container. This isolates the build and execution environment fro
 
 - [[#891](https://github.com/openmpf/openmpf/issues/891)] Fixed a bug where the Workflow Manager media segmenter generated short segments that were minimally MIN_SEGMENT_LENGTH+1 in size instead of MIN_SEGMENT_LENGTH.
 - [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. This seems to have been resolved by disabling ActiveMQ prefetch behavior on component queues.
-- [[#889](https://github.com/openmpf/openmpf/issues/855)] A logback circular reference suppressed exception no longer throws a StackOverflowError. This was resolved by transitioning the Workflow Manager and Java components from the Logback framework to Log4j2.
+- [[#855](https://github.com/openmpf/openmpf/issues/855)] A logback circular reference suppressed exception no longer throws a StackOverflowError. This was resolved by transitioning the Workflow Manager and Java components from the Logback framework to Log4j2.
 
 <h2>Known Issues</h2>
 
