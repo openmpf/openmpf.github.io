@@ -471,7 +471,7 @@ public MPFImageJob(
 |  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
 | dataUri  | `String`  | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
 | location | `MPFImageLocation` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFVideoJob
