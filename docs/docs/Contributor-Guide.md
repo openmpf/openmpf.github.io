@@ -16,6 +16,7 @@ The OpenMPF project consists of the following repositories:
  - [openmpf/openmpf-java-component-sdk](https://github.com/openmpf/openmpf-java-component-sdk)
  - [openmpf/openmpf-python-component-sdk](https://github.com/openmpf/openmpf-python-component-sdk) 
  - [openmpf/openmpf-projects](https://github.com/openmpf/openmpf-projects)
+ - [openmpf/openmpf-docker](https://github.com/openmpf/openmpf-docker)
 
 Work across the project is tracked using our [workboard](https://github.com/orgs/openmpf/projects/3).
 
