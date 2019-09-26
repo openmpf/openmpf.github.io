@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Development Environment Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Development Environment Guide";
+    var mkdocs_page_input_path = "Development-Environment-Guide.md";
+    var mkdocs_page_url = "/Development-Environment-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/index.html">Release Notes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Install-Guide/index.html">Install Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/index.html">User Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Node-Guide/index.html">Node Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Development Environment Guide</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#install-centos-7">Install CentOS 7</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#install-system-dependencies-using-package-managers">Install System Dependencies Using Package Managers</a></li>
+                
+                    <li><a class="toctree-l4" href="#configure-additional-repositories">Configure Additional Repositories</a></li>
+                
+                    <li><a class="toctree-l4" href="#install-system-dependencies-via-yum">Install System Dependencies via Yum</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#get-the-openmpf-source-code">Get the OpenMPF Source Code</a></li>
+                
+                    <li><a class="toctree-l4" href="#add-maven-dependencies">Add Maven Dependencies</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#build-and-install-system-dependencies-in-dockerfiles">Build and Install System Dependencies in Dockerfiles</a></li>
+                
+                    <li><a class="toctree-l4" href="#nvidia-cuda-toolkit">NVIDIA CUDA Toolkit</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#build-and-install-additional-system-dependencies">Build and Install Additional System Dependencies</a></li>
+                
+                    <li><a class="toctree-l4" href="#apache-activemq-5130">Apache ActiveMQ 5.13.0</a></li>
+                
+                    <li><a class="toctree-l4" href="#apache-ant-196">Apache Ant 1.9.6</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-system-dependencies">Configure System Dependencies</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-mysql">Configure MySQL</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-activemq">Configure ActiveMQ</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-redis">Configure Redis</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configure-tomcat-with-http">Configure Tomcat with HTTP</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#optional-configure-tomcat-with-https">(Optional) Configure Tomcat with HTTPS</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#optional-test-openmpf">(Optional) Test OpenMPF</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#proxy-configuration">Proxy Configuration</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#ssl-inspection">SSL Inspection</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#development-tools">Development Tools</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Components</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Architecture</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>General &raquo;</li>
+        
+      
+    
+    <li>Development Environment Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
+<p><strong>WARNING:</strong> This guide is a work in progress and may not be completely accurate or comprehensive. Since transitioning to Docker deployment, this guide has not been fully tested.</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>The following instructions are for setting up an environment for building OpenMPF outside of Docker.</p>
+<p>If your environment is behind a proxy server, please refer to the <a href="#proxy-configuration">Proxy Configuration</a> and <a href="#ssl-inspection">SSL Inspection</a> appendix sections before continuing. Keep them in mind throughout this guide and perform the configuration steps as necessary.</p>
+<h1 id="install-centos-7">Install CentOS 7</h1>
+<p>The recommended minimum system specifications are:</p>
+<ul>
+<li><strong>Memory</strong>: 8192MB</li>
+<li><strong>CPU</strong>: 4</li>
+<li><strong>Disk</strong>: 40GB on a SSD</li>
+</ul>
+<p>Install <a href="https://www.centos.org/download/">CentOS 7</a>. Most developers use a virtual machine for development.</p>
+<h1 id="install-system-dependencies-using-package-managers">Install System Dependencies Using Package Managers</h1>
+<h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
+<ol>
+<li>Install the Oracle MySQL Community Release Repository:<ol>
+<li><code>wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"</code></li>
+<li><code>sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm</code></li>
+</ol>
+</li>
+<li>Install the Remi Repo for Redis:<ol>
+<li><code>wget -P /home/mpf/Downloads "http://rpms.remirepo.net/RPM-GPG-KEY-remi"</code></li>
+<li><code>wget -P /home/mpf/Downloads "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"</code></li>
+<li><code>sudo rpm --import /home/mpf/Downloads/RPM-GPG-KEY-remi</code></li>
+<li><code>sudo rpm -Uvh /home/mpf/Downloads/remi-release-7.rpm</code></li>
+<li><code>sudo yum-config-manager --enable remi</code></li>
+</ol>
+</li>
+<li>Create an <code>/apps</code> directory and package subdirectories:<ol>
+<li><code>sudo mkdir -p /apps/install/lib</code></li>
+<li><code>sudo mkdir -p /apps/bin/apache</code></li>
+<li><code>sudo mkdir /apps/ansible</code></li>
+<li><code>sudo mkdir -p /apps/source/cmake_sources</code></li>
+<li><code>sudo mkdir /apps/source/apache_sources</code></li>
+<li><code>sudo mkdir /apps/source/google_sources</code></li>
+<li><code>sudo mkdir /apps/source/opencv_sources</code></li>
+<li><code>sudo mkdir /apps/source/ffmpeg_sources</code></li>
+<li><code>sudo mkdir /apps/source/dlib-sources</code></li>
+<li><code>sudo mkdir /apps/source/openalpr_sources</code></li>
+<li><code>sudo mkdir /apps/source/ansible_sources</code></li>
+<li><code>sudo chown -R mpf:mpf /apps</code></li>
+<li><code>sudo chmod -R 755 /apps</code></li>
+</ol>
+</li>
+<li>Create the OpenMPF <code>ldconfig</code> file:
+    <br><code>sudo touch /etc/ld.so.conf.d/mpf-x86_64.conf</code></li>
+<li>Add <code>/apps/install/lib</code> to the OpenMPF <code>ldconfig</code> file:
+    <br><code>sudo sh -c 'echo "/apps/install/lib" &gt;&gt; /etc/ld.so.conf.d/mpf-x86_64.conf'</code></li>
+<li>Update the shared library cache:
+    <br><code>sudo ldconfig</code></li>
+</ol>
+<h2 id="install-system-dependencies-via-yum">Install System Dependencies via Yum</h2>
+<p>Use <code>yum</code> to install packages:</p>
+<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
+<p>The version of <code>pip</code> available in the yum repository is old and must be upgraded with the following command:</p>
+<p><code>sudo pip install --upgrade pip</code></p>
+<h1 id="get-the-openmpf-source-code">Get the OpenMPF Source Code</h1>
+<ol>
+<li>
+<p>Clone the OpenMPF projects repository:</p>
+<ol>
+<li><code>cd /home/mpf</code></li>
+<li><code>git clone https://github.com/openmpf/openmpf-projects.git --recursive</code></li>
+</ol>
+</li>
+<li>
+<p>Copy the mpf user profile script from the extracted source code:
+    <br> <code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></p>
+</li>
+<li>
+<p>Add <code>/apps/install/bin</code> to the system <code>PATH</code> variable:</p>
+<ol>
+<li><code>sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+</li>
+</ol>
+<h2 id="add-maven-dependencies">Add Maven Dependencies</h2>
+<p>Some Maven dependencies needed for OpenMPF are not publicly available.</p>
+<ol>
+<li>Download   <a href="https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz">mpf-maven-deps.tar.gz</a> to <code>/home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz</code>.</li>
+<li>Set up the local Maven repository:<ol>
+<li><code>cd /home/mpf</code></li>
+<li><code>mkdir -p .m2/repository</code></li>
+</ol>
+</li>
+<li>Extract the archive to the local Maven repository:
+<br><code>tar xvzf /home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz -C /home/mpf/.m2/repository/</code></li>
+</ol>
+<h1 id="build-and-install-system-dependencies-in-dockerfiles">Build and Install System Dependencies in Dockerfiles</h1>
+<p>Refer to the <code>openmpf_build</code> <a href="https://github.com/openmpf/openmpf-docker/blob/develop/openmpf_build/Dockerfile">Dockerfile</a>, and execute the <code>RUN</code> steps to build/install the required dependencies in your local development environment. Use your best judgement. You will need to run some commands with <code>sudo</code> root privileges. Some of these may be redundant with the steps you've followed so far. Installation of the NVIDIA CUDA Toolkit is optional. Refer to the <a href="#nvidia-cuda-toolkit">NVIDIA CUDA Toolkit</a> section below.</p>
+<p>The <code>openmpf_build</code> Dockerfile may not include the dependencies you need to develop specific components. Refer to the Dockerfile for each of those components to determine which dependencies they require.</p>
+<h2 id="nvidia-cuda-toolkit">NVIDIA CUDA Toolkit</h2>
+<p>Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. Many components that support GPU processing also support execution on the CPU, and if this toolkit is not found in the build environment, the build system will automatically build those components for CPU processing only. For a discussion of NVIDIA GPU support in OpenMPF components, see the <a href="../GPU-Support-Guide/index.html">GPU Support Guide</a>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> To run OpenMPF components that use the NVIDIA GPUs, you must ensure that the deployment machine has the same version of this Toolkit installed, including the NVIDIA GPU drivers. The instructions here are for a development environment only, and thus do not include steps to install the drivers. If you also need to set up the deployment machine, please see the full instructions at <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html">https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html</a>.</p>
+</blockquote>
+<h1 id="build-and-install-additional-system-dependencies">Build and Install Additional System Dependencies</h1>
+<h2 id="apache-activemq-5130">Apache ActiveMQ 5.13.0</h2>
+<p>For reference only: <a href="http://activemq.apache.org">http://activemq.apache.org</a></p>
+<ol>
+<li><code>cd /apps/bin/apache</code></li>
+<li><code>wget -O /apps/bin/apache/apache-activemq-5.13.0-bin.tar.gz "https://archive.apache.org/dist/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz"</code></li>
+<li><code>sudo tar xvzf apache-activemq-5.13.0-bin.tar.gz -C /opt/</code></li>
+<li><code>sudo chown -R mpf:mpf /opt/apache-activemq-5.13.0</code></li>
+<li><code>sudo chmod -R 755 /opt/apache-activemq-5.13.0</code></li>
+<li><code>sudo ln -s /opt/apache-activemq-5.13.0 /opt/activemq</code></li>
+</ol>
+<h2 id="apache-ant-196">Apache Ant 1.9.6</h2>
+<p>For reference only: <a href="http://ant.apache.org">http://ant.apache.org</a></p>
+<ol>
+<li><code>cd /apps/bin/apache</code></li>
+<li><code>wget -O /apps/bin/apache/apache-ant-1.9.6-bin.tar.gz "https://archive.apache.org/dist/ant/binaries/apache-ant-1.9.6-bin.tar.gz"</code></li>
+<li><code>tar xzvf apache-ant-1.9.6-bin.tar.gz</code></li>
+<li><code>sudo cp -R /apps/bin/apache/apache-ant-1.9.6 /apps/install/</code></li>
+<li><code>sudo chown -R mpf:mpf /apps/install/apache-ant-1.9.6</code></li>
+<li><code>sudo sed -i '/^PATH/s/$/:\/apps\/install\/apache-ant-1.9.6\/bin/' /etc/profile.d/mpf.sh</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+<h1 id="configure-system-dependencies">Configure System Dependencies</h1>
+<h1 id="configure-mysql">Configure MySQL</h1>
+<ol>
+<li><code>sudo systemctl start mysqld</code></li>
+<li><code>mysql -u root --execute "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';flush privileges;"</code></li>
+<li><code>mysql -u root -ppassword --execute "create database mpf"</code></li>
+<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'%' IDENTIFIED by 'mpf';flush privileges;"</code></li>
+<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'$(hostname)' IDENTIFIED by 'mpf';flush privileges;"</code></li>
+<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'localhost' IDENTIFIED by 'mpf';flush privileges;"</code></li>
+<li><code>mysql -u root -ppassword --execute "grant all privileges on mpf.* to 'mpf';flush privileges;"</code></li>
+<li><code>sudo systemctl enable mysqld.service</code></li>
+<li><code>sudo chkconfig --level 2345 mysqld on</code></li>
+</ol>
+<h1 id="configure-activemq">Configure ActiveMQ</h1>
+<p>Some additional manual configuration of ActiveMQ is required. For each step, open the specified file in a text editor, make the change, and save the file. If ActiveMQ is running, please stop it before making these changes.</p>
+<p><strong>Use Additional Memory</strong></p>
+<p>In <code>/opt/activemq/bin/env</code> (line 27), comment out the line:</p>
+<pre><code>ACTIVEMQ_OPTS_MEMORY=&quot;-Xms64M -Xmx1G&quot;
+</code></pre>
+
+<p>so that it reads:</p>
+<pre><code>#ACTIVEMQ_OPTS_MEMORY=&quot;-Xms64M -Xmx1G&quot;
+</code></pre>
+
+<p><strong>Disable Persistence</strong></p>
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 40), change the line:</p>
+<pre><code>&lt;broker xmlns=&quot;http://activemq.apache.org/schema/core&quot; brokerName=&quot;localhost&quot; dataDirectory=&quot;${activemq.data}&quot;&gt;
+</code></pre>
+
+<p>so that it reads:</p>
+<pre><code>&lt;broker xmlns=&quot;http://activemq.apache.org/schema/core&quot; brokerName=&quot;localhost&quot; dataDirectory=&quot;${activemq.data}&quot; persistent=&quot;false&quot;&gt;
+</code></pre>
+
+<p><strong>Respect Priorities</strong></p>
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 44) under the line:</p>
+<pre><code>&lt;policyEntries&gt;
+</code></pre>
+
+<p>add the line:</p>
+<pre><code>&lt;policyEntry queue=&quot;&gt;&quot; prioritizedMessages=&quot;true&quot; useCache=&quot;false&quot; expireMessagesPeriod=&quot;0&quot; queuePrefetch=&quot;1&quot; /&gt;
+</code></pre>
+
+<p><strong>Enable JMX</strong></p>
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 72, after making the above addition), change the line:</p>
+<pre><code>&lt;managementContext createConnector=&quot;false&quot;/&gt;
+</code></pre>
+
+<p>so that it reads:</p>
+<pre><code>&lt;managementContext createConnector=&quot;true&quot;/&gt;
+</code></pre>
+
+<p><strong>Change Log Conversion Pattern</strong></p>
+<p>In <code>/opt/activemq/conf/log4j.properties</code> (line 52), change the line:</p>
+<pre><code>log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n
+</code></pre>
+
+<p>so that it reads:</p>
+<pre><code>log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n
+</code></pre>
+
+<h1 id="configure-redis">Configure Redis</h1>
+<p>Redis should be set to run in the background (i.e. as a daemon process).</p>
+<p>In <code>/etc/redis.conf</code> (line 136), change the line:</p>
+<pre><code>daemonize no
+</code></pre>
+
+<p>so that it reads:</p>
+<pre><code>daemonize yes
+</code></pre>
+
+<h1 id="configure-tomcat-with-http">Configure Tomcat with HTTP</h1>
+<p>When developing OpenMPF on a local machine, it is often most convenient to configure Tomcat to use HTTP instead of HTTPS.</p>
+<ol>
+<li>Open the file <code>/opt/apache-tomcat/conf/server.xml</code> in a text editor.</li>
+<li>Below the commented out section on lines 87 through 90, remove the following lines if they exist:
+<pre><code>&#60;Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+    disableUploadTimeout="true" enableLookups="false" maxThreads="25"
+    port="8443" keystoreFile="/home/mpf/.keystore" keystorePass="mpf123"
+    protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
+    secure="true" sslProtocol="TLS" /&#62;</code></pre></li>
+<li>Save and close the file.</li>
+<li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
+<li>Add the following line:
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='NONE' -Dweb.rest.protocol='http'"</code></pre></li>
+<li>Save and close the file.</li>
+</ol>
+<h1 id="optional-configure-tomcat-with-https">(Optional) Configure Tomcat with HTTPS</h1>
+<p>Alternatively, OpenMPF can also be run using HTTPS instead of HTTP.</p>
+<p><strong>Generate a self-signed certificate and keystore</strong></p>
+<p>A valid keystore is required to run OpenMPF with HTTPS support. These instructions will generate a keystore that should be used for local builds only. When deploying OpenMPF, a keystore containing a valid certificate trust chain should be used.</p>
+<ol>
+<li>Open a new terminal window.</li>
+<li><code>sudo systemctl stop tomcat7</code></li>
+<li><code>cd /home/mpf</code></li>
+<li><code>$JAVA_HOME/bin/keytool -genkey -alias tomcat -keyalg RSA</code></li>
+<li>At the prompt, enter a keystore password of: <code>mpf123</code></li>
+<li>Re-enter the keystore password of: <code>mpf123</code></li>
+<li>At the <code>What is your first and last name?</code> prompt, press the Enter key for a blank value.</li>
+<li>At the <code>What is the name of your organizational unit?</code> , press the Enter key for a blank value.</li>
+<li>At the <code>What is the name of your organization?</code> prompt, press the Enter key for a blank value.</li>
+<li>At the <code>What is the name of your City or Locality?</code> prompt, press the Enter key for a blank value.</li>
+<li>At the <code>What is the name of your State or Province?</code> prompt, press the Enter key for a blank value.</li>
+<li>At the <code>What is the two-letter country code for this unit?</code> prompt, press the Enter key for a blank value.</li>
+<li>At the <code>Is CN=Unknown, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?</code> prompt, type <code>yes</code> and press the Enter key to accept the values.</li>
+<li>At the <code>Enter key password for &lt;tomcat&gt;</code> prompt, press the Enter key for a blank value.</li>
+<li>Verify the file <code>/home/mpf/.keystore</code> was created at the current time.</li>
+</ol>
+<p><strong>Tomcat Configuration</strong></p>
+<ol>
+<li>Open the file <code>/opt/apache-tomcat/conf/server.xml</code> in a text editor.</li>
+<li>Below the commented out section on lines 87 through 90, add the following lines:
+<pre><code>&#60;Connector SSLEnabled="true" acceptCount="100" clientAuth="false"
+    disableUploadTimeout="true" enableLookups="false" maxThreads="25"
+    port="8443" keystoreFile="/home/mpf/.keystore" keystorePass="mpf123"
+    protocol="org.apache.coyote.http11.Http11NioProtocol" scheme="https"
+    secure="true" sslProtocol="TLS" /&#62;</code></pre></li>
+<li>Save and close the file.</li>
+<li>Create the file <code>/opt/apache-tomcat/bin/setenv.sh</code> and open it in a text editor.</li>
+<li>Add the following line:
+<pre><code>export CATALINA_OPTS="-server -Xms256m -XX:PermSize=512m -XX:MaxPermSize=512m -Djava.library.path=$MPF_HOME/lib -Dtransport.guarantee='CONFIDENTIAL' -Dweb.rest.protocol='https'"</code></pre></li>
+<li>Save and close the file.</li>
+</ol>
+<p><strong>Using an IDE</strong></p>
+<p>If running Tomcat from an IDE, such as IntelliJ, then <code>-Dtransport.guarantee="CONFIDENTIAL" -Dweb.rest.protocol="https"</code> should be added at the end of the Tomcat VM arguments for your Tomcat run configuration. It is not necessary to add these arguments when running tomcat from the command line or a systemd command because of the configured <code>CATALINA_OPTS</code> variable.</p>
+<h1 id="build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</h1>
+<p>Run these commands to build OpenMPF and launch the web application:</p>
+<ol>
+<li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
+<li>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+</li>
+<li>
+<p>Open <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
+</li>
+<li>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
+<li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager</code></li>
+<li><code>rm -rf /opt/apache-tomcat/webapps/workflow-manager*</code></li>
+<li><code>cp target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war</code></li>
+<li><code>cd ../..</code></li>
+<li><code>sudo cp trunk/install/libexec/node-manager /etc/init.d/</code></li>
+<li><code>sudo systemctl daemon-reload</code></li>
+<li><code>mpf start</code></li>
+</ol>
+<p>The web application should start running in the background as a daemon. Look for this log message in the Tomcat log (<code>/opt/apache-tomcat/logs/catalina.out</code>) with a time value indicating the Workflow Manager has finished starting:</p>
+<pre><code>INFO: Server startup in 39030 ms
+</code></pre>
+
+<p>After startup, the Workflow Manager will be available at <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a> (or <a href="https://localhost:8443/workflow-manager">https://localhost:8443/workflow-manager</a> if configured to use HTTPS instead of HTTP). Browse to this URL using FireFox or Chrome.</p>
+<p>If you want to test regular user capabilities, log in as the "mpf" user with the "mpf123" password. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as "admin" user with the "mpfadm" password. Please see the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a> for more information. When finished using OpenMPF, run <code>mpf stop</code>.</p>
+<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Guide/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a>. These will start and stop the ActiveMQ, MySQL, Redis, Node Manager, and Tomcat system processes.</p>
+<p>For debugging purposes, it may be helpful to manually start the Tomcat service in a separate terminal window to display the log output. To do that, use <code>mpf start --xtc</code> to start ActiveMQ, MySQL, Redis, and the Node Manager without starting Tomcat. Then, in another terminal windows run:</p>
+<pre><code>/opt/apache-tomcat/bin/catalina.sh run
+</code></pre>
+
+<p>Press <code>ctrl-c</code> in the Tomcat window to stop Tomcat.</p>
+<h1 id="optional-test-openmpf">(Optional) Test OpenMPF</h1>
+<p>Run these commands to build OpenMPF and run the integration tests:</p>
+<ol>
+<li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
+<li>
+<p>Copy the development properties file into place:</p>
+<p><code>cp trunk/workflow-manager/src/main/resources/properties/mpf-private-example.properties trunk/workflow-manager/src/main/resources/properties/mpf-private.properties</code></p>
+</li>
+<li>
+<p>Open the file <code>/etc/ansible/hosts</code> in a text editor. <code>sudo</code> is required to edit this file.</p>
+</li>
+<li>
+<p>If they do not already exist, add these two lines above <code># Ex 1: Ungrouped hosts, specify before any group headers.</code> (line 11):</p>
+<p><code>[mpf-child]
+localhost.localdomain</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=&lt;configFile&gt; -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false</code></li>
+<li><code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/</code></li>
+<li><code>sudo systemctl daemon-reload</code></li>
+<li><code>mpf start --xtc</code></li>
+<li><code>mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
+<li><code>mpf stop --xtc</code></li>
+</ol>
+<p>Please see the appendix section <a href="#known-issues">Known Issues</a> regarding any <code>java.lang.InterruptedException: null</code> warning log messages observed when running the tests.</p>
+<p>Run this command to clean up and remove all traces of the test run:</p>
+<ol>
+<li><code>mpf clean --delete-uploaded-media --delete-logs</code></li>
+<li>Type "Y" and press Enter.</li>
+</ol>
+<p>If you choose not to run <code>mpf clean</code> before following the <a href="../build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</a> steps, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.</p>
+<hr />
+<h1 id="appendices"><strong>Appendices</strong></h1>
+<h1 id="known-issues">Known Issues</h1>
+<p>The following are known issues that are related to setting up and running OpenMPF. For a more complete list of known issues, please see the OpenMPF <a href="../Release-Notes/index.html">Release Notes</a> and <a href="https://github.com/orgs/openmpf/projects/3?card_filter_query=label%3Abug">workboard</a>.</p>
+<p><strong>Test Exceptions</strong></p>
+<p>When running the tests, you may observe warning log messages similar to this:</p>
+<pre><code>//2016-07-25 16:16:27,848 WARN [Time-limited test] org.mitre.mpf.mst.TestSystem - Exception occurred while waiting. Assuming that the job has completed (but failed)
+java.lang.InterruptedException: null
+    at java.lang.Object.wait(Native Method) ~[na:1.8.0_60]
+    at java.lang.Object.wait(Object.java:502) ~[na:1.8.0_60]
+    at org.mitre.mpf.mst.TestSystem.waitFor(TestSystem.java:209) [test-classes/:na]
+    at org.mitre.mpf.mst.TestSystem.runPipelineOnMedia(TestSystem.java:201) [test-classes/:na]
+    at org.mitre.mpf.mst.TestSystemOnDiff.runSpeechSphinxDetectAudio(TestSystemOnDiff.java:250) [test-classes/:na]
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_60]
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_60]
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_60]
+    at java.lang.reflect.Method.invoke(Method.java:497) ~[na:1.8.0_60]
+    at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+    at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+    at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+    at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+    at org.springframework.test.context.junit4.statements.RunBeforeTestMethodCallbacks.evaluate(RunBeforeTestMethodCallbacks.java:75) [spring-test-4.2.5.RELEASE.jar:4.2.5.RELEASE]
+    at org.springframework.test.context.junit4.statements.RunAfterTestMethodCallbacks.evaluate(RunAfterTestMethodCallbacks.java:86) [spring-test-4.2.5.RELEASE.jar:4.2.5.RELEASE]
+    at org.springframework.test.context.junit4.statements.SpringRepeat.evaluate(SpringRepeat.java:84) [spring-test-4.2.5.RELEASE.jar:4.2.5.RELEASE]
+    at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:298) [junit-4.12.jar:4.12]
+    at org.junit.internal.runners.statements.FailOnTimeout$CallableStatement.call(FailOnTimeout.java:292) [junit-4.12.jar:4.12]
+    at java.util.concurrent.FutureTask.run(FutureTask.java:266) [na:1.8.0_60]
+    at java.lang.Thread.run(Thread.java:745) [na:1.8.0_60]//
+</code></pre>
+
+<p>This does not necessarily indicate any type of software bug. The most likely cause for this message is that a test has timed out. Increasing the available system resources or increasing the test timeout values may help.</p>
+<h1 id="proxy-configuration">Proxy Configuration</h1>
+<p><strong>Yum Package Manager Proxy Configuration</strong></p>
+<p>Before using the yum package manager,  it may be necessary to configure it to work with your environment's proxy settings. If credentials are not required, it is not necessary to add them to the yum configuration.</p>
+<ol>
+<li><code>sudo bash -c 'echo "proxy=&lt;address&gt;:&lt;port&gt;" &gt;&gt; /etc/yum.conf'</code></li>
+<li><code>sudo bash -c 'echo "proxy_username=&lt;username&gt;" &gt;&gt; /etc/yum.conf'</code></li>
+<li><code>sudo bash -c 'echo "proxy_password=&lt;password&gt;" &gt;&gt; /etc/yum.conf'</code></li>
+</ol>
+<p><strong>Proxy Environment Variables</strong></p>
+<p>If your build environment is behind a proxy server, some applications and tools will need to be configured to use it. To configure an HTTP and HTTPS proxy, run the following commands. If credentials are not required, leave those fields blank.</p>
+<ol>
+<li><code>sudo bash -c 'echo "export http_proxy=&lt;username&gt;:&lt;password&gt;@&lt;url&gt;:&lt;port&gt;" &gt;&gt; /etc/profile.d/mpf.sh</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+<li><code>sudo bash -c 'echo "export https_proxy='${http_proxy}'" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>sudo bash -c 'echo "export HTTP_PROXY='${http_proxy}'" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>sudo bash -c 'echo "export HTTPS_PROXY='${http_proxy}'" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+<p><strong>Git Proxy Configuration</strong></p>
+<p>If your build environment is behind a proxy server, git will need to be configured to use it. The following command will set the git global proxy. If the environment variable <code>$http_proxy</code> is not set, use the full proxy server address, port, and credentials (if needed).</p>
+<pre><code>git config --global http.proxy $http_proxy
+</code></pre>
+
+<p><strong>Firefox Proxy Configuration</strong></p>
+<p>Before running the integration tests and the web application, it may be necessary to configure Firefox with your environment's proxy settings.</p>
+<ol>
+<li>In a new terminal window, type <code>firefox</code> and press enter. This will launch a new Firefox window.</li>
+<li>In the new Firefox window, enter <code>about:preferences#advanced</code> in the URL text box and press enter.</li>
+<li>In the left sidebar click "Advanced", then click the <code>Network</code> tab, and in the <code>Connection</code> section press the "Settings..." button.</li>
+<li>Enter the proxy settings for your environment.</li>
+<li>In the "No Proxy for:" text box, verify that <code>localhost</code> is included.</li>
+<li>Press the "OK" button.</li>
+<li>Close all open Firefox instances.</li>
+</ol>
+<p><strong>Maven Proxy Configuration</strong></p>
+<p>Before using Maven, it may be necessary to configure it to work with your environment's proxy settings. Open a new terminal window and run these commands. Afterwards, continue with adding the additional maven dependencies.</p>
+<ol>
+<li><code>cd /home/mpf</code></li>
+<li><code>mkdir -p .m2</code></li>
+<li><code>cp /opt/apache-maven/conf/settings.xml .m2/</code></li>
+<li>Open the file <code>.m2/settings.xml</code> in a text editor.</li>
+<li>Navigate to the <code>&lt;proxies&gt;</code> section (line 85).</li>
+<li>There is a commented-out example proxy server specification. Copy and paste the example specification below the commented-out section, but before the end of the closing <code>&lt;/proxies&gt;</code> tag.</li>
+<li>Fill in your environment's proxy server information. For additional help and information, please see the Apache Maven guide to configuring a proxy server at <a href="https://maven.apache.org/guides/mini/guide-proxies.html">https://maven.apache.org/guides/mini/guide-proxies.html</a>.</li>
+</ol>
+<h1 id="ssl-inspection">SSL Inspection</h1>
+<p>If your build environment is behind a proxy server that performs SSL inspection, some applications and tools will need to be configured to accommodate it. The following steps will add trusted certificates to your development machine.</p>
+<p>Additional information on Java keytool can be found at <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html">https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html</a>.</p>
+<ol>
+<li>Download any certificates needed for using SSL in your build environment to <code>/home/mpf/Downloads</code>.</li>
+<li>For each certificate, run this command, filling in the values for certificate alias, certificate name, and keystore passphrase:
+    <br> <code>sudo $JAVA_HOME/bin/keytool -import -alias &lt;certificate alias&gt; -file /home/mpf/Downloads/&lt;certificate name&gt;.crt -keystore "$JAVA_HOME/jre/lib/security/cacerts" -storepass &lt;keystore passphrase&gt; -noprompt</code></li>
+<li>For each certificate, run this command, filling in the value for certificate name:
+    <br> <code>sudo cp /home/mpf/Downloads/&lt;certificate name&gt;.crt /tmp</code></li>
+<li>For each certificate, run this command, filling in the values for certificate name:
+    <br> <code>sudo -u root -H sh -c "openssl x509 -in /tmp/&lt;certificate name&gt;.crt    -text &gt; /etc/pki/ca-trust/source/anchors/&lt;certificate name&gt;.pem"</code></li>
+<li>Run these commands once:<ol>
+<li><code>sudo -u root -H sh -c "update-ca-trust enable"</code></li>
+<li><code>sudo -u root -H sh -c "update-ca-trust extract"</code></li>
+</ol>
+</li>
+<li>Run these commands once, filling in the value for the root certificate name:<ol>
+<li><code>sudo cp /etc/pki/tls/certs/ca-bundle.crt /etc/pki/tls/certs/ca-bundle.crt.original</code></li>
+<li><code>sudo -u root -H sh -c "cat /etc/pki/ca-trust/source/anchors/&lt;root certificate name&gt;.pem &gt;&gt; /etc/pki/tls/certs/ca-bundle.crt"</code></li>
+</ol>
+</li>
+</ol>
+<p>Alternatively, if adding certificates is not an option, or difficulties are encountered, you may optionally skip SSL certificate verification for these tools. This is not recommended:</p>
+<p><strong>wget</strong></p>
+<ol>
+<li><code>cd /home/mpf</code></li>
+<li><code>touch /home/mpf/.wgetrc</code></li>
+<li>In a text editor, open the file <code>/home/mpf/.wgetrc</code></li>
+<li>
+<p>Add this line:</p>
+<p><code>check_certificate=off</code></p>
+</li>
+<li>
+<p>Save and close the file.</p>
+</li>
+<li><code>. /home/mpf/.wgetrc</code></li>
+</ol>
+<p><strong>git</strong></p>
+<ol>
+<li><code>cd /home/mpf</code></li>
+<li><code>git config http.sslVerify false</code></li>
+<li><code>git config --global http.sslVerify false</code></li>
+</ol>
+<p><strong>maven</strong></p>
+<ol>
+<li>In a text editor, open the file <code>/etc/profile.d/mpf.sh</code></li>
+<li>At the bottom of the file, add this line:
+<pre><code>export MAVEN_OPTS="-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true"</code></pre></li>
+<li>Save and close the file.</li>
+<li><code>. /etc/profile.d/mpf.sh</code></li>
+</ol>
+<h1 id="development-tools">Development Tools</h1>
+<p>When developing for OpenMPF, you may find the following tools helpful:</p>
+<ul>
+<li><strong>Jenkins</strong>: <a href="https://jenkins.io">https://jenkins.io</a></li>
+<li><strong>IntelliJ</strong>: <a href="https://www.jetbrains.com/idea/">https://www.jetbrains.com/idea/</a></li>
+<li><strong>CLion</strong>: <a href="https://www.jetbrains.com/clion">https://www.jetbrains.com/clion</a></li>
+<li><strong>PyCharm</strong>: <a href="https://www.jetbrains.com/pycharm">https://www.jetbrains.com/pycharm</a></li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Contributor-Guide/index.html" class="btn btn-neutral" title="Contributor Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Contributor-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+
+</body>
+</html>
