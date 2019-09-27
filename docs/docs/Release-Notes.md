@@ -168,7 +168,7 @@ within a Docker container. This isolates the build and execution environment fro
 
 # OpenMPF 3.0.0: December 2018
 
-> **NOTE:** The [Build Guide](Build-Environment-Setup-Guide/index.html) and [Install Guide](Installation-Guide/index.html) are no longer supported. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
+> **NOTE:** The [Build Guide](Build-Environment-Setup-Guide/index.html) and [Install Guide](Install-Guide/index.html) are outdated. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
 
 > **NOTE:** Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container. Also, do not attempt to use the `mpf` command line tools in a Docker deployment.
 
@@ -296,7 +296,7 @@ within a Docker container. This isolates the build and execution environment fro
 - Added the [Python Batch Component API](Python-Batch-Component-API/index.html).
 - Added the [Node Guide](Node-Guide/index.html).
 - Added the [GPU Support Guide](GPU-Support-Guide).
-- Updated the [Install Guide](Installation-Guide/index.html) with an "(Optional) Install the NVIDIA CUDA Toolkit" section.
+- Updated the [Install Guide](Install-Guide/index.html) with an "(Optional) Install the NVIDIA CUDA Toolkit" section.
 - Renamed Admin Manual to Admin Guide for consistency.
 
 <h2>Python Batch Component API</h2>
@@ -572,7 +572,7 @@ for optional dependencies.
 - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for installing the latest JDK, latest JRE, FFmpeg 3.3.3, new codecs, and OpenCV 3.3.
 - Added an [Acknowledgements](Acknowledgements/index.html) section that provides information on third party dependencies leveraged by the OpenMPF.
 - Added a [Feed Forward Guide](Feed-Forward-Guide/index.html) that explains feed forward processing and how to use it.
-- Added missing requirements checklist content to the [Install Guide](Installation-Guide/index.html#pre-installation-checklist).
+- Added missing requirements checklist content to the [Install Guide](Install-Guide/index.html#pre-installation-checklist).
 - Updated the README at the top level of each of the primary repositories to help with user navigation and provide general information.
 
 <h2>Upgrade to FFmpeg 3.3.3 and OpenCV 3.3</h2>

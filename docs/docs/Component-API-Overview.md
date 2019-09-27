@@ -57,7 +57,7 @@ Components are identified by nine key characteristics:
 
 A component’s action type corresponds to the operation which the algorithm performs. Generally, this is `DETECTION`.
 
-A component can perform batch processing, stream processing, or both. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
+A component can perform batch processing, stream processing, or both. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html). There is also a [Python Batch Component API](Python-Batch-Component-API/index.html). We currently to not support Python components for stream processing.
 
 The data that a component accepts as inputs, and correspondingly produces as outputs, constrains its placement in a pipeline. This is some combination of `IMAGE`, `AUDIO`, and `VIDEO` for components that support batch processing, or just `VIDEO` for components that only support stream processing. Batch components can also support the `UNKNOWN` data type, meaning that they can accept jobs for any kind of media file.
 
