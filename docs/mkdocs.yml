@@ -13,13 +13,13 @@ pages:
 - Home: index.md
 - General:
     - Release Notes: Release-Notes.md
-    - Build Guide: Build-Environment-Setup-Guide.md
-    - Install Guide: Installation-Guide.md
+    - Install Guide: Install-Guide.md
     - User Guide: User-Guide.md
     - Admin Guide: Admin-Guide.md
     - Node Guide: Node-Guide.md
     - Object Storage Guide: Object-Storage-Guide.md
     - Contributor Guide: Contributor-Guide.md
+    - Development Environment Guide: Development-Environment-Guide.md
     - Acknowledgements: Acknowledgements.md
 - Components:
     - Component API Overview: Component-API-Overview.md

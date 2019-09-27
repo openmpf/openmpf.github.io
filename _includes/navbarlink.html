@@ -1,16 +1,27 @@
 {% capture before %}{{ include.link[1] | split: "://" | first }}{% endcapture %}
-{% capture after %}{{ include.link[1] | split: "://" | last }}{% endcapture %}            
+{% capture after %}{{ include.link[1] | split: "://" | last }}{% endcapture %}
 {% assign internal = true %}
 {% if before != after %}
   {% if before == "http" or before == "https" %}
     {% assign internal = false %}
-  {% endif %}  
+  {% endif %}
 {% endif %}
 
-{% if internal %}
+{% assign doc = false %}
+{% capture start %}{{ after | split: "/" | first }}{% endcapture %}
+{% if start == "docs" %}
+  {% assign internal = false %}
+  {% assign doc = true %}
+{% endif %}
+
+{% if internal or doc %}
   {% capture linkurl %}{{ site.baseurl }}/{{ include.link[1] }}{% endcapture %}
 {% else %}
   {% capture linkurl %}{{ include.link[1] }}{% endcapture %}
 {% endif %}
 
-<a href="{{ linkurl }}">{{ include.link[0] }}</a>
+{% if internal %}
+  <a href="{{ linkurl }}">{{ include.link[0] }}</a>
+{% else %}
+  <a href="{{ linkurl }}" target="_blank">{{ include.link[0] }}</a>
+{% endif %}

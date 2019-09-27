@@ -1,9 +1,11 @@
 ---
 layout: page
 title: About OpenMPF
-subtitle: MPF Overview
+subtitle:
 published: true
 ---
+
+See the one-page overview PDF <a href="/pdf/OpenMPF One-Pager.pdf" target="_blank">here</a>.
 
 There are numerous video and image exploitation capabilities available today. The Open Media Processing Framework (OpenMPF) provides a framework for chaining, combining, or replacing individual components for the purpose of experimentation and comparison.
 
