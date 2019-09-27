@@ -322,7 +322,7 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Docker Deployment</h2></p>
 <ul>
 <li>Streamlined single-host <code>docker-compose up</code> deployments and multi-host <code>docker stack deploy</code> swarm deployments. Now users are instructed to create a single <code>docker-compose.yml</code> file for both types of deployments.</li>
-<li>Removed the <code>docker-generate-compose-files.sh</code> script in favor of allowing users the flexibility of combining multiple <code>docker-compose.*.yml</code> fixes together using <code>docker-compose config</code>. See the <a href="https://github.com/openmpf/openmpf-docker/blob/develop/README.md#generate-docker-composeyml">Generate docker-compose.yml</a> section of the README.</li>
+<li>Removed the <code>docker-generate-compose-files.sh</code> script in favor of allowing users the flexibility of combining multiple <code>docker-compose.*.yml</code> files together using <code>docker-compose config</code>. See the <a href="https://github.com/openmpf/openmpf-docker/blob/develop/README.md#generate-docker-composeyml">Generate docker-compose.yml</a> section of the README.</li>
 <li>Components based on the Python component executor Docker image can now be defined and configured directly in <code>docker-compose.yml</code>.</li>
 <li>OpenMPF Docker images now make use of Docker labels.</li>
 </ul>
@@ -354,7 +354,7 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>ActiveMQ Profiles</h2>
 
 <ul>
-<li>The ActiveMQ Docker image now supports custom profiles. The container selects an <code>activemq.xml</code> and <code>env</code> file to use at runtime based the value of the <code>ACTIVE_MQ_PROFILE</code> environment variable. Among others, these files contain configuration settings for Java heap space and component queue memory limits.</li>
+<li>The ActiveMQ Docker image now supports custom profiles. The container selects an <code>activemq.xml</code> and <code>env</code> file to use at runtime based on the value of the <code>ACTIVE_MQ_PROFILE</code> environment variable. Among others, these files contain configuration settings for Java heap space and component queue memory limits.</li>
 <li>This release only supports a <code>default</code> profile setting, as defined by <code>activemq-default.xml</code> and <code>env.default</code>; however, developers are free to add other <code>activemq-&lt;profile&gt;.xml</code> and <code>env.&lt;profile&gt;</code> files to the ActiveMQ Docker image to suit their needs.</li>
 </ul>
 <h2>Disabled ActiveMQ Prefetch</h2>

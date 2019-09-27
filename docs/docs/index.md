@@ -12,18 +12,19 @@ A list of open source algorithms currently integrated into the OpenMPF as distri
 
 | **Operation** | **Object Type** | **Framework**
 |  --- | --- | ---
-| Detection/Tracking | Face | OpenCV
+| Detection/Tracking | Face | LBP-Based OpenCV
 | Detection/Tracking | Face | Dlib
-| Detection/Tracking | Text | OpenALPR
-| Detection/Tracking | Motion | OpenCV w/ STRUCT
-| Detection/Tracking | Person | OpenCV
+| Detection/Tracking | Person | HOG-Based OpenCV
+| Detection/Tracking | Motion | MOG w/ STRUCK
+| Detection/Tracking | Motion | SuBSENSE w/ STRUCK
+| Detection/Tracking | License Plate | OpenALPR
 | Detection | Speech | Sphinx
-| Detection| Classification | Caffe
-| Detection| Classification | Darknet
 | Detection| Scene | OpenCV
-| Detection| Text | Apache Tika
-| Detection| Text | Tesseract OCR
-| Detection| Text | EAST
+| Detection| Classification | Caffe
+| Detection/Tracking | Classification | Darknet
+| Detection| Text Region | EAST
+| Detection| Text (OCR) | Apache Tika
+| Detection| Text (OCR) | Tesseract OCR
 | Detection| Image (from document) | Apache Tika
 
 The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.
