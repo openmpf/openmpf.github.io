@@ -25,11 +25,12 @@ description: OpenMPF - Open Media Processing Framework
 
 navbar-links:
   Home: ""
-  Resources:
-    - Get Started!: "getting-started"
-    - Documentation: "documentation"
-    - GitHub: "https://github.com/openmpf"
-  About: "aboutmpf"
+  Install: "docs/site/Install-Guide/index.html"
+  API: "docs/site/Component-API-Overview/index.html"
+  Docs: "docs/site/index.html"
+  GitHub: "https://github.com/openmpf"
+  About: "about"
+  Contact: "contact-us"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
