@@ -288,6 +288,8 @@
 <li>Updated the openmpf-docker repo <a href="https://github.com/openmpf/openmpf-docker/blob/develop/README.md">README</a> and <a href="https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md">SWARM</a> guide to describe the new streamlined approach to using <code>docker-compose config</code>. See the <a href="#docker-deployment">Docker Deployment</a> section below.</li>
 <li>Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the <a href="../User-Guide/index.html#min_segment_length-property">User Guide</a> for issue <a href="https://github.com/openmpf/openmpf/issues/891">#891</a>.</li>
 <li>Updated the <a href="../Java-Batch-Component-API/index.html#logging">Java Batch Component API</a> with information on how to use Log4j2. Related to resolving issue <a href="https://github.com/openmpf/openmpf/issues/855">#855</a>.</li>
+<li>Updated the <a href="../Install-Guide/index.html">Install Guide</a> to point to the Docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started">README</a>.</li>
+<li>Transformed the Build Guide into a <a href="../Development-Environment-Guide/index.html">Development Environment Guide</a>.</li>
 </ul>
 <p><span id="arbitrary-rotation"></span>
 <h2>Arbitrary Rotation</h2></p>
@@ -381,6 +383,7 @@ within a Docker container. This isolates the build and execution environment fro
 <li>Increased the number of ActiveMQ maxConcurrentConsumers for the MPF.COMPLETED_DETECTIONS queue from 30 to 60.</li>
 <li>The Create Job web UI now only displays the content of the <code>$MPF_HOME/share/remote-media</code> directory instead of all of <code>$MPF_HOME/share</code>, which prevents the Workflow Manager from indexing generated JSON output files, artifacts, and markup. Indexing the latter resulted in Java heap space issues for large scale production systems. This is a mitigation for issue <a href="https://github.com/openmpf/openmpf/issues/897">#897</a>.</li>
 <li>The Job Status web UI now makes proper use of pagination in SQL/Hibernate through the Workflow Manager to avoid retrieving the entire jobs table, which was inefficient.</li>
+<li>The Workflow Manager will now silently discard all duplicate messages in the ActiveMQ Dead Letter Queue (DLQ), regardless of destination. Previously, only messages destined for component sub-job request queues were discarded.</li>
 </ul>
 <h2>Bug Fixes</h2>
 
