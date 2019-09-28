@@ -471,7 +471,7 @@ public MPFImageJob(
 |  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
 | dataUri  | `String`  | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 | location | `MPFImageLocation` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFVideoJob
@@ -509,7 +509,7 @@ public MPFVideoJob(
 |  startFrame | `int` | The first frame number (0-based index) of the video that should be processed to look for detections.  |
 | stopFrame  | `int` | The last frame number (0-based index) of the video that should be processed to look for detections.|
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pair:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li></ul> |
 | track | `MPFVideoTrack` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
@@ -550,7 +550,7 @@ public MPFAudioJob(
 |  startTime | `int` | The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
 | stopTime  | `int` | The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of audio file in milliseconds</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
 | track | `MPFAudioTrack` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 #### MPFGenericJob
@@ -582,7 +582,7 @@ public MPFGenericJob(
 |  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
 | dataUri  | `String` | See [MPFJob.dataUri](#data-uri) for description. |
 | jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description. |
+| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
 | track | `MPFGenericTrack` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 
 ### Detection Job Result Classes
