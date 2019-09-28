@@ -11,6 +11,8 @@
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/develop/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md) guide to describe the new streamlined approach to using `docker-compose config`. See the [Docker Deployment](#docker-deployment) section below.
 - Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
 - Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#855](https://github.com/openmpf/openmpf/issues/855).
+- Updated the [Install Guide](Install-Guide/index.html) to point to the Docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started).
+- Transformed the Build Guide into a [Development Environment Guide](Development-Environment-Guide/index.html).
 
 <span id="arbitrary-rotation"></span>
 <h2>Arbitrary Rotation</h2>
@@ -91,6 +93,7 @@ within a Docker container. This isolates the build and execution environment fro
 - Increased the number of ActiveMQ maxConcurrentConsumers for the MPF.COMPLETED_DETECTIONS queue from 30 to 60.
 - The Create Job web UI now only displays the content of the `$MPF_HOME/share/remote-media` directory instead of all of `$MPF_HOME/share`, which prevents the Workflow Manager from indexing generated JSON output files, artifacts, and markup. Indexing the latter resulted in Java heap space issues for large scale production systems. This is a mitigation for issue [#897](https://github.com/openmpf/openmpf/issues/897).
 - The Job Status web UI now makes proper use of pagination in SQL/Hibernate through the Workflow Manager to avoid retrieving the entire jobs table, which was inefficient.
+- The Workflow Manager will now silently discard all duplicate messages in the ActiveMQ Dead Letter Queue (DLQ), regardless of destination. Previously, only messages destined for component sub-job request queues were discarded.
 
 <h2>Bug Fixes</h2>
 
