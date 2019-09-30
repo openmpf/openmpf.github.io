@@ -507,7 +507,7 @@ MPFImageJob(
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 | location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>This may include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -545,7 +545,7 @@ MPFVideoJob(
 | stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
 | track | `const MPFVideoTrack &` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pair:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul> |
 
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
@@ -587,7 +587,7 @@ MPFAudioJob(
 | stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
 | track | `const MPFAudioTrack &` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`DURATION` : length of audio file in milliseconds</li></ul> |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of audio file in milliseconds</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
 
 #### MPFGenericJob
 Extends [`MPFJob`](#mpfjob)
@@ -620,7 +620,7 @@ MPFGenericJob(
 | data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
 | track | `const MPFGenericTrack &` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
 | job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description. |
+| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
 
 ### Detection Job Result Classes
 
