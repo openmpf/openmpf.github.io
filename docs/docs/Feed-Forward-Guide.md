@@ -1,7 +1,5 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
-> **IMPORTANT:** Currently, only the [C++ Batch Component API](CPP-Batch-Component-API/index.html) supports feed forward processing.
-
 # Introduction
 
 Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:
@@ -17,7 +15,7 @@ Feed forward is an optional behavior of OpenMPF that allows tracks from one dete
 
 Consider using feed forward for the following reasons:
 
-1. You have an algorithm that isn’t capable of breaking down a frame into regions of interest. For example, face detection can take a whole frame and generate a separate detection region for each face in the frame. On the other hand, Caffe classification will take that whole frame and generate a single detection that’s the size of the frame’s width and height. Caffe will produce better results if it operates on smaller regions that only capture the desired object to be classified. Using feed forward, you can create a pipeline so that Caffe only processes regions with motion in them.
+1. You have an algorithm that isn’t capable of breaking down a frame into regions of interest. For example, face detection can take a whole frame and generate a separate detection region for each face in the frame. On the other hand, performing classification with the OpenCV Deep Neural Network (DNN) component will take that whole frame and generate a single detection that’s the size of the frame’s width and height. The OpenCV DNN component will produce better results if it operates on smaller regions that only capture the desired object to be classified. Using feed forward, you can create a pipeline so that OpenCV DNN component only processes regions with motion in them.
 
 2. You wish to reduce processing time by creating a pipeline in which algorithms are chained from fastest to slowest. For example, a pipeline that starts with motion detection will only feed regions with motion to the next stage, which may be a compute-intensive face detection algorithm. Reducing the amount of data that algorithm needs to process will speed up run times.
 
@@ -87,7 +85,7 @@ The above video shows three faces. For each face there is an inner bounding box 
 
 # MPFVideoCapture and MPFImageReader Tools
 
-The [C++ Batch Component API](CPP-Batch-Component-API/index.html) includes utilities that make it easier to support feed forward in your components. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
+The [C++ Batch Component API](CPP-Batch-Component-API/index.html) and [Python Batch Component API](Python-Batch-Component-API/index.html) include utilities that make it easier to support feed forward in your components. They work similarly, but only the C++ tools will be discussed here. The `MPFVideoCapture` class is a wrapper around OpenCV's `cv::VideoCapture` class. `MPFVideoCapture` works very similarly to `cv::VideoCapture`, except that it might modify the video frames based on job properties. From the point of view of someone using `MPFVideoCapture`, these modifications are mostly transparent. `MPFVideoCapture` makes it look like you are reading the original video file.
 
 Conceptually, consider generating a new video from a feed forward track. The new video would have fewer frames (unless there was a detection in every frame) and possibly a smaller frame size.
 
@@ -98,7 +96,7 @@ One issue with this approach is that the detection frame numbers and bounding bo
 The general pattern for using `MPFVideoCapture` is as follows:
 
 ```
-MPFDetectionError CaffeDetection::GetDetections(
+MPFDetectionError OcvDnnDetection::GetDetections(
     const MPFVideoJob &job, std::vector<MPFVideoTrack> &tracks) {
 
     MPFVideoCapture video_cap(job);
@@ -118,27 +116,27 @@ MPFDetectionError CaffeDetection::GetDetections(
 
 `MPFVideoCapture` makes it look like the user is processing the original video, when in reality they are processing a modified version. To avoid confusion, this means that `MPFVideoCapture` should always be returning frames that are the same size because most users expect each frame of a video to be the same size.
 
-When using `SUPERSET_REGION` this is not an issue, since one bounding box is used for the entire track. However, when using `REGION`, each detection can be a different size, so it is not possible for `MPFVideoCapture` to return frames that are always the same size. Since this is a deviation from the expected behavior, and breaks the transparency of `MPFVideoCapture`, `SUPERSET_REGION` should usually be preferred over `REGION`. The `REGION` setting should only be used with components that explicitly state they support it (e.g. Caffe). Those components may not perform region tracking, so processing frames of various sizes is not a problem.
+When using `SUPERSET_REGION` this is not an issue, since one bounding box is used for the entire track. However, when using `REGION`, each detection can be a different size, so it is not possible for `MPFVideoCapture` to return frames that are always the same size. Since this is a deviation from the expected behavior, and breaks the transparency of `MPFVideoCapture`, `SUPERSET_REGION` should usually be preferred over `REGION`. The `REGION` setting should only be used with components that explicitly state they support it (e.g. OcvDnnDetection). Those components may not perform region tracking, so processing frames of various sizes is not a problem.
 
 The `MPFImageReader` class is similar to `MPFVideoCapture`, but it works on images instead of videos. `MPFImageReader` makes it look like the user is processing an original image, when in reality they are processing a modified version where the frame region is generated based on a detection (`MPFImageLocation`) fed forward from the previous stage of a pipeline. Note that `SUPERSET_REGION` and `REGION` have the same effect when working with images. `MPFImageReader` also has a reverse transform function.
 
 
-# Caffe Tracking
+# OpenCV DNN Component Tracking
 
-Caffe does not generate detection regions of its own. Its tracking behavior depends on whether feed forward is enabled or not. When feed forward is disabled, Caffe will process the entire region of each frame of a video. If one or more consecutive frames has the same highest confidence classification, then a new track is generated that contains those frames.
+The OpenCV DNN component does not generate detection regions of its own when performing classification. Its tracking behavior depends on whether feed forward is enabled or not. When feed forward is disabled, the component will process the entire region of each frame of a video. If one or more consecutive frames has the same highest confidence classification, then a new track is generated that contains those frames.
 
-When feed forward is enabled, Caffe will process the region of each frame of feed forward track according to the `FEED_FORWARD_TYPE`. It will generate one track that contains the same frames as the feed forward track. If `FEED_FORWARD_TYPE` is set to `REGION` then the Caffe track will contain (inherit) the same detection regions as the feed forward track. In any case, the `detectionProperties` map for the detections in the Caffe track will include the classification entries and possibly other Caffe properties.
+When feed forward is enabled, the OpenCV DNN component will process the region of each frame of feed forward track according to the `FEED_FORWARD_TYPE`. It will generate one track that contains the same frames as the feed forward track. If `FEED_FORWARD_TYPE` is set to `REGION` then the OpenCV DNN track will contain (inherit) the same detection regions as the feed forward track. In any case, the `detectionProperties` map for the detections in the OpenCV DNN track will include the `CLASSIFICATION` entries and possibly other OpenCV DNN component properties.
 
 
 # Feed Forward Pipeline Examples
 
-<b>Caffe Classification with MOG Motion Detection and Feed Forward Region</b>
+<b>GoogLeNet Classification with MOG Motion Detection and Feed Forward Region</b>
 
 First, create the following action:
 
 ```
 CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) ACTION
-+ Algorithm: CAFFE
++ Algorithm: DNNCV
 + MODEL_NAME: googlenet
 + SUBTRACT_BLUE_VALUE: 104.0
 + SUBTRACT_GREEN_VALUE: 117.0
@@ -161,7 +159,7 @@ CAFFE GOOGLENET DETECTION (WITH MOG MOTION TRACKING AND FEED FORWARD REGION) PIP
 + CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) TASK
 ```
 
-Running this pipeline will result in Caffe tracks that contain detections where there was MOG motion. Each detection in each track will have a Caffe classification. Each track has a 1-to-1 correspondence with a MOG motion track.
+Running this pipeline will result in OpenCV DNN tracks that contain detections where there was MOG motion. Each detection in each track will have an OpenCV DNN `CLASSIFICATION` entry. Each track has a 1-to-1 correspondence with a MOG motion track.
 
 Refer to `runMogThenCaffeFeedForwardExactRegionTest()` in the [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java) class for a system test that demonstrates this behavior. Refer to `runMogThenCaffeFeedForwardSupersetRegionTest()` in that class for a system test that uses `SUPERSET_REGION` instead. Refer to `runMogThenCaffeFeedForwardFullFrameTest()` for a system test that uses `FRAME` instead.
 

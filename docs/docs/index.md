@@ -20,7 +20,7 @@ A list of open source algorithms currently integrated into the OpenMPF as distri
 | Detection/Tracking | License Plate | OpenALPR
 | Detection | Speech | Sphinx
 | Detection| Scene | OpenCV
-| Detection| Classification | Caffe
+| Detection| Classification | OpenCV DNN
 | Detection/Tracking | Classification | Darknet
 | Detection| Text Region | EAST
 | Detection| Text (OCR) | Apache Tika
