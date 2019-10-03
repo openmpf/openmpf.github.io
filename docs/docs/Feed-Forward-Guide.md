@@ -1,7 +1,5 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
-> **IMPORTANT:** Currently, only the [C++ Batch Component API](CPP-Batch-Component-API/index.html) supports feed forward processing.
-
 # Introduction
 
 Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:
@@ -132,7 +130,7 @@ When feed forward is enabled, the OpenCV DNN component will process the region o
 
 # Feed Forward Pipeline Examples
 
-<b>OpenCV DNN Caffe Classification with MOG Motion Detection and Feed Forward Region</b>
+<b>GoogLeNet Classification with MOG Motion Detection and Feed Forward Region</b>
 
 First, create the following action:
 

@@ -276,7 +276,6 @@
               
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
-<p><strong>IMPORTANT:</strong> Currently, only the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a> supports feed forward processing.</p>
 </blockquote>
 <h1 id="introduction">Introduction</h1>
 <p>Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:</p>
@@ -379,7 +378,7 @@
 <p>The OpenCV DNN component does not generate detection regions of its own when performing classification. Its tracking behavior depends on whether feed forward is enabled or not. When feed forward is disabled, the component will process the entire region of each frame of a video. If one or more consecutive frames has the same highest confidence classification, then a new track is generated that contains those frames.</p>
 <p>When feed forward is enabled, the OpenCV DNN component will process the region of each frame of feed forward track according to the <code>FEED_FORWARD_TYPE</code>. It will generate one track that contains the same frames as the feed forward track. If <code>FEED_FORWARD_TYPE</code> is set to <code>REGION</code> then the OpenCV DNN track will contain (inherit) the same detection regions as the feed forward track. In any case, the <code>detectionProperties</code> map for the detections in the OpenCV DNN track will include the <code>CLASSIFICATION</code> entries and possibly other OpenCV DNN component properties.</p>
 <h1 id="feed-forward-pipeline-examples">Feed Forward Pipeline Examples</h1>
-<p><b>OpenCV DNN Caffe Classification with MOG Motion Detection and Feed Forward Region</b></p>
+<p><b>GoogLeNet Classification with MOG Motion Detection and Feed Forward Region</b></p>
 <p>First, create the following action:</p>
 <pre><code>CAFFE GOOGLENET DETECTION (WITH FEED FORWARD REGION) ACTION
 + Algorithm: DNNCV
