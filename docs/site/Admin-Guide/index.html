@@ -96,7 +96,7 @@
                     <li><a class="toctree-l4" href="#component-registration">Component Registration</a></li>
                 
             
-                <li class="toctree-l3"><a href="#command-line-tools">Command Line Tools</a></li>
+                <li class="toctree-l3"><a href="#user-configuration">User Configuration</a></li>
                 
             
             </ul>
@@ -267,10 +267,12 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
 Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
+<p><strong>IMPORTANT:</strong> Please refer to the <a href="#user-configuration">User Configuration</a> section for changing the default user passwords.</p>
 <p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI.</p>
 </blockquote>
 <h1 id="web-ui">Web UI</h1>
-<p>The login procedure, as well as all of the pages accessible through the Workflow Manager sidebar, are the same for admin and non-admin users. Refer to the <a href="../User-Guide/index.html">User Guide</a> for more information. The default account for an admin user has the username "admin" and password "mpfadm".</p>
+<p>The login procedure, as well as all of the pages accessible through the Workflow Manager sidebar, are the same for admin and non-admin users. Refer to the <a href="../User-Guide/index.html">User Guide</a> for more information. The default account for an admin user has the username "admin" and password "mpfadm". </p>
+<p>We highly recommend changing the default username and password settings for any environment which is exposed on a network, especially production environments. The default settings are public knowledge, which could be a security risk. Please refer to the <a href="#user-configuration">User Configuration</a> section below.</p>
 <p>This document will cover the additional functionality permitted to admin users through the Admin Console pages.</p>
 <h2 id="dashboard">Dashboard</h2>
 <p>The landing page for an admin user is the Job Status page:</p>
@@ -305,36 +307,11 @@ Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
 <p>If for some reason the component package upload succeeded but the component registration failed then the admin user will be able to click the "Register" button again to try to another registration attempt. For example, the admin user may do this after reviewing the workflow manager logs and resolving any issues that prevented the component from successfully registering the first time. One reason may be that a component with the same name already exists on the system. Note that an error will also occur if the top-level directory of the component package, once extracted, already exists in the /opt/mpf/plugins directory on the system.</p>
 <p>Once registered, an admin user has the option to remove the component. This will unregister it and completely remove any configured services, as well as the uploaded file and its extracted contents, from the system. Also, the component algorithm as well as any actions, tasks, and pipelines specified in the component's descriptor file will be removed when the component is removed.</p>
 <p>WARNING: Any actions, tasks, or pipelines created through the Create Custom Pipelines page that make use of the algorithm, actions, or tasks specified in the descriptor file of the component being removed will also be removed. This is to prevent pipelines from not working properly once the component is removed.</p>
-<h1 id="command-line-tools">Command Line Tools</h1>
-<p>OpenMPF release 0.6.0 and later installs command line tools that can be accessed through a terminal on the master node of the OpenMPF cluster. All of the tools take the form of actions: <code>mpf &lt;action&gt; [options ...]</code>. Note that tab-completion is enabled for ease of use.</p>
-<p>WARNING: These commands can be executed by anyone who has command line access to the master node.</p>
-<p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for documentation about a specific action.</p>
-<ul>
-<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.<ul>
-<li><code>mpf status</code>: displays a message indicating whether each of the system dependencies is running or not</li>
-<li><code>mpf start</code>: starts all of the system dependencies</li>
-<li><code>mpf stop</code>: stops all of the system dependencies</li>
-<li><code>mpf restart</code> : stops and then starts all of the system dependencies</li>
-</ul>
-</li>
-<li><strong>User Actions</strong>: Actions for managing workflow manager user accounts. If changes are made to an existing user then that user will need to log off or the workflow manager will need to be restarted for the changes to take effect.<ul>
-<li><code>mpf list-users</code> : lists all of the existing user accounts and their role (non-admin or admin)</li>
-<li><code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be prompted to enter the account password</li>
-<li><code>mpf remove-user &lt;username&gt;</code> : removes an existing user account</li>
-<li><code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin or vice versa) for an existing user</li>
-<li><code>mpf change-password &lt;username&gt;</code>: change the password for an existing user; will be prompted to enter the new account password</li>
-</ul>
-</li>
-<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a new install state. User accounts, registered components, as well as custom actions, tasks, and pipelines, are preserved.<ul>
-<li><code>mpf clean</code>: cleans out old job information and results, pending job requests, marked up media files, and ActiveMQ data, but preserves log files and uploaded media</li>
-<li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code> but also deletes log files and uploaded media</li>
-</ul>
-</li>
-<li><strong>Node Action</strong>: Actions for managing node membership in the OpenMPF cluster.<ul>
-<li><code>mpf list-nodes</code>: If the workflow manager is running, get the current JGroups view; otherwise, list the core nodes</li>
-</ul>
-</li>
-</ul>
+<h1 id="user-configuration">User Configuration</h1>
+<p>Every time the Workflow Manager starts it will attempt to create accounts for the users listed in the <code>user.properties</code> file. At runtime this file is extracted to <code>$MPF_HOME/config</code> on the machine running the Workflow Manager. For every user listed in that file, the Workflow Manager will create that user account if a user with the same name doesn't already exists in the mySQL database. By default, that file contains two entries, one for the "admin" user with the "mpfadm" password, and one for a non-admin "mpf" user with the "mpf123" password.</p>
+<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries <strong>before</strong> attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created. </p>
+<p>The official way to deploy OpenMPF is to use the Docker container platform. If you are using Docker, please follow the instructions in the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started">README</a> that explain how to use a <code>docker secret</code> for your custom <code>user.properties</code> file.</p>
+<p>TODO: Change the above link!</p>
               
             </div>
           </div>
