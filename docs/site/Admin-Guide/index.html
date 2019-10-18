@@ -309,9 +309,8 @@ Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
 <p>WARNING: Any actions, tasks, or pipelines created through the Create Custom Pipelines page that make use of the algorithm, actions, or tasks specified in the descriptor file of the component being removed will also be removed. This is to prevent pipelines from not working properly once the component is removed.</p>
 <h1 id="user-configuration">User Configuration</h1>
 <p>Every time the Workflow Manager starts it will attempt to create accounts for the users listed in the <code>user.properties</code> file. At runtime this file is extracted to <code>$MPF_HOME/config</code> on the machine running the Workflow Manager. For every user listed in that file, the Workflow Manager will create that user account if a user with the same name doesn't already exists in the mySQL database. By default, that file contains two entries, one for the "admin" user with the "mpfadm" password, and one for a non-admin "mpf" user with the "mpf123" password.</p>
-<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries <strong>before</strong> attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created. </p>
-<p>The official way to deploy OpenMPF is to use the Docker container platform. If you are using Docker, please follow the instructions in the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started">README</a> that explain how to use a <code>docker secret</code> for your custom <code>user.properties</code> file.</p>
-<p>TODO: Change the above link!</p>
+<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries before attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created. </p>
+<p>The official way to deploy OpenMPF is to use the Docker container platform. If you are using Docker, please follow the instructions in the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#configure-users">README</a> that explain how to use a <code>docker secret</code> for your custom <code>user.properties</code> file.</p>
               
             </div>
           </div>
