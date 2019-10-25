@@ -394,6 +394,10 @@
 </ol>
 </li>
 <li>
+<p>Install the OpenMPF command line tools:
+    <br> <code>sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></p>
+</li>
+<li>
 <p>Copy the mpf user profile script from the extracted source code:
     <br> <code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></p>
 </li>
@@ -402,13 +406,6 @@
 <ol>
 <li><code>sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" &gt;&gt; /etc/profile.d/mpf.sh'</code></li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>
-</ol>
-</li>
-<li>
-<p>Install the OpenMPF command line tools:</p>
-<ol>
-<li><code>sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></li>
-<li><code>command -v register-python-argcomplete &gt; /dev/null &amp;&amp; eval "$(register-python-argcomplete mpf)"</code></li>
 </ol>
 </li>
 </ol>

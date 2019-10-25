@@ -71,17 +71,16 @@ The version of `pip` available in the yum repository is old and must be upgraded
     1. `cd /home/mpf`
     2. `git clone https://github.com/openmpf/openmpf-projects.git --recursive`
 
-2. Copy the mpf user profile script from the extracted source code:
+2. Install the OpenMPF command line tools:
+    <br> `sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
+
+3. Copy the mpf user profile script from the extracted source code:
     <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
 
-3. Add `/apps/install/bin` to the system `PATH` variable:
+4. Add `/apps/install/bin` to the system `PATH` variable:
     1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
     2. `. /etc/profile.d/mpf.sh`
 
-4. Install the OpenMPF command line tools:
-    1. `sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
-    2. `command -v register-python-argcomplete > /dev/null && eval "$(register-python-argcomplete mpf)"`
- 
 For more information on the command line tools, please refer to the [Command Line Tools](#command-line-tools) section below.
 
 ## Add Maven Dependencies
