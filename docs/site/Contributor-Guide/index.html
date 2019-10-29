@@ -444,8 +444,30 @@ git push
 </ul>
 <p>Generally speaking, when writing new code, please refer to existing code in the repositories and match the style. Most style issues boil down to inconsistency. Not all of our code adheres to these style guidelines, but we are striving to improve it.</p>
 <h1 id="updating-online-documentation">Updating Online Documentation</h1>
-<p>We use <a href="http://www.mkdocs.org">mkdocs</a> to generate HTML files from Markdown (.md) files stored in the <a href="https://github.com/openmpf/openmpf.github.io/tree/master/docs/docs">openmpf.github.io repo</a>. When modifying the files locally we run <code>mkdocs serve</code> within the openmpf.github.io/docs directory. That spawns a local webserver so that you can view changes to the doc in real time by browsing to <a href="http://localhost:8000">http://localhost:8000</a>. When the changes look good, generate the HTML and associated files by running <code>mkdocs build</code> within the same directy. Commit all of the generated files and generate a pull request to merge them into the develop branch.</p>
-<p>When a commit is made to the master branch on GitHub, the <a href="https://openmpf.github.io/docs/site/">https://openmpf.github.io/docs/site/</a> page will automatically update (often within 5 minutes). Our repo is forked from <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>, which takes care of this process.</p>
+<p>Our <a href="https://github.com/openmpf/openmpf.github.io/tree/master">openmpf.github.io repo</a> repo is forked from <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>. In general, everything within <code>openmpf.github.io/docs</code> is part of a Read the Docs subsite within our overall Beautiful Jekyll site.</p>
+<h2>Install Tools</h2>
+
+<p>To install <code>mkdocs</code> run:</p>
+<pre><code>pip install mkdocs
+</code></pre>
+
+<p>Note that you need version 0.16.0 or higher.</p>
+<p>To install the Ruby bundler dependency management tool with the jekyll gem run:</p>
+<pre><code>sudo yum install ruby-devel
+gem install bundler
+bundle install
+</code></pre>
+
+<h2>Updating Read the Docs</h2>
+
+<p>Use <a href="http://www.mkdocs.org">mkdocs</a> to generate HTML files from Markdown (.md) files stored in <code>openmpf.github.io/docs/docs</code>. When modifying the files locally, run <code>mkdocs serve</code> within the <code>openmpf.github.io/docs</code> directory. That spawns a local webserver so that you can view changes to the docs in real time by browsing to <a href="http://localhost:8000">http://localhost:8000</a>. </p>
+<h2>Updating Beautiful Jekyll</h2>
+
+<p>When making updates to our landing page, or any other page other than those that are part of Read the Docs, run <code>./build-site.sh</code> within the top-level <code>openmpf.github.io</code> directory to generate the HTML for those changes, and then run <code>./serve.sh</code> to spawn a local webserver so that you can view changes by browsing to <a href="http://localhost:4000">http://localhost:4000</a>. Note that unlike the <code>mkdocs serve</code> command explained above, this site is not updated in real time as you make changes to the source code.</p>
+<h2>Committing Changes</h2>
+
+<p>When your changes look good, make sure to run the <code>./build-site.sh</code> command explained above to generate the HTML site content. Commit all of the generated files and generate a pull request to merge them into the develop branch.</p>
+<p>When a commit is made to the master branch on GitHub, the <a href="https://openmpf.github.io/docs/site/">https://openmpf.github.io/docs/site/</a> page will automatically update (often within 5 minutes).</p>
               
             </div>
           </div>

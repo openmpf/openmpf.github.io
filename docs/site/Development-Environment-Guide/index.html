@@ -155,6 +155,9 @@
                 <li class="toctree-l3"><a href="#configure-redis">Configure Redis</a></li>
                 
             
+                <li class="toctree-l3"><a href="#configure-users">Configure Users</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#configure-tomcat-with-http">Configure Tomcat with HTTP</a></li>
                 
             
@@ -168,6 +171,9 @@
                 
             
                 <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#command-line-tools">Command Line Tools</a></li>
                 
             
                 <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
@@ -388,6 +394,10 @@
 </ol>
 </li>
 <li>
+<p>Install the OpenMPF command line tools:
+    <br> <code>sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></p>
+</li>
+<li>
 <p>Copy the mpf user profile script from the extracted source code:
     <br> <code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh</code></p>
 </li>
@@ -399,6 +409,7 @@
 </ol>
 </li>
 </ol>
+<p>For more information on the command line tools, please refer to the <a href="#command-line-tools">Command Line Tools</a> section below.</p>
 <h2 id="add-maven-dependencies">Add Maven Dependencies</h2>
 <p>Some Maven dependencies needed for OpenMPF are not publicly available.</p>
 <ol>
@@ -511,6 +522,9 @@
 <pre><code>daemonize yes
 </code></pre>
 
+<h1 id="configure-users">Configure Users</h1>
+<p>To change the default user password settings, modify <code>/home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/user.properties</code>. Note that the default settings are public knowledge, which could be a security risk.</p>
+<p>Note that <code>mpf remove-user</code> and <code>mpf add-user</code> commands explained in the <a href="#command-line-tools">Command Line Tools</a> section do not modify the <code>user.properties</code> file. If you remove a user using the <code>mpf remove-user</code> command, the changes will take effect at runtime, but an entry may still exist for that user in the <code>user.properties</code> file. If so, then the user account will be recreated the next time the Workflow Manager is restarted.</p>
 <h1 id="configure-tomcat-with-http">Configure Tomcat with HTTP</h1>
 <p>When developing OpenMPF on a local machine, it is often most convenient to configure Tomcat to use HTTP instead of HTTPS.</p>
 <ol>
@@ -640,6 +654,35 @@ localhost.localdomain</code></p>
 <p>If you choose not to run <code>mpf clean</code> before following the <a href="../build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</a> steps, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.</p>
 <hr />
 <h1 id="appendices"><strong>Appendices</strong></h1>
+<h1 id="command-line-tools">Command Line Tools</h1>
+<p>OpenMPF installs command line tools that can be accessed through a terminal on the development machine. All of the tools take the form of actions: <code>mpf &lt;action&gt; [options ...]</code>. Note that tab-completion is enabled for ease of use.</p>
+<p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for documentation about a specific action.</p>
+<ul>
+<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.<ul>
+<li><code>mpf status</code>: displays a message indicating whether each of the system dependencies is running or not</li>
+<li><code>mpf start</code>: starts all of the system dependencies</li>
+<li><code>mpf stop</code>: stops all of the system dependencies</li>
+<li><code>mpf restart</code> : stops and then starts all of the system dependencies</li>
+</ul>
+</li>
+<li><strong>User Actions</strong>: Actions for managing Workflow Manager user accounts. If changes are made to an existing user then that user will need to log off or the Workflow Manager will need to be restarted for the changes to take effect.<ul>
+<li><code>mpf list-users</code> : lists all of the existing user accounts and their role (non-admin or admin)</li>
+<li><code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be prompted to enter the account password</li>
+<li><code>mpf remove-user &lt;username&gt;</code> : removes an existing user account</li>
+<li><code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin or vice versa) for an existing user</li>
+<li><code>mpf change-password &lt;username&gt;</code>: change the password for an existing user; will be prompted to enter the new account password</li>
+</ul>
+</li>
+<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a new install state. User accounts, registered components, as well as custom actions, tasks, and pipelines, are preserved.<ul>
+<li><code>mpf clean</code>: cleans out old job information and results, pending job requests, marked up media files, and ActiveMQ data, but preserves log files and uploaded media</li>
+<li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code> but also deletes log files and uploaded media</li>
+</ul>
+</li>
+<li><strong>Node Action</strong>: Actions for managing node membership in the OpenMPF cluster.<ul>
+<li><code>mpf list-nodes</code>: If the Workflow Manager is running, get the current JGroups view; otherwise, list the core nodes</li>
+</ul>
+</li>
+</ul>
 <h1 id="known-issues">Known Issues</h1>
 <p>The following are known issues that are related to setting up and running OpenMPF. For a more complete list of known issues, please see the OpenMPF <a href="../Release-Notes/index.html">Release Notes</a> and <a href="https://github.com/orgs/openmpf/projects/3?card_filter_query=label%3Abug">workboard</a>.</p>
 <p><strong>Test Exceptions</strong></p>
