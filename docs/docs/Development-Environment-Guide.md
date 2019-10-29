@@ -71,12 +71,17 @@ The version of `pip` available in the yum repository is old and must be upgraded
     1. `cd /home/mpf`
     2. `git clone https://github.com/openmpf/openmpf-projects.git --recursive`
 
-2. Copy the mpf user profile script from the extracted source code:
+2. Install the OpenMPF command line tools:
+    <br> `sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
+
+3. Copy the mpf user profile script from the extracted source code:
     <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
 
-3. Add `/apps/install/bin` to the system `PATH` variable:
+4. Add `/apps/install/bin` to the system `PATH` variable:
     1. `sudo sh -c 'echo "PATH=\$PATH:/apps/install/bin" >> /etc/profile.d/mpf.sh'`
     2. `. /etc/profile.d/mpf.sh`
+
+For more information on the command line tools, please refer to the [Command Line Tools](#command-line-tools) section below.
 
 ## Add Maven Dependencies
 
@@ -231,6 +236,12 @@ so that it reads:
 daemonize yes
 ```
 
+# Configure Users
+
+To change the default user password settings, modify `/home/mpf/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/user.properties`. Note that the default settings are public knowledge, which could be a security risk.
+
+Note that `mpf remove-user` and `mpf add-user` commands explained in the [Command Line Tools](#command-line-tools) section do not modify the `user.properties` file. If you remove a user using the `mpf remove-user` command, the changes will take effect at runtime, but an entry may still exist for that user in the `user.properties` file. If so, then the user account will be recreated the next time the Workflow Manager is restarted.
+
 # Configure Tomcat with HTTP
 
 When developing OpenMPF on a local machine, it is often most convenient to configure Tomcat to use HTTP instead of HTTPS.
@@ -381,6 +392,29 @@ If you choose not to run `mpf clean` before following the [Build and Run the Ope
 ---
 
 # **Appendices**
+
+# Command Line Tools
+
+OpenMPF installs command line tools that can be accessed through a terminal on the development machine. All of the tools take the form of actions: `mpf <action> [options ...]`. Note that tab-completion is enabled for ease of use.
+
+Execute `mpf --help` for general documentation and `mpf <action> --help` for documentation about a specific action.
+
+  - **Start / Stop Actions**: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.
+    - `mpf status`: displays a message indicating whether each of the system dependencies is running or not
+    - `mpf start`: starts all of the system dependencies
+    - `mpf stop`: stops all of the system dependencies
+    - `mpf restart` : stops and then starts all of the system dependencies
+  - **User Actions**: Actions for managing Workflow Manager user accounts. If changes are made to an existing user then that user will need to log off or the Workflow Manager will need to be restarted for the changes to take effect.
+    - `mpf list-users` : lists all of the existing user accounts and their role (non-admin or admin)
+    - `mpf add-user <username> <role>`: adds a new user account; will be prompted to enter the account password
+    - `mpf remove-user <username>` : removes an existing user account
+    - `mpf change-role <username> <role>` : change the role (non-admin to admin or vice versa) for an existing user
+    - `mpf change-password <username>`: change the password for an existing user; will be prompted to enter the new account password
+  - **Clean Actions**: Actions to remove old data and revert the system to a new install state. User accounts, registered components, as well as custom actions, tasks, and pipelines, are preserved.
+    - `mpf clean`: cleans out old job information and results, pending job requests, marked up media files, and ActiveMQ data, but preserves log files and uploaded media
+    - `mpf clean --delete-logs --delete-uploaded-media`: the same as `mpf clean` but also deletes log files and uploaded media
+- **Node Action**: Actions for managing node membership in the OpenMPF cluster.
+    - `mpf list-nodes`: If the Workflow Manager is running, get the current JGroups view; otherwise, list the core nodes
 
 # Known Issues
 
