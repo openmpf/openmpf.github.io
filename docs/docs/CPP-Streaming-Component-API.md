@@ -99,7 +99,7 @@ EXPORT_MPF_STREAMING_COMPONENT(TYPENAME);
 
 This creator macro takes the `TYPENAME` of the detection component (for example, “StreamingHelloWorld”). This macro creates the factory function that the OpenMPF Component Executable will call in order to instantiate the detection component. The creation function is called once, to obtain an instance of the component, after the component library has been loaded into memory.
 
-This macro also creates the factory function that the Component Executable will use to delete that instance of the detection component. 
+This macro also creates the factory function that the Component Executable will use to delete that instance of the detection component.
 
 This macro must be used outside of a class declaration, preferably at the bottom or top of a component source (.cpp) file.
 
@@ -118,7 +118,7 @@ The `MPFStreamingDetectionComponent` class is the abstract class utilized by all
 
 ### Constructor
 
-Superclass constructor that must be invoked by the constructor of the component subclass. 
+Superclass constructor that must be invoked by the constructor of the component subclass.
 
 * Function Definition:
 ```c++
@@ -179,7 +179,7 @@ void BeginSegment(const VideoSegmentInfo &segment_info)
 | Parameter  | Data Type  | Description  |
 |---|---|---|
 | segment_info  | `const VideoSegmentInfo &`  | Structure containing details about next video segment to process. See [`VideoSegmentInfo`](#videosegmentinfo) |
-   
+
 * Returns: none
 
 * Example:
@@ -188,19 +188,19 @@ void SampleComponent::BeginSegment(const VideoSegmentInfo &segment_info) {
     // Prepare for next segment
 }
 ```   
-   
+
 ### ProcessFrame(Mat ...)
-   
-Process a single video frame for the current segment. 
+
+Process a single video frame for the current segment.
 
 Must return true when the component begins generating the first track for the current segment. After it returns true, the Component Executable will ignore the return value until the component begins processing the next segment.
 
-If the `job_properties` map contained in the `MPFStreamingVideoJob` struct passed to the component constructor contains a CONFIDENCE_THRESHOLD entry, then this function should only return true for a detection with a confidence value that meets or exceeds that threshold. After the Component Executable invokes `EndSegment()` to retrieve the segment tracks, it will discard detections that are below the threshold. If all the detections in a track are below the threshold, then the entire track will be discarded. 
+If the `job_properties` map contained in the `MPFStreamingVideoJob` struct passed to the component constructor contains a CONFIDENCE_THRESHOLD entry, then this function should only return true for a detection with a confidence value that meets or exceeds that threshold. After the Component Executable invokes `EndSegment()` to retrieve the segment tracks, it will discard detections that are below the threshold. If all the detections in a track are below the threshold, then the entire track will be discarded.
 
 Note that this function may not be invoked for every frame in the current segment. For example, if FRAME_INTERVAL = 2, then this function will only be invoked for every other frame since those are the only ones that need to be processed.
 
-Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment. 
-   
+Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment.
+
 * Function Definition:   
 ```c++
 bool ProcessFrame(const cv::Mat &frame, int frame_number)
@@ -380,9 +380,9 @@ MPFVideoTrack(
 
 * Example:
 
->**NOTE:** Currently, `MPFVideoTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way. 
+>**NOTE:** Currently, `MPFVideoTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way.
 
-A component that detects text can add an entry to `detection_properties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
+A component that detects text can add an entry to `detection_properties` where the key is `TRANSCRIPT` and the value is a string representing the text found in the video segment.
 
 ```c++
 MPFVideoTrack track;
@@ -390,7 +390,7 @@ track.start_frame = 0;
 track.stop_frame = 5;
 track.confidence = 1.0;
 track.frame_locations = frame_locations;
-track.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER";
+track.detection_properties["TRANSCRIPT"] = "RE5ULTS FR0M A TEXT DETECTER";
 ```
 
 # C++ Component Build Environment
