@@ -289,7 +289,7 @@
 <li><a href="https://github.com/openmpf/openmpf-build-tools">openmpf/openmpf-build-tools</a></li>
 <li><a href="https://github.com/openmpf/openmpf-cpp-component-sdk">openmpf/openmpf-cpp-component-sdk</a></li>
 <li><a href="https://github.com/openmpf/openmpf-java-component-sdk">openmpf/openmpf-java-component-sdk</a></li>
-<li><a href="https://github.com/openmpf/openmpf-python-component-sdk">openmpf/openmpf-python-component-sdk</a> </li>
+<li><a href="https://github.com/openmpf/openmpf-python-component-sdk">openmpf/openmpf-python-component-sdk</a></li>
 <li><a href="https://github.com/openmpf/openmpf-projects">openmpf/openmpf-projects</a></li>
 <li><a href="https://github.com/openmpf/openmpf-docker">openmpf/openmpf-docker</a></li>
 </ul>
@@ -452,7 +452,7 @@ git push
 <pre><code>pip install mkdocs
 </code></pre>
 
-<p>Note that you need version 0.16.0 or higher.</p>
+<p>Note that you need version 0.16.0.</p>
 <p>To install the Ruby bundler dependency management tool with the jekyll gem run:</p>
 <pre><code>sudo yum install ruby-devel
 gem install bundler
@@ -461,7 +461,7 @@ bundle install
 
 <h2>Updating Read the Docs</h2>
 
-<p>Use <a href="http://www.mkdocs.org">mkdocs</a> to generate HTML files from Markdown (.md) files stored in <code>openmpf.github.io/docs/docs</code>. When modifying the files locally, run <code>mkdocs serve</code> within the <code>openmpf.github.io/docs</code> directory. That spawns a local webserver so that you can view changes to the docs in real time by browsing to <a href="http://localhost:8000">http://localhost:8000</a>. </p>
+<p>Use <a href="http://www.mkdocs.org">mkdocs</a> to generate HTML files from Markdown (.md) files stored in <code>openmpf.github.io/docs/docs</code>. When modifying the files locally, run <code>mkdocs serve</code> within the <code>openmpf.github.io/docs</code> directory. That spawns a local webserver so that you can view changes to the docs in real time by browsing to <a href="http://localhost:8000">http://localhost:8000</a>.</p>
 <h2>Updating Beautiful Jekyll</h2>
 
 <p>When making updates to our landing page, or any other page other than those that are part of Read the Docs, run <code>./build-site.sh</code> within the top-level <code>openmpf.github.io</code> directory to generate the HTML for those changes, and then run <code>./serve.sh</code> to spawn a local webserver so that you can view changes by browsing to <a href="http://localhost:4000">http://localhost:4000</a>. Note that unlike the <code>mkdocs serve</code> command explained above, this site is not updated in real time as you make changes to the source code.</p>
