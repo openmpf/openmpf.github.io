@@ -232,7 +232,7 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Track-Level Properties and Confidence</h2>
 
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object) section.
-- Components have been updated to return meaningful track-level properties. Caffe and Darknet include `CLASSIFICATION`, OALPR includes the exemplar `TEXT`, and Sphinx includes the `TRANSCRIPT`.
+- Components have been updated to return meaningful track-level properties. Caffe and Darknet include `CLASSIFICATION`, OALPR includes the exemplar `TEXT`, and Sphinx includes the `TRANSCRIPTION`.
 - The Workflow Manager will now populate the track-level confidence. It is the same as the exemplar confidence, which is the max of all of the track detections.
 
 <h2>Custom NGINX HTTP Object Storage</h2>
