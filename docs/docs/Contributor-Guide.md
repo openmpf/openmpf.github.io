@@ -185,7 +185,7 @@ To install `mkdocs` run:
 pip install mkdocs
 ```
 
-Note that you need version 0.16.0 or higher.
+Note that you need version 0.16.0.
 
 To install the Ruby bundler dependency management tool with the jekyll gem run:
 
