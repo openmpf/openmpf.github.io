@@ -1284,13 +1284,13 @@ MPFVideoTrack(
 <blockquote>
 <p><strong>NOTE:</strong> Currently, <code>MPFVideoTrack.detection_properties</code> do not show up in the JSON output object or are used by the WFM in any way.</p>
 </blockquote>
-<p>A component that detects text can add an entry to <code>detection_properties</code> where the key is <code>TRANSCRIPTION</code> and the value is a string representing the text found in the video segment.</p>
+<p>A component that detects text can add an entry to <code>detection_properties</code> where the key is <code>TRANSCRIPT</code> and the value is a string representing the text found in the video segment.</p>
 <pre><code class="c++">MPFVideoTrack track;
 track.start_frame = 0;
 track.stop_frame = 5;
 track.confidence = 1.0;
 track.frame_locations = frame_locations;
-track.detection_properties[&quot;TRANSCRIPTION&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
+track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
 </code></pre>
 
 <h4 id="mpfaudiotrack">MPFAudioTrack</h4>

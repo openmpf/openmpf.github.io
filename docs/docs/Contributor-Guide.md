@@ -14,7 +14,7 @@ The OpenMPF project consists of the following repositories:
  - [openmpf/openmpf-build-tools](https://github.com/openmpf/openmpf-build-tools)
  - [openmpf/openmpf-cpp-component-sdk](https://github.com/openmpf/openmpf-cpp-component-sdk)
  - [openmpf/openmpf-java-component-sdk](https://github.com/openmpf/openmpf-java-component-sdk)
- - [openmpf/openmpf-python-component-sdk](https://github.com/openmpf/openmpf-python-component-sdk) 
+ - [openmpf/openmpf-python-component-sdk](https://github.com/openmpf/openmpf-python-component-sdk)
  - [openmpf/openmpf-projects](https://github.com/openmpf/openmpf-projects)
  - [openmpf/openmpf-docker](https://github.com/openmpf/openmpf-docker)
 
@@ -197,7 +197,7 @@ bundle install
 
 <h2>Updating Read the Docs</h2>
 
-Use [mkdocs](http://www.mkdocs.org) to generate HTML files from Markdown (.md) files stored in `openmpf.github.io/docs/docs`. When modifying the files locally, run `mkdocs serve` within the `openmpf.github.io/docs` directory. That spawns a local webserver so that you can view changes to the docs in real time by browsing to <http://localhost:8000>. 
+Use [mkdocs](http://www.mkdocs.org) to generate HTML files from Markdown (.md) files stored in `openmpf.github.io/docs/docs`. When modifying the files locally, run `mkdocs serve` within the `openmpf.github.io/docs` directory. That spawns a local webserver so that you can view changes to the docs in real time by browsing to <http://localhost:8000>.
 
 <h2>Updating Beautiful Jekyll</h2>
 

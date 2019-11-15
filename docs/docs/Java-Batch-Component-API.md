@@ -654,11 +654,11 @@ public MPFVideoTrack(
 
 >**NOTE:** Currently, `MPFVideoTrack.detectionProperties` do not show up in the JSON output object or are used by the WFM in any way.
 
-A component that detects text could add an entry to `detectionProperties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
+A component that detects text could add an entry to `detectionProperties` where the key is `TRANSCRIPT` and the value is a string representing the text found in the video segment.
 
 ```java
 Map<String, String> detectionProperties = new HashMap<String, String>();
-detectionProperties.put("TRANSCRIPTION", "RE5ULTS FR0M A TEXT DETECTER");
+detectionProperties.put("TRANSCRIPT", "RE5ULTS FR0M A TEXT DETECTER");
 MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectionProperties);
 ```
 

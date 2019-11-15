@@ -719,7 +719,7 @@ MPFVideoTrack(
 
 >**NOTE:** Currently, `MPFVideoTrack.detection_properties` do not show up in the JSON output object or are used by the WFM in any way.
 
-A component that detects text can add an entry to `detection_properties` where the key is `TRANSCRIPTION` and the value is a string representing the text found in the video segment.
+A component that detects text can add an entry to `detection_properties` where the key is `TRANSCRIPT` and the value is a string representing the text found in the video segment.
 
 ```c++
 MPFVideoTrack track;
@@ -727,7 +727,7 @@ track.start_frame = 0;
 track.stop_frame = 5;
 track.confidence = 1.0;
 track.frame_locations = frame_locations;
-track.detection_properties["TRANSCRIPTION"] = "RE5ULTS FR0M A TEXT DETECTER";
+track.detection_properties["TRANSCRIPT"] = "RE5ULTS FR0M A TEXT DETECTER";
 ```
 
 #### MPFAudioTrack
