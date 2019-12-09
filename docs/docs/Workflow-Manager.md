@@ -22,7 +22,7 @@ There are three general functional areas in the WFM:
 
 There are two different databases used by the WFM:
 
-1. A **MySQL database** stores persistent data about jobs. This data includes:
+1. A **SQL database** stores persistent data about jobs. This data includes:
     * The job ID
     * The start and stop time of the job
     * The exit status of the job
@@ -116,13 +116,13 @@ The diagram below shows the sequence of WFM operations. It does not show the Act
 
 ![Job_Creation_Diagram](img/Job_Creation_Diagram.png "Job Creation Diagram")
 
-After the job request is validated and saved to the MySQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.
+After the job request is validated and saved to the SQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.
 
 [Apache Camel](http://camel.apache.org/) is an open-source framework that allows developers to build rule-based routing engines. Within the OpenMPF, we use a [Java DSL](http://camel.apache.org/dsl.html) to define the routes. Every route functions independently, and communication between the routes is URI-based. The OpenMPF uses ActiveMQ to handle its message traffic.
 
 ## Job Creator Route
 
-The **Job Creator Route** sets up the job in memory. By the time this route is invoked, the job has been persisted in the permanent MySQL database. The Job Creator Route sets up the transient objects in Redis that will be used for aggregating job data across pipeline stages. By the time this route exits, the particulars of the pipeline and job request will be stored in Redis.
+The **Job Creator Route** sets up the job in memory. By the time this route is invoked, the job has been persisted in the permanent SQL database. The Job Creator Route sets up the transient objects in Redis that will be used for aggregating job data across pipeline stages. By the time this route exits, the particulars of the pipeline and job request will be stored in Redis.
 
 ## Media Retriever Route
 
@@ -150,7 +150,7 @@ The **Stage Response Aggregation Route** is the exit point for the response proc
 
 ## Markup Response Route
 
-Markup files are copies of the initial media input to a job with any detections visually highlighted in the image. The **Markup Response Route** persists the locations of these markup files in the MySQL database.
+Markup files are copies of the initial media input to a job with any detections visually highlighted in the image. The **Markup Response Route** persists the locations of these markup files in the SQL database.
 
 ## Job Completed Route
 
