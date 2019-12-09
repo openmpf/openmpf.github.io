@@ -129,19 +129,30 @@ For reference only: <http://ant.apache.org>
 7. `. /etc/profile.d/mpf.sh`
 
 ## PostgreSQL
-1. Add PostgreSQL repository: 
-   `sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm`
-2. Install postgres with yum: `sudo yum install -y postgresql12-server`
-3. Initialize postgres: `sudo /usr/pgsql-12/bin/postgresql-12-setup initdb`
-4. Modify the default authentication method for localhost. 
+1. Add PostgreSQL repository:
+<br>`sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm`
+2. Install postgres with yum:
+<br>`sudo yum install -y postgresql12-server`
+3. Initialize postgres:
+<br>`sudo /usr/pgsql-12/bin/postgresql-12-setup initdb`
+4. Modify the default authentication method for localhost.
     - Open `/var/lib/pgsql/12/data/pg_hba.conf` in a text editor.
-    - Find the line containing: `host    all             all             127.0.0.1/32            ident`.
-      It should be line 82. Change "ident" to "md5".
-    - Find the line containing: `host    all             all             ::1/128                 ident`.
-      It should be line 84. Change "ident" to "md5".
-5. Start postgres: `sudo service postgresql-12 start`
-6. Create the mpf user. When prompted for a password use "password": `sudo -i -u postgres createuser -P mpf`
-7. Create the mpf database with the mpf user as the owner: `sudo -i -u postgres createdb -O mpf mpf`
+    - Find the line containing:<br>
+        ```
+        host    all             all             127.0.0.1/32            ident
+        ```
+      <br>It should be line 82. Change "ident" to "md5".
+    - Find the line containing:<br>
+        ```
+        host    all             all             ::1/128                 ident
+        ```
+      <br>It should be line 84. Change "ident" to "md5".
+5. Start postgres:
+<br>`sudo service postgresql-12 start`
+6. Create the mpf user. When prompted for a password use "password":
+<br>`sudo -i -u postgres createuser -P mpf`
+7. Create the mpf database with the mpf user as the owner:
+<br>`sudo -i -u postgres createdb -O mpf mpf`
 
 
 # Configure System Dependencies
