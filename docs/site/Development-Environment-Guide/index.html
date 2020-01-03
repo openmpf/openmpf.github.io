@@ -142,11 +142,10 @@
                 
                     <li><a class="toctree-l4" href="#apache-ant-196">Apache Ant 1.9.6</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#configure-system-dependencies">Configure System Dependencies</a></li>
+                    <li><a class="toctree-l4" href="#postgresql">PostgreSQL</a></li>
                 
             
-                <li class="toctree-l3"><a href="#configure-mysql">Configure MySQL</a></li>
+                <li class="toctree-l3"><a href="#configure-system-dependencies">Configure System Dependencies</a></li>
                 
             
                 <li class="toctree-l3"><a href="#configure-activemq">Configure ActiveMQ</a></li>
@@ -343,11 +342,6 @@
 <h1 id="install-system-dependencies-using-package-managers">Install System Dependencies Using Package Managers</h1>
 <h2 id="configure-additional-repositories">Configure Additional Repositories</h2>
 <ol>
-<li>Install the Oracle MySQL Community Release Repository:<ol>
-<li><code>wget -P /home/mpf/Downloads "http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm"</code></li>
-<li><code>sudo rpm -ivh /home/mpf/Downloads/mysql-community-release-el7-5.noarch.rpm</code></li>
-</ol>
-</li>
 <li>Install the Remi Repo for Redis:<ol>
 <li><code>wget -P /home/mpf/Downloads "http://rpms.remirepo.net/RPM-GPG-KEY-remi"</code></li>
 <li><code>wget -P /home/mpf/Downloads "http://rpms.famillecollet.com/enterprise/remi-release-7.rpm"</code></li>
@@ -381,7 +375,7 @@
 </ol>
 <h2 id="install-system-dependencies-via-yum">Install System Dependencies via Yum</h2>
 <p>Use <code>yum</code> to install packages:</p>
-<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel mysql-community-client mysql-community-server nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBD-MySQL perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
+<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <p>The version of <code>pip</code> available in the yum repository is old and must be upgraded with the following command:</p>
 <p><code>sudo pip install --upgrade pip</code></p>
 <h1 id="get-the-openmpf-source-code">Get the OpenMPF Source Code</h1>
@@ -452,19 +446,32 @@
 <li><code>sudo sed -i '/^PATH/s/$/:\/apps\/install\/apache-ant-1.9.6\/bin/' /etc/profile.d/mpf.sh</code></li>
 <li><code>. /etc/profile.d/mpf.sh</code></li>
 </ol>
-<h1 id="configure-system-dependencies">Configure System Dependencies</h1>
-<h1 id="configure-mysql">Configure MySQL</h1>
+<h2 id="postgresql">PostgreSQL</h2>
 <ol>
-<li><code>sudo systemctl start mysqld</code></li>
-<li><code>mysql -u root --execute "UPDATE mysql.user SET Password=PASSWORD('password') WHERE User='root';flush privileges;"</code></li>
-<li><code>mysql -u root -ppassword --execute "create database mpf"</code></li>
-<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'%' IDENTIFIED by 'mpf';flush privileges;"</code></li>
-<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'$(hostname)' IDENTIFIED by 'mpf';flush privileges;"</code></li>
-<li><code>mysql -u root -ppassword --execute "create user 'mpf'@'localhost' IDENTIFIED by 'mpf';flush privileges;"</code></li>
-<li><code>mysql -u root -ppassword --execute "grant all privileges on mpf.* to 'mpf';flush privileges;"</code></li>
-<li><code>sudo systemctl enable mysqld.service</code></li>
-<li><code>sudo chkconfig --level 2345 mysqld on</code></li>
+<li>Add PostgreSQL repository:
+<br><code>sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</code></li>
+<li>Install postgres with yum:
+<br><code>sudo yum install -y postgresql12-server</code></li>
+<li>Initialize postgres:
+<br><code>sudo /usr/pgsql-12/bin/postgresql-12-setup initdb</code></li>
+<li>Modify the default authentication method for localhost.<ul>
+<li>Open <code>/var/lib/pgsql/12/data/pg_hba.conf</code> in a text editor.</li>
+<li>Find the line containing:<br>
+    <code>host    all             all             127.0.0.1/32            ident</code>
+  <br>It should be line 82. Change "ident" to "md5".</li>
+<li>Find the line containing:<br>
+    <code>host    all             all             ::1/128                 ident</code>
+  <br>It should be line 84. Change "ident" to "md5".</li>
+</ul>
+</li>
+<li>Start postgres:
+<br><code>sudo service postgresql-12 start</code></li>
+<li>Create the mpf user. When prompted for a password use "password":
+<br><code>sudo -i -u postgres createuser -P mpf</code></li>
+<li>Create the mpf database with the mpf user as the owner:
+<br><code>sudo -i -u postgres createdb -O mpf mpf</code></li>
 </ol>
+<h1 id="configure-system-dependencies">Configure System Dependencies</h1>
 <h1 id="configure-activemq">Configure ActiveMQ</h1>
 <p>Some additional manual configuration of ActiveMQ is required. For each step, open the specified file in a text editor, make the change, and save the file. If ActiveMQ is running, please stop it before making these changes.</p>
 <p><strong>Use Additional Memory</strong></p>
@@ -580,7 +587,8 @@
 <p><strong>Using an IDE</strong></p>
 <p>If running Tomcat from an IDE, such as IntelliJ, then <code>-Dtransport.guarantee="CONFIDENTIAL" -Dweb.rest.protocol="https"</code> should be added at the end of the Tomcat VM arguments for your Tomcat run configuration. It is not necessary to add these arguments when running tomcat from the command line or a systemd command because of the configured <code>CATALINA_OPTS</code> variable.</p>
 <h1 id="build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</h1>
-<p>Run these commands to build OpenMPF and launch the web application:</p>
+<p>Run the following commands to build OpenMPF and launch the web application. Use this value for <code>&lt;configFile&gt;</code>:
+<br><code>/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/openmpf-open-source-package.json</code></p>
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
 <li>
@@ -613,14 +621,15 @@ localhost.localdomain</code></p>
 
 <p>After startup, the Workflow Manager will be available at <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a> (or <a href="https://localhost:8443/workflow-manager">https://localhost:8443/workflow-manager</a> if configured to use HTTPS instead of HTTP). Browse to this URL using FireFox or Chrome.</p>
 <p>If you want to test regular user capabilities, log in as the "mpf" user with the "mpf123" password. Please see the <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information. Alternatively, if you want to test admin capabilities then log in as "admin" user with the "mpfadm" password. Please see the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a> for more information. When finished using OpenMPF, run <code>mpf stop</code>.</p>
-<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Guide/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a>. These will start and stop the ActiveMQ, MySQL, Redis, Node Manager, and Tomcat system processes.</p>
-<p>For debugging purposes, it may be helpful to manually start the Tomcat service in a separate terminal window to display the log output. To do that, use <code>mpf start --xtc</code> to start ActiveMQ, MySQL, Redis, and the Node Manager without starting Tomcat. Then, in another terminal windows run:</p>
+<p>The preferred method to start and stop services for OpenMPF is with the <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these commands, please see the <a href="../Admin-Guide/index.html#command-line-tools">Command Line Tools</a> section of the <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a>. These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager, and Tomcat system processes.</p>
+<p>For debugging purposes, it may be helpful to manually start the Tomcat service in a separate terminal window to display the log output. To do that, use <code>mpf start --xtc</code> to start ActiveMQ, PostgreSQL, Redis, and the Node Manager without starting Tomcat. Then, in another terminal windows run:</p>
 <pre><code>/opt/apache-tomcat/bin/catalina.sh run
 </code></pre>
 
 <p>Press <code>ctrl-c</code> in the Tomcat window to stop Tomcat.</p>
 <h1 id="optional-test-openmpf">(Optional) Test OpenMPF</h1>
-<p>Run these commands to build OpenMPF and run the integration tests:</p>
+<p>Run the following commands to build OpenMPF and run the integration tests. Use this value for <code>&lt;configFile&gt;</code>:
+<br><code>/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/openmpf-open-source-package.json</code></p>
 <ol>
 <li><code>cd /home/mpf/openmpf-projects/openmpf</code></li>
 <li>
@@ -658,7 +667,7 @@ localhost.localdomain</code></p>
 <p>OpenMPF installs command line tools that can be accessed through a terminal on the development machine. All of the tools take the form of actions: <code>mpf &lt;action&gt; [options ...]</code>. Note that tab-completion is enabled for ease of use.</p>
 <p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for documentation about a specific action.</p>
 <ul>
-<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including mySQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.<ul>
+<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF system dependencies, including PostgreSQL, ActiveMQ, Redis, Tomcat, and the node managers on the various nodes in the OpenMPF cluster.<ul>
 <li><code>mpf status</code>: displays a message indicating whether each of the system dependencies is running or not</li>
 <li><code>mpf start</code>: starts all of the system dependencies</li>
 <li><code>mpf stop</code>: stops all of the system dependencies</li>

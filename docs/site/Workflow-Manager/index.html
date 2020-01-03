@@ -310,7 +310,7 @@
 </ol>
 <p>There are two different databases used by the WFM:</p>
 <ol>
-<li>A <strong>MySQL database</strong> stores persistent data about jobs. This data includes:<ul>
+<li>A <strong>SQL database</strong> stores persistent data about jobs. This data includes:<ul>
 <li>The job ID</li>
 <li>The start and stop time of the job</li>
 <li>The exit status of the job</li>
@@ -422,10 +422,10 @@
 <p>The request to create a job begins at the <a href="#jobcontroller"><code>JobController</code></a>. From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.</p>
 <p>The diagram below shows the sequence of WFM operations. It does not show the ActiveMQ messages that are sent to and from the component services.</p>
 <p><img alt="Job_Creation_Diagram" src="../img/Job_Creation_Diagram.png" title="Job Creation Diagram" /></p>
-<p>After the job request is validated and saved to the MySQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.</p>
+<p>After the job request is validated and saved to the SQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.</p>
 <p><a href="http://camel.apache.org/">Apache Camel</a> is an open-source framework that allows developers to build rule-based routing engines. Within the OpenMPF, we use a <a href="http://camel.apache.org/dsl.html">Java DSL</a> to define the routes. Every route functions independently, and communication between the routes is URI-based. The OpenMPF uses ActiveMQ to handle its message traffic.</p>
 <h2 id="job-creator-route">Job Creator Route</h2>
-<p>The <strong>Job Creator Route</strong> sets up the job in memory. By the time this route is invoked, the job has been persisted in the permanent MySQL database. The Job Creator Route sets up the transient objects in Redis that will be used for aggregating job data across pipeline stages. By the time this route exits, the particulars of the pipeline and job request will be stored in Redis.</p>
+<p>The <strong>Job Creator Route</strong> sets up the job in memory. By the time this route is invoked, the job has been persisted in the permanent SQL database. The Job Creator Route sets up the transient objects in Redis that will be used for aggregating job data across pipeline stages. By the time this route exits, the particulars of the pipeline and job request will be stored in Redis.</p>
 <h2 id="media-retriever-route">Media Retriever Route</h2>
 <p>The <strong>Media Retriever Route</strong> ensures that the media for the job can all be found and accessed. It stores the media information on the server to ensure continued access.</p>
 <h2 id="media-inspection-route">Media Inspection Route</h2>
@@ -439,7 +439,7 @@
 <h2 id="stage-response-aggregation-route">Stage Response Aggregation Route</h2>
 <p>The <strong>Stage Response Aggregation Route</strong> is the exit point for the response processors. It waits until all the sub-job responses have been retrieved for the current stage of the pipeline, then it invokes the Job Router Route to see if any additional processing needs to be done.</p>
 <h2 id="markup-response-route">Markup Response Route</h2>
-<p>Markup files are copies of the initial media input to a job with any detections visually highlighted in the image. The <strong>Markup Response Route</strong> persists the locations of these markup files in the MySQL database.</p>
+<p>Markup files are copies of the initial media input to a job with any detections visually highlighted in the image. The <strong>Markup Response Route</strong> persists the locations of these markup files in the SQL database.</p>
 <h2 id="job-completed-route">Job Completed Route</h2>
 <p>Once the Job is completed, the <strong>Job Completed Route</strong> converts the aggregated transient data structure into a JSON output format. It then clears out any lingering transient objects, updates the final job status, and sends the output object to anything that needs to access it.</p>
               
