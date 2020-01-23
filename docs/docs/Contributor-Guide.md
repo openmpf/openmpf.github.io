@@ -182,7 +182,7 @@ Our [openmpf.github.io repo](https://github.com/openmpf/openmpf.github.io/tree/m
 To install `mkdocs` run:
 
 ```
-pip install mkdocs
+pip install 'mkdocs==0.16.0'
 ```
 
 Note that you need version 0.16.0.
