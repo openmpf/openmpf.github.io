@@ -390,7 +390,7 @@ Run the following commands to build OpenMPF and run the integration tests. Use t
 7. `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/`
 8. `sudo systemctl daemon-reload`
 9. `mpf start --xtc`
-10. `mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
+10. `mvn verify -Pjenkins -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
 11. `mpf stop --xtc`
 
 Please see the appendix section [Known Issues](#known-issues) regarding any `java.lang.InterruptedException: null` warning log messages observed when running the tests.
