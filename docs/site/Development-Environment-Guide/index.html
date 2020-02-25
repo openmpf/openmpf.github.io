@@ -651,7 +651,7 @@ localhost.localdomain</code></p>
 <li><code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/</code></li>
 <li><code>sudo systemctl daemon-reload</code></li>
 <li><code>mpf start --xtc</code></li>
-<li><code>mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
+<li><code>mvn verify -Pjenkins -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
 <li><code>mpf stop --xtc</code></li>
 </ol>
 <p>Please see the appendix section <a href="#known-issues">Known Issues</a> regarding any <code>java.lang.InterruptedException: null</code> warning log messages observed when running the tests.</p>
