@@ -501,13 +501,57 @@ MPFImageJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-|  job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
-| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-| location | `const MPFImageLocation &` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
-| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>location</td>
+      <td><code>const MPFImageLocation &</code></td>
+      <td>An <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.media_properties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of the image in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of the image in pixels</li>
+        </ul>
+        May include the following key-value pairs:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+          <li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li>
+          <li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -537,19 +581,65 @@ MPFVideoJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-|  job_name | `const string &`  | See [MPFJob.job_name](#job-name) for description.  |
-| data_uri  | `const string &`  | See [MPFJob.data_uri](#data-uri) for description. |
-|  start_frame | `const int`  | The first frame number (0-based index) of the video that should be processed to look for detections.  |
-| stop_frame  | `const int`  | The last frame number (0-based index) of the video that should be processed to look for detections.|
-| track | `const MPFVideoTrack &` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
-| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/><br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pair:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul> |
-
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+    </tr>
+    <tr>
+      <td>start_frame</td>
+      <td><code>const int</code></td>
+      <td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stop_frame</td>
+      <td><code>const int</code></td>
+      <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>    
+    <tr>
+      <td>track</td>
+      <td><code>const MPFVideoTrack &</code></td>
+      <td>An <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.media_properties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of video in milliseconds</li>
+          <li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li>
+          <li><code>FRAME_COUNT</code> : the number of frames in the video</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of a frame in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of a frame in pixels</li>
+        </ul>
+        May include the following key-value pair:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
-
 
 #### MPFAudioJob
 Extends [`MPFJob`](#mpfjob)
@@ -579,15 +669,60 @@ MPFAudioJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-| job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
-| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-| start_time | `const int`  | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
-| stop_time  | `const int`  | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
-| track | `const MPFAudioTrack &` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
-| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of audio file in milliseconds</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>start_time</td>
+      <td><code>const int</code></td>
+      <td>The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stop_time</td>
+      <td><code>const int</code></td>
+      <td>The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>track</td>
+      <td><code>const MPFAudioTrack &</code></td>
+      <td>An <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.media_properties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of audio file in milliseconds</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 #### MPFGenericJob
 Extends [`MPFJob`](#mpfjob)
@@ -614,13 +749,49 @@ MPFGenericJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-| job_name | `const string &` | See [MPFJob.job_name](#job-name) for description.  |
-| data_uri  | `const string &` | See [MPFJob.data_uri](#data-uri) for description. |
-| track | `const MPFGenericTrack &` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
-| job_properties | `const Properties &` | See [MPFJob.job_properties](#job-properties) for description. |
-| media_properties | `const Properties &` | See [MPFJob.media_properties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>track</td>
+      <td><code>const MPFGenericTrack &</code></td>
+      <td>An <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>See <a href="#job-properties">MPFJob.job_properties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>const Properties &</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.media_properties</a> for description.
+        <br/><br/>
+        Includes the following key-value pair:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ### Detection Job Result Classes
 
