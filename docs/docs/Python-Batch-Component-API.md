@@ -435,13 +435,61 @@ Class containing data used for detection of objects in an image file.
 
 * Members:
 
-| Member                | Data Type        | Description |
-|-----------------------|------------------|-------------|
-| job_name              | `str`            | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
-| data_uri              | `str`            | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". |
-| job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br/><br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
-| feed_forward_location | `None` or `mpf_component_api.ImageLocation` | An `mpf_component_api.ImageLocation` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>str</code></td>
+      <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>str</code></td>
+      <td>The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.jpg".</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        <br/><br/>
+        Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
+      </td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of the image in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of the image in pixels</li>
+        </ul>
+        May include the following key-value pairs:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+          <li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li>
+          <li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>feed_forward_location</td>
+      <td><code>None</code> or <code>mpf_component_api.ImageLocation</code></td>
+      <td>An <code>mpf_component_api.ImageLocation</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 
 #### mpf_component_api.ImageLocation
@@ -575,15 +623,72 @@ Class containing data used for detection of objects in a video file.
 
 * Members:
 
-| Member                | Data Type        | Description |
-|-----------------------|------------------|-------------|
-| job_name              | `str`            | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
-| data_uri              | `str`            | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
-| start_frame           | `int`            | The first frame number (0-based index) of the video that should be processed to look for detections. |
-| stop_frame            | `int`            | The last frame number (0-based index) of the video that should be processed to look for detections. |
-| job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br/><br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pair:<ul><li>`ROTATION` : A floating point value in the interval `[0.0, 360.0)` indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li></ul> |
-| feed_forward_track    | `None` or `mpf_component_api.VideoTrack` | An `mpf_component_api.VideoTrack` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>str</code></td>
+      <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>str</code></td>
+      <td>The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".</td>
+    </tr>
+    <tr>
+      <td>start_frame</td>
+      <td><code>int</code></td>
+      <td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>    
+    <tr>
+      <td>stop_frame</td>
+      <td><code>int</code></td>
+      <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>    
+    <tr>
+      <td>job_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        <br/><br/>
+        Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
+      </td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of video in milliseconds</li>
+          <li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li>
+          <li><code>FRAME_COUNT</code> : the number of frames in the video</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of a frame in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of a frame in pixels</li>
+        </ul>
+        May include the following key-value pair:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>feed_forward_track</td>
+      <td><code>None</code> or <code>mpf_component_api.VideoTrack</code></td>
+      <td>An <code>mpf_component_api.VideoTrack</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 > **IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support.
 > For frame intervals greater than 1, the component must look for detections starting with the first
@@ -745,15 +850,64 @@ Currently, audio files are not logically segmented, so a job will contain the en
 
 * Members:
 
-| Member                | Data Type        | Description |
-|-----------------------|------------------|-------------|
-| job_name              | `str`            | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
-| data_uri              | `str`            | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.mp3". |
-| start_time            | `int`            | The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections. |
-| stop_time             | `int`            | The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections. |
-| job_properties        | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties      | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job. <br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of audio file in milliseconds</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
-| feed_forward_track    | `None` or `mpf_component_api.AudioTrack` | An `mpf_component_api.AudioTrack` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>str</code></td>
+      <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>str</code></td>
+      <td>The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.mp3".</td>
+    </tr>
+    <tr>
+      <td>start_time</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in milliseconds) associated with the beginning of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stop_time</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>        
+    <tr>
+      <td>job_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        <br/><br/>
+        Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
+      </td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of audio file in milliseconds</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>feed_forward_track</td>
+      <td><code>None</code> or <code>mpf_component_api.AudioTrack</code></td>
+      <td>An <code>mpf_component_api.AudioTrack</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 
 #### mpf_component_api.AudioTrack
@@ -812,14 +966,53 @@ logically segmented, so a job will contain the entirety of the file.
 
 * Members:
 
-| Member             | Data Type        | Description |
-|--------------------|------------------|-------------|
-| job_name           | `str`            | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
-| data_uri           | `str`            | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.txt". |
-| job_properties     | `dict[str, str]` | Contains a dict with keys and values of type `str` which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value. |
-| media_properties   | `dict[str, str]` | Contains a dict with keys and values of type `str` of metadata about the media associated with the job.<br/> <br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
-| feed_forward_track | `None` or `mpf_component_api.GenericTrack` | An `mpf_component_api.GenericTrack` from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
-
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>job_name</td>
+      <td><code>str</code></td>
+      <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>str</code></td>
+      <td>The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.txt".</td>
+    </tr>
+    <tr>
+      <td>job_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        <br/><br/>
+        Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
+      </td>
+    </tr>
+    <tr>
+      <td>media_properties</td>
+      <td><code>dict[str, str]</code></td>
+      <td>
+        Contains a dict with keys and values of type <code>str</code> of metadata about the media associated with the job.
+        <br/><br/>
+        Includes the following key-value pair:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>feed_forward_track</td>
+      <td><code>None</code> or <code>mpf_component_api.GenericTrack</code></td>
+      <td>An <code>mpf_component_api.GenericTrack</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 
 #### mpf_component_api.GenericTrack
