@@ -839,7 +839,7 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 </thead>
 <tbody>
 <tr>
-<td>job_name</td>
+<td>job_name <a name="job-name"></a></td>
 <td><code>const string  &amp;</code></td>
 <td>A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes.</td>
 </tr>
@@ -977,6 +977,11 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
       <td>job_name</td>
       <td><code>const string &</code></td>
       <td>See <a href="#job-name">MPFJob.job_name</a> for description.</td>
+    </tr>
+    <tr>
+      <td>data_uri</td>
+      <td><code>const string &</code></td>
+      <td>See <a href="#data-uri">MPFJob.data_uri</a> for description.</td>
     </tr>
     <tr>
       <td>start_frame</td>
