@@ -504,7 +504,7 @@ public MPFImageJob(
         </ul>
         May include the following key-value pairs:
         <ul>
-          <li><code>ROTATION</code> : 0, 90, 180, or 270 degrees indicating the orientation of the media in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
           <li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li>
           <li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li>
         </ul>
@@ -597,7 +597,7 @@ public MPFVideoJob(
         </ul>
         May include the following key-value pair:
         <ul>
-          <li><code>ROTATION</code> : 0, 90, 180, or 270 degrees indicating the orientation of the media in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
         </ul>
       </td>
     </tr>
