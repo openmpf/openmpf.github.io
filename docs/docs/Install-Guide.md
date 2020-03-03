@@ -2,7 +2,11 @@
 
 # Docker
 
-OpenMPF is installed using the Docker container platform. Please read the disclaimer below and follow the instructions in the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started) to setup Docker and build and deploy OpenMPF Docker images.
+OpenMPF is installed using the Docker container platform. Please read the [disclaimer](#disclaimer) below.
+ 
+To use prebuilt Docker images, refer to the OpenMPF Workflow Manager image "Quick Start" section on [DockerHub](https://hub.docker.com/r/openmpf/openmpf_workflow_manager).
+ 
+For more information, including how to setup Docker, and build and deploy OpenMPF Docker images, refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started).
 
 Additionally, if you would like to install OpenMPF across multiple physical or virtual machines, then refer to the openmpf-docker [Swarm Deployment Guide](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#do-i-need-swarm-deployment). 
 
