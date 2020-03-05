@@ -436,7 +436,7 @@ protected MPFJob(
 
 | Member  | Data Type  | Description  |
 |---|---|---|
-| jobName | `String`  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
+| jobName <a name="job-name"></a> | `String`  | A specific name given to the job by the OpenMPF Framework. This value may be used, for example, for logging and debugging purposes.  |
 | dataUri <a name="data-uri"></a> | `String`  | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi".  |
 | jobProperties <a name="job-properties"></a> | `Map<String, String>`  | The key corresponds to the property name specified in the component descriptor file described in "Installing and Registering a Component". Values are determined by an end user when creating a pipeline. <br/><br/> Note: Only those property values specified by the user will be in the jobProperties map; for properties not contained in the map, the component must use a default value. |
 | mediaProperties <a name="media-properties"></a> | `Map<String, String>` | Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description. |
@@ -466,13 +466,57 @@ public MPFImageJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-|  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
-| dataUri  | `String`  | See [MPFJob.dataUri](#data-uri) for description. |
-| jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/><br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pairs:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li><li>`HORIZONTAL_FLIP` : true if the image is mirrored across the Y-axis, otherwise false</li><li>`EXIF_ORIENTATION` : the standard EXIF orientation tag; a value between 1 and 8</li></ul> |
-| location | `MPFImageLocation` | An [`MPFImageLocation`](#mpfimagelocation) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>jobName</td>
+      <td><code>String</code></td>
+      <td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+    </tr>
+    <tr>
+      <td>dataUri</td>
+      <td><code>String</code></td>
+      <td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>jobProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>mediaProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.mediaProperties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of the image in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of the image in pixels</li>
+        </ul>
+        May include the following key-value pairs:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+          <li><code>HORIZONTAL_FLIP</code> : true if the image is mirrored across the Y-axis, otherwise false</li>
+          <li><code>EXIF_ORIENTATION</code> : the standard EXIF orientation tag; a value between 1 and 8</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>location</td>
+      <td><code>MPFImageLocation</code></td>
+      <td>An <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 #### MPFVideoJob
 Extends [`MPFJob`](#mpfjob)
@@ -502,15 +546,68 @@ public MPFVideoJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-| jobName | `String` | See [MPFJob.jobName](#job-name) for description.  |
-| dataUri  | `String` | See [MPFJob.dataUri](#data-uri) for description. |
-|  startFrame | `int` | The first frame number (0-based index) of the video that should be processed to look for detections.  |
-| stopFrame  | `int` | The last frame number (0-based index) of the video that should be processed to look for detections.|
-| jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of video in milliseconds</li><li>`FPS` : frames per second (averaged for variable frame rate video)</li><li>`FRAME_COUNT` : the number of frames in the video</li><li>`MIME_TYPE` : the MIME type of the media</li></ul>May include the following key-value pair:<ul><li>`ROTATION` : 0, 90, 180, or 270 degrees</li></ul> |
-| track | `MPFVideoTrack` | An [`MPFVideoTrack`](#mpfvideotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>jobName</td>
+      <td><code>String</code></td>
+      <td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+    </tr>
+    <tr>
+      <td>dataUri</td>
+      <td><code>String</code></td>
+      <td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>startFrame</td>
+      <td><code>int</code></td>
+      <td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stopFrame</td>
+      <td><code>int</code></td>
+      <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
+    </tr>        
+    <tr>
+      <td>jobProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>mediaProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.mediaProperties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of video in milliseconds</li>
+          <li><code>FPS</code> : frames per second (averaged for variable frame rate video)</li>
+          <li><code>FRAME_COUNT</code> : the number of frames in the video</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+          <li><code>FRAME_WIDTH</code> : the width of a frame in pixels</li>
+          <li><code>FRAME_HEIGHT</code> : the height of a frame in pixels</li>
+        </ul>
+        May include the following key-value pair:
+        <ul>
+          <li><code>ROTATION</code> : A floating point value in the interval <code>[0.0, 360.0)</code> indicating the orientation of the media in degrees in the counter-clockwise direction. In order to view the media in the upright orientation, it must be rotated the given number of degrees in the clockwise direction.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>track</td>
+      <td><code>MPFVideoTrack</code></td>
+      <td>An <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 >**IMPORTANT:** `FRAME_INTERVAL` is a common job property that many components support. For frame intervals greater than 1, the component must look for detections starting with the first frame, and then skip frames as specified by the frame interval, until or before it reaches the stop frame. For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component must look for objects in frames numbered 0, 2, 4, 6, ..., 98.
 
@@ -543,15 +640,60 @@ public MPFAudioJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-|  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
-| dataUri  | `String` | See [MPFJob.dataUri](#data-uri) for description. |
-|  startTime | `int` | The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.  |
-| stopTime  | `int` | The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections. |
-| jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pairs:<ul><li>`DURATION` : length of audio file in milliseconds</li><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
-| track | `MPFAudioTrack` | An [`MPFAudioTrack`](#mpfaudiotrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>jobName</td>
+      <td><code>String</code></td>
+      <td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+    </tr>
+    <tr>
+      <td>dataUri</td>
+      <td><code>String</code></td>
+      <td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>startTime</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stopTime</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>        
+    <tr>
+      <td>jobProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>mediaProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.mediaProperties</a> for description.
+        <br/><br/>
+        Includes the following key-value pairs:
+        <ul>
+          <li><code>DURATION</code> : length of audio file in milliseconds</li>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>track</td>
+      <td><code>MPFAudioTrack</code></td>
+      <td>An <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 #### MPFGenericJob
 Extends [`MPFJob`](#mpfjob)
@@ -577,13 +719,59 @@ public MPFGenericJob(
 
 * Members:
 
-| Member  | Data Type  | Description  |
-|---|---|---|
-|  jobName | `String`  | See [MPFJob.jobName](#job-name) for description.  |
-| dataUri  | `String` | See [MPFJob.dataUri](#data-uri) for description. |
-| jobProperties | `Map<String, String>` | See [MPFJob.jobProperties](#job-properties) for description. |
-| mediaProperties | `Map<String, String>` | See [MPFJob.mediaProperties](#media-properties) for description.<br/> <br/>Includes the following key-value pair:<ul><li>`MIME_TYPE` : the MIME type of the media</li></ul> |
-| track | `MPFGenericTrack` | An [`MPFGenericTrack`](#mpfgenerictrack) from the previous pipeline stage. Provided when feed forward is enabled. See [Feed Forward Guide](Feed-Forward-Guide/index.html). |
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>jobName</td>
+      <td><code>String</code></td>
+      <td>See <a href="#job-name">MPFJob.jobName</a> for description.</td>
+    </tr>
+    <tr>
+      <td>dataUri</td>
+      <td><code>String</code></td>
+      <td>See <a href="#data-uri">MPFJob.dataUri</a> for description.</td>
+    </tr>
+    <tr>
+      <td>startTime</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in ms) associated with the beginning of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>
+    <tr>
+      <td>stopTime</td>
+      <td><code>int</code></td>
+      <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
+    </tr>        
+    <tr>
+      <td>jobProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>See <a href="#job-properties">MPFJob.jobProperties</a> for description.</td>
+    </tr>
+    <tr>
+      <td>mediaProperties</td>
+      <td><code>Map&ltString, String&gt</code></td>
+      <td>
+        See <a href="#media-properties">MPFJob.mediaProperties</a> for description.
+        <br/><br/>
+        Includes the following key-value pair:
+        <ul>
+          <li><code>MIME_TYPE</code> : the MIME type of the media</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>track</td>
+      <td><code>MPFGenericTrack</code></td>
+      <td>An <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Detection Job Result Classes
 
