@@ -8,7 +8,7 @@
 
 - Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.
 - The Node Manager image has been removed. For Docker deployments, component services should be managed using Docker tools external to OpenMPF.
-- The Nodes web page is no longer available in Docker deployments, and component tar.gz packages cannot be registered through the Component Registration web page in Docker deployments. These features are now reserved for development environments.
+- In Docker deployments, streaming job REST endpoints are disabled, the Nodes web page is no longer available, component tar.gz packages cannot be registered through the Component Registration web page, and the `mpf` command line script can now only be run on the Workflow Manager container to modify user settings. The preexisting features are now reserved for non-Docker deployments and development environments.
 
 <h2>Docker Component Base Images</h2>
 
@@ -18,13 +18,14 @@
 
 - Pushed prebuilt OpenMPF Docker images to [DockerHub](https://hub.docker.com/u/openmpf). Refer to the "Quick Start" section of the OpenMPF Workflow Manager image [documentation](https://hub.docker.com/r/openmpf/openmpf_workflow_manager).
 
-<h2>Updates</h2>
+<h2>Version Updates</h2>
 
 - Updated from Oracle Java 8 to OpenJDK 11, which required updating to Tomcat 8.5.41. We now use [Cargo](https://codehaus-cargo.github.io/cargo/Home.html) to run integration tests.
+- Updated OpenCV from 3.0.0 to 3.4.7 to update Deep Neural Networks (DNN) support.
 
-<h2>Tesseract Parallelization</h2>
+<h2>FFmpeg</h2>
 
-- The Tesseract component now supports `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on one page of the PDF.
+- We are no longer building separate audio and video encoders and decoders for FFmpeg. Instead, we are using the built-in decoders that come with FFmpeg by default. This simplifies the build process and redistribution via Docker images.
 
 <h2>Artifact Extraction</h2>
 
@@ -39,9 +40,55 @@
     - `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT`: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.
 - For clarity, `OUTPUT_EXEMPLARS_ONLY` has been renamed to `OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY`. Extracted artifacts will always be reported in the JSON output object.
 
+<h2>REST Endpoints</h2>
+
+- Modified `[GET] /rest/info`. Now returns output like `{"version": "4.1.0", "dockerEnabled": true}`.
+- Added the following REST endpoints for getting, removing, and creating actions, tasks, and pipelines. Refer to the [REST API](REST-API.md) for more information:
+    - `[GET] \rest\actions`, `[GET] \rest\tasks`, `[GET] \rest\pipelines`
+    - `[DELETE] \rest\actions`, `[DELETE] \rest\tasks`, `[DELETE] \rest\pipelines`
+    - `[POST] \rest\actions` , `[POST] \rest\tasks`, `[POST] \rest\pipelines`
+- All of the endpoints above are new with the exception of `[GET] \rest\pipelines`. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API. 
+- `[GET] \rest\algorithms` can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component microservice so it self-registers with the Workflow Manager.
+
+<h2>Incomplete Actions, Tasks, and Pipelines</h2>
+
+- The previous version of OpenMPF would generate an error when attempting to register a component that included actions, tasks, or pipelines that depend on algorithms, actions, or tasks there are not yet registered with the Workflow Manager. This required components to be registered in a specific order. Also, when unregistering a component, it required the components which depend on it to be unregistered. These dependency checks are no longer enforced.
+- In general, the Workflow Manager now appropriately handles incomplete actions, tasks, and pipelines by checking if all of the elements are defined before executing a job, and then preserving that information in memory until the job is complete. This allows components to be registered and removed in an arbitrary order without affecting the state of other components, actions, tasks, or pipelines. This also allows actions and tasks to be removed using the new REST endpoints and then re-added at a later time while still preserving the elements that depend on them.
+- Note that unregistering a component while a job is running will cause it to stall. Please ensure that no jobs are using a component before unregistering it.
+
+<h2>Python Arbitrary Rotation</h2>
+
+- The Python MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted. This is similar to the existing support for [C++ arbitrary rotation](#cpp-arbitrary-rotation).
+
+<h2>OpenCV Deep Neural Networks (DNN) Detection Component</h2>
+
+- This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data.
+
+<h2>Tesseract OCR Text Detection Component</h2>
+
+- Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the `text-tags.json` file format has been updated to allow for specifying case-sensitive regular expression searches. For example: `{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}`. Additionally, the `TRIGGER_WORDS` and `TRIGGER_WORDS_OFFSET` detection properties are now supported, which list the OCR'd words that resulted in adding a `TAG` to the detection, and the character offset of those words within the OCR'd `TEXT`, respectively. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md#text-tagging).
+- The Tesseract component now supports `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on one page of the PDF.
+- The `ENABLE_OSD_FALLBACK` property is now supported. If enabled, an additional round of OSD is performed when the first round fails to generate script predictions that are above the OSD score and confidence thresholds. In the second pass, the component will run OSD on multiple copies of the input text image to get an improved prediction score and `OSD_FALLBACK_OCCURRED` detection property will be set to true.
+- If any OSD-detected models are missing, the new `MISSING_LANGUAGE_MODELS` detection property will list the missing models.
+
+<h2>Tika Text Detection Component</h2>
+
+- The Tika text detection component now supports text tagging in the same way as the Tesseract component. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md#text-tagging).
+
 <h2>Other Improvements</h2>
 
+- The `mediaProperties` map in the JSON output object now contains a `MIME_TYPE` property for all media types, as well as a `FRAME_WIDTH` and `FRAME_HEIGHT` property for images and videos.
 - Simplified component `descriptor.json` files by moving the specification of common properties, such as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file. Now when the Workflow Manager is updated to support new features, components may not require an update.
+- Updated the Sphinx component to return `TRANSCRIPT` instead of `TRANSCRIPTION`, which is better grammar.
+- Whitespace is now trimmed from property names when jobs are submitted via the REST API.
+- The Darknet Docker image now includes the YOLOv3 model weights.
+- The C++ and Python ModelsIniParser now allows users to specify optional fields.
+
+<h2>Bug Fixes</h2>
+
+- [[#772](https://github.com/openmpf/openmpf/issues/772)] Can now create a custom pipeline with long action names using the Pipelines 2 UI.
+- [[#941](https://github.com/openmpf/openmpf/issues/941)] Tesseract component no longer segfaults when handling corrupt media.
+- [[#1005](https://github.com/openmpf/openmpf/issues/1005)] Fixed a bug that caused a NullPointerException when attempting to get output object JSON via REST before a job completes.
 
 # OpenMPF 4.1.4: March 2020
 
@@ -54,7 +101,7 @@
 
 <h2>Features</h2>
 
-- Added support for `DETECTION_PADDING_X` and `DETECTION_PADDING_Y` optional job properties. The value can be a percentage or whole-number pixel value. When positive, each detection region in each track will be expanded. When negative, the region will shrink.
+- Added support for `DETECTION_PADDING_X` and `DETECTION_PADDING_Y` optional job properties. The value can be a percentage or whole-number pixel value. When positive, each detection region in each track will be expanded. When negative, the region will shrink. If the detection region is shrunk to nothing, the shrunk dimension(s) will be set to a value of 1 pixel and the `SHRUNK_TO_NOTHING` detection property will be set to true.
 - Added support for `DISTANCE_CONFIDENCE_WEIGHT_FACTOR` and `SIZE_CONFIDENCE_WEIGHT_FACTOR` SuBSENSE algorithm properties. Increasing the value of the first property will generate detection confidence values that favor being closer to the center frame of a track. Increasing the value of the second property will generate detection confidence values that favor large detection regions.
 
 # OpenMPF 4.1.1: January 2020
@@ -67,7 +114,7 @@
 
 <h2>Documentation</h2>
 
-- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [Arbitrary Rotation](#arbitrary-rotation) section below.
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [C++ Arbitrary Rotation](#cpp-arbitrary-rotation) section below.
 - Updated the [REST API](REST-API.md) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
 - Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the [EAST Text Region Detection Component](#east-text-region-detection-component) section below.
 - Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](#tesseract-ocr-text-detection-component) section below.
@@ -77,8 +124,8 @@
 - Updated the [Install Guide](Install-Guide/index.html) to point to the Docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started).
 - Transformed the Build Guide into a [Development Environment Guide](Development-Environment-Guide/index.html).
 
-<span id="arbitrary-rotation"></span>
-<h2>Arbitrary Rotation</h2>
+<span id="cpp-arbitrary-rotation"></span>
+<h2>C++ Arbitrary Rotation</h2>
 
 - The C++ MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted.
 - When using those tools to read frame data, they will automatically correct for rotation so that the returned frame is horizontally oriented toward the normal 3 o'clock position.
@@ -168,10 +215,14 @@ within a Docker container. This isolates the build and execution environment fro
 
 - [[#897](https://github.com/openmpf/openmpf/issues/897)] OpenMPF will attempt to index files located in `$MPF_HOME/share` as soon as the webapp is started by Tomcat. This is so that those files can be listed in a directory tree in the Create Job web UI. The main problem is that once a file gets indexed it's never removed from the cache, even if the file is manually deleted, resulting in a memory leak.
 
-<h2>Late Additions</h2>
+<h2>Late Additions: November 2019</h2>
 
-- [November 2019] User names, roles, and passwords can now be set by using an optional `user.properties` file. This allows administrators to override the default OpenMPF users that come preconfigured, which may be a security risk. Refer to the "Configure Users" section of the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users) for more information.
-- [December 2019] Transitioned from using a mySQL persistent database to PostgreSQL to support users that use a PostgreSQL database in the cloud. 
+- User names, roles, and passwords can now be set by using an optional `user.properties` file. This allows administrators to override the default OpenMPF users that come preconfigured, which may be a security risk. Refer to the "Configure Users" section of the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users) for more information.
+
+<h2>Late Additions: December 2019</h2>
+
+- Transitioned from using a mySQL persistent database to PostgreSQL to support users that use an external PostgreSQL database in the cloud. 
+- Updated the EAST component to support a `TEMPORARY_PADDING` and `FINAL_PADDING` property. The first property determines how much padding is added to detections during the non-maximum suppression or merging step. This padding is effectively removed from the final detections. The second property is used to control the final amount of padding on the output regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/EastTextDetection/README.md#properties).
 
 # OpenMPF 4.0.0: February 2019
 
