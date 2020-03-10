@@ -1,5 +1,68 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 5.0.0: April 2020
+
+<h2>Documentation</h2>
+
+<h2>Docker Microservices</h2>
+
+- Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.
+- The Node Manager image has been removed. For Docker deployments, component services should be managed using Docker tools external to OpenMPF.
+- The Nodes web page is no longer available in Docker deployments, and component tar.gz packages cannot be registered through the Component Registration web page in Docker deployments. These features are now reserved for development environments.
+
+<h2>Docker Component Base Images</h2>
+
+- A base builder image and executor image are provided for C++, Python, and Java component development. Component developers can refer to the Dockerfile for each of the component microservices as reference for how to make use of the base images.
+
+<h2>DockerHub</h2>
+
+- Pushed prebuilt OpenMPF Docker images to [DockerHub](https://hub.docker.com/u/openmpf). Refer to the "Quick Start" section of the OpenMPF Workflow Manager image [documentation](https://hub.docker.com/r/openmpf/openmpf_workflow_manager).
+
+<h2>Updates</h2>
+
+- Updated from Oracle Java 8 to OpenJDK 11, which required updating to Tomcat 8.5.41. We now use [Cargo](https://codehaus-cargo.github.io/cargo/Home.html) to run integration tests.
+
+<h2>Tesseract Parallelization</h2>
+
+- The Tesseract component now supports `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on one page of the PDF.
+
+<h2>Artifact Extraction</h2>
+
+- The  `ARTIFACT_EXTRACTION_POLICY` property can now be assigned a value of `NONE`, `VISUAL_TYPES_ONLY`, `ALL_TYPES`, or `ALL_DETECTIONS`.
+    - With the `VISUAL_TYPES_ONLY` or `ALL_TYPES` policy, artifacts will be extracted according to the `ARTIFACT_EXTRACTION_POLICY*` properties. With the `NONE` and `ALL_DETECTIONS` policies, those settings are ignored.,
+    - Note that previously `NONE`, `VISUAL_EXEMPLARS_ONLY`, `EXEMPLARS_ONLY`, `ALL_VISUAL_DETECTIONS`, and `ALL_DETECTIONS` were supported.
+- The following `ARTIFACT_EXTRACTION_POLICY*` properties are now supported:
+    - `ARTIFACT_EXTRACTION_POLICY_EXEMPLAR_FRAME_PLUS`: Extract the exemplar frame from the track, plus this many frames before and after the exemplar.
+    - `ARTIFACT_EXTRACTION_POLICY_FIRST_FRAME`: If true, extract the first frame from the track.
+    - `ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME`: If true, extract the frame with a detection that is closest to the middle frame from the track.
+    - `ARTIFACT_EXTRACTION_POLICY_LAST_FRAME`: If true, extract the last frame from the track.
+    - `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT`: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.
+- For clarity, `OUTPUT_EXEMPLARS_ONLY` has been renamed to `OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY`. Extracted artifacts will always be reported in the JSON output object.
+
+<h2>Other Improvements</h2>
+
+- Simplified component `descriptor.json` files by moving the specification of common properties, such as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file. Now when the Workflow Manager is updated to support new features, components may not require an update.
+
+# OpenMPF 4.1.4: March 2020
+
+<h2>Updates</h2>
+
+- Updated from Hibernate 5.0.8 to 5.4.12 to support schema-based multitenancy. This allows multiple instances of OpenMPF to use the same PostgreSQL database as long as each instance connects to the database as a separate user, and the database is configured appropriately. This also required updating Tomcat from 7.0.72 to 7.0.76.
+- Updated the Workflow Manager to include an `outputobjecturi` in GET and POST callbacks when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.
+
+# OpenMPF 4.1.3: February 2020
+
+<h2>Features</h2>
+
+- Added support for `DETECTION_PADDING_X` and `DETECTION_PADDING_Y` optional job properties. The value can be a percentage or whole-number pixel value. When positive, each detection region in each track will be expanded. When negative, the region will shrink.
+- Added support for `DISTANCE_CONFIDENCE_WEIGHT_FACTOR` and `SIZE_CONFIDENCE_WEIGHT_FACTOR` SuBSENSE algorithm properties. Increasing the value of the first property will generate detection confidence values that favor being closer to the center frame of a track. Increasing the value of the second property will generate detection confidence values that favor large detection regions.
+
+# OpenMPF 4.1.1: January 2020
+
+<h2>Bug Fixes</h2>
+
+- [[#1016](https://github.com/openmpf/openmpf/issues/1016)] Fixed a bug that caused a deadlock situation when the media inspection process failed quickly when processing many jobs using a pipeline with more than one stage.
+
 # OpenMPF 4.1.0: July 2019
 
 <h2>Documentation</h2>
@@ -104,6 +167,11 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Known Issues</h2>
 
 - [[#897](https://github.com/openmpf/openmpf/issues/897)] OpenMPF will attempt to index files located in `$MPF_HOME/share` as soon as the webapp is started by Tomcat. This is so that those files can be listed in a directory tree in the Create Job web UI. The main problem is that once a file gets indexed it's never removed from the cache, even if the file is manually deleted, resulting in a memory leak.
+
+<h2>Late Additions</h2>
+
+- [November 2019] User names, roles, and passwords can now be set by using an optional `user.properties` file. This allows administrators to override the default OpenMPF users that come preconfigured, which may be a security risk. Refer to the "Configure Users" section of the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users) for more information.
+- [December 2019] Transitioned from using a mySQL persistent database to PostgreSQL to support users that use a PostgreSQL database in the cloud. 
 
 # OpenMPF 4.0.0: February 2019
 
