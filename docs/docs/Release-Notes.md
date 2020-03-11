@@ -132,12 +132,12 @@
 
 <h2>Documentation</h2>
 
-- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the ROTATION detection property. See the [C++ Arbitrary Rotation](#cpp-arbitrary-rotation) section below.
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the `ROTATION` detection property. See the [C++ Arbitrary Rotation](#cpp-arbitrary-rotation) section below.
 - Updated the [REST API](REST-API.md) with new component registration REST endpoints. See the [Component Registration REST Endpoints](#component-registration-rest-endpoints) section below.
 - Added a [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md) for the EAST text region detection component. See the [EAST Text Region Detection Component](#east-text-region-detection-component) section below.
 - Updated the Tesseract OCR text detection component [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md). See the  [Tesseract OCR Text Detection Component](#tesseract-ocr-text-detection-component) section below.
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/develop/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/develop/SWARM.md) guide to describe the new streamlined approach to using `docker-compose config`. See the [Docker Deployment](#docker-deployment) section below.
-- Fixed the description of MIN_SEGMENT_LENGTH and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
+- Fixed the description of `MIN_SEGMENT_LENGTH` and associated examples in the [User Guide](User-Guide.md#min_segment_length-property) for issue [#891](https://github.com/openmpf/openmpf/issues/891).
 - Updated the [Java Batch Component API](Java-Batch-Component-API.md#logging) with information on how to use Log4j2. Related to resolving issue [#855](https://github.com/openmpf/openmpf/issues/855).
 - Updated the [Install Guide](Install-Guide/index.html) to point to the Docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started).
 - Transformed the Build Guide into a [Development Environment Guide](Development-Environment-Guide/index.html).
@@ -145,11 +145,11 @@
 <span id="cpp-arbitrary-rotation"></span>
 <h2>C++ Arbitrary Rotation</h2>
 
-- The C++ MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted.
+- The C++ MPFVideoCapture and MPFImageReader tools now support `ROTATION` values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise `ROTATION` job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted.
 - When using those tools to read frame data, they will automatically correct for rotation so that the returned frame is horizontally oriented toward the normal 3 o'clock position.
-    - When FEED_FORWARD_TYPE=REGION, these tools will look for a ROTATION detection property in the feed-forward detections and automatically correct for rotation. For example, a detection property of ROTATION=90 represents that the region is rotated 90 degrees counter clockwise, and therefore must be rotated 90 degrees clockwise to correct for it.
-    - When FEED_FORWARD_TYPE=SUPERSET_REGION, these tools will properly account for the ROTATION detection property associated with each feed-forward detection when calculating the bounding box that encapsulates all of those regions.
-    - When FEED_FORWARD_TYPE=FRAME, these tools will rotate the frame according to the ROTATION job property. It's important to note that for rotations other than 0, 90, 180, and 270 degrees the rotated frame dimensions will be larger than the original frame dimensions. This is because the  frame needs to be expanded to encapsulate the entirety of the original rotated frame region. Black pixels are used to fill the empty space near the edges of the original frame.
+    - When `FEED_FORWARD_TYPE=REGION`, these tools will look for a `ROTATION` detection property in the feed-forward detections and automatically correct for rotation. For example, a detection property of `ROTATION=90` represents that the region is rotated 90 degrees counter clockwise, and therefore must be rotated 90 degrees clockwise to correct for it.
+    - When `FEED_FORWARD_TYPE=SUPERSET_REGION`, these tools will properly account for the `ROTATION` detection property associated with each feed-forward detection when calculating the bounding box that encapsulates all of those regions.
+    - When `FEED_FORWARD_TYPE=FRAME`, these tools will rotate the frame according to the `ROTATION` job property. It's important to note that for rotations other than 0, 90, 180, and 270 degrees the rotated frame dimensions will be larger than the original frame dimensions. This is because the  frame needs to be expanded to encapsulate the entirety of the original rotated frame region. Black pixels are used to fill the empty space near the edges of the original frame.
 - The Markup component now places a colored dot at the upper-left corner of each detection region so that users can determine the rotation of the region relative to the entire frame.
 
 <span id="component-registration-rest-endpoints"></span>
@@ -177,13 +177,13 @@ within a Docker container. This isolates the build and execution environment fro
 <span id="east-text-region-detection-component"></span>
 <h2>EAST Text Region Detection Component</h2>
 
-- This new component uses the Efficient and Accurate Scene Text (EAST) detection model to detect text regions in images and videos. It reports their location, angle of rotation, and text type (STRUCTURED or UNSTRUCTURED), and supports a variety of settings to control the behavior of merging text regions into larger regions. It does not perform OCR on the text or track detections across video frames. Thus, each video track is at most one detection long. For more information, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md).
+- This new component uses the Efficient and Accurate Scene Text (EAST) detection model to detect text regions in images and videos. It reports their location, angle of rotation, and text type (`STRUCTURED` or `UNSTRUCTURED`), and supports a variety of settings to control the behavior of merging text regions into larger regions. It does not perform OCR on the text or track detections across video frames. Thus, each video track is at most one detection long. For more information, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/python/EastTextDetection/README.md).
 - Optionally, this component can be built as a Docker image using the Python component executor Docker image, allowing it to exist apart from the Node Manager image.
 
 <span id="tesseract-ocr-text-detection-component"></span>
 <h2>Tesseract OCR Text Detection Component</h2>
 
-- Updated to support reading tessdata `*.traineddata` files at a specified MODELS_DIR_PATH. This allows users to install new `*.traineddata` files post deployment.
+- Updated to support reading tessdata `*.traineddata` files at a specified `MODELS_DIR_PATH`. This allows users to install new `*.traineddata` files post deployment.
 - Updated to optionally perform Tesseract Orientation and Script Detection (OSD). When enabled, the component will attempt to use the orientation results of OSD to automatically rotate the image, as well as perform OCR using the scripts detected by OSD.
 - Updated to optionally rotate a feed-forward text region 180 degrees to account for upside-down text.
 - Now supports the following preprocessing properties for both structured and unstructured text:
@@ -193,7 +193,7 @@ within a Docker container. This isolates the build and execution environment fro
     - Adaptive thresholding
     - Histogram equalization
     - Adaptive histogram equalization (also known as Contrast Limited Adaptive Histogram Equalization (CLAHE))
-- Will use the TEXT_TYPE detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.
+- Will use the `TEXT_TYPE` detection property in feed-forward regions provided by the EAST component to determine which preprocessing steps to perform.
 - For more information on these new features, see the [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md).
 - Removed gibberish and string filters since they only worked on English text.
 
@@ -209,23 +209,23 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Search Region Percentages</h2>
 
 - In addition to using exact pixel values, users can now use percentages for the following properties when specifying search regions for C++ and Python components:
-    - SEARCH_REGION_TOP_LEFT_X_DETECTION
-    - SEARCH_REGION_TOP_LEFT_Y_DETECTION
-    - SEARCH_REGION_BOTTOM_RIGHT_X_DETECTION
-    - SEARCH_REGION_BOTTOM_RIGHT_Y_DETECTION
-- For example, setting SEARCH_REGION_TOP_LEFT_X_DETECTION=50% will result in components only processing the right half of an image or video.
+    - `SEARCH_REGION_TOP_LEFT_X_DETECTION`
+    - `SEARCH_REGION_TOP_LEFT_Y_DETECTION`
+    - `SEARCH_REGION_BOTTOM_RIGHT_X_DETECTION`
+    - `SEARCH_REGION_BOTTOM_RIGHT_Y_DETECTION`
+- For example, setting `SEARCH_REGION_TOP_LEFT_X_DETECTION=50%` will result in components only processing the right half of an image or video.
 - Optionally, users can specify exact pixel values of some of these properties and percentages for others.
 
 <h2>Other Improvements</h2>
 
-- Increased the number of ActiveMQ maxConcurrentConsumers for the MPF.COMPLETED_DETECTIONS queue from 30 to 60.
+- Increased the number of ActiveMQ maxConcurrentConsumers for the `MPF.COMPLETED_DETECTIONS` queue from 30 to 60.
 - The Create Job web UI now only displays the content of the `$MPF_HOME/share/remote-media` directory instead of all of `$MPF_HOME/share`, which prevents the Workflow Manager from indexing generated JSON output files, artifacts, and markup. Indexing the latter resulted in Java heap space issues for large scale production systems. This is a mitigation for issue [#897](https://github.com/openmpf/openmpf/issues/897).
 - The Job Status web UI now makes proper use of pagination in SQL/Hibernate through the Workflow Manager to avoid retrieving the entire jobs table, which was inefficient.
 - The Workflow Manager will now silently discard all duplicate messages in the ActiveMQ Dead Letter Queue (DLQ), regardless of destination. Previously, only messages destined for component sub-job request queues were discarded.
 
 <h2>Bug Fixes</h2>
 
-- [[#891](https://github.com/openmpf/openmpf/issues/891)] Fixed a bug where the Workflow Manager media segmenter generated short segments that were minimally MIN_SEGMENT_LENGTH+1 in size instead of MIN_SEGMENT_LENGTH.
+- [[#891](https://github.com/openmpf/openmpf/issues/891)] Fixed a bug where the Workflow Manager media segmenter generated short segments that were minimally `MIN_SEGMENT_LENGTH+1` in size instead of `MIN_SEGMENT_LENGTH`.
 - [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is created. This seems to have been resolved by disabling ActiveMQ prefetch behavior on component queues.
 - [[#855](https://github.com/openmpf/openmpf/issues/855)] A logback circular reference suppressed exception no longer throws a StackOverflowError. This was resolved by transitioning the Workflow Manager and Java components from the Logback framework to Log4j2.
 
@@ -259,12 +259,12 @@ within a Docker container. This isolates the build and execution environment fro
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
-- Updated to allow the user to set a TESSERACT_OEM property in order to select an OCR engine mode (OEM).
-- "script/Latin" can now be specified as the TESSERACT_LANGUAGE. When selected, Tesseract will select all Latin characters, which can be from different Latin languages.
+- Updated to allow the user to set a `TESSERACT_OEM` property in order to select an OCR engine mode (OEM).
+- "script/Latin" can now be specified as the `TESSERACT_LANGUAGE`. When selected, Tesseract will select all Latin characters, which can be from different Latin languages.
 
 <h2>Ceph S3 Object Storage</h2>
 
-- Added support for downloading files from, and uploading files to, an S3 object storage server. The following job properties can be provided: S3_ACCESS_KEY, S3_SECRET_KEY, S3_RESULTS_BUCKET, S3_UPLOAD_ONLY.
+- Added support for downloading files from, and uploading files to, an S3 object storage server. The following job properties can be provided: `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_RESULTS_BUCKET`, `S3_UPLOAD_ONLY`.
 - At this time, only support for Ceph object storage has been tested. However, the Workflow Manager uses the AWS SDK for Java to communicate with the object store, so it is possible that other S3-compatible storage solutions may work as well.
 
 <h2>ISO-8601 Timestamps</h2>
@@ -281,9 +281,9 @@ within a Docker container. This isolates the build and execution environment fro
 
 - The Caffe Component [models.ini](https://github.com/openmpf/openmpf-components/blob/master/cpp/CaffeDetection/plugin-files/models/models.ini) file has been updated with a "vehicle_color" section with links for downloading the [Reza Fuad Rachmadi's Vehicle Color Recognition Using Convolutional Neural Network](https://github.com/rezafuad/vehicle-color-recognition) model files.
 - The following pipelines have been added. These require the above model files to be placed in `$MPF_HOME/share/models/CaffeDetection`:
-    - CAFFE REZAFUAD VEHICLE COLOR DETECTION PIPELINE,
-    - CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM TINY YOLO VEHICLE DETECTOR) PIPELINE
-    - CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM YOLO VEHICLE DETECTOR) PIPELINE
+    - `CAFFE REZAFUAD VEHICLE COLOR DETECTION PIPELINE`
+    - `CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM TINY YOLO VEHICLE DETECTOR) PIPELINE`
+    - `CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM YOLO VEHICLE DETECTOR) PIPELINE`
 
 <h2>Track Merging and Minimum Track Length</h2>
 
@@ -293,10 +293,10 @@ within a Docker container. This isolates the build and execution environment fro
     - `detection.video.track.min.length`
     - `detection.video.track.overlap.threshold`
 - The above properties can be overridden by the following job properties, respectively. These have not been renamed since the last release:
-    - MERGE_TRACKS
-    - MIN_GAP_BETWEEN_TRACKS
-    - MIN_TRACK_LENGTH
-    - MIN_OVERLAP
+    - `MERGE_TRACKS`
+    - `MIN_GAP_BETWEEN_TRACKS`
+    - `MIN_TRACK_LENGTH`
+    - `MIN_OVERLAP`
 - These system and job properties now only apply to video media. This resolves an issue where users had set `detection.track.min.length=5`, which resulted in dropping all image media tracks. By design, each image track can only contain a single detection.
 
 <h2>Bug Fixes</h2>
@@ -399,7 +399,7 @@ within a Docker container. This isolates the build and execution environment fro
 <h2>Other Improvements</h2>
 
 - Now using variable-length text fields in the mySQL database for string data that may exceed 255 characters.
-- Updated the `MPFImageReader` tool to use OpenCV video capture behind the scenes to support reading data from HTTP URLs.
+- Updated the MPFImageReader tool to use OpenCV video capture behind the scenes to support reading data from HTTP URLs.
 - Python components can now include pre-built wheel files in the plugin package.
 - We now use a [Jenkinsfile](https://github.com/openmpf/openmpf-docker/blob/master/Jenkinsfile) Groovy script for our Jenkins build process. This allows us to use revision control for our continuous integration process and share that process with the open source community.
 - Added `remote.media.download.retries` and `remote.media.download.sleep` system properties that can be used to configure how the Workflow Manager will attempt to retry downloading remote media if it encounters a problem.
@@ -454,7 +454,7 @@ within a Docker container. This isolates the build and execution environment fro
 - Added `mpf list-nodes` command to list the core nodes and available spare nodes.
 - OpenMPF now uses the JGroups FILE_PING protocol for peer discovery instead of TCPPING. This means that the list of OpenMPF nodes no longer needs to be fully specified when the Workflow Manager starts. Instead, the Workflow Manager, and Node Manager process on each node, use the files in `$MPF_HOME/share/nodes` to determine which nodes are currently available.
 - Updated JGroups from 3.6.4. to 4.0.11.
-- The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified. Of note, ALL_MPF_NODES has been replaced by CORE_MPF_NODES.
+- The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified. Of note, `ALL_MPF_NODES` has been replaced by `CORE_MPF_NODES`.
 
 <h2>Default Detection System Properties</h2>
 
@@ -474,15 +474,15 @@ detection.models.dir.path=${mpf.share.path}/models/
 
 <h2>Adaptive Frame Interval</h2>
 
-- The FRAME_RATE_CAP property can be used to set a threshold on the maximum number of frames to process within one second of the native video time. This property takes precedence over the user-provided / pipeline-provided value for FRAME_INTERVAL. When the FRAME_RATE_CAP property is specified, an internal frame interval value is calculated as follows:
+- The `FRAME_RATE_CAP` property can be used to set a threshold on the maximum number of frames to process within one second of the native video time. This property takes precedence over the user-provided / pipeline-provided value for `FRAME_INTERVAL`. When the `FRAME_RATE_CAP` property is specified, an internal frame interval value is calculated as follows:
 
 ```
 calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 ```
 
-- FRAME_RATE_CAP may be disabled by setting it <= 0. FRAME_INTERVAL can be disabled in the same way.
-- If FRAME_RATE_CAP is disabled, then FRAME_INTERVAL will be used instead.
-- If both FRAME_RATE_CAP and FRAME_INTERVAL are disabled, then a value of 1 will be used for FRAME_INTERVAL.
+- `FRAME_RATE_CAP` may be disabled by setting it <= 0. `FRAME_INTERVAL` can be disabled in the same way.
+- If `FRAME_RATE_CAP` is disabled, then `FRAME_INTERVAL` will be used instead.
+- If both `FRAME_RATE_CAP` and `FRAME_INTERVAL` are disabled, then a value of 1 will be used for `FRAME_INTERVAL`.
 
 <h2>Darknet Component</h2>
 
@@ -490,10 +490,10 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - Pipelines for the Tiny YOLO and YOLOv2 models are provided. Due to its large size, the YOLOv2 weights file must be downloaded separately and placed in `$MPF_HOME/share/models/DarknetDetection` in order to use the YOLOv2 pipelines. Refer to `DarknetDetection/plugin-files/models/models.ini` for more information.
 - This component supports a preprocessor mode and default mode of operation. If preprocessor mode is enabled, and multiple Darknet detections in a frame share the same classification, then those are merged into a single detection where the region corresponds to the superset region that encapsulates all of the original detections, and the confidence value is the probability that at least one of the original detections is a true positive. If disabled, multiple Darknet detections in a frame are not merged together.
 - Detections are not tracked across frames. One track is generated per detection.
-- This component supports an optional CLASS_WHITELIST_FILE property. When provided, only detections with class names listed in the file will be generated.
+- This component supports an optional `CLASS_WHITELIST_FILE` property. When provided, only detections with class names listed in the file will be generated.
 - This component can be compiled with GPU support if the NVIDIA CUDA Toolkit is installed on the build machine. Refer to the [GPU Support Guide](GPU-Support-Guide). If the toolkit is not found, then the component will compile with CPU support only.
-- To run on a GPU, set the CUDA_DEVICE_ID job property, or set the detection.cuda.device.id system property, >= 0.
-- When CUDA_DEVICE_ID >= 0, you can set the FALLBACK_TO_CPU_WHEN_GPU_PROBLEM job property, or the detection.use.cpu.when.gpu.problem system property, to `TRUE` if you want to run the component logic on the CPU instead of the GPU when a GPU problem is detected.
+- To run on a GPU, set the `CUDA_DEVICE_ID` job property, or set the detection.cuda.device.id system property, >= 0.
+- When `CUDA_DEVICE_ID` >= 0, you can set the `FALLBACK_TO_CPU_WHEN_GPU_PROBLEM` job property, or the detection.use.cpu.when.gpu.problem system property, to `TRUE` if you want to run the component logic on the CPU instead of the GPU when a GPU problem is detected.
 
 <h2>Models Directory</h2>
 
@@ -503,7 +503,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 <h2>Packaging and Deployment</h2>
 
 - Python components are packaged with their respective dependencies as .whl files. This can be automated by providing a setup.py file. An example OpenCV Python component is provided that demonstrates how the component is packaged and deployed with the opencv-python module. When deployed, a virtualenv is created for the component with the .whl files installed in it.
-- When deploying OpenMPF, LD_LIBRARY_PATH is no longer set system-wide. Refer to Known Issues.
+- When deploying OpenMPF, `LD_LIBRARY_PATH` is no longer set system-wide. Refer to Known Issues.
 
 <h2>Web User Interface</h2>
 
@@ -517,7 +517,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of `0` instead of `1`.
 - Streaming health report and summary report timestamps have been corrected to represent hours in the 0-23 range instead of 1-24.
 - Single-frame .gif files are now segmented properly and no longer result in a NullPointerException.
-- LD_LIBRARY_PATH is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.
+- `LD_LIBRARY_PATH` is now set at the process level for Tomcat, the Node Manager, and component services, instead of at the system level in `/etc/profile.d/mpf.sh`. Also, deployments no longer create `/etc/ld.so.conf.d/mpf.conf`. This better isolates OpenMPF from the rest of the system and prevents issues, such as being unable to use SSH, when system libraries are not compatible with OpenMPF libraries. The latter situation may occur when running `yum update` on the system, which can make OpenMPF unusable until a new deployment package with compatible libraries is installed.
 - The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone is viewing the Job Status page when a job submitted through the REST API is in progress.
 
 <h2>Known Issues</h2>
@@ -530,14 +530,14 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 
 ```
 
-   > Further debugging is necessary to determine the reason why that message was missing that field. The situation is not easily reproducible. It may occur when ActiveMQ and / or the system is under heavy load and sends duplicate messages in attempt to ensure message delivery. Some of those messages seem to end up in the dead letter queue (DLQ). For now, we've improved the way we handle messages in the DLQ. If OpenMPF can process a message successfully, the job is marked as COMPLETED_WITH_ERRORS, and the message is moved from ActiveMQ.DLQ to MPF.DLQ_PROCESSED_MESSAGES. If OpenMPF cannot process a message successfully, it is moved from ActiveMQ.DLQ to MPF.DLQ_INVALID_MESSAGES.
+   > Further debugging is necessary to determine the reason why that message was missing that field. The situation is not easily reproducible. It may occur when ActiveMQ and / or the system is under heavy load and sends duplicate messages in attempt to ensure message delivery. Some of those messages seem to end up in the dead letter queue (DLQ). For now, we've improved the way we handle messages in the DLQ. If OpenMPF can process a message successfully, the job is marked as `COMPLETED_WITH_ERRORS`, and the message is moved from `ActiveMQ.DLQ` to `MPF.DLQ_PROCESSED_MESSAGES`. If OpenMPF cannot process a message successfully, it is moved from `ActiveMQ.DLQ to MPF.DLQ_INVALID_MESSAGES`.
 
 - The `mpf stop` command will stop the Workflow Manager, which will in turn send commands to all of the available nodes to stop all running component services. If a service is processing a sub-job when the quit command is received, that service process will not terminate until that sub-job is completely processed. Thus, the service may put a sub-job response on the ActiveMQ response queue after the Workflow Manager has terminated. That will not cause a problem because the queues are flushed the next time the Workflow Manager starts; however, there will be a problem if the service finishes processing the sub-job after the Workflow Manager is restarted. At that time, the Workflow Manager will have no knowledge of the old job and will in turn generate warnings in the log about how the job id is "not known to the system" and/or "not found as a batch or a streaming job". These can be safely ignored. Often, if these messages appear in the log, then C++ services were running after stopping the Workflow Manager. To address this, you may wish to run `sudo killall amq_detection_component` after running `mpf stop`.
 
 
 # OpenMPF 2.0.0: February 2018
 
-> **NOTE:** Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the descriptor.json file to support stream processing.
+> **NOTE:** Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the `descriptor.json` file to support stream processing.
 
 > **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time.
 
@@ -550,7 +550,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 
 <h2>Support for Generic Detections</h2>
 
-- C++ and Java components can now declare support for the UNKNOWN data type. The respective batch APIs have been updated with a function that will enable a component to process an `MPFGenericJob`, which represents a piece of media that is not a video, image, or audio file.
+- C++ and Java components can now declare support for the `UNKNOWN` data type. The respective batch APIs have been updated with a function that will enable a component to process an `MPFGenericJob`, which represents a piece of media that is not a video, image, or audio file.
 - Note that these API changes make OpenMPF R2.0.0 incompatible with components built for previous releases of OpenMPF. Specifically, the new component executor will not be able to load the component logic library.
 
 <h2>C++ Batch Component API</h2>
@@ -598,8 +598,8 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 <h2>C++ Streaming Component Executor</h2>
 
 - Developed the C++ Streaming Component Executor to load a streaming component logic library, read frames from a video stream, and exercise the component logic through the C++ Streaming Component API.
-- When the C++ Streaming Component Executor cannot read a frame from the stream, it will sleep for at least 1 millisecond, doubling the amount of sleep time per attempt until it reaches the  `stallTimeout` value specified when the job was created. While stalled, the job status will be STALLED. After the timeout is exceeded, the job will be TERMINATED.
-- The C++ Streaming Component Executor supports FRAME_INTERVAL, as well as rotation, horizontal flipping, and cropping (region of interest) properties. Does not support USE_KEY_FRAMES.
+- When the C++ Streaming Component Executor cannot read a frame from the stream, it will sleep for at least 1 millisecond, doubling the amount of sleep time per attempt until it reaches the  `stallTimeout` value specified when the job was created. While stalled, the job status will be `STALLED`. After the timeout is exceeded, the job will be `TERMINATED`.
+- The C++ Streaming Component Executor supports `FRAME_INTERVAL`, as well as rotation, horizontal flipping, and cropping (region of interest) properties. Does not support `USE_KEY_FRAMES`.
 
 <h2>Interoperability Package</h2>
 
@@ -615,7 +615,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 
 <h2>Packaging and Deployment</h2>
 
-- Updated descriptor.json fields to allow components to support batch and/or streaming jobs. Components that use the old descriptor.json file format cannot be registered through the web UI.  
+- Updated `descriptor.json` fields to allow components to support batch and/or streaming jobs. Components that use the old `descriptor.json` file format cannot be registered through the web UI.  
 - Batch component logic and streaming component logic are compiled into separate libraries.
 - The mySQL `streaming_job_request` table has been updated with the following fields, which are used to populate the JSON health reports:
     - `status_detail`: (Optional) A user-friendly description of the current job status.
@@ -636,7 +636,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 
 - Using single quotes, apsotrophes, or double quotes in the name of an algorithm, action, task, or pipeline configured on an existing OpenMPF system will result in a failure to perform an OpenMPF upgrade on that system. Specifically, the step where pre-existing custom actions, tasks, and pipelines are carried over to the upgraded version of OpenMPF will fail. Please do not use those special characters while naming those elements. If this has been done already, then those elements should be manually renamed in the XML files prior to an upgrade attempt.
 
-- OpenMPF uses OpenCV, which  uses FFmpeg, to connect to video streams. If a proxy and/or firewall prevents the network connection from succeeding, then OpenCV, or the underlying FFmpeg library, will segfault. This causes the C++ Streaming Component Executor process to fail. In turn, the job status will be set to ERROR with a status detail message of "Unexpected error. See logs for details". In this case, the logs will not contain any useful information. You can identify a segfault by the following line in the node-manager log:
+- OpenMPF uses OpenCV, which  uses FFmpeg, to connect to video streams. If a proxy and/or firewall prevents the network connection from succeeding, then OpenCV, or the underlying FFmpeg library, will segfault. This causes the C++ Streaming Component Executor process to fail. In turn, the job status will be set to `ERROR` with a status detail message of "Unexpected error. See logs for details". In this case, the logs will not contain any useful information. You can identify a segfault by the following line in the node-manager log:
 
 ```
 2018-02-15 16:01:21,814 INFO [pool-3-thread-4] o.m.m.nms.streaming.StreamingProcess - Process: Component exited with exit code 139 
@@ -724,34 +724,34 @@ for optional dependencies.
 <h2>Feed Forward Behavior</h2>
 
 - Updated the workflow manager (WFM) and all video components to optionally perform feed forward processing for batch jobs. This allows tracks to be passed forward from one pipeline stage to the next. Components in the next stage will only process the frames associated with the detections in those tracks. This differs from the default segmenting behavior, which does not preserve detection regions or track information between stages.
-- To enable this behavior, the optional FEED_FORWARD_TYPE property must be set to "FRAME", "SUPERSET_REGION", or "REGION". If set to "FRAME" then the components in the next stage will process the whole frame region associated with each detection in the track passed forward. If set to "SUPERSET_REGION" then the components in the next stage will determine the bounding box that encapsulates all of the detection regions in the track, and only process the pixel data within that superset region. If set to "REGION" then the components in the next stage will process the region associated with each detection in the track passed forward, which may vary in size and position from frame to frame.
-- The optional FEED_FORWARD_TOP_CONFIDENCE_COUNT property can be set to a number to limit the number of detections passed forward in a track. For example, if set to "5", then only the top 5 detections in the track will be passed forward and processed by the next stage. The top detections are defined as those with the highest confidence values, or if the confidence values are the same, those with the lowest frame index.
+- To enable this behavior, the optional `FEED_FORWARD_TYPE` property must be set to `FRAME`, `SUPERSET_REGION`, or `REGION`. If set to `FRAME` then the components in the next stage will process the whole frame region associated with each detection in the track passed forward. If set to `SUPERSET_REGION` then the components in the next stage will determine the bounding box that encapsulates all of the detection regions in the track, and only process the pixel data within that superset region. If set to `REGION` then the components in the next stage will process the region associated with each detection in the track passed forward, which may vary in size and position from frame to frame.
+- The optional `FEED_FORWARD_TOP_CONFIDENCE_COUNT` property can be set to a number to limit the number of detections passed forward in a track. For example, if set to "5", then only the top 5 detections in the track will be passed forward and processed by the next stage. The top detections are defined as those with the highest confidence values, or if the confidence values are the same, those with the lowest frame index.
 - Note that setting the feed forward properties has no effect on the first pipeline stage because there is no prior stage that can pass tracks to it.
 
 <h2>Caffe Component</h2>
 
 - Updated the Caffe component to process images in the BGR color space instead of the RGB color space. This addresses a bug found in OpenCV. Refer to the Bug Fixes section below.
 - Added support for processing videos.
-- Added support for an optional ACTIVATION_LAYER_LIST property. For each network layer specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is an encoded string of the JSON representation of an OpenCV matrix of the activation values for that layer. The activation values are obtained after the Caffe network has processed the frame data.
-- Added support for an optional SPECTRAL_HASH_FILE_LIST property. For each JSON file specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is a string of 0's and 1's representing the spectral hash calculated using the information in the spectral hash JSON file. The spectral hash is calculated using activation values after the Caffe network has processed the frame data.
+- Added support for an optional `ACTIVATION_LAYER_LIST` property. For each network layer specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is an encoded string of the JSON representation of an OpenCV matrix of the activation values for that layer. The activation values are obtained after the Caffe network has processed the frame data.
+- Added support for an optional `SPECTRAL_HASH_FILE_LIST` property. For each JSON file specified in the list, the `detectionProperties` map in the JSON output object will contain one entry. The value is a string of 0's and 1's representing the spectral hash calculated using the information in the spectral hash JSON file. The spectral hash is calculated using activation values after the Caffe network has processed the frame data.
 - Added a pipeline to showcase the above two features for the GoogLeNet Caffe model.
-- Removed the TRANSPOSE property from the Caffe component since it was not necessary.
+- Removed the `TRANSPOSE` property from the Caffe component since it was not necessary.
 - Added red, green, and blue mean subtraction values to the GoogLeNet pipeline.
 
 <h2>Use Key Frames</h2>
 
-- Added support for an optional USE_KEY_FRAMES property to each video component. When true the component will only look at key frames (I-frames) from the input video. Can be used in conjunction with FRAME_INTERVAL. For example, when USE_KEY_FRAMES is true, and FRAME_INTERVAL is set to "2", then every other key frame will be processed.
+- Added support for an optional `USE_KEY_FRAMES` property to each video component. When true the component will only look at key frames (I-frames) from the input video. Can be used in conjunction with `FRAME_INTERVAL`. For example, when `USE_KEY_FRAMES` is true, and `FRAME_INTERVAL` is set to "2", then every other key frame will be processed.
 
 <h2>MPFVideoCapture and MPFImageReader Tools</h2>
 
 - Updated the MPFVideoCapture and MPFImageReader tools to handle feed forward properties.
-- Updated the MPFVideoCapture tool to handle FRAME_INTERVAL and USE_KEY_FRAMES properties.
+- Updated the MPFVideoCapture tool to handle `FRAME_INTERVAL` and `USE_KEY_FRAMES` properties.
 - Updated all existing components to leverage these tools as much as possible.
 - We encourage component developers to use these tools to automatically take care of common frame grabbing and frame manipulation behaviors, and not to reinvent the wheel.
 
 <h2>Dead Letter Queue</h2>
 
-- If for some reason a sub-job request that should have gone to a component ends up on the ActiveMQ Dead Letter Queue (DLQ), then the WFM will now process that failed request so that the job can complete. The ActiveMQ management page will now show that ActiveMQ.DLQ has 1 consumer. It will also show unconsumed messages in MPF.PROCESSED_DLQ_MESSAGES. Those are left for auditing purposes. The "Message Detail" for these shows the string representation of the original job request protobuf message.
+- If for some reason a sub-job request that should have gone to a component ends up on the ActiveMQ Dead Letter Queue (DLQ), then the WFM will now process that failed request so that the job can complete. The ActiveMQ management page will now show that `ActiveMQ.DLQ` has 1 consumer. It will also show unconsumed messages in `MPF.PROCESSED_DLQ_MESSAGES`. Those are left for auditing purposes. The "Message Detail" for these shows the string representation of the original job request protobuf message.
 
 <h2>Upgrade Path</h2>
 
@@ -769,9 +769,9 @@ for optional dependencies.
 - Fixed a bug in the OpenCV person detection component that caused bounding boxes to be too large for detections near the edge of a frame.
 - Resubmitting jobs now properly carries over configured job properties.
 - Fixed a bug in the build order of the OpenMPF project so that test modules that the WFM depends on are built before the WFM itself.
-- The Markup component draws bounding boxes between detections when a FRAME_INTERVAL is specified. This is so that the bounding box in the marked-up video appears in every frame. Fixed a bug where the bounding boxes drawn on non-detection frames appeared to stand still rather than move along the interpolated path between detection regions.
-- Fixed a bug on the OALPR license plate detection component where it was not properly handling the SEARCH_REGION_* properties.
-- Support for the MIN_GAP_BETWEEN_SEGMENTS property was not implemented properly. When the gap between two segments is less than this property value then the segments should be merged; otherwise, the segments should remain separate. In some cases, the exact opposite was happening. This bug has been fixed.
+- The Markup component draws bounding boxes between detections when a `FRAME_INTERVAL` is specified. This is so that the bounding box in the marked-up video appears in every frame. Fixed a bug where the bounding boxes drawn on non-detection frames appeared to stand still rather than move along the interpolated path between detection regions.
+- Fixed a bug on the OALPR license plate detection component where it was not properly handling the `SEARCH_REGION_*` properties.
+- Support for the `MIN_GAP_BETWEEN_SEGMENTS` property was not implemented properly. When the gap between two segments is less than this property value then the segments should be merged; otherwise, the segments should remain separate. In some cases, the exact opposite was happening. This bug has been fixed.
 
 <h2>Known Issues</h2>
 
@@ -780,9 +780,9 @@ for optional dependencies.
 
 # OpenMPF 0.10.0: July 2017
 
-> **WARNING:** There is no longer a “DEFAULT CAFFE ACTION”, “DEFAULT CAFFE TASK”, or “DEFAULT CAFFE PIPELINE”. There is now a “CAFFE GOOGLENET DETECTION PIPELINE” and “CAFFE YAHOO NSFW DETECTION PIPELINE”, which each have a respective action and task.
+> **WARNING:** There is no longer a `DEFAULT CAFFE ACTION`, `DEFAULT CAFFE TASK`, or `DEFAULT CAFFE PIPELINE`. There is now a `CAFFE GOOGLENET DETECTION PIPELINE` and `CAFFE YAHOO NSFW DETECTION PIPELINE`, which each have a respective action and task.
 
-> **NOTE:** MPFImageReader has been re-enabled in this version of OpenMPF since we upgraded to OpenCV 3.2, which addressed the known issues with imread(), auto-orientation, and jpeg files in OpenCV 3.1.
+> **NOTE:** MPFImageReader has been re-enabled in this version of OpenMPF since we upgraded to OpenCV 3.2, which addressed the known issues with `imread()`, auto-orientation, and jpeg files in OpenCV 3.1.
 
 <h2>Documentation</h2>
 
@@ -798,7 +798,7 @@ for optional dependencies.
 
 - All gifs are now treated as videos. Each gif will be handled as an MPFVideoJob.
 - Unanimated gifs are treated as 1-frame videos.
-- The WFM Media Inspector now populates the `media_properties` map with a "FRAME_COUNT" entry (in addition to the "DURATION, and "FPS" entries).
+- The WFM Media Inspector now populates the `media_properties` map with a `FRAME_COUNT` entry (in addition to the `DURATION` and `FPS` entries).
 
 <h2>Caffe Component</h2>
 
@@ -821,7 +821,7 @@ for optional dependencies.
 
 <h2>Bug Fixes</h2>
 
-- The MOG and SuBSENSE component services could segfault and terminate if the “USE_MOTION_TRACKING” property was set to “1” and a detection was found close to the edge of the frame. Specifically, this would only happen if the video had a width and/or height dimension that was not an exact power of two.
+- The MOG and SuBSENSE component services could segfault and terminate if the `USE_MOTION_TRACKING` property was set to “1” and a detection was found close to the edge of the frame. Specifically, this would only happen if the video had a width and/or height dimension that was not an exact power of two.
     - The reason was because the code downsamples each frame by a power of two and rounds the value of the width and height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.
 
 <h2>Known Issues</h2>
@@ -838,7 +838,7 @@ for optional dependencies.
 
 > **WARNING:** The OALPR Text Detection Component has been renamed to OALPR **License Plate** Text Detection Component. This affects the name of the component package and the name of the actions, tasks, and pipelines. When upgrading from R0.8 to R0.9, if the old OALPR Text Detection Component is installed in R0.8 then you will be prompted to install it again at the end of the upgrade path script. We recommend declining this prompt because the old component will conflict with the new component.
 
-> **WARNING:** Action, task, and pipeline names that started with "MOTION DETECTION PREPROCESSOR" have been renamed "MOG MOTION DETECTION PREPROCESSOR". Similarly, "WITH MOTION PREPROCESSOR" has changed to "WITH MOG MOTION PREPROCESSOR".
+> **WARNING:** Action, task, and pipeline names that started with `MOTION DETECTION PREPROCESSOR` have been renamed `MOG MOTION DETECTION PREPROCESSOR`. Similarly, `WITH MOTION PREPROCESSOR` has changed to `WITH MOG MOTION PREPROCESSOR`.
 
 <h2>Documentation</h2>
 
@@ -859,7 +859,7 @@ for optional dependencies.
 
   - The "Close All" button on pop-up notifications now dismisses all notifications from the queue, not just the visible ones.
   - Job completion notifications now only appear for jobs created during the current login session instead of all jobs.
-  - The ROTATION, HORIZONTAL_FLIP, and SEARCH_REGION_* properties can be set using the web interface when creating a job. Once files are selected for a job, these properties can be set individually or by groups of files.
+  - The `ROTATION`, `HORIZONTAL_FLIP`, and `SEARCH_REGION_*` properties can be set using the web interface when creating a job. Once files are selected for a job, these properties can be set individually or by groups of files.
   - The Node and Process Status page has been merged into the Node Configuration page for simplicity and ease of use.
   - The Media Markup results page has been merged into the Job Status page for simplicity and ease of use.
   - The File Manager UI has been improved to handle large numbers of files and symbolic links.
@@ -867,14 +867,14 @@ for optional dependencies.
 
 <h2>REST API</h2>
 
-  - Added an optional jobProperties object to the /rest/jobs/ request which contains String key-value pairs which override the pipeline's pre-configured job properties.
-  - Added an optional algorithmProperties object to the /rest/jobs/ request which can be used to configure properties for specific algorithms in the pipeline. These properties override the pipeline's pre-configured job properties. They also override the values in the jobProperties object.
-  - Updated the /rest/jobs/ request to add more detail to media, replacing a list of mediaUri Strings with a list of media objects, each of which contains a mediaUri and an optional mediaProperties map. The mediaProperties map can be used to configure properties for the specific piece of media. These properties override the pipeline's pre-configured job properties, values in the jobProperties object, and values in the algorithmProperties object.
+  - Added an optional jobProperties object to the `/rest/jobs/` request which contains String key-value pairs which override the pipeline's pre-configured job properties.
+  - Added an optional algorithmProperties object to the `/rest/jobs/` request which can be used to configure properties for specific algorithms in the pipeline. These properties override the pipeline's pre-configured job properties. They also override the values in the jobProperties object.
+  - Updated the `/rest/jobs/` request to add more detail to media, replacing a list of mediaUri Strings with a list of media objects, each of which contains a mediaUri and an optional mediaProperties map. The mediaProperties map can be used to configure properties for the specific piece of media. These properties override the pipeline's pre-configured job properties, values in the jobProperties object, and values in the algorithmProperties object.
   - Streamlined the actions, tasks, and pipelines endpoints that are used by the web UI.
 
 <h2>Flipping, Rotation, and Region of Interest</h2>
 
-  - The ROTATION, HORIZONTAL_FLIP, and SEARCH_REGION_* properties will no longer appear in the detectionProperties map in the JSON detection output object. When applied to an algorithm these properties now appear in the pipeline.stages.actions.properties element. When applied to a piece of media these properties will now appear in the the media.mediaProperties element.
+  - The `ROTATION`, `HORIZONTAL_FLIP`, and `SEARCH_REGION_*` properties will no longer appear in the detectionProperties map in the JSON detection output object. When applied to an algorithm these properties now appear in the pipeline.stages.actions.properties element. When applied to a piece of media these properties will now appear in the the media.mediaProperties element.
   - The OpenMPF now supports multiple regions of interest in a single media file.  Each region will produce tracks separately, and the tracks for each region will be listed in the JSON output as if from a separate media file.
 
 <h2>Component API</h2>
@@ -889,9 +889,9 @@ for optional dependencies.
 
 <h2>JSON Output Objects</h2>
 
-  - The JSON output object for the job now contains a jobProperties map which contains all properties defined for the job in the job request.  For example, if the job request specifies a CONFIDENCE_THRESHOLD of then the jobProperties map in the output will also list a CONFIDENCE_THRESHOLD of 5.
-  - The JSON output object for the job now contains a algorithmProperties element which contains all algorithm-specific properties defined for the job in the job request.  For example, if the job request specifies a FRAME_INTERVAL of 2 for FACECV then the algorithmProperties element in the output will contain an entry for "FACECV" and that entry will list a FRAME_INTERVAL of 2.
-  - Each JSON media output object now contains a mediaProperties map which contains all media-specific properties defined by the job request.  For example, if the job request specifies a ROTATION of 90 degrees for a single piece of media then the mediaProperties map for that piece of piece will list a ROTATION of 90.
+  - The JSON output object for the job now contains a jobProperties map which contains all properties defined for the job in the job request.  For example, if the job request specifies a `CONFIDENCE_THRESHOLD` of then the jobProperties map in the output will also list a `CONFIDENCE_THRESHOLD` of 5.
+  - The JSON output object for the job now contains a algorithmProperties element which contains all algorithm-specific properties defined for the job in the job request.  For example, if the job request specifies a `FRAME_INTERVAL` of 2 for FACECV then the algorithmProperties element in the output will contain an entry for "FACECV" and that entry will list a `FRAME_INTERVAL` of 2.
+  - Each JSON media output object now contains a mediaProperties map which contains all media-specific properties defined by the job request.  For example, if the job request specifies a `ROTATION` of 90 degrees for a single piece of media then the mediaProperties map for that piece of piece will list a `ROTATION` of 90.
   - The content of JSON output objects are now organized by detection type (e.g. MOTION, FACE, PERSON, TEXT, etc.) rather than action type.
 
 <h2>Caffe Component</h2>
@@ -905,8 +905,8 @@ for optional dependencies.
 
 <h2>Packaging and Deployment</h2>
 
-  - Actions.xml, Algorithms.xml, nodeManagerConfig.xml, nodeServicesPalette.json, Pipelines.xml, and Tasks.xml are no longer stored within the Workflow Manager WAR file. They are now stored under `$MPF_HOME/data`. This makes it easier to upgrade the Workflow Manager and makes it easier for users to access these files.
-  - Each component can now be optionally installed and registered during deployment. Components not registered are set to the UPLOADED state. They can then be removed or registered through the Component Registration page.
+  - `Actions.xml`, `Algorithms.xml`, `nodeManagerConfig.xml`, `nodeServicesPalette.json`, `Pipelines.xml`, and `Tasks.xml` are no longer stored within the Workflow Manager WAR file. They are now stored under `$MPF_HOME/data`. This makes it easier to upgrade the Workflow Manager and makes it easier for users to access these files.
+  - Each component can now be optionally installed and registered during deployment. Components not registered are set to the `UPLOADED` state. They can then be removed or registered through the Component Registration page.
   - Java components are now packaged as tar.gz files instead of RPMs, bringing them into alignment with C++ components.
   - OpenMPF R0.9 can be installed over OpenMPF R0.8. The deployment scripts will determine that an upgrade should take place.
     - After the upgrade, user-defined actions, tasks, and pipelines will have "CUSTOM" prepended to their name.
