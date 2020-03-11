@@ -4,15 +4,26 @@
 
 <h2>Documentation</h2>
 
+- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide to describes the new build process, which now includes copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
+- Updated the [Install Guide](Install-Guide.md) with a pointer to the "Quick Start" section on DockerHub.
+- <span style="color:red">TODO: Updated the [REST API](REST-API.md) with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the `[GET] /rest/info` endpoint.</span>
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
+- <span style="color:red">TODO: Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.</span>
+
 <h2>Docker Microservices</h2>
 
 - Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.
 - The Node Manager image has been removed. For Docker deployments, component services should be managed using Docker tools external to OpenMPF.
 - In Docker deployments, streaming job REST endpoints are disabled, the Nodes web page is no longer available, component tar.gz packages cannot be registered through the Component Registration web page, and the `mpf` command line script can now only be run on the Workflow Manager container to modify user settings. The preexisting features are now reserved for non-Docker deployments and development environments.
+- <span style="color:red">TODO: The OpenMPF Docker stack can optionally be deployed with [Kibana](https://www.elastic.co/kibana) (which depends on Elasticsearch and Filebeat) for viewing log files. Refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation).</span>
 
 <h2>Docker Component Base Images</h2>
 
-- A base builder image and executor image are provided for C++, Python, and Java component development. Component developers can refer to the Dockerfile for each of the component microservices as reference for how to make use of the base images.
+- A base builder image and executor image are provided for C++ ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md)), Python ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md)), and Java ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md)) component development. Component developers can also refer to the Dockerfile for each of the component microservices as reference for how to make use of the base images.
+
+<h2 style="color:red">Configure Data Types per Component Service</h2>
+
+- <span style="color:red">TODO: Each component service now supports an optional `DATA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `DATA_TYPES: VIDEO,IMAGE` will process both videos and images, while `DATA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</span>
 
 <h2>DockerHub</h2>
 
@@ -29,6 +40,7 @@
 
 <h2>Artifact Extraction</h2>
 
+- <span style="color:red">TODO: Extracted artifacts are now cropped to the detection region. Previously, the entire frame was extracted.</span>
 - The  `ARTIFACT_EXTRACTION_POLICY` property can now be assigned a value of `NONE`, `VISUAL_TYPES_ONLY`, `ALL_TYPES`, or `ALL_DETECTIONS`.
     - With the `VISUAL_TYPES_ONLY` or `ALL_TYPES` policy, artifacts will be extracted according to the `ARTIFACT_EXTRACTION_POLICY*` properties. With the `NONE` and `ALL_DETECTIONS` policies, those settings are ignored.,
     - Note that previously `NONE`, `VISUAL_EXEMPLARS_ONLY`, `EXEMPLARS_ONLY`, `ALL_VISUAL_DETECTIONS`, and `ALL_DETECTIONS` were supported.
@@ -39,6 +51,10 @@
     - `ARTIFACT_EXTRACTION_POLICY_LAST_FRAME`: If true, extract the last frame from the track.
     - `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT`: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.
 - For clarity, `OUTPUT_EXEMPLARS_ONLY` has been renamed to `OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY`. Extracted artifacts will always be reported in the JSON output object.
+
+<h2 style="color:red">Job Errors and Warnings</h2>
+
+- <span style="color:red">TODO: When job segments generate errors they will appear in the `detectionProcessingErrors` collection in the JSON output object. They will also be summarized in the top-level `jobErrors` collection. Additionally, warnings will be summarized in the top-level `jobWarnings` collection.</span>
 
 <h2>REST Endpoints</h2>
 
@@ -58,7 +74,7 @@
 
 <h2>Python Arbitrary Rotation</h2>
 
-- The Python MPFVideoCapture and MPFImageReader tools now support ROTATION values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise ROTATION job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted. This is similar to the existing support for [C++ arbitrary rotation](#cpp-arbitrary-rotation).
+- The Python MPFVideoCapture and MPFImageReader tools now support `ROTATION` values other than 0, 90, 180, and 270 degrees. Users can now specify a clockwise `ROTATION` job property in the range [0, 360). Values outside that range will be normalized to that range. Floating point values are accepted. This is similar to the existing support for [C++ arbitrary rotation](#cpp-arbitrary-rotation).
 
 <h2>OpenCV Deep Neural Networks (DNN) Detection Component</h2>
 
@@ -67,7 +83,7 @@
 <h2>Tesseract OCR Text Detection Component</h2>
 
 - Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the `text-tags.json` file format has been updated to allow for specifying case-sensitive regular expression searches. For example: `{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}`. Additionally, the `TRIGGER_WORDS` and `TRIGGER_WORDS_OFFSET` detection properties are now supported, which list the OCR'd words that resulted in adding a `TAG` to the detection, and the character offset of those words within the OCR'd `TEXT`, respectively. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md#text-tagging).
-- The Tesseract component now supports `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on one page of the PDF.
+- The `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties are now supported. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a different language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on a different page of the PDF.
 - The `ENABLE_OSD_FALLBACK` property is now supported. If enabled, an additional round of OSD is performed when the first round fails to generate script predictions that are above the OSD score and confidence thresholds. In the second pass, the component will run OSD on multiple copies of the input text image to get an improved prediction score and `OSD_FALLBACK_OCCURRED` detection property will be set to true.
 - If any OSD-detected models are missing, the new `MISSING_LANGUAGE_MODELS` detection property will list the missing models.
 
@@ -78,15 +94,17 @@
 <h2>Other Improvements</h2>
 
 - The `mediaProperties` map in the JSON output object now contains a `MIME_TYPE` property for all media types, as well as a `FRAME_WIDTH` and `FRAME_HEIGHT` property for images and videos.
-- Simplified component `descriptor.json` files by moving the specification of common properties, such as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file. Now when the Workflow Manager is updated to support new features, components may not require an update.
-- Updated the Sphinx component to return `TRANSCRIPT` instead of `TRANSCRIPTION`, which is better grammar.
+- Simplified component `descriptor.json` files by moving the specification of common properties, such as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file. Now when the Workflow Manager is updated to support new features, the component `descriptor.json` file will not need to be updated.
+- Updated the Sphinx component to return `TRANSCRIPT` instead of `TRANSCRIPTION`, which is grammatically correct.
 - Whitespace is now trimmed from property names when jobs are submitted via the REST API.
 - The Darknet Docker image now includes the YOLOv3 model weights.
 - The C++ and Python ModelsIniParser now allows users to specify optional fields.
+- <span style="color:red">When a job completion callback fails, but otherwise the job is successful, the final state of the job will be `COMPLETE_WITH_WARNINGS`.</span>
 
 <h2>Bug Fixes</h2>
 
 - [[#772](https://github.com/openmpf/openmpf/issues/772)] Can now create a custom pipeline with long action names using the Pipelines 2 UI.
+- <span style="color:red">TODO: [[#812](https://github.com/openmpf/openmpf/issues/812)] Now properly setting the start and stop index for elements in the `detectionProcessingErrors` collection in the JSON output object. Errors reported for each job segment will now appear in the collection.</span>
 - [[#941](https://github.com/openmpf/openmpf/issues/941)] Tesseract component no longer segfaults when handling corrupt media.
 - [[#1005](https://github.com/openmpf/openmpf/issues/1005)] Fixed a bug that caused a NullPointerException when attempting to get output object JSON via REST before a job completes.
 
