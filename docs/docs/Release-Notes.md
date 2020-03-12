@@ -78,7 +78,11 @@
 
 <h2>OpenCV Deep Neural Networks (DNN) Detection Component</h2>
 
-- This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data.
+- This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md).
+
+<h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
+
+- <span style="color:red">This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
