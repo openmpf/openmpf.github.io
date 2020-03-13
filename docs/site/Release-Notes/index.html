@@ -299,7 +299,7 @@
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> with <code>MIME_TYPE</code>, <code>FRAME_WIDTH</code>, and <code>FRAME_HEIGHT</code> media properties.</li>
 <li><span style="color:red">TODO: Updated the <a href="https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> guide for Docker deployment with information on the new build process and component base builder and executor images.</span></li>
 </ul>
-<h2>Docker Microservices</h2>
+<h2>Full Docker Conversion</h2>
 
 <ul>
 <li>Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.</li>
@@ -310,7 +310,7 @@
 <h2>Docker Component Base Images</h2>
 
 <ul>
-<li>A base builder image and executor image are provided for C++ (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md">README</a>), Python (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md">README</a>), and Java (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md">README</a>) component development. Component developers can also refer to the Dockerfile for each of the component microservices as reference for how to make use of the base images.</li>
+<li>A base builder image and executor image are provided for C++ (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md">README</a>), Python (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md">README</a>), and Java (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md">README</a>) component development. Component developers can also refer to the Dockerfile in the source code for each component as reference for how to make use of the base images.</li>
 </ul>
 <h2 style="color:red">Configure Data Types per Component Service</h2>
 
@@ -368,7 +368,7 @@
 </ul>
 </li>
 <li>All of the endpoints above are new with the exception of <code>[GET] \rest\pipelines</code>. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API. </li>
-<li><code>[GET] \rest\algorithms</code> can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component microservice so it self-registers with the Workflow Manager.</li>
+<li><code>[GET] \rest\algorithms</code> can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component's Docker container so it self-registers with the Workflow Manager.</li>
 </ul>
 <h2>Incomplete Actions, Tasks, and Pipelines</h2>
 
