@@ -15,7 +15,7 @@
 - Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.
 - The Node Manager image has been removed. For Docker deployments, component services should be managed using Docker tools external to OpenMPF.
 - In Docker deployments, streaming job REST endpoints are disabled, the Nodes web page is no longer available, component tar.gz packages cannot be registered through the Component Registration web page, and the `mpf` command line script can now only be run on the Workflow Manager container to modify user settings. The preexisting features are now reserved for non-Docker deployments and development environments.
-- <span style="color:red">TODO: The OpenMPF Docker stack can optionally be deployed with [Kibana](https://www.elastic.co/kibana) (which depends on Elasticsearch and Filebeat) for viewing log files. Refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation).</span>
+- The OpenMPF Docker stack can optionally be deployed with [Kibana](https://www.elastic.co/kibana) (which depends on Elasticsearch and Filebeat) for viewing log files. Refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation).
 
 <h2>Docker Component Base Images</h2>
 
