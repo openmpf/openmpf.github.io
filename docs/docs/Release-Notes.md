@@ -4,7 +4,7 @@
 
 <h2>Documentation</h2>
 
-- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide to describes the new build process, which now includes copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
+- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide to describe the new build process, which now includes copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
 - Updated the [Install Guide](Install-Guide.md) with a pointer to the "Quick Start" section on DockerHub.
 - <span style="color:red">TODO: Updated the [REST API](REST-API.md) with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the `[GET] /rest/info` endpoint.</span>
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
@@ -68,7 +68,7 @@
 
 <h2>Incomplete Actions, Tasks, and Pipelines</h2>
 
-- The previous version of OpenMPF would generate an error when attempting to register a component that included actions, tasks, or pipelines that depend on algorithms, actions, or tasks there are not yet registered with the Workflow Manager. This required components to be registered in a specific order. Also, when unregistering a component, it required the components which depend on it to be unregistered. These dependency checks are no longer enforced.
+- The previous version of OpenMPF would generate an error when attempting to register a component that included actions, tasks, or pipelines that depend on algorithms, actions, or tasks that are not yet registered with the Workflow Manager. This required components to be registered in a specific order. Also, when unregistering a component, it required the components which depend on it to be unregistered. These dependency checks are no longer enforced.
 - In general, the Workflow Manager now appropriately handles incomplete actions, tasks, and pipelines by checking if all of the elements are defined before executing a job, and then preserving that information in memory until the job is complete. This allows components to be registered and removed in an arbitrary order without affecting the state of other components, actions, tasks, or pipelines. This also allows actions and tasks to be removed using the new REST endpoints and then re-added at a later time while still preserving the elements that depend on them.
 - Note that unregistering a component while a job is running will cause it to stall. Please ensure that no jobs are using a component before unregistering it.
 
