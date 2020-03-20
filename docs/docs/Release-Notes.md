@@ -23,7 +23,7 @@
 
 <h2 style="color:red">Configure Data Types per Component Service</h2>
 
-- <span style="color:red">TODO: Each component service now supports an optional `DATA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `DATA_TYPES: VIDEO,IMAGE` will process both videos and images, while `DATA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</span>
+- <span style="color:red">TODO: Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos and images, while `RESTRICT_MEDIA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</span>
 
 <h2>DockerHub</h2>
 
@@ -111,6 +111,14 @@
 - <span style="color:red">TODO: [[#812](https://github.com/openmpf/openmpf/issues/812)] Now properly setting the start and stop index for elements in the `detectionProcessingErrors` collection in the JSON output object. Errors reported for each job segment will now appear in the collection.</span>
 - [[#941](https://github.com/openmpf/openmpf/issues/941)] Tesseract component no longer segfaults when handling corrupt media.
 - [[#1005](https://github.com/openmpf/openmpf/issues/1005)] Fixed a bug that caused a NullPointerException when attempting to get output object JSON via REST before a job completes.
+- <span style="color:red">TODO: [[#1062](https://github.com/openmpf/openmpf/issues/1062)] Fixed a memory leak in the Darknet component that occurred when running jobs on CPU resources with the Tiny YOLO model.</span>
+
+<h2>Known Issues</h2>
+
+- <span style="color:red">TODO: [[#1028](https://github.com/openmpf/openmpf/issues/1028)] Media inspection fails to handle Apple-optimized PNGs with the CgBI data chunk before the IHDR chunk. </span>
+- <span style="color:red">TODO: [[#1035](https://github.com/openmpf/openmpf/issues/1035)] The job status IU does not search the job id field. We made the search more efficient by shifting it to a database query, but in doing so accidentally omitted the job id check. Also, this bug includes a quirk where the search operates on UTC time instead of local system time.</span>
+- <span style="color:red">TODO: [[#1064](https://github.com/openmpf/openmpf/issues/1064)] The Darknet component has memory leaks for various network types, and potentially when using GPU resources. This bug covers everything not addressed by [#1062](https://github.com/openmpf/openmpf/issues/1062).</span>
+
 
 # OpenMPF 4.1.4: March 2020
 
