@@ -299,6 +299,24 @@
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> with <code>MIME_TYPE</code>, <code>FRAME_WIDTH</code>, and <code>FRAME_HEIGHT</code> media properties.</li>
 <li><span style="color:red">TODO: Updated the <a href="https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> guide for Docker deployment with information on the new build process and component base builder and executor images.</span></li>
 </ul>
+<h2>JSON Output Object</h2>
+
+<ul>
+<li>Renamed <code>stages</code> to <code>tasks</code> for clarity and consistency with the rest of the code.</li>
+<li><code>JsonCallbackBody</code> now contains an <code>outputObjectUri</code> field.</li>
+</ul>
+<h2>Interoperability Package</h2>
+
+<ul>
+<li>Renamed <code>JsonStage.java</code> to <code>JsonTask.java</code>.</li>
+<li>Removed <code>JsonJobRequest.java</code>.</li>
+<li>Updated <code>JsonCallbackBody.java</code> to contain an <code>outputObjectUri</code> field.</li>
+</ul>
+<h2>Persistent Database</h2>
+
+<ul>
+<li>The <code>input_object</code> column in the <code>job_request</code> table has been renamed to <code>job</code> and the content now contains a serialized form of <code>BatchJob.java</code> instead of <code>JsonJobRequest.java</code>.</li>
+</ul>
 <h2>Full Docker Conversion</h2>
 
 <ul>
@@ -312,10 +330,10 @@
 <ul>
 <li>A base builder image and executor image are provided for C++ (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md">README</a>), Python (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md">README</a>), and Java (<a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md">README</a>) component development. Component developers can also refer to the Dockerfile in the source code for each component as reference for how to make use of the base images.</li>
 </ul>
-<h2 style="color:red">Configure Data Types per Component Service</h2>
+<h2>Configure Data Types per Component Service</h2>
 
 <ul>
-<li><span style="color:red">TODO: Each component service now supports an optional <code>RESTRICT_MEDIA_TYPES</code> Docker environment variable that specifies the types of media that service will process. For example, <code>RESTRICT_MEDIA_TYPES: VIDEO,IMAGE</code> will process both videos and images, while <code>RESTRICT_MEDIA_TYPES: IMAGE</code> will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</span></li>
+<li>Each component service now supports an optional <code>RESTRICT_MEDIA_TYPES</code> Docker environment variable that specifies the types of media that service will process. For example, <code>RESTRICT_MEDIA_TYPES: VIDEO,IMAGE</code> will process both videos and images, while <code>RESTRICT_MEDIA_TYPES: IMAGE</code> will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</li>
 </ul>
 <h2>DockerHub</h2>
 
@@ -390,7 +408,7 @@
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
 <ul>
-<li><span style="color:red">This new component detects objects in images and videos by making use of an <a href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/">NVIDIA TensorRT Inference Server</a> (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels">COCO labels</a>. Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md">README</a>.</span></li>
+<li><span style="color:red">TODO: This new component detects objects in images and videos by making use of an <a href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/">NVIDIA TensorRT Inference Server</a> (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels">COCO labels</a>. Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md">README</a>.</span></li>
 </ul>
 <h2>Tesseract OCR Text Detection Component</h2>
 
@@ -408,13 +426,12 @@
 <h2>Other Improvements</h2>
 
 <ul>
-<li>The <code>mediaProperties</code> map in the JSON output object now contains a <code>MIME_TYPE</code> property for all media types, as well as a <code>FRAME_WIDTH</code> and <code>FRAME_HEIGHT</code> property for images and videos.</li>
 <li>Simplified component <code>descriptor.json</code> files by moving the specification of common properties, such as <code>CONFIDENCE_THRESHOLD</code>, <code>FRAME_INTERVAL</code>, <code>MIN_SEGMENT_LENGTH</code>, etc., to a single <code>workflow-properties.json</code> file. Now when the Workflow Manager is updated to support new features, the component <code>descriptor.json</code> file will not need to be updated.</li>
 <li>Updated the Sphinx component to return <code>TRANSCRIPT</code> instead of <code>TRANSCRIPTION</code>, which is grammatically correct.</li>
 <li>Whitespace is now trimmed from property names when jobs are submitted via the REST API.</li>
 <li>The Darknet Docker image now includes the YOLOv3 model weights.</li>
 <li>The C++ and Python ModelsIniParser now allows users to specify optional fields.</li>
-<li><span style="color:red">When a job completion callback fails, but otherwise the job is successful, the final state of the job will be <code>COMPLETE_WITH_WARNINGS</code>.</span></li>
+<li><span style="color:red">TODO: When a job completion callback fails, but otherwise the job is successful, the final state of the job will be <code>COMPLETE_WITH_WARNINGS</code>.</span></li>
 </ul>
 <h2>Bug Fixes</h2>
 
@@ -437,7 +454,7 @@
 
 <ul>
 <li>Updated from Hibernate 5.0.8 to 5.4.12 to support schema-based multitenancy. This allows multiple instances of OpenMPF to use the same PostgreSQL database as long as each instance connects to the database as a separate user, and the database is configured appropriately. This also required updating Tomcat from 7.0.72 to 7.0.76.</li>
-<li>Updated the Workflow Manager to include an <code>outputobjecturi</code> in GET and POST callbacks when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.</li>
+<li>Updated the Workflow Manager to include an <code>outputobjecturi</code> in GET callbacks, and <code>outputObjectUri</code> in POST callbacks, when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.</li>
 </ul>
 <h1 id="openmpf-413-february-2020">OpenMPF 4.1.3: February 2020</h1>
 <h2>Features</h2>

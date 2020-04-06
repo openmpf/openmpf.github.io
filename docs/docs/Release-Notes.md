@@ -12,11 +12,18 @@
 
 <h2>JSON Output Object</h2>
 
-- Renamed "stages" to "tasks" in the JSON output object for clarity and consistency with the rest of the code.
+- Renamed `stages` to `tasks` for clarity and consistency with the rest of the code.
+- `JsonCallbackBody` now contains an `outputObjectUri` field.
 
 <h2>Interoperability Package</h2>
 
-- The JsonStage class is now JsonTask in the interoperability package.
+- Renamed `JsonStage.java` to `JsonTask.java`.
+- Removed `JsonJobRequest.java`.
+- Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
+
+<h2>Persistent Database</h2>
+
+- The `input_object` column in the `job_request` table has been renamed to `job` and the content now contains a serialized form of `BatchJob.java` instead of `JsonJobRequest.java`.
 
 <h2>Full Docker Conversion</h2>
 
@@ -29,9 +36,9 @@
 
 - A base builder image and executor image are provided for C++ ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md)), Python ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md)), and Java ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md)) component development. Component developers can also refer to the Dockerfile in the source code for each component as reference for how to make use of the base images.
 
-<h2 style="color:red">Configure Data Types per Component Service</h2>
+<h2>Configure Data Types per Component Service</h2>
 
-- <span style="color:red">TODO: Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos and images, while `RESTRICT_MEDIA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.</span>
+- Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos and images, while `RESTRICT_MEDIA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.
 
 <h2>DockerHub</h2>
 
@@ -90,7 +97,7 @@
 
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
-- <span style="color:red">This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
+- <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
@@ -105,13 +112,12 @@
 
 <h2>Other Improvements</h2>
 
-- The `mediaProperties` map in the JSON output object now contains a `MIME_TYPE` property for all media types, as well as a `FRAME_WIDTH` and `FRAME_HEIGHT` property for images and videos.
 - Simplified component `descriptor.json` files by moving the specification of common properties, such as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file. Now when the Workflow Manager is updated to support new features, the component `descriptor.json` file will not need to be updated.
 - Updated the Sphinx component to return `TRANSCRIPT` instead of `TRANSCRIPTION`, which is grammatically correct.
 - Whitespace is now trimmed from property names when jobs are submitted via the REST API.
 - The Darknet Docker image now includes the YOLOv3 model weights.
 - The C++ and Python ModelsIniParser now allows users to specify optional fields.
-- <span style="color:red">When a job completion callback fails, but otherwise the job is successful, the final state of the job will be `COMPLETE_WITH_WARNINGS`.</span>
+- <span style="color:red">TODO: When a job completion callback fails, but otherwise the job is successful, the final state of the job will be `COMPLETE_WITH_WARNINGS`.</span>
 
 <h2>Bug Fixes</h2>
 
@@ -133,7 +139,7 @@
 <h2>Updates</h2>
 
 - Updated from Hibernate 5.0.8 to 5.4.12 to support schema-based multitenancy. This allows multiple instances of OpenMPF to use the same PostgreSQL database as long as each instance connects to the database as a separate user, and the database is configured appropriately. This also required updating Tomcat from 7.0.72 to 7.0.76.
-- Updated the Workflow Manager to include an `outputobjecturi` in GET and POST callbacks when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.
+- Updated the Workflow Manager to include an `outputobjecturi` in GET callbacks, and `outputObjectUri` in POST callbacks, when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.
 
 # OpenMPF 4.1.3: February 2020
 
