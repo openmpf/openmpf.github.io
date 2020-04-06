@@ -10,6 +10,14 @@
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
 - <span style="color:red">TODO: Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.</span>
 
+<h2>JSON Output Object</h2>
+
+- Renamed "stages" to "tasks" in the JSON output object for clarity and consistency with the rest of the code.
+
+<h2>Interoperability Package</h2>
+
+- The JsonStage class is now JsonTask in the interoperability package.
+
 <h2>Full Docker Conversion</h2>
 
 - Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime. This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy at runtime.
