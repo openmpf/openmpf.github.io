@@ -108,7 +108,8 @@
         - For example: `{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}` enables case-sensitive regex pattern matching.
         - By default, each regex pattern, including those in the legacy format, will be case-insensitive.
     - As part of the text tagging update, the `TAGS` outputs are now separated by semicolons `;` rather than commas `,` to align with the `TRIGGER_WORDS` and `TRIGGER_WORDS_OFFSET` output patterns.
-        - Commas are now used to group each set of `TRIGGER_WORDS` with its respective `TAG` output.
+        - Commas are now used to group each set of `TRIGGER_WORDS_OFFSET` with its respective `TRIGGER_WORDS` output.
+        - Both `TAGS` and `TRIGGER_WORDS` are separated by semicolons only.
     - Regex tagging now follows the C++ ECMAS format (see [examples here](http://www.cplusplus.com/reference/regex/ECMAScript/)) after resolving JSON string conversion for regex tags.
     - As a result the regex patterns `\b` and `\p` in the text tagging file must now be written as `\\b` and `\\p`, respectively, to match the format of other regex character patterns (ex. `\\d`, `\\w`, `\\s`, etc.).
 - The `MAX_PARALLEL_SCRIPT_THREADS` and `MAX_PARALLEL_PAGE_THREADS` properties are now supported. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a different language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on a different page of the PDF.
