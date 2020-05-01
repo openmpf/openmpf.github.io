@@ -104,7 +104,7 @@
 - Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the `text-tags.json` file format has been updated to allow for specifying case-sensitive regular expression searches.
 - Additionally, the `TRIGGER_WORDS` and `TRIGGER_WORDS_OFFSET` detection properties are now supported, which list the OCR'd words that resulted in adding a `TAG` to the detection, and the character offset of those words within the OCR'd `TEXT`, respectively.
 - Key changes to tagging output and `text-tags.json` format are outlined below. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md#text-tagging) for more information:
-    - Regex patterns should now be entered in the format `{"pattern": "[regex_pattern]"}`. Users can add and toggle the `"caseSensitive"` regex flag for each pattern.
+    - Regex patterns should now be entered in the format `{"pattern": "regex_pattern"}`. Users can add and toggle the `"caseSensitive"` regex flag for each pattern.
         - For example: `{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}` enables case-sensitive regex pattern matching.
         - By default, each regex pattern, including those in the legacy format, will be case-insensitive.
     - As part of the text tagging update, the `TAGS` outputs are now separated by semicolons `;` rather than commas `,` to be consistent with the delimiters for `TRIGGER_WORDS` and `TRIGGER_WORDS_OFFSET` output patterns.
