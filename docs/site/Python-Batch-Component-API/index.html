@@ -409,8 +409,8 @@ their dependencies are available in the <code>~/mpf-sdk-install/python/wheelhous
 </code></pre>
 
 <p>To setup the libraries manually you can run:</p>
-<pre><code class="bash">pip wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/api
-pip wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/component_util
+<pre><code class="bash">pip3 wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/api
+pip3 wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/component_util
 </code></pre>
 
 <h2 id="how-to-create-a-setuptools-based-python-component">How to Create a Setuptools-based Python Component</h2>
@@ -427,7 +427,7 @@ Python component can be found
     ├── descriptor
     │   └── descriptor.json
     └── wheelhouse  # optional
-        └── my_prebuilt_lib-0.1-py2-none-any.whl
+        └── my_prebuilt_lib-0.1-py3-none-any.whl
 </code></pre>
 
 <p><strong>1. Create directory structure:</strong></p>
@@ -507,11 +507,11 @@ must also be added to your project's <code>plugin-files/wheelhouse</code> direct
 ├── descriptor
 │   └── descriptor.json
 └── wheelhouse
-    ├── MyComponent-0.1-py2-none-any.whl
-    ├── mpf_component_api-0.1-py2-none-any.whl
-    ├── mpf_component_util-0.1-py2-none-any.whl
-    ├── numpy-1.14.4-cp27-cp27mu-manylinux1_x86_64.whl
-    └── opencv_python-3.4.1.15-cp27-cp27mu-manylinux1_x86_64.whl
+    ├── MyComponent-0.1-py3-none-any.whl
+    ├── mpf_component_api-0.1-py3-none-any.whl
+    ├── mpf_component_util-0.1-py3-none-any.whl
+    ├── numpy-1.18.4-cp38-cp38-manylinux1_x86_64.whl
+    └── opencv_python-4.2.0.34-cp38-cp38-manylinux1_x86_64.whl
 </code></pre>
 
 <p>To create the plugin packages you can run the build script as follows:</p>
@@ -521,7 +521,7 @@ must also be added to your project's <code>plugin-files/wheelhouse</code> direct
 <p>The plugin package can also be built manually using the following commands:</p>
 <pre><code class="bash">mkdir -p plugin-packages/MyComponent/wheelhouse
 cp -r MyComponent/plugin-files/* plugin-packages/MyComponent/
-pip wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse -f plugin-packages/MyComponent/wheelhouse ./MyComponent/
+pip3 wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse -f plugin-packages/MyComponent/wheelhouse ./MyComponent/
 cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 </code></pre>
@@ -776,8 +776,8 @@ a static method, or a class method.</p>
 </tr>
 <tr>
 <td>detection_properties</td>
-<td><code>mpf_component_api.Properties</code></td>
-<td>Dict-like object with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
+<td><code>dict[str, str]</code></td>
+<td>A dict with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
 </tr>
 </tbody>
 </table>
@@ -1001,13 +1001,13 @@ must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </tr>
 <tr>
 <td>frame_locations</td>
-<td><code>mpf_component_api.FrameLocationMap</code></td>
-<td>A dict-like object of individual detections. The key for each entry is the frame number where the detection was generated, and the value is a <code>mpf_component_api.ImageLocation</code> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame.</td>
+<td><code>dict[int, mpf_component_api.ImageLocation]</code></td>
+<td>A dict of individual detections. The key for each entry is the frame number where the detection was generated, and the value is a <code>mpf_component_api.ImageLocation</code> calculated as if that frame was a still image. Note that a key-value pair is <em>not</em> required for every frame between the track start frame and track stop frame.</td>
 </tr>
 <tr>
 <td>detection_properties</td>
-<td><code>mpf_component_api.Properties</code></td>
-<td>Dict-like object with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
+<td><code>dict[str, str]</code></td>
+<td>A dict with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
 </tr>
 </tbody>
 </table>
@@ -1239,8 +1239,8 @@ Currently, audio files are not logically segmented, so a job will contain the en
 </tr>
 <tr>
 <td>detection_properties</td>
-<td><code>mpf_component_api.Properties</code></td>
-<td>Dict-like object with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
+<td><code>dict[str, str]</code></td>
+<td>A dict with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
 </tr>
 </tbody>
 </table>
@@ -1366,39 +1366,110 @@ logically segmented, so a job will contain the entirety of the file.</p>
 </tr>
 <tr>
 <td>detection_properties</td>
-<td><code>mpf_component_api.Properties</code></td>
-<td>Dict-like object with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
+<td><code>dict[str, str]</code></td>
+<td>A dict with keys and values of type <code>str</code> containing optional additional information about the detected object. For best practice, keys should be in all CAPS.</td>
 </tr>
 </tbody>
 </table>
 <h1 id="python-component-build-environment">Python Component Build Environment</h1>
-<p>All Python components must work with CPython 2.7. Also, Python components must work with the Linux version that is
+<p>All Python components must work with CPython 3.8.2. Also, Python components must work with the Linux version that is
 used by the OpenMPF Component Executable. At this writing, OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693).
 Pure Python code should work on any OS, but incompatibility issues can arise when using Python libraries that include
 compiled extension modules. Python libraries are typically distributed as wheel files. The wheel format requires that
 the file name follows the pattern of
 <code>&lt;dist_name&gt;-&lt;version&gt;-&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;.whl</code>. <code>&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;</code> are called
-<a href="https://www.python.org/dev/peps/pep-0425">compatibility tags</a>. For example, <code>mpf_component_api</code> is pure Python
-so the name of its wheel file is <code>mpf_component_api-0.1-py2-none-any.whl</code>. <code>py2</code> means it will work with any Python 2
+<a href="https://www.python.org/dev/peps/pep-0425">compatibility tags</a>. For example, <code>mpf_component_api</code> is pure Python,
+so the name of its wheel file is <code>mpf_component_api-0.1-py3-none-any.whl</code>. <code>py3</code> means it will work with any Python 3
 implementation because it does not use any implementation-specific features. <code>none</code> means that it does not use the
 Python ABI. <code>any</code> means it will work on any platform.</p>
-<p>Supported Python Tags:</p>
-<ul>
-<li><code>py2</code></li>
-<li><code>py27</code></li>
-<li><code>cp2</code></li>
-<li><code>cp27</code></li>
-</ul>
-<p>Supported ABI Tags:</p>
-<ul>
-<li><code>none</code></li>
-<li><code>cp27mu</code></li>
-</ul>
-<p>Supported Platform Tags:</p>
-<ul>
-<li><code>any</code></li>
-<li><code>manylinux1_x86_64</code></li>
-</ul>
+<p>The following combinations of compatibility tags are supported:
+* <code>cp32-abi3-linux_x86_64</code>
+* <code>cp32-abi3-manylinux1_x86_64</code>
+* <code>cp32-abi3-manylinux2010_x86_64</code>
+* <code>cp32-abi3-manylinux2014_x86_64</code>
+* <code>cp33-abi3-linux_x86_64</code>
+* <code>cp33-abi3-manylinux1_x86_64</code>
+* <code>cp33-abi3-manylinux2010_x86_64</code>
+* <code>cp33-abi3-manylinux2014_x86_64</code>
+* <code>cp34-abi3-linux_x86_64</code>
+* <code>cp34-abi3-manylinux1_x86_64</code>
+* <code>cp34-abi3-manylinux2010_x86_64</code>
+* <code>cp34-abi3-manylinux2014_x86_64</code>
+* <code>cp35-abi3-linux_x86_64</code>
+* <code>cp35-abi3-manylinux1_x86_64</code>
+* <code>cp35-abi3-manylinux2010_x86_64</code>
+* <code>cp35-abi3-manylinux2014_x86_64</code>
+* <code>cp36-abi3-linux_x86_64</code>
+* <code>cp36-abi3-manylinux1_x86_64</code>
+* <code>cp36-abi3-manylinux2010_x86_64</code>
+* <code>cp36-abi3-manylinux2014_x86_64</code>
+* <code>cp37-abi3-linux_x86_64</code>
+* <code>cp37-abi3-manylinux1_x86_64</code>
+* <code>cp37-abi3-manylinux2010_x86_64</code>
+* <code>cp37-abi3-manylinux2014_x86_64</code>
+* <code>cp38-abi3-linux_x86_64</code>
+* <code>cp38-abi3-manylinux1_x86_64</code>
+* <code>cp38-abi3-manylinux2010_x86_64</code>
+* <code>cp38-abi3-manylinux2014_x86_64</code>
+* <code>cp38-cp38-linux_x86_64</code>
+* <code>cp38-cp38-manylinux1_x86_64</code>
+* <code>cp38-cp38-manylinux2010_x86_64</code>
+* <code>cp38-cp38-manylinux2014_x86_64</code>
+* <code>cp38-none-any</code>
+* <code>cp38-none-linux_x86_64</code>
+* <code>cp38-none-manylinux1_x86_64</code>
+* <code>cp38-none-manylinux2010_x86_64</code>
+* <code>cp38-none-manylinux2014_x86_64</code>
+* <code>py30-none-any</code>
+* <code>py30-none-linux_x86_64</code>
+* <code>py30-none-manylinux1_x86_64</code>
+* <code>py30-none-manylinux2010_x86_64</code>
+* <code>py30-none-manylinux2014_x86_64</code>
+* <code>py31-none-any</code>
+* <code>py31-none-linux_x86_64</code>
+* <code>py31-none-manylinux1_x86_64</code>
+* <code>py31-none-manylinux2010_x86_64</code>
+* <code>py31-none-manylinux2014_x86_64</code>
+* <code>py32-none-any</code>
+* <code>py32-none-linux_x86_64</code>
+* <code>py32-none-manylinux1_x86_64</code>
+* <code>py32-none-manylinux2010_x86_64</code>
+* <code>py32-none-manylinux2014_x86_64</code>
+* <code>py33-none-any</code>
+* <code>py33-none-linux_x86_64</code>
+* <code>py33-none-manylinux1_x86_64</code>
+* <code>py33-none-manylinux2010_x86_64</code>
+* <code>py33-none-manylinux2014_x86_64</code>
+* <code>py34-none-any</code>
+* <code>py34-none-linux_x86_64</code>
+* <code>py34-none-manylinux1_x86_64</code>
+* <code>py34-none-manylinux2010_x86_64</code>
+* <code>py34-none-manylinux2014_x86_64</code>
+* <code>py35-none-any</code>
+* <code>py35-none-linux_x86_64</code>
+* <code>py35-none-manylinux1_x86_64</code>
+* <code>py35-none-manylinux2010_x86_64</code>
+* <code>py35-none-manylinux2014_x86_64</code>
+* <code>py36-none-any</code>
+* <code>py36-none-linux_x86_64</code>
+* <code>py36-none-manylinux1_x86_64</code>
+* <code>py36-none-manylinux2010_x86_64</code>
+* <code>py36-none-manylinux2014_x86_64</code>
+* <code>py37-none-any</code>
+* <code>py37-none-linux_x86_64</code>
+* <code>py37-none-manylinux1_x86_64</code>
+* <code>py37-none-manylinux2010_x86_64</code>
+* <code>py37-none-manylinux2014_x86_64</code>
+* <code>py38-none-any</code>
+* <code>py38-none-linux_x86_64</code>
+* <code>py38-none-manylinux1_x86_64</code>
+* <code>py38-none-manylinux2010_x86_64</code>
+* <code>py38-none-manylinux2014_x86_64</code>
+* <code>py3-none-any</code>
+* <code>py3-none-linux_x86_64</code>
+* <code>py3-none-manylinux1_x86_64</code>
+* <code>py3-none-manylinux2010_x86_64</code>
+* <code>py3-none-manylinux2014_x86_64</code></p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
 (aside from the standard Python libraries), and any configuration or data files.</p>
@@ -1411,11 +1482,10 @@ multiple instantiations of the component, each running as a separate service.</p
 (i.e. when processing the same job).</p>
 <h2 id="logging">Logging</h2>
 <p>It recommended that components use the logger returned from:
-<br> <code>mpf_component_util.configure_logging(log_file_name, is_debug=False)</code>. When <code>is_debug</code> is false, the log messages
-will be written to
-<br> <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;log_file_name&gt;.log</code> When <code>is_debug</code> is true, the log messages
-will be written to standard out. Note that multiple instances of the same component can log to the same file.
-Also, logging content can span multiple lines. The following log levels are supported:
+<br> <code>mpf_component_api.configure_logging(log_file_name, debug=False, replace_existing_config=True)</code>. 
+The logger will write log messages to standard out. When <code>debug</code> is false, the log messages will also be written to
+<br> <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;log_file_name&gt;.log</code> Note that multiple instances of the same component 
+can log to the same file. Also, logging content can span multiple lines. The following log levels are supported: 
 <code>FATAL, ERROR, WARN, INFO, DEBUG</code>.</p>
 <p>The format of the log messages is:</p>
 <pre><code>DATE TIME LEVEL [SOURCE_FILE:LINE_NUMBER] - MESSAGE

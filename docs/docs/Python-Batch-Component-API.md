@@ -138,8 +138,8 @@ If you have openmpf-build-tools, then you can run:
 ```
 To setup the libraries manually you can run:
 ```bash
-pip wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/api
-pip wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/component_util
+pip3 wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/api
+pip3 wheel -w ~/mpf-sdk-install/python/wheelhouse ~/openmpf-projects/openmpf-python-component-sdk/detection/component_util
 ```
 
 
@@ -159,7 +159,7 @@ ComponentName
     ├── descriptor
     │   └── descriptor.json
     └── wheelhouse  # optional
-        └── my_prebuilt_lib-0.1-py2-none-any.whl
+        └── my_prebuilt_lib-0.1-py3-none-any.whl
 ```
 
 **1\. Create directory structure:**
@@ -257,11 +257,11 @@ MyComponent
 ├── descriptor
 │   └── descriptor.json
 └── wheelhouse
-    ├── MyComponent-0.1-py2-none-any.whl
-    ├── mpf_component_api-0.1-py2-none-any.whl
-    ├── mpf_component_util-0.1-py2-none-any.whl
-    ├── numpy-1.14.4-cp27-cp27mu-manylinux1_x86_64.whl
-    └── opencv_python-3.4.1.15-cp27-cp27mu-manylinux1_x86_64.whl
+    ├── MyComponent-0.1-py3-none-any.whl
+    ├── mpf_component_api-0.1-py3-none-any.whl
+    ├── mpf_component_util-0.1-py3-none-any.whl
+    ├── numpy-1.18.4-cp38-cp38-manylinux1_x86_64.whl
+    └── opencv_python-4.2.0.34-cp38-cp38-manylinux1_x86_64.whl
 ```
 
 To create the plugin packages you can run the build script as follows:
@@ -273,7 +273,7 @@ The plugin package can also be built manually using the following commands:
 ```bash
 mkdir -p plugin-packages/MyComponent/wheelhouse
 cp -r MyComponent/plugin-files/* plugin-packages/MyComponent/
-pip wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse -f plugin-packages/MyComponent/wheelhouse ./MyComponent/
+pip3 wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python/wheelhouse -f plugin-packages/MyComponent/wheelhouse ./MyComponent/
 cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 ```
@@ -510,7 +510,7 @@ def __init__(self, x_left_upper, y_left_upper, width, height, confidence=-1.0, d
 | width                | `int`     | The width of the detected object. |
 | height               | `int`     | The height of the detected object. |
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+| detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
 * Example:
 
@@ -713,8 +713,8 @@ def __init__(self, start_frame, stop_frame, confidence=-1.0, frame_locations=Non
 | start_frame          | `int`     | The first frame number (0-based index) that contained the detected object. |
 | stop_frame           | `int`     | The last frame number (0-based index) that contained the detected object. |
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| frame_locations      | `mpf_component_api.FrameLocationMap` |  A dict-like object of individual detections. The key for each entry is the frame number where the detection was generated, and the value is a `mpf_component_api.ImageLocation` calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
-| detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+| frame_locations      | `dict[int, mpf_component_api.ImageLocation]` |  A dict of individual detections. The key for each entry is the frame number where the detection was generated, and the value is a `mpf_component_api.ImageLocation` calculated as if that frame was a still image. Note that a key-value pair is *not* required for every frame between the track start frame and track stop frame. |
+| detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
 > **NOTE:** Currently, `mpf_component_api.VideoTrack.detection_properties` do not show up in the JSON output object or
 > are used by the WFM in any way.
@@ -927,7 +927,7 @@ def __init__(self, start_time, stop_time, confidence, detection_properties=None)
 | start_time           | `int`     | The time (0-based index, in ms) when the audio detection event started. |
 | stop_time            | `int`     | The time (0-based index, in ms) when the audio detection event stopped. |
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+| detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
 > **NOTE:** Currently, `mpf_component_api.AudioTrack.detection_properties` do not show up in the JSON output object or
 > are used by the WFM in any way.
@@ -1030,38 +1030,109 @@ def __init__(self, confidence=-1.0, detection_properties=None):
 | Member               | Data Type | Description |
 |----------------------|-----------|-------------|
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `mpf_component_api.Properties` | Dict-like object with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+| detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
 
 # Python Component Build Environment
-All Python components must work with CPython 2.7. Also, Python components must work with the Linux version that is
+All Python components must work with CPython 3.8.2. Also, Python components must work with the Linux version that is
 used by the OpenMPF Component Executable. At this writing, OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693).
 Pure Python code should work on any OS, but incompatibility issues can arise when using Python libraries that include
 compiled extension modules. Python libraries are typically distributed as wheel files. The wheel format requires that
 the file name follows the pattern of
 `<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`. `<python_tag>-<abi_tag>-<platform_tag>` are called
-[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, `mpf_component_api` is pure Python
-so the name of its wheel file is `mpf_component_api-0.1-py2-none-any.whl`. `py2` means it will work with any Python 2
+[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, `mpf_component_api` is pure Python,
+so the name of its wheel file is `mpf_component_api-0.1-py3-none-any.whl`. `py3` means it will work with any Python 3
 implementation because it does not use any implementation-specific features. `none` means that it does not use the
 Python ABI. `any` means it will work on any platform.
 
-Supported Python Tags:
-
-* `py2`
-* `py27`
-* `cp2`
-* `cp27`
-
-Supported ABI Tags:
-
-* `none`
-* `cp27mu`
-
-Supported Platform Tags:
-
-* `any`
-* `manylinux1_x86_64`
-
+The following combinations of compatibility tags are supported:
+* `cp32-abi3-linux_x86_64`
+* `cp32-abi3-manylinux1_x86_64`
+* `cp32-abi3-manylinux2010_x86_64`
+* `cp32-abi3-manylinux2014_x86_64`
+* `cp33-abi3-linux_x86_64`
+* `cp33-abi3-manylinux1_x86_64`
+* `cp33-abi3-manylinux2010_x86_64`
+* `cp33-abi3-manylinux2014_x86_64`
+* `cp34-abi3-linux_x86_64`
+* `cp34-abi3-manylinux1_x86_64`
+* `cp34-abi3-manylinux2010_x86_64`
+* `cp34-abi3-manylinux2014_x86_64`
+* `cp35-abi3-linux_x86_64`
+* `cp35-abi3-manylinux1_x86_64`
+* `cp35-abi3-manylinux2010_x86_64`
+* `cp35-abi3-manylinux2014_x86_64`
+* `cp36-abi3-linux_x86_64`
+* `cp36-abi3-manylinux1_x86_64`
+* `cp36-abi3-manylinux2010_x86_64`
+* `cp36-abi3-manylinux2014_x86_64`
+* `cp37-abi3-linux_x86_64`
+* `cp37-abi3-manylinux1_x86_64`
+* `cp37-abi3-manylinux2010_x86_64`
+* `cp37-abi3-manylinux2014_x86_64`
+* `cp38-abi3-linux_x86_64`
+* `cp38-abi3-manylinux1_x86_64`
+* `cp38-abi3-manylinux2010_x86_64`
+* `cp38-abi3-manylinux2014_x86_64`
+* `cp38-cp38-linux_x86_64`
+* `cp38-cp38-manylinux1_x86_64`
+* `cp38-cp38-manylinux2010_x86_64`
+* `cp38-cp38-manylinux2014_x86_64`
+* `cp38-none-any`
+* `cp38-none-linux_x86_64`
+* `cp38-none-manylinux1_x86_64`
+* `cp38-none-manylinux2010_x86_64`
+* `cp38-none-manylinux2014_x86_64`
+* `py30-none-any`
+* `py30-none-linux_x86_64`
+* `py30-none-manylinux1_x86_64`
+* `py30-none-manylinux2010_x86_64`
+* `py30-none-manylinux2014_x86_64`
+* `py31-none-any`
+* `py31-none-linux_x86_64`
+* `py31-none-manylinux1_x86_64`
+* `py31-none-manylinux2010_x86_64`
+* `py31-none-manylinux2014_x86_64`
+* `py32-none-any`
+* `py32-none-linux_x86_64`
+* `py32-none-manylinux1_x86_64`
+* `py32-none-manylinux2010_x86_64`
+* `py32-none-manylinux2014_x86_64`
+* `py33-none-any`
+* `py33-none-linux_x86_64`
+* `py33-none-manylinux1_x86_64`
+* `py33-none-manylinux2010_x86_64`
+* `py33-none-manylinux2014_x86_64`
+* `py34-none-any`
+* `py34-none-linux_x86_64`
+* `py34-none-manylinux1_x86_64`
+* `py34-none-manylinux2010_x86_64`
+* `py34-none-manylinux2014_x86_64`
+* `py35-none-any`
+* `py35-none-linux_x86_64`
+* `py35-none-manylinux1_x86_64`
+* `py35-none-manylinux2010_x86_64`
+* `py35-none-manylinux2014_x86_64`
+* `py36-none-any`
+* `py36-none-linux_x86_64`
+* `py36-none-manylinux1_x86_64`
+* `py36-none-manylinux2010_x86_64`
+* `py36-none-manylinux2014_x86_64`
+* `py37-none-any`
+* `py37-none-linux_x86_64`
+* `py37-none-manylinux1_x86_64`
+* `py37-none-manylinux2010_x86_64`
+* `py37-none-manylinux2014_x86_64`
+* `py38-none-any`
+* `py38-none-linux_x86_64`
+* `py38-none-manylinux1_x86_64`
+* `py38-none-manylinux2010_x86_64`
+* `py38-none-manylinux2014_x86_64`
+* `py3-none-any`
+* `py3-none-linux_x86_64`
+* `py3-none-manylinux1_x86_64`
+* `py3-none-manylinux2010_x86_64`
+* `py3-none-manylinux2014_x86_64`
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
@@ -1082,11 +1153,10 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 ## Logging
 It recommended that components use the logger returned from:
-<br> `mpf_component_util.configure_logging(log_file_name, is_debug=False)`. When `is_debug` is false, the log messages
-will be written to
-<br> `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` When `is_debug` is true, the log messages
-will be written to standard out. Note that multiple instances of the same component can log to the same file.
-Also, logging content can span multiple lines. The following log levels are supported:
+<br> `mpf_component_api.configure_logging(log_file_name, debug=False, replace_existing_config=True)`. 
+The logger will write log messages to standard out. When `debug` is false, the log messages will also be written to
+<br> `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` Note that multiple instances of the same component 
+can log to the same file. Also, logging content can span multiple lines. The following log levels are supported: 
 `FATAL, ERROR, WARN, INFO, DEBUG`.
 
 The format of the log messages is:

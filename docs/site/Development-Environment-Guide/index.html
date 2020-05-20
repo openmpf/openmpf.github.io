@@ -144,6 +144,8 @@
                 
                     <li><a class="toctree-l4" href="#postgresql">PostgreSQL</a></li>
                 
+                    <li><a class="toctree-l4" href="#python-38">Python 3.8</a></li>
+                
             
                 <li class="toctree-l3"><a href="#configure-system-dependencies">Configure System Dependencies</a></li>
                 
@@ -375,9 +377,7 @@
 </ol>
 <h2 id="install-system-dependencies-via-yum">Install System Dependencies via Yum</h2>
 <p>Use <code>yum</code> to install packages:</p>
-<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
-<p>The version of <code>pip</code> available in the yum repository is old and must be upgraded with the following command:</p>
-<p><code>sudo pip install --upgrade pip</code></p>
+<p><code>sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel</code></p>
 <h1 id="get-the-openmpf-source-code">Get the OpenMPF Source Code</h1>
 <ol>
 <li>
@@ -389,7 +389,7 @@
 </li>
 <li>
 <p>Install the OpenMPF command line tools:
-    <br> <code>sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></p>
+    <br> <code>sudo pip3 install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></p>
 </li>
 <li>
 <p>Copy the mpf user profile script from the extracted source code:
@@ -470,6 +470,29 @@
 <br><code>sudo -i -u postgres createuser -P mpf</code></li>
 <li>Create the mpf database with the mpf user as the owner:
 <br><code>sudo -i -u postgres createdb -O mpf mpf</code></li>
+</ol>
+<h2 id="python-38">Python 3.8</h2>
+<ol>
+<li>
+<p>Install build dependencies:
+   <br> <code>sudo yum install -y yum-utils</code>
+   <br><code>sudo yum-builddep -y python3</code></p>
+</li>
+<li>
+<p>Download the source code: 
+   <br><code>curl https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz | tar --extract --xz</code></p>
+</li>
+<li>
+<p>Build Python:
+   <br> <code>cd Python-3.8.2</code>
+   <br> <code>./configure --enable-optimizations --with-lto --enable-shared</code>
+   <br> <code>make -j8</code>
+   <br> <code>sudo make install</code>
+   <br> <code>ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0</code></p>
+</li>
+<li>
+<p>Make sure the output of running <code>python3 --version</code> is <code>Python 3.8.2</code>.</p>
+</li>
 </ol>
 <h1 id="configure-system-dependencies">Configure System Dependencies</h1>
 <h1 id="configure-activemq">Configure ActiveMQ</h1>
