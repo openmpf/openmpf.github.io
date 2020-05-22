@@ -382,6 +382,8 @@
 </ul>
 </li>
 <li>For clarity, <code>OUTPUT_EXEMPLARS_ONLY</code> has been renamed to <code>OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY</code>. Extracted artifacts will always be reported in the JSON output object.</li>
+<li>The <code>mpf.output.objects.exemplars.only</code> system property has been renamed to <code>mpf.output.objects.artifacts.and.exemplars.only</code>. It works the same as before with the exception that if an artifact is extracted for a detection then that detection will always be represented in the JSON output object, whether it's an exemplar or not.</li>
+<li>The <code>mpf.output.objects.last.stage.only</code> system property has been renamed to <code>mpf.output.objects.last.task.only</code>. It works the same as before with the exception that when set to true artifact extraction is skipped for all tasks but the last task.</li>
 </ul>
 <h2 style="color:red">Job Errors and Warnings</h2>
 

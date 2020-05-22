@@ -72,6 +72,8 @@
     - `ARTIFACT_EXTRACTION_POLICY_LAST_FRAME`: If true, extract the last frame from the track.
     - `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT`: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.
 - For clarity, `OUTPUT_EXEMPLARS_ONLY` has been renamed to `OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY`. Extracted artifacts will always be reported in the JSON output object.
+- The `mpf.output.objects.exemplars.only` system property has been renamed to `mpf.output.objects.artifacts.and.exemplars.only`. It works the same as before with the exception that if an artifact is extracted for a detection then that detection will always be represented in the JSON output object, whether it's an exemplar or not.
+- The `mpf.output.objects.last.stage.only` system property has been renamed to `mpf.output.objects.last.task.only`. It works the same as before with the exception that when set to true artifact extraction is skipped for all tasks but the last task.
 
 <h2 style="color:red">Job Errors and Warnings</h2>
 
