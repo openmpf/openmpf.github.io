@@ -1046,6 +1046,7 @@ implementation because it does not use any implementation-specific features. `no
 Python ABI. `any` means it will work on any platform.
 
 The following combinations of compatibility tags are supported:
+
 * `cp32-abi3-linux_x86_64`
 * `cp32-abi3-manylinux1_x86_64`
 * `cp32-abi3-manylinux2010_x86_64`
@@ -1154,8 +1155,7 @@ OpenMPF components should be stateless in operation and give identical output fo
 ## Logging
 It recommended that components use the logger returned from:
 <br> `mpf_component_api.configure_logging(log_file_name, debug=False, replace_existing_config=True)`. 
-The logger will write log messages to standard out. When `debug` is false, the log messages will also be written to
-<br> `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` Note that multiple instances of the same component 
+The logger will write log messages to standard out. When `debug` is false, the log messages will also be written to `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` Note that multiple instances of the same component 
 can log to the same file. Also, logging content can span multiple lines. The following log levels are supported: 
 `FATAL, ERROR, WARN, INFO, DEBUG`.
 
