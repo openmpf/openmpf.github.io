@@ -303,6 +303,7 @@
 <li>Updated the <a href="../Install-Guide/index.html">Install Guide</a> with a pointer to the "Quick Start" section on DockerHub.</li>
 <li><span style="color:red">TODO: Updated the <a href="../REST-API/index.html">REST API</a> with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the <code>[GET] /rest/info</code> endpoint.</span></li>
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> with <code>MIME_TYPE</code>, <code>FRAME_WIDTH</code>, and <code>FRAME_HEIGHT</code> media properties.</li>
+<li>Updated the <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a> with information on Python3 and the simplification of using a <code>dict</code> for some of the data members.</li>
 <li><span style="color:red">TODO: Updated the <a href="https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> guide for Docker deployment with information on the new build process and component base builder and executor images.</span></li>
 </ul>
 <h2>JSON Output Object</h2>
@@ -322,6 +323,11 @@
 
 <ul>
 <li>The <code>input_object</code> column in the <code>job_request</code> table has been renamed to <code>job</code> and the content now contains a serialized form of <code>BatchJob.java</code> instead of <code>JsonJobRequest.java</code>.</li>
+</ul>
+<h2>Python Batch Component API</h2>
+
+<ul>
+<li>Simplified the <code>detection_properties</code> and <code>frame_locations</code> data members to use a Python <code>dict</code> instead of a custom data type.</li>
 </ul>
 <h2>Full Docker Conversion</h2>
 
@@ -351,6 +357,7 @@
 <ul>
 <li>Updated from Oracle Java 8 to OpenJDK 11, which required updating to Tomcat 8.5.41. We now use <a href="https://codehaus-cargo.github.io/cargo/Home.html">Cargo</a> to run integration tests.</li>
 <li>Updated OpenCV from 3.0.0 to 3.4.7 to update Deep Neural Networks (DNN) support.</li>
+<li>Updated Python from 2.7 to 3.8.2.</li>
 </ul>
 <h2>FFmpeg</h2>
 
@@ -419,7 +426,29 @@
 <h2>Tesseract OCR Text Detection Component</h2>
 
 <ul>
-<li>Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the <code>text-tags.json</code> file format has been updated to allow for specifying case-sensitive regular expression searches. For example: <code>{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}</code>. Additionally, the <code>TRIGGER_WORDS</code> and <code>TRIGGER_WORDS_OFFSET</code> detection properties are now supported, which list the OCR'd words that resulted in adding a <code>TAG</code> to the detection, and the character offset of those words within the OCR'd <code>TEXT</code>, respectively. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md#text-tagging">README</a>.</li>
+<li>Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the <code>text-tags.json</code> file format has been updated to allow for specifying case-sensitive regular expression searches.</li>
+<li>Additionally, the <code>TRIGGER_WORDS</code> and <code>TRIGGER_WORDS_OFFSET</code> detection properties are now supported, which list the OCR'd words that resulted in adding a <code>TAG</code> to the detection, and the character offset of those words within the OCR'd <code>TEXT</code>, respectively.</li>
+<li>Key changes to tagging output and <code>text-tags.json</code> format are outlined below. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md#text-tagging">README</a> for more information:<ul>
+<li>Regex patterns should now be entered in the format <code>{"pattern": "regex_pattern"}</code>. Users can add and toggle the <code>"caseSensitive"</code> regex flag for each pattern.<ul>
+<li>For example: <code>{"pattern": "(\\b)bus(\\b)", "caseSensitive": true}</code> enables case-sensitive regex pattern matching.</li>
+<li>By default, each regex pattern, including those in the legacy format, will be case-insensitive.</li>
+</ul>
+</li>
+<li>As part of the text tagging update, the <code>TAGS</code> outputs are now separated by semicolons <code>;</code> rather than commas <code>,</code> to be consistent with the delimiters for <code>TRIGGER_WORDS</code> and <code>TRIGGER_WORDS_OFFSET</code> output patterns.<ul>
+<li>Because semicolons can be part of the trigger word itself, those semicolons will be encapsulated in brackets.<ul>
+<li>For example, <code>detected trigger with a ;</code> in the OCR'd <code>TEXT</code> is reported as <code>TRIGGER_WORDS=detected trigger with a [;]; some other trigger</code>.</li>
+</ul>
+</li>
+<li>Commas are now used to group each set of <code>TRIGGER_WORDS_OFFSET</code> with its respective <code>TRIGGER_WORDS</code> output. Both <code>TAGS</code> and <code>TRIGGER_WORDS</code> are separated by semicolons only.<ul>
+<li>For example: <code>TRIGGER_WORDS=trigger1; trigger2</code>, <code>TRIGGER_WORDS_OFFSET=0-5, 6-10; 12-15</code>, means that <code>trigger1</code> occurs twice in the text at the index ranges 0-5 and 6-10, and <code>trigger2</code> occurs at index range 12-15.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Regex tagging now follows the C++ ECMAS format (see <a href="http://www.cplusplus.com/reference/regex/ECMAScript/">examples here</a>) after resolving JSON string conversion for regex tags.</li>
+<li>As a result the regex patterns <code>\b</code> and <code>\p</code> in the text tagging file must now be written as <code>\\b</code> and <code>\\p</code>, respectively, to match the format of other regex character patterns (ex. <code>\\d</code>, <code>\\w</code>, <code>\\s</code>, etc.).</li>
+</ul>
+</li>
 <li>The <code>MAX_PARALLEL_SCRIPT_THREADS</code> and <code>MAX_PARALLEL_PAGE_THREADS</code> properties are now supported. When processing images, the first property is used to determine how many threads to run in parallel. Each thread performs OCR using a different language or script model. When processing PDFs, the second property is used to determine how many threads to run in parallel. Each thread performs OCR on a different page of the PDF.</li>
 <li>The <code>ENABLE_OSD_FALLBACK</code> property is now supported. If enabled, an additional round of OSD is performed when the first round fails to generate script predictions that are above the OSD score and confidence thresholds. In the second pass, the component will run OSD on multiple copies of the input text image to get an improved prediction score and <code>OSD_FALLBACK_OCCURRED</code> detection property will be set to true.</li>
 <li>If any OSD-detected models are missing, the new <code>MISSING_LANGUAGE_MODELS</code> detection property will list the missing models.</li>

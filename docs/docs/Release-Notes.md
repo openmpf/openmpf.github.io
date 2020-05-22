@@ -8,6 +8,7 @@
 - Updated the [Install Guide](Install-Guide.md) with a pointer to the "Quick Start" section on DockerHub.
 - <span style="color:red">TODO: Updated the [REST API](REST-API.md) with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the `[GET] /rest/info` endpoint.</span>
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
+- Updated the [Python Batch Component API](Python-Batch-Component-API.md) with information on Python3 and the simplification of using a `dict` for some of the data members.
 - <span style="color:red">TODO: Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.</span>
 
 <h2>JSON Output Object</h2>
@@ -24,6 +25,10 @@
 <h2>Persistent Database</h2>
 
 - The `input_object` column in the `job_request` table has been renamed to `job` and the content now contains a serialized form of `BatchJob.java` instead of `JsonJobRequest.java`.
+
+<h2>Python Batch Component API</h2>
+
+- Simplified the `detection_properties` and `frame_locations` data members to use a Python `dict` instead of a custom data type.
 
 <h2>Full Docker Conversion</h2>
 
@@ -48,6 +53,7 @@
 
 - Updated from Oracle Java 8 to OpenJDK 11, which required updating to Tomcat 8.5.41. We now use [Cargo](https://codehaus-cargo.github.io/cargo/Home.html) to run integration tests.
 - Updated OpenCV from 3.0.0 to 3.4.7 to update Deep Neural Networks (DNN) support.
+- Updated Python from 2.7 to 3.8.2.
 
 <h2>FFmpeg</h2>
 
