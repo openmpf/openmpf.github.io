@@ -21,7 +21,7 @@
 - Renamed `JsonStage.java` to `JsonTask.java`.
 - Removed `JsonJobRequest.java`.
 - Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
-- Modified `JsonDetectionProcessingError`, removed the `startOffset` and `stopOffset` fields, and added four new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, and `stopOffsetTime`.
+- Modified `JsonDetectionProcessingError.java` by removing the `startOffset` and `stopOffset` fields and adding four new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, and `stopOffsetTime`.
 
 <h2>Persistent Database</h2>
 
