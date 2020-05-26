@@ -488,10 +488,31 @@
    <br> <code>./configure --enable-optimizations --with-lto --enable-shared</code>
    <br> <code>make -j8</code>
    <br> <code>sudo make install</code>
-   <br> <code>ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0</code></p>
+   <br> <code>sudo ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0</code>
+   <br> <code>sudo ln -sf /usr/local/bin/python3 /bin/python3</code>
+   <br> <code>sudo ln -sf /usr/local/bin/python3.8 /bin/python3.8</code>
+   <br> <code>sudo ln -sf /usr/local/bin/pip3 /bin/pip3</code>
+   <br> <code>sudo ln -sf /usr/local/bin/pip3.8 /bin/pip3.8</code></p>
 </li>
 <li>
 <p>Make sure the output of running <code>python3 --version</code> is <code>Python 3.8.2</code>.</p>
+</li>
+<li>
+<p>Make sure the output of running <code>sudo python3 --version</code> is <code>Python 3.8.2</code>.</p>
+</li>
+<li>
+<p>Make sure the output of running <code>pip3 --version</code> ends with <code>(python 3.8)</code>.</p>
+</li>
+<li>
+<p>Make sure the output of running <code>sudo pip3 --version</code> ends with <code>(python 3.8)</code>.</p>
+</li>
+<li>
+<p>Upgrade pip:
+   <br> <code>sudo pip3 install --upgradge pip</code></p>
+</li>
+<li>
+<p>Install wheel:
+   <br> <code>sudo pip3 install wheel</code></p>
 </li>
 </ol>
 <h1 id="configure-system-dependencies">Configure System Dependencies</h1>

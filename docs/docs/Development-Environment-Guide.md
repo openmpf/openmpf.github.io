@@ -164,9 +164,25 @@ For reference only: <http://ant.apache.org>
    <br> `./configure --enable-optimizations --with-lto --enable-shared`
    <br> `make -j8`
    <br> `sudo make install`
-   <br> `ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0`
+   <br> `sudo ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0`
+   <br> `sudo ln -sf /usr/local/bin/python3 /bin/python3`
+   <br> `sudo ln -sf /usr/local/bin/python3.8 /bin/python3.8`
+   <br> `sudo ln -sf /usr/local/bin/pip3 /bin/pip3`
+   <br> `sudo ln -sf /usr/local/bin/pip3.8 /bin/pip3.8`
    
 4. Make sure the output of running `python3 --version` is `Python 3.8.2`.
+
+5. Make sure the output of running `sudo python3 --version` is `Python 3.8.2`.
+
+6. Make sure the output of running `pip3 --version` ends with `(python 3.8)`.
+
+7. Make sure the output of running `sudo pip3 --version` ends with `(python 3.8)`.
+
+8. Upgrade pip:
+   <br> `sudo pip3 install --upgradge pip`
+
+9. Install wheel:
+   <br> `sudo pip3 install wheel`
 
 
 # Configure System Dependencies
