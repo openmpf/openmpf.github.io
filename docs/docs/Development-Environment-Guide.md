@@ -55,11 +55,7 @@ Install [CentOS 7](https://www.centos.org/download/). Most developers use a virt
 
 Use `yum` to install packages:
 
-`sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig python-devel python-httplib2 python-jinja2 python-keyczar python2-paramiko python2-pip python-setuptools python-six PyYAML qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel`
-
-The version of `pip` available in the yum repository is old and must be upgraded with the following command:
-
-`sudo pip install --upgrade pip`
+`sudo yum install -y asciidoc autoconf automake boost boost-devel cmake3 curl freetype-devel gcc-c++ git graphviz gstreamer-plugins-base-devel gtk2-devel gtkglext-devel gtkglext-libs jasper jasper-devel libavc1394-devel libcurl-devel libdc1394-devel libffi-devel libICE-devel libjpeg-turbo-devel libpng-devel libSM-devel libtiff-devel libtool libv4l-devel libXinerama-devel libXmu-devel libXt-devel log4cplus log4cplus-devel log4cxx log4cxx-devel make mercurial mesa-libGL-devel mesa-libGLU-devel nasm ncurses-devel numpy openssl-devel pangox-compat pangox-compat-devel perl-CPAN-Meta-YAML perl-DBI perl-Digest-MD5 perl-File-Find-Rule perl-File-Find-Rule-Perl perl-JSON perl-JSON-PP perl-List-Compare perl-Number-Compare perl-Params-Util perl-Parse-CPAN-Meta php pkgconfig qt qt-devel qt-x11 redis rpm-build sshpass tbb tbb-devel tree unzip uuid-devel wget yasm yum-utils zlib-devel`
 
 
 # Get the OpenMPF Source Code
@@ -69,7 +65,7 @@ The version of `pip` available in the yum repository is old and must be upgraded
     2. `git clone https://github.com/openmpf/openmpf-projects.git --recursive`
 
 2. Install the OpenMPF command line tools:
-    <br> `sudo pip install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
+    <br> `sudo pip3 install /home/mpf/openmpf-projects/openmpf/trunk/bin/mpf-scripts`
 
 3. Copy the mpf user profile script from the extracted source code:
     <br> `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/mpf-install/src/main/scripts/mpf-profile.sh /etc/profile.d/mpf.sh`
@@ -153,6 +149,40 @@ For reference only: <http://ant.apache.org>
 <br>`sudo -i -u postgres createuser -P mpf`
 7. Create the mpf database with the mpf user as the owner:
 <br>`sudo -i -u postgres createdb -O mpf mpf`
+
+
+## Python 3.8
+1. Install build dependencies:
+   <br> `sudo yum install -y yum-utils`
+   <br>`sudo yum-builddep -y python3`
+
+2. Download the source code: 
+   <br>`curl https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz | tar --extract --xz`
+   
+3. Build Python:
+   <br> `cd Python-3.8.2`
+   <br> `./configure --enable-optimizations --with-lto --enable-shared`
+   <br> `make -j8`
+   <br> `sudo make install`
+   <br> `sudo ln -s /usr/local/lib/libpython3.8.so.1.0 /usr/lib64/libpython3.8.so.1.0`
+   <br> `sudo ln -sf /usr/local/bin/python3 /bin/python3`
+   <br> `sudo ln -sf /usr/local/bin/python3.8 /bin/python3.8`
+   <br> `sudo ln -sf /usr/local/bin/pip3 /bin/pip3`
+   <br> `sudo ln -sf /usr/local/bin/pip3.8 /bin/pip3.8`
+   
+4. Make sure the output of running `python3 --version` is `Python 3.8.2`.
+
+5. Make sure the output of running `sudo python3 --version` is `Python 3.8.2`.
+
+6. Make sure the output of running `pip3 --version` ends with `(python 3.8)`.
+
+7. Make sure the output of running `sudo pip3 --version` ends with `(python 3.8)`.
+
+8. Upgrade pip:
+   <br> `sudo pip3 install --upgrade pip`
+
+9. Install wheel:
+   <br> `sudo pip3 install wheel`
 
 
 # Configure System Dependencies
