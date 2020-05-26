@@ -179,7 +179,7 @@ For reference only: <http://ant.apache.org>
 7. Make sure the output of running `sudo pip3 --version` ends with `(python 3.8)`.
 
 8. Upgrade pip:
-   <br> `sudo pip3 install --upgradge pip`
+   <br> `sudo pip3 install --upgrade pip`
 
 9. Install wheel:
    <br> `sudo pip3 install wheel`
