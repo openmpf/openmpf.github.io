@@ -1,6 +1,6 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
+> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
-# OpenMPF 5.0.0: April 2020
+# OpenMPF 5.0.0: June 2020
 
 <h2>Documentation</h2>
 
@@ -21,6 +21,7 @@
 - Renamed `JsonStage.java` to `JsonTask.java`.
 - Removed `JsonJobRequest.java`.
 - Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
+- Modified `JsonDetectionProcessingError`, removed the `startOffset` and `stopOffset` fields, and added four new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, and `stopOffsetTime`.
 
 <h2>Persistent Database</h2>
 
