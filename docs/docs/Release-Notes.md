@@ -62,7 +62,6 @@
 
 <h2>Artifact Extraction</h2>
 
-- <span style="color:red">TODO: Extracted artifacts are now cropped to the detection region. Previously, the entire frame was extracted.</span>
 - The  `ARTIFACT_EXTRACTION_POLICY` property can now be assigned a value of `NONE`, `VISUAL_TYPES_ONLY`, `ALL_TYPES`, or `ALL_DETECTIONS`.
     - With the `VISUAL_TYPES_ONLY` or `ALL_TYPES` policy, artifacts will be extracted according to the `ARTIFACT_EXTRACTION_POLICY*` properties. With the `NONE` and `ALL_DETECTIONS` policies, those settings are ignored.
     - Note that previously `NONE`, `VISUAL_EXEMPLARS_ONLY`, `EXEMPLARS_ONLY`, `ALL_VISUAL_DETECTIONS`, and `ALL_DETECTIONS` were supported.
@@ -72,7 +71,7 @@
     - `ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME`: If true, extract the frame with a detection that is closest to the middle frame from the track.
     - `ARTIFACT_EXTRACTION_POLICY_LAST_FRAME`: If true, extract the last frame from the track.
     - `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT`: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.
-    - `ARTIFACT_EXTRACTION_POLICY_CROPPING`: If true, an artifact will be extracted for each detection in each frame that is selected according to the other ARTIFACT_EXTRACTION_POLICY* properties. The extracted artifact will be cropped to the width and height of the detection bounding box, and the artifact will be rotated according to the detection ROTATION property. If false, the artifact extraction behavior is unchanged from the previous release: the entire frame will be extracted without any rotation.
+    - `ARTIFACT_EXTRACTION_POLICY_CROPPING`: If true, an artifact will be extracted for each detection in each frame that is selected according to the other `ARTIFACT_EXTRACTION_POLICY*` properties. The extracted artifact will be cropped to the width and height of the detection bounding box, and the artifact will be rotated according to the detection `ROTATION` property. If false, the artifact extraction behavior is unchanged from the previous release: the entire frame will be extracted without any rotation.
 - For clarity, `OUTPUT_EXEMPLARS_ONLY` has been renamed to `OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY`. Extracted artifacts will always be reported in the JSON output object.
 - The `mpf.output.objects.exemplars.only` system property has been renamed to `mpf.output.objects.artifacts.and.exemplars.only`. It works the same as before with the exception that if an artifact is extracted for a detection then that detection will always be represented in the JSON output object, whether it's an exemplar or not.
 - The `mpf.output.objects.last.stage.only` system property has been renamed to `mpf.output.objects.last.task.only`. It works the same as before with the exception that when set to true artifact extraction is skipped for all tasks but the last task.

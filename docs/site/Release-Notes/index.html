@@ -368,9 +368,8 @@
 <h2>Artifact Extraction</h2>
 
 <ul>
-<li><span style="color:red">TODO: Extracted artifacts are now cropped to the detection region. Previously, the entire frame was extracted.</span></li>
 <li>The  <code>ARTIFACT_EXTRACTION_POLICY</code> property can now be assigned a value of <code>NONE</code>, <code>VISUAL_TYPES_ONLY</code>, <code>ALL_TYPES</code>, or <code>ALL_DETECTIONS</code>.<ul>
-<li>With the <code>VISUAL_TYPES_ONLY</code> or <code>ALL_TYPES</code> policy, artifacts will be extracted according to the <code>ARTIFACT_EXTRACTION_POLICY*</code> properties. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, those settings are ignored.,</li>
+<li>With the <code>VISUAL_TYPES_ONLY</code> or <code>ALL_TYPES</code> policy, artifacts will be extracted according to the <code>ARTIFACT_EXTRACTION_POLICY*</code> properties. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, those settings are ignored.</li>
 <li>Note that previously <code>NONE</code>, <code>VISUAL_EXEMPLARS_ONLY</code>, <code>EXEMPLARS_ONLY</code>, <code>ALL_VISUAL_DETECTIONS</code>, and <code>ALL_DETECTIONS</code> were supported.</li>
 </ul>
 </li>
@@ -380,6 +379,7 @@
 <li><code>ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME</code>: If true, extract the frame with a detection that is closest to the middle frame from the track.</li>
 <li><code>ARTIFACT_EXTRACTION_POLICY_LAST_FRAME</code>: If true, extract the last frame from the track.</li>
 <li><code>ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT</code>: Sort the detections in a track by confidence and then extract this many detections, starting with those which have the highest confidence.</li>
+<li><code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code>: If true, an artifact will be extracted for each detection in each frame that is selected according to the other <code>ARTIFACT_EXTRACTION_POLICY*</code> properties. The extracted artifact will be cropped to the width and height of the detection bounding box, and the artifact will be rotated according to the detection <code>ROTATION</code> property. If false, the artifact extraction behavior is unchanged from the previous release: the entire frame will be extracted without any rotation.</li>
 </ul>
 </li>
 <li>For clarity, <code>OUTPUT_EXEMPLARS_ONLY</code> has been renamed to <code>OUTPUT_ARTIFACTS_AND_EXEMPLARS_ONLY</code>. Extracted artifacts will always be reported in the JSON output object.</li>
