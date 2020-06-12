@@ -611,12 +611,14 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 </code></pre>
 
 <h4 id="getdetectionsmpfimagejob">GetDetections(MPFImageJob …)</h4>
-<p>Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.</p>
-<p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.</p>
+<p>Used to detect objects in an image file. The MPFImageJob structure contains 
+the data_uri specifying the location of the image file.</p>
+<p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". 
+This is because all media is copied to the OpenMPF server before the job is executed.</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations)
+<pre><code class="c++">std::vector&lt;MPFImageLocation&gt; GetDetections(const MPFImageJob &amp;job);
 </code></pre>
 
 <ul>
@@ -633,37 +635,23 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <tbody>
 <tr>
 <td>job</td>
-<td><code>const MPFImageJob &amp;</code></td>
+<td><code>const MPFImageJob&amp;</code></td>
 <td>Structure containing details about the work to be performed. See <a href="#mpfimagejob"><code>MPFImageJob</code></a></td>
 </tr>
-<tr>
-<td>locations</td>
-<td><code>vector&lt;MPFImageLocation&gt; &amp;</code></td>
-<td>The <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> data for each detected object.</td>
-</tr>
 </tbody>
 </table>
 <ul>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
-<li>
-<p>Example:</p>
-</li>
+<li>Returns: <code>std::vector&lt;MPFImageLocation&gt;</code> - The <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> data for each detected object.</li>
 </ul>
-<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &amp;job, vector&lt;MPFImageLocation&gt; &amp;locations) {
-    // Parse job
-    // Generate image locations
-    return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
 <h4 id="getdetectionsmpfvideojob">GetDetections(MPFVideoJob …)</h4>
-<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" of video data and each segment (containing a range of frames) is assigned to a different job. Components are not guaranteed to receive requests in any order. For example, the first request processed by a component might receive a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
+<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" 
+of video data and each segment (containing a range of frames) is assigned to a different job. Components are not 
+guaranteed to receive requests in any order. For example, the first request processed by a component might receive 
+a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">MPFDetectionError getDetections(const MPFVideoJob &amp;job, vector&lt;MPFVideoTrack&gt; tracks);
+<pre><code class="c++">std::vector&lt;MPFVideoTrack&gt;  GetDetections(const MPFVideoJob &amp;job);
 </code></pre>
 
 <ul>
@@ -680,37 +668,21 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <tbody>
 <tr>
 <td>job</td>
-<td><code>const MPFVideoJob &amp;</code></td>
+<td><code>const MPFVideoJob&amp;</code></td>
 <td>Structure containing details about the work to be performed. See <a href="#mpfvideojob"><code>MPFVideoJob</code></a></td>
-</tr>
-<tr>
-<td>tracks</td>
-<td><code>vector&lt;MPFVideoTrack&gt; &amp;</code></td>
-<td>The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
-<li>
-<p>Example:</p>
-</li>
+<li>Returns: <code>std::vector&lt;MPFVideoTrack&gt;</code> - The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.  </li>
 </ul>
-<pre><code class="c++">MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
 <h4 id="getdetectionsmpfaudiojob">GetDetections(MPFAudioJob …)</h4>
-<p>Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.</p>
+<p>Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain 
+the entirety of the audio file.</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks)
+<pre><code class="c++">std::vector&lt;MPFAudioTrack&gt; GetDetections(const MPFAudioJob &amp;job);
 </code></pre>
 
 <ul>
@@ -730,34 +702,18 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <td><code>const MPFAudioJob &amp;</code></td>
 <td>Structure containing details about the work to be performed. See <a href="#mpfaudiojob"><code>MPFAudioJob</code></a></td>
 </tr>
-<tr>
-<td>tracks</td>
-<td><code>vector&lt;MPFAudioTrack&gt; &amp;</code></td>
-<td>The <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> data for each detected object</td>
-</tr>
 </tbody>
 </table>
 <ul>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
-<li>
-<p>Example:</p>
-</li>
+<li>Returns: <code>std::vector&lt;MPFAudioTrack&gt;</code> - The <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> data for each detected object.</li>
 </ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFAudioJob &amp;job, vector&lt;MPFAudioTrack&gt; &amp;tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
 <h4 id="getdetectionsmpfgenericjob">GetDetections(MPFGenericJob …)</h4>
-<p>Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and handled generically. These files are not logically segmented, so a job will contain the entirety of the file.</p>
+<p>Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and 
+handled generically. These files are not logically segmented, so a job will contain the entirety of the file.</p>
 <ul>
 <li>Function Definition:</li>
 </ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks)
+<pre><code class="c++">std::vector&lt;MPFGenericTrack&gt; GetDetections(const MPFGenericJob &amp;job)
 </code></pre>
 
 <ul>
@@ -777,28 +733,11 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 <td><code>const MPFGenericJob &amp;</code></td>
 <td>Structure containing details about the work to be performed. See <a href="#mpfgenericjob"><code>MPFGenericJob</code></a></td>
 </tr>
-<tr>
-<td>tracks</td>
-<td><code>vector&lt;MPFGenericTrack&gt; &amp;</code></td>
-<td>The <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> data for each detected object</td>
-</tr>
 </tbody>
 </table>
 <ul>
-<li>
-<p>Returns: <code>MPFDetectionError</code></p>
-</li>
-<li>
-<p>Example:</p>
-</li>
+<li>Returns: <code>std::vector&lt;MPFGenericTrack&gt;</code> - The <a href="#mpfgenerictrack"><code>MPFGenericTrack</code></a> data for each detected object.</li>
 </ul>
-<pre><code class="c++">MPFDetectionError GetDetections(const MPFGenericJob &amp;job, vector&lt;MPFGenericTrack&gt; &amp;tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-</code></pre>
-
 <h3 id="detection-job-data-structures">Detection Job Data Structures</h3>
 <p>The following data structures contain details about a specific job (work unit):</p>
 <ul>
@@ -1428,9 +1367,42 @@ MPFGenericTrack(
 </tr>
 </tbody>
 </table>
+<h3 id="exception-types">Exception Types</h3>
+<h4 id="mpfdetectionexception">MPFDetectionException</h4>
+<p>Exception that should be thrown by the <code>GetDetections()</code> methods when an error occurs. 
+The content of the <code>error_code</code> and <code>what()</code> members will appear in the JSON output object.</p>
+<ul>
+<li>Constructors:</li>
+</ul>
+<pre><code class="c++">MPFDetectionException(MPFDetectionError error_code, const std::string &amp;what = &quot;&quot;)
+MPFDetectionException(const std::string &amp;what)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>error_code</td>
+<td><code>MPFDetectionError</code></td>
+<td>Specifies the error type. See <a href="#mpfdetectionerror"><code>MPFDetectionError</code></a>.</td>
+</tr>
+<tr>
+<td>what()</td>
+<td><code>const char*</code></td>
+<td>Textual description of the specific error. (Inherited from <code>std::exception</code>)</td>
+</tr>
+</tbody>
+</table>
 <h3 id="enumeration-types">Enumeration Types</h3>
 <h4 id="mpfdetectionerror">MPFDetectionError</h4>
-<p>Enum used to indicate the status of a <code>GetDetections</code> call. A component is not required to support all error types.</p>
+<p>Enum used to indicate the type of error that occurred in a <code>GetDetections()</code> method. It is used as a parameter to 
+the <code>MPFDetectionException</code> constructor. A component is not required to support all error types.</p>
 <table>
 <thead>
 <tr>
@@ -1439,10 +1411,6 @@ MPFGenericTrack(
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>MPF_DETECTION_SUCCESS</td>
-<td>The execution of any component function has completed normally with no errors.</td>
-</tr>
 <tr>
 <td>MPF_OTHER_DETECTION_ERROR_TYPE</td>
 <td>The component function has failed for a reason that is not captured by any of the other error codes.</td>
