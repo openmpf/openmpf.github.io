@@ -808,29 +808,53 @@ detection.
 
 In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.
 
+```
+MPFImageLocation { 
+    x_left_upper = 156, y_left_upper = 339, width = 194, height = 243,
+    { {"ROTATION", "90.0"} } 
+}
+```
 
-```c++
-MPFImageLocation detection;
-detection.x_left_upper = 156;
-detection.y_left_upper = 339;
-detection.width = 194;
-detection.height = 243;
-detection.confidence = 1.0;
-detection.detection_properties["ROTATION"] = "90.0";
+The `detection_properties` map can also contain a `HORIZONTAL_FLIP` property that will either be `"true"` or `"false"`.
+The `detection_properties` map may have both `HORIZONTAL_FLIP` and `ROTATION` keys.
+
+The algorithm to draw the bounding box is as follows:
+
+<ol>
+<li style="color:red">
+    Draw the rectangle ignoring rotation and flip. 
+</li>
+
+<li style="color:blue">
+   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner. 
+</li>
+
+<li style="color:green">
+  If the rectangle is flipped, flip horizontally around the top left corner.
+</li>
+</ol>
+
+<img src="../img/flip-rotate-steps-example.png" style="border: 1px solid black" alt="flip and rotate example">
+
+In the image above you can see the three steps required to properly draw a bounding box.
+Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is drawn in green.
+The detection for the image above is:
+```
+MPFImageLocation { 
+    x_left_upper = 210, y_left_upper = 189, width = 177, height = 41,
+    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } } 
+}
 ```
 
 * Example:
 
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
-```c++
-MPFImageLocation detection;
-detection.x_left_upper = 0;
-detection.y_left_upper = 0;
-detection.width = 100;
-detection.height = 50;
-detection.confidence = 1.0;
-detection.detection_properties["CLASSIFICATION"] = "backpack";
+```
+MPFImageLocation { 
+    x_left_upper = 0, y_left_upper = 0, width = 100, height = 50,
+    { {"CLASSIFICATION", "backpack"} } 
+}
 ```
 
 #### MPFVideoTrack

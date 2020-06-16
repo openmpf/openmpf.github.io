@@ -1192,26 +1192,47 @@ detection.</p>
 </ul>
 <p><img alt="Lenna 90 CCW with Markup" src="../img/lenna_90_ccw_markup.png" title="Lenna 90 degrees CCW with Markup" /></p>
 <p>In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.</p>
-<pre><code class="c++">MPFImageLocation detection;
-detection.x_left_upper = 156;
-detection.y_left_upper = 339;
-detection.width = 194;
-detection.height = 243;
-detection.confidence = 1.0;
-detection.detection_properties[&quot;ROTATION&quot;] = &quot;90.0&quot;;
+<pre><code>MPFImageLocation { 
+    x_left_upper = 156, y_left_upper = 339, width = 194, height = 243,
+    { {&quot;ROTATION&quot;, &quot;90.0&quot;} } 
+}
+</code></pre>
+
+<p>The <code>detection_properties</code> map can also contain a <code>HORIZONTAL_FLIP</code> property that will either be <code>"true"</code> or <code>"false"</code>.
+The <code>detection_properties</code> map may have both <code>HORIZONTAL_FLIP</code> and <code>ROTATION</code> keys.</p>
+<p>The algorithm to draw the bounding box is as follows:</p>
+<ol>
+<li style="color:red">
+    Draw the rectangle ignoring rotation and flip. 
+</li>
+
+<li style="color:blue">
+   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner. 
+</li>
+
+<li style="color:green">
+  If the rectangle is flipped, flip horizontally around the top left corner.
+</li>
+</ol>
+
+<p><img src="../img/flip-rotate-steps-example.png" style="border: 1px solid black" alt="flip and rotate example"></p>
+<p>In the image above you can see the three steps required to properly draw a bounding box.
+Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is drawn in green.
+The detection for the image above is:</p>
+<pre><code>MPFImageLocation { 
+    x_left_upper = 210, y_left_upper = 189, width = 177, height = 41,
+    { {&quot;ROTATION&quot;, &quot;15&quot;}, { &quot;HORIZONTAL_FLIP&quot;, &quot;true&quot; } } 
+}
 </code></pre>
 
 <ul>
 <li>Example:</li>
 </ul>
 <p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
-<pre><code class="c++">MPFImageLocation detection;
-detection.x_left_upper = 0;
-detection.y_left_upper = 0;
-detection.width = 100;
-detection.height = 50;
-detection.confidence = 1.0;
-detection.detection_properties[&quot;CLASSIFICATION&quot;] = &quot;backpack&quot;;
+<pre><code>MPFImageLocation { 
+    x_left_upper = 0, y_left_upper = 0, width = 100, height = 50,
+    { {&quot;CLASSIFICATION&quot;, &quot;backpack&quot;} } 
+}
 </code></pre>
 
 <h4 id="mpfvideotrack">MPFVideoTrack</h4>
