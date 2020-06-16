@@ -10,11 +10,13 @@
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
 - Updated the [Python Batch Component API](Python-Batch-Component-API.md) with information on Python3 and the simplification of using a `dict` for some of the data members.
 - <span style="color:red">TODO: Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.</span>
+- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
 
 <h2>JSON Output Object</h2>
 
 - Renamed `stages` to `tasks` for clarity and consistency with the rest of the code.
 - `JsonCallbackBody` now contains an `outputObjectUri` field.
+- <span style="color:red">TODO: Describe changes related to errors and warnings.</span>
 
 <h2>Interoperability Package</h2>
 
@@ -22,13 +24,19 @@
 - Removed `JsonJobRequest.java`.
 - Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
 - Modified `JsonDetectionProcessingError.java` by removing the `startOffset` and `stopOffset` fields and adding four new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, and `stopOffsetTime`.
+- <span style="color:red">TODO: Describe changes related to errors and warnings.</span>
 
 <h2>Persistent Database</h2>
 
 - The `input_object` column in the `job_request` table has been renamed to `job` and the content now contains a serialized form of `BatchJob.java` instead of `JsonJobRequest.java`.
 
+<h2>C++ Batch Component API</h2>
+
+- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
+
 <h2>Python Batch Component API</h2>
 
+- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
 - Simplified the `detection_properties` and `frame_locations` data members to use a Python `dict` instead of a custom data type.
 
 <h2>Full Docker Conversion</h2>
@@ -103,6 +111,10 @@
 <h2>OpenCV Deep Neural Networks (DNN) Detection Component</h2>
 
 - This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md).
+
+<h2 style="color:red">Azure Cognitive Services (ACS) OCR Component</h2>
+
+- <span style="color:red">TODO: This new component utilizes the [ACS OCR REST endpoint](https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc) to extract text from images and videos  Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md).</span>
 
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 

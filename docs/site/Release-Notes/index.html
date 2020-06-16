@@ -305,12 +305,14 @@
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> with <code>MIME_TYPE</code>, <code>FRAME_WIDTH</code>, and <code>FRAME_HEIGHT</code> media properties.</li>
 <li>Updated the <a href="../Python-Batch-Component-API/index.html">Python Batch Component API</a> with information on Python3 and the simplification of using a <code>dict</code> for some of the data members.</li>
 <li><span style="color:red">TODO: Updated the <a href="https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> guide for Docker deployment with information on the new build process and component base builder and executor images.</span></li>
+<li><span style="color:red">TODO: Describe API changes related to errors and warnings.</span></li>
 </ul>
 <h2>JSON Output Object</h2>
 
 <ul>
 <li>Renamed <code>stages</code> to <code>tasks</code> for clarity and consistency with the rest of the code.</li>
 <li><code>JsonCallbackBody</code> now contains an <code>outputObjectUri</code> field.</li>
+<li><span style="color:red">TODO: Describe changes related to errors and warnings.</span></li>
 </ul>
 <h2>Interoperability Package</h2>
 
@@ -319,15 +321,22 @@
 <li>Removed <code>JsonJobRequest.java</code>.</li>
 <li>Updated <code>JsonCallbackBody.java</code> to contain an <code>outputObjectUri</code> field.</li>
 <li>Modified <code>JsonDetectionProcessingError.java</code> by removing the <code>startOffset</code> and <code>stopOffset</code> fields and adding four new fields: <code>startOffsetFrame</code>, <code>stopOffsetFrame</code>, <code>startOffsetTime</code>, and <code>stopOffsetTime</code>.</li>
+<li><span style="color:red">TODO: Describe changes related to errors and warnings.</span></li>
 </ul>
 <h2>Persistent Database</h2>
 
 <ul>
 <li>The <code>input_object</code> column in the <code>job_request</code> table has been renamed to <code>job</code> and the content now contains a serialized form of <code>BatchJob.java</code> instead of <code>JsonJobRequest.java</code>.</li>
 </ul>
+<h2>C++ Batch Component API</h2>
+
+<ul>
+<li><span style="color:red">TODO: Describe API changes related to errors and warnings.</span></li>
+</ul>
 <h2>Python Batch Component API</h2>
 
 <ul>
+<li><span style="color:red">TODO: Describe API changes related to errors and warnings.</span></li>
 <li>Simplified the <code>detection_properties</code> and <code>frame_locations</code> data members to use a Python <code>dict</code> instead of a custom data type.</li>
 </ul>
 <h2>Full Docker Conversion</h2>
@@ -420,6 +429,11 @@
 
 <ul>
 <li>This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md">README</a>.</li>
+</ul>
+<h2 style="color:red">Azure Cognitive Services (ACS) OCR Component</h2>
+
+<ul>
+<li><span style="color:red">TODO: This new component utilizes the <a href="https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc">ACS OCR REST endpoint</a> to extract text from images and videos  Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md">README</a>.</span></li>
 </ul>
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
