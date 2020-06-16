@@ -512,6 +512,8 @@ def __init__(self, x_left_upper, y_left_upper, width, height, confidence=-1.0, d
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
 
+[See here for information about rotation and horizontal flipping.](CPP-Batch-Component-API.md#rotation-flip-info)
+
 * Example:
 
 A component that performs generic object classification can add an entry to `detection_properties` where the key is

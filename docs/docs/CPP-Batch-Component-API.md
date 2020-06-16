@@ -794,6 +794,7 @@ MPFImageLocation(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
 
+<span id="rotation-flip-info"></span>
 When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
 `[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
 In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
