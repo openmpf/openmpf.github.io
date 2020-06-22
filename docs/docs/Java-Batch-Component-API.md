@@ -903,7 +903,6 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 
 |  ENUM  |   Description  |
 |---|---|
-| MPF_DETECTION_SUCCESS  | The execution of any component method has completed normally with no errors.       |
 | MPF_OTHER_DETECTION_ERROR_TYPE | The component method has failed for a reason that is not captured by any of the other error codes. |
 | MPF_DETECTION_NOT_INITIALIZED | The initialization of the component, or the initialization of any of its dependencies, has failed for any reason. |
 | MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the `MPFDataType` enum.  Note that this failure is normally caught by the Component Executor before a job is passed to the component logic. |

@@ -343,7 +343,7 @@ std::vector<MPFImageLocation> GetDetections(const MPFImageJob &job);
 |---|---|---|
 |  job | `const MPFImageJob&`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
 
-* Returns: `std::vector<MPFImageLocation>` - The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.
+* Returns: (`std::vector<MPFImageLocation>`) The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.
 
 
 #### GetDetections(MPFVideoJob …)
@@ -364,7 +364,7 @@ std::vector<MPFVideoTrack>  GetDetections(const MPFVideoJob &job);
 |---|---|---|
 | job  | `const MPFVideoJob&`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
 
-* Returns: `std::vector<MPFVideoTrack>` - The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  
+* Returns: (`std::vector<MPFVideoTrack>`) The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  
 
 
 #### GetDetections(MPFAudioJob …)
@@ -383,7 +383,7 @@ std::vector<MPFAudioTrack> GetDetections(const MPFAudioJob &job);
 |---|---|---|
 | job  | `const MPFAudioJob &`  | Structure containing details about the work to be performed. See [`MPFAudioJob`](#mpfaudiojob) |
 
-* Returns: `std::vector<MPFAudioTrack>` - The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object.
+* Returns: (`std::vector<MPFAudioTrack>`) The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object.
 
 
 #### GetDetections(MPFGenericJob …)
@@ -402,7 +402,7 @@ std::vector<MPFGenericTrack> GetDetections(const MPFGenericJob &job)
 |---|---|---|
 | job  | `const MPFGenericJob &`  | Structure containing details about the work to be performed. See [`MPFGenericJob`](#mpfgenericjob) |
 
-* Returns: `std::vector<MPFGenericTrack>` - The [`MPFGenericTrack`](#mpfgenerictrack) data for each detected object.
+* Returns: (`std::vector<MPFGenericTrack>`) The [`MPFGenericTrack`](#mpfgenerictrack) data for each detected object.
 
 
 ### Detection Job Data Structures
@@ -792,34 +792,31 @@ MPFImageLocation(
 | width | `int` | The width of the detected object. |
 | height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
-
-<span id="rotation-flip-info"></span>
-When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
-`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
-In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
-clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of
-the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented
-detection.
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See the [section](#rotation-flip-info) for `ROTATION` and `HORIZONTAL_FLIP` below, |
 
 * Example:
 
-![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
+A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
-
-In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.
-
-```
+<pre><code class="text" style="color:black">
 MPFImageLocation { 
-    x_left_upper = 156, y_left_upper = 339, width = 194, height = 243,
-    { {"ROTATION", "90.0"} } 
+    x_left_upper = 0, y_left_upper = 0, width = 100, height = 50, confidence = 1.0,
+    { {"CLASSIFICATION", "backpack"} } 
 }
-```
+</code></pre>
+
+<span id="rotation-flip-info"></span>
+##### Rotation and Horizontal Flip
+
+When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
+`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
+clockwise direction.
 
 The `detection_properties` map can also contain a `HORIZONTAL_FLIP` property that will either be `"true"` or `"false"`.
 The `detection_properties` map may have both `HORIZONTAL_FLIP` and `ROTATION` keys.
 
-The algorithm to draw the bounding box is as follows:
+The Workflow Manager performs the following algorithm to draw the bounding box when generating markup:
 
 <ol>
 <li style="color:red">
@@ -840,23 +837,45 @@ The algorithm to draw the bounding box is as follows:
 In the image above you can see the three steps required to properly draw a bounding box.
 Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is drawn in green.
 The detection for the image above is:
-```
+
+<pre><code class="text" style="color:black">
 MPFImageLocation { 
-    x_left_upper = 210, y_left_upper = 189, width = 177, height = 41,
+    x_left_upper = 210, y_left_upper = 189, width = 177, height = 41, confidence = 1.0,
     { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } } 
 }
-```
+</code></pre>
 
-* Example:
+Note that the `x_left_upper`, `y_left_upper`, `width`, and `height` values describe the red rectangle. The addition
+of the `ROTATION` property results in the blue rectangle, and the addition of the `HORIZONTAL_FLIP` property results
+in the green rectangle. 
 
-A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
+One way to think about the process is "draw the unrotated and unflipped rectangle, stick a pin in the upper left corner,
+and then rotate and flip around the pin".
 
-```
+###### Rotation-Only Example
+
+![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
+
+The Workflow Manager generated the above image by performing markup on the original image with the following
+detection:
+
+<pre><code class="text" style="color:black">
 MPFImageLocation { 
-    x_left_upper = 0, y_left_upper = 0, width = 100, height = 50,
-    { {"CLASSIFICATION", "backpack"} } 
+    x_left_upper = 156, y_left_upper = 339, width = 194, height = 243, confidence = 1.0,
+    { {"ROTATION", "90.0"} } 
 }
-```
+</code></pre>
+
+The markup process followed steps 1 and 2 in the previous section, skipping step 3 because there is no
+`HORIZONTAL_FLIP`. 
+
+In order to properly extract the detection region from the original image, such as when generating an artifact, you
+would need to rotate the region in the above image 90 degrees clockwise around the cyan dot currently shown in the
+bottom-left corner so that the face is in the proper upright position. 
+
+When the rotation is properly corrected in this way, the cyan dot will appear in the top-left corner of the bounding
+box. That is why its position is described using the `x_left_upper`, and `y_left_upper` variables. They refer to the
+top-left corner of the correctly oriented region. 
 
 #### MPFVideoTrack
 
