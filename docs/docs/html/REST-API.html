@@ -145,7 +145,7 @@
 <body>
     <div style='page-break-after:always'>
         <h1>OpenMPF Workflow Manager REST API</h1>
-        <h2>Version 4.1.0 (build 20190927)</h2>
+        <h2>Version 5.0.0 (build 20200616)</h2>
         <br/>
         <p><i><font size="3">NOTICE</font></i></p>
         <p><i><font size="3">
@@ -154,11 +154,11 @@
             52.227-14, Alt. IV (DEC 2007).
         </font></i></p>
         <p><i><font size="3">
-            Copyright 2019 The MITRE Corporation. All Rights Reserved.
+            Copyright 2020 The MITRE Corporation. All Rights Reserved.
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Fri Sep 27, 2019</div>
+    <div class='footer'>Last updated on: Tue Jun 16, 2020</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -1529,7 +1529,7 @@
                 <td style='width:30%;'>algorithm</td>
                 <td style='width:10%;'>algorithm</td>
                 <td style='width:30%;'>
-                    The name of the actions's algorithm.
+                    The name of the actions' algorithm.
                 </td>
             </tr>
             <tr>
@@ -4277,6 +4277,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class='td-alignment-small'>404</td>
                                 <td class='td-alignment-std'>
                                     There was no component with the specified name.
@@ -4329,6 +4335,12 @@
                                     Success
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -4343,7 +4355,7 @@
                 <tr>
                     <td class='td-alignment-small'><b>Summary</b></td>
                     <td class='td-alignment-std'>
-                        Creates a new pipeline
+                        Creates a new pipeline.
                     </td>
                 </tr>
                 <tr style=';background-color: #EAEAEA'>
@@ -4419,6 +4431,12 @@
                                 <td class='td-alignment-small'>400</td>
                                 <td class='td-alignment-std'>
                                     The pipeline was invalid.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
                                 </td>
                             </tr>
                         </table>
@@ -4508,6 +4526,12 @@
                                     The pipeline was successfully removed.
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -4554,6 +4578,12 @@
                                 <td class='td-alignment-small'>200</td>
                                 <td class='td-alignment-std'>
                                     Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
                                 </td>
                             </tr>
                         </table>
@@ -4649,6 +4679,12 @@
                                     The task was invalid.
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -4735,6 +4771,12 @@
                                     The task was successfully removed.
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -4780,6 +4822,12 @@
                                 <td class='td-alignment-small'>200</td>
                                 <td class='td-alignment-std'>
                                     Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
                                 </td>
                             </tr>
                         </table>
@@ -4874,6 +4922,12 @@
                                     The action was invalid.
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -4960,6 +5014,12 @@
                                     The action was successfully removed.
                                 </td>
                             </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -5006,6 +5066,12 @@
                                 <td class='td-alignment-small'>200</td>
                                 <td class='td-alignment-std'>
                                     Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
                                 </td>
                             </tr>
                         </table>
