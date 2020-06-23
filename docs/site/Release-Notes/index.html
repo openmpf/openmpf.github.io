@@ -67,6 +67,21 @@
                 <li class="toctree-l3"><a href="#openmpf-500-june-2020">OpenMPF 5.0.0: June 2020</a></li>
                 
             
+                <li class="toctree-l3"><a href="#openmpf-4114-june-2020">OpenMPF 4.1.14: June 2020</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-4113-june-2020">OpenMPF 4.1.13: June 2020</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-4112-may-2020">OpenMPF 4.1.12: May 2020</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-4111-may-2020">OpenMPF 4.1.11: May 2020</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#openmpf-418-may-2020">OpenMPF 4.1.8: May 2020</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-416-april-2020">OpenMPF 4.1.6: April 2020</a></li>
                 
             
@@ -331,14 +346,12 @@
 <li>When an error or warning occurs in multiple frames of a video for a single piece of media it will be represented in one <code>details</code> element and the <code>message</code> will list the frame ranges.</li>
 </ul>
 </li>
-<li>When a job callback is performed the <code>JsonCallbackBody</code> now contains an <code>outputObjectUri</code> field with the URI to the JSON output object.</li>
 </ul>
 <h2>Interoperability Package</h2>
 
 <ul>
 <li>Renamed <code>JsonStage.java</code> to <code>JsonTask.java</code>.</li>
 <li>Removed <code>JsonJobRequest.java</code>.</li>
-<li>Updated <code>JsonCallbackBody.java</code> to contain an <code>outputObjectUri</code> field.</li>
 <li>Modified <code>JsonDetectionProcessingError.java</code> by removing the <code>startOffset</code> and <code>stopOffset</code> fields and adding the following new fields: <code>startOffsetFrame</code>, <code>stopOffsetFrame</code>, <code>startOffsetTime</code>, <code>stopOffsetTime</code>, and <code>code</code>.</li>
 <li>Updated <code>JsonMediaOutputObject.java</code> by removing <code>message</code> field.</li>
 <li>Added <code>JsonMediaIssue.java</code> and <code>JsonIssueDetails.java</code>.</li>
@@ -460,11 +473,6 @@
 <ul>
 <li>This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md">README</a>.</li>
 </ul>
-<h2>Azure Cognitive Services (ACS) OCR Component</h2>
-
-<ul>
-<li>This new component utilizes the <a href="https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc">ACS OCR REST endpoint</a> to extract text from images and videos. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md">README</a>.</li>
-</ul>
 <h2>Tesseract OCR Text Detection Component</h2>
 
 <ul>
@@ -518,12 +526,48 @@
 <li>[<a href="https://github.com/openmpf/openmpf/issues/941">#941</a>] Tesseract component no longer segfaults when handling corrupt media.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1005">#1005</a>] Fixed a bug that caused a NullPointerException when attempting to get output object JSON via REST before a job completes.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1035">#1035</a>] The search bar in the Job Status UI can once again for used to search for job id.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1104">#1104</a>] Fixed C++/Python component executor memory leaks.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1108">#1108</a>] Fixed a bug when handling frames and detections that are horizontally flipped. This affected both markup and feed-forward behaviors.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1119">#1119</a>] Fixed Tesseract component memory leaks and uninitialized read issues.</li>
 </ul>
 <h2>Known Issues</h2>
 
 <ul>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1028">#1028</a>] Media inspection fails to handle Apple-optimized PNGs with the CgBI data chunk before the IHDR chunk.</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1109">#1109</a>] We made the search bar in the Job Status UI more efficient by shifting it to a database query, but in doing so introduced a bug where the search operates on UTC time instead of local system time.</li>
+</ul>
+<h1 id="openmpf-4114-june-2020">OpenMPF 4.1.14: June 2020</h1>
+<h2>Bug Fixes</h2>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1120">#1120</a>] The node-manager Docker image now correctly installs CUDA libraries so that GPU-enabled components on that image can run on the GPU.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1064">#1064</a>] Fixed memory leaks in the Darknet component for various network types, and when using GPU resources. This bug covers everything not addressed by <a href="https://github.com/openmpf/openmpf/issues/1062">#1062</a>.</li>
+</ul>
+<h1 id="openmpf-4113-june-2020">OpenMPF 4.1.13: June 2020</h1>
+<h2>Updates</h2>
+
+<ul>
+<li>Updated the OpenCV build and media inspection process to properly handle webp images.</li>
+</ul>
+<h1 id="openmpf-4112-may-2020">OpenMPF 4.1.12: May 2020</h1>
+<h2>Updates</h2>
+
+<ul>
+<li>Update JDK from <code>jdk-8u181-linux-x64.rpm</code> to <code>jdk-8u251-linux-x64.rpm</code>.</li>
+</ul>
+<h1 id="openmpf-4111-may-2020">OpenMPF 4.1.11: May 2020</h1>
+<h2>Tesseract OCR Text Detection Component</h2>
+
+<ul>
+<li>Added <code>INVALID_MIN_IMAGE_SIZE</code> job property to filter out images with extremely low width or height.</li>
+<li>Updated image rescaling behavior to account for image dimension limits.</li>
+<li>Fixed handling of <code>nullptr</code> returns from Tesseract API OCR calls.</li>
+</ul>
+<h1 id="openmpf-418-may-2020">OpenMPF 4.1.8: May 2020</h1>
+<h2>Azure Cognitive Services (ACS) OCR Component</h2>
+
+<ul>
+<li>This new component utilizes the <a href="https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc">ACS OCR REST endpoint</a> to extract text from images and videos. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md">README</a>.</li>
 </ul>
 <h1 id="openmpf-416-april-2020">OpenMPF 4.1.6: April 2020</h1>
 <h2>Updates</h2>
@@ -547,7 +591,16 @@
 
 <ul>
 <li>Updated from Hibernate 5.0.8 to 5.4.12 to support schema-based multitenancy. This allows multiple instances of OpenMPF to use the same PostgreSQL database as long as each instance connects to the database as a separate user, and the database is configured appropriately. This also required updating Tomcat from 7.0.72 to 7.0.76.</li>
+</ul>
+<h2>JSON Output Object</h2>
+
+<ul>
 <li>Updated the Workflow Manager to include an <code>outputobjecturi</code> in GET callbacks, and <code>outputObjectUri</code> in POST callbacks, when jobs complete. This URI specifies a file path, or path on the object storage server, depending on where the JSON output object is located.</li>
+</ul>
+<h2>Interoperability Package</h2>
+
+<ul>
+<li>Updated <code>JsonCallbackBody.java</code> to contain an <code>outputObjectUri</code> field.</li>
 </ul>
 <h1 id="openmpf-413-february-2020">OpenMPF 4.1.3: February 2020</h1>
 <h2>Features</h2>
