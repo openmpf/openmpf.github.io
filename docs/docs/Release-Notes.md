@@ -112,11 +112,11 @@
 
 - Modified `[GET] /rest/info`. Now returns output like `{"version": "4.1.0", "dockerEnabled": true}`.
 - Added the following REST endpoints for getting, removing, and creating actions, tasks, and pipelines. Refer to the [REST API](REST-API.md) for more information:
-    - `[GET] \rest\actions`, `[GET] \rest\tasks`, `[GET] \rest\pipelines`
-    - `[DELETE] \rest\actions`, `[DELETE] \rest\tasks`, `[DELETE] \rest\pipelines`
-    - `[POST] \rest\actions` , `[POST] \rest\tasks`, `[POST] \rest\pipelines`
-- All of the endpoints above are new with the exception of `[GET] \rest\pipelines`. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API. 
-- `[GET] \rest\algorithms` can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component's Docker container so it self-registers with the Workflow Manager.
+    - `[GET] /rest/actions`, `[GET] /rest/tasks`, `[GET] /rest/pipelines`
+    - `[DELETE] /rest/actions`, `[DELETE] /rest/tasks`, `[DELETE] /rest/pipelines`
+    - `[POST] /rest/actions` , `[POST] /rest/tasks`, `[POST] /rest/pipelines`
+- All of the endpoints above are new with the exception of `[GET] /rest/pipelines`. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API. 
+- `[GET] /rest/algorithms` can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component's Docker container so it self-registers with the Workflow Manager.
 
 <h2>Incomplete Actions, Tasks, and Pipelines</h2>
 
