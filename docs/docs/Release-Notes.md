@@ -1,30 +1,46 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
+<!--
+# OpenMPF 5.1.0: XXX 2020
+
+<h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
+
+- <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
+-->
+
 # OpenMPF 5.0.0: June 2020
 
 <h2>Documentation</h2>
 
-- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide to describe the new build process, which now includes copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
+- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guides to describe the new build process, which now includes automatically copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
+- Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) with the following sections:
+    - How to [Use Kibana for Log Viewing and Aggregation](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation)
+    - How to [Restrict Media Types That a Component Can Process](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation)
+    - How to [Import Root Certificates for Additional Certificate Authorities](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-import-root-certificates-for-additional-certificate-authorities)
+- Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.
 - Updated the [Install Guide](Install-Guide.md) with a pointer to the "Quick Start" section on DockerHub.
-- <span style="color:red">TODO: Updated the [REST API](REST-API.md) with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the `[GET] /rest/info` endpoint.</span>
+- Updated the [REST API](REST-API.md) with the new endpoints for getting, deleting, and creating actions, tasks, and pipelines, as well as a change to the `[GET] /rest/info` endpoint.
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md) to describe changes to the `GetDetection()` calls, which now return a collection of detections or tracks instead of an error code, and to describe improvements to exception handling.
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) with `MIME_TYPE`, `FRAME_WIDTH`, and `FRAME_HEIGHT` media properties.
 - Updated the [Python Batch Component API](Python-Batch-Component-API.md) with information on Python3 and the simplification of using a `dict` for some of the data members.
-- <span style="color:red">TODO: Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.</span>
-- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
 
 <h2>JSON Output Object</h2>
 
 - Renamed `stages` to `tasks` for clarity and consistency with the rest of the code.
-- `JsonCallbackBody` now contains an `outputObjectUri` field.
-- <span style="color:red">TODO: Describe changes related to errors and warnings.</span>
+- The `media` element no longer contains a `message` field.
+- Each `detectionProcessingError` element now contains a `code` field.
+- Errors and warnings are now grouped by `mediaId` and summarized using a `details` element that contains a `source`, `code`, and `message` field. Refer to [this comment](https://github.com/openmpf/openmpf/issues/780#issuecomment-641295884) for an example of the JSON structure. Note that errors and warnings generated by the Workflow Manager do not have a `mediaId`.
+    - When an error or warning occurs in multiple frames of a video for a single piece of media it will be represented in one `details` element and the `message` will list the frame ranges.
+- When a job callback is performed the `JsonCallbackBody` now contains an `outputObjectUri` field with the URI to the JSON output object.
 
 <h2>Interoperability Package</h2>
 
 - Renamed `JsonStage.java` to `JsonTask.java`.
 - Removed `JsonJobRequest.java`.
 - Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
-- Modified `JsonDetectionProcessingError.java` by removing the `startOffset` and `stopOffset` fields and adding four new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, and `stopOffsetTime`.
-- <span style="color:red">TODO: Describe changes related to errors and warnings.</span>
+- Modified `JsonDetectionProcessingError.java` by removing the `startOffset` and `stopOffset` fields and adding the following new fields: `startOffsetFrame`, `stopOffsetFrame`, `startOffsetTime`, `stopOffsetTime`, and `code`.
+- Updated `JsonMediaOutputObject.java` by removing `message` field.
+- Added `JsonMediaIssue.java` and `JsonIssueDetails.java`.
 
 <h2>Persistent Database</h2>
 
@@ -32,11 +48,17 @@
 
 <h2>C++ Batch Component API</h2>
 
-- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
+- The `GetDetection()` calls now return a collection instead of an error code:
+    - `std::vector<MPFImageLocation> GetDetections(const MPFImageJob &job)`
+    - `std::vector<MPFVideoTrack> GetDetections(const MPFVideoJob &job)`
+    - `std::vector<MPFAudioTrack> GetDetections(const MPFAudioJob &job)`
+    - `std::vector<MPFGenericTrack> GetDetections(const MPFGenericJob &job)`
+- `MPFDetectionException` can now be constructed with a `what` parameter representing a descriptive error message:
+    - `MPFDetectionException(MPFDetectionError error_code, const std::string &what = "")`
+    - `MPFDetectionException(const std::string &what)`
 
 <h2>Python Batch Component API</h2>
 
-- <span style="color:red">TODO: Describe API changes related to errors and warnings.</span>
 - Simplified the `detection_properties` and `frame_locations` data members to use a Python `dict` instead of a custom data type.
 
 <h2>Full Docker Conversion</h2>
@@ -53,6 +75,10 @@
 <h2>Configure Data Types per Component Service</h2>
 
 - Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos and images, while `RESTRICT_MEDIA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.
+
+<h2>Import Additional Root Certificates into the Workflow Manager</h2>
+
+- Additional root certificates can be imported into the Workflow Manager at runtime by adding an entry for `MPF_CA_CERTS` to the workflow-manager service's environment variables in `docker-compose.core.yml`. `MPF_CA_CERTS` must contain a colon-delimited list of absolute file paths. Of note, a root certificate may be used to trust the idenitify of a remote object storage server.
 
 <h2>DockerHub</h2>
 
@@ -84,10 +110,6 @@
 - The `mpf.output.objects.exemplars.only` system property has been renamed to `mpf.output.objects.artifacts.and.exemplars.only`. It works the same as before with the exception that if an artifact is extracted for a detection then that detection will always be represented in the JSON output object, whether it's an exemplar or not.
 - The `mpf.output.objects.last.stage.only` system property has been renamed to `mpf.output.objects.last.task.only`. It works the same as before with the exception that when set to true artifact extraction is skipped for all tasks but the last task.
 
-<h2 style="color:red">Job Errors and Warnings</h2>
-
-- <span style="color:red">TODO: When job segments generate errors they will appear in the `detectionProcessingErrors` collection in the JSON output object. They will also be summarized in the top-level `jobErrors` collection. Additionally, warnings will be summarized in the top-level `jobWarnings` collection.</span>
-
 <h2>REST Endpoints</h2>
 
 - Modified `[GET] /rest/info`. Now returns output like `{"version": "4.1.0", "dockerEnabled": true}`.
@@ -112,13 +134,9 @@
 
 - This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md).
 
-<h2 style="color:red">Azure Cognitive Services (ACS) OCR Component</h2>
+<h2>Azure Cognitive Services (ACS) OCR Component</h2>
 
-- <span style="color:red">TODO: This new component utilizes the [ACS OCR REST endpoint](https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc) to extract text from images and videos  Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md).</span>
-
-<h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
-
-- <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
+- This new component utilizes the [ACS OCR REST endpoint](https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc) to extract text from images and videos. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md).
 
 <h2>Tesseract OCR Text Detection Component</h2>
 
@@ -150,19 +168,20 @@
 - Whitespace is now trimmed from property names when jobs are submitted via the REST API.
 - The Darknet Docker image now includes the YOLOv3 model weights.
 - The C++ and Python ModelsIniParser now allows users to specify optional fields.
-- <span style="color:red">TODO: When a job completion callback fails, but otherwise the job is successful, the final state of the job will be `COMPLETE_WITH_WARNINGS`.</span>
+- When a job completion callback fails, but otherwise the job is successful, the final state of the job will be `COMPLETE_WITH_WARNINGS`.
 
 <h2>Bug Fixes</h2>
 
 - [[#772](https://github.com/openmpf/openmpf/issues/772)] Can now create a custom pipeline with long action names using the Pipelines 2 UI.
-- <span style="color:red">TODO: [[#812](https://github.com/openmpf/openmpf/issues/812)] Now properly setting the start and stop index for elements in the `detectionProcessingErrors` collection in the JSON output object. Errors reported for each job segment will now appear in the collection.</span>
+- [[#812](https://github.com/openmpf/openmpf/issues/812)] Now properly setting the start and stop index for elements in the `detectionProcessingErrors` collection in the JSON output object. Errors reported for each job segment will now appear in the collection.
 - [[#941](https://github.com/openmpf/openmpf/issues/941)] Tesseract component no longer segfaults when handling corrupt media.
 - [[#1005](https://github.com/openmpf/openmpf/issues/1005)] Fixed a bug that caused a NullPointerException when attempting to get output object JSON via REST before a job completes.
+- [[#1035](https://github.com/openmpf/openmpf/issues/1035)] The search bar in the Job Status UI can once again for used to search for job id.
 
 <h2>Known Issues</h2>
 
-- <span style="color:red">TODO: [[#1028](https://github.com/openmpf/openmpf/issues/1028)] Media inspection fails to handle Apple-optimized PNGs with the CgBI data chunk before the IHDR chunk. </span>
-- <span style="color:red">TODO: [[#1035](https://github.com/openmpf/openmpf/issues/1035)] The job status IU does not search the job id field. We made the search more efficient by shifting it to a database query, but in doing so accidentally omitted the job id check. Also, this bug includes a quirk where the search operates on UTC time instead of local system time.</span>
+- [[#1028](https://github.com/openmpf/openmpf/issues/1028)] Media inspection fails to handle Apple-optimized PNGs with the CgBI data chunk before the IHDR chunk.
+- [[#1109](https://github.com/openmpf/openmpf/issues/1109)] We made the search bar in the Job Status UI more efficient by shifting it to a database query, but in doing so introduced a bug where the search operates on UTC time instead of local system time.
 
 # OpenMPF 4.1.6: April 2020
 
