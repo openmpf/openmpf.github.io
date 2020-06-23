@@ -179,6 +179,9 @@
 
 - [[#1028](https://github.com/openmpf/openmpf/issues/1028)] Media inspection fails to handle Apple-optimized PNGs with the CgBI data chunk before the IHDR chunk.
 - [[#1109](https://github.com/openmpf/openmpf/issues/1109)] We made the search bar in the Job Status UI more efficient by shifting it to a database query, but in doing so introduced a bug where the search operates on UTC time instead of local system time.
+- [[#1010](https://github.com/openmpf/openmpf/issues/1010)] `mpf.output.objects.enabled` does not behave as expected for batch jobs. A user would expect it to control whether the JSON output object is generated, but it's generated regardless of that setting.
+- [[#1032](https://github.com/openmpf/openmpf/issues/1032)] Jobs fail on corrupt QuickTime videos. For these videos, the OpenCV-reported frame count is more than twice the actual frame count.
+- [[#1106](https://github.com/openmpf/openmpf/issues/1106)] When a job ends in ERROR the job status UI does not show an End Date.
 
 # OpenMPF 4.1.14: June 2020
 

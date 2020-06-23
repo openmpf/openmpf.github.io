@@ -326,69 +326,55 @@ string SampleComponent::GetDetectionType() {
 
 #### GetDetections(MPFImageJob …)
 
-Used to detect objects in an image file. The MPFImageJob structure contains the data_uri specifying the location of the image file.
+Used to detect objects in an image file. The MPFImageJob structure contains 
+the data_uri specifying the location of the image file.
 
-Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.
+Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". 
+This is because all media is copied to the OpenMPF server before the job is executed.
 
 * Function Definition:
 ```c++
-MPFDetectionError GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations)
+std::vector<MPFImageLocation> GetDetections(const MPFImageJob &job);
 ```
 
 * Parameters:
 
 | Parameter  | Data Type  | Description  |
 |---|---|---|
-|  job | `const MPFImageJob &`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
-|  locations | `vector<MPFImageLocation> &` | The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.   |
+|  job | `const MPFImageJob&`  | Structure containing details about the work to be performed. See [`MPFImageJob`](#mpfimagejob) |
 
-* Returns: `MPFDetectionError`
+* Returns: (`std::vector<MPFImageLocation>`) The [`MPFImageLocation`](#mpfimagelocation) data for each detected object.
 
-* Example:
-
-```c++
-MPFDetectionError SampleComponent::GetDetections(const MPFImageJob &job, vector<MPFImageLocation> &locations) {
-    // Parse job
-    // Generate image locations
-    return MPF_DETECTION_SUCCESS;
-}
-```
 
 #### GetDetections(MPFVideoJob …)
 
-Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" of video data and each segment (containing a range of frames) is assigned to a different job. Components are not guaranteed to receive requests in any order. For example, the first request processed by a component might receive a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.
+Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" 
+of video data and each segment (containing a range of frames) is assigned to a different job. Components are not 
+guaranteed to receive requests in any order. For example, the first request processed by a component might receive 
+a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.
 
 * Function Definition:
 ```c++
-MPFDetectionError getDetections(const MPFVideoJob &job, vector<MPFVideoTrack> tracks);
+std::vector<MPFVideoTrack>  GetDetections(const MPFVideoJob &job);
 ```
 
 * Parameters:
 
 | Parameter  | Data Type  | Description  |
 |---|---|---|
-| job  | `const MPFVideoJob &`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
-| tracks  | `vector<MPFVideoTrack> &` | The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  |
+| job  | `const MPFVideoJob&`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
 
-* Returns: `MPFDetectionError`
+* Returns: (`std::vector<MPFVideoTrack>`) The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  
 
-* Example:
-
-```c++
-MPFDetectionError SampleComponent::GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-```
 
 #### GetDetections(MPFAudioJob …)
 
-Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain the entirety of the audio file.
+Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain 
+the entirety of the audio file.
 
 * Function Definition:
 ```c++
-MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks)
+std::vector<MPFAudioTrack> GetDetections(const MPFAudioJob &job);
 ```
 
 * Parameters:
@@ -396,27 +382,18 @@ MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &t
 | Parameter  | Data Type  | Description  |
 |---|---|---|
 | job  | `const MPFAudioJob &`  | Structure containing details about the work to be performed. See [`MPFAudioJob`](#mpfaudiojob) |
-| tracks  | `vector<MPFAudioTrack> &` |  The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object  |
 
-* Returns: `MPFDetectionError`
+* Returns: (`std::vector<MPFAudioTrack>`) The [`MPFAudioTrack`](#mpfaudiotrack) data for each detected object.
 
-* Example:
-
-```c++
-MPFDetectionError GetDetections(const MPFAudioJob &job, vector<MPFAudioTrack> &tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-```
 
 #### GetDetections(MPFGenericJob …)
 
-Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and handled generically. These files are not logically segmented, so a job will contain the entirety of the file.
+Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and 
+handled generically. These files are not logically segmented, so a job will contain the entirety of the file.
 
 * Function Definition:
 ```c++
-MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks)
+std::vector<MPFGenericTrack> GetDetections(const MPFGenericJob &job);
 ```
 
 * Parameters:
@@ -424,19 +401,9 @@ MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack
 | Parameter  | Data Type  | Description  |
 |---|---|---|
 | job  | `const MPFGenericJob &`  | Structure containing details about the work to be performed. See [`MPFGenericJob`](#mpfgenericjob) |
-| tracks  | `vector<MPFGenericTrack> &` |  The [`MPFGenericTrack`](#mpfgenerictrack) data for each detected object  |
 
-* Returns: `MPFDetectionError`
+* Returns: (`std::vector<MPFGenericTrack>`) The [`MPFGenericTrack`](#mpfgenerictrack) data for each detected object.
 
-* Example:
-
-```c++
-MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks) {
-    // Parse job
-    // Generate tracks
-    return MPF_DETECTION_SUCCESS;
-}
-```
 
 ### Detection Job Data Structures
 
@@ -825,46 +792,90 @@ MPFImageLocation(
 | width | `int` | The width of the detected object. |
 | height | `int` | The height of the detected object. |
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
-| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See note about `ROTATION` below. |
-
-When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
-`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
-In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
-clockwise direction. When the `ROTATION` key is present, `x_left_upper` and `y_left_upper` indicate the top left of
-the correctly oriented detection. Similarly, `width` and `height` indicate the dimensions of the correctly oriented
-detection.
-
-* Example:
-
-![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
-
-
-In the above image with markup, the cyan dot in the bottom-left corner of the bounding box represents the top-left corner of the detection region when correctly oriented.
-
-
-```c++
-MPFImageLocation detection;
-detection.x_left_upper = 156;
-detection.y_left_upper = 339;
-detection.width = 194;
-detection.height = 243;
-detection.confidence = 1.0;
-detection.detection_properties["ROTATION"] = "90.0";
-```
+| detection_properties | `Properties &` | Optional additional information about the detected object. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. See the [section](#rotation-flip-info) for `ROTATION` and `HORIZONTAL_FLIP` below, |
 
 * Example:
 
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
-```c++
-MPFImageLocation detection;
-detection.x_left_upper = 0;
-detection.y_left_upper = 0;
-detection.width = 100;
-detection.height = 50;
-detection.confidence = 1.0;
-detection.detection_properties["CLASSIFICATION"] = "backpack";
-```
+<pre><code class="text" style="color:black">
+MPFImageLocation { 
+    x_left_upper = 0, y_left_upper = 0, width = 100, height = 50, confidence = 1.0,
+    { {"CLASSIFICATION", "backpack"} } 
+}
+</code></pre>
+
+<span id="rotation-flip-info"></span>
+##### Rotation and Horizontal Flip
+
+When the `detection_properties` map contains a `ROTATION` key, it should be a floating point value in the interval
+`[0.0, 360.0)` indicating the orientation of the detection in degrees in the counter-clockwise direction.
+In order to view the detection in the upright orientation, it must be rotated the given number of degrees in the
+clockwise direction.
+
+The `detection_properties` map can also contain a `HORIZONTAL_FLIP` property that will either be `"true"` or `"false"`.
+The `detection_properties` map may have both `HORIZONTAL_FLIP` and `ROTATION` keys.
+
+The Workflow Manager performs the following algorithm to draw the bounding box when generating markup:
+
+<ol>
+<li style="color:red">
+    Draw the rectangle ignoring rotation and flip. 
+</li>
+
+<li style="color:blue">
+   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner. 
+</li>
+
+<li style="color:green">
+  If the rectangle is flipped, flip horizontally around the top left corner.
+</li>
+</ol>
+
+<img src="../img/flip-rotate-steps-example.png" style="border: 1px solid black" alt="flip and rotate example">
+
+In the image above you can see the three steps required to properly draw a bounding box.
+Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is drawn in green.
+The detection for the image above is:
+
+<pre><code class="text" style="color:black">
+MPFImageLocation { 
+    x_left_upper = 210, y_left_upper = 189, width = 177, height = 41, confidence = 1.0,
+    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } } 
+}
+</code></pre>
+
+Note that the `x_left_upper`, `y_left_upper`, `width`, and `height` values describe the red rectangle. The addition
+of the `ROTATION` property results in the blue rectangle, and the addition of the `HORIZONTAL_FLIP` property results
+in the green rectangle. 
+
+One way to think about the process is "draw the unrotated and unflipped rectangle, stick a pin in the upper left corner,
+and then rotate and flip around the pin".
+
+###### Rotation-Only Example
+
+![Lenna 90 CCW with Markup](img/lenna_90_ccw_markup.png "Lenna 90 degrees CCW with Markup")
+
+The Workflow Manager generated the above image by performing markup on the original image with the following
+detection:
+
+<pre><code class="text" style="color:black">
+MPFImageLocation { 
+    x_left_upper = 156, y_left_upper = 339, width = 194, height = 243, confidence = 1.0,
+    { {"ROTATION", "90.0"} } 
+}
+</code></pre>
+
+The markup process followed steps 1 and 2 in the previous section, skipping step 3 because there is no
+`HORIZONTAL_FLIP`. 
+
+In order to properly extract the detection region from the original image, such as when generating an artifact, you
+would need to rotate the region in the above image 90 degrees clockwise around the cyan dot currently shown in the
+bottom-left corner so that the face is in the proper upright position. 
+
+When the rotation is properly corrected in this way, the cyan dot will appear in the top-left corner of the bounding
+box. That is why its position is described using the `x_left_upper`, and `y_left_upper` variables. They refer to the
+top-left corner of the correctly oriented region. 
 
 #### MPFVideoTrack
 
@@ -950,15 +961,35 @@ MPFGenericTrack(
 | confidence | `float` | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `Properties &` | Optional additional information about the detection. There is no restriction on the keys or the number of entries that can be added to the detection_properties map. For best practice, keys should be in all CAPS. |
 
+
+### Exception Types
+
+#### MPFDetectionException
+
+Exception that should be thrown by the `GetDetections()` methods when an error occurs. 
+The content of the `error_code` and `what()` members will appear in the JSON output object.
+
+* Constructors:
+```c++
+MPFDetectionException(MPFDetectionError error_code, const std::string &what = "")
+MPFDetectionException(const std::string &what)
+```
+
+| Member  | Data Type  | Description  |
+|---|---|---|
+| error_code | `MPFDetectionError` | Specifies the error type. See [`MPFDetectionError`](#mpfdetectionerror).
+| what() | `const char*` | Textual description of the specific error. (Inherited from `std::exception`)
+
+
 ### Enumeration Types
 
 #### MPFDetectionError
 
-Enum used to indicate the status of a `GetDetections` call. A component is not required to support all error types.
+Enum used to indicate the type of error that occurred in a `GetDetections()` method. It is used as a parameter to 
+the `MPFDetectionException` constructor. A component is not required to support all error types.
 
 |  ENUM  |   Description  |
 |---|---|
-| MPF_DETECTION_SUCCESS  | The execution of any component function has completed normally with no errors.       |
 | MPF_OTHER_DETECTION_ERROR_TYPE | The component function has failed for a reason that is not captured by any of the other error codes. |
 | MPF_DETECTION_NOT_INITIALIZED | The initialization of the component, or the initialization of any of its dependencies, has failed for any reason. |
 | MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the MPFDetectionDataType enum.  Note that this failure is normally caught by the Component Executable, before a job is passed to the component logic. |
