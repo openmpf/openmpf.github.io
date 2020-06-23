@@ -145,7 +145,7 @@
 <body>
     <div style='page-break-after:always'>
         <h1>OpenMPF Workflow Manager REST API</h1>
-        <h2>Version 4.1.0 (build 20190927)</h2>
+        <h2>Version 5.0.0 (build 20200616)</h2>
         <br/>
         <p><i><font size="3">NOTICE</font></i></p>
         <p><i><font size="3">
@@ -154,11 +154,11 @@
             52.227-14, Alt. IV (DEC 2007).
         </font></i></p>
         <p><i><font size="3">
-            Copyright 2019 The MITRE Corporation. All Rights Reserved.
+            Copyright 2020 The MITRE Corporation. All Rights Reserved.
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Fri Sep 27, 2019</div>
+    <div class='footer'>Last updated on: Tue Jun 16, 2020</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -270,6 +270,37 @@
                 <br>
                 <br>
             </div>
+            <div class="div-container-margin"><span><b>1.24.</b> Pipeline</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.25.</b> Task</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.26.</b> Action</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.27.</b> Algorithm</span>
+                <br>
+                <br>
+            </div>
+
+            <div class="div-container-margin"><span><b>1.28.</b> Algorithm.Provides</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.29.</b> AlgorithmProperty</span>
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>1.30.</b> Algorithm.Requires</span>
+                <br>
+                <br>
+            </div>
+
+
             <div style='page-break-after:always'></div>
             <h2>2. Paths</h2>
             <div class="div-container-margin"><span><b>2.1.</b> GET</span>&nbsp;&nbsp;/rest/info
@@ -370,8 +401,48 @@
                 <br>
                 <br>
             </div>
+            <div class="div-container-margin"><span><b>2.26.</b> GET</span>&nbsp;&nbsp;/rest/pipelines
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.27.</b> POST</span>&nbsp;&nbsp;/rest/pipelines
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.28.</b> DELETE</span>&nbsp;&nbsp;/rest/pipelines?name={name}
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.29.</b> GET</span>&nbsp;&nbsp;/rest/tasks
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.30.</b> POST</span>&nbsp;&nbsp;/rest/tasks
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.31.</b> DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.32.</b> GET</span>&nbsp;&nbsp;/rest/actions
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.33.</b> POST</span>&nbsp;&nbsp;/rest/actions
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.34.</b> DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}
+                <br>
+                <br>
+            </div>
+            <div class="div-container-margin"><span><b>2.35.</b> GET</span>&nbsp;&nbsp;/rest/algorithms
+                <br>
+                <br>
+            </div>
 
-            <div style='page-break-after:always'></div>
+        <div style='page-break-after:always'></div>
         </div>
     </div>
     <div style='page-break-after:always'></div>
@@ -1348,6 +1419,297 @@
                 <td style='width:10%;'>string</td>
                 <td style='width:30%;'>
                     Message describing result of REST API call.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.24. Pipeline</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The pipeline's name.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>description</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A description of the pipeline.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>tasks</td>
+                <td style='width:10%;'>array&lt;string&gt;</td>
+                <td style='width:30%;'>
+                    The names of the pipeline's tasks.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.25. Task</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The task's name.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>description</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A description of the task.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>actions</td>
+                <td style='width:10%;'>array&lt;string&gt;</td>
+                <td style='width:30%;'>
+                    The names of the task's actions.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.26. Action</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The action's name.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>description</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A description of the action.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>algorithm</td>
+                <td style='width:10%;'>algorithm</td>
+                <td style='width:30%;'>
+                    The name of the actions' algorithm.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>properties</td>
+                <td style='width:10%;'>array&lt;object&gt;</td>
+                <td style='width:30%;'>
+                    The properties associated with the action which may be used to override algorithm properties.
+                    Each property is an object with two fields, name and value.
+                    For example: [ {"name": "some_name", "value": "some_value"},
+                    {"name": "some_other_name", "value": "some_other_value"}]
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.27. Algorithm</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The algorithm's name.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>description</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A description of the algorithm.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>actionType</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    Currently this is always "DETECTION", except for the markup component.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>supportsBatchProcessing</td>
+                <td style='width:10%;'>boolean</td>
+                <td style='width:30%;'>
+                    Indicates whether or not the algorithm supports batch processing.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>supportsStreamProcessing</td>
+                <td style='width:10%;'>boolean</td>
+                <td style='width:30%;'>
+                    Indicates whether or not the algorithm supports stream processing.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>providesCollection</td>
+                <td style='width:10%;'>Algorithm.Provides</td>
+                <td style='width:30%;'>
+                    See Algorithm.Provides
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>providesCollection</td>
+                <td style='width:10%;'>Algorithm.Requires</td>
+                <td style='width:30%;'>
+                    See Algorithm.Requires
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.28. Algorithm.Provides</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>states</td>
+                <td style='width:10%;'>array&lt;string&gt;</td>
+                <td style='width:30%;'>
+                    The names of the states provided by the algorithm.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>properties</td>
+                <td style='width:10%;'>array&lt;AlgorithmProperty&gt;</td>
+                <td style='width:30%;'>
+                    The properties provided by the algorithm.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.29. AlgorithmProperty</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The name of the property
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>description</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A description the property.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>defaultValue</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The value to use when no value is explicitly set for the property.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>type</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The data type of this property value. Must be one of 'BOOLEAN', 'FLOAT', 'DOUBLE', 'INT',
+                    'LONG', or 'STRING'.
+                </td>
+            </tr>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>propertiesKey</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The name of the Java property that provides the default value for the property.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3>1.30. Algorithm.Requires</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>states</td>
+                <td style='width:10%;'>array&lt;string&gt;</td>
+                <td style='width:30%;'>
+                    The names of the states required by the algorithm.
                 </td>
             </tr>
             </tbody>
@@ -3915,6 +4277,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class='td-alignment-small'>404</td>
                                 <td class='td-alignment-std'>
                                     There was no component with the specified name.
@@ -3927,6 +4295,790 @@
         </div>
     </div>
 
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.26 GET</span>&nbsp;&nbsp; /rest/pipelines</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Gets the list of pipelines.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>array&lt;Pipeline&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.27 POST</span>&nbsp;&nbsp;/rest/pipelines</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Creates a new pipeline.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>pipeline</td>
+                                <td class='td-alignment-small-no-width'>body</td>
+                                <td class='td-alignment-small-no-width'>
+                                    The pipeline to create.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Pipeline
+                                </td>
+                                <td class='td-alignment-small-no-width'>application/json</td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The pipeline was successfully created.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>400</td>
+                                <td class='td-alignment-std'>
+                                    The pipeline was invalid.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="div-container-margin">
+        <pre class="delete"><code class="huge"><span>2.28 DELETE</span>&nbsp;&nbsp;/rest/pipeline?name={name}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Deletes a pipeline.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>name</td>
+                                <td class='td-alignment-small-no-width'>query string</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Name of pipeline
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    string
+                                </td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The pipeline was successfully removed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.29 GET</span>&nbsp;&nbsp;/rest/tasks</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Gets the list of tasks.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>array&lt;Task&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.30 POST</span>&nbsp;&nbsp;/rest/tasks</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Create a new task.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>task</td>
+                                <td class='td-alignment-small-no-width'>body</td>
+                                <td class='td-alignment-small-no-width'>
+                                    The task to create.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Task
+                                </td>
+                                <td class='td-alignment-small-no-width'>application/json</td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The task was successfully created
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>400</td>
+                                <td class='td-alignment-std'>
+                                    The task was invalid.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="div-container-margin">
+        <pre class="delete"><code class="huge"><span>2.31 DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Deletes a task.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>name</td>
+                                <td class='td-alignment-small-no-width'>query string</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Name of task.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    string
+                                </td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The task was successfully removed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.32 GET</span>&nbsp;&nbsp;/rest/actions</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Gets the list of actions.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>array&lt;Action&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span>2.33 POST</span>&nbsp;&nbsp;/rest/actions</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Create a new action.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>action</td>
+                                <td class='td-alignment-small-no-width'>body</td>
+                                <td class='td-alignment-small-no-width'>
+                                    The action to create.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Action
+                                </td>
+                                <td class='td-alignment-small-no-width'>application/json</td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The action was successfully created
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>400</td>
+                                <td class='td-alignment-std'>
+                                    The action was invalid.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="div-container-margin">
+        <pre class="delete"><code class="huge"><span>2.34 DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Deletes an action.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>&lt;No content&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>name</td>
+                                <td class='td-alignment-small-no-width'>query string</td>
+                                <td class='td-alignment-small-no-width'>
+                                    Name of action.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    string
+                                </td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    The action was successfully removed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="div-container-margin">
+        <pre class="get"><code class="huge"><span>2.35 GET</span>&nbsp;&nbsp;/rest/algorithms</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Gets the list of algorithms.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>array&lt;Algorithm&gt;</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
