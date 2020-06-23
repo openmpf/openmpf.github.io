@@ -393,7 +393,7 @@ handled generically. These files are not logically segmented, so a job will cont
 
 * Function Definition:
 ```c++
-std::vector<MPFGenericTrack> GetDetections(const MPFGenericJob &job)
+std::vector<MPFGenericTrack> GetDetections(const MPFGenericJob &job);
 ```
 
 * Parameters:
