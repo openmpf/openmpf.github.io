@@ -1,4 +1,4 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.
+> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
 > **WARNING:** This guide is a work in progress and may not be completely accurate or comprehensive. Since transitioning to Docker deployment, this guide has not been fully tested.
 
@@ -416,11 +416,11 @@ Run the following commands to build OpenMPF and run the integration tests. Use t
     ```
 
 5. Save and close the file.
-6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=<configFile> -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false`
+6. `mvn clean install -DskipTests -DskipITs -Dcargo.maven.skip=true -Dcomponents.build.package.json=<configFile> -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false`
 7. `sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/`
 8. `sudo systemctl daemon-reload`
 9. `mpf start --xtc`
-10. `mvn verify -Pjenkins -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
+10. `mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcargo.spring.profiles.active=jenkins -Dspring.profiles.active=jenkins -Dit.test='!ITWebUI' -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false`
 11. `mpf stop --xtc`
 
 Please see the appendix section [Known Issues](#known-issues) regarding any `java.lang.InterruptedException: null` warning log messages observed when running the tests.

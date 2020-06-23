@@ -327,7 +327,7 @@
             <div class="section">
               
                 <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2019 The MITRE Corporation. All Rights Reserved.</p>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.</p>
 <p><strong>WARNING:</strong> This guide is a work in progress and may not be completely accurate or comprehensive. Since transitioning to Docker deployment, this guide has not been fully tested.</p>
 </blockquote>
 <h1 id="overview">Overview</h1>
@@ -691,11 +691,11 @@ localhost.localdomain</code></p>
 <li>
 <p>Save and close the file.</p>
 </li>
-<li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true -Dcomponents.build.package.json=&lt;configFile&gt; -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false</code></li>
+<li><code>mvn clean install -DskipTests -DskipITs -Dcargo.maven.skip=true -Dcomponents.build.package.json=&lt;configFile&gt; -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false</code></li>
 <li><code>sudo cp /home/mpf/openmpf-projects/openmpf/trunk/install/libexec/node-manager /etc/init.d/</code></li>
 <li><code>sudo systemctl daemon-reload</code></li>
 <li><code>mpf start --xtc</code></li>
-<li><code>mvn verify -Pjenkins -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
+<li><code>mvn verify -Dtransport.guarantee="NONE" -Dweb.rest.protocol="http" -Dcargo.spring.profiles.active=jenkins -Dspring.profiles.active=jenkins -Dit.test='!ITWebUI' -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build -Dstartup.auto.registration.skip=false</code></li>
 <li><code>mpf stop --xtc</code></li>
 </ol>
 <p>Please see the appendix section <a href="#known-issues">Known Issues</a> regarding any <code>java.lang.InterruptedException: null</code> warning log messages observed when running the tests.</p>
