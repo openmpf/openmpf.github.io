@@ -15,7 +15,7 @@
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guides to describe the new build process, which now includes automatically copying the openmpf repo source code into the openmpf-build image instead of using various bind mounts, and building all of the component base builder and executor images.
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md) with the following sections:
     - How to [Use Kibana for Log Viewing and Aggregation](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation)
-    - How to [Restrict Media Types That a Component Can Process](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation)
+    - How to [Restrict Media Types that a Component Can Process](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-restrict-media-types-that-a-component-can-process)
     - How to [Import Root Certificates for Additional Certificate Authorities](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-import-root-certificates-for-additional-certificate-authorities)
 - Updated the [CONTRIBUTING](https://github.com/openmpf/openmpf-docker/blob/master/CONTRIBUTING.md) guide for Docker deployment with information on the new build process and component base builder and executor images.
 - Updated the [Install Guide](Install-Guide.md) with a pointer to the "Quick Start" section on DockerHub.
@@ -72,13 +72,13 @@
 
 - A base builder image and executor image are provided for C++ ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md)), Python ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/python_executor/README.md)), and Java ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md)) component development. Component developers can also refer to the Dockerfile in the source code for each component as reference for how to make use of the base images.
 
-<h2>Configure Data Types per Component Service</h2>
+<h2>Restrict Media Types that a Component Can Process</h2>
 
 - Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos and images, while `RESTRICT_MEDIA_TYPES: IMAGE` will only process images. If not specified, the service will process all of the media types it natively supports. For example, this feature can be used to ensure that some services are always available to process images while others are processing long videos.
 
 <h2>Import Additional Root Certificates into the Workflow Manager</h2>
 
-- Additional root certificates can be imported into the Workflow Manager at runtime by adding an entry for `MPF_CA_CERTS` to the workflow-manager service's environment variables in `docker-compose.core.yml`. `MPF_CA_CERTS` must contain a colon-delimited list of absolute file paths. Of note, a root certificate may be used to trust the idenitify of a remote object storage server.
+- Additional root certificates can be imported into the Workflow Manager at runtime by adding an entry for `MPF_CA_CERTS` to the workflow-manager service's environment variables in `docker-compose.core.yml`. `MPF_CA_CERTS` must contain a colon-delimited list of absolute file paths. Of note, a root certificate may be used to trust the identity of a remote object storage server.
 
 <h2>DockerHub</h2>
 
