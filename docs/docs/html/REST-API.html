@@ -2278,135 +2278,160 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
                                                             <br>
                                                             <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
 {
- "jobId": 20,
- "jobErrors": [],
- "jobWarnings": [],
- "objectId": "f3345ee1-5b76-4c3f-8101-26102f96c102",
- "pipeline": {
-  "name": "COMBINED DETECTION PIPELINE",
-  "description": "Executes multiple face detection algorithms and a person detection algorithm.",
-  "stages": [{
-   "actionType": "DETECTION",
-   "name": "COMBINED DETECTION ACTION",
-   "description": "Executes multiple face detection algorithms and a person detection algorithm.",
-   "actions": [{
-    "algorithm": "FACECV",
-    "name": "OCV FACE DETECTION ACTION",
-    "description": "Executes the OpenCV face detection algorithm using the default parameters.",
-    "properties": {}
-   }, {
-    "algorithm": "DLIB",
-    "name": "DLIB FACE DETECTION ACTION",
-    "description": "Executes the dlib face detection algorithm using the default parameters.",
-    "properties": {}
-   }, {
-    "algorithm": "PERSONCV",
-    "name": "OCV PERSON DETECTION ACTION",
-    "description": "Executes the OpenCV person detection algorithm using the default parameters.",
-    "properties": {}
-   }]
-  }]
- },
- "priority": 4,
- "siteId": "mpf1",
- "externalJobId": null,
- "timeStart": "2017-04-25T09:47:14.0-05:00",
- "timeStop": "2017-04-25T09:47:17.0-05:00",
- "status": "COMPLETE",
- "algorithmProperties": {},
- "jobProperties": {},
- "media": [{
-  "mediaId": 0,
-  "path": "file:/opt/mpf/share/remote-media/meds-aa-S001-01.jpg",
-  "mimeType": "image/jpeg",
-  "length": 1,
-  "sha256": "c067e7eed23a0fe022140c30dbfa993ae720309d6567a803d111ecec739a6713",
-  "message": null,
-  "status": "COMPLETE",
-  "mediaMetadata": {},
-  "mediaProperties": {},
-  "markupResult": null,
-  "output": {
-   "FACE": [{
-    "source": "+#DLIB FACE DETECTION ACTION",
-    "tracks": [{
-     "id": "a2b623ec3d73a82702e54d75f84fe902e79842f10ef228e3cc5712b27f02b143",
-     "startOffsetFrame": 0,
-     "stopOffsetFrame": 1,
-<div style='page-break-after:always'></div>
-     "startOffsetTime": 0,
-     "stopOffsetTime": 0,
-     "type": "FACE",
-     "source": "+#DLIB FACE DETECTION ACTION",
-     "exemplar": {
-      "x": 114,
-      "y": 238,
-      "width": 225,
-      "height": 225,
-      "confidence": 2.3898146,
-      "detectionProperties": {},
-      "offsetFrame": 0,
-      "offsetTime": 0,
-      "artifactExtractionStatus": "COMPLETED",
-      "artifactPath": "/opt/mpf/share/artifacts/20/0/0/meds-aa-S001-01.jpg"
-     },
-     "detections": [{
-      "x": 114,
-      "y": 238,
-      "width": 225,
-      "height": 225,
-      "confidence": 2.3898146,
-      "detectionProperties": {},
-      "offsetFrame": 0,
-      "offsetTime": 0,
-      "artifactExtractionStatus": "COMPLETED",
-      "artifactPath": "/opt/mpf/share/artifacts/20/0/0/meds-aa-S001-01.jpg",
-     }]
-     }]
-    }, {
-    "source": "+#OCV FACE DETECTION ACTION",
-    "tracks": [{
-     "id": "4d16bf11dfad28e6b3827b28d4a47e74bd13a329eba5df11577a082c79bf1395",
-     "startOffsetFrame": 0,
-     "stopOffsetFrame": 1,
-     "startOffsetTime": 0,
-     "stopOffsetTime": 0,
-     "type": "FACE",
-     "source": "+#OCV FACE DETECTION ACTION",
-     "exemplar": {
-      "x": 85,
-      "y": 212,
-      "width": 283,
-      "height": 283,
-      "confidence": 58,
-      "detectionProperties": {},
-      "offsetFrame": 0,
-      "offsetTime": 0,
-      "artifactExtractionStatus": "COMPLETED",
-      "artifactPath": "/opt/mpf/share/artifacts/20/0/0/meds-aa-S001-01.jpg"
-     },
-     "detections": [{
-      "x": 85,
-      "y": 212,
-      "width": 283,
-      "height": 283,
-      "confidence": 58,
-      "detectionProperties": {},
-      "offsetFrame": 0,
-      "offsetTime": 0,
-      "artifactExtractionStatus": "COMPLETED",
-      "artifactPath": "/opt/mpf/share/artifacts/20/0/0/meds-aa-S001-01.jpg"
-     }]
-    }]
-   }],
-   "NO TRACKS": [{
-    "source": "+#OCV PERSON DETECTION ACTION",
-    "tracks": []
-   }]
-<div style='page-break-after:always'></div>
-  },
-  "detectionProcessingErrors": {}
- }]
+   "jobId": 1,
+   "errors": [],
+   "warnings": [],
+   "objectId": "7f745455-6e5a-4681-b5b5-309ec6d2e9c8",
+   "pipeline": {
+      "name": "COMBINED DETECTION PIPELINE",
+      "description": "Executes multiple face detection algorithms and a person detection algorithm.",
+      "tasks": [
+         {
+            "actionType": "DETECTION",
+            "name": "COMBINED DETECTION TASK",
+            "description": "Executes multiple face detection algorithms and a person detection algorithm.",
+            "actions": [
+               {
+                  "algorithm": "FACECV",
+                  "name": "OCV FACE DETECTION ACTION",
+                  "description": "Executes the OpenCV face detection algorithm using the default parameters.",
+                  "properties": {}
+               },
+               {
+                  "algorithm": "DLIB",
+                  "name": "DLIB FACE DETECTION ACTION",
+                  "description": "Executes the dlib face detection algorithm using the default parameters.",
+                  "properties": {}
+               },
+               {
+                  "algorithm": "PERSONCV",
+                  "name": "OCV PERSON DETECTION ACTION",
+                  "description": "Executes the OpenCV person detection algorithm using the default parameters.",
+                  "properties": {}
+               }
+            ]
+         }
+      ]
+   },
+   "priority": 4,
+   "siteId": "mpf1",
+   "externalJobId": null,
+   "timeStart": "2020-06-24T01:55:30.003Z",
+   "timeStop": "2020-06-24T01:55:31.567Z",
+   "status": "COMPLETE",
+   "algorithmProperties": {},
+   "jobProperties": {},
+   "media": [
+      {
+         "mediaId": 1,
+         "path": "file:///opt/mpf/share/remote-media/meds-aa-S001-01.jpg",
+         "detectionProcessingErrors": {},
+         "mimeType": "image/jpeg",
+         "length": 1,
+         "sha256": "c067e7eed23a0fe022140c30dbfa993ae720309d6567a803d111ecec739a6713",
+         "status": "COMPLETE",
+         "mediaMetadata": {
+            "FRAME_HEIGHT": "600",
+            "FRAME_WIDTH": "480",
+            "MIME_TYPE": "image/jpeg"
+         },
+         "mediaProperties": {},
+         "markupResult": null,
+         "output": {
+            "FACE": [
+               {
+                  "source": "+#DLIB FACE DETECTION ACTION",
+                  "tracks": [
+                     {
+                        "id": "a2b623ec3d73a82702e54d75f84fe902e79842f10ef228e3cc5712b27f02b143",
+                        "startOffsetFrame": 0,
+                        "stopOffsetFrame": 1,
+                        "startOffsetTime": 0,
+                        "stopOffsetTime": 0,
+                        "type": "FACE",
+                        "source": "+#DLIB FACE DETECTION ACTION",
+                        "confidence": 2.3898146,
+                        "trackProperties": {},
+                        "exemplar": {
+                           "offsetFrame": 0,
+                           "offsetTime": 0,
+                           "x": 114,
+                           "y": 238,
+                           "width": 225,
+                           "height": 225,
+                           "confidence": 2.3898146,
+                           "detectionProperties": {},
+                           "artifactExtractionStatus": "COMPLETED",
+                           "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/1/0/frame-0.png"
+                        },
+                        "detections": [
+                           {
+                              "offsetFrame": 0,
+                              "offsetTime": 0,
+                              "x": 114,
+                              "y": 238,
+                              "width": 225,
+                              "height": 225,
+                              "confidence": 2.3898146,
+                              "detectionProperties": {},
+                              "artifactExtractionStatus": "COMPLETED",
+                              "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/1/0/frame-0.png"
+                           }
+                        ]
+                     }
+                  ]
+               },
+               {
+                  "source": "+#OCV FACE DETECTION ACTION",
+                  "tracks": [
+                     {
+                        "id": "afba8b4afeb29c2d0b8453f3c1795920dd06d94c18596390a1067d706cfdb453",
+                        "startOffsetFrame": 0,
+                        "stopOffsetFrame": 1,
+                        "startOffsetTime": 0,
+                        "stopOffsetTime": 0,
+                        "type": "FACE",
+                        "source": "+#OCV FACE DETECTION ACTION",
+                        "confidence": 57,
+                        "trackProperties": {},
+                        "exemplar": {
+                           "offsetFrame": 0,
+                           "offsetTime": 0,
+                           "x": 83,
+                           "y": 209,
+                           "width": 285,
+                           "height": 285,
+                           "confidence": 57,
+                           "detectionProperties": {},
+                           "artifactExtractionStatus": "COMPLETED",
+                           "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/0/0/frame-0.png"
+                        },
+                        "detections": [
+                           {
+                              "offsetFrame": 0,
+                              "offsetTime": 0,
+                              "x": 83,
+                              "y": 209,
+                              "width": 285,
+                              "height": 285,
+                              "confidence": 57,
+                              "detectionProperties": {},
+                              "artifactExtractionStatus": "COMPLETED",
+                              "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/0/0/frame-0.png"
+                           }
+                        ]
+                     }
+                  ]
+               }
+            ],
+            "NO TRACKS": [
+               {
+                  "source": "+#OCV PERSON DETECTION ACTION"
+               }
+            ]
+         }
+      }
+   ]
 }
                                                             </pre>
                                                     </td>
