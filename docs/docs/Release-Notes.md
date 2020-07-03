@@ -8,6 +8,16 @@
 - <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
 -->
 
+# OpenMPF 5.0.1: July 2020
+
+<h2>Azure Cognitive Services (ACS) Speech Detection Component</h2>
+
+- This new component utilizes the [Azure Cognitive Services Batch Transcription REST endpoint](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/batch-transcription) to transcribe speech from audio and video files. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureSpeechDetection/README.md).
+
+<h2>Updates</h2>
+
+- Updated Tessseract component with `MAX_PIXELS` setting to prevent processing large images.
+
 # OpenMPF 5.0.0: June 2020
 
 <h2>Documentation</h2>
@@ -200,7 +210,7 @@
 
 <h2>Updates</h2>
 
-- Update JDK from `jdk-8u181-linux-x64.rpm` to `jdk-8u251-linux-x64.rpm`.
+- Updated JDK from `jdk-8u181-linux-x64.rpm` to `jdk-8u251-linux-x64.rpm`.
 
 # OpenMPF 4.1.11: May 2020
 
