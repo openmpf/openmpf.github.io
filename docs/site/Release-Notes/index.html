@@ -64,6 +64,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-501-july-2020">OpenMPF 5.0.1: July 2020</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-500-june-2020">OpenMPF 5.0.0: June 2020</a></li>
                 
             
@@ -318,6 +321,17 @@
 - <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
 -->
 
+<h1 id="openmpf-501-july-2020">OpenMPF 5.0.1: July 2020</h1>
+<h2>Azure Cognitive Services (ACS) Speech Detection Component</h2>
+
+<ul>
+<li>This new component utilizes the <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/batch-transcription">Azure Cognitive Services Batch Transcription REST endpoint</a> to transcribe speech from audio and video files. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/AzureSpeechDetection/README.md">README</a>.</li>
+</ul>
+<h2>Updates</h2>
+
+<ul>
+<li>Updated Tessseract component with <code>MAX_PIXELS</code> setting to prevent processing large images.</li>
+</ul>
 <h1 id="openmpf-500-june-2020">OpenMPF 5.0.0: June 2020</h1>
 <h2>Documentation</h2>
 
@@ -556,7 +570,7 @@
 <h2>Updates</h2>
 
 <ul>
-<li>Update JDK from <code>jdk-8u181-linux-x64.rpm</code> to <code>jdk-8u251-linux-x64.rpm</code>.</li>
+<li>Updated JDK from <code>jdk-8u181-linux-x64.rpm</code> to <code>jdk-8u251-linux-x64.rpm</code>.</li>
 </ul>
 <h1 id="openmpf-4111-may-2020">OpenMPF 4.1.11: May 2020</h1>
 <h2>Tesseract OCR Text Detection Component</h2>

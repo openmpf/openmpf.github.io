@@ -8,7 +8,7 @@ OpenMPF is a non-proprietary, scalable framework that permits practitioners and 
 
 For those developing new exploitation capabilities, OpenMPF exposes a set of Application Program Interfaces (APIs) for extending media analytics functionality. The APIs allow integrators to introduce new algorithms capable of detecting new targeted entity types. For example, a backpack detection algorithm could be integrated into an OpenMPF instance. OpenMPF does not restrict the number of algorithms that can operate on a given media file, permitting researchers, practitioners, and developers to explore arbitrarily complex composites of exploitation algorithms.
 
-A list of open source algorithms currently integrated into the OpenMPF as distributed processing components is shown here:
+A list of algorithms currently integrated into the OpenMPF as distributed processing components is shown here:
 
 | **Operation** | **Object Type** | **Framework**
 |  --- | --- | ---
@@ -19,6 +19,7 @@ A list of open source algorithms currently integrated into the OpenMPF as distri
 | Detection/Tracking | Motion | SuBSENSE w/ STRUCK
 | Detection/Tracking | License Plate | OpenALPR
 | Detection | Speech | Sphinx
+| Detection | Speech | Azure Cognitive Services
 | Detection| Scene | OpenCV
 | Detection| Classification | OpenCV DNN
 | Detection/Tracking | Classification | Darknet
