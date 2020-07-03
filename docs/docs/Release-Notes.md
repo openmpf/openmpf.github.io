@@ -132,6 +132,10 @@
 
 - This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in favor of a custom TensorFlow vehicle color detection model. In our tests, the new model has proven to be more generalizable and provide more accurate results on never-before-seen test data. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md).
 
+<h2>Azure Cognitive Services (ACS) Speech Detection Component</h2>
+
+- This new component utilizes the [Azure Cognitive Services Batch Transcription REST endpoint](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/batch-transcription) to transcribe speech from audio and video files. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureSpeechDetection/README.md).
+
 <h2>Tesseract OCR Text Detection Component</h2>
 
 - Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of regular expression searches, and are therefore still supported. Also, the `text-tags.json` file format has been updated to allow for specifying case-sensitive regular expression searches.
@@ -200,7 +204,7 @@
 
 <h2>Updates</h2>
 
-- Update JDK from `jdk-8u181-linux-x64.rpm` to `jdk-8u251-linux-x64.rpm`.
+- Updated JDK from `jdk-8u181-linux-x64.rpm` to `jdk-8u251-linux-x64.rpm`.
 
 # OpenMPF 4.1.11: May 2020
 
