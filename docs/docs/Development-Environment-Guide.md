@@ -365,7 +365,7 @@ Run the following commands to build OpenMPF and launch the web application. Use 
     ```
 
 5. Save and close the file.
-6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
+6. `mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dcargo.maven.skip=true  -Dcomponents.build.package.json=<configFile> -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build`
 7. `cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager`
 8. `rm -rf /opt/apache-tomcat/webapps/workflow-manager*`
 9. `cp target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war`
