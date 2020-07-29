@@ -650,7 +650,7 @@ localhost.localdomain</code></p>
 <li>
 <p>Save and close the file.</p>
 </li>
-<li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dmaven.tomcat.skip=true  -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
+<li><code>mvn clean install -DskipTests -Dmaven.test.skip=true -DskipITs -Dcargo.maven.skip=true  -Dcomponents.build.package.json=&lt;configFile&gt; -Dstartup.auto.registration.skip=false -Dcomponents.build.dir=/home/mpf/openmpf-projects/openmpf/mpf-component-build</code></li>
 <li><code>cd /home/mpf/openmpf-projects/openmpf/trunk/workflow-manager</code></li>
 <li><code>rm -rf /opt/apache-tomcat/webapps/workflow-manager*</code></li>
 <li><code>cp target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war</code></li>
