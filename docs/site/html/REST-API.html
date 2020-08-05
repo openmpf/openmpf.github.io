@@ -158,7 +158,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Tue Jun 23, 2020</div>
+    <div class='footer'>Last updated on: Tue Aug 4, 2020</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -651,6 +651,18 @@
             <td style='width:10%;'>string</td>
             <td style='width:30%;'>A valid (properly encoded) URI to a single media source for the job.</td>
             <td style='width:30%;'>Yes</td>
+        </tr>
+        <tr style=''>
+            <td style='width:30%;'>metadata</td>
+            <td style='width:10%;'>object</td>
+            <td style='width:30%;'>A map of key-value pairs using strings which may be used to set the metadata for this
+                media. When sufficient metadata is provided, media inspection will be skipped. To skip inspection, the
+                `MEDIA_HASH` and `MIME_TYPE` keys must be set to the media's respective hash and media type. Audio files
+                will also require the metadata value for `DURATION`. Image files will also require the metadata values
+                for `FRAME_WIDTH` and `FRAME_HEIGHT`. Video files will also require the metadata values for
+                `FRAME_WIDTH`, `FRAME_HEIGHT`, `FRAME_COUNT`, `FPS`, and `DURATION`.
+            </td>
+            <td style='width:30%;'>No</td>
         </tr>
         <tr style=''>
             <td style='width:30%;'>properties</td>
