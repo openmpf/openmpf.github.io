@@ -1898,15 +1898,15 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
                         algorithm.
                         <br/>
                         <br/>
-                        Within media, an optional metadata object containing String key-value pairs can override media
-                        inspection once the required metadata information is provided for audio, image, generic, and
-                        video jobs. For media metadata, note that optional parameters like `ROTATION` and `HORIZONTAL_FLIP`
-                        can also be provided.
-                        <br/>
-                        <br/>
                         Note that the batch jobs and streaming jobs share a range of valid job ids. OpenMPF guarantees
                         that the ids of a streaming job and a batch job will be unique. Also, note that all provided
                         URIs must be properly encoded.
+                        <br/>
+                        <br/>
+                        Within media, an optional metadata object containing String key-value pairs can override media
+                        inspection once the required metadata information is provided for audio, image, generic, and
+                        video jobs. For media metadata, note that optional parameters like `ROTATION` and
+                        `HORIZONTAL_FLIP` can also be provided.
                         <br/>
                         <br/>
                         The body of a POST job creation request will be similar to this example which uses a OCV FACE DETECTION (WITH MOG MOTION PREPROCESSOR) PIPELINE.  Some unrequired parameters are omitted. Note that this example makes use of overloading by jobProperties, algorithmProperties and mediaProperties:
