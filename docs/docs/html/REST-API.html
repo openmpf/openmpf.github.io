@@ -145,7 +145,7 @@
 <body>
     <div style='page-break-after:always'>
         <h1>OpenMPF Workflow Manager REST API</h1>
-        <h2>Version 5.0.0 (build 20200616)</h2>
+        <h2>Version 5.1.0 (build 20200804)</h2>
         <br/>
         <p><i><font size="3">NOTICE</font></i></p>
         <p><i><font size="3">
@@ -1896,6 +1896,12 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
                         in the pipeline. For algorithmProperties, the key should be the algorithm name, and the value
                         should be a Map of String key-value pairs representing properties specific to the named
                         algorithm.
+                        <br/>
+                        <br/>
+                        Within media, an optional metadata object containing String key-value pairs can override media
+                        inspection once the required metadata information is provided for audio, image, generic, and
+                        video jobs. For media metadata, note that optional parameters like `ROTATION` and `HORIZONTAL_FLIP`
+                        can also be provided.
                         <br/>
                         <br/>
                         Note that the batch jobs and streaming jobs share a range of valid job ids. OpenMPF guarantees
