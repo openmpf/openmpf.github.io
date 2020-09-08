@@ -221,10 +221,12 @@ Below is an example of the structure of a simple component. This component exten
 [`mpf_component_util.VideoCapture`](#mpf_component_utilvideocapture). You would replace the call to
 `run_detection_algorithm_on_frame` with your component-specific logic.
 ```python
+import logging
+
 import mpf_component_api as mpf
 import mpf_component_util as mpf_util
 
-logger = mpf.configure_logging('my-component.log', __name__ == '__main__')
+logger = logging.getLogger('MyComponent')
 
 class MyComponent(mpf_util.VideoCaptureMixin, object):
     detection_type = 'FACE'
@@ -1155,11 +1157,17 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 
 ## Logging
-It recommended that components use the logger returned from:
-<br> `mpf_component_api.configure_logging(log_file_name, debug=False, replace_existing_config=True)`. 
-The logger will write log messages to standard out. When `debug` is false, the log messages will also be written to `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<log_file_name>.log` Note that multiple instances of the same component 
-can log to the same file. Also, logging content can span multiple lines. The following log levels are supported: 
-`FATAL, ERROR, WARN, INFO, DEBUG`.
+It recommended that components use Python's built-in 
+[`logging` module.](https://docs.python.org/3/library/logging.html) The component should 
+`import logging` and call `logging.getLogger('<componentName>')` to get a logger instance. 
+The component should not configure logging itself. The component executor will configure the 
+`logging` module for the component. The logger will write log messages to standard error and 
+`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`. Note that multiple instances of the 
+same component can log to the same file. Also, logging content can span multiple lines. 
+
+The following log levels are supported: `FATAL, ERROR, WARN, INFO, DEBUG`. 
+The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 
+verbosity. When `LOG_LEVEL` is absent, `INFO` is used.
 
 The format of the log messages is:
 ```

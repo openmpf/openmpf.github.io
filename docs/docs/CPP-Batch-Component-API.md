@@ -140,7 +140,6 @@ string GetRunDirectory()
 string run_dir = GetRunDirectory();
 string plugin_path = run_dir + "/SampleComponent";
 string config_path = plugin_path + "/config";
-string logconfig_file = config_path + "/Log4cxxConfig.xml";
 ```
 
 ### Init()
@@ -1042,7 +1041,7 @@ It is recommended that C++ components are organized according to the following d
 
 ```
 componentName
-├── config - Logging and other component-specific configuration
+├── config - Optional component-specific configuration files
 ├── descriptor
 │   └── descriptor.json
 └── lib
@@ -1053,41 +1052,25 @@ Once built, components should be packaged into a .tar.gz containing the contents
 
 
 ## Logging
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for 
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
+The component executor will configure log4cxx globally. Components should call 
+`log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you 
+are using a different logging framework, you should make sure its behavior is similar to how
+the component executor configures log4cxx as described below. 
 
-It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for OpenMPF Component logging.
+The following log LEVELs are supported: `FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
+The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 
+verbosity. When `LOG_LEVEL` is absent, `INFO` is used.
 
-Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.
+Note that multiple instances of the same component can log to the same file. 
+Also, logging content can span multiple lines.
 
-Log files should be output to:
-`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`
+The logger will write to both standard error and 
+`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`.
 
-Each log statement must take the form:
+Each log statement will take the form:
 `DATE TIME LEVEL CONTENT`
-
-The following log LEVELs are supported:
-`FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
 
 For example:
 `2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]`
-
-The following configuration can be used to match the format of other OpenMPF logs:
-
-```xml
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-
-  <!-- Output the log message to log file-->
-  <appender name="SAMPLECOMPONENT-FILE" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="file" value="${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log" />
-    <param name="DatePattern" value="'.'yyyy-MM-dd" />
-    <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%d %p [%t] %c{36}:%L - %m%n" />
-    </layout>
-  </appender>
-
-  <logger name= "SampleComponent" additivity="false">
-    <level value="INFO"/>
-    <appender-ref ref="SAMPLECOMPONENT-FILE"/>
-  </logger>
-
-</log4j:configuration>
-```

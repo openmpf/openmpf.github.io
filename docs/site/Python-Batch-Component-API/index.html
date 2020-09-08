@@ -477,10 +477,12 @@ the descriptor format.</p>
 <a href="#mpf_component_utilvideocapturemixin"><code>mpf_component_util.VideoCaptureMixin</code></a> to simplify the use of
 <a href="#mpf_component_utilvideocapture"><code>mpf_component_util.VideoCapture</code></a>. You would replace the call to
 <code>run_detection_algorithm_on_frame</code> with your component-specific logic.</p>
-<pre><code class="python">import mpf_component_api as mpf
+<pre><code class="python">import logging
+
+import mpf_component_api as mpf
 import mpf_component_util as mpf_util
 
-logger = mpf.configure_logging('my-component.log', __name__ == '__main__')
+logger = logging.getLogger('MyComponent')
 
 class MyComponent(mpf_util.VideoCaptureMixin, object):
     detection_type = 'FACE'
@@ -1484,11 +1486,16 @@ multiple instantiations of the component, each running as a separate service.</p
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input
 (i.e. when processing the same job).</p>
 <h2 id="logging">Logging</h2>
-<p>It recommended that components use the logger returned from:
-<br> <code>mpf_component_api.configure_logging(log_file_name, debug=False, replace_existing_config=True)</code>. 
-The logger will write log messages to standard out. When <code>debug</code> is false, the log messages will also be written to <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;log_file_name&gt;.log</code> Note that multiple instances of the same component 
-can log to the same file. Also, logging content can span multiple lines. The following log levels are supported: 
-<code>FATAL, ERROR, WARN, INFO, DEBUG</code>.</p>
+<p>It recommended that components use Python's built-in 
+<a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module.</a> The component should 
+<code>import logging</code> and call <code>logging.getLogger('&lt;componentName&gt;')</code> to get a logger instance. 
+The component should not configure logging itself. The component executor will configure the 
+<code>logging</code> module for the component. The logger will write log messages to standard error and 
+<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>. Note that multiple instances of the 
+same component can log to the same file. Also, logging content can span multiple lines. </p>
+<p>The following log levels are supported: <code>FATAL, ERROR, WARN, INFO, DEBUG</code>. 
+The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging 
+verbosity. When <code>LOG_LEVEL</code> is absent, <code>INFO</code> is used.</p>
 <p>The format of the log messages is:</p>
 <pre><code>DATE TIME LEVEL [SOURCE_FILE:LINE_NUMBER] - MESSAGE
 </code></pre>

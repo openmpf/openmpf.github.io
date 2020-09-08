@@ -833,7 +833,7 @@ track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT D
 <h2 id="component-packaging">Component Packaging</h2>
 <p>It is recommended that C++ components are organized according to the following directory structure:</p>
 <pre><code>componentName
-├── config - Logging and other component-specific configuration
+├── config - Component-specific configuration files
 ├── descriptor
 │   └── descriptor.json
 └── lib
@@ -842,35 +842,23 @@ track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT D
 
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
-<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for OpenMPF Component logging.</p>
-<p>Note that multiple instances of the same component can log to the same file. Also, logging content can span multiple lines.</p>
-<p>Log files should be output to:
-<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code></p>
-<p>Each log statement must take the form:
+<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
+The component executor will configure log4cxx globally. Components should call 
+<code>log4cxx::Logger::getLogger("&lt;componentName&gt;")</code> to a get a reference to the logger. If you 
+are using a different logging framework, you should make sure its behavior is similar to how
+the component executor configures log4cxx as described below. </p>
+<p>The following log LEVELs are supported: <code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.
+The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging 
+verbosity. When <code>LOG_LEVEL</code> is absent, <code>INFO</code> is used.</p>
+<p>Note that multiple instances of the same component can log to the same file. 
+Also, logging content can span multiple lines.</p>
+<p>The logger will write to both standard error and 
+<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>.</p>
+<p>Each log statement will take the form:
 <code>DATE TIME LEVEL CONTENT</code></p>
-<p>The following log LEVELs are supported:
-<code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.</p>
 <p>For example:
 <code>2016-02-09 13:42:42,341 INFO - Starting sample-component: [  OK  ]</code></p>
-<p>The following configuration can be used to match the format of other OpenMPF logs:</p>
-<pre><code class="xml">&lt;log4j:configuration xmlns:log4j=&quot;http://jakarta.apache.org/log4j/&quot;&gt;
-
-  &lt;!-- Output the log message to log file--&gt;
-  &lt;appender name=&quot;SAMPLECOMPONENT-FILE&quot; class=&quot;org.apache.log4j.DailyRollingFileAppender&quot;&gt;
-    &lt;param name=&quot;file&quot; value=&quot;${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log&quot; /&gt;
-    &lt;param name=&quot;DatePattern&quot; value=&quot;'.'yyyy-MM-dd&quot; /&gt;
-    &lt;layout class=&quot;org.apache.log4j.PatternLayout&quot;&gt;
-      &lt;param name=&quot;ConversionPattern&quot; value=&quot;%d %p [%t] %c{36}:%L - %m%n&quot; /&gt;
-    &lt;/layout&gt;
-  &lt;/appender&gt;
-
-  &lt;logger name= &quot;SampleComponent&quot; additivity=&quot;false&quot;&gt;
-    &lt;level value=&quot;INFO&quot;/&gt;
-    &lt;appender-ref ref=&quot;SAMPLECOMPONENT-FILE&quot;/&gt;
-  &lt;/logger&gt;
-
-&lt;/log4j:configuration&gt;
-</code></pre>
               
             </div>
           </div>
