@@ -64,6 +64,15 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-510-xxx-2020">OpenMPF 5.1.0: XXX 2020</a></li>
+                
+                    <li><a class="toctree-l4" href="#c-batch-component-api">C++ Batch Component API</a></li>
+                
+                    <li><a class="toctree-l4" href="#python-batch-component-api">Python Batch Component API</a></li>
+                
+                    <li><a class="toctree-l4" href="#docker-component-base-images">Docker Component Base Images</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-501-july-2020">OpenMPF 5.0.1: July 2020</a></li>
                 
             
@@ -313,14 +322,42 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<!--
-# OpenMPF 5.1.0: XXX 2020
-
+<h1 id="openmpf-510-xxx-2020">OpenMPF 5.1.0: XXX 2020</h1>
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
-- <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
--->
-
+<ul>
+<li><span style="color:red">TODO: This new component detects objects in images and videos by making use of an <a href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/">NVIDIA TensorRT Inference Server</a> (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels">COCO labels</a>. Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md">README</a>.</span></li>
+</ul>
+<h2 id="c-batch-component-api">C++ Batch Component API</h2>
+<ul>
+<li>Component code should no longer configure Log4CXX. The component executor now handles 
+  configuring Log4CXX. Component code should call <code>log4cxx::Logger::getLogger("&lt;component-name&gt;")</code>
+  to get access to the logger. Calls to <code>log4cxx::xml::DOMConfigurator::configure(logconfig_file);</code>
+  should be removed. </li>
+</ul>
+<h2 id="python-batch-component-api">Python Batch Component API</h2>
+<ul>
+<li>Component code should no longer configure logging. The component executor now handles 
+  configuring logging. Calls to <code>mpf.configure_logging</code> should be replaced with 
+  <code>logging.getLogger('&lt;component-name&gt;')</code>.</li>
+</ul>
+<h2 id="docker-component-base-images">Docker Component Base Images</h2>
+<ul>
+<li>
+<p>In order to support running a component through the CLI runner, C++ component developers should 
+  set the <code>LD_LIBRARY_PATH</code> environment variable in the final stage of their Dockerfiles. It should 
+  generally be set like: <code>ENV LD_LIBRARY_PATH $PLUGINS_DIR/&lt;component-name&gt;/lib</code>.</p>
+</li>
+<li>
+<p>Because of the logging changes mentioned above, components no longer need to set the 
+  <code>COMPONENT_LOG_NAME</code> environment variable in their Dockerfiles.</p>
+</li>
+<li>
+<p>Component images now support running the component on the command line. See the 
+  <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cli_runner/README.md">README</a> 
+  for more information.</p>
+</li>
+</ul>
 <h1 id="openmpf-501-july-2020">OpenMPF 5.0.1: July 2020</h1>
 <h2>Updates</h2>
 

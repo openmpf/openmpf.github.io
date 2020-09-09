@@ -1,12 +1,36 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
-<!--
 # OpenMPF 5.1.0: XXX 2020
 
 <h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
 - <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
--->
+
+## C++ Batch Component API ##
+- Component code should no longer configure Log4CXX. The component executor now handles 
+  configuring Log4CXX. Component code should call `log4cxx::Logger::getLogger("<component-name>")`
+  to get access to the logger. Calls to `log4cxx::xml::DOMConfigurator::configure(logconfig_file);`
+  should be removed. 
+  
+  
+## Python Batch Component API ##
+- Component code should no longer configure logging. The component executor now handles 
+  configuring logging. Calls to `mpf.configure_logging` should be replaced with 
+  `logging.getLogger('<component-name>')`.
+  
+  
+## Docker Component Base Images ##
+- In order to support running a component through the CLI runner, C++ component developers should 
+  set the `LD_LIBRARY_PATH` environment variable in the final stage of their Dockerfiles. It should 
+  generally be set like: `ENV LD_LIBRARY_PATH $PLUGINS_DIR/<component-name>/lib`.
+
+- Because of the logging changes mentioned above, components no longer need to set the 
+  `COMPONENT_LOG_NAME` environment variable in their Dockerfiles.
+
+- Component images now support running the component on the command line. See the 
+  [README](https://github.com/openmpf/openmpf-docker/blob/master/components/cli_runner/README.md) 
+  for more information.
+
 
 # OpenMPF 5.0.1: July 2020
 
