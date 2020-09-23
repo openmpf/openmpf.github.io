@@ -1,12 +1,90 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
-<!--
-# OpenMPF 5.1.0: XXX 2020
+# OpenMPF 5.1.0: September 2020
 
-<h2 style="color:red">TensorRT Inference Server (TRTIS) Object Detection Component</h2>
+<h2>Optionally Skip Media Inspection</h2>
 
-- <span style="color:red">TODO: This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/plugin-files/models/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/trtisdetection/README.md).</span>
--->
+- The Workflow Manager will skip media inspection if all of the required media metadata is provided in the job request. The `MEDIA_HASH` and `MIME_TYPE` fields are always required. Depending on the media data type, other fields may be required or optional:
+    - Images
+        - Required: `FRAME_WIDTH`, `FRAME_HEIGHT`
+        - Optional: `HORIZONTAL_FLIP`, `ROTATION`
+    - Videos 
+        - Required: `FRAME_WIDTH`, `FRAME_HEIGHT`, `FRAME_COUNT`, `FPS`, `DURATION` 
+        - Optional: `HORIZONTAL_FLIP`, `ROTATION`
+    - Audio files
+        - Required: `DURATION`
+
+<h2>Updates</h2>
+
+- Update OpenMPF Python SDK exception handling for Python 3. Now instead of raising an `EnvironmentError`, which has been deprecated in Python 3, the SDK will raise an `mpf.DetectionError` or allow the underlying exception to be thrown.
+
+# OpenMPF 5.0.7: September 2020
+
+<h2>TensorRT Inference Server (TRTIS) Object Detection Component</h2>
+
+- This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. 
+- By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/TrtisDetection/plugin-files/models/ip_irv2_coco/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TrtisDetection/README.md).
+
+# OpenMPF 5.0.6: August 2020
+
+<h2>Enable OcvDnnDetection to Annotate Feed-forward Detections</h2>
+
+- The OcvDnnDetection component can now by configured to operate only on certain feed-forward detections and annotate them with supplementary information. For example, the following pipeline can be configured to generate detections that have both `CLASSIFICATION` and `COLOR` detection properties:
+
+```
+DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
+```
+  
+- For example:
+  
+```
+  "detectionProperties": {
+    "CLASSIFICATION": "car",
+    "CLASSIFICATION CONFIDENCE LIST": "0.397336",
+    "CLASSIFICATION LIST": "car",
+    "COLOR": "blue",
+    "COLOR CONFIDENCE LIST": "0.93507; 0.055744",
+    "COLOR LIST": "blue; gray"
+  }
+```
+
+- The OcvDnnDetection component now supports the following properties:
+    - `CLASSIFICATION_TYPE`: Set this value to change the `CLASSIFICATION*` part of each output property name to something else. For example, setting it to `COLOR` will generate `COLOR`, `COLOR LIST`, and `COLOR CONFIDENCE LIST`. When handling feed-foward detections, the pre-existing `CLASSIFICATION*` properties will be carried over and the `COLOR*` properties will be added to the detection.
+    - `FEED_FORWARD_WHITELIST_FILE`: When `FEED_FORWARD_TYPE` is provided and not set to `NONE`, only feed-forward detections with class names contained in the specified file will be processed. For, example, a file with only "car" in it will result in performing the exclude behavior (below) for all feed-foward detections that do not have a `CLASSIFICATION` of "car".
+    - `FEED_FORWARD_EXCLUDE_BEHAVIOR`: Specifies what to do when excluding detections not specified in the `FEED_FORWARD_WHITELIST_FILE`. Acceptable values are:
+        - `PASS_THROUGH`: Return the excluded detections, without modification, along with any annotated detections.
+        - `DROP`: Don't return the excluded detections. Only return annotated detections.
+
+
+<h2>Updates</h2>
+
+- Make interop package work with Java 8 to better support exernal job producers and consumers.
+
+# OpenMPF 5.0.5: August 2020
+
+<h2>Updates</h2>
+
+- Configure Camel not to auto-acknowledge messages. Users can now see the number of pending messages in the ActiveMQ management console for queues consumed by the Workflow Manager.
+- Improve Tesseract OSD fallback behavior. This prevents selecting the OSD rotation from the fallback pass without the OSD script from the fallback pass.
+
+# OpenMPF 5.0.4: August 2020
+
+<h2>Updates</h2>
+
+- Retry job callbacks when they fail. The Workflow Manager now supports the `http.callback.timeout.ms` and `http.callback.retries` system properties.
+- Drop "duplicate paged in from cursor" DLQ messages.
+
+# OpenMPF 5.0.3: July 2020
+
+<h2>Updates</h2>
+
+- Update ActiveMQ to 5.16.0.
+
+# OpenMPF 5.0.2: July 2020
+
+<h2>Updates</h2>
+
+- Disable video segmentation for ACS Speech Detection to prevent issues when generating speaker ids.
 
 # OpenMPF 5.0.1: July 2020
 
