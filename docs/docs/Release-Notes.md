@@ -1,6 +1,36 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
 
-# OpenMPF 5.1.0: September 2020
+# OpenMPF 5.1.0: November 2020
+
+<h2>Media Inspection Improvements</h2>
+
+- The Workflow Manager will now handle video files that don't have a video stream as an `AUDIO` type, and handle video files that don't have a video or audio stream as an `UNKNOWN` type. The JSON output object  contains a new `media.mediaType` field that will be set to `VIDEO`, `AUDIO`, `IMAGE`, or `UNKNOWN`.
+- The Workflow Manager now configures Tika with [custom MIME type support](https://github.com/openmpf/openmpf/blob/master/trunk/workflow-manager/src/main/resources/org/apache/tika/mime/custom-mimetypes.xml). Currently, this enables the detection of `video/vnd.dlna.mpeg-tts` and `image/jxr` MIME types.
+- If the Workflow Manager cannot use Tika to determine the media MIME type then it will fall back to using the Linux `file` command with a [custom magicfile](https://github.com/openmpf/openmpf/blob/master/trunk/workflow-manager/src/main/resources/magic/custom-magic).
+- OpenMPF now supports Apple-optimized PNGs and HEIC images. Refer to the Bug Fixes section below.
+    
+<h2>EAST Text Region Detection Component Improvements</h2>
+
+- The `TEMPORARY_PADDING` property has been separated into `TEMPORARY_PADDING_X` and `TEMPORARY_PADDING_Y` so that X and Y padding can be configured independently.
+- The `MERGE_MIN_OVERLAP` property has been renamed to `MERGE_OVERLAP_THRESHOLD` so that setting it to a value of 0 will merge all regions that touch, regardless of how small the amount of overlap.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/EastTextDetection/README.md#properties) for details.
+    
+<h2>MPFVideoCapture and MPFImageReader Tool Improvements</h2>
+    
+- These tools now support a `ROTATION_FILL_COLOR` property for setting the fill color for pixels near the corners and edges of frames when performing non-orthogonal rotations. Previously, the color was hardcoded to `BLACK`. That is still the default setting for most components. Now the color can be set to `WHITE`, which is the default setting for the Tesseract component.
+- These tools now support a `ROTATION_THRESHOLD` property for adjusting the threshold at which the frame transformer performs rotation. Previously, the value was hardcoded to 0.1 degrees. That is still the default value. Rotation is not performed on any `ROTATION` value less than that threshold. The motivation is that some algorithms detect small rotations (for example, on structured text) when there is no rotation. In such cases rotating the frame results in fewer detections.
+- OpenMPF now uses FFmpeg when counting video frames. Refer to the Bug Fixes section below.
+
+<h2><span style="color:red">Keyword Tagging Component</span></h2>
+
+- This new component performs the same keyword tagging behavior that was previously part of the Tesseract component, but does so on feed-forward tracks that generate detections with `TEXT` and `TRANSCRIPT` properties. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/KeywordTagging/README.md) for details.
+- In addition to the Tesseract component, keyword tagging behavior has been removed from the Tika Text component and ACS OCR component.
+- Example pipelines have been added to the following components which make use of a final Keyword Tagging component stage:
+    - Tesseract
+    - Tika Text
+    - ACS OCR
+    - Sphinx
+    - ACS Speech
 
 <h2>Optionally Skip Media Inspection</h2>
 
@@ -8,8 +38,8 @@
     - Images
         - Required: `FRAME_WIDTH`, `FRAME_HEIGHT`
         - Optional: `HORIZONTAL_FLIP`, `ROTATION`
-    - Videos 
-        - Required: `FRAME_WIDTH`, `FRAME_HEIGHT`, `FRAME_COUNT`, `FPS`, `DURATION` 
+    - Videos
+        - Required: `FRAME_WIDTH`, `FRAME_HEIGHT`, `FRAME_COUNT`, `FPS`, `DURATION`
         - Optional: `HORIZONTAL_FLIP`, `ROTATION`
     - Audio files
         - Required: `DURATION`
@@ -18,11 +48,34 @@
 
 - Update OpenMPF Python SDK exception handling for Python 3. Now instead of raising an `EnvironmentError`, which has been deprecated in Python 3, the SDK will raise an `mpf.DetectionError` or allow the underlying exception to be thrown.
 
+<h2>Bug Fixes</h2>
+
+- [[#1028](https://github.com/openmpf/openmpf/issues/1028)] OpenMPF can now properly handle Apple-optimized PNGs, which have a non-standard data chunk named CgBI before the IHDR chunk. The Workflow Manager uses [pngdefry](http://www.jongware.com/pngdefry.html) to convert the image into a standard PNG for processing. Before this fix, Tika would throw an error when trying to determine the MIME type of the Apple-optimized PNG.
+- [[#1130](https://github.com/openmpf/openmpf/issues/1130)] OpenMPF can now properly handle HEIC images. The Workflow Manager uses [libheif](https://github.com/strukturag/libheif) to convert the image into a standard PNG for processing. Before this fix, the HEIC image was sometimes falsely identified as a video and the Workflow Manager would fail to count the number of frames.
+- [[#1171](https://github.com/openmpf/openmpf/issues/1171)] The MIME type in the JSON output object is no longer null when there is a frame counting exception.
+- [[#1192](https://github.com/openmpf/openmpf/issues/1192)] When processing videos, the frame count is now obtained from both OpenCV and FFmpeg. The lower of the two is used. If they don't match, a `FRAME_COUNT` warning is generated. Before this fix, on some videos OpenCV would return frame counts that were magnitudes higher than the frames that could actually be read. This resulted in failing to process many video segments with a  `BAD_FRAME_SIZE` error.
+
+# OpenMPF 5.0.9: October 2020
+
+<h2>Bug Fixes</h2>
+
+- [[#1200](https://github.com/openmpf/openmpf/issues/1200)] The MPFVideoCapture and MPFImageReader tools now properly handle cropping to frame regions when the region coordinates fall outside of the frame boundary. There was a bug that would result in an OpenCV error. Note that the bug only occurred when cropping was not performed with rotation or flipping.
+
+# OpenMPF 5.0.8: October 2020
+
+<h2>Updates</h2>
+
+- The Tesseract component now supports a `TESSDATA_MODELS_SUBDIRECTORY` property. The component will look for tessdata files in `<MODELS_DIR_PATH>/<TESSDATA_MODELS_SUBDIRECTORY>`. This allows users to easily switch between `tessdata`, `tessdata_best`, and `tessdata_fast` subdirectories.
+
+<h2>Bug Fixes</h2>
+
+- [[#1199](https://github.com/openmpf/openmpf/issues/1199)] Added missing synchronized to InProgressBatchJobsService, which was resulting in some jobs staying `IN_PROGRESS` indefinitely.
+
 # OpenMPF 5.0.7: September 2020
 
 <h2>TensorRT Inference Server (TRTIS) Object Detection Component</h2>
 
-- This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead. 
+- This new component detects objects in images and videos by making use of an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (TRTIS), and calculates features that can later be used by other systems to recognize the same object in other media. We provide support for running the server as a separate service during a Docker deployment, but an external server instance can be used instead.
 - By default, the ip_irv2_coco model is supported and will optionally classify detected objects using [COCO labels](https://github.com/openmpf/openmpf-components/blob/master/cpp/TrtisDetection/plugin-files/models/ip_irv2_coco/ip_irv2_coco.labels). Additionally, features can be generated for whole frames, automatically-detected object regions, and user-specified regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TrtisDetection/README.md).
 
 # OpenMPF 5.0.6: August 2020
@@ -34,9 +87,9 @@
 ```
 DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 ```
-  
+
 - For example:
-  
+
 ```
   "detectionProperties": {
     "CLASSIFICATION": "car",
@@ -199,7 +252,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
     - `[GET] /rest/actions`, `[GET] /rest/tasks`, `[GET] /rest/pipelines`
     - `[DELETE] /rest/actions`, `[DELETE] /rest/tasks`, `[DELETE] /rest/pipelines`
     - `[POST] /rest/actions` , `[POST] /rest/tasks`, `[POST] /rest/pipelines`
-- All of the endpoints above are new with the exception of `[GET] /rest/pipelines`. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API. 
+- All of the endpoints above are new with the exception of `[GET] /rest/pipelines`. The endpoint has changed since the last version of OpenMPF. Some fields in the response JSON have been removed and renamed. Also, it now returns a collection of tasks for each pipelines. Refer to the REST API.
 - `[GET] /rest/algorithms` can be used to get information about algorithms. Note that algorithms are tied to registered components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the associated component's Docker container so it self-registers with the Workflow Manager.
 
 <h2>Incomplete Actions, Tasks, and Pipelines</h2>
@@ -308,7 +361,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 
 <h2>Updates</h2>
 
-- Now silently discarding ActiveMQ DLQ "Suppressing duplicate delivery on connection" messages in addition to "duplicate from store" messages. 
+- Now silently discarding ActiveMQ DLQ "Suppressing duplicate delivery on connection" messages in addition to "duplicate from store" messages.
 
 # OpenMPF 4.1.5: March 2020
 
@@ -458,7 +511,7 @@ within a Docker container. This isolates the build and execution environment fro
 
 <h2>Late Additions: December 2019</h2>
 
-- Transitioned from using a mySQL persistent database to PostgreSQL to support users that use an external PostgreSQL database in the cloud. 
+- Transitioned from using a mySQL persistent database to PostgreSQL to support users that use an external PostgreSQL database in the cloud.
 - Updated the EAST component to support a `TEMPORARY_PADDING` and `FINAL_PADDING` property. The first property determines how much padding is added to detections during the non-maximum suppression or merging step. This padding is effectively removed from the final detections. The second property is used to control the final amount of padding on the output regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/EastTextDetection/README.md#properties).
 
 # OpenMPF 4.0.0: February 2019
