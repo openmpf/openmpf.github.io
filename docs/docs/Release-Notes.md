@@ -21,7 +21,13 @@
 - These tools now support a `ROTATION_THRESHOLD` property for adjusting the threshold at which the frame transformer performs rotation. Previously, the value was hardcoded to 0.1 degrees. That is still the default value. Rotation is not performed on any `ROTATION` value less than that threshold. The motivation is that some algorithms detect small rotations (for example, on structured text) when there is no rotation. In such cases rotating the frame results in fewer detections.
 - OpenMPF now uses FFmpeg when counting video frames. Refer to the Bug Fixes section below.
 
-<h2><span style="color:red">Keyword Tagging Component</span></h2>
+<h2>Azure Cognitive Services (ACS) Form Detection Component</h2>
+
+- This new component utilizes the [Azure Cognitive Services Form Detection REST endpoint](https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2/operations/AnalyzeLayoutAsync) to extract formatted text from documents (PDFs) and images. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureFormDetection/README.md) for details.
+- This component is capable of performing detections using a specified ACS endpoint URL. For example, different endpoints support receipt detection, business card detection, layout analysis, and support for custom models trained with or without labeled data.
+- This component may output the following detection properties depending on the endpoint, model, and media being processed: `TEXT`, `TABLE_CSV_OUTPUT`, `KEY_VALUE_PAIRS_JSON`, and `DOCUMENT_JSON_FIELDS`.
+
+<h2>Keyword Tagging Component</h2>
 
 - This new component performs the same keyword tagging behavior that was previously part of the Tesseract component, but does so on feed-forward tracks that generate detections with `TEXT` and `TRANSCRIPT` properties. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/KeywordTagging/README.md) for details.
 - In addition to the Tesseract component, keyword tagging behavior has been removed from the Tika Text component and ACS OCR component.
