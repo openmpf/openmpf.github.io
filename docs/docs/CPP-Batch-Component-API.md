@@ -444,6 +444,15 @@ MPFJob(
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
+Job properties can also be set through environment variables prefixed with `MPF_PROP_`. This allows 
+users to set job properties in their 
+[docker-compose files.](https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96) 
+These will take precedence over all other property types (job, algorithm, media, etc). It is not 
+possible to change the value of properties set via environment variables at runtime and therefore 
+they should only be used to specify properties that will not change throughout the entire lifetime 
+of the service (e.g. Docker container).
+
+
 #### MPFImageJob
 Extends [`MPFJob`](#mpfjob)
 
