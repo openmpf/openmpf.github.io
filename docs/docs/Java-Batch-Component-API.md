@@ -442,6 +442,15 @@ protected MPFJob(
 | mediaProperties <a name="media-properties"></a> | `Map<String, String>` | Metadata about the media associated with the job. The key is the property name and value is the property value. The entries in the map vary depend on the job type. They are defined in the specific Job's API description. |
 
 
+Job properties can also be set through environment variables prefixed with `MPF_PROP_`. This allows
+users to set job properties in their
+[docker-compose files.](https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96)
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).
+
+
 #### MPFImageJob
 Extends [`MPFJob`](#mpfjob)
 
