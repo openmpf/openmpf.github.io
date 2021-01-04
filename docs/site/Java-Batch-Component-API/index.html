@@ -845,6 +845,13 @@ public boolean supports(MPFDataType dataType) {
 </tr>
 </tbody>
 </table>
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).</p>
 <h4 id="mpfimagejob">MPFImageJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
 <p>Class containing data used for detection of objects in image files.</p>
