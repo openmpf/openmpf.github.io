@@ -58,7 +58,7 @@
          ...
 ```
 
-- Note that you can use the `OUTPUT_MERGE_WITH_PREVIOUS_TASK` setting on multiple tasks. For example, if you set it as a job property it will be applied to all tasks (with the exception of Markup - in which case the task before Markup is used), so you will only get the output of the last task in the pipeline. The last task will in inherit the detection type and algorithm of the first task in the pipeline.
+- Note that you can use the `OUTPUT_MERGE_WITH_PREVIOUS_TASK` setting on multiple tasks. For example, if you set it as a job property it will be applied to all tasks (with the exception of Markup - in which case the task before Markup is used), so you will only get the output of the last task in the pipeline. The last task will inherit the detection type and algorithm of the first task in the pipeline.
 
 <h2>Tesseract Custom Dictionaries</h2>
 
