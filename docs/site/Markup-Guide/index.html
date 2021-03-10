@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Markup Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Markup Guide";
+    var mkdocs_page_input_path = "Markup-Guide.md";
+    var mkdocs_page_url = "/Markup-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../index.html">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>General</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Release-Notes/index.html">Release Notes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Install-Guide/index.html">Install Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../User-Guide/index.html">User Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Node-Guide/index.html">Node Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Markup Guide</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configuration">Configuration</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#video-markup-icons">Video Markup Icons</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#video-markup-examples">Video Markup Examples</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#video-encoder-considerations">Video Encoder Considerations</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Distribution-And-Licensing/index.html">Distribution and Licensing</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Components</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Architecture</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../REST-API/index.html">REST API</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>General &raquo;</li>
+        
+      
+    
+    <li>Markup Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <blockquote>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, 
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). 
+Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
+</blockquote>
+<h1 id="overview">Overview</h1>
+<p>OpenMPF provides a Markup component that can be used to draw bounding boxes and labels on images and videos. The
+component provides one task called <code>OCV GENERIC MARKUP TASK</code> that can be added to the end of any image and/or video
+pipeline. By default, many other OpenMPF components provide <code>* (WITH MARKUP)</code> pipelines that use this task. Note that
+the Markup component will not appear in the list of components in the Component Registration web UI because it's a core
+feature of OpenMPF.</p>
+<h1 id="configuration">Configuration</h1>
+<p>The following properties can be set as job properties or algorithm properties on the <code>MARKUPCV</code> algorithm. Also, the
+default values can be changed be setting the system property listed for each:</p>
+<ul>
+<li><code>MARKUP_LABELS_ENABLED</code><ul>
+<li>System property: <code>markup.labels.enabled</code></li>
+<li>Default value: <code>true</code>  </li>
+<li>If true, add a label to each detection box.</li>
+</ul>
+</li>
+<li><code>MARKUP_LABELS_ALPHA</code><ul>
+<li>System property: <code>markup.labels.alpha</code></li>
+<li>Default value: <code>0.5</code></li>
+<li>Value in range [0.0, 1.0] that specifies how transparent the labels and frame number overlay should be. 0.0 is invisible (not recommended) and 1.0 is fully opaque.</li>
+</ul>
+</li>
+<li><code>MARKUP_LABELS_FROM_DETECTIONS</code><ul>
+<li>System property: <code>markup.labels.from.detections</code></li>
+<li>Default value: <code>false</code></li>
+<li>If true, use detection-level details to populate the bounding box labels. Otherwise, use track-level details.</li>
+</ul>
+</li>
+<li><code>MARKUP_LABELS_TEXT_PROP_TO_SHOW</code><ul>
+<li>System property: <code>markup.labels.text.prop.to.show</code></li>
+<li>Default value: <code>CLASSIFICATION</code></li>
+<li>Name of the text property to show in the label before the numeric property. If using track-level details, and this property is not present at the track level, then the detection property for the track's exemplar will be used. Leave empty to omit.</li>
+<li>At most 10 characters of the text value will be displayed in the label.</li>
+</ul>
+</li>
+<li><code>MARKUP_LABELS_NUMERIC_PROP_TO_SHOW</code><ul>
+<li>System property: <code>markup.labels.numeric.prop.to.show</code></li>
+<li>Default value: <code>CONFIDENCE</code></li>
+<li>Name of the numeric property to show in the label after the text property. If using track-level details, and this property is not present at the track level, then the detection property for the track's exemplar will be used. Leave empty to omit. Set to CONFIDENCE to use the confidence value.</li>
+<li>Numeric values are displayed with a precision of 3 decimal places in the label.</li>
+</ul>
+</li>
+<li><code>MARKUP_LABELS_CHOOSE_SIDE_ENABLED</code><ul>
+<li>System property: <code>markup.labels.choose.side.enabled</code></li>
+<li>Default value: <code>true</code></li>
+<li>Labels will always snap to the top-most corner of the box. If true, snap the label to the side of the corner that produces the least amount of overhang. If false, always show the label on the right side of the corner.</li>
+</ul>
+</li>
+<li><code>MARKUP_BORDER_ENABLED</code><ul>
+<li>System property: <code>markup.border.enabled</code></li>
+<li>Default value: <code>false</code></li>
+<li>If true, generate the marked-up frame with a black border. Can be useful if boxes or labels extend beyond frame boundaries.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_EXEMPLAR_ICONS_ENABLED</code><ul>
+<li>System property: <code>markup.video.exemplar.icons.enabled</code></li>
+<li>Default value: <code>true</code></li>
+<li>If true, and labels are enabled, use an icon to indicate the exemplar detection for each track.</li>
+<li>The icons are only used in video markup. This is because every detection is an exemplar in image markup.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED</code><ul>
+<li>System property: <code>markup.video.box.source.icons.enabled</code></li>
+<li>Default value: <code>false</code></li>
+<li>If true, and labels are enabled, use icons to indicate the source of each bounding box. For example, if the box is the result of an algorithm detection, tracking performing gap fill, or Workflow Manager animation.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_MOVING_OBJECT_ICONS_ENABLED</code><ul>
+<li>System property: <code>markup.video.moving.object.icons.enabled</code></li>
+<li>Default value: <code>false</code></li>
+<li>If true, and labels are enabled, use icons to indicate if the object is considered moving or stationary. If using track-level details, and the <code>MOVING</code> property is not present at the track level, then the property for the track's exemplar will be used.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_FRAME_NUMBERS_ENABLED</code><ul>
+<li>System property: <code>markup.video.frame.numbers.enabled</code></li>
+<li>Default value: <code>true</code></li>
+<li>If true, add the frame number to each marked-up frame. This setting is independent of <code>MARKUP_LABELS_ENABLED</code>.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_ENCODER</code><ul>
+<li>System property: <code>markup.video.encoder</code></li>
+<li>Default value: <code>vp9</code></li>
+<li>Use <code>vp9</code> to generate VP9-encoded <code>.webm</code> video files. Use <code>h264</code> to generate H.264-encoded <code>.mp4</code> files. Use <code>mjpeg</code> to generate MJPEG-encoded <code>.avi</code> files. The <code>.webm</code> and <code>.mp4</code> files can display in most browsers, but take longer to generate.</li>
+<li>Please review the <a href="../Distribution-And-Licensing/index.html#usage-royalties">Usage Royalties</a> section of the Distribution and Licensing page before using the H.264 encoder for commercial purposes.</li>
+</ul>
+</li>
+<li><code>MARKUP_VIDEO_VP9_CRF</code><ul>
+<li>System property: <code>markup.video.vp9.crf</code></li>
+<li>Default value: <code>31</code></li>
+<li>The CRF value can be from 0-63. Lower values mean better quality. Recommended values range from 15-35, with 31 being recommended for 1080p HD video. This property is only used if generating VP9-encoded <code>.webm</code> files</li>
+</ul>
+</li>
+</ul>
+<h1 id="video-markup-icons">Video Markup Icons</h1>
+<table>
+<thead>
+<tr>
+<th>Icon</th>
+<th>Meaning</th>
+<th>Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img alt="Exemplar Icon" src="../img/markup/star.png" title="Exemplar Icon" /></td>
+<td>Track exemplar</td>
+<td><code>MARKUP_VIDEO_EXEMPLAR_ICONS_ENABLED</code></td>
+</tr>
+<tr>
+<td><img alt="Motion Icon" src="../img/markup/fast-forward.png" title="Motion Icon" /></td>
+<td>Track or detection is moving</td>
+<td><code>MARKUP_VIDEO_MOVING_OBJECT_ICONS_ENABLED</code></td>
+</tr>
+<tr>
+<td><img alt="Stationary Icon" src="../img/markup/anchor.png" title="Stationary Icon" /></td>
+<td>Track or detection is stationary</td>
+<td><code>MARKUP_VIDEO_MOVING_OBJECT_ICONS_ENABLED</code></td>
+</tr>
+<tr>
+<td><img alt="Detection Algorithm Icon" src="../img/markup/magnifying-glass.png" title="Detection Algorithm Icon" /></td>
+<td>Detection is the direct result of a component detection algorithm</td>
+<td><code>MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED</code></td>
+</tr>
+<tr>
+<td><img alt="Tracking Filled Gap Icon" src="../img/markup/paper-clip.png" title="Tracking Filled Gap Icon" /></td>
+<td>Detection is the result of a component performing tracking in an attempt to fill in the gaps between algorithm detections</td>
+<td><code>MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED</code></td>
+</tr>
+<tr>
+<td><img alt="Animation Icon" src="../img/markup/movie-camera.png" title="Animation Icon" /></td>
+<td>Detection is the result of the Workflow Manager interpolating (animating) the size and position of the bounding box to fill gaps between detections in the track</td>
+<td><code>MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="video-markup-examples">Video Markup Examples</h1>
+<p><img alt="Walking No Border Exemplar" src="../img/markup/walking-no-border-exemplar.jpg" title="Walking No Border Exemplar" /></p>
+<p>Above we show frame 94 of a marked up video. Frame numbers are enabled so the frame number is shown in the top-right corner. Exemplar icons are enabled, and since this detection is the track exemplar a star icon is shown in the label. Also, the label shows the track's <code>CLASSIFICATION</code> property followed by the track confidence. All of the examples shown in this section will display track-level information because <code>MARKUP_LABELS_FROM_DETECTIONS=false</code>. The circle represents the top-left corner of the detection. See <a href="../CPP-Batch-Component-API/index.html#rotation-and-horizontal-flip">this section</a> of the C++ Batch Component API for more information on flip and rotation.</p>
+<p><img alt="Walking With Border Algorithm Detection" src="../img/markup/walking-with-border-algorithm-detection.jpg" title="Walking With Border Algorithm Detection" /></p>
+<p>Above we show frame 25 of the marked up video. This time we configured markup to show a black border around the video frame. This is useful when the label extends beyond the edge of the original video frame, as shown here. Also, this time we configured markup to show icons indicating if the track is moving or stationary. The fast-forward icon at the start of the label indicates that this track is moving. Additionally, this time we configured markup to show icons indicating the bounding box source. The magnifying glass icon after the fast-forward icon indicates that this detection is a direct result of the component's detection algorithm. Note that the magnifying glass icon will be replaced with the star icon for exemplars.</p>
+<p><img alt="Walking With Border Animation" src="../img/markup/walking-with-border-animation.jpg" title="Walking With Border Animation" /></p>
+<p>The frame above shows a movie camera icon to indicate that the detection is the result of the Workflow Manager (WFM) interpolating (animating) the size and position of the bounding box to fill gaps between detections in the track. Considering how blurry the person appears in this frame, it's not surprising that the algorithm could not detect him. If you perform a job with <code>FRAME_INTERVAL</code> greater than one, or otherwise perform frame skipping, then all bounding boxes in skipped frames will be the result of WFM animation. Note that the classification and confidence values are simply carried over from the last detection that was not the result of WFM animation.</p>
+<p><img alt="Walking With Border Filled Gap" src="../img/markup/walking-with-border-filled-gap.jpg" title="Walking With Border Filled Gap" /></p>
+<p>The frame above shows a paper clip icon to indicate that the detection is the result of the component performing tracking in an attempt to fill in the gaps between algorithm detections. In general, these detections are more trustworthy than the ones resulting from WFM animation, but not as trustworthy as the ones directly resulting from the detection algorithm.</p>
+<p><img alt="Walking With Border Skies" src="../img/markup/walking-with-border-skis.jpg" title="Walking With Border Skis" /></p>
+<p>The frame above shows the person detection in addition to a new skis detection. The confidence for the latter is lower, which is good considering the algorithm misclassified the person's shadow as skis. The skis track is only a few frames long, so the WFM determined it was a non-moving (stationary) track. This is represented by the anchor icon at the start of the label. Also, notice that the labels are semi-transparent. This allows you to read labels and see frame content that would otherwise be hidden if the labels were completely opaque. Note that you may want to set <code>MARKUP_LABELS_ALPHA</code> to <code>0.75</code> or greater when using the <code>mjpeg</code> encoder.</p>
+<h1 id="video-encoder-considerations">Video Encoder Considerations</h1>
+<p>Performing markup on an image will always generate a <code>.png</code> file. Performing markup on a video will generate a video file based on the value of <code>MARKUP_VIDEO_ENCODER</code>. The <code>vp9</code>, <code>h264</code>, and <code>mjpg</code> encoders are supported. </p>
+<p>The <code>vp9</code> and <code>h264</code> encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the <code>.avi</code> files resulting from the <code>mjpeg</code> format must be downloaded and played using a separate program like <a href="https://www.videolan.org/vlc/index.html">VLC</a> or <a href="https://mpv.io/">mpv</a>. In general, <code>h264</code> encoding is much faster than <code>vp9</code> encoding, so you may want to use it instead of <code>vp9</code>. Please be aware that you may be required to pay <a href="../Distribution-And-Licensing/index.html#usage-royalties">Usage Royalties</a> when using the <code>h264</code> encoder for commercial purposes.</p>
+<p>The <code>mjpeg</code> encoder is faster than both the <code>vp9</code> and <code>h264</code> encoders. You may want to use it when developing components or marking up large video files.</p>
+<p>To give you a sense of performance, here are the results of a very limited batch of tests. Note that if you choose to use the <code>vp9</code> encoder, you can increase the CRF value to reduce processing time at the cost of reduced video quality.</p>
+<p><strong>input media: 23 frames @ 3840x2160:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Encoder</th>
+<th>CRF</th>
+<th>Time (secs)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mjpeg</td>
+<td></td>
+<td>6.94</td>
+<td></td>
+</tr>
+<tr>
+<td>h264</td>
+<td></td>
+<td>9.478</td>
+<td></td>
+</tr>
+<tr>
+<td>vp9</td>
+<td>60</td>
+<td>13.194</td>
+<td></td>
+</tr>
+<tr>
+<td>vp9</td>
+<td>31</td>
+<td>21.431</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>input media: 509 frames @ 640x480:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Encoder</th>
+<th>CRF</th>
+<th>Time (secs)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mjpeg</td>
+<td></td>
+<td>6.927</td>
+<td>alpha 0.5 is hard to read when blended with dark background; 0.75 does better</td>
+</tr>
+<tr>
+<td>h264</td>
+<td></td>
+<td>11.259</td>
+<td></td>
+</tr>
+<tr>
+<td>vp9</td>
+<td>60</td>
+<td>35.945</td>
+<td>text not acceptable due to low resolution</td>
+</tr>
+<tr>
+<td>vp9</td>
+<td>31</td>
+<td>52.178</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Contributor-Guide/index.html" class="btn btn-neutral float-right" title="Contributor Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Object-Storage-Guide/index.html" class="btn btn-neutral" title="Object Storage Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Object-Storage-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Contributor-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Node Guide - OpenMPF</title>
+  <title>Distribution and Licensing - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Node Guide";
-    var mkdocs_page_input_path = "Node-Guide.md";
-    var mkdocs_page_url = "/Node-Guide/index.html";
+    var mkdocs_page_name = "Distribution and Licensing";
+    var mkdocs_page_input_path = "Distribution-And-Licensing.md";
+    var mkdocs_page_url = "/Distribution-And-Licensing/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -87,15 +87,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="index.html">Node Guide</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#jgroups-communication">JGroups Communication</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../Node-Guide/index.html">Node Guide</a>
         
     </li>
 
@@ -129,8 +122,22 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../Distribution-And-Licensing/index.html">Distribution and Licensing</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">Distribution and Licensing</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#disclaimer">Disclaimer</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#license-considerations">License Considerations</a></li>
+                
+                    <li><a class="toctree-l4" href="#software-distribution">Software Distribution</a></li>
+                
+                    <li><a class="toctree-l4" href="#usage-royalties">Usage Royalties</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -257,7 +264,7 @@
         
       
     
-    <li>Node Guide</li>
+    <li>Distribution and Licensing</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -268,22 +275,34 @@
             <div class="section">
               
                 <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, 
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). 
 Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="jgroups-communication">JGroups Communication</h1>
-<p>OpenMPF uses the <a href="http://www.jgroups.org">JGroups</a> toolkit for passing messages between node-manager processes. One process runs on each OpenMPF Node Manager Docker container, and one master node-manager runs as part of the Workflow Manager web application on the Workflow Manager Docker container. Each of these containers is effectively a "node" in the OpenMPF cluster.</p>
-<p>There are two primary aspects of JGroups that an OpenMPF administrator needs to be concerned with:</p>
-<ol>
-<li>
-<p>OpenMPF uses the JGroups FILE_PING protocol for peer discovery. Each node uses files stored in <code>$MPF_HOME/share/nodes/MPF_Channel</code>. A node will write a file to that directory when the node-manager starts up, and read files in that directory to determine what other nodes are in the OpenMPF cluster.</p>
-</li>
-<li>
-<p>Each OpenMPF node uses network port 7800 for JGroups TCP communication. Please ensure that this port is open in the network firewall on each OpenMPF node, or the firewall is disabled.</p>
-</li>
-</ol>
-<p>If for some reason port 7800 is reserved by another process, JGroups will try the next available port, starting at 7801, then 7802, and so on. Note that within an OpenMPF <a href="../Development-Environment-Guide/index.html">development environment</a> the Workflow Manager web application and node-manager process will run on the same machine, resulting in the use of port 7800 and 7801.</p>
-<p>When a node first starts up it will be in its own JGroups cluster. Within a minute it will be merged into the cluster with the other OpenMPF nodes. At that time it will be recognized by the Workflow Manager and become available for running services and processing jobs.</p>
+<h1 id="disclaimer">Disclaimer</h1>
+<p>The Open Media Processing Framework (OpenMPF) software is provided as raw source code. This is to avoid any potential licensing issues that may arise from distributing a pre-compiled executable that is linked to dependencies that are licensed under a copyleft license or have patent restrictions. Generally, it is acceptable to build and execute software with these dependencies for non-commercial in-house use.</p>
+<p>By distributing the OpenMPF software as raw source code the development team is able to keep most of the software clean from copyleft and patent issues so that it can be published under a more open Apache license and freely distributed to interested parties.</p>
+<blockquote>
+<p><strong>IMPORTANT:</strong> It is the responsibility of the end users who build the OpenMPF software to abide by all of the non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building OpenMPF and linking in these dependencies at build time or run time may result in creating a derivative work under the terms of the GNU General Public License. Refer to <a href="../Acknowledgements/index.html">Acknowledgements</a> for more information about these dependencies.</p>
+</blockquote>
+<p>In general, it is only acceptable to use and distribute the executable form of the OpenMPF, which includes generated Docker images, "in house", which is loosely defined as internally with an organization. The OpenMPF should only be distributed to third parties in raw source code form and those parties will be responsible for creating their own executables and Docker images.</p>
+<h1 id="license-considerations">License Considerations</h1>
+<p>We are not lawyers and provide this information to the best of our ability in an attempt to honor all licensing agreements and clarify the potential responsibilities of OpenMPF users.</p>
+<h2 id="software-distribution">Software Distribution</h2>
+<p>The OpenMPF Docker images are released under <a href="../www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPLv2</a>, unless otherwise stated.</p>
+<h3 id="ffmpeg-devel-integration">ffmpeg-devel Integration</h3>
+<p>The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of OpenCV that is in turn linked with a version of ffmpeg-devel built with "<code>--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265</code>". Distribution of software that includes the latter two encoders must be released under GPLv2 and cannot be used commercially without obtaining the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or <a href="https://x265.org/">MulticoreWare</a>. See <a href="http://x265.org/x265-licensing-faq/">here</a> for more information.</p>
+<p>Note that OpenMPF does not use the x264 and x265 encoders in any way. We choose to build with a  yum version of ffmpeg-devel out of convenience.</p>
+<h2 id="usage-royalties">Usage Royalties</h2>
+<h3 id="x264-and-x256-encoders">x264 and x256 Encoders</h3>
+<p>If someone uses a component that makes use of the x264 or x256 encoders in FFmpeg for commercial applications, then that person should obtain the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or <a href="http://x265.org/">MulticoreWare</a>, respectively.</p>
+<h3 id="h264-and-hevc-decoders">"h264" and "hevc" Decoders</h3>
+<p>FFmpeg comes bundled with its own native "h264" and "hevc" decoders, which OpenMPF may use depending on the media types provided when creating jobs. Although released under LGPL, use of these decoders for commercial applications may still require the payment of royalties to patent holders. The FFmpeg group states on their <a href="http://www.ffmpeg.org/legal.html">Legal page</a>:</p>
+<blockquote>
+<p>Q: Does FFmpeg use patented algorithms?
+A: We do not know, we are not lawyers so we are not qualified to answer this. Also we have never read patents to implement any part of FFmpeg, so even if we were qualified we could not answer it as we do not know what is patented.</p>
+<p>There have been cases where companies have used FFmpeg in their products. These companies found out that once you start trying to make money from patented technologies, the owners of the patents will come after their licensing fees. Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related technologies.</p>
+</blockquote>
               
             </div>
           </div>
@@ -291,10 +310,10 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Object-Storage-Guide/index.html" class="btn btn-neutral float-right" title="Object Storage Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Admin-Guide/index.html" class="btn btn-neutral" title="Admin Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Development-Environment-Guide/index.html" class="btn btn-neutral" title="Development Environment Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -322,10 +341,10 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Admin-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Development-Environment-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Object-Storage-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
