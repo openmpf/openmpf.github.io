@@ -292,7 +292,7 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 <p>The OpenMPF Docker images are released under <a href="../www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPLv2</a>, unless otherwise stated.</p>
 <h3 id="ffmpeg-devel-integration">ffmpeg-devel Integration</h3>
 <p>The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of OpenCV that is in turn linked with a version of ffmpeg-devel built with "<code>--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265</code>". Distribution of software that includes the latter two encoders must be released under GPLv2 and cannot be used commercially without obtaining the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or <a href="https://x265.org/">MulticoreWare</a>. See <a href="http://x265.org/x265-licensing-faq/">here</a> for more information.</p>
-<p>Note that OpenMPF does not use the x264 and x265 encoders in any way. We choose to build with a  yum version of ffmpeg-devel out of convenience.</p>
+<p>Note that the OpenMPF core is built with, but does not require, the x264 or x265 encoders. In some cases, such as when generating video markup, users have the option to use x264, or an alternative encoder such as vp9 or mjpeg.</p>
 <h2 id="usage-royalties">Usage Royalties</h2>
 <h3 id="x264-and-x256-encoders">x264 and x256 Encoders</h3>
 <p>If someone uses a component that makes use of the x264 or x256 encoders in FFmpeg for commercial applications, then that person should obtain the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or <a href="http://x265.org/">MulticoreWare</a>, respectively.</p>

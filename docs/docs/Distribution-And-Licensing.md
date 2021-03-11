@@ -27,7 +27,7 @@ The OpenMPF Docker images are released under [GPLv2](www.gnu.org/licenses/old-li
 ### ffmpeg-devel Integration ###
 The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of OpenCV that is in turn linked with a version of ffmpeg-devel built with "`--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265`". Distribution of software that includes the latter two encoders must be released under GPLv2 and cannot be used commercially without obtaining the appropriate licenses from [x264 LLC / CoreCodec](https://x264.org/) or [MulticoreWare](https://x265.org/). See [here](http://x265.org/x265-licensing-faq/) for more information.
 
-Note that OpenMPF does not use the x264 and x265 encoders in any way. We choose to build with a  yum version of ffmpeg-devel out of convenience.
+Note that the OpenMPF core is built with, but does not require, the x264 or x265 encoders. In some cases, such as when generating video markup, users have the option to use x264, or an alternative encoder such as vp9 or mjpeg.
 
 
 Usage Royalties
