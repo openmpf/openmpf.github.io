@@ -20,16 +20,18 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection/Tracking | License Plate | OpenALPR
 | Detection | Speech | Sphinx
 | Detection | Speech | Azure Cognitive Services
-| Detection| Scene | OpenCV
-| Detection| Classification | OpenCV DNN
-| Detection/Tracking | Classification | Darknet
-| Detection/Tracking | Classification/Features | TensorRT
-| Detection| Text Region | EAST
-| Detection| Text (OCR) | Apache Tika
-| Detection| Text (OCR) | Tesseract OCR
-| Detection| Text (OCR) | Azure Cognitive Services
-| Detection| Form Structure (with OCR) | Azure Cognitive Services
-| Detection| Keywords | Boost Regular Expressions
-| Detection| Image (from document) | Apache Tika
+| Detection | Scene | OpenCV
+| Detection | Classification | OpenCV DNN (GoogLeNet, Yahoo NSFW, vehicle color)
+| Detection/Tracking | Classification | OpenCV DNN (YOLO)
+| Detection/Tracking | Classification | Darknet (YOLO)
+| Detection/Tracking | Classification/Features | TensorRT (COCO classes)
+| Detection | Text Region | EAST
+| Detection | Text (OCR) | Apache Tika
+| Detection | Text (OCR) | Tesseract OCR
+| Detection | Text (OCR) | Azure Cognitive Services
+| Detection | Form Structure (with OCR) | Azure Cognitive Services
+| Detection | Keywords | Boost Regular Expressions
+| Detection | Image (from document) | Apache Tika
+| Translation | Language | Azure Cognitive Services
 
 The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.
