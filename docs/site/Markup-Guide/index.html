@@ -142,7 +142,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Distribution-And-Licensing/index.html">Distribution and Licensing</a>
+        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
         
     </li>
 
@@ -367,7 +367,7 @@ default values can be changed be setting the system property listed for each:</p
 <li>System property: <code>markup.video.encoder</code></li>
 <li>Default value: <code>vp9</code></li>
 <li>Use <code>vp9</code> to generate VP9-encoded <code>.webm</code> video files. Use <code>h264</code> to generate H.264-encoded <code>.mp4</code> files. Use <code>mjpeg</code> to generate MJPEG-encoded <code>.avi</code> files. The <code>.webm</code> and <code>.mp4</code> files can display in most browsers, and are higher quality, but take longer to generate.</li>
-<li>Please review the <a href="../Distribution-And-Licensing/index.html#usage-royalties">Usage Royalties</a> section of the Distribution and Licensing page before using the H.264 encoder for commercial purposes.</li>
+<li>Please review the <a href="../License-And-Distribution/index.html#usage-royalties">Usage Royalties</a> section of the License and Distribution page before using the H.264 encoder for commercial purposes.</li>
 </ul>
 </li>
 <li><code>MARKUP_VIDEO_VP9_CRF</code><ul>
@@ -432,7 +432,7 @@ default values can be changed be setting the system property listed for each:</p
 <p>The frame above shows the person detection in addition to a new skis detection. The confidence for the latter is lower, which is good considering the algorithm misclassified the person's shadow as skis. The skis track is only a few frames long, so the WFM determined it was a non-moving (stationary) track. This is represented by the anchor icon at the start of the label. Also, notice that the labels are semi-transparent. This allows you to read labels and see frame content that would otherwise be hidden if the labels were completely opaque. Note that you may want to set <code>MARKUP_LABELS_ALPHA</code> to <code>0.75</code> or greater when using the <code>mjpeg</code> encoder.</p>
 <h1 id="video-encoder-considerations">Video Encoder Considerations</h1>
 <p>Performing markup on an image will always generate a <code>.png</code> file. Performing markup on a video will generate a video file based on the value of <code>MARKUP_VIDEO_ENCODER</code>. The <code>vp9</code>, <code>h264</code>, and <code>mjpg</code> encoders are supported. </p>
-<p>The <code>vp9</code> and <code>h264</code> encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the <code>.avi</code> files resulting from the <code>mjpeg</code> format must be downloaded and played using a separate program like <a href="https://www.videolan.org/vlc/index.html">VLC</a> or <a href="https://mpv.io/">mpv</a>. In general, <code>h264</code> encoding is much faster than <code>vp9</code> encoding, so you may want to use it instead of <code>vp9</code>. Please be aware that you may be required to pay <a href="../Distribution-And-Licensing/index.html#usage-royalties">Usage Royalties</a> when using the <code>h264</code> encoder for commercial purposes.</p>
+<p>The <code>vp9</code> and <code>h264</code> encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the <code>.avi</code> files resulting from the <code>mjpeg</code> format must be downloaded and played using a separate program like <a href="https://www.videolan.org/vlc/index.html">VLC</a> or <a href="https://mpv.io/">mpv</a>. In general, <code>h264</code> encoding is much faster than <code>vp9</code> encoding, so you may want to use it instead of <code>vp9</code>. Please be aware that you may be required to pay <a href="../License-And-Distribution/index.html#usage-royalties">Usage Royalties</a> when using the <code>h264</code> encoder for commercial purposes.</p>
 <p>The <code>mjpeg</code> encoder is faster than both the <code>vp9</code> and <code>h264</code> encoders, but produces lower quality video. Specifically, the label text is not as clear. You may want to use it when developing components or marking up large video files.</p>
 <p>To give you a sense of performance, here are the results of a very limited batch of tests. Note that if you choose to use the <code>vp9</code> encoder, you can increase the CRF value to reduce processing time at the cost of reduced video quality.</p>
 <p><strong>input media: 23 frames @ 3840x2160:</strong></p>

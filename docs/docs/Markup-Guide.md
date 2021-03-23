@@ -66,7 +66,7 @@ default values can be changed be setting the system property listed for each:
     - System property: `markup.video.encoder`
     - Default value: `vp9`
     - Use `vp9` to generate VP9-encoded `.webm` video files. Use `h264` to generate H.264-encoded `.mp4` files. Use `mjpeg` to generate MJPEG-encoded `.avi` files. The `.webm` and `.mp4` files can display in most browsers, and are higher quality, but take longer to generate.
-    - Please review the [Usage Royalties](Distribution-And-Licensing.md#usage-royalties) section of the Distribution and Licensing page before using the H.264 encoder for commercial purposes.
+    - Please review the [Usage Royalties](License-And-Distribution.md#usage-royalties) section of the License and Distribution page before using the H.264 encoder for commercial purposes.
 - `MARKUP_VIDEO_VP9_CRF`
     - System property: `markup.video.vp9.crf`
     - Default value: `31`
@@ -109,7 +109,7 @@ The frame above shows the person detection in addition to a new skis detection. 
 
 Performing markup on an image will always generate a `.png` file. Performing markup on a video will generate a video file based on the value of `MARKUP_VIDEO_ENCODER`. The `vp9`, `h264`, and `mjpg` encoders are supported. 
 
-The `vp9` and `h264` encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the `.avi` files resulting from the `mjpeg` format must be downloaded and played using a separate program like [VLC](https://www.videolan.org/vlc/index.html) or [mpv](https://mpv.io/). In general, `h264` encoding is much faster than `vp9` encoding, so you may want to use it instead of `vp9`. Please be aware that you may be required to pay [Usage Royalties](Distribution-And-Licensing.md#usage-royalties) when using the `h264` encoder for commercial purposes.
+The `vp9` and `h264` encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the `.avi` files resulting from the `mjpeg` format must be downloaded and played using a separate program like [VLC](https://www.videolan.org/vlc/index.html) or [mpv](https://mpv.io/). In general, `h264` encoding is much faster than `vp9` encoding, so you may want to use it instead of `vp9`. Please be aware that you may be required to pay [Usage Royalties](License-And-Distribution.md#usage-royalties) when using the `h264` encoder for commercial purposes.
 
 The `mjpeg` encoder is faster than both the `vp9` and `h264` encoders, but produces lower quality video. Specifically, the label text is not as clear. You may want to use it when developing components or marking up large video files.
 
