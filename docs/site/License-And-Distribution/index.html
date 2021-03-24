@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Install Guide - OpenMPF</title>
+  <title>License and Distribution - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Install Guide";
-    var mkdocs_page_input_path = "Install-Guide.md";
-    var mkdocs_page_url = "/Install-Guide/index.html";
+    var mkdocs_page_name = "License and Distribution";
+    var mkdocs_page_input_path = "License-And-Distribution.md";
+    var mkdocs_page_url = "/License-And-Distribution/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -66,15 +66,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="index.html">Install Guide</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#docker">Docker</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../Install-Guide/index.html">Install Guide</a>
         
     </li>
 
@@ -129,8 +122,21 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="index.html">License and Distribution</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#license-considerations">License Considerations</a></li>
+                
+                    <li><a class="toctree-l4" href="#open-source">Open Source</a></li>
+                
+                    <li><a class="toctree-l4" href="#docker-distribution">Docker Distribution</a></li>
+                
+                    <li><a class="toctree-l4" href="#usage-royalties">Usage Royalties</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -257,7 +263,7 @@
         
       
     
-    <li>Install Guide</li>
+    <li>License and Distribution</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -268,14 +274,55 @@
             <div class="section">
               
                 <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
+<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
+Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
-<h1 id="docker">Docker</h1>
-<p>OpenMPF is installed using the Docker container platform.</p>
-<p>To use prebuilt Docker images, refer to the "Quick Start" section of the documentation for the OpenMPF Workflow Manager image on <a href="https://hub.docker.com/r/openmpf/openmpf_workflow_manager">DockerHub</a>.</p>
-<p>For more information, including how to setup Docker, and build and deploy OpenMPF Docker images, refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#getting-started">README</a>.</p>
-<p>Additionally, if you would like to install OpenMPF across multiple physical or virtual machines, then refer to the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md#do-i-need-swarm-deployment">Swarm Deployment Guide</a>. </p>
-<p>Please review the page on <a href="../License-And-Distribution/index.html">License and Distribution</a>.</p>
+<h1 id="license-considerations">License Considerations</h1>
+<p>We are not lawyers and provide this information to the best of our ability in an attempt to honor all licensing
+agreements and clarify the potential responsibilities of OpenMPF users.</p>
+<h2 id="open-source">Open Source</h2>
+<p>The Open Media Processing Framework (OpenMPF) source code is publicly available on <a href="https://github.com/openmpf">GitHub</a>.
+By distributing the OpenMPF software as raw source code the development team is able to keep most of the software clean
+from copyleft and patent issues so that it can be published under a more open
+<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license and freely distributed to interested parties.</p>
+<blockquote>
+<p><strong>IMPORTANT:</strong> It is the responsibility of the end users who build the OpenMPF software to abide by all of the
+non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building
+OpenMPF and linking in these dependencies at build time or run time may result in creating a derivative work under the
+terms of the GNU General Public License. Refer to <a href="../Acknowledgements/index.html">Acknowledgements</a> for more information
+about these dependencies.</p>
+</blockquote>
+<h2 id="docker-distribution">Docker Distribution</h2>
+<p>The OpenMPF Docker images are released under <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPLv2</a>, unless
+otherwise stated.</p>
+<h3 id="ffmpeg-devel-integration">ffmpeg-devel Integration</h3>
+<p>The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of
+OpenCV that is in turn linked with a version of ffmpeg-devel built with
+<code>--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265</code>.
+Distribution of software that includes the latter two encoders must be released under GPLv2 and
+cannot be used commercially without obtaining the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
+<a href="https://x265.org/">MulticoreWare</a>. See <a href="http://x265.org/x265-licensing-faq/">here</a> for more information.</p>
+<p>Note that the OpenMPF core is built with, but does not require, the x264 or x265 encoders. In some cases, such as when
+generating video markup, users have the option to use x264, or an alternative encoder such as vp9 or mjpeg.</p>
+<h2 id="usage-royalties">Usage Royalties</h2>
+<h3 id="x264-and-x256-encoders">x264 and x256 Encoders</h3>
+<p>If someone uses a component that makes use of the x264 or x256 encoders in FFmpeg for commercial applications, then that
+person should obtain the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
+<a href="http://x265.org/">MulticoreWare</a>, respectively.</p>
+<h3 id="h264-and-hevc-decoders">"h264" and "hevc" Decoders</h3>
+<p>FFmpeg comes bundled with its own native "h264" and "hevc" decoders, which OpenMPF may use depending on the media types
+provided when creating jobs. Although released under LGPL, use of these decoders for commercial applications may still
+require the payment of royalties to patent holders. The FFmpeg group states on their <a href="http://www.ffmpeg.org/legal.html">Legal
+page</a>:</p>
+<blockquote>
+<p>Q: Does FFmpeg use patented algorithms?</p>
+<p>A: We do not know, we are not lawyers so we are not qualified to answer this. Also we have never read patents to
+implement any part of FFmpeg, so even if we were qualified we could not answer it as we do not know what is patented.</p>
+<p>There have been cases where companies have used FFmpeg in their products. These companies found out that once you
+start trying to make money from patented technologies, the owners of the patents will come after their licensing fees.
+Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related technologies.</p>
+</blockquote>
               
             </div>
           </div>
@@ -283,10 +330,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../User-Guide/index.html" class="btn btn-neutral float-right" title="User Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Release-Notes/index.html" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Development-Environment-Guide/index.html" class="btn btn-neutral" title="Development Environment Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -314,10 +361,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Release-Notes/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Development-Environment-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../User-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
