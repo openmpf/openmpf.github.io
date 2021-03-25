@@ -1,4 +1,4 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2020 The MITRE Corporation. All Rights Reserved.
+> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # API Overview
 
@@ -441,6 +441,15 @@ MPFJob(
 | data_uri <a name="data-uri"></a> | `const string  &` | The URI of the input media file to be processed. Currently, this is a file path. For example, "/opt/mpf/share/remote-media/test-file.avi". |
 | job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
+
+
+Job properties can also be set through environment variables prefixed with `MPF_PROP_`. This allows 
+users to set job properties in their 
+[docker-compose files.](https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96) 
+These will take precedence over all other property types (job, algorithm, media, etc). It is not 
+possible to change the value of properties set via environment variables at runtime and therefore 
+they should only be used to specify properties that will not change throughout the entire lifetime 
+of the service (e.g. Docker container).
 
 
 #### MPFImageJob

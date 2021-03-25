@@ -18,8 +18,10 @@ pages:
     - Admin Guide: Admin-Guide.md
     - Node Guide: Node-Guide.md
     - Object Storage Guide: Object-Storage-Guide.md
+    - Markup Guide: Markup-Guide.md
     - Contributor Guide: Contributor-Guide.md
     - Development Environment Guide: Development-Environment-Guide.md
+    - License and Distribution: License-And-Distribution.md
     - Acknowledgements: Acknowledgements.md
 - Components:
     - Component API Overview: Component-API-Overview.md

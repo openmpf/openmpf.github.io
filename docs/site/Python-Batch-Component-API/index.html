@@ -102,6 +102,13 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
@@ -110,6 +117,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
         
     </li>
 
@@ -296,7 +310,7 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to
 the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
-Copyright 2020 The MITRE Corporation. All Rights Reserved.</p>
+Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="api-overview">API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
@@ -730,6 +744,13 @@ a static method, or a class method.</p>
   </tbody>
 </table>
 
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).</p>
 <h4 id="mpf_component_apiimagelocation">mpf_component_api.ImageLocation</h4>
 <p>Class used to store the location of detected objects in a image file.</p>
 <ul>
@@ -966,6 +987,13 @@ frame, and then skip frames as specified by the frame interval, until or before 
 For example, given a start frame of 0, a stop frame of 99, and a frame interval of 2, then the detection component
 must look for objects in frames numbered 0, 2, 4, 6, ..., 98.</p>
 </blockquote>
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).</p>
 <h4 id="mpf_component_apivideotrack">mpf_component_api.VideoTrack</h4>
 <p>Class used to store the location of detected objects in a video file.</p>
 <ul>
@@ -1204,6 +1232,13 @@ Currently, audio files are not logically segmented, so a job will contain the en
   </tbody>
 </table>
 
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).</p>
 <h4 id="mpf_component_apiaudiotrack">mpf_component_api.AudioTrack</h4>
 <p>Class used to store the location of detected objects in an audio file.</p>
 <ul>
@@ -1341,6 +1376,13 @@ logically segmented, so a job will contain the entirety of the file.</p>
   </tbody>
 </table>
 
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
+of the service (e.g. Docker container).</p>
 <h4 id="mpf_component_apigenerictrack">mpf_component_api.GenericTrack</h4>
 <p>Class used to store the location of detected objects in a file that is not a video, image, or audio file.</p>
 <ul>
