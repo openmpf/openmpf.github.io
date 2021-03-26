@@ -66,12 +66,6 @@
             
                 <li class="toctree-l3"><a href="#openmpf-tbd-xxx">OpenMPF TBD: XXX</a></li>
                 
-                    <li><a class="toctree-l4" href="#c-batch-component-api">C++ Batch Component API</a></li>
-                
-                    <li><a class="toctree-l4" href="#python-batch-component-api">Python Batch Component API</a></li>
-                
-                    <li><a class="toctree-l4" href="#docker-component-base-images">Docker Component Base Images</a></li>
-                
             
                 <li class="toctree-l3"><a href="#openmpf-601-december-2020">OpenMPF 6.0.1: December 2020</a></li>
                 
@@ -376,20 +370,34 @@
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
 <h1 id="openmpf-tbd-xxx">OpenMPF TBD: XXX</h1>
-<h2 id="c-batch-component-api">C++ Batch Component API</h2>
+<h2>OpenMPF Command Line Runner</h2>
+
+<ul>
+<li>The Command Line Runner allows users to run jobs with a single component without the 
+  Workflow Manager.</li>
+<li>It outputs results in a JSON structure that is a subset of the regular OpenMPF output.</li>
+<li>It only supports C++ and Python components.</li>
+<li>See the 
+  <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cli_runner/README.md">README</a>
+  for more information.</li>
+</ul>
+<h2>C++ Batch Component API</h2>
+
 <ul>
 <li>Component code should no longer configure Log4CXX. The component executor now handles
   configuring Log4CXX. Component code should call <code>log4cxx::Logger::getLogger("&lt;component-name&gt;")</code>
   to get access to the logger. Calls to <code>log4cxx::xml::DOMConfigurator::configure(logconfig_file);</code>
   should be removed.</li>
 </ul>
-<h2 id="python-batch-component-api">Python Batch Component API</h2>
+<h2>Python Batch Component API </h2>
+
 <ul>
 <li>Component code should no longer configure logging. The component executor now handles
   configuring logging. Calls to <code>mpf.configure_logging</code> should be replaced with
   <code>logging.getLogger('&lt;component-name&gt;')</code>.</li>
 </ul>
-<h2 id="docker-component-base-images">Docker Component Base Images</h2>
+<h2>Docker Component Base Images</h2>
+
 <ul>
 <li>
 <p>In order to support running a component through the CLI runner, C++ component developers should
@@ -401,9 +409,11 @@
   <code>COMPONENT_LOG_NAME</code> environment variable in their Dockerfiles.</p>
 </li>
 <li>
-<p>Component images now support running the component on the command line. See the
-  <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cli_runner/README.md">README</a>
-  for more information.</p>
+<p>Added the 
+  <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md"><code>openmpf_python_executor_ssb</code> base image</a>. 
+  It can be used instead of <code>openmpf_python_component_build</code> and <code>openmpf_python_executor</code> to 
+  simplify Dockerfiles for Python components that are pure Python and have no build time 
+  dependencies.</p>
 </li>
 </ul>
 <h1 id="openmpf-601-december-2020">OpenMPF 6.0.1: December 2020</h1>

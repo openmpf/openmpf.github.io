@@ -228,7 +228,7 @@ import mpf_component_util as mpf_util
 
 logger = logging.getLogger('MyComponent')
 
-class MyComponent(mpf_util.VideoCaptureMixin, object):
+class MyComponent(mpf_util.VideoCaptureMixin):
     detection_type = 'FACE'
 
     @staticmethod
@@ -316,11 +316,11 @@ Below is an example of the structure of a simple component that does not use
 [`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin). You would replace the call to
 `run_detection_algorithm` with your component-specific logic.
 ```python
-import mpf_component_api as mpf
+import logging
 
-logger = mpf.configure_logging('my-component.log', __name__ == '__main__')
+logger = logging.getLogger('MyComponent')
 
-class MyComponent(object):
+class MyComponent:
     detection_type = 'FACE'
 
     @staticmethod
@@ -370,14 +370,14 @@ For example:
 
 instance method:
 ```python
-class MyComponent(object):
+class MyComponent:
     def get_detections_from_image(self, image_job):
         return [mpf_component_api.ImageLocation(...), ...]
 ```
 
 static method:
 ```python
-class MyComponent(object):
+class MyComponent:
     @staticmethod
     def get_detections_from_image(image_job):
         return [mpf_component_api.ImageLocation(...), ...]
@@ -385,7 +385,7 @@ class MyComponent(object):
 
 class method:
 ```python
-class MyComponent(object):
+class MyComponent:
     @classmethod
     def get_detections_from_image(cls, image_job):
         return [mpf_component_api.ImageLocation(...), ...]
@@ -401,7 +401,7 @@ but any iterable can be used.
 Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
 * Example:
 ```python
-class MyComponent(object):
+class MyComponent:
     detection_type = 'FACE'
 
 ```
@@ -415,7 +415,7 @@ Used to detect objects in an image file.
 
 * Method Definition:
 ```python
-class MyComponent(object):
+class MyComponent:
     def get_detections_from_image(self, image_job):
         return [mpf_component_api.ImageLocation(...), ...]
 ```
@@ -550,7 +550,7 @@ cannot automatically perform the reverse transform for the developer.
 
 The general pattern for using `mpf_component_util.ImageReader` is as follows:
 ```python
-class MyComponent(object):
+class MyComponent:
 
     @staticmethod
     def get_detections_from_image(image_job):
@@ -585,7 +585,7 @@ There are some requirements to properly use `mpf_component_util.ImageReaderMixin
 
 The general pattern for using `mpf_component_util.ImageReaderMixin` is as follows:
 ```python
-class MyComponent(mpf_component_util.ImageReaderMixin, object):
+class MyComponent(mpf_component_util.ImageReaderMixin):
 
     @staticmethod # Can also be a regular instance method or a class method
     def get_detections_from_image_reader(image_job, image_reader):
@@ -614,7 +614,7 @@ request for frames 300-399 of a Video A, while the next request may cover frames
 
 * Method Definition:
 ```python
-class MyComponent(object):
+class MyComponent:
     def get_detections_from_video(self, video_job):
         return [mpf_component_api.VideoTrack(...), ...]
 ```
@@ -769,7 +769,7 @@ cannot automatically perform the reverse transform for the developer.
 
 The general pattern for using `mpf_component_util.VideoCapture` is as follows:
 ```python
-class MyComponent(object):
+class MyComponent:
 
     @staticmethod
     def get_detections_from_video(video_job):
@@ -806,7 +806,7 @@ There are some requirements to properly use `mpf_component_util.VideoCaptureMixi
 
 The general pattern for using `mpf_component_util.VideoCaptureMixin` is as follows:
 ```python
-class MyComponent(mpf_component_util.VideoCaptureMixin, object):
+class MyComponent(mpf_component_util.VideoCaptureMixin):
 
     @staticmethod # Can also be a regular instance method or a class method
     def get_detections_from_video_capture(video_job, video_capture):
@@ -826,7 +826,7 @@ from extending other classes. If a component supports both videos and images, an
 [`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagereadermixin).
 For example:
 ```python
-class MyComponent(mpf_component_util.VideoCaptureMixin, mpf_component_util.ImageReaderMixin, object):
+class MyComponent(mpf_component_util.VideoCaptureMixin, mpf_component_util.ImageReaderMixin):
 
     @staticmethod
     def get_detections_from_video_capture(video_job, video_capture):
@@ -847,7 +847,7 @@ Used to detect objects in an audio file.
 
 * Method Definition:
 ```python
-class MyComponent(object):
+class MyComponent:
     def get_detections_from_audio(self, audio_job):
         return [mpf_component_api.AudioTrack(...), ...]
 ```
@@ -972,7 +972,7 @@ handled generically.
 
 * Method Definition:
 ```python
-class MyComponent(object):
+class MyComponent:
     def get_detections_from_generic(self, generic_job):
         return [mpf_component_api.GenericTrack(...), ...]
 ```
