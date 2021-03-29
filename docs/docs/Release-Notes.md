@@ -9,7 +9,7 @@
 - It outputs results in a JSON structure that is a subset of the regular OpenMPF output.
 - It only supports C++ and Python components.
 - See the 
-  [README](https://github.com/openmpf/openmpf-docker/blob/master/components/cli_runner/README.md)
+  [README](https://github.com/openmpf/openmpf-docker/blob/master/CLI_RUNNER.md)
   for more information.
 
 <h2>C++ Batch Component API</h2>
@@ -34,7 +34,7 @@
   `COMPONENT_LOG_NAME` environment variable in their Dockerfiles.
 
 - Added the 
-  [`openmpf_python_executor_ssb` base image](https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md). 
+  [`openmpf_python_executor_ssb` base image](https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md#openmpf_python_executor_ssb). 
   It can be used instead of `openmpf_python_component_build` and `openmpf_python_executor` to 
   simplify Dockerfiles for Python components that are pure Python and have no build time 
   dependencies.

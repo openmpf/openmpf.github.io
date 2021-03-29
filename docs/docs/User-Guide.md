@@ -5,11 +5,18 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # General
 
+The Open Media Processing Framework (OpenMPF) can be used in three ways:
+
+* Through the OpenMPF Web user interface (UI)
+* Through the [REST API endpoints](#rest-api)
+* Through the [CLI Runner](https://github.com/openmpf/openmpf-docker/blob/master/CLI_RUNNER.md)
+
+
 ## Accessing the Web UI
 
-On the server hosting the Open Media Processing Framework (OpenMPF), the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".
+On the server hosting the Open Media Processing Framework, the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".
 
-The OpenMPF user interface (UI) was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.
+The OpenMPF user interface was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.
 
 ## Logging In
 
@@ -190,7 +197,7 @@ The "Processes" tab on this page allows a user to view a table with information 
 
 ## REST API
 
-This page allows a user to try out the various REST API endpoints provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the OpenMPF.
+This page allows a user to try out the [various REST API endpoints](REST-API) provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the OpenMPF.
 
 After selecting a functional category, such as "meta", "jobs", "statistics", "nodes", "pipelines", or "system-message", each REST endpoint for that category is shown in a list. Selecting one of them will cause it to expand and reveal more information about the request and response structures. If the request takes any parameters then a section will appear that allows the user to manually specify them.
 
