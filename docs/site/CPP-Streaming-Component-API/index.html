@@ -422,7 +422,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 </ul>
 <pre><code class="c++">SampleComponent::SampleComponent(const MPFStreamingVideoJob &amp;job)
         : MPFStreamingDetectionComponent(job)
-        , hw_logger_(GetLogger(job.run_directory))
+        , hw_logger_(log4cxx::Logger::getLogger(&quot;SampleComponent&quot;))
         , job_name_(job.job_name) {
 
     LOG4CXX_INFO(hw_logger_, &quot;[&quot; &lt;&lt; job_name_ &lt;&lt; &quot;] Initialized SampleComponent component.&quot;)

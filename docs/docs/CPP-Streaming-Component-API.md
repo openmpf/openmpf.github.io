@@ -137,7 +137,7 @@ MPFStreamingDetectionComponent(const MPFStreamingVideoJob &job)
 ```c++
 SampleComponent::SampleComponent(const MPFStreamingVideoJob &job)
         : MPFStreamingDetectionComponent(job)
-        , hw_logger_(GetLogger(job.run_directory))
+        , hw_logger_(log4cxx::Logger::getLogger("SampleComponent"))
         , job_name_(job.job_name) {
 
     LOG4CXX_INFO(hw_logger_, "[" << job_name_ << "] Initialized SampleComponent component.")
