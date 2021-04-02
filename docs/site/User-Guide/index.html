@@ -314,9 +314,15 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 <p><strong>NOTE:</strong> This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI.</p>
 </blockquote>
 <h1 id="general">General</h1>
+<p>The Open Media Processing Framework (OpenMPF) can be used in three ways:</p>
+<ul>
+<li>Through the OpenMPF Web user interface (UI)</li>
+<li>Through the <a href="#rest-api">REST API endpoints</a></li>
+<li>Through the <a href="https://github.com/openmpf/openmpf-docker/blob/master/CLI_RUNNER.md">CLI Runner</a></li>
+</ul>
 <h2 id="accessing-the-web-ui">Accessing the Web UI</h2>
-<p>On the server hosting the Open Media Processing Framework (OpenMPF), the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".</p>
-<p>The OpenMPF user interface (UI) was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.</p>
+<p>On the server hosting the Open Media Processing Framework, the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".</p>
+<p>The OpenMPF user interface was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.</p>
 <h2 id="logging-in">Logging In</h2>
 <p>The OpenMPF Web UI requires user authentication and provides two default accounts: "mpf" and "admin". The password for the "mpf" user is "mpf123". These accounts are used to assign user or admin roles for OpenMPF cluster management. Note that an administrator can remove these accounts and/or add new ones using a command line tool. Refer to the <a href="../Admin-Guide/index.html">Admin Guide</a> for features available to an admin user.</p>
 <p><img alt="Login Page" src="../img/mpf_login.png" title="Login Page" /></p>
@@ -410,7 +416,7 @@ Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 <p>The "Processes" tab on this page allows a user to view a table with information about the runtime of various internal workflow manager operations. The "Count" field represents the number of times each operation was run. The min, max, and mean are calculated over the set of times each operation was performed. Runtime information is reset when the workflow manager is restarted.</p>
 <p><img alt="Job Statistics Page" src="../img/mpf_stats_proc.png" title="Job Statistics Page" /></p>
 <h2 id="rest-api">REST API</h2>
-<p>This page allows a user to try out the various REST API endpoints provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the OpenMPF.</p>
+<p>This page allows a user to try out the <a href="../REST-API">various REST API endpoints</a> provided by the workflow manager. It is intended to serve as a learning tool for technical users who wish to design and build systems that interact with the OpenMPF.</p>
 <p>After selecting a functional category, such as "meta", "jobs", "statistics", "nodes", "pipelines", or "system-message", each REST endpoint for that category is shown in a list. Selecting one of them will cause it to expand and reveal more information about the request and response structures. If the request takes any parameters then a section will appear that allows the user to manually specify them.</p>
 <p><img alt="REST API Page" src="../img/swagger1.png" title="REST API Page" /></p>
 <p>In the example above, the "/rest/jobs/{id}" endpoint was selected. It takes a required "id" parameter that corresponds to a previously run job and returns a JSON representation of that job's information. The screenshot below shows the result of specifying an "id" of "1", providing the "mpf" user credentials when prompted, and then clicking the "Try it out!" button:</p>

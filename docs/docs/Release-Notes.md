@@ -1,5 +1,45 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF TBD: XXX
+
+<h2>OpenMPF Command Line Runner</h2>
+
+- The Command Line Runner allows users to run jobs with a single component without the 
+  Workflow Manager.
+- It outputs results in a JSON structure that is a subset of the regular OpenMPF output.
+- It only supports C++ and Python components.
+- See the 
+  [README](https://github.com/openmpf/openmpf-docker/blob/master/CLI_RUNNER.md)
+  for more information.
+
+<h2>C++ Batch Component API</h2>
+- Component code should no longer configure Log4CXX. The component executor now handles
+  configuring Log4CXX. Component code should call `log4cxx::Logger::getLogger("<component-name>")`
+  to get access to the logger. Calls to `log4cxx::xml::DOMConfigurator::configure(logconfig_file);`
+  should be removed.
+
+
+<h2>Python Batch Component API </h2>
+- Component code should no longer configure logging. The component executor now handles
+  configuring logging. Calls to `mpf.configure_logging` should be replaced with
+  `logging.getLogger('<component-name>')`.
+
+
+<h2>Docker Component Base Images</h2>
+- In order to support running a component through the CLI runner, C++ component developers should
+  set the `LD_LIBRARY_PATH` environment variable in the final stage of their Dockerfiles. It should
+  generally be set like: `ENV LD_LIBRARY_PATH $PLUGINS_DIR/<component-name>/lib`.
+
+- Because of the logging changes mentioned above, components no longer need to set the
+  `COMPONENT_LOG_NAME` environment variable in their Dockerfiles.
+
+- Added the 
+  [`openmpf_python_executor_ssb` base image](https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md#openmpf_python_executor_ssb). 
+  It can be used instead of `openmpf_python_component_build` and `openmpf_python_executor` to 
+  simplify Dockerfiles for Python components that are pure Python and have no build time 
+  dependencies.
+
+
 # OpenMPF 6.0.1: December 2020
 
 <h2>Bug Fixes</h2>
