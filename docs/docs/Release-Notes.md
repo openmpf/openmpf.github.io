@@ -74,7 +74,7 @@
 - Optionally, set `MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED=TRUE` to show icons that represent the source of the detection.
   For example, if the box is the result of an algorithm detection, tracking performing gap fill, or Workflow Manager
   animation.
-- Each frame if a marked-up video now has a frame number in the upper right corner.
+- Each frame of a marked-up video now has a frame number in the upper right corner.
 - Please refer to the [Markup Guide](Markup-Guide.md) for the complete set of markup properties, icon definitions, and
   encoder considerations.
 
