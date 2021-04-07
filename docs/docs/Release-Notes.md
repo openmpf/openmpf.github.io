@@ -2,9 +2,9 @@
 
 # OpenMPF 6.1.x
 
-<h1>6.1.0: April 2021</h1>
+<h2>6.1.0: April 2021</h2>
 
-<h2>OpenMPF Command Line Runner</h2>
+<h3>OpenMPF Command Line Runner</h3>
 
 - The Command Line Runner allows users to run jobs with a single component without the Workflow Manager.
 - It outputs results in a JSON structure that is a subset of the regular OpenMPF output.
@@ -13,20 +13,20 @@
   [README](https://github.com/openmpf/openmpf-docker/blob/master/CLI_RUNNER.md)
   for more information.
 
-<h2>C++ Batch Component API</h2>
+<h3>C++ Batch Component API</h3>
 
 - Component code should no longer configure Log4CXX. The component executor now handles configuring Log4CXX. Component
   code should call `log4cxx::Logger::getLogger("<component-name>")`
   to get access to the logger. Calls to `log4cxx::xml::DOMConfigurator::configure(logconfig_file);`
   should be removed.
 
-<h2>Python Batch Component API </h2>
+<h3>Python Batch Component API </h3>
 
 - Component code should no longer configure logging. The component executor now handles configuring logging. Calls
   to `mpf.configure_logging` should be replaced with
   `logging.getLogger('<component-name>')`.
 
-<h2>Docker Component Base Images</h2>
+<h3>Docker Component Base Images</h3>
 
 - In order to support running a component through the CLI runner, C++ component developers should set
   the `LD_LIBRARY_PATH` environment variable in the final stage of their Dockerfiles. It should generally be set
@@ -40,7 +40,7 @@
   . It can be used instead of `openmpf_python_component_build` and `openmpf_python_executor` to simplify Dockerfiles for
   Python components that are pure Python and have no build time dependencies.
 
-<h2>Label Moving vs. Non-Moving Tracks</h2>
+<h3>Label Moving vs. Non-Moving Tracks</h3>
 
 - The Workflow Manager can now identify if a track is moving or non-moving. This is determined by calculating the
   average bounding box for a track by averaging the size and position of all the detections in the track. Then, for each
@@ -56,7 +56,7 @@
       IoU, the more likely the object is moving.
     - `MOVING_TRACK_MIN_DETECTIONS`: The minimum number of moving detections for a track to be labeled as moving.
 
-<h2>Markup Improvements</h2>
+<h3>Markup Improvements</h3>
 
 - Users can now watch videos directly in the OpenMPF web UI within the media pop-up dialog for each job. Most modern web
   browsers support videoes encoded in VP9 and H.264. If a video cannot be played, users have the option to download it
@@ -78,70 +78,69 @@
 - Please refer to the [Markup Guide](Markup-Guide.md) for the complete set of markup properties, icon definitions, and
   encoder considerations.
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - [[#1181](https://github.com/openmpf/openmpf/issues/1181)] Updated the Tesseract OCR Text Detection component from
   Tesseract version 4.0.0 to 4.1.1
 - [[#1232](https://github.com/openmpf/openmpf/issues/1232)] Updated the Azure Speech Detection component from Azure
   Batch Transcription version 2.0 to 3.0
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1187](https://github.com/openmpf/openmpf/issues/1187)] EXIF orientation is now preserved during markup and artifact
   extraction
 - [[#1257](https://github.com/openmpf/openmpf/issues/1257)] Updated `OUTPUT_LAST_TASK_ONLY` to work on all media types
 
 # OpenMPF 6.0.x
----
 
-<h1>6.0.11: March 2021</h1>
+<h2>6.0.11: March 2021</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1284](https://github.com/openmpf/openmpf/issues/1284)] Updated the Azure Translation component to count emoji as 2
   characters
 
-<h1>6.0.10: March 2021</h1>
+<h2>6.0.10: March 2021</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - [[#1270](https://github.com/openmpf/openmpf/issues/1270)] The Azure Cognitive Services components now retry HTTP
   requests
 
-<h1>6.0.9: March 2021</h1>
+<h2>6.0.9: March 2021</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1273](https://github.com/openmpf/openmpf/issues/1273)] Setting `TRANSLATION` to the empty string no longer prevents
   Keyword Tagging
 
-<h1>6.0.6: March 2021</h1>
+<h2>6.0.6: March 2021</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1265](https://github.com/openmpf/openmpf/issues/1265)] Updated the Tika Text Detection component to handle
   spreadsheets
 - [[#1268](https://github.com/openmpf/openmpf/issues/1268)] Updated the Tika Text Detection component to remove metadata
 
-<h1>6.0.5: February 2021</h1>
+<h2>6.0.5: February 2021</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1266](https://github.com/openmpf/openmpf/issues/1266)] The Azure Translation component now handles the final
   segment correctly when guessing sentence breaks
 
-<h1>6.0.4: February 2021</h1>
+<h2>6.0.4: February 2021</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - [[#1264](https://github.com/openmpf/openmpf/issues/1264)] Updated the Azure Translation component to handle large
   amounts of text
 - [[#1269](https://github.com/openmpf/openmpf/issues/1269)] AzureTranslation no longer tries to translate text that is
   already in the `TO_LANGUAGE`
 
-<h1>6.0.3: February 2021</h1>
+<h2>6.0.3: February 2021</h2>
 
-<h2>OpenCV YOLO Detection Component</h2>
+<h3>OpenCV YOLO Detection Component</h3>
 
 - This new component utilizes the OpenCV Deep Neural Networks (DNN) framework to detect and classify objects in images
   and videos using Darknet YOLOv4 models trained on the COCO dataset. It supports both CPU and GPU modes of operation.
@@ -149,23 +148,23 @@
   FFT) phase correlation, Kalman filtering, and OpenCV MOSSE tracking. Refer to
   the [README](https://github.com/openmpf/openmpf-components/tree/master/cpp/OcvYoloDetection#readme) for details.
 
-<h1>6.0.2: January 2021</h1>
+<h2>6.0.2: January 2021</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1249](https://github.com/openmpf/openmpf/issues/1249)] FFmpeg no longer reports different frame counts for the same
   piece of media
 
-<h1>6.0.1: December 2020</h1>
+<h2>6.0.1: December 2020</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1238](https://github.com/openmpf/openmpf/issues/1238)] The JSON output object is now generated when remote media
   cannot be downloaded.
 
-<h1>6.0.0: December 2020</h1>
+<h2>6.0.0: December 2020</h2>
 
-<h2>Upgrade to OpenCV 4.5.0</h2>
+<h3>Upgrade to OpenCV 4.5.0</h3>
 
 - Updated core framework and components from OpenCV 3.4.7 to OpenCV 4.5.0.
 - OpenCV is now built with CUDA support, including cuDNN (CUDA Deep Neural Network library) and cuBLAS (CUDA Basic
@@ -173,7 +172,7 @@
   CUDA support built in, giving developers the option to make use of it.
 - Added GPU support to the OcvDnnDetection component.
 
-<h2>Azure Cognitive Services (ACS) Translation Component</h2>
+<h3>Azure Cognitive Services (ACS) Translation Component</h3>
 
 - This new component utilizes
   the [Azure Cognitive Services Translator REST endpoint](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/reference/v3-0-translate)
@@ -182,7 +181,7 @@
   to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureTranslation/README.md) for
   details.
 
-<h2>Interoperability Package</h2>
+<h3>Interoperability Package</h3>
 
 - Added `algorithm` field to the element that describes a collection of tracks generated by an action in the JSON output
   object. For example:
@@ -197,7 +196,7 @@
    },
 ```
 
-<h2>Merge Tasks in JSON Output Object</h2>
+<h3>Merge Tasks in JSON Output Object</h3>
 
 - The output of two tasks in the JSON output object can be merged by setting the `OUTPUT_MERGE_WITH_PREVIOUS_TASK`
   property to true. This is a Workflow Manager property and can be set on any task in any pipeline, although it has no
@@ -238,7 +237,7 @@
   used), so you will only get the output of the last task in the pipeline. The last task will inherit the detection type
   and algorithm of the first task in the pipeline.
 
-<h2>Tesseract Custom Dictionaries</h2>
+<h3>Tesseract Custom Dictionaries</h3>
 
 - The Tesseract component Docker image now contains an `/opt/mpf/tessdata_model_updater` binary that you can use to
   update `*.traineddata` models with a custom dictionary, as well as extract files from existing models. Refer to
@@ -247,7 +246,7 @@
 - In general, legacy `*.traineddata` models are more influenced by words in their dictionary than more modern
   LSTM `*.traineddata` models. Also, refer to the known issue below.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - [[#1243](https://github.com/openmpf/openmpf/issues/1243)] Unpacking a `*.traineddata` model, for example, in order to
   modify its dictionary, and then repacking it may result in dropping some of the words present in the original
@@ -255,11 +254,10 @@
   results.
 
 # OpenMPF 5.1.x
----
 
-<h1>5.1.3: December 2020</h1>
+<h2>5.1.3: December 2020</h2>
 
-<h2>Setting Properties as Docker Environment Variables</h2>
+<h3>Setting Properties as Docker Environment Variables</h3>
 
 - Any property that can be set as a job property can now be set as a Docker environment variable by prefixing it
   with `MPF_PROP_`. For example, setting the `MPF_PROP_TRTIS_SERVER` environment variable in the `trtis-detection`
@@ -268,35 +266,35 @@
   possible to change the value of properties set via environment variables at runtime and therefore they should only be
   used to specify properties that will not change throughout the entire lifetime of the service.
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - The `mpf.output.objects.censored.properties` system property can be used to prevent properties from being shown in
   JSON output objects. The value for these properties will appear as `<censored>`.
 - The Azure Speech Detection component now retries without diarization when diarization is not supported by the selected
   locale.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1230](https://github.com/openmpf/openmpf/issues/1230)] The Azure Speech Detection component now uses a UUID for the
   recording id associated with a piece of media in order to prevent deleting a piece of media while it's in use.
 
-<h1>5.1.1: December 2020</h1>
+<h2>5.1.1: December 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Only generate `FRAME_COUNT` warning when the frame difference is > 1. This can be configured using
   the `warn.frame.count.diff` system property.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1209](https://github.com/openmpf/openmpf/issues/1209)] The Keyword Tagging component now generates video tracks in
   the JSON output object.
 - [[#1212](https://github.com/openmpf/openmpf/issues/1212)] The Keyword Tagging component now preserves the detection
   bounding box and confidence.
 
-<h1>5.1.0: November 2020</h1>
+<h2>5.1.0: November 2020</h2>
 
-<h2>Media Inspection Improvements</h2>
+<h3>Media Inspection Improvements</h3>
 
 - The Workflow Manager will now handle video files that don't have a video stream as an `AUDIO` type, and handle video
   files that don't have a video or audio stream as an `UNKNOWN` type. The JSON output object contains a
@@ -310,7 +308,7 @@
   .
 - OpenMPF now supports Apple-optimized PNGs and HEIC images. Refer to the Bug Fixes section below.
 
-<h2>EAST Text Region Detection Component Improvements</h2>
+<h3>EAST Text Region Detection Component Improvements</h3>
 
 - The `TEMPORARY_PADDING` property has been separated into `TEMPORARY_PADDING_X` and `TEMPORARY_PADDING_Y` so that X and
   Y padding can be configured independently.
@@ -320,7 +318,7 @@
   the [README](https://github.com/openmpf/openmpf-components/blob/master/python/EastTextDetection/README.md#properties)
   for details.
 
-<h2>MPFVideoCapture and MPFImageReader Tool Improvements</h2>
+<h3>MPFVideoCapture and MPFImageReader Tool Improvements</h3>
 
 - These tools now support a `ROTATION_FILL_COLOR` property for setting the fill color for pixels near the corners and
   edges of frames when performing non-orthogonal rotations. Previously, the color was hardcoded to `BLACK`. That is
@@ -333,7 +331,7 @@
   fewer detections.
 - OpenMPF now uses FFmpeg when counting video frames. Refer to the Bug Fixes section below.
 
-<h2>Azure Cognitive Services (ACS) Form Detection Component</h2>
+<h3>Azure Cognitive Services (ACS) Form Detection Component</h3>
 
 - This new component utilizes
   the [Azure Cognitive Services Form Detection REST endpoint](https://westus2.dev.cognitive.microsoft.com/docs/services/form-recognizer-api-v2/operations/AnalyzeLayoutAsync)
@@ -346,7 +344,7 @@
 - This component may output the following detection properties depending on the endpoint, model, and media being
   processed: `TEXT`, `TABLE_CSV_OUTPUT`, `KEY_VALUE_PAIRS_JSON`, and `DOCUMENT_JSON_FIELDS`.
 
-<h2>Keyword Tagging Component</h2>
+<h3>Keyword Tagging Component</h3>
 
 - This new component performs the same keyword tagging behavior that was previously part of the Tesseract component, but
   does so on feed-forward tracks that generate detections with `TEXT` and `TRANSCRIPT` properties. Refer to
@@ -361,7 +359,7 @@
     - Sphinx
     - ACS Speech
 
-<h2>Optionally Skip Media Inspection</h2>
+<h3>Optionally Skip Media Inspection</h3>
 
 - The Workflow Manager will skip media inspection if all of the required media metadata is provided in the job request.
   The `MEDIA_HASH` and `MIME_TYPE` fields are always required. Depending on the media data type, other fields may be
@@ -375,13 +373,13 @@
     - Audio files
         - Required: `DURATION`
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Update OpenMPF Python SDK exception handling for Python 3. Now instead of raising an `EnvironmentError`, which has
   been deprecated in Python 3, the SDK will raise an `mpf.DetectionError` or allow the underlying exception to be
   thrown.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1028](https://github.com/openmpf/openmpf/issues/1028)] OpenMPF can now properly handle Apple-optimized PNGs, which
   have a non-standard data chunk named CgBI before the IHDR chunk. The Workflow Manager
@@ -399,33 +397,32 @@
   could actually be read. This resulted in failing to process many video segments with a  `BAD_FRAME_SIZE` error.
 
 # OpenMPF 5.0.x
----
 
-<h1>5.0.9: October 2020</h1>
+<h2>5.0.9: October 2020</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1200](https://github.com/openmpf/openmpf/issues/1200)] The MPFVideoCapture and MPFImageReader tools now properly
   handle cropping to frame regions when the region coordinates fall outside of the frame boundary. There was a bug that
   would result in an OpenCV error. Note that the bug only occurred when cropping was not performed with rotation or
   flipping.
 
-<h1>5.0.8: October 2020</h1>
+<h2>5.0.8: October 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - The Tesseract component now supports a `TESSDATA_MODELS_SUBDIRECTORY` property. The component will look for tessdata
   files in `<MODELS_DIR_PATH>/<TESSDATA_MODELS_SUBDIRECTORY>`. This allows users to easily switch between `tessdata`
   , `tessdata_best`, and `tessdata_fast` subdirectories.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1199](https://github.com/openmpf/openmpf/issues/1199)] Added missing synchronized to InProgressBatchJobsService,
   which was resulting in some jobs staying `IN_PROGRESS` indefinitely.
 
-<h1>5.0.7: September 2020</h1>
+<h2>5.0.7: September 2020</h2>
 
-<h2>TensorRT Inference Server (TRTIS) Object Detection Component</h2>
+<h3>TensorRT Inference Server (TRTIS) Object Detection Component</h3>
 
 - This new component detects objects in images and videos by making use of
   an [NVIDIA TensorRT Inference Server](https://docs.nvidia.com/deeplearning/sdk/tensorrt-inference-server-guide/docs/) (
@@ -438,9 +435,9 @@
   regions. Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TrtisDetection/README.md)
   .
 
-<h1>5.0.6: August 2020</h1>
+<h2>5.0.6: August 2020</h2>
 
-<h2>Enable OcvDnnDetection to Annotate Feed-forward Detections</h2>
+<h3>Enable OcvDnnDetection to Annotate Feed-forward Detections</h3>
 
 - The OcvDnnDetection component can now by configured to operate only on certain feed-forward detections and annotate
   them with supplementary information. For example, the following pipeline can be configured to generate detections that
@@ -477,48 +474,48 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
         - `PASS_THROUGH`: Return the excluded detections, without modification, along with any annotated detections.
         - `DROP`: Don't return the excluded detections. Only return annotated detections.
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Make interop package work with Java 8 to better support exernal job producers and consumers.
 
-<h1>5.0.5: August 2020</h1>
+<h2>5.0.5: August 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Configure Camel not to auto-acknowledge messages. Users can now see the number of pending messages in the ActiveMQ
   management console for queues consumed by the Workflow Manager.
 - Improve Tesseract OSD fallback behavior. This prevents selecting the OSD rotation from the fallback pass without the
   OSD script from the fallback pass.
 
-<h1>5.0.4: August 2020</h1>
+<h2>5.0.4: August 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Retry job callbacks when they fail. The Workflow Manager now supports the `http.callback.timeout.ms`
   and `http.callback.retries` system properties.
 - Drop "duplicate paged in from cursor" DLQ messages.
 
-<h1>5.0.3: July 2020</h1>
+<h2>5.0.3: July 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Update ActiveMQ to 5.16.0.
 
-<h1>5.0.2: July 2020</h1>
+<h2>5.0.2: July 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Disable video segmentation for ACS Speech Detection to prevent issues when generating speaker ids.
 
-<h1>5.0.1: July 2020</h1>
+<h2>5.0.1: July 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Updated Tessseract component with `MAX_PIXELS` setting to prevent processing large images.
 
-<h1>5.0.0: June 2020</h1>
+<h2>5.0.0: June 2020</h2>
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Updated the openmpf-docker repo [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md)
   and [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guides to describe the new build process,
@@ -547,7 +544,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Updated the [Python Batch Component API](Python-Batch-Component-API.md) with information on Python3 and the
   simplification of using a `dict` for some of the data members.
 
-<h2>JSON Output Object</h2>
+<h3>JSON Output Object</h3>
 
 - Renamed `stages` to `tasks` for clarity and consistency with the rest of the code.
 - The `media` element no longer contains a `message` field.
@@ -559,7 +556,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
     - When an error or warning occurs in multiple frames of a video for a single piece of media it will be represented
       in one `details` element and the `message` will list the frame ranges.
 
-<h2>Interoperability Package</h2>
+<h3>Interoperability Package</h3>
 
 - Renamed `JsonStage.java` to `JsonTask.java`.
 - Removed `JsonJobRequest.java`.
@@ -568,12 +565,12 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Updated `JsonMediaOutputObject.java` by removing `message` field.
 - Added `JsonMediaIssue.java` and `JsonIssueDetails.java`.
 
-<h2>Persistent Database</h2>
+<h3>Persistent Database</h3>
 
 - The `input_object` column in the `job_request` table has been renamed to `job` and the content now contains a
   serialized form of `BatchJob.java` instead of `JsonJobRequest.java`.
 
-<h2>C++ Batch Component API</h2>
+<h3>C++ Batch Component API</h3>
 
 - The `GetDetection()` calls now return a collection instead of an error code:
     - `std::vector<MPFImageLocation> GetDetections(const MPFImageJob &job)`
@@ -584,12 +581,12 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
     - `MPFDetectionException(MPFDetectionError error_code, const std::string &what = "")`
     - `MPFDetectionException(const std::string &what)`
 
-<h2>Python Batch Component API</h2>
+<h3>Python Batch Component API</h3>
 
 - Simplified the `detection_properties` and `frame_locations` data members to use a Python `dict` instead of a custom
   data type.
 
-<h2>Full Docker Conversion</h2>
+<h3>Full Docker Conversion</h3>
 
 - Each component is now encapsulated in its own Docker image which self-registers with the Workflow Manager at runtime.
   This deconflicts component dependencies, and allows for greater flexibility when deciding which components to deploy
@@ -605,7 +602,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-kibana-for-log-viewing-and-aggregation)
   .
 
-<h2>Docker Component Base Images</h2>
+<h3>Docker Component Base Images</h3>
 
 - A base builder image and executor image are provided for
   C++ ([README](https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md)),
@@ -614,7 +611,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   development. Component developers can also refer to the Dockerfile in the source code for each component as reference
   for how to make use of the base images.
 
-<h2>Restrict Media Types that a Component Can Process</h2>
+<h3>Restrict Media Types that a Component Can Process</h3>
 
 - Each component service now supports an optional `RESTRICT_MEDIA_TYPES` Docker environment variable that specifies the
   types of media that service will process. For example, `RESTRICT_MEDIA_TYPES: VIDEO,IMAGE` will process both videos
@@ -622,33 +619,33 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   all of the media types it natively supports. For example, this feature can be used to ensure that some services are
   always available to process images while others are processing long videos.
 
-<h2>Import Additional Root Certificates into the Workflow Manager</h2>
+<h3>Import Additional Root Certificates into the Workflow Manager</h3>
 
 - Additional root certificates can be imported into the Workflow Manager at runtime by adding an entry
   for `MPF_CA_CERTS` to the workflow-manager service's environment variables in `docker-compose.core.yml`
   . `MPF_CA_CERTS` must contain a colon-delimited list of absolute file paths. Of note, a root certificate may be used
   to trust the identity of a remote object storage server.
 
-<h2>DockerHub</h2>
+<h3>DockerHub</h3>
 
 - Pushed prebuilt OpenMPF Docker images to [DockerHub](https://hub.docker.com/u/openmpf). Refer to the "Quick Start"
   section of the OpenMPF Workflow Manager
   image [documentation](https://hub.docker.com/r/openmpf/openmpf_workflow_manager).
 
-<h2>Version Updates</h2>
+<h3>Version Updates</h3>
 
 - Updated from Oracle Java 8 to OpenJDK 11, which required updating to Tomcat 8.5.41. We now
   use [Cargo](https://codehaus-cargo.github.io/cargo/Home.html) to run integration tests.
 - Updated OpenCV from 3.0.0 to 3.4.7 to update Deep Neural Networks (DNN) support.
 - Updated Python from 2.7 to 3.8.2.
 
-<h2>FFmpeg</h2>
+<h3>FFmpeg</h3>
 
 - We are no longer building separate audio and video encoders and decoders for FFmpeg. Instead, we are using the
   built-in decoders that come with FFmpeg by default. This simplifies the build process and redistribution via Docker
   images.
 
-<h2>Artifact Extraction</h2>
+<h3>Artifact Extraction</h3>
 
 - The  `ARTIFACT_EXTRACTION_POLICY` property can now be assigned a value of `NONE`, `VISUAL_TYPES_ONLY`, `ALL_TYPES`,
   or `ALL_DETECTIONS`.
@@ -681,7 +678,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   works the same as before with the exception that when set to true artifact extraction is skipped for all tasks but the
   last task.
 
-<h2>REST Endpoints</h2>
+<h3>REST Endpoints</h3>
 
 - Modified `[GET] /rest/info`. Now returns output like `{"version": "4.1.0", "dockerEnabled": true}`.
 - Added the following REST endpoints for getting, removing, and creating actions, tasks, and pipelines. Refer to
@@ -696,7 +693,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   components, so to remove an algorithm you must unregister the associated component. To add an algorithm, start the
   associated component's Docker container so it self-registers with the Workflow Manager.
 
-<h2>Incomplete Actions, Tasks, and Pipelines</h2>
+<h3>Incomplete Actions, Tasks, and Pipelines</h3>
 
 - The previous version of OpenMPF would generate an error when attempting to register a component that included actions,
   tasks, or pipelines that depend on algorithms, actions, or tasks that are not yet registered with the Workflow
@@ -710,14 +707,14 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Note that unregistering a component while a job is running will cause it to stall. Please ensure that no jobs are
   using a component before unregistering it.
 
-<h2>Python Arbitrary Rotation</h2>
+<h3>Python Arbitrary Rotation</h3>
 
 - The Python MPFVideoCapture and MPFImageReader tools now support `ROTATION` values other than 0, 90, 180, and 270
   degrees. Users can now specify a clockwise `ROTATION` job property in the range [0, 360). Values outside that range
   will be normalized to that range. Floating point values are accepted. This is similar to the existing support
   for [C++ arbitrary rotation](#cpp-arbitrary-rotation).
 
-<h2>OpenCV Deep Neural Networks (DNN) Detection Component</h2>
+<h3>OpenCV Deep Neural Networks (DNN) Detection Component</h3>
 
 - This new component replaces the old CaffeDetection component. It supports the same GoogLeNet and Yahoo Not Suitable
   For Work (NSFW) models as the old component, but removes support for the Rezafuad vehicle color detection model in
@@ -725,14 +722,14 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   generalizable and provide more accurate results on never-before-seen test data. Refer to
   the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/OcvDnnDetection/README.md).
 
-<h2>Azure Cognitive Services (ACS) Speech Detection Component</h2>
+<h3>Azure Cognitive Services (ACS) Speech Detection Component</h3>
 
 - This new component utilizes
   the [Azure Cognitive Services Batch Transcription REST endpoint](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/batch-transcription)
   to transcribe speech from audio and video files. Refer to
   the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureSpeechDetection/README.md).
 
-<h2>Tesseract OCR Text Detection Component</h2>
+<h3>Tesseract OCR Text Detection Component</h3>
 
 - Text tagging has been simplified to only support regular expression searches. Whole keyword searches are a subset of
   regular expression searches, and are therefore still supported. Also, the `text-tags.json` file format has been
@@ -774,12 +771,12 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - If any OSD-detected models are missing, the new `MISSING_LANGUAGE_MODELS` detection property will list the missing
   models.
 
-<h2>Tika Text Detection Component</h2>
+<h3>Tika Text Detection Component</h3>
 
 - The Tika text detection component now supports text tagging in the same way as the Tesseract component. Refer to
   the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md#text-tagging).
 
-<h2>Other Improvements</h2>
+<h3>Other Improvements</h3>
 
 - Simplified component `descriptor.json` files by moving the specification of common properties, such
   as `CONFIDENCE_THRESHOLD`, `FRAME_INTERVAL`, `MIN_SEGMENT_LENGTH`, etc., to a single `workflow-properties.json` file.
@@ -792,7 +789,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - When a job completion callback fails, but otherwise the job is successful, the final state of the job will
   be `COMPLETE_WITH_WARNINGS`.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#772](https://github.com/openmpf/openmpf/issues/772)] Can now create a custom pipeline with long action names using
   the Pipelines 2 UI.
@@ -811,7 +808,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - [[#1119](https://github.com/openmpf/openmpf/issues/1119)] Fixed Tesseract component memory leaks and uninitialized
   read issues.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - [[#1028](https://github.com/openmpf/openmpf/issues/1028)] Media inspection fails to handle Apple-optimized PNGs with
   the CgBI data chunk before the IHDR chunk.
@@ -827,11 +824,10 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   End Date.
 
 # OpenMPF 4.1.x
----
 
-<h1>4.1.14: June 2020</h1>
+<h2>4.1.14: June 2020</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1120](https://github.com/openmpf/openmpf/issues/1120)] The node-manager Docker image now correctly installs CUDA
   libraries so that GPU-enabled components on that image can run on the GPU.
@@ -839,76 +835,76 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   network types, and when using GPU resources. This bug covers everything not addressed
   by [#1062](https://github.com/openmpf/openmpf/issues/1062).
 
-<h1>4.1.13: June 2020</h1>
+<h2>4.1.13: June 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Updated the OpenCV build and media inspection process to properly handle webp images.
 
-<h1>4.1.12: May 2020</h1>
+<h2>4.1.12: May 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Updated JDK from `jdk-8u181-linux-x64.rpm` to `jdk-8u251-linux-x64.rpm`.
 
-<h1>4.1.11: May 2020</h1>
+<h2>4.1.11: May 2020</h2>
 
-<h2>Tesseract OCR Text Detection Component</h2>
+<h3>Tesseract OCR Text Detection Component</h3>
 
 - Added `INVALID_MIN_IMAGE_SIZE` job property to filter out images with extremely low width or height.
 - Updated image rescaling behavior to account for image dimension limits.
 - Fixed handling of `nullptr` returns from Tesseract API OCR calls.
 
-<h1>4.1.8: May 2020</h1>
+<h2>4.1.8: May 2020</h2>
 
-<h2>Azure Cognitive Services (ACS) OCR Component</h2>
+<h3>Azure Cognitive Services (ACS) OCR Component</h3>
 
 - This new component utilizes
   the [ACS OCR REST endpoint](https://westus.dev.cognitive.microsoft.com/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fc)
   to extract text from images and videos. Refer to
   the [README](https://github.com/openmpf/openmpf-components/blob/master/python/AzureOcrTextDetection/README.md).
 
-<h1>4.1.6: April 2020</h1>
+<h2>4.1.6: April 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Now silently discarding ActiveMQ DLQ "Suppressing duplicate delivery on connection" messages in addition to "duplicate
   from store" messages.
 
-<h1>4.1.5: March 2020</h1>
+<h2>4.1.5: March 2020</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1062](https://github.com/openmpf/openmpf/issues/1062)] Fixed a memory leak in the Darknet component that occurred
   when running jobs on CPU resources with the Tiny YOLO model.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - [[#1064](https://github.com/openmpf/openmpf/issues/1064)] The Darknet component has memory leaks for various network
   types, and potentially when using GPU resources. This bug covers everything not addressed
   by [#1062](https://github.com/openmpf/openmpf/issues/1062).
 
-<h1>4.1.4: March 2020</h1>
+<h2>4.1.4: March 2020</h2>
 
-<h2>Updates</h2>
+<h3>Updates</h3>
 
 - Updated from Hibernate 5.0.8 to 5.4.12 to support schema-based multitenancy. This allows multiple instances of OpenMPF
   to use the same PostgreSQL database as long as each instance connects to the database as a separate user, and the
   database is configured appropriately. This also required updating Tomcat from 7.0.72 to 7.0.76.
 
-<h2>JSON Output Object</h2>
+<h3>JSON Output Object</h3>
 
 - Updated the Workflow Manager to include an `outputobjecturi` in GET callbacks, and `outputObjectUri` in POST
   callbacks, when jobs complete. This URI specifies a file path, or path on the object storage server, depending on
   where the JSON output object is located.
 
-<h2>Interoperability Package</h2>
+<h3>Interoperability Package</h3>
 
 - Updated `JsonCallbackBody.java` to contain an `outputObjectUri` field.
 
-<h1>4.1.3: February 2020</h1>
+<h2>4.1.3: February 2020</h2>
 
-<h2>Features</h2>
+<h3>Features</h3>
 
 - Added support for `DETECTION_PADDING_X` and `DETECTION_PADDING_Y` optional job properties. The value can be a
   percentage or whole-number pixel value. When positive, each detection region in each track will be expanded. When
@@ -919,16 +915,16 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   closer to the center frame of a track. Increasing the value of the second property will generate detection confidence
   values that favor large detection regions.
 
-<h1>4.1.1: January 2020</h1>
+<h2>4.1.1: January 2020</h2>
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#1016](https://github.com/openmpf/openmpf/issues/1016)] Fixed a bug that caused a deadlock situation when the media
   inspection process failed quickly when processing many jobs using a pipeline with more than one stage.
 
-<h1>4.1.0: July 2019</h1>
+<h2>4.1.0: July 2019</h2>
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API.md#mpfimagelocation) to describe the `ROTATION`
   detection property. See the [C++ Arbitrary Rotation](#cpp-arbitrary-rotation) section below.
@@ -953,7 +949,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Transformed the Build Guide into a [Development Environment Guide](Development-Environment-Guide/index.html).
 
 <span id="cpp-arbitrary-rotation"></span>
-<h2>C++ Arbitrary Rotation</h2>
+<h3>C++ Arbitrary Rotation</h3>
 
 - The C++ MPFVideoCapture and MPFImageReader tools now support `ROTATION` values other than 0, 90, 180, and 270 degrees.
   Users can now specify a clockwise `ROTATION` job property in the range [0, 360). Values outside that range will be
@@ -976,7 +972,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   determine the rotation of the region relative to the entire frame.
 
 <span id="component-registration-rest-endpoints"></span>
-<h2>Component Registration REST Endpoints</h2>
+<h3>Component Registration REST Endpoints</h3>
 
 - Added a `[POST] /rest/components/registerUnmanaged` endpoint so that components running as separate Docker containers
   can self-register with the Workflow Manager.
@@ -988,7 +984,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Added a `[DELETE] /rest/components/{componentName}` endpoint that can be used to remove managed and unmanaged
   components.
 
-<h2>Python Component Executor Docker Image</h2>
+<h3>Python Component Executor Docker Image</h3>
 
 - Component developers can now use a Python component executor Docker image to write a Python component for OpenMPF that
   can be encapsulated within a Docker container. This isolates the build and execution environment from the rest of
@@ -998,7 +994,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   Manager and their lifetime is determined by their own Docker container.
 
 <span id="docker-deployment"></span>
-<h2>Docker Deployment</h2>
+<h3>Docker Deployment</h3>
 
 - Streamlined single-host `docker-compose up` deployments and multi-host `docker stack deploy` swarm deployments. Now
   users are instructed to create a single `docker-compose.yml` file for both types of deployments.
@@ -1011,7 +1007,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - OpenMPF Docker images now make use of Docker labels.
 
 <span id="east-text-region-detection-component"></span>
-<h2>EAST Text Region Detection Component</h2>
+<h3>EAST Text Region Detection Component</h3>
 
 - This new component uses the Efficient and Accurate Scene Text (EAST) detection model to detect text regions in images
   and videos. It reports their location, angle of rotation, and text type (`STRUCTURED` or `UNSTRUCTURED`), and supports
@@ -1023,7 +1019,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   it to exist apart from the Node Manager image.
 
 <span id="tesseract-ocr-text-detection-component"></span>
-<h2>Tesseract OCR Text Detection Component</h2>
+<h3>Tesseract OCR Text Detection Component</h3>
 
 - Updated to support reading tessdata `*.traineddata` files at a specified `MODELS_DIR_PATH`. This allows users to
   install new `*.traineddata` files post deployment.
@@ -1044,7 +1040,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   the [README](https://github.com/openmpf/openmpf-components/blob/develop/cpp/TesseractOCRTextDetection/README.md).
 - Removed gibberish and string filters since they only worked on English text.
 
-<h2>ActiveMQ Profiles</h2>
+<h3>ActiveMQ Profiles</h3>
 
 - The ActiveMQ Docker image now supports custom profiles. The container selects an `activemq.xml` and `env` file to use
   at runtime based on the value of the `ACTIVE_MQ_PROFILE` environment variable. Among others, these files contain
@@ -1053,13 +1049,13 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   however, developers are free to add other `activemq-<profile>.xml` and `env.<profile>` files to the ActiveMQ Docker
   image to suit their needs.
 
-<h2>Disabled ActiveMQ Prefetch</h2>
+<h3>Disabled ActiveMQ Prefetch</h3>
 
 - Disabled ActiveMQ prefetching on all component queues. Previously, a prefetch value of one was resulting in situations
   where one component service could be dispatched two sub-jobs, thereby starving other available component services
   which could process one of those sub-jobs in parallel.
 
-<h2>Search Region Percentages</h2>
+<h3>Search Region Percentages</h3>
 
 - In addition to using exact pixel values, users can now use percentages for the following properties when specifying
   search regions for C++ and Python components:
@@ -1071,7 +1067,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   of an image or video.
 - Optionally, users can specify exact pixel values of some of these properties and percentages for others.
 
-<h2>Other Improvements</h2>
+<h3>Other Improvements</h3>
 
 - Increased the number of ActiveMQ maxConcurrentConsumers for the `MPF.COMPLETED_DETECTIONS` queue from 30 to 60.
 - The Create Job web UI now only displays the content of the `$MPF_HOME/share/remote-media` directory instead of all
@@ -1083,7 +1079,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - The Workflow Manager will now silently discard all duplicate messages in the ActiveMQ Dead Letter Queue (DLQ),
   regardless of destination. Previously, only messages destined for component sub-job request queues were discarded.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - [[#891](https://github.com/openmpf/openmpf/issues/891)] Fixed a bug where the Workflow Manager media segmenter
   generated short segments that were minimally `MIN_SEGMENT_LENGTH+1` in size instead of `MIN_SEGMENT_LENGTH`.
@@ -1094,14 +1090,14 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   throws a StackOverflowError. This was resolved by transitioning the Workflow Manager and Java components from the
   Logback framework to Log4j2.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - [[#897](https://github.com/openmpf/openmpf/issues/897)] OpenMPF will attempt to index files located
   in `$MPF_HOME/share` as soon as the webapp is started by Tomcat. This is so that those files can be listed in a
   directory tree in the Create Job web UI. The main problem is that once a file gets indexed it's never removed from the
   cache, even if the file is manually deleted, resulting in a memory leak.
 
-<h2>Late Additions: November 2019</h2>
+<h3>Late Additions: November 2019</h3>
 
 - User names, roles, and passwords can now be set by using an optional `user.properties` file. This allows
   administrators to override the default OpenMPF users that come preconfigured, which may be a security risk. Refer to
@@ -1109,7 +1105,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users) for
   more information.
 
-<h2>Late Additions: December 2019</h2>
+<h3>Late Additions: December 2019</h3>
 
 - Transitioned from using a mySQL persistent database to PostgreSQL to support users that use an external PostgreSQL
   database in the cloud.
@@ -1120,35 +1116,34 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   the [README](https://github.com/openmpf/openmpf-components/blob/master/python/EastTextDetection/README.md#properties).
 
 # OpenMPF 4.0.x
----
 
-<h1>4.0.0: February 2019</h1>
+<h2>4.0.0: February 2019</h2>
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Added an [Object Storage Guide](Object-Storage-Guide/index.html) with information on how to configure OpenMPF to work
   with a custom NGINX object storage server, and how to run jobs that use an S3 object storage server. Note that the
   system properties for the custom NGINX object storage server have changed since the last release.
 
-<h2>Upgrade to Tesseract 4.0</h2>
+<h3>Upgrade to Tesseract 4.0</h3>
 
 - Both the Tesseract OCR Text Detection Component and OpenALPR License Plate Detection Components have been updated to
   use the new version of Tesseract.
 - Additionally, Leptonica has been upgraded from 1.72 to 1.75.
 
-<h2>Docker Deployment</h2>
+<h3>Docker Deployment</h3>
 
 - The Docker images now use the yum package manager to install ImageMagick6 from a public RPM repository instead of
   downloading the RPMs directly from imagemagick.org. This resolves an issue with the OpenMPF Docker build where RPMs
   on [imagemagick.org](https://imagemagick.org/script/download.php) were no longer available.
 
-<h2>Tesseract OCR Text Detection Component</h2>
+<h3>Tesseract OCR Text Detection Component</h3>
 
 - Updated to allow the user to set a `TESSERACT_OEM` property in order to select an OCR engine mode (OEM).
 - "script/Latin" can now be specified as the `TESSERACT_LANGUAGE`. When selected, Tesseract will select all Latin
   characters, which can be from different Latin languages.
 
-<h2>Ceph S3 Object Storage</h2>
+<h3>Ceph S3 Object Storage</h3>
 
 - Added support for downloading files from, and uploading files to, an S3 object storage server. The following job
   properties can be provided: `S3_ACCESS_KEY`, `S3_SECRET_KEY`, `S3_RESULTS_BUCKET`, `S3_UPLOAD_ONLY`.
@@ -1156,7 +1151,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   Java to communicate with the object store, so it is possible that other S3-compatible storage solutions may work as
   well.
 
-<h2>ISO-8601 Timestamps</h2>
+<h3>ISO-8601 Timestamps</h3>
 
 - All timestamps in the JSON output object, and streaming video callbacks, are now in the ISO-8601 format (e.g. "
   2018-12-19T12:12:59.995-05:00"). This new format includes the time zone, which makes it possible to compare timestamps
@@ -1164,7 +1159,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - This change does not affect the track and detection start and stop offset times, which are still reported in
   milliseconds since the start of the video.
 
-<h2>Reduced Redis Usage</h2>
+<h3>Reduced Redis Usage</h3>
 
 - The Workflow Manager has been refactored to reduce usage of the Redis in-memory database. In general, Redis is not
   necessary for storing job information and only resulted in introducing potential delays in accessing that data over
@@ -1173,7 +1168,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   Manager requires of the Java Virtual Machine. Compared to the other job information, track and detection data can
   potentially be relatively much larger. In the future, we plan to store frame data in Redis for streaming jobs as well.
 
-<h2>Caffe Vehicle Color Estimation</h2>
+<h3>Caffe Vehicle Color Estimation</h3>
 
 - The Caffe
   Component [models.ini](https://github.com/openmpf/openmpf-components/blob/master/cpp/CaffeDetection/plugin-files/models/models.ini)
@@ -1186,7 +1181,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
     - `CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM TINY YOLO VEHICLE DETECTOR) PIPELINE`
     - `CAFFE REZAFUAD VEHICLE COLOR DETECTION (WITH FF REGION FROM YOLO VEHICLE DETECTOR) PIPELINE`
 
-<h2>Track Merging and Minimum Track Length</h2>
+<h3>Track Merging and Minimum Track Length</h3>
 
 - The following system properties now have "video" in their names:
     - `detection.video.track.merging.enabled`
@@ -1203,7 +1198,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   set `detection.track.min.length=5`, which resulted in dropping all image media tracks. By design, each image track can
   only contain a single detection.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - Fixed a bug where the Docker entrypoint scripts appended properties to the end
   of `$MPF_HOME/share/config/mpf-custom.properties` every time the Docker deployment was restarted, resulting in entries
@@ -1215,15 +1210,14 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Fixed a bug where ImageMagick6 installation failed while building Docker images.
 
 # OpenMPF 3.0.x
----
 
-<h1>3.0.0: December 2018</h1>
+<h2>3.0.0: December 2018</h2>
 
 > **NOTE:** The [Build Guide](Build-Environment-Setup-Guide/index.html) and [Install Guide](Install-Guide/index.html) are outdated. The old process for manually configuring a Build VM, using it to build an OpenMPF package, and installing that package, is deprecated in favor of Docker containers. Please refer to the openmpf-docker [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md).
 
 > **NOTE:** Do not attempt to register or unregister a component through the Nodes UI in a Docker deployment. It may appear to succeed, but the changes will not affect the child Node Manager containers, only the Workflow Manager container. Also, do not attempt to use the `mpf` command line tools in a Docker deployment.
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Added a [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md)
   , [SWARM](https://github.com/openmpf/openmpf-docker/blob/master/SWARM.md) guide,
@@ -1232,7 +1226,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   properties and track confidence are handled when merging tracks.
 - Added README files for new components. Refer to the component sections below.
 
-<h2>Docker Support</h2>
+<h3>Docker Support</h3>
 
 - OpenMPF can now be built and distributed as 5 Docker images: openmpf_workflow_manager, openmpf_node_manager,
   openmpf_active_mq, mysql_database, and redis.
@@ -1242,7 +1236,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Both HTTP and HTTPS deployments are supported.
 
 <span id="json-output-object"></span>
-<h2>JSON Output Object</h2>
+<h3>JSON Output Object</h3>
 
 - Added a `trackProperties` field at the track level that works in much the same way as the `detectionProperties` field
   at the detection level. Both are maps that contain zero or more key-value pairs. The component APIs have always
@@ -1261,7 +1255,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   set to reduce the size of the JSON output object by only recording the detections for the last non-markup stage of a
   pipeline.
 
-<h2>Darknet Component</h2>
+<h3>Darknet Component</h3>
 
 - The Darknet component can now support processing streaming video.
 - In batch mode, video frames are prefetched, decoded, and stored in a buffer using a separate thread from the one that
@@ -1271,7 +1265,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - The Darknet component has been updated to support the full and tiny YOLOv3 models. The YOLOv2 models are no longer
   supported.
 
-<h2>Tesseract OCR Text Detection Component</h2>
+<h3>Tesseract OCR Text Detection Component</h3>
 
 - This new component extracts text found in an image and reports it as a single-detection track.
 - PDF documents can also be processed with one track detection per page.
@@ -1280,7 +1274,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Refer to
   the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/TesseractOCRTextDetection/README.md).
 
-<h2>OpenCV Scene Change Detection Component</h2>
+<h3>OpenCV Scene Change Detection Component</h3>
 
 - This new component detects and segments a given video by scenes. Each scene change is detected using histogram
   comparison, edge comparison, brightness (fade outs), and overall hue/saturation/value differences between adjacent
@@ -1289,19 +1283,19 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   method.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/SceneChangeDetection/README.md).
 
-<h2>Tika Text Detection Component</h2>
+<h3>Tika Text Detection Component</h3>
 
 - This new component extracts text contained in documents and performs language detection. 71 languages and most
   document formats (.txt, .pptx, .docx, .doc, .pdf, etc.) are supported.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md).
 
-<h2>Tika Image Detection Component</h2>
+<h3>Tika Image Detection Component</h3>
 
 - This new component extracts images embedded in document formats (.pdf, .ppt, .doc) and stores them on disk in a
   specified directory.
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaImageDetection/README.md).
 
-<h2>Track-Level Properties and Confidence</h2>
+<h3>Track-Level Properties and Confidence</h3>
 
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object)
   section.
@@ -1310,7 +1304,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - The Workflow Manager will now populate the track-level confidence. It is the same as the exemplar confidence, which is
   the max of all of the track detections.
 
-<h2>Custom NGINX HTTP Object Storage</h2>
+<h3>Custom NGINX HTTP Object Storage</h3>
 
 - Added `http.object.storage.*` system properties for configuring an optional custom NGINX object storage server on
   which to store generated detection artifacts, JSON output objects, and markup files.
@@ -1323,7 +1317,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   to support more common storage server solutions, such as Amazon S3.
 
 <span id="activemq"></span>
-<h2>ActiveMQ</h2>
+<h3>ActiveMQ</h3>
 
 - The `MPF_OUTPUT` queue is no longer supported and has been removed. Job producers can specify a callback URL when
   creating a job so that they are alerted when the job is complete. Users observed heap space issues with ActiveMQ after
@@ -1333,7 +1327,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   messages. It's assumed that ActiveMQ will only place a duplicate message in the DLQ if the original message, or
   another duplicate, can be delivered.
 
-<h2>Node Auto-Configuration</h2>
+<h3>Node Auto-Configuration</h3>
 
 - Added the `node.auto.config.enabled`, `node.auto.unconfig.enabled`, and `node.auto.config.num.services.per.component`
   system properties for automatically managing the configuration of services when nodes join and leave the OpenMPF
@@ -1343,7 +1337,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   convenient since the hostname of those containers cannot be known in advance, and new containers with new hostnames
   are created when the swarm is restarted.
 
-<h2>Job Status Web UI</h2>
+<h3>Job Status Web UI</h3>
 
 - Added the `web.broadcast.job.status.enabled` and `web.job.polling.interval` system properties that can be used to
   configure if the Workflow Manager automatically broadcasts updates to the Job Status web UI. By default, the
@@ -1355,7 +1349,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - To disable broadcasts and polling, set `web.broadcast.job.status.enabled` to `false` and `web.job.polling.interval` to
   a zero or negative value. Users will then need to manually refresh the Job Status web page using their web browser.
 
-<h2>Other Improvements</h2>
+<h3>Other Improvements</h3>
 
 - Now using variable-length text fields in the mySQL database for string data that may exceed 255 characters.
 - Updated the MPFImageReader tool to use OpenCV video capture behind the scenes to support reading data from HTTP URLs.
@@ -1369,7 +1363,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   where a video is not well-formed or corrupted. For components that use MPFVideoCapture, this enables better
   consistency between the frames they process and the artifacts that are later extracted.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - Jobs now properly end in `ERROR` if an invalid media URL is provided or there is a problem accessing remote media.
 - Jobs now end in `COMPLETE_WITH_ERRORS` when a detection splitter error occurs due to missing system properties.
@@ -1384,7 +1378,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Refer to the addition of track-level properties and confidence in the [JSON Output Object](#json-output-object)
   section.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - [[#745](https://github.com/openmpf/openmpf/issues/745)] In environments where thousands of jobs are processed, users
   have observed that, on occasion, pending sub-job messages in ActiveMQ queues are not processed until a new job is
@@ -1406,13 +1400,12 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
   deployment, or remove the entire node in the Nodes UI and add it again.
 
 # OpenMPF 2.1.x
----
 
-<h1>2.1.0: June 2018</h1>
+<h2>2.1.0: June 2018</h2>
 
 > **NOTE:** If building this release on a machine used to build a previous version of OpenMPF, then please run `sudo pip install --upgrade pip` to update to at least pip 10.0.1. If not, the OpenMPF build script will fail to properly download .whl files for Python modules.
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Added the [Python Batch Component API](Python-Batch-Component-API/index.html).
 - Added the [Node Guide](Node-Guide/index.html).
@@ -1420,7 +1413,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - Updated the [Install Guide](Install-Guide/index.html) with an "(Optional) Install the NVIDIA CUDA Toolkit" section.
 - Renamed Admin Manual to Admin Guide for consistency.
 
-<h2>Python Batch Component API</h2>
+<h3>Python Batch Component API</h3>
 
 - Developers can now write batch components in Python using the mpf_component_api module.
 - Dependencies can be specified in a setup.py file. OpenMPF will automatically download the .whl files using pip at
@@ -1430,7 +1423,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - OpenMPF ImageReader and VideoCapture tools are provided in the mpf_component_util module.
 - Example Python components are provided for reference.
 
-<h2>Spare Nodes</h2>
+<h3>Spare Nodes</h3>
 
 - Spare nodes can join and leave an OpenMPF cluster while the Workflow Manager is running. You can create a spare node
   by cloning an existing OpenMPF child node. Refer to the [Node Guide](Node-Guide/index.html).
@@ -1445,7 +1438,7 @@ DarknetDetection (person + vehicle) --> OcvDnnDetection (vehicle color)
 - The environment variables specified in `/etc/profile.d/mpf.sh` have been simplified. Of note, `ALL_MPF_NODES` has been
   replaced by `CORE_MPF_NODES`.
 
-<h2>Default Detection System Properties</h2>
+<h3>Default Detection System Properties</h3>
 
 - The detection properties that specify the default values when creating new jobs can now be updated at runtime without
   restarting the Workflow Manager. Changing these properties will only have an effect on new jobs, not jobs that are
@@ -1466,7 +1459,7 @@ detection.models.dir.path=${env:MPF_HOME}/models/
 detection.models.dir.path=${mpf.share.path}/models/
 ```
 
-<h2>Adaptive Frame Interval</h2>
+<h3>Adaptive Frame Interval</h3>
 
 - The `FRAME_RATE_CAP` property can be used to set a threshold on the maximum number of frames to process within one
   second of the native video time. This property takes precedence over the user-provided / pipeline-provided value
@@ -1481,7 +1474,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - If `FRAME_RATE_CAP` is disabled, then `FRAME_INTERVAL` will be used instead.
 - If both `FRAME_RATE_CAP` and `FRAME_INTERVAL` are disabled, then a value of 1 will be used for `FRAME_INTERVAL`.
 
-<h2>Darknet Component</h2>
+<h3>Darknet Component</h3>
 
 - This release includes a component that uses the [Darknet neural network framework](https://pjreddie.com/darknet/) to
   perform detection and classification of objects using trained models.
@@ -1504,7 +1497,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
   detection.use.cpu.when.gpu.problem system property, to `TRUE` if you want to run the component logic on the CPU
   instead of the GPU when a GPU problem is detected.
 
-<h2>Models Directory</h2>
+<h3>Models Directory</h3>
 
 - The`$MPF_HOME/share/models` directory is now used by the Darknet and Caffe components to store model files and
   associated files, such as classification names files, weights files, etc. This allows users to more easily add model
@@ -1513,7 +1506,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - To add new models to the Darknet and Caffe component, add an entry to the
   respective `<component-name>/plugin-files/models/models.ini` file.
 
-<h2>Packaging and Deployment</h2>
+<h3>Packaging and Deployment</h3>
 
 - Python components are packaged with their respective dependencies as .whl files. This can be automated by providing a
   setup.py file. An example OpenCV Python component is provided that demonstrates how the component is packaged and
@@ -1521,14 +1514,14 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
   installed in it.
 - When deploying OpenMPF, `LD_LIBRARY_PATH` is no longer set system-wide. Refer to Known Issues.
 
-<h2>Web User Interface</h2>
+<h3>Web User Interface</h3>
 
 - Updated the Nodes page to distinguish between core nodes and spare nodes, and to show when a node is online or
   offline.
 - Updated the Component Registration page to list the core nodes as a reminder that changes will not affect spare nodes.
 - Updated the Properties page to separate the default detection properties from the general system properties.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - Custom Action, task, and pipeline names can now contain "(" and ")" characters again.
 - Detection location elements for audio tracks and generic tracks in a JSON output object will now have a y value of `0`
@@ -1544,7 +1537,7 @@ calcFrameInterval = max(1, floor(mediaNativeFPS / frameRateCapProp));
 - The Workflow Manager will no longer generate an "Error retrieving the SingleJobInfo model" line in the log if someone
   is viewing the Job Status page when a job submitted through the REST API is in progress.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - When multiple component services of the same type on the same node log to the same file at the same time, sometimes
   log lines will not be captured in the log file. The logging frameworks (log4j and log4cxx) do not support that usage.
@@ -1570,22 +1563,21 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
   to run `sudo killall amq_detection_component` after running `mpf stop`.
 
 # OpenMPF 2.0.x
----
 
-<h1>2.0.0: February 2018</h1>
+<h2>2.0.0: February 2018</h2>
 
 > **NOTE:** Components built for previous releases of OpenMPF are not compatible with OpenMPF 2.0.0 due to Batch Component API changes to support generic detections, and changes made to the format of the `descriptor.json` file to support stream processing.
 
 > **NOTE:** This release contains basic support for processing video streams. Currently, the only way to make use of that functionality is through the REST API. Streaming jobs and services cannot be created or monitored through the web UI. Only the SuBSENSE component has been updated to support streaming. Only single-stage pipelines are supported at this time.
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Updated documents to distinguish the batch component APIs from the streaming component API.
 - Added the [C++ Streaming Component API](CPP-Streaming-Component-API/index.html).
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API/index.html) to describe support for generic detections.
 - Updated the [REST API](REST-API/index.html) with endpoints for streaming jobs.
 
-<h2>Support for Generic Detections</h2>
+<h3>Support for Generic Detections</h3>
 
 - C++ and Java components can now declare support for the `UNKNOWN` data type. The respective batch APIs have been
   updated with a function that will enable a component to process an `MPFGenericJob`, which represents a piece of media
@@ -1593,17 +1585,17 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 - Note that these API changes make OpenMPF R2.0.0 incompatible with components built for previous releases of OpenMPF.
   Specifically, the new component executor will not be able to load the component logic library.
 
-<h2>C++ Batch Component API</h2>
+<h3>C++ Batch Component API</h3>
 
 - Added the following function to support generic detections:
     - `MPFDetectionError GetDetections(const MPFGenericJob &job, vector<MPFGenericTrack> &tracks)`
 
-<h2>Java Batch Component API</h2>
+<h3>Java Batch Component API</h3>
 
 - Added the following method to support generic detections:
     - `List<MPFGenericTrack> getDetections(MPFGenericJob job)`
 
-<h2>Streaming REST API</h2>
+<h3>Streaming REST API</h3>
 
 - Added the following REST endpoints for streaming jobs:
     - `[GET] /rest/streaming/jobs`: Returns a list of streaming job ids.
@@ -1612,7 +1604,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
     - `[GET] /rest/streaming/jobs/{id}`: Gets information about a streaming job.
     - `[POST] /rest/streaming/jobs/{id}/cancel`: Cancels a streaming job.
 
-<h2>Workflow Manager</h2>
+<h3>Workflow Manager</h3>
 
 - Updated to support generic detections.
 - Updated Redis to store information about streaming jobs.
@@ -1622,14 +1614,14 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 - Added ActiveMQ queues to enable the C++ Streaming Component Executor to send reports and job status to the Workflow
   Manager.
 
-<h2>Node Manager</h2>
+<h3>Node Manager</h3>
 
 - Updated the master Node Manager and child Node Managers to spawn component services on demand to handle streaming
   jobs, cancel those jobs, and to monitor the status of those processes.
 - Using .ini files to represent streaming job properties and enable better communication between a child Node Manager
   and C++ Streaming Component Executor.
 
-<h2>C++ Streaming Component API</h2>
+<h3>C++ Streaming Component API</h3>
 
 - Developed the C++ Streaming Component API with the following functions:
     - `MPFStreamingDetectionComponent(const MPFStreamingVideoJob &job)`: Constructor that takes a streaming video job.
@@ -1640,7 +1632,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
     - `vector<MPFVideoTrack> EndSegment()`: Indicates the end of the current video segment.
 - Updated the C++ Hello World component to support streaming jobs.
 
-<h2>C++ Streaming Component Executor</h2>
+<h3>C++ Streaming Component Executor</h3>
 
 - Developed the C++ Streaming Component Executor to load a streaming component logic library, read frames from a video
   stream, and exercise the component logic through the C++ Streaming Component API.
@@ -1651,7 +1643,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 - The C++ Streaming Component Executor supports `FRAME_INTERVAL`, as well as rotation, horizontal flipping, and
   cropping (region of interest) properties. Does not support `USE_KEY_FRAMES`.
 
-<h2>Interoperability Package</h2>
+<h3>Interoperability Package</h3>
 
 - Added the following Java classes to the interoperability package to simplify third party integration:
     - `JsonHealthReportCollection`: Represents the JSON content of a health report callback. Contains one or
@@ -1659,7 +1651,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
     - `JsonSegmentSummaryReport`: Represents the JSON content of a summary report callback. Content is similar to the
       JSON output object used for batch processing.
 
-<h2>SuBSENSE Component</h2>
+<h3>SuBSENSE Component</h3>
 
 - The SuBSENSE component now supports both batch processing and stream processing.
 - Each video segment will be processed independently of the rest. In other words, tracks will be generated on a
@@ -1667,7 +1659,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
 - Note that the last frame in the previous segment will be used to determine if there is motion in the first frame of
   the next segment.
 
-<h2>Packaging and Deployment</h2>
+<h3>Packaging and Deployment</h3>
 
 - Updated `descriptor.json` fields to allow components to support batch and/or streaming jobs. Components that use the
   old `descriptor.json` file format cannot be registered through the web UI.
@@ -1679,12 +1671,12 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
       track for the current segment.
     - `activity_timestamp`: The timestamp associated with the last job activity.
 
-<h2>Web User Interface</h2>
+<h3>Web User Interface</h3>
 
 - Added column names to the table that appears when the user clicks in the Media button associated with a job on the Job
   Status page. Now descriptive comments are provided when table cells are empty.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - Upgraded Tika to 1.17 to resolve an issue with improper indentation in a Python file (rotation.py) that resulted in
   generating at least one error message per image processed. When processing a large number of images, this would
@@ -1692,7 +1684,7 @@ com.google.protobuf.InvalidProtocolBufferException: Message missing required fie
   in that state, that process would stay there, essentially wasting on CPU core. This resulted in some of the Jenkins
   virtual machines we used for testing to become unresponsive.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - OpenCV 3.3.0 `cv::imread()` does not properly decode some TIFF images that have EXIF orientation metadata. It can
   handle images that are flipped horizontally, but not vertically. It also has issues with rotated images. Since most
@@ -1780,11 +1772,10 @@ for optional dependencies.
 ```
 
 # OpenMPF 1.0.x
----
 
-<h1>1.0.0: October 2017</h1>
+<h2>1.0.0: October 2017</h2>
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for installing the latest JDK,
   latest JRE, FFmpeg 3.3.3, new codecs, and OpenCV 3.3.
@@ -1796,13 +1787,13 @@ for optional dependencies.
 - Updated the README at the top level of each of the primary repositories to help with user navigation and provide
   general information.
 
-<h2>Upgrade to FFmpeg 3.3.3 and OpenCV 3.3</h2>
+<h3>Upgrade to FFmpeg 3.3.3 and OpenCV 3.3</h3>
 
 - Updated core framework from FFmpeg 2.6.3 to FFmpeg 3.3.3.
 - Added the following FFmpeg codecs: x256, VP9, AAC, Opus, Speex.
 - Updated core framework and components from OpenCV 3.2 to OpenCV 3.3. No longer building with opencv_contrib.
 
-<h2>Feed Forward Behavior</h2>
+<h3>Feed Forward Behavior</h3>
 
 - Updated the workflow manager (WFM) and all video components to optionally perform feed forward processing for batch
   jobs. This allows tracks to be passed forward from one pipeline stage to the next. Components in the next stage will
@@ -1822,7 +1813,7 @@ for optional dependencies.
 - Note that setting the feed forward properties has no effect on the first pipeline stage because there is no prior
   stage that can pass tracks to it.
 
-<h2>Caffe Component</h2>
+<h3>Caffe Component</h3>
 
 - Updated the Caffe component to process images in the BGR color space instead of the RGB color space. This addresses a
   bug found in OpenCV. Refer to the Bug Fixes section below.
@@ -1839,13 +1830,13 @@ for optional dependencies.
 - Removed the `TRANSPOSE` property from the Caffe component since it was not necessary.
 - Added red, green, and blue mean subtraction values to the GoogLeNet pipeline.
 
-<h2>Use Key Frames</h2>
+<h3>Use Key Frames</h3>
 
 - Added support for an optional `USE_KEY_FRAMES` property to each video component. When true the component will only
   look at key frames (I-frames) from the input video. Can be used in conjunction with `FRAME_INTERVAL`. For example,
   when `USE_KEY_FRAMES` is true, and `FRAME_INTERVAL` is set to "2", then every other key frame will be processed.
 
-<h2>MPFVideoCapture and MPFImageReader Tools</h2>
+<h3>MPFVideoCapture and MPFImageReader Tools</h3>
 
 - Updated the MPFVideoCapture and MPFImageReader tools to handle feed forward properties.
 - Updated the MPFVideoCapture tool to handle `FRAME_INTERVAL` and `USE_KEY_FRAMES` properties.
@@ -1853,7 +1844,7 @@ for optional dependencies.
 - We encourage component developers to use these tools to automatically take care of common frame grabbing and frame
   manipulation behaviors, and not to reinvent the wheel.
 
-<h2>Dead Letter Queue</h2>
+<h3>Dead Letter Queue</h3>
 
 - If for some reason a sub-job request that should have gone to a component ends up on the ActiveMQ Dead Letter Queue (
   DLQ), then the WFM will now process that failed request so that the job can complete. The ActiveMQ management page
@@ -1861,19 +1852,19 @@ for optional dependencies.
   in `MPF.PROCESSED_DLQ_MESSAGES`. Those are left for auditing purposes. The "Message Detail" for these shows the string
   representation of the original job request protobuf message.
 
-<h2>Upgrade Path</h2>
+<h3>Upgrade Path</h3>
 
 - Removed the Release 0.8 to Release 0.9 upgrade path in the deployment scripts.
 - Added support for a Release 0.9 to Release 1.0.0 upgrade path, and a Release 0.10.0 to Release 1.0.0 upgrade path.
 
-<h2>Markup</h2>
+<h3>Markup</h3>
 
 - Bounding boxes are now drawn along the interpolated path between detection regions whenever there are one or more
   frames in a track which do not have detections associated with them.
 - For each track, the color of the bounding box is now a randomly selected hue in the HSV color space. The colors are
   evenly distributed using the golden ratio.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - Fixed a [bug in OpenCV](https://github.com/opencv/opencv/issues/9625) where the Caffe example code was processing
   images in the RGB color space instead of the BGR color space. Updated the OpenMPF Caffe component accordingly.
@@ -1891,44 +1882,43 @@ for optional dependencies.
   less than this property value then the segments should be merged; otherwise, the segments should remain separate. In
   some cases, the exact opposite was happening. This bug has been fixed.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - Because of the number of additional ActiveMQ messages involved, enabling feed forward for low resolution video may
   take longer than the non-feed-forward behavior.
 
 # OpenMPF 0.x.x
----
 
-<h1>0.10.0: July 2017</h1>
+<h2>0.10.0: July 2017</h2>
 
 > **WARNING:** There is no longer a `DEFAULT CAFFE ACTION`, `DEFAULT CAFFE TASK`, or `DEFAULT CAFFE PIPELINE`. There is now a `CAFFE GOOGLENET DETECTION PIPELINE` and `CAFFE YAHOO NSFW DETECTION PIPELINE`, which each have a respective action and task.
 
 > **NOTE:** MPFImageReader has been re-enabled in this version of OpenMPF since we upgraded to OpenCV 3.2, which addressed the known issues with `imread()`, auto-orientation, and jpeg files in OpenCV 3.1.
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Added a [Contributor Guide](Contributor-Guide/index.html) that provides guidelines for contributing to the OpenMPF
   codebase.
 - Updated the [Java Batch Component API](Java-Batch-Component-API/index.html) with links to the example Java components.
 - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for OpenCV 3.2.
 
-<h2>Upgrade to OpenCV 3.2</h2>
+<h3>Upgrade to OpenCV 3.2</h3>
 
 - Updated core framework and components from OpenCV 3.1 to OpenCV 3.2.
 
-<h2>Support for Animated gifs</h2>
+<h3>Support for Animated gifs</h3>
 
 - All gifs are now treated as videos. Each gif will be handled as an MPFVideoJob.
 - Unanimated gifs are treated as 1-frame videos.
 - The WFM Media Inspector now populates the `media_properties` map with a `FRAME_COUNT` entry (in addition to
   the `DURATION` and `FPS` entries).
 
-<h2>Caffe Component</h2>
+<h3>Caffe Component</h3>
 
 - Added support for the Yahoo Not Suitable for Work (NSFW) Caffe model for explicit material detection.
 - Updated the Caffe component to support the OpenCV 3.2 Deep Neural Network (DNN) module.
 
-<h2>Future Support for Streaming Video</h2>
+<h3>Future Support for Streaming Video</h3>
 
 > **NOTE:** At this time, OpenMPF does not support streaming video. This section details what's being / has been done so far to prepare for that feature.
 
@@ -1943,7 +1933,7 @@ for optional dependencies.
 - The Redis and mySQL databases are being updated to support streaming video jobs.
     - A batch job will never have the same id as a streaming job. The integer ids will always be unique.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - The MOG and SuBSENSE component services could segfault and terminate if the `USE_MOTION_TRACKING` property was set to
   “1” and a detection was found close to the edge of the frame. Specifically, this would only happen if the video had a
@@ -1952,7 +1942,7 @@ for optional dependencies.
       height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to
       the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - If a job is submitted through the REST API, and a user to logged into the web UI and looking at the job status page,
   the WFM may generate "Error retrieving the SingleJobInfo model for the job with id" messages.
@@ -1963,7 +1953,7 @@ for optional dependencies.
   thousands of jobs have been run, this call could take minutes to complete. The code should be improved to execute a
   direct mySQL query.
 
-<h1>0.9.0: April 2017</h1>
+<h2>0.9.0: April 2017</h2>
 
 > **WARNING:** MPFImageReader has been disabled in this version of OpenMPF. Component developers should use MPFVideoCapture instead. This affects components developed against previous versions of OpenMPF and components developed against this version of OpenMPF. Please refer to the Known Issues section for more information.
 
@@ -1971,7 +1961,7 @@ for optional dependencies.
 
 > **WARNING:** Action, task, and pipeline names that started with `MOTION DETECTION PREPROCESSOR` have been renamed `MOG MOTION DETECTION PREPROCESSOR`. Similarly, `WITH MOTION PREPROCESSOR` has changed to `WITH MOG MOTION PREPROCESSOR`.
 
-<h2>Documentation</h2>
+<h3>Documentation</h3>
 
 - Updated the [REST API](REST-API/index.html) to reflect job properties, algorithm-specific properties, and
   media-specific properties.
@@ -1980,7 +1970,7 @@ for optional dependencies.
 - Updated the [Admin Guide](Admin-Guide/index.html) and [User Guide](User-Guide/index.html) to reflect web UI changes.
 - Updated the [Build Guide](Build-Environment-Setup-Guide/index.html) with instructions for GitHub repositories.
 
-<h2>Workflow Manager</h2>
+<h3>Workflow Manager</h3>
 
 - Added support for job properties, which will override pre-defined pipeline properties.
 - Added support for algorithm-specific properties, which will apply to a single stage of the pipeline and will override
@@ -1989,7 +1979,7 @@ for optional dependencies.
   properties, algorithm-specific properties, and pre-defined pipeline properties.
 - Components can now be automatically registered and installed when the web application starts in Tomcat.
 
-<h2>Web User Interface</h2>
+<h3>Web User Interface</h3>
 
 - The "Close All" button on pop-up notifications now dismisses all notifications from the queue, not just the visible
   ones.
@@ -2001,7 +1991,7 @@ for optional dependencies.
 - The File Manager UI has been improved to handle large numbers of files and symbolic links.
 - The side navigation menu is now replaced by a top navigation bar.
 
-<h2>REST API</h2>
+<h3>REST API</h3>
 
 - Added an optional jobProperties object to the `/rest/jobs/` request which contains String key-value pairs which
   override the pipeline's pre-configured job properties.
@@ -2014,7 +2004,7 @@ for optional dependencies.
   job properties, values in the jobProperties object, and values in the algorithmProperties object.
 - Streamlined the actions, tasks, and pipelines endpoints that are used by the web UI.
 
-<h2>Flipping, Rotation, and Region of Interest</h2>
+<h3>Flipping, Rotation, and Region of Interest</h3>
 
 - The `ROTATION`, `HORIZONTAL_FLIP`, and `SEARCH_REGION_*` properties will no longer appear in the detectionProperties
   map in the JSON detection output object. When applied to an algorithm these properties now appear in the
@@ -2023,7 +2013,7 @@ for optional dependencies.
 - The OpenMPF now supports multiple regions of interest in a single media file. Each region will produce tracks
   separately, and the tracks for each region will be listed in the JSON output as if from a separate media file.
 
-<h2>Component API</h2>
+<h3>Component API</h3>
 
 - Java Batch Component API is functionally complete for third-party development, with the exception of Component Adapter
   and frame transformation utilities classes.
@@ -2037,7 +2027,7 @@ for optional dependencies.
 - Reorganized the Java and C++ component source code to enable component development without the OpenMPF core, which
   will simplify component development and streamline the code base.
 
-<h2>JSON Output Objects</h2>
+<h3>JSON Output Objects</h3>
 
 - The JSON output object for the job now contains a jobProperties map which contains all properties defined for the job
   in the job request. For example, if the job request specifies a `CONFIDENCE_THRESHOLD` of then the jobProperties map
@@ -2052,17 +2042,17 @@ for optional dependencies.
 - The content of JSON output objects are now organized by detection type (e.g. MOTION, FACE, PERSON, TEXT, etc.) rather
   than action type.
 
-<h2>Caffe Component</h2>
+<h3>Caffe Component</h3>
 
 - Added support for flip, rotation, and cropping to regions of interest.
 - Added support for returning multiple classifications per detection based on user-defined settings. The classification
   list is in order of decreasing confidence value.
 
-<h2>New Pipelines</h2>
+<h3>New Pipelines</h3>
 
 - New SuBSENSE motion preprocessor pipelines have been added to components that perform detection on video.
 
-<h2>Packaging and Deployment</h2>
+<h3>Packaging and Deployment</h3>
 
 - `Actions.xml`, `Algorithms.xml`, `nodeManagerConfig.xml`, `nodeServicesPalette.json`, `Pipelines.xml`, and `Tasks.xml`
   are no longer stored within the Workflow Manager WAR file. They are now stored under `$MPF_HOME/data`. This makes it
@@ -2080,7 +2070,7 @@ for optional dependencies.
   that components are grouped by license and maturity. Build scripts have been created to streamline and simplify the
   build process across the various repositories.
 
-<h2>Upgrade to OpenCV 3.1</h2>
+<h3>Upgrade to OpenCV 3.1</h3>
 
 - The OpenMPF software has been ported to use OpenCV 3.1, including all of the C++ detection components and the markup
   component. For the OpenALPR license plate detection component, the versions of the openalpr, tesseract, and leptonica
@@ -2088,7 +2078,7 @@ for optional dependencies.
   component, the version of the SuBSENSE library was upgraded to use the code found at this
   location: <https://bitbucket.org/pierre_luc_st_charles/subsense/src>.
 
-<h2>Bug Fixes</h2>
+<h3>Bug Fixes</h3>
 
 - MOG motion detection always detected motion in frame 0 of a video. Because motion can only be detected between two
   adjacent frames, frame 1 is now the first frame in which motion can be detected.
@@ -2101,7 +2091,7 @@ for optional dependencies.
 - A job would fail when processing images with an invalid metadata tag for the camera flash setting.
 - Users were permitted to select invalid file types using the File Manager UI.
 
-<h2>Known Issues</h2>
+<h3>Known Issues</h3>
 
 - **MPFImageReader does not work reliably with the current release version of OpenCV 3.1**: In OpenCV 3.1, new
   functionality was introduced to interpret EXIF information when reading jpeg files.
