@@ -350,13 +350,13 @@
 <h3>Label Moving vs. Non-Moving Tracks</h3>
 
 <ul>
-<li>The Workflow Manager can now identify if a track is moving or non-moving. This is determined by calculating the
+<li>The Workflow Manager can now identify whether a track is moving or non-moving. This is determined by calculating the
   average bounding box for a track by averaging the size and position of all the detections in the track. Then, for each
   detection in the track, the intersection over union (IoU) is calculated between that detection and the average
   detection. If the IoU for at least <code>MOVING_TRACK_MIN_DETECTIONS</code> number of detections is less than or equal to
   <code>MOVING_TRACK_MAX_IOU</code>, then the track is considered a moving track.</li>
-<li>Added the following Workflow Manager job properties. These can be set for any image or video job:<ul>
-<li><code>MOVING_TRACK_LABELS_ENABLED</code>: When set to true, attempt to label tracks as either moving or not moving objects.
+<li>Added the following Workflow Manager job properties. These can be set for any video job:<ul>
+<li><code>MOVING_TRACK_LABELS_ENABLED</code>: When set to true, attempt to label tracks as either moving or non-moving objects.
   Each track will have a <code>MOVING</code> property set to <code>TRUE</code> or <code>FALSE</code>.</li>
 <li><code>MOVING_TRACKS_ONLY</code>: When set to true, remove any tracks that were marked as not moving.</li>
 <li><code>MOVING_TRACK_MAX_IOU</code>: The maximum IoU overlap between detection bounding boxes and the average per-track
@@ -370,7 +370,7 @@
 
 <ul>
 <li>Users can now watch videos directly in the OpenMPF web UI within the media pop-up dialog for each job. Most modern web
-  browsers support videoes encoded in VP9 and H.264. If a video cannot be played, users have the option to download it
+  browsers support videos encoded in VP9 and H.264. If a video cannot be played, users have the option to download it
   and play it using a stand-alone media player.</li>
 <li>To set the markup encoder use <code>MARKUP_VIDEO_ENCODER</code>. The default encoder has changed from <code>mjpeg</code> to <code>vp9</code>. As a
   result, it will take longer to generate marked up videos, but they will be higher quality and can be viewed in the web
@@ -385,7 +385,7 @@
 <li>Optionally, set <code>MARKUP_VIDEO_BOX_SOURCE_ICONS_ENABLED=TRUE</code> to show icons that represent the source of the detection.
   For example, if the box is the result of an algorithm detection, tracking performing gap fill, or Workflow Manager
   animation.</li>
-<li>Each frame if a marked up video now has a frame number in the upper right corner.</li>
+<li>Each frame if a marked-up video now has a frame number in the upper right corner.</li>
 <li>Please refer to the <a href="../Markup-Guide/index.html">Markup Guide</a> for the complete set of markup properties, icon definitions, and
   encoder considerations.</li>
 </ul>
