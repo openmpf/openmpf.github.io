@@ -1,6 +1,62 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 6.2.x
+
+<h2>6.2.0: May 2021</h2>
+
+<h3>Tesseract OCR Text Detection Component Support for Videos</h3>
+
+- Added support for processing videos. Each video frame is processed sequentially. The `MAX_PARALLEL_SCRIPT_THREADS` property determines how many threads to use to process each frame, one thread per language or script.
+- Note that for videos without much text, it may be faster to disable threading by setting `MAX_PARALLEL_SCRIPT_THREADS=1`. This will allow the component to reuse TessAPI instances instead of creating new ones for every frame. Pleaese refer to the Known Issues section for more information. 
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Added support for `COULD_NOT_OPEN_MEDIA` and `COULD_NOT_READ_MEDIA` error types
+- [[#1159](https://github.com/openmpf/openmpf/issues/1159)] Split `IssueCodes.REMOTE_STORAGE` into `REMOTE_STORAGE_DOWNLOAD` and `REMOTE_STORAGE_UPLOAD`
+- [[#1250](https://github.com/openmpf/openmpf/issues/1250)] Modified `/rest/jobs/{id}` to include the job's media
+- [[#1312](https://github.com/openmpf/openmpf/issues/1312)] Created `NETWORK_ERROR` error code for when a component can't connect to an external server
+
+<h3>Known Issues</h3>
+
+- [[#1008](https://github.com/openmpf/openmpf/issues/1008)] Use global TessAPI instances with parallel processing
+
 # OpenMPF 6.1.x
+
+<h2>6.1.6: May 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
+
+<h2>6.1.5: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
+
+<h2>6.1.4: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
+
+<h2>6.1.3: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
+
+<h2>6.1.2: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
+
+<h2>6.1.1: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Blah
 
 <h2>6.1.0: April 2021</h2>
 

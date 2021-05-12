@@ -64,6 +64,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#openmpf-62x">OpenMPF 6.2.x</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#openmpf-61x">OpenMPF 6.1.x</a></li>
                 
             
@@ -300,7 +303,71 @@
                 <blockquote>
 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 </blockquote>
+<h1 id="openmpf-62x">OpenMPF 6.2.x</h1>
+<h2>6.2.0: May 2021</h2>
+
+<h3>Tesseract OCR Text Detection Component Support for Videos</h3>
+
+<ul>
+<li>Added support for processing videos. Each video frame is processed sequentially. The <code>MAX_PARALLEL_SCRIPT_THREADS</code> property determines how many threads to use to process each frame, one thread per language or script.</li>
+<li>Note that for videos without much text, it may be faster to disable threading by setting <code>MAX_PARALLEL_SCRIPT_THREADS=1</code>. This will allow the component to reuse TessAPI instances instead of creating new ones for every frame. Pleaese refer to the Known Issues section for more information. </li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Added support for <code>COULD_NOT_OPEN_MEDIA</code> and <code>COULD_NOT_READ_MEDIA</code> error types</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1159">#1159</a>] Split <code>IssueCodes.REMOTE_STORAGE</code> into <code>REMOTE_STORAGE_DOWNLOAD</code> and <code>REMOTE_STORAGE_UPLOAD</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1250">#1250</a>] Modified <code>/rest/jobs/{id}</code> to include the job's media</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1312">#1312</a>] Created <code>NETWORK_ERROR</code> error code for when a component can't connect to an external server</li>
+</ul>
+<h3>Known Issues</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1008">#1008</a>] Use global TessAPI instances with parallel processing</li>
+</ul>
 <h1 id="openmpf-61x">OpenMPF 6.1.x</h1>
+<h2>6.1.6: May 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Blah</li>
+</ul>
+<h2>6.1.5: April 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Blah</li>
+</ul>
+<h2>6.1.4: April 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Blah</li>
+</ul>
+<h2>6.1.3: April 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Blah</li>
+</ul>
+<h2>6.1.2: April 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Blah</li>
+</ul>
+<h2>6.1.1: April 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Added support for <code>COULD_NOT_OPEN_MEDIA</code> and <code>COULD_NOT_READ_MEDIA</code> error types</li>
+</ul>
 <h2>6.1.0: April 2021</h2>
 
 <h3>OpenMPF Command Line Runner</h3>
