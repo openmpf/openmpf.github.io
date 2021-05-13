@@ -309,17 +309,25 @@
 <h3>Tesseract OCR Text Detection Component Support for Videos</h3>
 
 <ul>
-<li>The component can now process videos in addition to images and PDFs. Each video frame is processed sequentially. The <code>MAX_PARALLEL_SCRIPT_THREADS</code> property determines how many threads to use to process each frame, one thread per language or script.</li>
-<li>Note that for videos without much text, it may be faster to disable threading by setting <code>MAX_PARALLEL_SCRIPT_THREADS=1</code>. This will allow the component to reuse TessAPI instances instead of creating new ones for every frame. Please refer to the Known Issues section.</li>
+<li>The component can now process videos in addition to images and PDFs. Each video frame is processed sequentially.
+  The <code>MAX_PARALLEL_SCRIPT_THREADS</code> property determines how many threads to use to process each frame, one thread per
+  language or script.</li>
+<li>Note that for videos without much text, it may be faster to disable threading by
+  setting <code>MAX_PARALLEL_SCRIPT_THREADS=1</code>. This will allow the component to reuse TessAPI instances instead of creating
+  new ones for every frame. Please refer to the Known Issues section.</li>
 <li>Resolved issues: <a href="https://github.com/openmpf/openmpf/issues/1285">#1285</a></li>
 </ul>
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Added support for <code>COULD_NOT_OPEN_MEDIA</code> and <code>COULD_NOT_READ_MEDIA</code> error types</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1159">#1159</a>] Split <code>IssueCodes.REMOTE_STORAGE</code> into <code>REMOTE_STORAGE_DOWNLOAD</code> and <code>REMOTE_STORAGE_UPLOAD</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1086">#1086</a>] Added support for <code>COULD_NOT_OPEN_MEDIA</code>
+  and <code>COULD_NOT_READ_MEDIA</code> error types</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1159">#1159</a>] Split <code>IssueCodes.REMOTE_STORAGE</code>
+  into <code>REMOTE_STORAGE_DOWNLOAD</code> and <code>REMOTE_STORAGE_UPLOAD</code></li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1250">#1250</a>] Modified <code>/rest/jobs/{id}</code> to include the job's media</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1312">#1312</a>] Created <code>NETWORK_ERROR</code> error code for when a component can't connect to an external server. Updated Python HTTP retry code to return <code>NETWORK_ERROR</code>. This affects the Azure components.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1312">#1312</a>] Created <code>NETWORK_ERROR</code> error code for when a component
+  can't connect to an external server. Updated Python HTTP retry code to return <code>NETWORK_ERROR</code>. This affects the Azure
+  components.</li>
 </ul>
 <h3>Known Issues</h3>
 
@@ -332,46 +340,66 @@
 <h3>Handle Variable Frame Rate Videos</h3>
 
 <ul>
-<li>The WFM will attempt to detect if a video is constant frame rate (CFR) or variable frame rate (VFR) during media inspection. If no determination can be made, it will default to VFR behavior. If CFR, the JSON output object will have a <code>HAS_CONSTANT_FRAME_RATE=true</code> property in the <code>mediaMetadata</code> field.</li>
-<li>When <code>MPFVideoCapture</code> handles a CFR video it will use OpenCV to set the frame position, unless the position is within 16 frames of the current position, in which it will iteratively use OpenCV <code>grab()</code> to advance to the desired frame. </li>
-<li>When <code>MPFVideoCapture</code> handles a VFR video it will always iteratively use OpenCV <code>grab()</code> to advance to the desired frame because setting the frame position directly has been shown to not work correctly on VFR videos.</li>
-<li>When a video is split into multiple segments, <code>MPFVideoCapture</code> must iteratively use <code>grab()</code> to advance from frame 0 to the start of the segment. This introduces performance overhead. To mitigate this we recommend using fewer, and larger, video segments than those used for CFR videos.</li>
-<li>In addition to the existing <code>TARGET_SEGMENT_LENGTH</code> and <code>MIN_SEGMENT_LENGTH</code> job properties (<code>detection.segment.target.length</code> and <code>detection.segment.minimum.length</code> system properties) for CFR videos, the WFM now supports the <code>VFR_TARGET_SEGMENT_LENGTH</code> and <code>VFR_MIN_SEGMENT_LENGTH</code> job properties (<code>detection.vfr.segment.target.length</code> and <code>detection.vfr.segment.minimum.length</code> system properties) for VFR videos.</li>
-<li>Note that the timestamps associated with tracks and detections in a VFR video may be wrong. Please refer to the Known Issues section.  </li>
+<li>The Workflow Manager will attempt to detect if a video is constant frame rate (CFR) or variable frame rate (VFR)
+  during media inspection. If no determination can be made, it will default to VFR behavior. If CFR, the JSON output
+  object will have a <code>HAS_CONSTANT_FRAME_RATE=true</code> property in the <code>mediaMetadata</code> field.</li>
+<li>When <code>MPFVideoCapture</code> handles a CFR video it will use OpenCV to set the frame position, unless the position is within
+  16 frames of the current position, in which case it will iteratively use OpenCV <code>grab()</code> to advance to the desired
+  frame.</li>
+<li>When <code>MPFVideoCapture</code> handles a VFR video it will always iteratively use OpenCV <code>grab()</code> to advance to the desired
+  frame because setting the frame position directly has been shown to not work correctly on VFR videos.</li>
+<li>When a video is split into multiple segments, <code>MPFVideoCapture</code> must iteratively use <code>grab()</code> to advance from frame 0
+  to the start of the segment. This introduces performance overhead. To mitigate this we recommend using larger video
+  segments than those used for CFR videos.</li>
+<li>In addition to the existing <code>TARGET_SEGMENT_LENGTH</code> and <code>MIN_SEGMENT_LENGTH</code> job
+  properties (<code>detection.segment.target.length</code> and <code>detection.segment.minimum.length</code> system properties) for CFR
+  videos, the Workflow Manager now supports the <code>VFR_TARGET_SEGMENT_LENGTH</code> and <code>VFR_MIN_SEGMENT_LENGTH</code> job
+  properties (<code>detection.vfr.segment.target.length</code> and <code>detection.vfr.segment.minimum.length</code> system properties) for
+  VFR videos.</li>
+<li>Note that the timestamps associated with tracks and detections in a VFR video may be wrong. Please refer to the Known
+  Issues section.</li>
 <li>Resolved issues: <a href="https://github.com/openmpf/openmpf/issues/1307">#1307</a></li>
 </ul>
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1287">#1287</a>] Updated Tika Text Detection Component to break up large chunks of text. The component now generates tracks with both a <code>PAGE_NUM</code> property and <code>SECTION_NUM</code> property. Please refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md#overview">README</a>.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1287">#1287</a>] Updated Tika Text Detection Component to break up large
+  chunks of text. The component now generates tracks with both a <code>PAGE_NUM</code> property and <code>SECTION_NUM</code> property. Please
+  refer to
+  the <a href="https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md#overview">README</a>.</li>
 </ul>
 <h3>Known Issues</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1313">#1313</a>] Incorrect JSON output object timestamps for variable frame rate videos</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1317">#1317</a>] Tika Text Detection component generates first PDF track at <code>PAGE_NUM</code> 2</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1313">#1313</a>] Incorrect JSON output object timestamps for variable frame
+  rate videos</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1317">#1317</a>] Tika Text Detection component generates first PDF track
+  at <code>PAGE_NUM</code> 2</li>
 </ul>
 <h2>6.1.5: April 2021</h2>
 
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1300">#1300</a>] Parallelized S3 artifact upload. Use the <code>detection.artifact.extraction.parallel.upload.count</code> system property to configure the number of parallel uploads.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1300">#1300</a>] Parallelized S3 artifact upload. Use
+  the <code>detection.artifact.extraction.parallel.upload.count</code> system property to configure the number of parallel uploads.</li>
 </ul>
 <h2>6.1.4: April 2021</h2>
 
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1299">#1299</a>] Improved artifact extraction performance when there is no rotation or flip</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1299">#1299</a>] Improved artifact extraction performance when there is no
+  rotation or flip</li>
 </ul>
 <h2>6.1.3: April 2021</h2>
 
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1295">#1295</a>] Improved artifact extraction and markup JNI memory utilization</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1297">#1297</a>] Limited WFM IO threads to a reasonable number</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1295">#1295</a>] Improved artifact extraction and markup JNI memory
+  utilization</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1297">#1297</a>] Limited Workflow Manager IO threads to a reasonable number</li>
 </ul>
 <h3>Bug Fixes</h3>
 
