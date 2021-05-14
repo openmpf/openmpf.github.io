@@ -1,6 +1,111 @@
 > **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 6.2.x
+
+<h2>6.2.0: May 2021</h2>
+
+<h3>Tesseract OCR Text Detection Component Support for Videos</h3>
+
+- The component can now process videos in addition to images and PDFs. Each video frame is processed sequentially.
+  The `MAX_PARALLEL_SCRIPT_THREADS` property determines how many threads to use to process each frame, one thread per
+  language or script.
+- Note that for videos without much text, it may be faster to disable threading by
+  setting `MAX_PARALLEL_SCRIPT_THREADS=1`. This will allow the component to reuse TessAPI instances instead of creating
+  new ones for every frame. Please refer to the Known Issues section.
+- Resolved issues: [#1285](https://github.com/openmpf/openmpf/issues/1285)
+
+<h3>Updates</h3>
+
+- [[#1086](https://github.com/openmpf/openmpf/issues/1086)] Added support for `COULD_NOT_OPEN_MEDIA`
+  and `COULD_NOT_READ_MEDIA` error types
+- [[#1159](https://github.com/openmpf/openmpf/issues/1159)] Split `IssueCodes.REMOTE_STORAGE`
+  into `REMOTE_STORAGE_DOWNLOAD` and `REMOTE_STORAGE_UPLOAD`
+- [[#1250](https://github.com/openmpf/openmpf/issues/1250)] Modified `/rest/jobs/{id}` to include the job's media
+- [[#1312](https://github.com/openmpf/openmpf/issues/1312)] Created `NETWORK_ERROR` error code for when a component
+  can't connect to an external server. Updated Python HTTP retry code to return `NETWORK_ERROR`. This affects the Azure
+  components.
+
+<h3>Known Issues</h3>
+
+- [[#1008](https://github.com/openmpf/openmpf/issues/1008)] Use global TessAPI instances with parallel processing
+
 # OpenMPF 6.1.x
+
+<h2>6.1.6: May 2021</h2>
+
+<h3>Handle Variable Frame Rate Videos</h3>
+
+- The Workflow Manager will attempt to detect if a video is constant frame rate (CFR) or variable frame rate (VFR)
+  during media inspection. If no determination can be made, it will default to VFR behavior. If CFR, the JSON output
+  object will have a `HAS_CONSTANT_FRAME_RATE=true` property in the `mediaMetadata` field.
+- When `MPFVideoCapture` handles a CFR video it will use OpenCV to set the frame position, unless the position is within
+  16 frames of the current position, in which case it will iteratively use OpenCV `grab()` to advance to the desired
+  frame.
+- When `MPFVideoCapture` handles a VFR video it will always iteratively use OpenCV `grab()` to advance to the desired
+  frame because setting the frame position directly has been shown to not work correctly on VFR videos.
+- When a video is split into multiple segments, `MPFVideoCapture` must iteratively use `grab()` to advance from frame 0
+  to the start of the segment. This introduces performance overhead. To mitigate this we recommend using larger video
+  segments than those used for CFR videos.
+- In addition to the existing `TARGET_SEGMENT_LENGTH` and `MIN_SEGMENT_LENGTH` job
+  properties (`detection.segment.target.length` and `detection.segment.minimum.length` system properties) for CFR
+  videos, the Workflow Manager now supports the `VFR_TARGET_SEGMENT_LENGTH` and `VFR_MIN_SEGMENT_LENGTH` job
+  properties (`detection.vfr.segment.target.length` and `detection.vfr.segment.minimum.length` system properties) for
+  VFR videos.
+- Note that the timestamps associated with tracks and detections in a VFR video may be wrong. Please refer to the Known
+  Issues section.
+- Resolved issues: [#1307](https://github.com/openmpf/openmpf/issues/1307)
+
+<h3>Updates</h3>
+
+- [[#1287](https://github.com/openmpf/openmpf/issues/1287)] Updated Tika Text Detection Component to break up large
+  chunks of text. The component now generates tracks with both a `PAGE_NUM` property and `SECTION_NUM` property. Please
+  refer to
+  the [README](https://github.com/openmpf/openmpf-components/blob/master/java/TikaTextDetection/README.md#overview).
+
+<h3>Known Issues</h3>
+
+- [[#1313](https://github.com/openmpf/openmpf/issues/1313)] Incorrect JSON output object timestamps for variable frame
+  rate videos
+- [[#1317](https://github.com/openmpf/openmpf/issues/1317)] Tika Text Detection component generates first PDF track
+  at `PAGE_NUM` 2
+
+<h2>6.1.5: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1300](https://github.com/openmpf/openmpf/issues/1300)] Parallelized S3 artifact upload. Use
+  the `detection.artifact.extraction.parallel.upload.count` system property to configure the number of parallel uploads.
+
+<h2>6.1.4: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1299](https://github.com/openmpf/openmpf/issues/1299)] Improved artifact extraction performance when there is no
+  rotation or flip
+
+<h2>6.1.3: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1295](https://github.com/openmpf/openmpf/issues/1295)] Improved artifact extraction and markup JNI memory
+  utilization
+- [[#1297](https://github.com/openmpf/openmpf/issues/1297)] Limited Workflow Manager IO threads to a reasonable number
+
+<h3>Bug Fixes</h3>
+
+- [[#1296](https://github.com/openmpf/openmpf/issues/1296)] Fixed ActiveMQ job priorities
+
+<h2>6.1.2: April 2021</h2>
+
+<h3>Updates</h3>
+
+- [[#1294](https://github.com/openmpf/openmpf/issues/1294)] Limited ffmpeg threads to a reasonable number
+
+<h2>6.1.1: April 2021</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1292](https://github.com/openmpf/openmpf/issues/1292)] Don't skip artifact extraction for failed media
 
 <h2>6.1.0: April 2021</h2>
 
