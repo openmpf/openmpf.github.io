@@ -313,7 +313,7 @@
 <li>Invokes methods on the component library to obtain detection results</li>
 <li>Populates and sends the respective responses to the WFM</li>
 </ol>
-<p>The basic psuedocode for the Component Executor is as follows:</p>
+<p>The basic pseudocode for the Component Executor is as follows:</p>
 <pre><code class="java">component.setRunDirectory(...)
 component.init()
 while (true) {
@@ -1449,11 +1449,11 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 </tr>
 <tr>
 <td>MPF_COULD_NOT_OPEN_DATAFILE</td>
-<td>The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI.</td>
+<td>The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. <br><br>Use MPF_COULD_NOT_OPEN_MEDIA for media files.</td>
 </tr>
 <tr>
 <td>MPF_COULD_NOT_READ_DATAFILE</td>
-<td>There is a failure reading data from a successfully opened input data file.</td>
+<td>There is a failure reading data from a successfully opened input data file. <br><br>Use MPF_COULD_NOT_READ_MEDIA for media files.</td>
 </tr>
 <tr>
 <td>MPF_FILE_WRITE_ERROR</td>
@@ -1461,7 +1461,7 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 </tr>
 <tr>
 <td>MPF_IMAGE_READ_ERROR</td>
-<td>The component failed to read the image provided by the URI.</td>
+<td>Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibiilty and may be removed in a future release. <br><br><em>The component failed to read the image provided by the URI.</em></td>
 </tr>
 <tr>
 <td>MPF_BAD_FRAME_SIZE</td>
@@ -1518,6 +1518,18 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <tr>
 <td>MPF_GPU_ERROR</td>
 <td>The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected.</td>
+</tr>
+<tr>
+<td>MPF_NETWORK_ERROR</td>
+<td>The component failed to communicate with an external system over the network. The system may not be available or there may have been a timeout.</td>
+</tr>
+<tr>
+<td>MPF_COULD_NOT_OPEN_MEDIA</td>
+<td>The media file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI.</td>
+</tr>
+<tr>
+<td>MPF_COULD_NOT_READ_MEDIA</td>
+<td>There is a failure reading data from a successfully opened media file.</td>
 </tr>
 </tbody>
 </table>
