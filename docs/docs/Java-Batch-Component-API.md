@@ -23,7 +23,7 @@ The Component Executor:
 2. Invokes methods on the component library to obtain detection results
 3. Populates and sends the respective responses to the WFM
 
-The basic psuedocode for the Component Executor is as follows:
+The basic pseudocode for the Component Executor is as follows:
 ```java
 component.setRunDirectory(...)
 component.init()
@@ -917,10 +917,10 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the `MPFDataType` enum.  Note that this failure is normally caught by the Component Executor before a job is passed to the component logic. |
 | MPF_UNSUPPORTED_DATA_TYPE | The job passed to a component requests processing of a job of an unsupported type. For instance, a component that is only capable of processing audio files should return this error code if a video or image job request is received. |
 | MPF_INVALID_DATAFILE_URI | The string containing the URI location of the input data file is invalid or empty. |
-| MPF_COULD_NOT_OPEN_DATAFILE | The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. |
-| MPF_COULD_NOT_READ_DATAFILE | There is a failure reading data from a successfully opened input data file. |
+| MPF_COULD_NOT_OPEN_DATAFILE | The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. <br><br>Use MPF_COULD_NOT_OPEN_MEDIA for media files. |
+| MPF_COULD_NOT_READ_DATAFILE | There is a failure reading data from a successfully opened input data file. <br><br>Use MPF_COULD_NOT_READ_MEDIA for media files. |
 | MPF_FILE_WRITE_ERROR | The component received a failure for any reason when attempting to write to a file. |
-| MPF_IMAGE_READ_ERROR | The component failed to read the image provided by the URI. |
+| MPF_IMAGE_READ_ERROR | Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibility and may be removed in a future release. <br><br>*The component failed to read the image provided by the URI.* |
 | MPF_BAD_FRAME_SIZE | The frame data retrieved has an incorrect or invalid frame size.  |
 | MPF_BOUNDING_BOX_SIZE_ERROR | The calculation of a detection location bounding box has failed. For example, a component may be using an external library to detect objects, but the bounding box returned by that library lies partially outside the frame boundaries. |
 | MPF_INVALID_FRAME_INTERVAL | An invalid or unsupported frame interval was received. |
@@ -935,6 +935,9 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}. |
 | MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
+| MPF_NETWORK_ERROR | The component failed to communicate with an external system over the network. The system may not be available or there may have been a timeout. |
+| MPF_COULD_NOT_OPEN_MEDIA | The media file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. |
+| MPF_COULD_NOT_READ_MEDIA | There is a failure reading data from a successfully opened media file. |
 
 ### Utility Classes
 

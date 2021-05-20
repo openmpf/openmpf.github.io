@@ -24,7 +24,7 @@ The Component Executable:
 2. Invokes functions on the component library to obtain detection results
 3. Populates and sends the respective responses to the WFM
 
-The basic psuedocode for the Component Executable is as follows:
+The basic pseudocode for the Component Executable is as follows:
 
 ```c++
 while (has_next_frame) {

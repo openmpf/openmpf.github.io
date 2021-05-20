@@ -29,7 +29,7 @@ The Component Executable:
 2. Invokes methods on the component library to obtain detection results
 3. Populates and sends the respective responses to the WFM
 
-The basic psuedocode for the Component Executable is as follows:
+The basic pseudocode for the Component Executable is as follows:
 ```python
 component_cls = locate_component_class()
 component = component_cls()
@@ -1070,6 +1070,23 @@ def __init__(self, confidence=-1.0, detection_properties=None):
 |----------------------|-----------|-------------|
 | confidence           | `float`   | Represents the "quality" of the detection. The range depends on the detection algorithm. 0.0 is lowest quality. Higher values are higher quality. Using a standard range of [0.0 - 1.0] is advised. If the component is unable to supply a confidence value, it should return -1.0. |
 | detection_properties | `dict[str, str]` | A dict with keys and values of type `str` containing optional additional information about the detected object. For best practice, keys should be in all CAPS. |
+
+
+# How to Report Errors
+The following is an example of how to throw an exception:
+
+```python
+import mpf_component_api as mpf
+
+...
+raise mpf.DetectionError.MISSING_PROPERTY.exception(
+  'The REALLY_IMPORTANT property must be provided as a job property.')
+```
+
+The Python Batch Component API supports all of the same error types
+listed [here](/CPP-Batch-Component-API/index.html#mpfdetectionerror) for the C++ Batch Component API. Be sure to omit
+the `MPF_` prefix. You can replace the `MISSING_PROPERTY` part in the above code with any other error type. When
+generating an exception, choose the type that best describes your error.
 
 
 # Python Component Build Environment
