@@ -920,7 +920,7 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 | MPF_COULD_NOT_OPEN_DATAFILE | The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. <br><br>Use MPF_COULD_NOT_OPEN_MEDIA for media files. |
 | MPF_COULD_NOT_READ_DATAFILE | There is a failure reading data from a successfully opened input data file. <br><br>Use MPF_COULD_NOT_READ_MEDIA for media files. |
 | MPF_FILE_WRITE_ERROR | The component received a failure for any reason when attempting to write to a file. |
-| MPF_IMAGE_READ_ERROR | Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibiilty and may be removed in a future release. <br><br>*The component failed to read the image provided by the URI.* |
+| MPF_IMAGE_READ_ERROR | Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibility and may be removed in a future release. <br><br>*The component failed to read the image provided by the URI.* |
 | MPF_BAD_FRAME_SIZE | The frame data retrieved has an incorrect or invalid frame size.  |
 | MPF_BOUNDING_BOX_SIZE_ERROR | The calculation of a detection location bounding box has failed. For example, a component may be using an external library to detect objects, but the bounding box returned by that library lies partially outside the frame boundaries. |
 | MPF_INVALID_FRAME_INTERVAL | An invalid or unsupported frame interval was received. |

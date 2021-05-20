@@ -1085,8 +1085,8 @@ raise mpf.DetectionError.MISSING_PROPERTY.exception(
 
 The Python Batch Component API supports all of the same error types
 listed [here](/CPP-Batch-Component-API/index.html#mpfdetectionerror) for the C++ Batch Component API. Be sure to omit
-the `MPF_` prefix. You can replace `MISSING_PROPERTY` part in the above code with any other error type. When generating
-an exception, choose the type that best describes your error.
+the `MPF_` prefix. You can replace the `MISSING_PROPERTY` part in the above code with any other error type. When
+generating an exception, choose the type that best describes your error.
 
 
 # Python Component Build Environment
