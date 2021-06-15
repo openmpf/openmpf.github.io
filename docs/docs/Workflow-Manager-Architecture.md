@@ -1,13 +1,15 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
-> **IMPORTANT:** This document describes the Workflow Manager architecture for batch processing. There is a separate architecture for stream processing that uses many of the same elements and concepts.
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> This document was last updated for OpenMPF 0.10.0. It describes the Workflow Manager architecture for batch processing. The stream processing architecture uses many of the same elements and concepts.</p></div>
+
 
 # Workflow Manager Overview
 
-The OpenMPF consists of three major pieces:
+OpenMPF consists of three major pieces:
 
 1. A collection of **Components** which process media
-2. A **Node Manager**, which launches and monitors running components in the system
+2. A **Node Manager**, which launches and monitors running components in the system in a non-Docker deployment
 3. The **Workflow Manager** (WFM), which allows for the creation of jobs and manages the flow through active components
 
 These pieces are supported by a number of modules which provide shared functionality, as shown in the dependency diagram below:
@@ -67,7 +69,7 @@ The following sections list the rest of the constrollers in more detail.
 
 ## AdminComponentRegistrationController
 
-Components in the OpenMPF are uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](Component-API-Overview/index.html).
+In a non-Docker deployment, components can be uploaded as tar.gz packages containing all necessary component data. For more information on components, read [OpenMPF Component API Overview](Component-API-Overview/index.html).
 
 The **AdminComponentRegistrationController** provides endpoints which allow:
 
@@ -96,7 +98,7 @@ The **MediaController** enables upload and organization of media files within th
 
 ## NodeController
 
-The OpenMPF uses multiple hosts to enable scalability and parallel processing. The **NodeController** provides access to host information and allows components to be deployed on nodes. One or more components can be installed on a node. The same component can be installed on multiple nodes. Each node can manage one or more services for each component.
+OpenMPF uses multiple hosts to enable scalability and parallel processing. The **NodeController** provides access to host information and allows components to be deployed on nodes. One or more components can be installed on a node. The same component can be installed on multiple nodes. Each node can manage one or more services for each component.
 
 The **NodeController** provides host information and component service deployment status. It also provides an endpoint to deploy a service on a node and an endpoint to stop a service.
 
@@ -118,7 +120,7 @@ The diagram below shows the sequence of WFM operations. It does not show the Act
 
 After the job request is validated and saved to the SQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.
 
-[Apache Camel](http://camel.apache.org/) is an open-source framework that allows developers to build rule-based routing engines. Within the OpenMPF, we use a [Java DSL](http://camel.apache.org/dsl.html) to define the routes. Every route functions independently, and communication between the routes is URI-based. The OpenMPF uses ActiveMQ to handle its message traffic.
+[Apache Camel](http://camel.apache.org/) is an open-source framework that allows developers to build rule-based routing engines. Within OpenMPF, we use a [Java DSL](http://camel.apache.org/dsl.html) to define the routes. Every route functions independently, and communication between the routes is URI-based. OpenMPF uses ActiveMQ to handle its message traffic.
 
 ## Job Creator Route
 

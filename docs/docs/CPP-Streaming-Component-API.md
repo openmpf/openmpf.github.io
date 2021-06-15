@@ -1,4 +1,7 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> The C++ Streaming API is not complete, and there are no future development plans. Use at your own risk. The only way to make use of the functionality is through the REST API.</p></div>
 
 # API Overview
 
@@ -57,8 +60,7 @@ Detection components are implemented by:
 
 1. Extending [`MPFStreamingDetectionComponent`](#detection-component-interface).
 2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/CMakeLists.txt)).
-3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
+3. Creating a component Docker image. (See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview)).
 
 # API Specification
 
@@ -282,7 +284,7 @@ MPFStreamingVideoJob(
 |---|---|---|
 | job_name | `const string  &` | A specific name given to the job by the OpenMPF framework. This value may be used, for example, for logging and debugging purposes. |
 |  run_directory <a name="job-name"></a> | `const string  &` | Contains the full path of the parent folder above where the component is installed. This parent folder is also known as the plugin folder. |
-| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
+| job_properties <a name="job-properties"></a> | `const Properties &` | Contains a map of `<string, string>` which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the [Component Descriptor Reference](Component-Descriptor-Reference/index.html). Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value. |
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 ### VideoSegmentInfo
@@ -435,9 +437,7 @@ componentName
 │   └── descriptor.json
 └── lib
     └──libComponentName.so - Compiled component library
-```  
-
-Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
+```
 
 
 ## Logging

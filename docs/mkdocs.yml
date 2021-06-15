@@ -16,22 +16,22 @@ pages:
     - Install Guide: Install-Guide.md
     - User Guide: User-Guide.md
     - Admin Guide: Admin-Guide.md
-    - Node Guide: Node-Guide.md
     - Object Storage Guide: Object-Storage-Guide.md
     - Markup Guide: Markup-Guide.md
-    - Contributor Guide: Contributor-Guide.md
-    - Development Environment Guide: Development-Environment-Guide.md
+    - REST API: REST-API.md
     - License and Distribution: License-And-Distribution.md
     - Acknowledgements: Acknowledgements.md
-- Components:
+- Component Development:
     - Component API Overview: Component-API-Overview.md
+    - Component Descriptor Reference: Component-Descriptor-Reference.md
     - C++ Batch Component API: CPP-Batch-Component-API.md
-    - C++ Streaming Component API: CPP-Streaming-Component-API.md
-    - Java Batch Component API: Java-Batch-Component-API.md
     - Python Batch Component API: Python-Batch-Component-API.md
+    - Java Batch Component API: Java-Batch-Component-API.md
     - GPU Support Guide: GPU-Support-Guide.md
-    - Packaging and Registering a Component: Packaging-and-Registering-a-Component.md
     - Feed Forward Guide: Feed-Forward-Guide.md
-- Architecture:
-    - Workflow Manager: Workflow-Manager.md
-    - REST API: REST-API.md
+- Additional Developer Resources:
+    - Contributor Guide: Contributor-Guide.md
+    - Development Environment Guide: Development-Environment-Guide.md
+    - Node Guide: Node-Guide.md
+    - Workflow Manager Architecture: Workflow-Manager-Architecture.md
+    - C++ Streaming Component API: CPP-Streaming-Component-API.md

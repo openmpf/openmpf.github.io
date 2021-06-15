@@ -1,10 +1,14 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
-> **WARNING:** This guide is a work in progress and may not be completely accurate or comprehensive. Since transitioning to Docker deployment, this guide has not been fully tested.
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> For most component developers, these steps are not necessary. Instead, refer to the <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md#overview">C++</a>, <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md#overview">Python</a>, or <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md#overview">Java</a> README for developing a Docker component in your desired language.</p></div>
+
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> This guide is a work in progress and may not be completely accurate or comprehensive. Since transitioning to Docker deployment, this guide has not been fully tested.</p></div>
+
 
 # Overview
 
-The following instructions are for setting up an environment for building OpenMPF outside of Docker.
+The following instructions are for setting up an environment for building and running OpenMPF outside of Docker. They serve as a reference for developers who want develop the Workflow Manager web application itself and perform end-to-end integration testing.
 
 If your environment is behind a proxy server, please refer to the [Proxy Configuration](#proxy-configuration) and [SSL Inspection](#ssl-inspection) appendix sections before continuing. Keep them in mind throughout this guide and perform the configuration steps as necessary.
 
@@ -22,7 +26,7 @@ Install [CentOS 7](https://www.centos.org/download/). Most developers use a virt
 
 # Install System Dependencies Using Package Managers
 
-## Configure Additional Repositories
+<h2>Configure Additional Repositories</h2>
 
 1. Install the Remi Repo for Redis:
     1. `wget -P /home/mpf/Downloads "http://rpms.remirepo.net/RPM-GPG-KEY-remi"`
@@ -51,7 +55,7 @@ Install [CentOS 7](https://www.centos.org/download/). Most developers use a virt
 5. Update the shared library cache:
     <br>`sudo ldconfig`
 
-## Install System Dependencies via Yum
+<h2>Install System Dependencies via Yum</h2>
 
 Use `yum` to install packages:
 
@@ -76,11 +80,11 @@ Use `yum` to install packages:
 
 For more information on the command line tools, please refer to the [Command Line Tools](#command-line-tools) section below.
 
-## Add Maven Dependencies
+<h2>Add Maven Dependencies</h2>
 
 Some Maven dependencies needed for OpenMPF are not publicly available.
 
-1. Download   [mpf-maven-deps.tar.gz](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz) to `/home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz`.
+1. Download [mpf-maven-deps.tar.gz](https://github.com/openmpf/openmpf-build-tools/blob/master/mpf-maven-deps.tar.gz) to `/home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz`.
 2. Set up the local Maven repository:
     1. `cd /home/mpf`
     2. `mkdir -p .m2/repository`
@@ -94,7 +98,7 @@ Refer to the `openmpf_build` [Dockerfile](https://github.com/openmpf/openmpf-doc
 
 The `openmpf_build` Dockerfile may not include the dependencies you need to develop specific components. Refer to the Dockerfile for each of those components to determine which dependencies they require.
 
-## NVIDIA CUDA Toolkit
+<h2>NVIDIA CUDA Toolkit</h2>
 
 Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you need to run a component on a GPU. Many components that support GPU processing also support execution on the CPU, and if this toolkit is not found in the build environment, the build system will automatically build those components for CPU processing only. For a discussion of NVIDIA GPU support in OpenMPF components, see the [GPU Support Guide](GPU-Support-Guide/index.html).
 
@@ -103,7 +107,7 @@ Installation of the NVIDIA CUDA Toolkit is optional, and only necessary if you n
 
 # Build and Install Additional System Dependencies
 
-## Apache ActiveMQ 5.13.0
+<h2>Apache ActiveMQ 5.13.0</h2>
 For reference only: <http://activemq.apache.org>
 
 1. `cd /apps/bin/apache`
@@ -113,7 +117,7 @@ For reference only: <http://activemq.apache.org>
 5. `sudo chmod -R 755 /opt/apache-activemq-5.13.0`
 6. `sudo ln -s /opt/apache-activemq-5.13.0 /opt/activemq`
 
-## Apache Ant 1.9.6
+<h2>Apache Ant 1.9.6</h2>
 For reference only: <http://ant.apache.org>
 
 1. `cd /apps/bin/apache `
@@ -124,7 +128,7 @@ For reference only: <http://ant.apache.org>
 6. `sudo sed -i '/^PATH/s/$/:\/apps\/install\/apache-ant-1.9.6\/bin/' /etc/profile.d/mpf.sh`
 7. `. /etc/profile.d/mpf.sh`
 
-## PostgreSQL
+<h2>PostgreSQL</h2>
 1. Add PostgreSQL repository:
 <br>`sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm`
 2. Install postgres with yum:
@@ -151,7 +155,7 @@ For reference only: <http://ant.apache.org>
 <br>`sudo -i -u postgres createdb -O mpf mpf`
 
 
-## Python 3.8
+<h2>Python 3.8</h2>
 1. Install build dependencies:
    <br> `sudo yum install -y yum-utils`
    <br>`sudo yum-builddep -y python3`
@@ -187,7 +191,7 @@ For reference only: <http://ant.apache.org>
 
 # Configure System Dependencies
 
-# Configure ActiveMQ
+<h2>Configure ActiveMQ</h2>
 
 Some additional manual configuration of ActiveMQ is required. For each step, open the specified file in a text editor, make the change, and save the file. If ActiveMQ is running, please stop it before making these changes.
 
@@ -261,7 +265,7 @@ so that it reads:
 log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n
 ```
 
-# Configure Redis
+<h2>Configure Redis</h2>
 
 Redis should be set to run in the background (i.e. as a daemon process).
 
@@ -430,7 +434,7 @@ Run this command to clean up and remove all traces of the test run:
 1. `mpf clean --delete-uploaded-media --delete-logs`
 2. Type "Y" and press Enter.
 
-If you choose not to run `mpf clean` before following the [Build and Run the OpenMPF Workflow Manager Web Application](build-and-run-the-openmpf-workflow-manager-web-application) steps, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.
+If you choose not to run `mpf clean` before following the [Build and Run the OpenMPF Workflow Manager Web Application](#build-and-run-the-openmpf-workflow-manager-web-application) steps, the Job Status table will be pre-populated with some entries; however, the input media, markup, and JSON output objects for those jobs will not be available.
 
 ---
 
@@ -458,6 +462,88 @@ Execute `mpf --help` for general documentation and `mpf <action> --help` for doc
     - `mpf clean --delete-logs --delete-uploaded-media`: the same as `mpf clean` but also deletes log files and uploaded media
 - **Node Action**: Actions for managing node membership in the OpenMPF cluster.
     - `mpf list-nodes`: If the Workflow Manager is running, get the current JGroups view; otherwise, list the core nodes
+
+
+## Packaging a Component
+
+In a non-Docker deployment, admin users can register compnent packages through the web UI. Refer to [Component Registration](#component-registration).
+
+Once the descriptor file is complete, as described in [Component Descriptor Reference](Component-Descriptor-Reference/index.html), the next step is to compile your component source code, and finally, create a .tar.gz package containing the descriptor file, component library, and all other necessary files.
+
+The package should contain a top-level directory with a unique name that will (hopefully) not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the `componentName`.
+
+Within the top-level directory there must be a directory named “descriptor” with the descriptor JSON file in it. The name of the file must be “descriptor.json”.
+
+Example:
+```
+//sample-component-1.0.0-tar.gz contents
+SampleComponent/
+  config/
+  descriptor/
+    descriptor.json
+  lib/
+```
+
+### Installing and registering a component
+The Component Registration web page, located in the Admin section of the OpenMPF web user interface, can be used to upload and register the component.
+
+Drag and drop the .tar.gz file containing the component onto the dropzone area of that page. The component will automatically be uploaded and registered.
+
+Upon successful registration, the component will be available for deployment onto OpenMPF nodes via the Node Configuration web page and `/rest/nodes/config` end point.
+
+If the descriptor contains custom actions, tasks, or pipelines, then they will be automatically added to the system upon registration.
+
+>**NOTE:** If the descriptor does not contain custom actions, tasks, or pipelines, then a default action, task, and pipeline will be generated and added to the system.
+>
+>The default action will use the component’s algorithm with its default property value settings.
+The default task will use the default action.
+The default pipeline will use the default task. This will only be generated if the algorithm does not specify any `requiresCollection` states.
+
+### Unregistering a component
+A component can be unregistered by using the remove button on the Component Registration page.
+
+During unregistration, all services, algorithms, actions, tasks, and pipelines associated with the component are deleted. Additionally, all actions, tasks, and pipelines that depend on these elements are removed.
+
+
+# Web UI
+
+The following sections will cover some additional functionality permitted to admin users in a non-Docker deployment.
+
+## Node Configuration and Status
+
+This page provides a list of all of the services that are configured to run on the OpenMPF cluster, and enables an admin user to start, stop, or restart them on an individual basis. Only an admin user can perform these actions. If a non-admin user views this page, the "Action(s)" column is not displayed. This page also enables an admin user to edit the configuration for all nodes in the OpenMPF cluster. A non-admin user can only view the existing configuration.
+
+![Node and Process Status Page](img/mpf-adm-node.png "Node and Process Status Page")
+
+An admin user can add a node by using the "Add Node" button and selecting a node in the OpenMPF cluster from the drop-down list. You an also select to add all services at this time. A node and all if its configured services can be removed by clicking the trash can to the right of the node's hostname.
+
+An admin user can add services individually by selecting the node edit button at the bottom of the node. The number of service instances can be increased or decreased by using the drop-down. Click the "Submit" button to save the changes.
+
+Any node or service changes take effect immediately, no saving is required, except for adding services.
+
+When making changes, please be aware of the following:
+
+- It may take a minute for the configuration to take effect on the server.
+- If you remove an existing service from a node, any job that service is processing will be stopped, and you will need to resubmit that job.
+- If you create a new node, its configuration will not take effect until the OpenMPF software is properly installed and started on the associated host.
+- If you delete a node, you will need to manually turn off the hardware running that node (deleting a node does not shut down the machine).
+
+## Component Registration
+
+This page allows an admin user to add and remove non-default components to and from the system:
+
+![Component Registration Page](img/mpf-adm-component.png "Component Registration Page")
+
+A component package takes the form of a tar.gz file. An admin user can either drag and drop the file onto the "Upload a new component" dropzone area or click the dropzone area to open a file browser and select the file that way. In either case, the component will begin to be uploaded to the system. If the admin user dragged and dropped the file onto the dropzone area then the upload progress will be shown in that area. Once uploaded, the workflow manager will automatically attempt to register the component. Notification messages will appear in the upper right side of the screen to indicate success or failure if an error occurs. The "Current Components" table will display the component status.
+
+![Component Registration Page](img/mpf-adm-component2.png "Component Registration Page")
+
+If for some reason the component package upload succeeded but the component registration failed then the admin user will be able to click the "Register" button again to try to another registration attempt. For example, the admin user may do this after reviewing the workflow manager logs and resolving any issues that prevented the component from successfully registering the first time. One reason may be that a component with the same name already exists on the system. Note that an error will also occur if the top-level directory of the component package, once extracted, already exists in the /opt/mpf/plugins directory on the system.
+
+Once registered, an admin user has the option to remove the component. This will unregister it and completely remove any configured services, as well as the uploaded file and its extracted contents, from the system. Also, the component algorithm as well as any actions, tasks, and pipelines specified in the component's descriptor file will be removed when the component is removed.
+
+WARNING: Any actions, tasks, or pipelines created through the Create Custom Pipelines page that make use of the algorithm, actions, or tasks specified in the descriptor file of the component being removed will also be removed. This is to prevent pipelines from not working properly once the component is removed.
+
 
 # Known Issues
 

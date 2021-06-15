@@ -88,13 +88,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Node-Guide/index.html">Node Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
         
     </li>
@@ -109,14 +102,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+        <a class="" href="../REST-API/index.html">REST API</a>
         
     </li>
 
@@ -140,12 +126,19 @@
           
             <li>
     <ul class="subnav">
-    <li><span>Components</span></li>
+    <li><span>Component Development</span></li>
 
         
             
     <li class="toctree-l1 ">
         <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
         
     </li>
 
@@ -193,7 +186,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+        <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
         
     </li>
 
@@ -207,21 +200,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>
         
     </li>
 
@@ -238,19 +217,40 @@
           
             <li>
     <ul class="subnav">
-    <li><span>Architecture</span></li>
+    <li><span>Additional Developer Resources</span></li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Workflow-Manager/index.html">Workflow Manager</a>
+        <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../REST-API/index.html">REST API</a>
+        <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Node-Guide/index.html">Node Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
         
     </li>
 
@@ -280,7 +280,7 @@
     
       
         
-          <li>Components &raquo;</li>
+          <li>Component Development &raquo;</li>
         
       
     
@@ -294,9 +294,8 @@
           <div role="main">
             <div class="section">
               
-                <blockquote>
-<p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
-</blockquote>
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="api-overview">API Overview</h1>
 <p>In OpenMPF, a <strong>component</strong> is a plugin that receives jobs (containing media), processes that  media, and returns results.</p>
 <p>The OpenMPF Batch Component API currently supports the development of <strong>detection components</strong>, which are used detect objects in image, video, audio, or other (generic) files that reside on disk.</p>
@@ -337,8 +336,7 @@ component-&gt;Close()
 <ol>
 <li>Extending <a href="#detection-component-interface"><code>MPFDetectionComponent</code></a>.</li>
 <li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/examples/HelloWorldComponent/CMakeLists.txt">HelloWorldComponent CMakeLists.txt</a>).</li>
-<li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
-<li>Registering the component with OpenMPF. (See <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>).</li>
+<li>Creating a component Docker image. (See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview">README</a>).</li>
 </ol>
 <h1 id="api-specification">API Specification</h1>
 <p>The figure below presents a high-level component diagram of the C++ Batch Component API:</p>
@@ -803,7 +801,7 @@ handled generically. These files are not logically segmented, so a job will cont
 <tr>
 <td>job_properties <a name="job-properties"></a></td>
 <td><code>const Properties &amp;</code></td>
-<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
+<td>Contains a map of <code>&lt;string, string&gt;</code> which represents the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job. <br/><br/> Note: The job_properties map may not contain the full set of job properties. For properties not contained in the map, the component must use a default value.</td>
 </tr>
 <tr>
 <td>media_properties <a name="media-properties"></a></td>
@@ -1591,7 +1589,6 @@ the <code>MPFDetectionException</code> constructor. A component is not required 
     └──libComponentName.so - Compiled component library
 </code></pre>
 
-<p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
 <p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
 OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
@@ -1617,10 +1614,10 @@ Also, logging content can span multiple lines.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../CPP-Streaming-Component-API/index.html" class="btn btn-neutral float-right" title="C++ Streaming Component API">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Python-Batch-Component-API/index.html" class="btn btn-neutral float-right" title="Python Batch Component API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Component-API-Overview/index.html" class="btn btn-neutral" title="Component API Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Component-Descriptor-Reference/index.html" class="btn btn-neutral" title="Component Descriptor Reference"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1648,10 +1645,10 @@ Also, logging content can span multiple lines.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Component-API-Overview/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Component-Descriptor-Reference/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../CPP-Streaming-Component-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Python-Batch-Component-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

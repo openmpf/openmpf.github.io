@@ -1,6 +1,5 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to
-> the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
-> Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # API Overview
 
@@ -210,7 +209,7 @@ package contains the `my_component.py` file and the `my_component.py` file conta
 
 The `batchLibrary` field should match the distribution name from the setup.py file. In this example the
 field should be: `"batchLibrary" : "MyComponent"`.
-See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html) for details about
+See the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) for details about
 the descriptor format.
 
 
@@ -306,7 +305,7 @@ touch MyComponent/my_component.py
 
 The `batchLibrary` field should be the full path to the Python file containing your component class.
 In this example the field should be: `"batchLibrary" : "${MPF_HOME}/plugins/MyComponent/my_component.py"`.
-See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html) for details about
+See the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) for details about
 the descriptor format.
 
 
@@ -460,7 +459,7 @@ Class containing data used for detection of objects in an image file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -669,7 +668,7 @@ Class containing data used for detection of objects in a video file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -904,7 +903,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -1019,7 +1018,7 @@ logically segmented, so a job will contain the entirety of the file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>

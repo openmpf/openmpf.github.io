@@ -1,4 +1,5 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # API Overview
 
@@ -52,8 +53,7 @@ Detection components are implemented by:
 
 1. Extending [`MPFDetectionComponentBase`](#detection-component-interface).
 2. Building the component into a jar. (See [HelloWorldComponent pom.xml](https://github.com/openmpf/openmpf-java-component-sdk/blob/master/detection/examples/HelloWorldComponent/pom.xml)).
-3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
-4. Registering the component with OpenMPF. (See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html)).
+3. Creating a component Docker image. (See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/java_executor#overview)).
 
 # API Specification
 
@@ -945,7 +945,7 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 
 
 # Java Component Build Environment
-A Java Component must be built using a version of the Java SDK that is compatible with the one used to build the Java Component Executor. The OpenMPF Java Component Executor is currently built using Java version 1.8.0_144. In general, the Java SDK is backwards compatible.
+A Java Component must be built using a version of the Java SDK that is compatible with the one used to build the Java Component Executor. The OpenMPF Java Component Executor is currently built using OpenJDK 11.0.11. In general, the Java SDK is backwards compatible.
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and Java SDK libraries), and any configuration or data files.
 
@@ -969,8 +969,6 @@ componentName
 └── lib - All libraries required by the component
 └── libComponentName.jar - Compiled component library
 ```
-
-Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 ## Logging
 
