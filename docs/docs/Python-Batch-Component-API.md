@@ -117,6 +117,8 @@ Basic Python components are quicker to set up, but have no built-in support for 
 All dependencies must be handled by the developer. Setuptools-based components are recommended since they use
 setuptools and pip for dependency management.
 
+3. Creating a component Docker image. (See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview)).
+
 ## Get openmpf-python-component-sdk
 In order to create a Python component you will need to clone the
 [openmpf-python-component-sdk repository](https://github.com/openmpf/openmpf-python-component-sdk) if you don't
@@ -250,7 +252,7 @@ If any of the prebuilt libraries have transitive dependencies that are not avail
 must also be added to your project's `plugin-files/wheelhouse` directory.
 
 
-**6\. Create the plugin package:**
+**6\. Optional: Create the plugin package for non-Docker deployments:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -278,6 +280,11 @@ pip3 wheel -w plugin-packages/MyComponent/wheelhouse -f ~/mpf-sdk-install/python
 cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 ```
+
+**7\. Create the component Docker image:**
+
+See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
+
 
 ## How to Create a Basic Python Component
 In this example we create a basic Python component that supports video. An example of a basic Python component can be
@@ -332,7 +339,7 @@ EXPORT_MPF_COMPONENT = MyComponent
 The component executor looks for a module-level variable named `EXPORT_MPF_COMPONENT` to specify which class
 is the component.
 
-**4\. Create the plugin package:**
+**4\. Optional: Create the plugin package for non-Docker deployments:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -351,6 +358,10 @@ The plugin package can also be built manually using the following command:
 ```bash
 tar -zcf MyComponent.tar.gz MyComponent
 ```
+
+**5\. Create the component Docker image:**
+
+See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
 
 
 # API Specification

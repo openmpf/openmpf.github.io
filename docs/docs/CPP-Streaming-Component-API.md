@@ -427,7 +427,7 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 For components that want to take advantage of NVIDA GPU processors, please read the [GPU Support Guide](GPU-Support-Guide/index.html). Also ensure that your build environment has the NVIDIA CUDA Toolkit installed, as described in the [Build Environment Setup Guide](Build-Environment-Setup-Guide/index.html).
 
-## Component Packaging
+## Component Structure
 It is recommended that C++ components are organized according to the following directory structure:
 
 ```
@@ -437,7 +437,9 @@ componentName
 │   └── descriptor.json
 └── lib
     └──libComponentName.so - Compiled component library
-```
+```  
+
+Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.
 
 
 ## Logging

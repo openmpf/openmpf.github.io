@@ -958,7 +958,7 @@ Implementations are encouraged to operate in single-threaded mode. OpenMPF will 
 ## Stateless Behavior
 OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same `MPFJob`).
 
-## Component Packaging
+## Component Structure
 It is recommended that Java components are organized according to the following directory structure:
 
 ```
@@ -969,6 +969,8 @@ componentName
 └── lib - All libraries required by the component
 └── libComponentName.jar - Compiled component library
 ```
+
+Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.
 
 ## Logging
 

@@ -186,7 +186,7 @@
                 
                     <li><a class="toctree-l4" href="#stateless-behavior">Stateless Behavior</a></li>
                 
-                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+                    <li><a class="toctree-l4" href="#component-structure">Component Structure</a></li>
                 
                     <li><a class="toctree-l4" href="#logging">Logging</a></li>
                 
@@ -1541,7 +1541,7 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <p>Implementations are encouraged to operate in single-threaded mode. OpenMPF will parallelize components through multiple instantiations of the component, each running as a separate service.</p>
 <h2 id="stateless-behavior">Stateless Behavior</h2>
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing the same <code>MPFJob</code>).</p>
-<h2 id="component-packaging">Component Packaging</h2>
+<h2 id="component-structure">Component Structure</h2>
 <p>It is recommended that Java components are organized according to the following directory structure:</p>
 <pre><code>componentName
 ├── config - Other component-specific configuration
@@ -1551,6 +1551,7 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 └── libComponentName.jar - Compiled component library
 </code></pre>
 
+<p>Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.</p>
 <h2 id="logging">Logging</h2>
 <p>It is recommended to use <a href="http://www.slf4j.org/">slf4j</a> with <a href="https://logging.apache.org/log4j/2.x/">log4j2</a> for OpenMPF Java Component logging. Multiple instances of the same component can log to the same file. Logging content can span multiple lines.</p>
 <p>Log files should be output to:

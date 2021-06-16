@@ -407,6 +407,9 @@ package that gets installed is <code>mpf_component_api</code>. <code>mpf_compone
 Basic Python components are quicker to set up, but have no built-in support for dependency management.
 All dependencies must be handled by the developer. Setuptools-based components are recommended since they use
 setuptools and pip for dependency management.</p>
+<ol>
+<li>Creating a component Docker image. (See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview">README</a>).</li>
+</ol>
 <h2 id="get-openmpf-python-component-sdk">Get openmpf-python-component-sdk</h2>
 <p>In order to create a Python component you will need to clone the
 <a href="https://github.com/openmpf/openmpf-python-component-sdk">openmpf-python-component-sdk repository</a> if you don't
@@ -517,7 +520,7 @@ your project. The prebuilt libraries must be placed in your project's <code>plug
 The prebuilt library names must be listed in your <code>setup.py</code> file's <code>install_requires</code> field.
 If any of the prebuilt libraries have transitive dependencies that are not available on PyPi, then those libraries
 must also be added to your project's <code>plugin-files/wheelhouse</code> directory.</p>
-<p><strong>6. Create the plugin package:</strong></p>
+<p><strong>6. Optional: Create the plugin package for non-Docker deployments:</strong></p>
 <p>The directory structure of the .tar.gz file will be:</p>
 <pre><code>MyComponent
 ├── descriptor
@@ -542,6 +545,8 @@ cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 </code></pre>
 
+<p><strong>7. Create the component Docker image:</strong></p>
+<p>See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview">README</a>.</p>
 <h2 id="how-to-create-a-basic-python-component">How to Create a Basic Python Component</h2>
 <p>In this example we create a basic Python component that supports video. An example of a basic Python component can be
 found
@@ -587,7 +592,7 @@ EXPORT_MPF_COMPONENT = MyComponent
 
 <p>The component executor looks for a module-level variable named <code>EXPORT_MPF_COMPONENT</code> to specify which class
 is the component.</p>
-<p><strong>4. Create the plugin package:</strong></p>
+<p><strong>4. Optional: Create the plugin package for non-Docker deployments:</strong></p>
 <p>The directory structure of the .tar.gz file will be:</p>
 <pre><code>ComponentName
 ├── component_name.py
@@ -604,6 +609,8 @@ is the component.</p>
 <pre><code class="bash">tar -zcf MyComponent.tar.gz MyComponent
 </code></pre>
 
+<p><strong>5. Create the component Docker image:</strong></p>
+<p>See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview">README</a>.</p>
 <h1 id="api-specification">API Specification</h1>
 <p>An OpenMPF Python component is a class that defines one or more of the get_detections_from_* methods and has a
 <code>detection_type</code> field.</p>

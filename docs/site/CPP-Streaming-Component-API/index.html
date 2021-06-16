@@ -251,7 +251,7 @@
                 
                     <li><a class="toctree-l4" href="#gpu-support">GPU Support</a></li>
                 
-                    <li><a class="toctree-l4" href="#component-packaging">Component Packaging</a></li>
+                    <li><a class="toctree-l4" href="#component-structure">Component Structure</a></li>
                 
                     <li><a class="toctree-l4" href="#logging">Logging</a></li>
                 
@@ -844,7 +844,7 @@ track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT D
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input (i.e. when processing a segment with the same <code>VideoSegmentInfo</code>).</p>
 <h2 id="gpu-support">GPU Support</h2>
 <p>For components that want to take advantage of NVIDA GPU processors, please read the <a href="../GPU-Support-Guide/index.html">GPU Support Guide</a>. Also ensure that your build environment has the NVIDIA CUDA Toolkit installed, as described in the <a href="../Build-Environment-Setup-Guide/index.html">Build Environment Setup Guide</a>.</p>
-<h2 id="component-packaging">Component Packaging</h2>
+<h2 id="component-structure">Component Structure</h2>
 <p>It is recommended that C++ components are organized according to the following directory structure:</p>
 <pre><code>componentName
 ├── config - Component-specific configuration files
@@ -854,6 +854,7 @@ track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT D
     └──libComponentName.so - Compiled component library
 </code></pre>
 
+<p>Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.</p>
 <h2 id="logging">Logging</h2>
 <p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
 OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
