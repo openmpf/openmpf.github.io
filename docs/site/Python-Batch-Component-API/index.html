@@ -368,8 +368,8 @@ See the <a href="#api-specification">API Specification</a> for more information.
 <p>The figures below present high-level component diagrams of the Python Batch Component API.
 This figure shows the basic structure:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_no_mixin.png" title="OpenMPF Component Diagram" /></p>
-<p>The figure above shows the Node Manager starting the Detection Component Executable.
-The Detection Component Executable determines that it is running a Python component so it creates an instance of the
+<p>The Node Manager is only used in a non-Docker deployment. In a Docker deployment the Component Executor is started by the Docker container itself.</p>
+<p>The Component Executor determines that it is running a Python component so it creates an instance of the
 <a href="https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h"><code>PythonComponentHandle</code></a>
 class. The <code>PythonComponentHandle</code> class creates an instance of the component class and calls one of the
 <a href="#componentget_detections_from_42-methods">get_detections_from_*</a> methods on the component instance. The example
@@ -478,7 +478,7 @@ setuptools.setup(
 
 <p>The <code>name</code> parameter defines the distribution name. Typically the distribution name matches the component name.</p>
 <p>Any dependencies that component requires should be listed in the <code>install_requires</code> field.</p>
-<p>The component executor looks in the <code>entry_points</code> element and uses the <code>mpf.exported_component</code> field to determine
+<p>The Component Executor looks in the <code>entry_points</code> element and uses the <code>mpf.exported_component</code> field to determine
 the component class. The right hand side of <code>component =</code> should be the dotted module name, followed by a <code>:</code>,
 followed by the name of the class. The general pattern is
 <code>'mpf.exported_component': 'component = &lt;package_name&gt;.&lt;module_name&gt;:&lt;class_name&gt;'</code>. In the above example,
@@ -590,7 +590,7 @@ class MyComponent:
 EXPORT_MPF_COMPONENT = MyComponent
 </code></pre>
 
-<p>The component executor looks for a module-level variable named <code>EXPORT_MPF_COMPONENT</code> to specify which class
+<p>The Component Executor looks for a module-level variable named <code>EXPORT_MPF_COMPONENT</code> to specify which class
 is the component.</p>
 <p><strong>4. Optional: Create the plugin package for non-Docker deployments:</strong></p>
 <p>The directory structure of the .tar.gz file will be:</p>
@@ -1551,7 +1551,7 @@ multiple instantiations of the component, each running as a separate service.</p
 <p>It recommended that components use Python's built-in 
 <a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module.</a> The component should 
 <code>import logging</code> and call <code>logging.getLogger('&lt;componentName&gt;')</code> to get a logger instance. 
-The component should not configure logging itself. The component executor will configure the 
+The component should not configure logging itself. The Component Executor will configure the 
 <code>logging</code> module for the component. The logger will write log messages to standard error and 
 <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>. Note that multiple instances of the 
 same component can log to the same file. Also, logging content can span multiple lines. </p>

@@ -163,7 +163,7 @@ In general, all services of the same component type running on the same node wri
 
 Note that only the master node will have the "workflow-manager" log. This is because the workflow manager only runs on the master node. The same is true for the "activemq" and "tomcat" logs.
 
-The "node-manager-startup" and "node-manager" logs will appear for every node in the OpenMPF cluster. The "node-manager-startup" log captures information about the nodemanager startup process, such as if any errors occurred. The "node-manager" log captures information about node manager execution, such as starting and stopping services.
+The "node-manager-startup" and "node-manager" logs will appear for every node in a non-Docker OpenMPF cluster. The "node-manager-startup" log captures information about the nodemanager startup process, such as if any errors occurred. The "node-manager" log captures information about node manager execution, such as starting and stopping services.
 
 The "detection" log captures information about initializing C++ detection components and how they handle job request and response messages.
 

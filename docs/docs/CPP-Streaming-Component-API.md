@@ -1,7 +1,7 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
-<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> The C++ Streaming API is not complete, and there are no future development plans. Use at your own risk. The only way to make use of the functionality is through the REST API.</p></div>
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> The C++ Streaming API is not complete, and there are no future development plans. Use at your own risk. The only way to make use of the functionality is through the REST API. It requires the Node Manager and does not work in a Docker deployment.</p></div>
 
 # API Overview
 
@@ -65,7 +65,6 @@ Detection components are implemented by:
 # API Specification
 
 The figure below presents a high-level component diagram of the C++ Streaming Component API:
-
 
 ![OpenMPF Component Diagram](img/component_diagram_cpp_streaming.png "OpenMPF Component Diagram")
 
@@ -445,10 +444,10 @@ Once built, components can be packaged into a .tar.gz containing the contents of
 ## Logging
 It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for 
 OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
-The component executor will configure log4cxx globally. Components should call 
+The Component Executor will configure log4cxx globally. Components should call 
 `log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you 
 are using a different logging framework, you should make sure its behavior is similar to how
-the component executor configures log4cxx as described below. 
+the Component Executor configures log4cxx as described below. 
 
 The following log LEVELs are supported: `FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
 The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 

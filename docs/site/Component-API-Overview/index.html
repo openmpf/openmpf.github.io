@@ -299,7 +299,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 </ul>
 <h1> Background </h1>
 
-<p>OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components.</p>
+<p>OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components. The Node Manager is only used in a non-Docker deployment.</p>
 <h2 id="workflow-manager">Workflow Manager</h2>
 <p>The WFM receives job requests from user interface and external systems through the <a href="../REST-API/index.html">REST API</a>. The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.</p>
 <p>The WFM orchestrates the flow of work within a job through the various stages of a processing pipeline. For each stage, the WFM communicates with the appropriate component services by exchanging JMS messages via a message broker. For example, if a pipeline consists of a motion detection stage, then the WFM will communicate with motion detection component services.</p>
@@ -308,12 +308,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p><strong>NOTE:</strong> All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.</p>
 </blockquote>
 <h2 id="node-manager">Node Manager</h2>
-<p>The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.</p>
+<p>The Node Manager is a process that runs on each OpenMPF node in a non-Docker deployment. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.</p>
 <p>A service behaves differently based on the kind of processing that needs to be performed. After the Node Manager spawns a service:</p>
 <ul>
 <li><em>Batch processing</em> - The service waits for job requests from the WFM and produces a response for each request.</li>
 <li><em>Stream processing</em> - The service waits for the next frame from the stream and produces activity alerts and segment summary reports.</li>
 </ul>
+<p>Note that in a Docker deployment the Docker daemon creates the desired number of containers for each component. Stream processing only works in a non-Docker deployment.</p>
 <h2 id="components">Components</h2>
 <p>Components are identified by nine key characteristics:</p>
 <ul>
@@ -337,7 +338,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p>The figure below depicts a high-level block diagram of the OpenMPF architecture with components.</p>
 <p><img alt="OpenMPF System Block Diagram" src="../img/block_diagram.png" title="OpenMPF System Block Diagram" /></p>
 <p>The Component Registry serves as a central location for information about the components registered with the OpenMPF instance. A future goal is to develop a web page that can be used to browse the registry and display the metadata associated with each available component.</p>
-<p>OpenMPF includes a Component Executable for the <code>DETECTION</code> action type, as denoted by the blue cubes. Note that the Component Executable is shown three times to represent three instances of that process, one for each component type. This executable is responsible for loading a component library based on information provided at launch time from the Node Manager. </p>
+<p>OpenMPF includes a Component Executable for the <code>DETECTION</code> action type, as denoted by the blue cubes. Note that the Component Executable is shown three times to represent three instances of that process, one for each component type. This executable is responsible for loading a component library based on information provided at launch time. </p>
 <p>One Component Executable instance is associated with each component service. For example, a motion detection service, face detection service, and text detection service will require three instances of the Component Executable process, one for each service. For another example, three motion detection services will also require three instances of the Component Executable process, one for each service. The Component Executable is abstract; it does not care what kind of detection is performed. It simply interacts with the component library through the Component API.</p>
 <p>The Component Executable receives job requests from the message broker, translates those requests for the component, and converts the component’s outputs into response messages for the OpenMPF.</p>
 <p>A separate Component Executable is maintained for C++ and Java components. The component library is compiled as a C++ shared object library, or Java JAR, and encapsulates the component's detection logic.</p>

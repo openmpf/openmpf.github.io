@@ -23,7 +23,7 @@ In order to talk about OpenMPF, readers should be familiar with the following ke
 * **Stream Processing** - Process live video streams.
 
 <h1> Background </h1> 
-OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components.
+OpenMPF consists of the Workflow Manager (WFM), a Node Manager, components, and a message passing mechanism that enables communication between the WFM and the components. The Node Manager is only used in a non-Docker deployment.
 
 ## Workflow Manager
 The WFM receives job requests from user interface and external systems through the [REST API](REST-API/index.html). The WFM handles each request by creating a job, which consists of a collection of input media and a pipeline. These jobs are then broken down into job requests that are handled by component services, which in turn process media and return results.
@@ -35,12 +35,14 @@ The WFM provides work to a component service by placing a job request on the req
 >**NOTE:** All component messaging is abstracted within the OpenMPF Component API and component developers are not required or able to directly interact with the message queues.
 
 ## Node Manager
-The Node Manager is a process that runs on each OpenMPF node. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.
+The Node Manager is a process that runs on each OpenMPF node in a non-Docker deployment. The Node Manager handles spawning the desired number of instances of a component based on the end-user's desired configuration. Each instance is referred to as a service.
 
 A service behaves differently based on the kind of processing that needs to be performed. After the Node Manager spawns a service:
  
 *   *Batch processing* - The service waits for job requests from the WFM and produces a response for each request.
 *   *Stream processing* - The service waits for the next frame from the stream and produces activity alerts and segment summary reports.
+
+Note that in a Docker deployment the Docker daemon creates the desired number of containers for each component. Stream processing only works in a non-Docker deployment.
 
 ## Components
 
@@ -76,7 +78,7 @@ The figure below depicts a high-level block diagram of the OpenMPF architecture 
 
 The Component Registry serves as a central location for information about the components registered with the OpenMPF instance. A future goal is to develop a web page that can be used to browse the registry and display the metadata associated with each available component.
 
-OpenMPF includes a Component Executable for the `DETECTION` action type, as denoted by the blue cubes. Note that the Component Executable is shown three times to represent three instances of that process, one for each component type. This executable is responsible for loading a component library based on information provided at launch time from the Node Manager. 
+OpenMPF includes a Component Executable for the `DETECTION` action type, as denoted by the blue cubes. Note that the Component Executable is shown three times to represent three instances of that process, one for each component type. This executable is responsible for loading a component library based on information provided at launch time. 
 
 One Component Executable instance is associated with each component service. For example, a motion detection service, face detection service, and text detection service will require three instances of the Component Executable process, one for each service. For another example, three motion detection services will also require three instances of the Component Executable process, one for each service. The Component Executable is abstract; it does not care what kind of detection is performed. It simply interacts with the component library through the Component API.
 
