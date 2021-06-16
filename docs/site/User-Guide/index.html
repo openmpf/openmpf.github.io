@@ -67,7 +67,36 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Guides</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../Install-Guide/index.html">Install Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
         
     </li>
 
@@ -99,27 +128,11 @@
                 
                     <li><a class="toctree-l4" href="#logs">Logs</a></li>
                 
-                    <li><a class="toctree-l4" href="#node-configuration-and-status">Node Configuration and Status</a></li>
-                
                     <li><a class="toctree-l4" href="#properties-settings">Properties Settings</a></li>
                 
                     <li><a class="toctree-l4" href="#statistics">Statistics</a></li>
                 
                     <li><a class="toctree-l4" href="#rest-api">REST API</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#detection-chaining">Detection Chaining</a></li>
-                
-                    <li><a class="toctree-l4" href="#use_preprocessor-property">"USE_PREPROCESSOR" Property</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#segmenting-media">Segmenting Media</a></li>
-                
-                    <li><a class="toctree-l4" href="#target_segment_length-property">"TARGET_SEGMENT_LENGTH" Property</a></li>
-                
-                    <li><a class="toctree-l4" href="#min_segment_length-property">"MIN_SEGMENT_LENGTH" Property</a></li>
-                
-                    <li><a class="toctree-l4" href="#min_gap_between_segments-property">"MIN_GAP_BETWEEN_SEGMENTS" Property</a></li>
                 
             
             </ul>
@@ -129,7 +142,14 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+        <a class="" href="../Segmenting-Media-Guide/index.html">Segmenting Media Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
 
@@ -151,20 +171,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../REST-API/index.html">REST API</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
         
     </li>
 
@@ -215,13 +221,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
 
@@ -294,7 +293,7 @@
     
       
         
-          <li>General &raquo;</li>
+          <li>Guides &raquo;</li>
         
       
     
@@ -327,8 +326,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p><img alt="Landing Page" src="../img/mpf_landing.png" title="Landing Page" /></p>
 <p>Logging in starts a user session. By default, after 30 minutes of inactivity the user will automatically be logged out of the system. Within one minute of logging out the user will be prompted to extend or end their session. Note that the timeout period can be configured by any admin user with the admin role.</p>
 <p>A given user can only be logged into the OpenMPF from one machine using one browser at a time. If the same user attempts to log in from another machine, or another browser on the same machine, then the first user session will be terminated immediately and redirected back to the login page. This feature ensures that the user will be able to immediately log in again if the user accidentally closes the browser window or shuts down their machine without properly logging out first.</p>
-<p>A user may have multiple browser tabs or windows open for the same session, for example, to view the Jobs Status page and Logs page at the same time. It is not recommended that two users login using the same browser at the same time in different tabs or windows. Technically, the second user to login will take precedence, but the first user session will not appear to be terminated. Instead the first user will appear to share recently uploaded media, recent jobs, and other information with the second user. Also, when one of the users logs out in this scenario, they will both be logged out.</p>
-<p>Once logged in, only the "admin" user has access to the full capabilities within the application, including node configuration, resetting system properties, and stopping and starting processes across the cluster. A non-admin user can view the status of processes in the Admin Console but cannot alter the node configuration or stop and start processes.</p>
+<p>A user may have multiple browser tabs or windows open for the same session, for example, to view the Jobs Status page and Logs page at the same time. It is not recommended that two users login using the same browser at the same time in different tabs or windows. Technically, the second user to login will take precedence, but the first user session will not appear to be terminated. Instead the first user will appear to share recent jobs and other information with the second user. Also, when one of the users logs out in this scenario, they will both be logged out.</p>
 <h2 id="logging-out">Logging out</h2>
 <p>To log out a user can click the down arrow associated with the user icon at the top right hand corner of the page and then select "Logout":</p>
 <p><img alt="Logout Button" src="../img/mpf_show_logout.png" title="Logout Button" /></p>
@@ -399,10 +397,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p>Note that only the master node will have the "workflow-manager" log. This is because the workflow manager only runs on the master node. The same is true for the "activemq" and "tomcat" logs.</p>
 <p>The "node-manager-startup" and "node-manager" logs will appear for every node in a non-Docker OpenMPF cluster. The "node-manager-startup" log captures information about the nodemanager startup process, such as if any errors occurred. The "node-manager" log captures information about node manager execution, such as starting and stopping services.</p>
 <p>The "detection" log captures information about initializing C++ detection components and how they handle job request and response messages.</p>
-<h2 id="node-configuration-and-status">Node Configuration and Status</h2>
-<p>This page allows a user to view the various service processes running on each node in the OpenMPF cluster. Each node shows information about the current status of each service, if it is unlaunchable due to an underlying error, and how many services are running for each node. If a service is unlaunchable, it will be indicated using a red status icon (not shown). Note that services are grouped by component type. Click the chevron "&gt;" to expand a service group to view the individual services.</p>
-<p><img alt="Node Configuration and Status Page" src="../img/mpf_services.png" title="Node Configuration and Status Page" /></p>
-<p>Each service is given a unique number to distinguish between multiple instances of the same service running on the same node. For example, if there are two instances of the OpenCV face detection service running on somehost-7-mpfd2 then the first one will have a name of Service 1 and the second one will be Service 2 (not shown).</p>
 <h2 id="properties-settings">Properties Settings</h2>
 <p>This page allows a user to view the various OpenMPF properties configured automatically or by an admin user:</p>
 <p><img alt="Edit Properties Page" src="../img/mpf_properties.png" title="Edit Properties Page" /></p>
@@ -419,90 +413,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p>In the example above, the "/rest/jobs/{id}" endpoint was selected. It takes a required "id" parameter that corresponds to a previously run job and returns a JSON representation of that job's information. The screenshot below shows the result of specifying an "id" of "1", providing the "mpf" user credentials when prompted, and then clicking the "Try it out!" button:</p>
 <p><img alt="REST API Page" src="../img/swagger2.png" title="REST API Page" /></p>
 <p>The HTTP response information is shown below the "Try it out!" button. Note that the structure of the "Response Body" is the same as the response model shown in the "Response Class" directly underneath the "/rest/jobs/{id}" label.</p>
-<h1 id="detection-chaining">Detection Chaining</h1>
-<p>The OpenMPF has the ability to chain detection tasks together in a detection pipeline. As each detection stage in the pipeline completes, the volume of data to be processed in the next stage may be reduced. Generally, any detection tasks executed prior to the final detection task in the pipeline are referred to as preprocessors or filters. For example, consider the following pipeline which demonstrates the use of a motion preprocessor:</p>
-<p><img alt="Detection Chaining Diagram" src="../img/mpf-chain.png" title="Detection Chaining Diagram" /></p>
-<p>In the pipeline above, the motion preprocessor reduces the volume of data which is passed to the face detector. This is particularly useful when the input media collection contains videos captured by a fixed-location camera.  For example, a camera targeting a chokepoint such as a hallway door. The motion preprocessor will filter the input media so that only regions of video containing motion are passed on to the face detector.</p>
-<p>Detection pipelines may be created with, or without, preprocessors and filters using the Create Custom Pipelines view.</p>
-<blockquote>
-<p>WARNING: Preprocessors and filters may ultimately eliminate the entirety of a media file. When an entire media file is eliminated, none of the subsequent stages in the pipeline will operate on that file. Therefore, it is important to consider the consequences of using preprocessors/filters. For example, when the motion detection receives an image or audio file, its default behavior is to return a response indicating that the file did not contain any motion tracks. If the pipeline continued to face detection then none of the image files would be eligible for that kind of detection.</p>
-</blockquote>
-<h2 id="use_preprocessor-property">"USE_PREPROCESSOR" Property</h2>
-<p>In order to mitigate the risk of eliminating useful media files simply because they are not supported by a detector using its default settings, some algorithms expose a "USE_PREPROCESSOR" property. When a user creates an action based on a detector with this property, the user may assign this property a nonzero value in order to indicate that the detector should behave as a preprocessor as opposed to a filter. When acting as a preprocessor, a detector will not emit an empty detection set when provided with an unsupported media type, rather it will return a single track spanning the duration of the media file. Thus, when configured with the "USE_PREPROCESSOR" setting, the motion detector will not prevent images from passing on to the next stage in the pipeline, for example.</p>
-<h1 id="segmenting-media">Segmenting Media</h1>
-<p>The OpenMPF allows users to configure video segmenting properties for actions in a pipeline. Audio files (which do not have the concept of "frames") and image files (which are treated like single-frame videos) are not affected by these properties.</p>
-<p>Segmenting is performed before a detection action in order to split work across the available detection services running on the various nodes in the OpenMPF cluster. In general, each instance of a detection service can process one video segment at a time. Multiple services can process separate segments at the same time, thus enabling parallel processing. There are two fundamental segmenting scenarios:</p>
-<ol>
-<li>Segmenting must be performed on a video which has not passed through a preprocessor or filter.</li>
-<li>Segmenting must be performed on a video which has passed through a preprocessor or filter.</li>
-</ol>
-<p>In the first scenario the segmenting logic is less complex. The segmenter will create a supersegment corresponding to the entire length of the video (in frames), and it will then divide the supersegment into segments which respect to the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties.</p>
-<p>In the second scenario the segmenting logic is more complex. The segmenter first examines the start and stop times associated with all of the overlapping tracks produced by the previous detection action in the pipeline and proceeds to merge those intervals and segment the result. The goal is to generate a minimum number of segments that don't include unnecessary frames (frames that don't belong to any tracks). For example:</p>
-<p><img alt="Segmenting Diagram" src="../img/tracks-to-segments.png" title="Segmenting Diagram" /></p>
-<h2 id="target_segment_length-property">"TARGET_SEGMENT_LENGTH" Property</h2>
-<p>This property indicates the preferred number of frames which will be provided to the detection component. For example, a value of "100" indicates that the input video should be split into 100-frame segments. Note that the properties "MIN_SEGMENT_LENGTH" and "MIN_GAP_BETWEEN_SEGMENTS" may ultimately cause segments to vary from the preferred segment size.</p>
-<h2 id="min_segment_length-property">"MIN_SEGMENT_LENGTH" Property</h2>
-<p>If a segment length is less than this value, the segment will be merged into the segment that precedes it. If no segment precedes it, the short segment will stand on its own. Short segments are not discarded.</p>
-<h3 id="example-1-adjacent-segment-present">Example 1: Adjacent Segment Present</h3>
-<p><img alt="Segmenting Diagram" src="../img/min_segment_length_with_adjacent.png" title="Segmenting Diagram" /></p>
-<ol>
-<li>In this example, a preprocessor has completed and produced a single track.</li>
-<li>The next detection action specifies the following parameters:<ul>
-<li>"TARGET_SEGMENT_LENGTH" = 100</li>
-<li>"MIN_SEGMENT_LENGTH" = 75</li>
-</ul>
-</li>
-<li>Three segments are initially produced from the input track with lengths corresponding to 100 frames, 100 frames, and 50 frames.</li>
-<li>Since segment 3 is not at least the minimum specified segment length, it is merged with segment 2.</li>
-<li>Ultimately, two segments are produced.</li>
-</ol>
-<h3 id="example-2-no-adjacent-segment">Example 2: No Adjacent Segment</h3>
-<p><img alt="Segmenting Diagram" src="../img/min_segment_length_no_adjacent.png" title="Segmenting Diagram" /></p>
-<ol>
-<li>In this example, a preprocessor has completed and produced two non-overlapping tracks.</li>
-<li>The next detection action specifies the following parameters:<ul>
-<li>"TARGET_SEGMENT_LENGTH" = 100</li>
-<li>"MIN_SEGMENT_LENGTH" = 75</li>
-<li>"MIN_GAP_BETWEEN_SEGMENTS" = 50</li>
-</ul>
-</li>
-<li>The segmenter begins by merging any segments which are less than "MIN_GAP_BETWEEN_SEGMENTS" apart. There are none.</li>
-<li>The segmenter then splits the existing segments using the "MIN_SEGMENT_LENGTH" and "TARGET_SEGMENT_LENGTH" values.</li>
-<li>The segmenter iterates through each segment produced. If the segment satisfies the minimum length constraint, it moves to the next segment.<ul>
-<li>When it reaches the third segment and finds the length of 50 frames is not at least the minimum length, it merges that segment with the previous adjacent segment.</li>
-<li>When it reaches the final segment and finds that the length of 25 frames is not at least the minimum length, it creates a short segment since there is no adjacent preceding segment to merge it with.</li>
-</ul>
-</li>
-<li>Ultimately, three segments are produced.</li>
-</ol>
-<h2 id="min_gap_between_segments-property">"MIN_GAP_BETWEEN_SEGMENTS" Property</h2>
-<p>This property is important to pipelines which contain preprocessors or filters and controls the minimum gap which must appear between consecutive segments. The purpose of this property is to prevent scenarios where a preprocessor or filter produces a large number of short segments separated by only a few frames. By merging the segments together prior to performing further segmentation, the number of work units produced by the segmenting plan can be reduced, thereby reducing pipeline execution time.</p>
-<p>Consider the following diagram, which further illustrates the purpose of this property:</p>
-<p><img alt="Segmenting Diagram" src="../img/min_frame_gap_example.png" title="Segmenting Diagram" /></p>
-<ol>
-<li>The user submits a video to a pipeline containing a motion preprocessor followed by another extractor (e.g., face).</li>
-<li>The video is initially split into segments using the properties provided by the motion preprocessor. Specifically, the preprocessor action specifies the following parameters and four segments are produced:<ul>
-<li>"TARGET_SEGMENT_LENGTH" = "250"</li>
-<li>"MIN_SEGMENT_LENGTH" = "150"</li>
-<li>"MERGE_TRACKS" = "true"</li>
-</ul>
-</li>
-<li>The segments are submitted to the motion preprocessor, and five distinct and non-overlapping tracks are returned based on the frames of the segments in which motion is detected.</li>
-<li>Because the "MERGE_TRACKS" property is set to "true", tracks are merged across segment boundaries if applicable.
-   This rule is applied to each pair of tracks that are only one frame apart (adjacent). Consequently, only three
-   tracks are ultimately derived from the video. (The number of tracks is reduced from five to three between the
-   "Preprocessor" and "Track Merger" phases of the diagram.) When two tracks are merged, the confidence value will be
-   set to the maximum confidence value of the two tracks and their track properties will be merged. If the two tracks
-   both have a track property with the same name but different values, the values will be concatenated with a
-   semicolon as the separator.</li>
-<li>The non-overlapping tracks are then used to form the video segments for the next detection action. This action specifies the following parameters:<ul>
-<li>"TARGET_SEGMENT_LENGTH" = "75"</li>
-<li>"MIN_SEGMENT_LENGTH" = "26"</li>
-<li>"MIN_GAP_BETWEEN_SEGMENTS" = "100"</li>
-</ul>
-</li>
-<li>The segmenting logic merges tracks which are less than "MIN_GAP_BETWEEN_SEGMENTS" frames apart into one long segment. Once all tracks have been merged, each track is segmented with respect to the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties. Ultimately, ten segments are produced. (Track #1 and Track #2 in the "Track Merger" phase of the diagram are combined, which is why Segment #3 in the "Segmenter" phase of the diagram includes the 25 frames that span the gap between those two tracks.)</li>
-</ol>
               
             </div>
           </div>
@@ -510,10 +420,10 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Admin-Guide/index.html" class="btn btn-neutral float-right" title="Admin Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Segmenting-Media-Guide/index.html" class="btn btn-neutral float-right" title="Segmenting Media Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Install-Guide/index.html" class="btn btn-neutral" title="Install Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Admin-Guide/index.html" class="btn btn-neutral" title="Admin Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -541,10 +451,10 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Install-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Admin-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Admin-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Segmenting-Media-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

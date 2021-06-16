@@ -18,7 +18,29 @@
     </url>
         
     <url>
+     <loc>/License-And-Distribution/index.html</loc>
+     <lastmod>2021-06-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Acknowledgements/index.html</loc>
+     <lastmod>2021-06-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
      <loc>/Install-Guide/index.html</loc>
+     <lastmod>2021-06-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Admin-Guide/index.html</loc>
      <lastmod>2021-06-16</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -30,7 +52,13 @@
     </url>
         
     <url>
-     <loc>/Admin-Guide/index.html</loc>
+     <loc>/Segmenting-Media-Guide/index.html</loc>
+     <lastmod>2021-06-16</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/Feed-Forward-Guide/index.html</loc>
      <lastmod>2021-06-16</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -49,18 +77,6 @@
         
     <url>
      <loc>/REST-API/index.html</loc>
-     <lastmod>2021-06-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/License-And-Distribution/index.html</loc>
-     <lastmod>2021-06-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/Acknowledgements/index.html</loc>
      <lastmod>2021-06-16</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -101,12 +117,6 @@
         
     <url>
      <loc>/GPU-Support-Guide/index.html</loc>
-     <lastmod>2021-06-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>/Feed-Forward-Guide/index.html</loc>
      <lastmod>2021-06-16</lastmod>
      <changefreq>daily</changefreq>
     </url>

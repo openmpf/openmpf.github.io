@@ -466,7 +466,7 @@ Execute `mpf --help` for general documentation and `mpf <action> --help` for doc
 
 ## Packaging a Component
 
-In a non-Docker deployment, admin users can register compnent packages through the web UI. Refer to [Component Registration](#component-registration).
+In a non-Docker deployment, admin users can register component packages through the web UI. Refer to [Component Registration](#component-registration).
 
 Once the descriptor file is complete, as described in [Component Descriptor Reference](Component-Descriptor-Reference/index.html), the next step is to compile your component source code, and finally, create a .tar.gz package containing the descriptor file, component library, and all other necessary files.
 
@@ -511,15 +511,17 @@ The following sections will cover some additional functionality permitted to adm
 
 ## Node Configuration and Status
 
-This page provides a list of all of the services that are configured to run on the OpenMPF cluster, and enables an admin user to start, stop, or restart them on an individual basis. Only an admin user can perform these actions. If a non-admin user views this page, the "Action(s)" column is not displayed. This page also enables an admin user to edit the configuration for all nodes in the OpenMPF cluster. A non-admin user can only view the existing configuration.
+This page provides a list of all of the services that are configured to run on the OpenMPF cluster:
 
 ![Node and Process Status Page](img/mpf-adm-node.png "Node and Process Status Page")
+
+Each node shows information about the current status of each service, if it is unlaunchable due to an underlying error, and how many services are running for each node. If a service is unlaunchable, it will be indicated using a red status icon (not shown). Note that services are grouped by component type. Click the chevron ">" to expand a service group to view the individual services.
+
+An admin user can start, stop, or restart them on an individual basis. If a non-admin user views this page, the "Action(s)" column is not displayed. This page also enables an admin user to edit the configuration for all nodes in the OpenMPF cluster. A non-admin user can only view the existing configuration.
 
 An admin user can add a node by using the "Add Node" button and selecting a node in the OpenMPF cluster from the drop-down list. You an also select to add all services at this time. A node and all if its configured services can be removed by clicking the trash can to the right of the node's hostname.
 
 An admin user can add services individually by selecting the node edit button at the bottom of the node. The number of service instances can be increased or decreased by using the drop-down. Click the "Submit" button to save the changes.
-
-Any node or service changes take effect immediately, no saving is required, except for adding services.
 
 When making changes, please be aware of the following:
 
@@ -541,8 +543,6 @@ A component package takes the form of a tar.gz file. An admin user can either dr
 If for some reason the component package upload succeeded but the component registration failed then the admin user will be able to click the "Register" button again to try to another registration attempt. For example, the admin user may do this after reviewing the workflow manager logs and resolving any issues that prevented the component from successfully registering the first time. One reason may be that a component with the same name already exists on the system. Note that an error will also occur if the top-level directory of the component package, once extracted, already exists in the /opt/mpf/plugins directory on the system.
 
 Once registered, an admin user has the option to remove the component. This will unregister it and completely remove any configured services, as well as the uploaded file and its extracted contents, from the system. Also, the component algorithm as well as any actions, tasks, and pipelines specified in the component's descriptor file will be removed when the component is removed.
-
-WARNING: Any actions, tasks, or pipelines created through the Create Custom Pipelines page that make use of the algorithm, actions, or tasks specified in the descriptor file of the component being removed will also be removed. This is to prevent pipelines from not working properly once the component is removed.
 
 
 # Known Issues

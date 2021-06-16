@@ -67,7 +67,36 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Guides</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../Install-Guide/index.html">Install Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
         
     </li>
 
@@ -81,7 +110,14 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+        <a class="" href="../Segmenting-Media-Guide/index.html">Segmenting Media Guide</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
 
@@ -103,20 +139,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../REST-API/index.html">REST API</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
         
     </li>
 
@@ -167,13 +189,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
         
     </li>
 
@@ -750,7 +765,7 @@ localhost.localdomain</code></p>
 </li>
 </ul>
 <h2 id="packaging-a-component">Packaging a Component</h2>
-<p>In a non-Docker deployment, admin users can register compnent packages through the web UI. Refer to <a href="#component-registration">Component Registration</a>.</p>
+<p>In a non-Docker deployment, admin users can register component packages through the web UI. Refer to <a href="#component-registration">Component Registration</a>.</p>
 <p>Once the descriptor file is complete, as described in <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>, the next step is to compile your component source code, and finally, create a .tar.gz package containing the descriptor file, component library, and all other necessary files.</p>
 <p>The package should contain a top-level directory with a unique name that will (hopefully) not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the <code>componentName</code>.</p>
 <p>Within the top-level directory there must be a directory named “descriptor” with the descriptor JSON file in it. The name of the file must be “descriptor.json”.</p>
@@ -780,11 +795,12 @@ The default pipeline will use the default task. This will only be generated if t
 <h1 id="web-ui">Web UI</h1>
 <p>The following sections will cover some additional functionality permitted to admin users in a non-Docker deployment.</p>
 <h2 id="node-configuration-and-status">Node Configuration and Status</h2>
-<p>This page provides a list of all of the services that are configured to run on the OpenMPF cluster, and enables an admin user to start, stop, or restart them on an individual basis. Only an admin user can perform these actions. If a non-admin user views this page, the "Action(s)" column is not displayed. This page also enables an admin user to edit the configuration for all nodes in the OpenMPF cluster. A non-admin user can only view the existing configuration.</p>
+<p>This page provides a list of all of the services that are configured to run on the OpenMPF cluster:</p>
 <p><img alt="Node and Process Status Page" src="../img/mpf-adm-node.png" title="Node and Process Status Page" /></p>
+<p>Each node shows information about the current status of each service, if it is unlaunchable due to an underlying error, and how many services are running for each node. If a service is unlaunchable, it will be indicated using a red status icon (not shown). Note that services are grouped by component type. Click the chevron "&gt;" to expand a service group to view the individual services.</p>
+<p>An admin user can start, stop, or restart them on an individual basis. If a non-admin user views this page, the "Action(s)" column is not displayed. This page also enables an admin user to edit the configuration for all nodes in the OpenMPF cluster. A non-admin user can only view the existing configuration.</p>
 <p>An admin user can add a node by using the "Add Node" button and selecting a node in the OpenMPF cluster from the drop-down list. You an also select to add all services at this time. A node and all if its configured services can be removed by clicking the trash can to the right of the node's hostname.</p>
 <p>An admin user can add services individually by selecting the node edit button at the bottom of the node. The number of service instances can be increased or decreased by using the drop-down. Click the "Submit" button to save the changes.</p>
-<p>Any node or service changes take effect immediately, no saving is required, except for adding services.</p>
 <p>When making changes, please be aware of the following:</p>
 <ul>
 <li>It may take a minute for the configuration to take effect on the server.</li>
@@ -799,7 +815,6 @@ The default pipeline will use the default task. This will only be generated if t
 <p><img alt="Component Registration Page" src="../img/mpf-adm-component2.png" title="Component Registration Page" /></p>
 <p>If for some reason the component package upload succeeded but the component registration failed then the admin user will be able to click the "Register" button again to try to another registration attempt. For example, the admin user may do this after reviewing the workflow manager logs and resolving any issues that prevented the component from successfully registering the first time. One reason may be that a component with the same name already exists on the system. Note that an error will also occur if the top-level directory of the component package, once extracted, already exists in the /opt/mpf/plugins directory on the system.</p>
 <p>Once registered, an admin user has the option to remove the component. This will unregister it and completely remove any configured services, as well as the uploaded file and its extracted contents, from the system. Also, the component algorithm as well as any actions, tasks, and pipelines specified in the component's descriptor file will be removed when the component is removed.</p>
-<p>WARNING: Any actions, tasks, or pipelines created through the Create Custom Pipelines page that make use of the algorithm, actions, or tasks specified in the descriptor file of the component being removed will also be removed. This is to prevent pipelines from not working properly once the component is removed.</p>
 <h1 id="known-issues">Known Issues</h1>
 <p>The following are known issues that are related to setting up and running OpenMPF. For a more complete list of known issues, please see the OpenMPF <a href="../Release-Notes/index.html">Release Notes</a> and <a href="https://github.com/orgs/openmpf/projects/3?card_filter_query=label%3Abug">workboard</a>.</p>
 <p><strong>Test Exceptions</strong></p>
