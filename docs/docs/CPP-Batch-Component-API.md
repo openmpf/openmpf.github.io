@@ -5,7 +5,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 In OpenMPF, a **component** is a plugin that receives jobs (containing media), processes that  media, and returns results.
 
-The OpenMPF Batch Component API currently supports the development of **detection components**, which are used detect objects in image, video, audio, or other (generic) files that reside on disk.
+The OpenMPF Batch Component API currently supports the development of **detection components**, which are used to detect objects in image, video, audio, or other (generic) files that reside on disk.
 
 Using this API, detection components can be built to provide:
 
@@ -1050,7 +1050,7 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 For components that want to take advantage of NVIDA GPU processors, please read the [GPU Support Guide](GPU-Support-Guide/index.html). Also ensure that your build environment has the NVIDIA CUDA Toolkit installed, as described in the [Build Environment Setup Guide](Build-Environment-Setup-Guide/index.html).
 
-## Component Structure
+## Component Structure for non-Docker Deployments
 It is recommended that C++ components are organized according to the following directory structure:
 
 ```
@@ -1062,7 +1062,7 @@ componentName
     └──libComponentName.so - Compiled component library
 ```  
 
-Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.
+Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 
 ## Logging

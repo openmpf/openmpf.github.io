@@ -362,7 +362,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <ol>
 <li>Extending <a href="#detection-component-interface"><code>MPFStreamingDetectionComponent</code></a>.</li>
 <li>Building the component into a shared object library. (See <a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/CMakeLists.txt">HelloWorldComponent CMakeLists.txt</a>).</li>
-<li>Creating a component Docker image. (See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview">README</a>).</li>
+<li>Packaging the component into an OpenMPF-compliant .tar.gz file. (See <a href="#component-packaging">Component Packaging</a>).</li>
+<li>Registering the component with OpenMPF. (See <a href="../Development-Environment-Guide/index.html#component-registration">Component Registration</a>).</li>
 </ol>
 <h1 id="api-specification">API Specification</h1>
 <p>The figure below presents a high-level component diagram of the C++ Streaming Component API:</p>
@@ -869,7 +870,7 @@ track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT D
     └──libComponentName.so - Compiled component library
 </code></pre>
 
-<p>Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.</p>
+<p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
 <p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
 OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 

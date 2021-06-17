@@ -314,7 +314,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <h3>sourceLanguage</h3>
 
 <p>Required.</p>
-<p>Contains the language the component is coded in. Should be either “java” or “c++”.</p>
+<p>Contains the language the component is coded in. Should be "c++", "python", or "java".</p>
 <p>Example:
 <code>"sourceLanguage" : "c++"</code></p>
 <h3>batchLibrary</h3>
@@ -337,18 +337,9 @@ component's <code>setup.py</code> file. The distribution name is usually the sam
 
 <p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
 <p>For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.</p>
-<p>Note that Java components currently do not support stream processing, so this field should be omitted from Java component descriptor files.</p>
-<!-- For future use:
-For Java components, this contains the name of the jar which contains the component implementation used for stream processing.
--->
-
+<p>Note that Python and Java components currently do not support stream processing, so this field should be omitted from Python and Java component descriptor files.</p>
 <p>Example (C++):
 <code>"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so</code></p>
-<!-- For future use:
-Example (Java):
-`"streamLibrary" : "stream-sample-component-2.0.1.jar"`
--->
-
 <h3>environmentVariables</h3>
 
 <p>Required; can be empty.</p>

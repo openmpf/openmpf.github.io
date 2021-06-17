@@ -118,7 +118,12 @@ Basic Python components are quicker to set up, but have no built-in support for 
 All dependencies must be handled by the developer. Setuptools-based components are recommended since they use
 setuptools and pip for dependency management.
 
-3. Creating a component Docker image. (See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview)).
+Either way, the end goal is to create a Docker image. This document describes the steps for developing a component
+outside of Docker. Many developers prefer to do that first and then focus on building and running their component
+within Docker after they are confident it works in a local environment. Alternatively, some developers feel confident
+developing their component entirely within Docker. When you're ready for the Docker steps, refer to the
+[README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
+
 
 ## Get openmpf-python-component-sdk
 In order to create a Python component you will need to clone the

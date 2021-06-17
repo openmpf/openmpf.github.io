@@ -8,7 +8,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 # Overview
 
-The following instructions are for setting up an environment for building and running OpenMPF outside of Docker. They serve as a reference for developers who want develop the Workflow Manager web application itself and perform end-to-end integration testing.
+The following instructions are for setting up an environment for building and running OpenMPF outside of Docker. They serve as a reference for developers who want to develop the Workflow Manager web application itself and perform end-to-end integration testing.
 
 If your environment is behind a proxy server, please refer to the [Proxy Configuration](#proxy-configuration) and [SSL Inspection](#ssl-inspection) appendix sections before continuing. Keep them in mind throughout this guide and perform the configuration steps as necessary.
 

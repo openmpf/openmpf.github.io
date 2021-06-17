@@ -39,7 +39,7 @@ Example:
 <h3>sourceLanguage</h3>
 Required.
 
-Contains the language the component is coded in. Should be either “java” or “c++”.
+Contains the language the component is coded in. Should be "c++", "python", or "java".
 
 Example:
 `"sourceLanguage" : "c++"`
@@ -73,19 +73,10 @@ Optional. At least one of `batchLibrary` or `streamLibrary` must be provided.
 
 For C++ components, this contains the full path to the Component Logic shared object library used for stream processing once the component is deployed.
 
-Note that Java components currently do not support stream processing, so this field should be omitted from Java component descriptor files.
-
-<!-- For future use:
-For Java components, this contains the name of the jar which contains the component implementation used for stream processing.
--->
+Note that Python and Java components currently do not support stream processing, so this field should be omitted from Python and Java component descriptor files.
 
 Example (C++):
 `"streamLibrary" : "${MPF_HOME}/plugins/SampleComponent/lib/libstreamSampleComponent.so`
-
-<!-- For future use:
-Example (Java):
-`"streamLibrary" : "stream-sample-component-2.0.1.jar"`
--->
 
 <h3>environmentVariables</h3>
 Required; can be empty.

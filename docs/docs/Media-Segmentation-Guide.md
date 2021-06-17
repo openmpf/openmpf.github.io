@@ -26,7 +26,7 @@ Segmenting is performed before a detection action in order to split work across 
 1. Segmenting must be performed on a video which has not passed through a preprocessor or filter.
 2. Segmenting must be performed on a video which has passed through a preprocessor or filter.
 
-In the first scenario the segmenting logic is less complex. The segmenter will create a supersegment corresponding to the entire length of the video (in frames), and it will then divide the supersegment into segments which respect to the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties.
+In the first scenario the segmenting logic is less complex. The segmenter will create a supersegment corresponding to the entire length of the video (in frames), and it will then divide the supersegment into segments which respect the provided "TARGET_SEGMENT_LENGTH" and "MIN_SEGMENT_LENGTH" properties.
 
 In the second scenario the segmenting logic is more complex. The segmenter first examines the start and stop times associated with all of the overlapping tracks produced by the previous detection action in the pipeline and proceeds to merge those intervals and segment the result. The goal is to generate a minimum number of segments that don't include unnecessary frames (frames that don't belong to any tracks). For example:
 

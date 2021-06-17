@@ -60,7 +60,8 @@ Detection components are implemented by:
 
 1. Extending [`MPFStreamingDetectionComponent`](#detection-component-interface).
 2. Building the component into a shared object library. (See [HelloWorldComponent CMakeLists.txt](https://github.com/openmpf/openmpf-cpp-component-sdk/blob/develop/detection/examples/HelloWorldComponent/CMakeLists.txt)).
-3. Creating a component Docker image. (See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/cpp_executor#overview)).
+3. Packaging the component into an OpenMPF-compliant .tar.gz file. (See [Component Packaging](#component-packaging)).
+4. Registering the component with OpenMPF. (See [Component Registration](Development-Environment-Guide/index.html#component-registration)).
 
 # API Specification
 
@@ -438,7 +439,7 @@ componentName
     └──libComponentName.so - Compiled component library
 ```  
 
-Once built, components can be packaged into a .tar.gz containing the contents of the directory shown above for non-Docker deployments.
+Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 
 ## Logging
