@@ -114,9 +114,9 @@ For more information on pipelines, please read the [Create Custom Pipelines](Use
 
 The request to create a job begins at the [JobController](#jobcontroller). From there, it is transformed and passed through multiple flows on its way to the component services. These services process the job then return information to the WFM for JSON output generation.
 
-The diagram below shows the sequence of WFM operations. It does not show the ActiveMQ messages that are sent to and from the component services.
+The diagram below shows the sequence of WFM operations for a job executing a single-stage pipeline.
 
-![Job_Creation_Diagram](img/Job_Creation_Diagram.png "Job Creation Diagram")
+![Job Execution Diagram](img/job_execution_diagram.png "Job Execution Diagram")
 
 After the job request is validated and saved to the SQL database, it passes through multiple Apache Camel routes, each of which checks that the job is still valid (with no fatal errors or cancellations), and then invokes a series of transformations and processors specific to the route.
 
@@ -142,7 +142,7 @@ This route may be invoked multiple times as future routes redirect back to the J
 
 Once the job is completed, this route converts the aggregated track and detection data in Redis into a JSON output format. It then clears out all data in Redis for the job, updates the final job status in the SQL database, optionally uploads the JSON output object to an object storage server, and optionally makes a callback to the endpoint listed in the job request.
 
-## Detection Response Route <small><i>(Not Shown)</i></small>
+## Detection Response Route
 
 The **Detection Response Route** is the re-entry point to the WFM. It unmarshals the protobuf responses from components and converts them into the Track and Detection objects used within the WFM. It then optionally performs each of the following actions: track merging, detection padding, detecting moving objects, and artifact extraction. It stores the track and detection data in the Redis database and optionally uploads artifacts to an object storage server.
 
@@ -158,4 +158,4 @@ Markup files are copies of the initial media with any detections visually highli
 
 Additionally, there is a **Detection Cancellation Route** for cancelling detection requests sent to components, and a **Markup Cancellation Route** for cancelling requests sent to the Markup component. 
 
-Also, there is a **DLQ Route** for handing messages that appear the ActiveMQ Dead Letter Queue (DLQ), which usually indicates a component failure or inability to deliver a message. In these cases, the job is terminated with an error condition.
+Also, there is a **DLQ Route** for handling messages that appear in the ActiveMQ Dead Letter Queue (DLQ), which usually indicates a component failure or inability to deliver a message. In these cases, the job is terminated with an error condition.

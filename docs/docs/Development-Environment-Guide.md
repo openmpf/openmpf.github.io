@@ -470,7 +470,7 @@ In a non-Docker deployment, admin users can register component packages through 
 
 Once the descriptor file is complete, as described in [Component Descriptor Reference](Component-Descriptor-Reference/index.html), the next step is to compile your component source code, and finally, create a .tar.gz package containing the descriptor file, component library, and all other necessary files.
 
-The package should contain a top-level directory with a unique name that will (hopefully) not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the `componentName`.
+The package should contain a top-level directory with a unique name that will not conflict with existing component packages that have already been developed. The top-level directory name should be the same as the `componentName`.
 
 Within the top-level directory there must be a directory named “descriptor” with the descriptor JSON file in it. The name of the file must be “descriptor.json”.
 
