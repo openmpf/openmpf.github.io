@@ -65,20 +65,69 @@ The OpenMPF Plugin Architecture provides the ability to seamlessly integrate <b>
 
 OpenMPF includes algorithms for detecting and tracking:<br/><br/>
 <ul>
-  <li>Faces - LBP-Based OpenCV, Dlib</li>
-  <li>People - HOG-Based OpenCV</li>
-  <li>Motion - MOG with STRUCK, SuBSENSE with STRUCK</li>
-  <li>License Plates - OpenALPR</li>
-  <li>Speech - Sphinx, Azure Cognitive Services</li>
-  <li>Scenes - OpenCV</li>
-  <li>Objects (Classification) - OpenCV DNN (YOLO, GoogLeNet, Yahoo NSFW, vehicle color), Darknet (YOLO)</li>
-  <li>Objects/Features (Classification) - TensorRT (COCO classes)</li>
-  <li>Text Regions - EAST</li>
-  <li>Text (OCR) - Tesseract, Apache Tika, Azure Cognitive Services</li>
-  <li>Form Structure (with OCR) - Azure Cognitive Services</li>
-  <li>Keywords - Boost Regular Expressions</li>
-  <li>Document Images - Apache Tika</li>
-  <li>Translation (Language) - Azure Cognitive Services</li>
+  <li>Faces</li>
+  <ul>
+    <li>LBP-Based OpenCV</li>
+    <li>Dlib</li>
+  </ul>
+  <li>People</li>
+  <ul>
+    <li>HOG-Based OpenCV</li>
+  </ul>
+  <li>Motion</li>
+  <ul>
+    <li>MOG with STRUCK</li>
+    <li>SuBSENSE with STRUCK</li>
+  </ul>
+  <li>License Plates</li>
+  <ul>
+    <li>OpenALPR</li>
+  </ul>
+  <li>Speech</li>
+  <ul>
+    <li>Sphinx</li>
+    <li>Azure Cognitive Services Batch Transcription API</li>
+  </ul>
+  <li>Scenes</li>
+  <ul>
+    <li>OpenCV</li>
+  </ul>
+  <li>Objects (Classification)</li>
+  <ul>
+    <li>OpenCV DNN (YOLO, GoogLeNet, Yahoo NSFW, vehicle color)</li>
+    <li>Darknet (YOLO)</li>
+  </ul>
+  <li>Objects/Features (Classification)</li>
+  <ul>
+    <li>TensorRT (COCO classes)</li>
+  </ul>
+  <li>Text Regions</li>
+  <ul>
+    <li>EAST</li>
+  </ul>
+  <li>Text (OCR)</li>
+  <ul>
+    <li>Tesseract</li>
+    <li>Apache Tika</li>
+    <li>Azure Cognitive Services Computer Vision API (OCR endpoint)</li>
+    <li>Azure Cognitive Services Read API</li>
+  </ul>
+  <li>Form Structure (with OCR)</li>
+  <ul>
+    <li>Azure Cognitive Services Form Recognizer API</li>
+  </ul>
+  <li>Keywords</li>
+  <ul>
+    <li>Boost Regular Expressions</li>
+  </ul>
+  <li>Document Images</li>
+  <ul>
+    <li>Apache Tika</li>
+  </ul>
+  <li>Translation (Language)</li>
+  <ul>
+    <li>Azure Cognitive Services Translate API</li>
+  </ul>
 </ul>
 
 <h3>Customizable Pipelines</h3>
