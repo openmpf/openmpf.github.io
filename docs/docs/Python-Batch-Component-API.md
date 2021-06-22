@@ -1,6 +1,5 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to
-> the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007).
-> Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # API Overview
 
@@ -69,8 +68,9 @@ This figure shows the basic structure:
 
 ![OpenMPF Component Diagram](img/component_diagram_python_batch_no_mixin.png "OpenMPF Component Diagram")
 
-The figure above shows the Node Manager starting the Detection Component Executable.
-The Detection Component Executable determines that it is running a Python component so it creates an instance of the
+The Node Manager is only used in a non-Docker deployment. In a Docker deployment the Component Executor is started by the Docker container itself.
+
+The Component Executor determines that it is running a Python component so it creates an instance of the
 [`PythonComponentHandle`](https://github.com/openmpf/openmpf/blob/master/trunk/detection/executor/cpp/batch/PythonComponentHandle.h)
 class. The `PythonComponentHandle` class creates an instance of the component class and calls one of the
 [get_detections_from_*](#componentget_detections_from_42-methods) methods on the component instance. The example
@@ -117,6 +117,13 @@ There are two types of Python components that are supported, setuptools-based co
 Basic Python components are quicker to set up, but have no built-in support for dependency management.
 All dependencies must be handled by the developer. Setuptools-based components are recommended since they use
 setuptools and pip for dependency management.
+
+Either way, the end goal is to create a Docker image. This document describes the steps for developing a component
+outside of Docker. Many developers prefer to do that first and then focus on building and running their component
+within Docker after they are confident it works in a local environment. Alternatively, some developers feel confident
+developing their component entirely within Docker. When you're ready for the Docker steps, refer to the
+[README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
+
 
 ## Get openmpf-python-component-sdk
 In order to create a Python component you will need to clone the
@@ -197,7 +204,7 @@ The `name` parameter defines the distribution name. Typically the distribution n
 
 Any dependencies that component requires should be listed in the `install_requires` field.
 
-The component executor looks in the `entry_points` element and uses the `mpf.exported_component` field to determine
+The Component Executor looks in the `entry_points` element and uses the `mpf.exported_component` field to determine
 the component class. The right hand side of `component = ` should be the dotted module name, followed by a `:`,
 followed by the name of the class. The general pattern is
 `'mpf.exported_component': 'component = <package_name>.<module_name>:<class_name>'`. In the above example,
@@ -210,7 +217,7 @@ package contains the `my_component.py` file and the `my_component.py` file conta
 
 The `batchLibrary` field should match the distribution name from the setup.py file. In this example the
 field should be: `"batchLibrary" : "MyComponent"`.
-See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html) for details about
+See the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) for details about
 the descriptor format.
 
 
@@ -251,7 +258,7 @@ If any of the prebuilt libraries have transitive dependencies that are not avail
 must also be added to your project's `plugin-files/wheelhouse` directory.
 
 
-**6\. Create the plugin package:**
+**6\. Optional: Create the plugin package for non-Docker deployments:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -280,6 +287,11 @@ cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 ```
 
+**7\. Create the component Docker image:**
+
+See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
+
+
 ## How to Create a Basic Python Component
 In this example we create a basic Python component that supports video. An example of a basic Python component can be
 found
@@ -306,7 +318,7 @@ touch MyComponent/my_component.py
 
 The `batchLibrary` field should be the full path to the Python file containing your component class.
 In this example the field should be: `"batchLibrary" : "${MPF_HOME}/plugins/MyComponent/my_component.py"`.
-See [Packaging and Registering a Component](Packaging-and-Registering-a-Component/index.html) for details about
+See the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) for details about
 the descriptor format.
 
 
@@ -330,10 +342,10 @@ class MyComponent:
 
 EXPORT_MPF_COMPONENT = MyComponent
 ```
-The component executor looks for a module-level variable named `EXPORT_MPF_COMPONENT` to specify which class
+The Component Executor looks for a module-level variable named `EXPORT_MPF_COMPONENT` to specify which class
 is the component.
 
-**4\. Create the plugin package:**
+**4\. Optional: Create the plugin package for non-Docker deployments:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -352,6 +364,10 @@ The plugin package can also be built manually using the following command:
 ```bash
 tar -zcf MyComponent.tar.gz MyComponent
 ```
+
+**5\. Create the component Docker image:**
+
+See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
 
 
 # API Specification
@@ -460,7 +476,7 @@ Class containing data used for detection of objects in an image file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -669,7 +685,7 @@ Class containing data used for detection of objects in a video file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -904,7 +920,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -1019,7 +1035,7 @@ logically segmented, so a job will contain the entirety of the file.
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
       <td>
-        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in <a href="../Packaging-and-Registering-a-Component/index.html">Packaging and Registering a Component</a>. Values are determined when creating a pipeline or when submitting a job.
+        Contains a dict with keys and values of type <code>str</code> which represent the property name and the property value. The key corresponds to the property name specified in the component descriptor file described in the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>. Values are determined when creating a pipeline or when submitting a job.
         <br/><br/>
         Note: The job_properties dict may not contain the full set of job properties. For properties not contained in the dict, the component must use a default value.
       </td>
@@ -1212,7 +1228,7 @@ OpenMPF components should be stateless in operation and give identical output fo
 It recommended that components use Python's built-in 
 [`logging` module.](https://docs.python.org/3/library/logging.html) The component should 
 `import logging` and call `logging.getLogger('<componentName>')` to get a logger instance. 
-The component should not configure logging itself. The component executor will configure the 
+The component should not configure logging itself. The Component Executor will configure the 
 `logging` module for the component. The logger will write log messages to standard error and 
 `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`. Note that multiple instances of the 
 same component can log to the same file. Also, logging content can span multiple lines. 

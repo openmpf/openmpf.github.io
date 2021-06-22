@@ -2,7 +2,7 @@
 
 Welcome to the Open Media Processing Framework (OpenMPF) Web Site Project!
 
-## What is the OpenMPF?
+## What is OpenMPF?
 
 OpenMPF provides a platform to perform content detection and extraction on bulk multimedia, enabling users to analyze, search, and share information through the extraction of objects, keywords, thumbnails, and other contextual data.
 

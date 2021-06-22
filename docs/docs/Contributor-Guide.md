@@ -1,4 +1,5 @@
-> **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+**NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 # High-level Overview
 
@@ -13,8 +14,8 @@ The OpenMPF project consists of the following repositories:
  - [openmpf/openmpf-contrib-components](https://github.com/openmpf/openmpf-contrib-components)
  - [openmpf/openmpf-build-tools](https://github.com/openmpf/openmpf-build-tools)
  - [openmpf/openmpf-cpp-component-sdk](https://github.com/openmpf/openmpf-cpp-component-sdk)
+ - [openmpf/openmpf-python-component-sdk](https://github.com/openmpf/openmpf-python-component-sdk)   
  - [openmpf/openmpf-java-component-sdk](https://github.com/openmpf/openmpf-java-component-sdk)
- - [openmpf/openmpf-python-component-sdk](https://github.com/openmpf/openmpf-python-component-sdk)
  - [openmpf/openmpf-projects](https://github.com/openmpf/openmpf-projects)
  - [openmpf/openmpf-docker](https://github.com/openmpf/openmpf-docker)
 
@@ -29,7 +30,7 @@ We welcome all contributions that are made in a good faith effort to meet the fo
 - Functionally correct and logically sound. All code must pass a code review and round of regression tests.
 - Designed to use existing interfaces, super classes, and utilities
 - Makes use of well-known design patterns, polymorphism, and encapsulation where possible
-- Employs best practices for integrating with the OpenMPF architecture. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
+- Employs best practices for integrating with the OpenMPF architecture. Refer to the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [C++ Streaming Component API](CPP-Streaming-Component-API/index.html), [Python Batch Component API](Python-Batch-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html).
 - Employs [standard coding style](#coding-style) that is consistent with the rest of the project
 - Sufficiently commented and, if necessary, comes with appropriate documentation
 - Comes with sufficient test cases
@@ -167,9 +168,9 @@ Note that new components should have a README.md file, LICENSE file, COPYING fil
 The following list of style guides provide a comprehensive explanation of some of the best coding practices for the programming languages used in the OpenMPF project:
 
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+- [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 - [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml)
-- [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 
 Generally speaking, when writing new code, please refer to existing code in the repositories and match the style. Most style issues boil down to inconsistency. Not all of our code adheres to these style guidelines, but we are striving to improve it.
 
