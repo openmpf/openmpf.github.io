@@ -357,87 +357,83 @@
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.15.</b> GET</span>&nbsp;&nbsp;/rest/pipelines
+            <div class="div-container-margin"><span><b>2.15.</b> GET</span>&nbsp;&nbsp;/rest/system-message
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.16.</b> GET</span>&nbsp;&nbsp;/rest/system-message
+            <div class="div-container-margin"><span><b>2.16.</b> POST</span>&nbsp;&nbsp;/rest/system-message
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.17.</b> POST</span>&nbsp;&nbsp;/rest/system-message
+            <div class="div-container-margin"><span><b>2.17.</b> GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.18.</b> GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}
+            <div class="div-container-margin"><span><b>2.18.</b> DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.19.</b> DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}
+            <div class="div-container-margin"><span><b>2.19.</b> GET</span>&nbsp;&nbsp;/rest/streaming/jobs
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.20.</b> GET</span>&nbsp;&nbsp;/rest/streaming/jobs
+            <div class="div-container-margin"><span><b>2.20.</b> POST</span>&nbsp;&nbsp;/rest/streaming/jobs
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.21.</b> POST</span>&nbsp;&nbsp;/rest/streaming/jobs
+            <div class="div-container-margin"><span><b>2.21.</b> GET</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.22.</b> GET</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}
+            <div class="div-container-margin"><span><b>2.22.</b> POST</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}/cancel
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.23.</b> POST</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}/cancel
+            <div class="div-container-margin"><span><b>2.23.</b> POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.24.</b> POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged
+            <div class="div-container-margin"><span><b>2.24.</b> DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.25.</b> DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}
+            <div class="div-container-margin"><span><b>2.25.</b> GET</span>&nbsp;&nbsp;/rest/pipelines
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.26.</b> GET</span>&nbsp;&nbsp;/rest/pipelines
+            <div class="div-container-margin"><span><b>2.26.</b> POST</span>&nbsp;&nbsp;/rest/pipelines
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.27.</b> POST</span>&nbsp;&nbsp;/rest/pipelines
+            <div class="div-container-margin"><span><b>2.27.</b> DELETE</span>&nbsp;&nbsp;/rest/pipelines?name={name}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.28.</b> DELETE</span>&nbsp;&nbsp;/rest/pipelines?name={name}
+            <div class="div-container-margin"><span><b>2.28.</b> GET</span>&nbsp;&nbsp;/rest/tasks
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.29.</b> GET</span>&nbsp;&nbsp;/rest/tasks
+            <div class="div-container-margin"><span><b>2.29.</b> POST</span>&nbsp;&nbsp;/rest/tasks
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.30.</b> POST</span>&nbsp;&nbsp;/rest/tasks
+            <div class="div-container-margin"><span><b>2.30.</b> DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.31.</b> DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}
+            <div class="div-container-margin"><span><b>2.31.</b> GET</span>&nbsp;&nbsp;/rest/actions
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.32.</b> GET</span>&nbsp;&nbsp;/rest/actions
+            <div class="div-container-margin"><span><b>2.32.</b> POST</span>&nbsp;&nbsp;/rest/actions
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.33.</b> POST</span>&nbsp;&nbsp;/rest/actions
+            <div class="div-container-margin"><span><b>2.33.</b> DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.34.</b> DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>2.35.</b> GET</span>&nbsp;&nbsp;/rest/algorithms
+            <div class="div-container-margin"><span><b>2.34.</b> GET</span>&nbsp;&nbsp;/rest/algorithms
                 <br>
                 <br>
             </div>
@@ -890,7 +886,7 @@
                         INITIALIZED (the job has been initialized but not started),
                         IN_PROGRESS, IN_PROGRESS_ERRORS, IN_PROGRESS_WARNINGS
                         COMPLETE, COMPLETE_WITH_ERRORS, COMPLETE_WITH_WARNINGS,
-                        CANCELLING, CANCELLED, ERROR
+                        CANCELLING, CANCELLED, CANCELLED_BY_SHUTDOWN, ERROR
                     </td>
                 </tr>
                 <tr style=";background-color: #EAEAEA">
@@ -911,7 +907,11 @@
                 <tr style="">
                     <td style="width:40%;">terminal</td>
                     <td style="width:20%;">boolean</td>
-                    <td style="width:40%;">True if jobStatus is JOB_CREATION_ERROR, COMPLETE, CANCELLED, or ERROR; otherwise false</td>
+                    <td style="width:40%;">
+                        True if jobStatus is COMPLETE, COMPLETE_WITH_ERRORS,
+                        COMPLETE_WITH_WARNINGS, CANCELLED, CANCELLED_BY_SHUTDOWN, or ERROR;
+                        otherwise false
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -3067,68 +3067,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
         </div>
     </div>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.15 GET</span>&nbsp;&nbsp;/rest/pipelines</code></pre>
-        <div>
-            <table class='table-margin'>
-                <tr>
-                    <td class='td-alignment-small'><b>Summary</b></td>
-                    <td class='td-alignment-std'>Retrieves list of available pipelines.</td>
-                </tr>
-                <tr style=';background-color: #EAEAEA'>
-                    <td class='td-alignment-small'><b>Description</b></td>
-                    <td class='td-alignment-std'>The response will be a JSON array of strings with each item being a pipeline.</td>
-                </tr>
-                <tr>
-                    <td class='td-alignment-small'><b>Operation Id</b></td>
-                    <td class='td-alignment-std'></td>
-                </tr>
-                <tr style=';background-color: #EAEAEA'>
-                    <td class='td-alignment-small'><b>Produces</b></td>
-                    <td class='td-alignment-std'>application/json</td>
-                </tr>
-                <tr>
-                    <td class='td-alignment-small'><b>Parameters</b></td>
-                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'><p>no parameters</p></td>
-                </tr>
-                <tr>
-                    <td class='td-alignment-small'><b>Tags</b></td>
-                    <td class='td-alignment-std' style='padding-left:6px'>pipelines</td>
-                </tr>
-                <tr>
-                    <td class='td-alignment-small'><b>Responses</b></td>
-                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
-                        <table class='table-margin'>
-                            <tr>
-                                <td class='td-alignment-small'><b>code</b></td>
-                                <td class='td-alignment-std'><b>description</b></td>
-                            </tr>
-                            <tr>
-                                <td class='td-alignment-small'>200</td>
-                                <td class='td-alignment-std'>Successful response
-                                    <table class='table-margin' style='margin-left:-5px!important'>
-                                        <tr>
-                                            <td style='width:20%'><b>Schema type</b></td>
-                                            <td style='width:80%'>array</td>
-                                        </tr>
-                                        <tr>
-                                            <td class='td-alignment-small'>&nbsp;</td>
-                                            <td class='td-alignment-std'>[ "pipeline1", "pipeline2", ..., "pipelineN" ]</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class='td-alignment-small'>401</td>
-                                <td class='td-alignment-std'>Bad credentials </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.16 GET</span>&nbsp;&nbsp;/rest/system-message</code></pre>
+        <pre class="get"><code class="huge"><span>2.15 GET</span>&nbsp;&nbsp;/rest/system-message</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -3205,7 +3144,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.17 POST</span>&nbsp;&nbsp;/rest/system-message</code></pre>
+        <pre class="post"><code class="huge"><span>2.16 POST</span>&nbsp;&nbsp;/rest/system-message</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -3333,7 +3272,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.18 GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}</code></pre>
+        <pre class="get"><code class="huge"><span>2.17 GET</span>&nbsp;&nbsp;/rest/system-message/type/{typeFilter}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -3434,7 +3373,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
         </div>
     </div>
     <div class="div-container-margin">
-        <pre class="delete"><code class="huge"><span>2.19 DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}</code></pre>
+        <pre class="delete"><code class="huge"><span>2.18 DELETE</span>&nbsp;&nbsp;/rest/system-message/{id}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -3565,7 +3504,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.20 GET</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
+        <pre class="get"><code class="huge"><span>2.19 GET</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -3680,7 +3619,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.21 POST</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
+        <pre class="post"><code class="huge"><span>2.20 POST</span>&nbsp;&nbsp;/rest/streaming/jobs</code></pre>
         <div>
             <table class='table-margin' style="margin-left:-5px!important">
                 <tr>
@@ -3954,7 +3893,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 <div style='page-break-after:always'></div>
     <br/>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.22 GET</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}</code></pre>
+        <pre class="get"><code class="huge"><span>2.21 GET</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4047,7 +3986,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.23 POST</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}/cancel</code></pre>
+        <pre class="post"><code class="huge"><span>2.22 POST</span>&nbsp;&nbsp;/rest/streaming/jobs/{id}/cancel</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4158,7 +4097,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
         </div>
     </div>
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.24 POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged</code></pre>
+        <pre class="post"><code class="huge"><span>2.23 POST</span>&nbsp;&nbsp;/rest/components/registerUnmanaged</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4286,7 +4225,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="delete"><code class="huge"><span>2.25 DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}</code></pre>
+        <pre class="delete"><code class="huge"><span>2.24 DELETE</span>&nbsp;&nbsp;/rest/components/{componentName}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4384,7 +4323,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.26 GET</span>&nbsp;&nbsp; /rest/pipelines</code></pre>
+        <pre class="get"><code class="huge"><span>2.25 GET</span>&nbsp;&nbsp; /rest/pipelines</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4437,7 +4376,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.27 POST</span>&nbsp;&nbsp;/rest/pipelines</code></pre>
+        <pre class="post"><code class="huge"><span>2.26 POST</span>&nbsp;&nbsp;/rest/pipelines</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4536,7 +4475,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
 
     <div class="div-container-margin">
-        <pre class="delete"><code class="huge"><span>2.28 DELETE</span>&nbsp;&nbsp;/rest/pipeline?name={name}</code></pre>
+        <pre class="delete"><code class="huge"><span>2.27 DELETE</span>&nbsp;&nbsp;/rest/pipeline?name={name}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4629,7 +4568,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
 
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.29 GET</span>&nbsp;&nbsp;/rest/tasks</code></pre>
+        <pre class="get"><code class="huge"><span>2.28 GET</span>&nbsp;&nbsp;/rest/tasks</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4683,7 +4622,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
 
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.30 POST</span>&nbsp;&nbsp;/rest/tasks</code></pre>
+        <pre class="post"><code class="huge"><span>2.29 POST</span>&nbsp;&nbsp;/rest/tasks</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4781,7 +4720,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="delete"><code class="huge"><span>2.31 DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}</code></pre>
+        <pre class="delete"><code class="huge"><span>2.30 DELETE</span>&nbsp;&nbsp;/rest/tasks?name={name}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4873,7 +4812,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.32 GET</span>&nbsp;&nbsp;/rest/actions</code></pre>
+        <pre class="get"><code class="huge"><span>2.31 GET</span>&nbsp;&nbsp;/rest/actions</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -4926,7 +4865,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.33 POST</span>&nbsp;&nbsp;/rest/actions</code></pre>
+        <pre class="post"><code class="huge"><span>2.32 POST</span>&nbsp;&nbsp;/rest/actions</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -5024,7 +4963,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
     </div>
 
     <div class="div-container-margin">
-        <pre class="delete"><code class="huge"><span>2.34 DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}</code></pre>
+        <pre class="delete"><code class="huge"><span>2.33 DELETE</span>&nbsp;&nbsp;/rest/actions?name={name}</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -5117,7 +5056,7 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
 
 
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.35 GET</span>&nbsp;&nbsp;/rest/algorithms</code></pre>
+        <pre class="get"><code class="huge"><span>2.34 GET</span>&nbsp;&nbsp;/rest/algorithms</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
