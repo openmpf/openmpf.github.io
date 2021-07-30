@@ -131,6 +131,18 @@ git commit
 git push
 ```
 
+## Hotfix Workflow
+
+When an OpenMPF project administrator determines that a code change is urgently needed to fix a bug in previously released code, the pull request workflow is modified in the following ways.
+
+- Create your feature branch off of the master branch, not develop. The convention is to include the word "hotfix" in the name of the branch.
+- When creating your pull request on the web page for the repo you are modifying, leave the 'base:master' dropdown menu as is, and change the 'compare:' dropdown to the name of your hotfix branch.
+- After the PR has been reviewed and accepted, land the PR as described above.
+- Create a new branch off of the develop branch. The convention is to use the word "hotfix-merge" in the name of the branch.
+- Merge the master branch into your hotfix-merge branch.
+- Create a pull request for this branch as described above in the Contributor Instructions, using develop as the 'base:' branch, and your hotfix-merge branch as the 'compare:' branch.
+- The remainder of the process for reviewing and landing a PR to the develop branch must be followed at this point.
+
 # Versioning a New Release
 
 The decision to version a new release is based on the following factors:
