@@ -219,6 +219,8 @@
                 
                     <li><a class="toctree-l4" href="#reviewer-instructions">Reviewer Instructions</a></li>
                 
+                    <li><a class="toctree-l4" href="#hotfix-workflow">Hotfix Workflow</a></li>
+                
             
                 <li class="toctree-l3"><a href="#versioning-a-new-release">Versioning a New Release</a></li>
                 
@@ -438,6 +440,37 @@ git submodule foreach 'git pull'
 git add .
 git commit
 git push
+</code></pre>
+
+<h2 id="hotfix-workflow">Hotfix Workflow</h2>
+<p>When an OpenMPF project administrator determines that a code change is urgently needed to fix a bug in previously released code, the pull request workflow is modified in the following ways.</p>
+<ul>
+<li>Create your feature branch off of the master branch, not develop. The convention is to include the prefix "hotfix/" in the name of the branch.</li>
+<li>When creating your pull request on the web page for the repo you are modifying, leave the 'base:master' dropdown menu as is, and change the 'compare:' dropdown to the name of your hotfix branch.</li>
+<li>After the PR has been reviewed and accepted, land the PR as described above.</li>
+<li>Next, create a new branch off of the develop branch. The convention is to use the prefix "hf-merge/" in the name of the branch.</li>
+<li>Merge the master branch into your hf-merge branch.</li>
+</ul>
+<pre><code>git checkout master
+git pull
+git checkout develop
+git pull
+git checkout -b hf-merge/&lt;branch-name&gt;
+git merge master
+git push -u
+</code></pre>
+
+<ul>
+<li>Create a pull request for this branch as described above in the Contributor Instructions, using develop as the 'base:' branch, and your hf-merge branch as the 'compare:' branch.</li>
+<li>The remainder of the process for reviewing and landing a PR to the develop branch must be followed at this point, with one exception. You should merge your branch to the develop branch on the command line, instead of through the GitHub UI, to preserve commits and not squash them into one.</li>
+</ul>
+<pre><code>git checkout develop
+git pull
+git merge hf-merge/&lt;branch-name&gt;
+</code></pre>
+
+<p>Make sure that the merge is a fast-forward merge.</p>
+<pre><code>git push
 </code></pre>
 
 <h1 id="versioning-a-new-release">Versioning a New Release</h1>
