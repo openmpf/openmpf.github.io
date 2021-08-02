@@ -141,7 +141,7 @@ When an OpenMPF project administrator determines that a code change is urgently 
 - Next, create a new branch off of the develop branch. The convention is to use the prefix "hf-merge/" in the name of the branch.
 - Merge the master branch into your hf-merge branch.
 - Create a pull request for this branch as described above in the Contributor Instructions, using develop as the 'base:' branch, and your hf-merge branch as the 'compare:' branch.
-- The remainder of the process for reviewing and landing a PR to the develop branch must be followed at this point, with one exception. You should merge your branch to the develop branch on the command line, instead of through the github UI, to preserve commits and not squash them into one.
+- The remainder of the process for reviewing and landing a PR to the develop branch must be followed at this point, with one exception. You should merge your branch to the develop branch on the command line, instead of through the GitHub UI, to preserve commits and not squash them into one.
 
 # Versioning a New Release
 
