@@ -176,7 +176,7 @@ The "Jobs" tab on this page allows a user to view a bar graph representing the t
 
 ![Job Statistics Page](img/mpf_stats_jobs.png "Job Statistics Page")
 
-For example, the DLIB FACE DETECTION PIPELINE was run twice. Note that the Y-axis in the bar graph has a logarithmic scale. Hovering the mouse over any bar in the graph will show more information. Information about each pipeline is listed below the graph.
+For example, the OCV YOLO OBJECT DETECTION PIPELINE was run once. Note that the Y-axis in the bar graph has a logarithmic scale. Hovering the mouse over any bar in the graph will show more information. Information about each pipeline is listed below the graph.
 
 The "Processes" tab on this page allows a user to view a table with information about the runtime of various internal workflow manager operations. The "Count" field represents the number of times each operation was run. The min, max, and mean are calculated over the set of times each operation was performed. Runtime information is reset when the workflow manager is restarted.
 
