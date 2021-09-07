@@ -33,7 +33,7 @@ OpenMPF has several GPU components. Initially, we tested a GPU component on a va
 found an insignificant difference in the run time for different architectures using this approach, and so we have opted
 to provide maximum runtime portability. For any new components that may be developed, this may not be the case, and
 similar testing should be undertaken to determine the correct set of flags for that component. The nvcc compiler flags
-are configured by setting the `CUDA_NVCC_FLAGS` CMake variable in the individual component's CMakeLists.txt file, e.g.,
+are configured by setting the `CUDA_NVCC_FLAGS` CMake variable in the individual component's CMakeLists.txt file, e.g.:
 ```
 set(CUDA_NVCC_FLAGS --compiler-options -fPIC -gencode arch=compute_30,code=compute_30)
 ```
@@ -45,7 +45,7 @@ that use OpenCV CUDA support will have built-in access to it through the base C+
 the above-mentioned GPU compile flags will have already been set when OpenCV was built.
 
 
-> **NOTE:** OpenMPF GPU components are written so that they can run on the CPU only, as well as using GPU hardware. 
+> **NOTE:** Most OpenMPF GPU components are written so that they can run on the CPU only, as well as using GPU hardware. 
 > If the component is built on a system that does not have the NVIDIA CUDA Toolkit installed, then the build will 
 > default to compiling for the CPU. It is recommended that developers of new GPU components make every attempt to 
 > follow this model, so that other users are not burdened with installing the NVIDIA CUDA Toolkit when they have no 
