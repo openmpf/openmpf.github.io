@@ -1,6 +1,18 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 6.3.x
+
+<h2>6.3.0: September 2021</h2>
+
+<h3>Documentation</h3>
+
+- Updated the API documents, Development Environment Guide, Node Guide, Install Guide, User Guide, Admin Guide, and others to clarify the difference between Docker and non-Docker behaviors.
+- Transformed Packaging and Registering a Component document into Component Descriptor Reference.
+- Split Media Segmentation Guide from User Guide.
+- Updated and renamed the Workflow Manager document to Workflow Manager Architecture.
+- Updated the various Docker guides to clarify the difference between building Docker images from scratch versus building them using pre-built base images on Docker Hub, emphasizing the latter.
+
 # OpenMPF 6.2.x
 
 <h2>6.2.0: May 2021</h2>
