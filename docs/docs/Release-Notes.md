@@ -105,8 +105,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
   longer using the same path when extracting images for jobs with multiple pieces of media
 - [[#1386](https://github.com/openmpf/openmpf/issues/1386)] FeedForwardFrameCropper in the Python SDK now handles
   negative coordinates properly
-- [[#1389](https://github.com/openmpf/openmpf/issues/1389)] NlpTextCorrection now properly reads the value
-  of `FULL_TEXT_CORRECTION_OUTPUT`
 - [[#1391](https://github.com/openmpf/openmpf/issues/1391)] If a job is configured to upload markup and markup fails,
   the job no longer gets stuck
 
@@ -114,6 +112,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 - [[#1372](https://github.com/openmpf/openmpf/issues/1372)] TikaImageDetection misses images in PowerPoint and Word
   documents
+- [[#1389](https://github.com/openmpf/openmpf/issues/1389)] NlpTextCorrection does not properly read the value
+  of `FULL_TEXT_CORRECTION_OUTPUT`
 
 # OpenMPF 6.2.x
 
