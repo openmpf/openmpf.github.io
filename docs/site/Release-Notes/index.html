@@ -333,11 +333,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <li>Updated and renamed the Workflow Manager document to Workflow Manager Architecture.</li>
 <li>Updated the various Docker guides to clarify the difference between building Docker images from scratch versus
   building them using pre-built base images on Docker Hub, emphasizing the latter.</li>
+<li>Updated the Contributor Guide to document the hotfix pull request process.</li>
 </ul>
 <h3>TiesDb Integration</h3>
 
 <ul>
-<li>TiesDb is a PostgreSQL DB with a RESTful API that stores media metadata by hash (sha256, md5) query. TIES stands
+<li>TiesDb is a PostgreSQL DB with a RESTful API that stores media metadata. The metadata entries are queried using the
+  hash (sha256, md5) of the media file. TIES stands
   for <a href="https://github.com/Noblis/ties-lib">Triage Import Export Schema</a>. TiesDb is deployed and managed externally to
   OpenMPF. For more information please contact us.</li>
 <li>When a job completes, OpenMPF can post assertions to media entries that exist in TiesDb. In general, one assertion is
@@ -374,13 +376,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <h3>Natural Language Processing (NLP) Text Correction Component</h3>
 
 <ul>
-<li>This component utilizes the <a href="https://github.com/MSeal/cython_hunspell">cython_hunspell</a> library, which is a Python
+<li>This component utilizes the <a href="https://github.com/MSeal/cython_hunspell">CyHunspell</a> library, which is a Python
   port of the <a href="https://github.com/hunspell/hunspell">Hunspell</a> spell-checking library, to perform post-processing
   correction of OCR text. In general, it's intended to be used in a pipeline after a component like
   TesseractOCRTextDetection that generates <code>TEXT</code> tracks. These tracks are then fed-forward into NlpTextCorrection,
   which will add a <code>CORRECTED TEXT</code> property to the existing tracks.
-  The <code>TESSERACT OCR TEXT DETECTION WITH NLP TEXT CORRECTION PIPELINE</code> performs this behavior. It can also run on its
-  own to process plain text files. Refer to
+  The <code>TESSERACT OCR TEXT DETECTION WITH NLP TEXT CORRECTION PIPELINE</code> performs this behavior. The component can also
+  run on its own to process plain text files. Refer to
   the <a href="https://github.com/openmpf/openmpf-components/tree/master/python/NlpTextCorrection#readme">README</a> for details.</li>
 </ul>
 <h3>Azure Cognitive Services (ACS) Read Component</h3>
@@ -397,31 +399,46 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <ul>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1151">#1151</a>] Now supports <code>IN_PROGRESS_WITH_WARNINGS</code> status</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1234">#1234</a>] Now sorts JSON output object media by media id</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1341">#1341</a>] Added job id to all batch-job-specific Workflow Manager log messages</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1341">#1341</a>] Added job id to all batch-job-specific Workflow Manager log
+  messages</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1349">#1349</a>] Improved reporting and recording job status</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1353">#1353</a>] Updated the Workflow Manager to remove and warn about zero-size detections</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1382">#1382</a>] Updated Tika version to 1.27 for TikaImageDetection and TikaTextDetection components</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1387">#1387</a>] Markup can now be configured in a component's <code>descriptor.json</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1353">#1353</a>] Updated the Workflow Manager to remove and warn about
+  zero-size detections</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1382">#1382</a>] Updated Tika version to 1.27 for TikaImageDetection and
+  TikaTextDetection components</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1387">#1387</a>] Markup can now be configured in a
+  component's <code>descriptor.json</code></li>
 </ul>
 <h3>Bug Fixes</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1080">#1080</a>] Batch jobs no longer prematurely set to 100% completion during artifact extraction</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1106">#1106</a>] When a job ends in <code>ERROR</code> or <code>CANCELLED_BY_SHUTDOWN</code> the job status UI now shows an End Date</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1080">#1080</a>] Batch jobs no longer prematurely set to 100% completion
+  during artifact extraction</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1106">#1106</a>] When a job ends in <code>ERROR</code> or <code>CANCELLED_BY_SHUTDOWN</code> the
+  job status UI now shows an End Date</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1158">#1158</a>] JSON output object URI no longer changes when callback fails</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1317">#1317</a>] TikaTextDetection no longer generates first PDF track at <code>PAGE_NUM</code> 2</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1337">#1337</a>] Now using <code>MPF_BAD_FRAME_SIZE</code> instead of <code>MPF_DETECTION_FAILED</code> for OpenCV empty/resize exception</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1359">#1359</a>] Image detection tracks no longer have <code>endOffsetFrameInclusive</code> set to 1</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1373">#1373</a>] When uploading large files through the Workflow Manager web UI, now more than the first 865032704 bytes get written</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1379">#1379</a>] TikaImageDetection component can now write file if processing more than one piece of media per job</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1386">#1386</a>] FeedForwardFrameCropper in the Python SDK now handles negative coordinates properly</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1389">#1389</a>] NlpTextCorrection now properly reads the value of <code>FULL_TEXT_CORRECTION_OUTPUT</code></li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1391">#1391</a>] If a job is configured to upload markup and markup fails, the job no longer gets stuck</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1317">#1317</a>] TikaTextDetection no longer generates first PDF track
+  at <code>PAGE_NUM</code> 2</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1337">#1337</a>] Now using <code>MPF_BAD_FRAME_SIZE</code> instead
+  of <code>MPF_DETECTION_FAILED</code> for OpenCV empty/resize exception</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1359">#1359</a>] Image detection tracks no longer
+  have <code>endOffsetFrameInclusive</code> set to 1</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1373">#1373</a>] When uploading large files through the Workflow Manager web
+  UI, now more than the first 865032704 bytes get written</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1379">#1379</a>] TikaImageDetection component now avoids conflicts by no
+  longer using the same path when extracting images for jobs with multiple pieces of media</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1386">#1386</a>] FeedForwardFrameCropper in the Python SDK now handles
+  negative coordinates properly</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1389">#1389</a>] NlpTextCorrection now properly reads the value
+  of <code>FULL_TEXT_CORRECTION_OUTPUT</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1391">#1391</a>] If a job is configured to upload markup and markup fails,
+  the job no longer gets stuck</li>
 </ul>
 <h3>Known Issues</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1372">#1372</a>] TikaImageDetection misses images in PowerPoint and Word documents</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1372">#1372</a>] TikaImageDetection misses images in PowerPoint and Word
+  documents</li>
 </ul>
 <h1 id="openmpf-62x">OpenMPF 6.2.x</h1>
 <h2>6.2.0: May 2021</h2>
