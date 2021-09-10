@@ -158,7 +158,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: Mon Jul 26, 2021</div>
+    <div class='footer'>Last updated on: September 7, 2021</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -2307,160 +2307,166 @@ http://api.example.com/foo?jobid=1&outputobjecturi=file%3A%2F%2F%2Fpath%2Fto%2F1
                                                             <br>
                                                             <pre style="color: rgb(0, 0, 0); background-color: #ECECB4;">
 {
-   "jobId": 1,
-   "errors": [],
-   "warnings": [],
-   "objectId": "7f745455-6e5a-4681-b5b5-309ec6d2e9c8",
-   "pipeline": {
-      "name": "COMBINED DETECTION PIPELINE",
-      "description": "Executes multiple face detection algorithms and a person detection algorithm.",
-      "tasks": [
-         {
-            "actionType": "DETECTION",
-            "name": "COMBINED DETECTION TASK",
-            "description": "Executes multiple face detection algorithms and a person detection algorithm.",
-            "actions": [
-               {
-                  "algorithm": "FACECV",
-                  "name": "OCV FACE DETECTION ACTION",
-                  "description": "Executes the OpenCV face detection algorithm using the default parameters.",
-                  "properties": {}
-               },
-               {
-                  "algorithm": "DLIB",
-                  "name": "DLIB FACE DETECTION ACTION",
-                  "description": "Executes the dlib face detection algorithm using the default parameters.",
-                  "properties": {}
-               },
-               {
-                  "algorithm": "PERSONCV",
-                  "name": "OCV PERSON DETECTION ACTION",
-                  "description": "Executes the OpenCV person detection algorithm using the default parameters.",
-                  "properties": {}
-               }
-            ]
-         }
-      ]
-   },
-   "priority": 4,
-   "siteId": "mpf1",
-   "externalJobId": null,
-   "timeStart": "2020-06-24T01:55:30.003Z",
-   "timeStop": "2020-06-24T01:55:31.567Z",
-   "status": "COMPLETE",
-   "algorithmProperties": {},
-   "jobProperties": {},
-   "media": [
+  "jobId": 11,
+  "errors": [],
+  "warnings": [],
+  "objectId": "ef027349-8e6a-4472-a459-eba9463787f3",
+  "pipeline": {
+    "name": "OCV FACE DETECTION PIPELINE",
+    "description": "Performs OpenCV face detection.",
+    "tasks": [
       {
-         "mediaId": 1,
-         "path": "file:///opt/mpf/share/remote-media/meds-aa-S001-01.jpg",
-         "detectionProcessingErrors": {},
-         "mimeType": "image/jpeg",
-         "length": 1,
-         "sha256": "c067e7eed23a0fe022140c30dbfa993ae720309d6567a803d111ecec739a6713",
-         "status": "COMPLETE",
-         "mediaMetadata": {
-            "FRAME_HEIGHT": "600",
-            "FRAME_WIDTH": "480",
-            "MIME_TYPE": "image/jpeg"
-         },
-         "mediaProperties": {},
-         "markupResult": null,
-         "output": {
-            "FACE": [
-               {
-                  "source": "+#DLIB FACE DETECTION ACTION",
-                  "tracks": [
-                     {
-                        "id": "a2b623ec3d73a82702e54d75f84fe902e79842f10ef228e3cc5712b27f02b143",
-                        "startOffsetFrame": 0,
-                        "stopOffsetFrame": 1,
-                        "startOffsetTime": 0,
-                        "stopOffsetTime": 0,
-                        "type": "FACE",
-                        "source": "+#DLIB FACE DETECTION ACTION",
-                        "confidence": 2.3898146,
-                        "trackProperties": {},
-                        "exemplar": {
-                           "offsetFrame": 0,
-                           "offsetTime": 0,
-                           "x": 114,
-                           "y": 238,
-                           "width": 225,
-                           "height": 225,
-                           "confidence": 2.3898146,
-                           "detectionProperties": {},
-                           "artifactExtractionStatus": "COMPLETED",
-                           "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/1/0/frame-0.png"
-                        },
-                        "detections": [
-                           {
-                              "offsetFrame": 0,
-                              "offsetTime": 0,
-                              "x": 114,
-                              "y": 238,
-                              "width": 225,
-                              "height": 225,
-                              "confidence": 2.3898146,
-                              "detectionProperties": {},
-                              "artifactExtractionStatus": "COMPLETED",
-                              "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/1/0/frame-0.png"
-                           }
-                        ]
-                     }
-                  ]
-               },
-               {
-                  "source": "+#OCV FACE DETECTION ACTION",
-                  "tracks": [
-                     {
-                        "id": "afba8b4afeb29c2d0b8453f3c1795920dd06d94c18596390a1067d706cfdb453",
-                        "startOffsetFrame": 0,
-                        "stopOffsetFrame": 1,
-                        "startOffsetTime": 0,
-                        "stopOffsetTime": 0,
-                        "type": "FACE",
-                        "source": "+#OCV FACE DETECTION ACTION",
-                        "confidence": 57,
-                        "trackProperties": {},
-                        "exemplar": {
-                           "offsetFrame": 0,
-                           "offsetTime": 0,
-                           "x": 83,
-                           "y": 209,
-                           "width": 285,
-                           "height": 285,
-                           "confidence": 57,
-                           "detectionProperties": {},
-                           "artifactExtractionStatus": "COMPLETED",
-                           "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/0/0/frame-0.png"
-                        },
-                        "detections": [
-                           {
-                              "offsetFrame": 0,
-                              "offsetTime": 0,
-                              "x": 83,
-                              "y": 209,
-                              "width": 285,
-                              "height": 285,
-                              "confidence": 57,
-                              "detectionProperties": {},
-                              "artifactExtractionStatus": "COMPLETED",
-                              "artifactPath": "file:///opt/mpf/share/artifacts/1/1/0/0/0/frame-0.png"
-                           }
-                        ]
-                     }
-                  ]
-               }
-            ],
-            "NO TRACKS": [
-               {
-                  "source": "+#OCV PERSON DETECTION ACTION"
-               }
-            ]
-         }
+        "actionType": "DETECTION",
+        "name": "OCV FACE DETECTION TASK",
+        "description": "Performs OpenCV face detection.",
+        "actions": [
+          {
+            "algorithm": "FACECV",
+            "name": "OCV FACE DETECTION ACTION",
+            "description": "Executes the OpenCV face detection algorithm using the default parameters.",
+            "properties": {}
+          }
+        ]
       }
-   ]
+    ]
+  },
+  "priority": 4,
+  "siteId": "mpf1",
+  "externalJobId": null,
+  "timeStart": "2021-09-07T20:57:01.073Z",
+  "timeStop": "2021-09-07T20:57:02.946Z",
+  "status": "COMPLETE",
+  "algorithmProperties": {},
+  "jobProperties": {},
+  "environmentVariableProperties": {},
+  "media": [
+    {
+      "mediaId": 3,
+      "path": "file:///opt/mpf/share/remote-media/faces.jpg",
+      "sha256": "184e9b04369248ae8a97ec2a20b1409a016e2895686f90a2a1910a0bef763d56",
+      "mimeType": "image/jpeg",
+      "mediaType": "IMAGE",
+      "length": 1,
+      "mediaMetadata": {
+        "FRAME_HEIGHT": "1275",
+        "FRAME_WIDTH": "1920",
+        "MIME_TYPE": "image/jpeg"
+      },
+      "mediaProperties": {},
+      "status": "COMPLETE",
+      "detectionProcessingErrors": {},
+      "markupResult": null,
+      "output": {
+        "FACE": [
+          {
+            "source": "+#OCV FACE DETECTION ACTION",
+            "algorithm": "FACECV",
+            "tracks": [
+              {
+                "id": "d4b4a6e870c1378a3bc85a234b6f4c881f81a14edcf858d6d256d04ad40bc175",
+                "startOffsetFrame": 0,
+                "stopOffsetFrame": 0,
+                "startOffsetTime": 0,
+                "stopOffsetTime": 0,
+                "type": "FACE",
+                "source": "+#OCV FACE DETECTION ACTION",
+                "confidence": 5,
+                "trackProperties": {},
+                "exemplar": {
+                  "offsetFrame": 0,
+                  "offsetTime": 0,
+                  "x": 652,
+                  "y": 212,
+                  "width": 277,
+                  "height": 277,
+                  "confidence": 5,
+                  "detectionProperties": {},
+                  "artifactExtractionStatus": "NOT_ATTEMPTED",
+                  "artifactPath": null
+                },
+                "detections": [
+                  {
+                    "offsetFrame": 0,
+                    "offsetTime": 0,
+                    "x": 652,
+                    "y": 212,
+                    "width": 277,
+                    "height": 277,
+                    "confidence": 5,
+                    "detectionProperties": {},
+                    "artifactExtractionStatus": "NOT_ATTEMPTED",
+                    "artifactPath": null
+                  }
+                ]
+              },
+              {
+                "id": "3d51c28fa7373930dc8d1381b4e76f583fce1c5a9802d82926d4476449789bff",
+                "startOffsetFrame": 0,
+                "stopOffsetFrame": 0,
+                "startOffsetTime": 0,
+                "stopOffsetTime": 0,
+                "type": "FACE",
+                "source": "+#OCV FACE DETECTION ACTION",
+                "confidence": 18,
+                "trackProperties": {},
+                "exemplar": {
+                  "offsetFrame": 0,
+                  "offsetTime": 0,
+                  "x": 970,
+                  "y": 165,
+                  "width": 329,
+                  "height": 329,
+                  "confidence": 18,
+                  "detectionProperties": {},
+                  "artifactExtractionStatus": "NOT_ATTEMPTED",
+                  "artifactPath": null
+                },
+                "detections": [
+                  {
+                    "offsetFrame": 0,
+                    "offsetTime": 0,
+                    "x": 970,
+                    "y": 165,
+                    "width": 329,
+                    "height": 329,
+                    "confidence": 18,
+                    "detectionProperties": {},
+                    "artifactExtractionStatus": "NOT_ATTEMPTED",
+                    "artifactPath": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "mediaId": 4,
+      "path": "file:///opt/mpf/share/remote-media/shell.jpg",
+      "sha256": "43fa105be8421f70f8335d84b21b10c7f17989a254fab76570113826e7cf6e0e",
+      "mimeType": "image/jpeg",
+      "mediaType": "IMAGE",
+      "length": 1,
+      "mediaMetadata": {
+        "FRAME_HEIGHT": "1258",
+        "FRAME_WIDTH": "1920",
+        "MIME_TYPE": "image/jpeg"
+      },
+      "mediaProperties": {},
+      "status": "COMPLETE",
+      "detectionProcessingErrors": {},
+      "markupResult": null,
+      "output": {
+        "NO TRACKS": [
+          {
+            "source": "+#OCV FACE DETECTION ACTION",
+            "algorithm": "FACECV"
+          }
+        ]
+      }
+    }
+  ]
 }
                                                             </pre>
                                                     </td>

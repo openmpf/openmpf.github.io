@@ -351,7 +351,7 @@ If running Tomcat from an IDE, such as IntelliJ, then `-Dtransport.guarantee="CO
 # Build and Run the OpenMPF Workflow Manager Web Application
 
 Run the following commands to build OpenMPF and launch the web application. Use this value for `<configFile>`:
-<br>`/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/openmpf-open-source-package.json`
+<br>`/home/mpf/openmpf-projects/openmpf-build-tools/config-files/openmpf-example-package.json`
 
 1. `cd /home/mpf/openmpf-projects/openmpf`
 2. Copy the development properties file into place:
@@ -402,7 +402,7 @@ Press `ctrl-c` in the Tomcat window to stop Tomcat.
 # (Optional) Test OpenMPF
 
 Run the following commands to build OpenMPF and run the integration tests. Use this value for `<configFile>`:
-<br>`/home/mpf/openmpf-projects/openmpf/trunk/jenkins/scripts/config_files/openmpf-open-source-package.json`
+<br>`/home/mpf/openmpf-projects/openmpf-build-tools/config-files/openmpf-example-package.json`
 
 1. `cd /home/mpf/openmpf-projects/openmpf`
 2. Copy the development properties file into place:

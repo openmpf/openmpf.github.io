@@ -14,8 +14,6 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | **Operation** | **Object Type** | **Framework**
 |  --- | --- | ---
 | Detection/Tracking | Face | LBP-Based OpenCV
-| Detection/Tracking | Face | Dlib
-| Detection/Tracking | Person | HOG-Based OpenCV
 | Detection/Tracking | Motion | MOG w/ STRUCK
 | Detection/Tracking | Motion | SuBSENSE w/ STRUCK
 | Detection/Tracking | License Plate | OpenALPR
@@ -24,7 +22,6 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Scene | OpenCV
 | Detection | Classification | OpenCV DNN (GoogLeNet, Yahoo NSFW, vehicle color)
 | Detection/Tracking | Classification | OpenCV DNN (YOLO)
-| Detection/Tracking | Classification | Darknet (YOLO)
 | Detection/Tracking | Classification/Features | TensorRT (COCO classes)
 | Detection | Text Region | EAST
 | Detection | Text (OCR) | Apache Tika
