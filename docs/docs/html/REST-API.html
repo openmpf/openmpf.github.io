@@ -140,6 +140,53 @@
         content: "\a";
         white-space: pre;
     }
+
+
+    .def-section-begin {
+        counter-reset: def-counter 0
+    }
+
+    .toc-def:before, .def-header:before  {
+        counter-increment: def-counter 1;
+        content: "1." counter(def-counter) ". ";
+        font-weight: bold;
+    }
+
+
+    .path-section-begin {
+        counter-reset: path-counter 0;
+    }
+
+    .toc-path:before, .path-verb:before, .path-number:before {
+        counter-increment: path-counter 1;
+        content: "2." counter(path-counter) ". ";
+        font-weight: bold;
+    }
+
+
+    body {
+        counter-reset: toc-section-counter 0;
+    }
+
+    .toc-section {
+        counter-increment: toc-section-counter 1;
+        counter-reset: toc-entry-counter 0;
+
+    }
+
+    .toc-entry {
+        margin-left: 21px;
+        margin-right: 51px;
+        margin-bottom: 1em;
+    }
+
+    .toc-entry:before {
+        counter-increment: toc-entry-counter;
+        content: counter(toc-section-counter) "." counter(toc-entry-counter) ". ";
+        font-weight: bold;
+    }
+
+
 </style>
 
 <body>
@@ -177,139 +224,49 @@
     <div style='page-break-after:always'>
         <div class="coverHeadings">
             <h1>Table of contents</h1></div>
-            <h2>1. Definitions</h2>
-            <div class="div-container-margin"><span><b>1.1.</b> EnvironmentVariableModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.2.</b> SystemMessage</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.3.</b> DeployedNodeManagerModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.4.</b> JobCreationRequest</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.5.</b> JobCreationMediaData</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.6.</b> DeployedServiceModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.7.</b> JobCreationResponse</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.8.</b> ServiceModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.9.</b> NodeManagerModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.10.</b> SingleJobInfo</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.11.</b> InfoModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.12.</b> MpfResponse</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.13.</b> AggregatePipelineStatsModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.14.</b> AllJobsStatisticsModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.15.</b> StreamingJobCreationRequest</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.16.</b> StreamingJobCreationResponse</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.17.</b> StreamingJobInfo</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.18.</b> StreamingJobCancelResponse</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.19.</b> JobCreationStreamData</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.20.</b> HealthReport</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.21.</b> HealthReportData</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.22.</b> AllStreamingJobsInfoModel</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.23.</b> ResponseMessage</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.24.</b> Pipeline</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.25.</b> Task</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.26.</b> Action</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.27.</b> Algorithm</span>
-                <br>
-                <br>
-            </div>
-
-            <div class="div-container-margin"><span><b>1.28.</b> Algorithm.Provides</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.29.</b> AlgorithmProperty</span>
-                <br>
-                <br>
-            </div>
-            <div class="div-container-margin"><span><b>1.30.</b> Algorithm.Requires</span>
-                <br>
-                <br>
-            </div>
+            <h2 class="toc-section">1. Definitions</h2>
+            <div class="toc-entry">EnvironmentVariableModel</div>
+            <div class="toc-entry">SystemMessage</div>
+            <div class="toc-entry">DeployedNodeManagerModel</div>
+            <div class="toc-entry">JobCreationRequest</div>
+            <div class="toc-entry">JobCreationMediaData</div>
+            <div class="toc-entry">JobCreationMediaRange</div>
+            <div class="toc-entry">DeployedServiceModel</div>
+            <div class="toc-entry">JobCreationResponse</div>
+            <div class="toc-entry">ServiceModel</div>
+            <div class="toc-entry">NodeManagerModel</div>
+            <div class="toc-entry">SingleJobInfo</div>
+            <div class="toc-entry">InfoModel</div>
+            <div class="toc-entry">MpfResponse</div>
+            <div class="toc-entry">AggregatePipelineStatsModel</div>
+            <div class="toc-entry">AllJobsStatisticsModel</div>
+            <div class="toc-entry">StreamingJobCreationRequest</div>
+            <div class="toc-entry">StreamingJobCreationResponse</div>
+            <div class="toc-entry">StreamingJobInfo</div>
+            <div class="toc-entry">StreamingJobCancelResponse</div>
+            <div class="toc-entry">JobCreationStreamData</div>
+            <div class="toc-entry">HealthReport</div>
+            <div class="toc-entry">HealthReportData</div>
+            <div class="toc-entry">AllStreamingJobsInfoModel</div>
+            <div class="toc-entry">ResponseMessage</div>
+            <div class="toc-entry">Pipeline</div>
+            <div class="toc-entry">Task</div>
+            <div class="toc-entry">Action</div>
+            <div class="toc-entry">Algorithm</div>
+            <div class="toc-entry">Algorithm.Provides</div>
+            <div class="toc-entry">AlgorithmProperty</div>
+            <div class="toc-entry">Algorithm.Requires</div>
 
 
             <div style='page-break-after:always'></div>
-            <h2>2. Paths</h2>
-            <div class="div-container-margin"><span><b>2.1.</b> GET</span>&nbsp;&nbsp;/rest/info
+            <h2 class="path-section-begin">2. Paths</h2>
+            <div class="div-container-margin"><span><b class="path-number"></b> GET</span>&nbsp;&nbsp;/rest/info
                 <br>
                 <br>
             </div>
-            <div class="div-container-margin"><span><b>2.2.</b> GET</span>&nbsp;&nbsp;/rest/jobs/stats
+            <div class="div-container-margin"><span><b class="path-number"></b> GET</span>&nbsp;&nbsp;/rest/jobs/stats
                 <br>
-                <br><span><b>2.3.</b> POST</span>&nbsp;&nbsp;/rest/jobs
+                <br><span><b class="path-number"></b> POST</span>&nbsp;&nbsp;/rest/jobs
                 <br>
                 <br>
             </div>
@@ -442,9 +399,9 @@
         </div>
     </div>
     <div style='page-break-after:always'></div>
-    <h2>1. Definitions</h2>
+    <h2 class="def-section-begin">1. Definitions</h2>
     <div class="div-container-margin">
-        <h3>1.1. EnvironmentVariableModel</h3>
+        <h3 class="def-header">EnvironmentVariableModel</h3>
         <hr />
         <table class='table-margin'>
             <thead>
@@ -479,7 +436,7 @@
         <br />
     </div>
     <div class="div-container-margin">
-        <h3>1.2. SystemMessage</h3>
+        <h3 class="def-header">SystemMessage</h3>
         <hr/>
         <table class='table-margin'>
             <thead>
@@ -531,7 +488,7 @@
         </table>
     </div>
     <div class="div-container-margin">
-        <h3>1.3. DeployedNodeManagerModel (Response only)</h3>
+        <h3 class="def-header">DeployedNodeManagerModel (Response only)</h3>
         <hr />
         <table class='table-margin'>
             <thead>
@@ -666,9 +623,49 @@
             <td style='width:30%;'>A map of key-value pairs using strings which may be used to override the parameters associated with the pipeline or job properties for this medium.</td>
             <td style='width:30%;'>No</td>
         </tr>
+        <tr style=''>
+            <td style='width:30%;'>frameRanges</td>
+            <td style='width:10%;'>array&lt;JobCreationMediaRange></td>
+            <td style='width:30%;'>When provided...</td>
+            <td style='width:30%;'>No</td>
+        </tr>
+        <tr style=''>
+            <td style='width:30%;'>timeRanges</td>
+            <td style='width:10%;'>array&lt;JobCreationMediaRange></td>
+            <td style='width:30%;'>When provided...</td>
+            <td style='width:30%;'>No</td>
+        </tr>
         </tbody>
     </table>
     <br/></div>
+
+    <div class="div-container-margin"><h3>1.6. JobCreationMediaRange</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+                <th class='th-heading'><b>Required</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>start</td>
+                <td style='width:10%;'>integer</td>
+                <td style='width:30%;'>The inclusive start of the range</td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>stop</td>
+                <td style='width:10%;'>integer</td>
+                <td style='width:30%;'>The inclusive end of the range</td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/></div>
 
     <div style='page-break-after:always'></div>
 
@@ -1741,9 +1738,9 @@
     </div>
 
     <div style='page-break-after:always'></div>
-    <h2>2. Paths</h2>
+    <h2 class="path-section-begin">2. Paths</h2>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.1 GET</span>&nbsp;&nbsp;/rest/info</code></pre>
+        <pre class="get"><code class="huge"><span class="path-verb">GET</span>&nbsp;&nbsp;/rest/info</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -1805,7 +1802,7 @@
         </div>
     </div>
     <div class="div-container-margin">
-        <pre class="get"><code class="huge"><span>2.2 GET</span>&nbsp;&nbsp;/rest/jobs/stats</code></pre>
+        <pre class="get"><code class="huge"><span class="path-verb">GET</span>&nbsp;&nbsp;/rest/jobs/stats</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
@@ -1865,7 +1862,7 @@
     </div>
     <div style='page-break-after:always'></div>
     <div class="div-container-margin">
-        <pre class="post"><code class="huge"><span>2.3 POST</span>&nbsp;&nbsp;/rest/jobs</code></pre>
+        <pre class="post"><code class="huge"><span class="path-verb">POST</span>&nbsp;&nbsp;/rest/jobs</code></pre>
         <div>
             <table class='table-margin'>
                 <tr>
