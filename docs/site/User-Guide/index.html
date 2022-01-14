@@ -367,7 +367,108 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <p>The Job Status page displays a summary of the status for all jobs run by any user in the past. The current status and progress of any running job can be monitored from this view, which is updated automatically.</p>
 <p><img alt="Job Status Page" src="../img/mpf_job_status_complete.png" title="Job Status Page" /></p>
 <p>When a job is COMPLETE a user can view the generated JSON output object data by clicking the "Output Objects" button for that job. A new tab/window will open with the detection output. The detection object output displays a formatted JSON representation of the detection results.</p>
-<p><img alt="Job Output Objects" src="../img/mpf_job_status_output.png" title="Job Output Objects" /></p>
+<pre><code class="json">{
+  &quot;jobId&quot;: &quot;localhost-11&quot;,
+  &quot;errors&quot;: [],
+  &quot;warnings&quot;: [],
+  &quot;objectId&quot;: &quot;ef027349-8e6a-4472-a459-eba9463787f3&quot;,
+  &quot;pipeline&quot;: {
+    &quot;name&quot;: &quot;OCV FACE DETECTION PIPELINE&quot;,
+    &quot;description&quot;: &quot;Performs OpenCV face detection.&quot;,
+    &quot;tasks&quot;: [
+      {
+        &quot;actionType&quot;: &quot;DETECTION&quot;,
+        &quot;name&quot;: &quot;OCV FACE DETECTION TASK&quot;,
+        &quot;description&quot;: &quot;Performs OpenCV face detection.&quot;,
+        &quot;actions&quot;: [
+          {
+            &quot;algorithm&quot;: &quot;FACECV&quot;,
+            &quot;name&quot;: &quot;OCV FACE DETECTION ACTION&quot;,
+            &quot;description&quot;: &quot;Executes the OpenCV face detection algorithm using the default parameters.&quot;,
+            &quot;properties&quot;: {}
+          }
+        ]
+      }
+    ]
+  },
+  &quot;priority&quot;: 4,
+  &quot;siteId&quot;: &quot;mpf1&quot;,
+  &quot;externalJobId&quot;: null,
+  &quot;timeStart&quot;: &quot;2021-09-07T20:57:01.073Z&quot;,
+  &quot;timeStop&quot;: &quot;2021-09-07T20:57:02.946Z&quot;,
+  &quot;status&quot;: &quot;COMPLETE&quot;,
+  &quot;algorithmProperties&quot;: {},
+  &quot;jobProperties&quot;: {},
+  &quot;environmentVariableProperties&quot;: {},
+  &quot;media&quot;: [
+    {
+      &quot;mediaId&quot;: 3,
+      &quot;path&quot;: &quot;file:///opt/mpf/share/remote-media/faces.jpg&quot;,
+      &quot;sha256&quot;: &quot;184e9b04369248ae8a97ec2a20b1409a016e2895686f90a2a1910a0bef763d56&quot;,
+      &quot;mimeType&quot;: &quot;image/jpeg&quot;,
+      &quot;mediaType&quot;: &quot;IMAGE&quot;,
+      &quot;length&quot;: 1,
+      &quot;mediaMetadata&quot;: {
+        &quot;FRAME_HEIGHT&quot;: &quot;1275&quot;,
+        &quot;FRAME_WIDTH&quot;: &quot;1920&quot;,
+        &quot;MIME_TYPE&quot;: &quot;image/jpeg&quot;
+      },
+      &quot;mediaProperties&quot;: {},
+      &quot;status&quot;: &quot;COMPLETE&quot;,
+      &quot;detectionProcessingErrors&quot;: {},
+      &quot;markupResult&quot;: null,
+      &quot;output&quot;: {
+        &quot;FACE&quot;: [
+          {
+            &quot;source&quot;: &quot;+#OCV FACE DETECTION ACTION&quot;,
+            &quot;algorithm&quot;: &quot;FACECV&quot;,
+            &quot;tracks&quot;: [
+              {
+                &quot;id&quot;: &quot;d4b4a6e870c1378a3bc85a234b6f4c881f81a14edcf858d6d256d04ad40bc175&quot;,
+                &quot;startOffsetFrame&quot;: 0,
+                &quot;stopOffsetFrame&quot;: 0,
+                &quot;startOffsetTime&quot;: 0,
+                &quot;stopOffsetTime&quot;: 0,
+                &quot;type&quot;: &quot;FACE&quot;,
+                &quot;source&quot;: &quot;+#OCV FACE DETECTION ACTION&quot;,
+                &quot;confidence&quot;: 5,
+                &quot;trackProperties&quot;: {},
+                &quot;exemplar&quot;: {
+                  &quot;offsetFrame&quot;: 0,
+                  &quot;offsetTime&quot;: 0,
+                  &quot;x&quot;: 652,
+                  &quot;y&quot;: 212,
+                  &quot;width&quot;: 277,
+                  &quot;height&quot;: 277,
+                  &quot;confidence&quot;: 5,
+                  &quot;detectionProperties&quot;: {},
+                  &quot;artifactExtractionStatus&quot;: &quot;NOT_ATTEMPTED&quot;,
+                  &quot;artifactPath&quot;: null
+                },
+                &quot;detections&quot;: [
+                  {
+                    &quot;offsetFrame&quot;: 0,
+                    &quot;offsetTime&quot;: 0,
+                    &quot;x&quot;: 652,
+                    &quot;y&quot;: 212,
+                    &quot;width&quot;: 277,
+                    &quot;height&quot;: 277,
+                    &quot;confidence&quot;: 5,
+                    &quot;detectionProperties&quot;: {},
+                    &quot;artifactExtractionStatus&quot;: &quot;NOT_ATTEMPTED&quot;,
+                    &quot;artifactPath&quot;: null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+</code></pre>
+
 <p>A user can click the "Cancel" button to attempt to cancel the execution of a job before it completes. Note that if a service is currently processing part of a job, for example, a video segment that's part of a larger video file, then it will continue to process that part of the job until it completes or there is an error. The act of cancelling a job will prevent other parts of that job from being processed. Thus, if the "Cancel" button is clicked late into the job execution, or if each part of the job is already being processed by services executing in parallel, it may have no effect. Also, if the video segment size is set to a very large number, and the detection being performed is slow, then cancelling a job could take awhile.</p>
 <p>A user can click the "Resubmit" button to execute a job again. The new job execution will retain the same job id and all generated artifacts, marked up media, and detection objects will be replaced with the new results. The results of the previous job execution will no longer be available. Note that the user has the option to change the job priority when resubmitting a job.</p>
 <p>You can view the results of any Media Markup by clicking on the "Media" button for that job. This view will display the path of the source medium and the marked up output path of any media processed using a pipeline that contains a markup action. Clicking an image will display a popup with the marked up image. You cannot view a preview for marked up videos. In any case, the marked up data can be downloaded to the machine running the web browser by clicking the "Download" button.</p>
