@@ -914,28 +914,17 @@ Enum used to indicate the status of `getDetections` in a [`MPFComponentDetection
 
 |  ENUM  |   Description  |
 |---|---|
+| MPF_DETECTION_SUCCESS | The component function completed successfully. |
 | MPF_OTHER_DETECTION_ERROR_TYPE | The component method has failed for a reason that is not captured by any of the other error codes. |
 | MPF_DETECTION_NOT_INITIALIZED | The initialization of the component, or the initialization of any of its dependencies, has failed for any reason. |
-| MPF_UNRECOGNIZED_DATA_TYPE | The media data type received by a component is not one of the values contained in the `MPFDataType` enum.  Note that this failure is normally caught by the Component Executor before a job is passed to the component logic. |
 | MPF_UNSUPPORTED_DATA_TYPE | The job passed to a component requests processing of a job of an unsupported type. For instance, a component that is only capable of processing audio files should return this error code if a video or image job request is received. |
-| MPF_INVALID_DATAFILE_URI | The string containing the URI location of the input data file is invalid or empty. |
 | MPF_COULD_NOT_OPEN_DATAFILE | The data file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. <br><br>Use MPF_COULD_NOT_OPEN_MEDIA for media files. |
 | MPF_COULD_NOT_READ_DATAFILE | There is a failure reading data from a successfully opened input data file. <br><br>Use MPF_COULD_NOT_READ_MEDIA for media files. |
 | MPF_FILE_WRITE_ERROR | The component received a failure for any reason when attempting to write to a file. |
-| MPF_IMAGE_READ_ERROR | Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibility and may be removed in a future release. <br><br>*The component failed to read the image provided by the URI.* |
 | MPF_BAD_FRAME_SIZE | The frame data retrieved has an incorrect or invalid frame size.  |
-| MPF_BOUNDING_BOX_SIZE_ERROR | The calculation of a detection location bounding box has failed. For example, a component may be using an external library to detect objects, but the bounding box returned by that library lies partially outside the frame boundaries. |
-| MPF_INVALID_FRAME_INTERVAL | An invalid or unsupported frame interval was received. |
-| MPF_INVALID_START_FRAME | The component received an invalid start frame number. For example, if the start frame is less than zero, or greater than the stop frame, this error code should be used. |
-| MPF_INVALID_STOP_FRAME | The component receives an invalid stop frame number. For example, if the stop frame is less than the start frame, or greater than the number of the last frame in a video segment, this error code should be used. |
 | MPF_DETECTION_FAILED | General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects. |
-| MPF_DETECTION_TRACKING_FAILED | General failure of a tracking algorithm.  This does not indicate a lack of tracks generated for the media, but rather a break down in the algorithm that makes it impossible to continue to try to track objects. |
 | MPF_INVALID_PROPERTY | The component received a property that is unrecognized or has an invalid/out-of-bounds value. |
 | MPF_MISSING_PROPERTY | The component received a job that is missing a required property. |
-| MPF_JOB_PROPERTY_IS_NOT_INT | A job property is supposed to be an integer type, but it is of some other type, such as a boolean or a floating point value. |
-| MPF_JOB_PROPERTY_IS_NOT_FLOAT | A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value. |
-| MPF_INVALID_ROTATION | The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}. |
-| MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
 | MPF_NETWORK_ERROR | The component failed to communicate with an external system over the network. The system may not be available or there may have been a timeout. |
 | MPF_COULD_NOT_OPEN_MEDIA | The media file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. |
