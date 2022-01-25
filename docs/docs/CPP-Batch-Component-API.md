@@ -1011,6 +1011,7 @@ the `MPFDetectionException` constructor. A component is not required to support 
 | MPF_DETECTION_FAILED | General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects. |
 | MPF_INVALID_PROPERTY | The component received a property that is unrecognized or has an invalid/out-of-bounds value. |
 | MPF_MISSING_PROPERTY | The component received a job that is missing a required property. |
+| MPF_MEMORY_ALLOCATION_FAILED | The component failed to allocate memory for any reason. |
 | MPF_GPU_ERROR | The job was configured to execute on a GPU, but there was an issue with the GPU or no GPU was detected. |
 | MPF_NETWORK_ERROR | The component failed to communicate with an external system over the network. The system may not be available or there may have been a timeout. |
 | MPF_COULD_NOT_OPEN_MEDIA | The media file to be processed could not be opened for any reason, such as a permissions failure, or an unreachable URI. |
