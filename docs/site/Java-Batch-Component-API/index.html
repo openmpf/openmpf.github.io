@@ -1442,6 +1442,10 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 </thead>
 <tbody>
 <tr>
+<td>MPF_DETECTION_SUCCESS</td>
+<td>The component function completed successfully.</td>
+</tr>
+<tr>
 <td>MPF_OTHER_DETECTION_ERROR_TYPE</td>
 <td>The component method has failed for a reason that is not captured by any of the other error codes.</td>
 </tr>
@@ -1450,16 +1454,8 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <td>The initialization of the component, or the initialization of any of its dependencies, has failed for any reason.</td>
 </tr>
 <tr>
-<td>MPF_UNRECOGNIZED_DATA_TYPE</td>
-<td>The media data type received by a component is not one of the values contained in the <code>MPFDataType</code> enum.  Note that this failure is normally caught by the Component Executor before a job is passed to the component logic.</td>
-</tr>
-<tr>
 <td>MPF_UNSUPPORTED_DATA_TYPE</td>
 <td>The job passed to a component requests processing of a job of an unsupported type. For instance, a component that is only capable of processing audio files should return this error code if a video or image job request is received.</td>
-</tr>
-<tr>
-<td>MPF_INVALID_DATAFILE_URI</td>
-<td>The string containing the URI location of the input data file is invalid or empty.</td>
 </tr>
 <tr>
 <td>MPF_COULD_NOT_OPEN_DATAFILE</td>
@@ -1474,36 +1470,12 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <td>The component received a failure for any reason when attempting to write to a file.</td>
 </tr>
 <tr>
-<td>MPF_IMAGE_READ_ERROR</td>
-<td>Use MPF_COULD_NOT_READ_MEDIA instead. This error is only kept for backwards compatibility and may be removed in a future release. <br><br><em>The component failed to read the image provided by the URI.</em></td>
-</tr>
-<tr>
 <td>MPF_BAD_FRAME_SIZE</td>
 <td>The frame data retrieved has an incorrect or invalid frame size.</td>
 </tr>
 <tr>
-<td>MPF_BOUNDING_BOX_SIZE_ERROR</td>
-<td>The calculation of a detection location bounding box has failed. For example, a component may be using an external library to detect objects, but the bounding box returned by that library lies partially outside the frame boundaries.</td>
-</tr>
-<tr>
-<td>MPF_INVALID_FRAME_INTERVAL</td>
-<td>An invalid or unsupported frame interval was received.</td>
-</tr>
-<tr>
-<td>MPF_INVALID_START_FRAME</td>
-<td>The component received an invalid start frame number. For example, if the start frame is less than zero, or greater than the stop frame, this error code should be used.</td>
-</tr>
-<tr>
-<td>MPF_INVALID_STOP_FRAME</td>
-<td>The component receives an invalid stop frame number. For example, if the stop frame is less than the start frame, or greater than the number of the last frame in a video segment, this error code should be used.</td>
-</tr>
-<tr>
 <td>MPF_DETECTION_FAILED</td>
 <td>General failure of a detection algorithm.  This does not indicate a lack of detections found in the media, but rather a break down in the algorithm that makes it impossible to continue to try to detect objects.</td>
-</tr>
-<tr>
-<td>MPF_DETECTION_TRACKING_FAILED</td>
-<td>General failure of a tracking algorithm.  This does not indicate a lack of tracks generated for the media, but rather a break down in the algorithm that makes it impossible to continue to try to track objects.</td>
 </tr>
 <tr>
 <td>MPF_INVALID_PROPERTY</td>
@@ -1512,18 +1484,6 @@ MPFVideoTrack videoTrack = new MPFVideoTrack(0, 5, frameLocations, 1.0, detectio
 <tr>
 <td>MPF_MISSING_PROPERTY</td>
 <td>The component received a job that is missing a required property.</td>
-</tr>
-<tr>
-<td>MPF_JOB_PROPERTY_IS_NOT_INT</td>
-<td>A job property is supposed to be an integer type, but it is of some other type, such as a boolean or a floating point value.</td>
-</tr>
-<tr>
-<td>MPF_JOB_PROPERTY_IS_NOT_FLOAT</td>
-<td>A job property is supposed to be a floating point type, but it is of some other type, such as a boolean value.</td>
-</tr>
-<tr>
-<td>MPF_INVALID_ROTATION</td>
-<td>The component received a job that requests rotation of the media, but the rotation value given is not in the set of acceptable values.  The set of acceptable values is {0, 90, 180, 270}.</td>
 </tr>
 <tr>
 <td>MPF_MEMORY_ALLOCATION_FAILED</td>

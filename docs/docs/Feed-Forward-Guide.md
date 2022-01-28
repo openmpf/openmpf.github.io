@@ -97,9 +97,9 @@ One issue with this approach is that the detection frame numbers and bounding bo
 The general pattern for using `MPFVideoCapture` is as follows:
 
 ```
-MPFDetectionError OcvDnnDetection::GetDetections(
-    const MPFVideoJob &job, std::vector<MPFVideoTrack> &tracks) {
+std::vector<MPFVideoTrack> OcvDnnDetection::GetDetections(const MPFVideoJob &job) {
 
+std::vector<MPFVideoTrack> tracks;
     MPFVideoCapture video_cap(job);
 
     cv::Mat frame;
@@ -111,7 +111,7 @@ MPFDetectionError OcvDnnDetection::GetDetections(
         video_cap.ReverseTransform(track);
     }
 
-    return MPF_DETECTION_SUCCESS;
+    return tracks;
 }
 ```
 
