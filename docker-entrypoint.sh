@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.2
+#! /usr/bin/bash
 
 #############################################################################
 # NOTICE                                                                    #
@@ -26,28 +26,17 @@
 # limitations under the License.                                            #
 #############################################################################
 
-FROM ubuntu:20.04
+set -o errexit -o pipefail
+set -x
 
-SHELL ["/bin/bash", "-o", "errexit", "-o", "pipefail", "-c"]
+cd /mpf-docs/docs
+mkdocs build
 
+cd /mpf-docs
 
-RUN --mount=type=tmpfs,target=/var/cache/apt \
-    --mount=type=tmpfs,target=/var/lib/apt/lists  \
-    --mount=type=tmpfs,target=/tmp \
-    apt-get update; \
-    apt-get install --no-install-recommends -y \
-        ruby-dev python3-pip ruby-bundler make gcc libc-dev zlib1g-dev
+bundle exec jekyll build --config _config.yml,_config_dev.yml
 
-
-RUN pip3 install --no-cache-dir 'mkdocs==0.17.5'
-
-COPY Gemfile Gemfile.lock /mpf-docs/
-
-WORKDIR /mpf-docs
-
-RUN bundle install
-
-COPY docker-entrypoint.sh /scripts/docker-entrypoint.sh
-
-ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
+if [ "$1" = "serve" ]; then
+    exec bundle exec jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0
+fi
 
