@@ -102,7 +102,7 @@ After files have been selected and a pipeline and priority are assigned, clickin
 
 The Job Status page displays a summary of the status for all jobs run by any user in the past. The current status and progress of any running job can be monitored from this view, which is updated automatically.
 
-![Job Status Page](img/mpf_job_status_complete.png "Job Status Page")
+![Job Status Page](img/mpf_job_status.png "Job Status Page")
 
 When a job is COMPLETE a user can view the generated JSON output object data by clicking the "Output Objects" button for that job. A new tab/window will open with the detection output. The detection object output displays a formatted JSON representation of the detection results.
 
