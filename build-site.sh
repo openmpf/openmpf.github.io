@@ -26,10 +26,14 @@
 # limitations under the License.                                            #
 #############################################################################
 
-set -o errexit -o pipefail
+set -o errexit -o pipefail -o xtrace
 
-export DOCKER_BUILDKIT=1
+DOCKER_BUILDKIT=1 docker build . -t openmpf_docs_builder
 
-docker build . -t openmpf_docs_builder
+if [ "$1" = "serve" ]; then
+    docker run --rm -v "$(pwd):/mpf-docs" -p 4000:4000 -u "$(id -u):$(id -g)" openmpf_docs_builder serve
+else
+    docker run --rm -v "$(pwd):/mpf-docs" -u "$(id -u):$(id -g)" openmpf_docs_builder
+fi
 
-docker run --rm -v "$(pwd):/mpf-docs" -p 4000:4000 -u "$(id -u):$(id -g)" openmpf_docs_builder "$1"
+

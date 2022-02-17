@@ -26,8 +26,7 @@
 # limitations under the License.                                            #
 #############################################################################
 
-set -o errexit -o pipefail
-set -x
+set -o errexit -o pipefail -o xtrace
 
 cd /mpf-docs/docs
 mkdocs build
