@@ -1106,106 +1106,114 @@ generating an exception, choose the type that best describes your error.
 
 
 # Python Component Build Environment
-All Python components must work with CPython 3.8.2. Also, Python components must work with the Linux version that is
-used by the OpenMPF Component Executable. At this writing, OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693).
-Pure Python code should work on any OS, but incompatibility issues can arise when using Python libraries that include
-compiled extension modules. Python libraries are typically distributed as wheel files. The wheel format requires that
-the file name follows the pattern of
-`<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`. `<python_tag>-<abi_tag>-<platform_tag>` are called
-[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, `mpf_component_api` is pure Python,
-so the name of its wheel file is `mpf_component_api-0.1-py3-none-any.whl`. `py3` means it will work with any Python 3
-implementation because it does not use any implementation-specific features. `none` means that it does not use the
-Python ABI. `any` means it will work on any platform.
+All Python components must work with CPython 3.8.10. Also, Python components 
+must work with the Linux version that is used by the OpenMPF Component 
+Executable. At this writing, OpenMPF runs on 
+Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any 
+OS, but incompatibility issues can arise when using Python libraries that 
+include compiled extension modules. Python libraries are typically distributed 
+as wheel files. The wheel format requires that the file name follows the pattern 
+of `<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`. 
+`<python_tag>-<abi_tag>-<platform_tag>` are called 
+[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, 
+`mpf_component_api` is pure Python, so the name of its wheel file is 
+`mpf_component_api-0.1-py3-none-any.whl`. `py3` means it will work with any 
+Python 3 implementation because it does not use any implementation-specific 
+features. `none` means that it does not use the Python ABI. `any` means it will 
+work on any platform.
 
 The following combinations of compatibility tags are supported:
 
-* `cp32-abi3-linux_x86_64`
-* `cp32-abi3-manylinux1_x86_64`
-* `cp32-abi3-manylinux2010_x86_64`
-* `cp32-abi3-manylinux2014_x86_64`
-* `cp33-abi3-linux_x86_64`
-* `cp33-abi3-manylinux1_x86_64`
-* `cp33-abi3-manylinux2010_x86_64`
-* `cp33-abi3-manylinux2014_x86_64`
-* `cp34-abi3-linux_x86_64`
-* `cp34-abi3-manylinux1_x86_64`
-* `cp34-abi3-manylinux2010_x86_64`
-* `cp34-abi3-manylinux2014_x86_64`
-* `cp35-abi3-linux_x86_64`
-* `cp35-abi3-manylinux1_x86_64`
-* `cp35-abi3-manylinux2010_x86_64`
-* `cp35-abi3-manylinux2014_x86_64`
-* `cp36-abi3-linux_x86_64`
-* `cp36-abi3-manylinux1_x86_64`
-* `cp36-abi3-manylinux2010_x86_64`
-* `cp36-abi3-manylinux2014_x86_64`
-* `cp37-abi3-linux_x86_64`
-* `cp37-abi3-manylinux1_x86_64`
-* `cp37-abi3-manylinux2010_x86_64`
-* `cp37-abi3-manylinux2014_x86_64`
-* `cp38-abi3-linux_x86_64`
-* `cp38-abi3-manylinux1_x86_64`
-* `cp38-abi3-manylinux2010_x86_64`
-* `cp38-abi3-manylinux2014_x86_64`
-* `cp38-cp38-linux_x86_64`
-* `cp38-cp38-manylinux1_x86_64`
-* `cp38-cp38-manylinux2010_x86_64`
 * `cp38-cp38-manylinux2014_x86_64`
-* `cp38-none-any`
-* `cp38-none-linux_x86_64`
-* `cp38-none-manylinux1_x86_64`
-* `cp38-none-manylinux2010_x86_64`
+* `cp38-cp38-manylinux2010_x86_64`
+* `cp38-cp38-manylinux1_x86_64`
+* `cp38-cp38-linux_x86_64`
+* `cp38-abi3-manylinux2014_x86_64`
+* `cp38-abi3-manylinux2010_x86_64`
+* `cp38-abi3-manylinux1_x86_64`
+* `cp38-abi3-linux_x86_64`
 * `cp38-none-manylinux2014_x86_64`
-* `py30-none-any`
-* `py30-none-linux_x86_64`
-* `py30-none-manylinux1_x86_64`
-* `py30-none-manylinux2010_x86_64`
-* `py30-none-manylinux2014_x86_64`
-* `py31-none-any`
-* `py31-none-linux_x86_64`
-* `py31-none-manylinux1_x86_64`
-* `py31-none-manylinux2010_x86_64`
-* `py31-none-manylinux2014_x86_64`
-* `py32-none-any`
-* `py32-none-linux_x86_64`
-* `py32-none-manylinux1_x86_64`
-* `py32-none-manylinux2010_x86_64`
-* `py32-none-manylinux2014_x86_64`
-* `py33-none-any`
-* `py33-none-linux_x86_64`
-* `py33-none-manylinux1_x86_64`
-* `py33-none-manylinux2010_x86_64`
-* `py33-none-manylinux2014_x86_64`
-* `py34-none-any`
-* `py34-none-linux_x86_64`
-* `py34-none-manylinux1_x86_64`
-* `py34-none-manylinux2010_x86_64`
-* `py34-none-manylinux2014_x86_64`
-* `py35-none-any`
-* `py35-none-linux_x86_64`
-* `py35-none-manylinux1_x86_64`
-* `py35-none-manylinux2010_x86_64`
-* `py35-none-manylinux2014_x86_64`
-* `py36-none-any`
-* `py36-none-linux_x86_64`
-* `py36-none-manylinux1_x86_64`
-* `py36-none-manylinux2010_x86_64`
-* `py36-none-manylinux2014_x86_64`
-* `py37-none-any`
-* `py37-none-linux_x86_64`
-* `py37-none-manylinux1_x86_64`
-* `py37-none-manylinux2010_x86_64`
-* `py37-none-manylinux2014_x86_64`
-* `py38-none-any`
-* `py38-none-linux_x86_64`
-* `py38-none-manylinux1_x86_64`
-* `py38-none-manylinux2010_x86_64`
+* `cp38-none-manylinux2010_x86_64`
+* `cp38-none-manylinux1_x86_64`
+* `cp38-none-linux_x86_64`
+* `cp37-abi3-manylinux2014_x86_64`
+* `cp37-abi3-manylinux2010_x86_64`
+* `cp37-abi3-manylinux1_x86_64`
+* `cp37-abi3-linux_x86_64`
+* `cp36-abi3-manylinux2014_x86_64`
+* `cp36-abi3-manylinux2010_x86_64`
+* `cp36-abi3-manylinux1_x86_64`
+* `cp36-abi3-linux_x86_64`
+* `cp35-abi3-manylinux2014_x86_64`
+* `cp35-abi3-manylinux2010_x86_64`
+* `cp35-abi3-manylinux1_x86_64`
+* `cp35-abi3-linux_x86_64`
+* `cp34-abi3-manylinux2014_x86_64`
+* `cp34-abi3-manylinux2010_x86_64`
+* `cp34-abi3-manylinux1_x86_64`
+* `cp34-abi3-linux_x86_64`
+* `cp33-abi3-manylinux2014_x86_64`
+* `cp33-abi3-manylinux2010_x86_64`
+* `cp33-abi3-manylinux1_x86_64`
+* `cp33-abi3-linux_x86_64`
+* `cp32-abi3-manylinux2014_x86_64`
+* `cp32-abi3-manylinux2010_x86_64`
+* `cp32-abi3-manylinux1_x86_64`
+* `cp32-abi3-linux_x86_64`
 * `py38-none-manylinux2014_x86_64`
-* `py3-none-any`
-* `py3-none-linux_x86_64`
-* `py3-none-manylinux1_x86_64`
-* `py3-none-manylinux2010_x86_64`
+* `py38-none-manylinux2010_x86_64`
+* `py38-none-manylinux1_x86_64`
+* `py38-none-linux_x86_64`
 * `py3-none-manylinux2014_x86_64`
+* `py3-none-manylinux2010_x86_64`
+* `py3-none-manylinux1_x86_64`
+* `py3-none-linux_x86_64`
+* `py37-none-manylinux2014_x86_64`
+* `py37-none-manylinux2010_x86_64`
+* `py37-none-manylinux1_x86_64`
+* `py37-none-linux_x86_64`
+* `py36-none-manylinux2014_x86_64`
+* `py36-none-manylinux2010_x86_64`
+* `py36-none-manylinux1_x86_64`
+* `py36-none-linux_x86_64`
+* `py35-none-manylinux2014_x86_64`
+* `py35-none-manylinux2010_x86_64`
+* `py35-none-manylinux1_x86_64`
+* `py35-none-linux_x86_64`
+* `py34-none-manylinux2014_x86_64`
+* `py34-none-manylinux2010_x86_64`
+* `py34-none-manylinux1_x86_64`
+* `py34-none-linux_x86_64`
+* `py33-none-manylinux2014_x86_64`
+* `py33-none-manylinux2010_x86_64`
+* `py33-none-manylinux1_x86_64`
+* `py33-none-linux_x86_64`
+* `py32-none-manylinux2014_x86_64`
+* `py32-none-manylinux2010_x86_64`
+* `py32-none-manylinux1_x86_64`
+* `py32-none-linux_x86_64`
+* `py31-none-manylinux2014_x86_64`
+* `py31-none-manylinux2010_x86_64`
+* `py31-none-manylinux1_x86_64`
+* `py31-none-linux_x86_64`
+* `py30-none-manylinux2014_x86_64`
+* `py30-none-manylinux2010_x86_64`
+* `py30-none-manylinux1_x86_64`
+* `py30-none-linux_x86_64`
+* `cp38-none-any`
+* `py38-none-any`
+* `py3-none-any`
+* `py37-none-any`
+* `py36-none-any`
+* `py35-none-any`
+* `py34-none-any`
+* `py33-none-any`
+* `py32-none-any`
+* `py31-none-any`
+* `py30-none-any`
+
+The list above was generated with the following command: 
+`python3 -c 'import pip._internal.pep425tags as tags; print("\n".join(str(t) for t in tags.get_supported()))'`
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
