@@ -166,6 +166,9 @@
     <li class="toctree-l3"><a href="#build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</a></li>
     
 
+    <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
+    
+
     <li class="toctree-l3"><a href="#appendices">Appendices</a></li>
     
 
@@ -187,9 +190,6 @@
             <li><a class="toctree-l4" href="#component-registration">Component Registration</a></li>
         
         </ul>
-    
-
-    <li class="toctree-l3"><a href="#known-issues">Known Issues</a></li>
     
 
     </ul>
@@ -259,8 +259,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 <div style="background-color:orange"><p style="color:white; padding:5px">
     <b>WARNING:</b> This guide is a work in progress and may not be completely 
-    accurate or comprehensive. Since transitioning to Docker deployment, this 
-    guide has not been fully tested.
+    accurate or comprehensive.
 </p></div>
 
 <h1 id="overview">Overview</h1>
@@ -277,10 +276,11 @@ end integration testing.</p>
 <p>Create an Ubuntu VM using the downloaded iso. This part is different based on 
   what VM software you are using.</p>
 <ul>
-<li>Use mpf as your username </li>
-<li>During the initial install, the VM window was small and didn't stretch to 
-  fill up the screen, but this was fixed automatically after the 
-  installation finished.</li>
+<li>Use mpf as your username.</li>
+<li>During the initial install, the VM window was small and didn't stretch to
+  fill up the screen, but this may be fixed automatically after the installation
+  finishes, or there may be additional steps necessary to install tools or
+  configure settings based on your VM software.</li>
 </ul>
 </li>
 <li>
@@ -288,7 +288,8 @@ end integration testing.</p>
   software. You should install the updates.</p>
 </li>
 <li>
-<p>Optionally, shutdown the VM and take a snapshot.</p>
+<p>Optionally, shutdown the VM and take a snapshot. This will enable you to revert back
+  to a clean Ubuntu install in case anything goes wrong.</p>
 </li>
 <li>
 <p>Open a terminal and run <code>sudo apt update</code></p>
@@ -310,7 +311,8 @@ end integration testing.</p>
   <a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository</a></p>
 </li>
 <li>
-<p>Optional: Configure Docker to use socket activation:</p>
+<p>Optionally, configure Docker to use socket activation. The advantage of socket activation is
+  that systemd will automatically start the Docker daemon when you use <code>docker</code> commands:</p>
 </li>
 </ul>
 <pre><code class="language-bash">sudo systemctl disable docker.service;
@@ -435,23 +437,24 @@ sudo ln --symbolic /opt/apache-activemq-5.16.4 /opt/activemq;
 </code></pre>
 <ul>
 <li>
-<p>In /opt/activemq/conf/activemq.xml change line 40 from <br />
+<p>In <code>/opt/activemq/conf/activemq.xml</code> change line 40 from <br />
   <code>&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}"&gt;</code>
   <br /> to <br />
   <code>&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false"&gt;</code></p>
 </li>
 <li>
-<p>In /opt/activemq/conf/activemq.xml (line 44) under the line: 
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 44) under the line: 
   <code>&lt;policyEntries&gt;</code>, add <br />
   <code>&lt;policyEntry queue="&gt;" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" /&gt;</code></p>
 </li>
 <li>
-<p>In /opt/activemq/conf/activemq.xml (line 72, after making the above addition), 
-  change the line: <code>&lt;managementContext createConnector="false"/&gt;</code> to <br />
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 72, after making the above addition), 
+  change the line: <code>&lt;managementContext createConnector="false"/&gt;</code>
+  <br /> to <br />
   <code>&lt;managementContext createConnector="true"/&gt;</code>.</p>
 </li>
 <li>
-<p>In /opt/activemq/conf/log4j.properties (line 52), change the line <br />
+<p>In <code>/opt/activemq/conf/log4j.properties</code> (line 52), change the line <br />
   <code>log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code> 
   <br /> to  <br />
   <code>log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n</code></p>
@@ -507,6 +510,9 @@ git submodule foreach git checkout develop;
 <p>Reboot the VM.</p>
 </li>
 </ul>
+<p>At this point you may wish to install additional dependencies so that you can
+build specific OpenMPF components. Refer to the commands in the <code>Dockerfile</code>
+for each component you're interested in.</p>
 <h1 id="configure-users">Configure Users</h1>
 <p>To change the default user password settings, modify 
 <code>openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/user.properties</code>. 
@@ -543,9 +549,8 @@ Workflow Manager has finished starting:</p>
 <pre><code>INFO: Server startup in 39030 ms
 </code></pre>
 <p>After startup, the Workflow Manager will be available at
-<a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a> (or
-<a href="https://localhost:8443/workflow-manager">https://localhost:8443/workflow-manager</a> if configured to use HTTPS instead of
-HTTP). Browse to this URL using FireFox or Chrome.</p>
+<a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>.
+Browse to this URL using Firefox or Chrome.</p>
 <p>If you want to test regular user capabilities, log in as the "mpf" user with
 the "mpf123" password. Please see the
 <a href="../User-Guide/index.html">OpenMPF User Guide</a> for more information.
@@ -556,9 +561,9 @@ When finished using OpenMPF, run <code>mpf stop</code>.</p>
 <p>The preferred method to start and stop services for OpenMPF is with the
 <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these
 commands, please see the
-<a href="../Admin-Guide/index.html#command-line-tools">Command Line Tools</a> section of the
-<a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a>. These will start and stop the
-ActiveMQ, PostgreSQL, Redis, Node Manager, and Tomcat system processes.</p>
+<a href="#command-line-tools">Command Line Tools</a> section.
+These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager,
+and Tomcat system processes.</p>
 <p>For debugging purposes, it may be helpful to manually start the Tomcat service
 in a separate terminal window to display the log output. To do that, use
 <code>mpf start --xtc</code> to start ActiveMQ, PostgreSQL, Redis, and the Node Manager
@@ -566,6 +571,18 @@ without starting Tomcat. Then, in another terminal windows run:</p>
 <pre><code>/opt/apache-tomcat/bin/catalina.sh run
 </code></pre>
 <p>Press <code>ctrl-c</code> in the Tomcat window to stop Tomcat.</p>
+<h1 id="known-issues">Known Issues</h1>
+<p><strong>o.m.m.m.c.JobController - Failure creating job. supplier.get()</strong></p>
+<p>If you see an error message similar to:</p>
+<pre><code>2022-02-07 17:17:30,538 ERROR [http-nio-8080-exec-1] o.m.m.m.c.JobController - Failure creating job. supplier.get()
+java.lang.NullPointerException: supplier.get()
+    at java.util.Objects.requireNonNull(Objects.java:246) ~[?:?]
+    at java.util.Objects.requireNonNullElseGet(Objects.java:321) ~[?:?]
+    at org.mitre.mpf.wfm.util.PropertiesUtil.getHostName(PropertiesUtil.java:267) ~[classes/:?]
+    at org.mitre.mpf.wfm.util.PropertiesUtil.getExportedJobId(PropertiesUtil.java:285) ~[classes/:?]
+</code></pre>
+<p>Open <code>/etc/profile.d/mpf.sh</code> and change <code>export HOSTNAME</code> to
+<code>export HOSTNAME=$(hostname)</code>. Then, restart the VM.</p>
 <h1 id="appendices"><strong>Appendices</strong></h1>
 <h1 id="command-line-tools">Command Line Tools</h1>
 <p>OpenMPF installs command line tools that can be accessed through a terminal 
@@ -709,7 +726,7 @@ automatically attempt to register the component. Notification messages will
 appear in the upper right side of the screen to indicate success or failure if 
 an error occurs. The "Current Components" table will display the component 
 status.</p>
-<p><img alt="Component Registration Page" src="../img/mpf-adm-component2.png" title="Component Registration Page" /></p>
+<p><img alt="Component Registration Page" src="../img/mpf-adm-component2.png" title="Component Successfully Registered" /></p>
 <p>If for some reason the component package upload succeeded but the component 
 registration failed then the admin user will be able to click the "Register" 
 button again to try to another registration attempt. For example, the admin 
@@ -717,25 +734,13 @@ user may do this after reviewing the workflow manager logs and resolving any
 issues that prevented the component from successfully registering the first 
 time. One reason may be that a component with the same name already exists on 
 the system. Note that an error will also occur if the top-level directory of 
-the component package, once extracted, already exists in the /opt/mpf/plugins 
+the component package, once extracted, already exists in the <code>/opt/mpf/plugins</code>
 directory on the system.</p>
 <p>Once registered, an admin user has the option to remove the component. This 
 will unregister it and completely remove any configured services, as well as 
 the uploaded file and its extracted contents, from the system. Also, the 
 component algorithm as well as any actions, tasks, and pipelines specified in 
 the component's descriptor file will be removed when the component is removed.</p>
-<h1 id="known-issues">Known Issues</h1>
-<p><strong>o.m.m.m.c.JobController - Failure creating job. supplier.get()</strong></p>
-<p>If you see an error message similar to:</p>
-<pre><code>2022-02-07 17:17:30,538 ERROR [http-nio-8080-exec-1] o.m.m.m.c.JobController - Failure creating job. supplier.get()
-java.lang.NullPointerException: supplier.get()
-    at java.util.Objects.requireNonNull(Objects.java:246) ~[?:?]
-    at java.util.Objects.requireNonNullElseGet(Objects.java:321) ~[?:?]
-    at org.mitre.mpf.wfm.util.PropertiesUtil.getHostName(PropertiesUtil.java:267) ~[classes/:?]
-    at org.mitre.mpf.wfm.util.PropertiesUtil.getExportedJobId(PropertiesUtil.java:285) ~[classes/:?]
-</code></pre>
-<p>Open <code>/etc/profile.d/mpf.sh</code> and change <code>export HOSTNAME</code> to 
-<code>export HOSTNAME=$(hostname)</code>. Then, restart the VM.</p>
               
             </div>
           </div>
