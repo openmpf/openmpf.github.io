@@ -24,6 +24,53 @@ The following system properties are common to the various types of object storag
       first retry. The delay doubles for each subsequent retry.
     - When using S3, the AWS SDK's default retry strategy is used.
 
+
+# S3 Object Storage
+OpenMPF supports downloading media and uploading results to an S3 compatible 
+server such as Ceph or Minio. The use of S3 is controlled through the 
+following job properties and system properties:
+
+- `S3_ACCESS_KEY` job property or `s3.access.key` system property
+    - The access key that will be used when downloading and uploading to S3.
+    - When provided with `S3_SECRET_KEY`, media will be downloaded with S3
+      authentication unless `S3_UPLOAD_ONLY` is true.
+- `S3_SECRET_KEY` job property or `s3.secret.key` system property
+    - The secret key that will be used when downloading and uploading to S3.
+- `S3_SESSION_TOKEN` job property or `s3.session.token` system property
+    - Only required when the S3 bucket is configured to require a session key. 
+      This generally occurs when multi-factor authentication is required.
+    - OpenMPF does not handle generating the session key.
+- `S3_USE_VIRTUAL_HOST` job property or `s3.use.virtual.host` system property
+    - When false or not provided, 
+      [path-style requests](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#path-style-access) 
+      will be used.
+    - When true, 
+      [virtual hosted-style](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access) 
+      access will be used.
+    - When true, `S3_HOST` must also be provided.
+- `S3_HOST` job property or `s3.host` system property
+    - The host of the S3 server without the bucket name.
+    - If `S3_RESULTS_BUCKET=https://bucket.s3.amazonaws.com`, `S3_HOST` should be 
+      set to `s3.amazonaws.com`
+    - Only used when `S3_USE_VIRTUAL_HOST=true`.
+- `S3_RESULTS_BUCKET` job property or `s3.results.bucket` system property
+    - URI to bucket where result objects should be stored.
+    - To disable the upload of result objects, do not provide a value for this property.
+    - Example when `S3_USE_VIRTUAL_HOST=false`: `https://s3host/results_bucket`
+    - Example when `S3_USE_VIRTUAL_HOST=true`: `https://results_buckets.s3host`
+- `S3_UPLOAD_ONLY` job property or `s3.upload.only` system property
+    - When true, media will not be downloaded using S3 authentication.
+      If `S3_RESULTS_BUCKET` is set, S3 authentication will be used to upload result objects.
+    - When false or not provided, S3 authentication will be used to download remote media.
+      S3 authentication will also be used to upload result objects if `S3_RESULTS_BUCKET` is set.
+    - If you want to run a job where some media is in S3 and some is hosted elsewhere,
+      you can set `S3_UPLOAD_ONLY` to `true` as a media specific property on the media that is hosted elsewhere.
+- `S3_REGION` job property or `s3.region` system property
+    - The [S3 region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints) 
+      to use when accessing S3. For example: `us-east-1` 
+    - Some S3 compatible servers like Minio ignore this.
+
+
 # Custom NGINX HTTP Object Storage
 
 OpenMPF supports a custom NGINX object storage server solution. If you're interested, please contact us. 
@@ -47,23 +94,4 @@ The following system properties are unique to the custom NGINX object storage so
 The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. 
 It then uses that hash to name the file and returns the file URI to OpenMPF.
 
-
-# S3 Object Storage
-OpenMPF supports downloading media and uploading results to an S3 compatible server such as Ceph. 
-The use of S3 is controlled through the following job properties:
-
-- `S3_RESULTS_BUCKET`
-    - URI to bucket where result objects should be stored. For example: `http://s3host/results_bucket`
-    - To disable the upload of result objects, do not provide a value for this property.
-- `S3_UPLOAD_ONLY`
-    - When true, media will not be downloaded using S3 authentication. 
-      If `S3_RESULTS_BUCKET` is set, S3 authentication will be used to upload result objects.
-    - When false or not provided, S3 authentication will be used to download remote media. 
-      S3 authentication will also be used to upload result objects if `S3_RESULTS_BUCKET` is set.
-    - If you want to run a job where some media is in S3 and some is hosted elsewhere, 
-      you can set `S3_UPLOAD_ONLY` to `true` as a media specific property on the media that is hosted elsewhere.
-- `S3_ACCESS_KEY`
-    - The access key that will be used when downloading and uploading to S3.
-- `S3_SECRET_KEY`
-    - The secret key that will be used when downloading and uploading to S3.
 
