@@ -65,8 +65,11 @@ sudo systemctl enable docker.socket;
 - Follow instructions so that you can run Docker without sudo: 
   <https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user>
 
-- Follow instructions to install docker-compose: 
-  <https://docs.docker.com/compose/install/#install-compose-on-linux-systems>
+- Install Docker Compose:
+```
+sudo apt update
+sudo apt install docker-compose-plugin
+```
 
 - Optionally, stop redis from starting automatically:
   `sudo systemctl disable redis`
