@@ -13,8 +13,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 <div style="background-color:orange"><p style="color:white; padding:5px">
     <b>WARNING:</b> This guide is a work in progress and may not be completely 
-    accurate or comprehensive. Since transitioning to Docker deployment, this 
-    guide has not been fully tested.
+    accurate or comprehensive.
 </p></div>
 
 
@@ -32,15 +31,17 @@ end integration testing.
 
 - Create an Ubuntu VM using the downloaded iso. This part is different based on 
   what VM software you are using.
-    - Use mpf as your username 
-    - During the initial install, the VM window was small and didn't stretch to 
-      fill up the screen, but this was fixed automatically after the 
-      installation finished.
+    - Use mpf as your username.
+    - During the initial install, the VM window was small and didn't stretch to
+      fill up the screen, but this may be fixed automatically after the installation
+      finishes, or there may be additional steps necessary to install tools or
+      configure settings based on your VM software.
   
 - After completing the installation, you will likely be prompted to update 
   software. You should install the updates.
 
-- Optionally, shutdown the VM and take a snapshot.
+- Optionally, shutdown the VM and take a snapshot. This will enable you to revert back
+  to a clean Ubuntu install in case anything goes wrong.
 
 - Open a terminal and run `sudo apt update`
 
@@ -55,7 +56,8 @@ end integration testing.
 - Follow instructions to install Docker: 
   <https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository>
 
-- Optional: Configure Docker to use socket activation:
+- Optionally, configure Docker to use socket activation. The advantage of socket activation is
+  that systemd will automatically start the Docker daemon when you use `docker` commands:
 ```bash
 sudo systemctl disable docker.service;
 sudo systemctl stop docker.service;
@@ -176,20 +178,21 @@ wget -O- https://archive.apache.org/dist/activemq/5.16.4/apache-activemq-5.16.4-
 sudo ln --symbolic /opt/apache-activemq-5.16.4 /opt/activemq;
 ```
 
-- In /opt/activemq/conf/activemq.xml change line 40 from <br />
+- In `/opt/activemq/conf/activemq.xml` change line 40 from <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">`
   <br /> to <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false">`
 
-- In /opt/activemq/conf/activemq.xml (line 44) under the line: 
+- In `/opt/activemq/conf/activemq.xml` (line 44) under the line: 
   `<policyEntries>`, add <br />
   `<policyEntry queue=">" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" />`
 
-- In /opt/activemq/conf/activemq.xml (line 72, after making the above addition), 
-  change the line: `<managementContext createConnector="false"/>` to <br />
+- In `/opt/activemq/conf/activemq.xml` (line 72, after making the above addition), 
+  change the line: `<managementContext createConnector="false"/>`
+  <br /> to <br />
   `<managementContext createConnector="true"/>`.
 
-- In /opt/activemq/conf/log4j.properties (line 52), change the line <br />
+- In `/opt/activemq/conf/log4j.properties` (line 52), change the line <br />
   `log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n%throwable{full}` 
   <br /> to  <br />
   `log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n`
@@ -231,6 +234,10 @@ git submodule foreach git checkout develop;
 - Run `mkdir -p ~/.m2/repository/; tar -f /home/mpf/openmpf-projects/openmpf-build-tools/mpf-maven-deps.tar.gz --extract --gzip --directory ~/.m2/repository/`
 
 - Reboot the VM.
+
+At this point you may wish to install additional dependencies so that you can
+build specific OpenMPF components. Refer to the commands in the `Dockerfile`
+for each component you're interested in.
 
 
 # Configure Users
@@ -276,9 +283,8 @@ INFO: Server startup in 39030 ms
 ```
 
 After startup, the Workflow Manager will be available at
-<http://localhost:8080/workflow-manager> (or
-<https://localhost:8443/workflow-manager> if configured to use HTTPS instead of
-HTTP). Browse to this URL using FireFox or Chrome.
+<http://localhost:8080/workflow-manager>.
+Browse to this URL using Firefox or Chrome.
 
 If you want to test regular user capabilities, log in as the "mpf" user with
 the "mpf123" password. Please see the
@@ -291,9 +297,9 @@ When finished using OpenMPF, run `mpf stop`.
 The preferred method to start and stop services for OpenMPF is with the
 `mpf start` and `mpf stop` commands. For additional information on these
 commands, please see the
-[Command Line Tools](Admin-Guide/index.html#command-line-tools) section of the
-[OpenMPF Admin Guide](Admin-Guide/index.html). These will start and stop the
-ActiveMQ, PostgreSQL, Redis, Node Manager, and Tomcat system processes.
+[Command Line Tools](#command-line-tools) section.
+These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager,
+and Tomcat system processes.
 
 For debugging purposes, it may be helpful to manually start the Tomcat service
 in a separate terminal window to display the log output. To do that, use
@@ -306,6 +312,22 @@ without starting Tomcat. Then, in another terminal windows run:
 
 Press `ctrl-c` in the Tomcat window to stop Tomcat.
 
+
+# Known Issues
+
+**o.m.m.m.c.JobController - Failure creating job. supplier.get()**
+
+If you see an error message similar to:
+```
+2022-02-07 17:17:30,538 ERROR [http-nio-8080-exec-1] o.m.m.m.c.JobController - Failure creating job. supplier.get()
+java.lang.NullPointerException: supplier.get()
+    at java.util.Objects.requireNonNull(Objects.java:246) ~[?:?]
+    at java.util.Objects.requireNonNullElseGet(Objects.java:321) ~[?:?]
+    at org.mitre.mpf.wfm.util.PropertiesUtil.getHostName(PropertiesUtil.java:267) ~[classes/:?]
+    at org.mitre.mpf.wfm.util.PropertiesUtil.getExportedJobId(PropertiesUtil.java:285) ~[classes/:?]
+```
+Open `/etc/profile.d/mpf.sh` and change `export HOSTNAME` to
+`export HOSTNAME=$(hostname)`. Then, restart the VM.
 
 
 # **Appendices**
@@ -476,7 +498,7 @@ appear in the upper right side of the screen to indicate success or failure if
 an error occurs. The "Current Components" table will display the component 
 status.
 
-![Component Registration Page](img/mpf-adm-component2.png "Component Registration Page")
+![Component Registration Page](img/mpf-adm-component2.png "Component Successfully Registered")
 
 If for some reason the component package upload succeeded but the component 
 registration failed then the admin user will be able to click the "Register" 
@@ -485,7 +507,7 @@ user may do this after reviewing the workflow manager logs and resolving any
 issues that prevented the component from successfully registering the first 
 time. One reason may be that a component with the same name already exists on 
 the system. Note that an error will also occur if the top-level directory of 
-the component package, once extracted, already exists in the /opt/mpf/plugins 
+the component package, once extracted, already exists in the `/opt/mpf/plugins`
 directory on the system.
 
 Once registered, an admin user has the option to remove the component. This 
@@ -493,32 +515,3 @@ will unregister it and completely remove any configured services, as well as
 the uploaded file and its extracted contents, from the system. Also, the 
 component algorithm as well as any actions, tasks, and pipelines specified in 
 the component's descriptor file will be removed when the component is removed.
-
-
-
-# Known Issues
-
-**o.m.m.m.c.JobController - Failure creating job. supplier.get()**
-
-If you see an error message similar to:
-```
-2022-02-07 17:17:30,538 ERROR [http-nio-8080-exec-1] o.m.m.m.c.JobController - Failure creating job. supplier.get()
-java.lang.NullPointerException: supplier.get()
-    at java.util.Objects.requireNonNull(Objects.java:246) ~[?:?]
-    at java.util.Objects.requireNonNullElseGet(Objects.java:321) ~[?:?]
-    at org.mitre.mpf.wfm.util.PropertiesUtil.getHostName(PropertiesUtil.java:267) ~[classes/:?]
-    at org.mitre.mpf.wfm.util.PropertiesUtil.getExportedJobId(PropertiesUtil.java:285) ~[classes/:?]
-```
-Open `/etc/profile.d/mpf.sh` and change `export HOSTNAME` to 
-`export HOSTNAME=$(hostname)`. Then, restart the VM.
-
-
-
-
-
-
-
-
-
-
-
