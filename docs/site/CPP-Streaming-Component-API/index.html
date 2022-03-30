@@ -763,7 +763,12 @@ track.frame_locations = frame_locations;
 track.detection_properties[&quot;TRANSCRIPT&quot;] = &quot;RE5ULTS FR0M A TEXT DETECTER&quot;;
 </code></pre>
 <h1 id="c-component-build-environment">C++ Component Build Environment</h1>
-<p>A C++ component library must be built for the same C++ compiler and Linux version that is used by the OpenMPF Component Executable. This is to ensure compatibility between the executable and the library functions at the Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on CentOS 7.4.1708 (kernel version 3.10.0-693), and the OpenMPF C++ Component Executable is built with g++ (GCC) 4.8.5 20150623 (Red Hat 4.8.5-16).</p>
+<p>A C++ component library must be built for the same C++ compiler and Linux
+version that is used by the OpenMPF Component Executable. This is to ensure
+compatibility between the executable and the library functions at the
+Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on
+Ubuntu 20.04 (kernel version 5.13.0-30), and the OpenMPF C++ Component
+Executable is built with g++ (GCC) 9.3.0-17.</p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
 <h2 id="throw-exceptions">Throw Exceptions</h2>
