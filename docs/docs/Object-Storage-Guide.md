@@ -16,13 +16,15 @@ If the job completes without other issues, the final status will be `COMPLETE_WI
 
 # Common Object Storage Properties
 
-The following system properties are common to the various types of object storage solutions that OpenMPF supports:
+The following system properties are common to the various types of object storage solutions that 
+OpenMPF supports:
 
 - `http.object.storage.upload.retry.count`
-    - The number of times OpenMPF will attempt to upload an object to the storage server after the first failed attempt.
-    - When using NGINX, exponential back off is used between retry attempts. There is a 500ms delay before the 
-      first retry. The delay doubles for each subsequent retry.
+    - The number of times OpenMPF will attempt to upload an object to the storage server after the 
+      first failed attempt.
     - When using S3, the AWS SDK's default retry strategy is used.
+    - When using NGINX, exponential back off is used between retry attempts. There is a 500ms 
+      delay before the first retry. The delay doubles for each subsequent retry.
 
 
 # S3 Object Storage
@@ -48,6 +50,9 @@ following job properties and system properties:
       [virtual hosted-style](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access) 
       access will be used.
     - When true, `S3_HOST` must also be provided.
+    - The CNAME configuration described 
+      [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#VirtualHostingCustomURLs) 
+      is not supported.
 - `S3_HOST` job property or `s3.host` system property
     - The host of the S3 server without the bucket name.
     - If `S3_RESULTS_BUCKET=https://bucket.s3.amazonaws.com`, `S3_HOST` should be 
