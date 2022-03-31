@@ -134,10 +134,10 @@
                 <li class="toctree-l3"><a href="#common-object-storage-properties">Common Object Storage Properties</a></li>
                 
             
-                <li class="toctree-l3"><a href="#custom-nginx-http-object-storage">Custom NGINX HTTP Object Storage</a></li>
+                <li class="toctree-l3"><a href="#s3-object-storage">S3 Object Storage</a></li>
                 
             
-                <li class="toctree-l3"><a href="#s3-object-storage">S3 Object Storage</a></li>
+                <li class="toctree-l3"><a href="#custom-nginx-http-object-storage">Custom NGINX HTTP Object Storage</a></li>
                 
             
             </ul>
@@ -303,13 +303,79 @@ deployments to better support integration between systems, and/or to consolidate
 If and when a failure occurs, the JSON output object will contain a descriptive message in the <code>jobWarnings</code> field. 
 If the job completes without other issues, the final status will be <code>COMPLETE_WITH_WARNINGS</code>.</p>
 <h1 id="common-object-storage-properties">Common Object Storage Properties</h1>
-<p>The following system properties are common to the various types of object storage solutions that OpenMPF supports:</p>
+<p>The following system properties are common to the various types of object storage solutions that 
+OpenMPF supports:</p>
 <ul>
 <li><code>http.object.storage.upload.retry.count</code><ul>
-<li>The number of times OpenMPF will attempt to upload an object to the storage server after the first failed attempt.</li>
-<li>When using NGINX, exponential back off is used between retry attempts. There is a 500ms delay before the 
-  first retry. The delay doubles for each subsequent retry.</li>
+<li>The number of times OpenMPF will attempt to upload an object to the storage server after the 
+  first failed attempt.</li>
 <li>When using S3, the AWS SDK's default retry strategy is used.</li>
+<li>When using NGINX, exponential back off is used between retry attempts. There is a 500ms 
+  delay before the first retry. The delay doubles for each subsequent retry.</li>
+</ul>
+</li>
+</ul>
+<h1 id="s3-object-storage">S3 Object Storage</h1>
+<p>OpenMPF supports downloading media and uploading results to an S3 compatible 
+server such as Ceph or Minio. The use of S3 is controlled through the 
+following job properties and system properties:</p>
+<ul>
+<li><code>S3_ACCESS_KEY</code> job property or <code>s3.access.key</code> system property<ul>
+<li>The access key that will be used when downloading and uploading to S3.</li>
+<li>When provided with <code>S3_SECRET_KEY</code>, media will be downloaded with S3
+  authentication unless <code>S3_UPLOAD_ONLY</code> is true.</li>
+</ul>
+</li>
+<li><code>S3_SECRET_KEY</code> job property or <code>s3.secret.key</code> system property<ul>
+<li>The secret key that will be used when downloading and uploading to S3.</li>
+</ul>
+</li>
+<li><code>S3_SESSION_TOKEN</code> job property or <code>s3.session.token</code> system property<ul>
+<li>Only required when the S3 bucket is configured to require a session key. 
+  This generally occurs when multi-factor authentication is required.</li>
+<li>OpenMPF does not handle generating the session key.</li>
+</ul>
+</li>
+<li><code>S3_USE_VIRTUAL_HOST</code> job property or <code>s3.use.virtual.host</code> system property<ul>
+<li>When false or not provided, 
+  <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#path-style-access">path-style requests</a> 
+  will be used.</li>
+<li>When true, 
+  <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#virtual-hosted-style-access">virtual hosted-style</a> 
+  access will be used.</li>
+<li>When true, <code>S3_HOST</code> must also be provided.</li>
+<li>The CNAME configuration described 
+  <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/VirtualHosting.html#VirtualHostingCustomURLs">here</a> 
+  is not supported.</li>
+</ul>
+</li>
+<li><code>S3_HOST</code> job property or <code>s3.host</code> system property<ul>
+<li>The host of the S3 server without the bucket name.</li>
+<li>If <code>S3_RESULTS_BUCKET=https://bucket.s3.amazonaws.com</code>, <code>S3_HOST</code> should be 
+  set to <code>s3.amazonaws.com</code></li>
+<li>Only used when <code>S3_USE_VIRTUAL_HOST=true</code>.</li>
+</ul>
+</li>
+<li><code>S3_RESULTS_BUCKET</code> job property or <code>s3.results.bucket</code> system property<ul>
+<li>URI to bucket where result objects should be stored.</li>
+<li>To disable the upload of result objects, do not provide a value for this property.</li>
+<li>Example when <code>S3_USE_VIRTUAL_HOST=false</code>: <code>https://s3host/results_bucket</code></li>
+<li>Example when <code>S3_USE_VIRTUAL_HOST=true</code>: <code>https://results_buckets.s3host</code></li>
+</ul>
+</li>
+<li><code>S3_UPLOAD_ONLY</code> job property or <code>s3.upload.only</code> system property<ul>
+<li>When true, media will not be downloaded using S3 authentication.
+  If <code>S3_RESULTS_BUCKET</code> is set, S3 authentication will be used to upload result objects.</li>
+<li>When false or not provided, S3 authentication will be used to download remote media.
+  S3 authentication will also be used to upload result objects if <code>S3_RESULTS_BUCKET</code> is set.</li>
+<li>If you want to run a job where some media is in S3 and some is hosted elsewhere,
+  you can set <code>S3_UPLOAD_ONLY</code> to <code>true</code> as a media specific property on the media that is hosted elsewhere.</li>
+</ul>
+</li>
+<li><code>S3_REGION</code> job property or <code>s3.region</code> system property<ul>
+<li>The <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints">S3 region</a> 
+  to use when accessing S3. For example: <code>us-east-1</code> </li>
+<li>Some S3 compatible servers like Minio ignore this.</li>
 </ul>
 </li>
 </ul>
@@ -339,33 +405,6 @@ The following system properties are unique to the custom NGINX object storage so
 </ul>
 <p>The NGINX object storage server will determine the sha256 hash for the file once it's been uploaded. 
 It then uses that hash to name the file and returns the file URI to OpenMPF.</p>
-<h1 id="s3-object-storage">S3 Object Storage</h1>
-<p>OpenMPF supports downloading media and uploading results to an S3 compatible server such as Ceph. 
-The use of S3 is controlled through the following job properties:</p>
-<ul>
-<li><code>S3_RESULTS_BUCKET</code><ul>
-<li>URI to bucket where result objects should be stored. For example: <code>http://s3host/results_bucket</code></li>
-<li>To disable the upload of result objects, do not provide a value for this property.</li>
-</ul>
-</li>
-<li><code>S3_UPLOAD_ONLY</code><ul>
-<li>When true, media will not be downloaded using S3 authentication. 
-  If <code>S3_RESULTS_BUCKET</code> is set, S3 authentication will be used to upload result objects.</li>
-<li>When false or not provided, S3 authentication will be used to download remote media. 
-  S3 authentication will also be used to upload result objects if <code>S3_RESULTS_BUCKET</code> is set.</li>
-<li>If you want to run a job where some media is in S3 and some is hosted elsewhere, 
-  you can set <code>S3_UPLOAD_ONLY</code> to <code>true</code> as a media specific property on the media that is hosted elsewhere.</li>
-</ul>
-</li>
-<li><code>S3_ACCESS_KEY</code><ul>
-<li>The access key that will be used when downloading and uploading to S3.</li>
-</ul>
-</li>
-<li><code>S3_SECRET_KEY</code><ul>
-<li>The secret key that will be used when downloading and uploading to S3.</li>
-</ul>
-</li>
-</ul>
               
             </div>
           </div>
