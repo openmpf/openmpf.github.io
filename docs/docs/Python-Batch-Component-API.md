@@ -200,7 +200,7 @@ name = MyComponent
 version = 0.1
 
 [options]
-packages = ocv_component
+packages = my_component
 install_requires =
     mpf_component_api>=0.1
     mpf_component_util>=0.1
@@ -210,7 +210,7 @@ mpf.exported_component =
     component = my_component.my_component:MyComponent
 
 [options.package_data]
-ocv_component=models/*
+my_component=models/*
 ```
 The `name` parameter defines the distribution name. Typically the distribution name matches the component name.
 
@@ -223,6 +223,8 @@ followed by the name of the class. The general pattern is
 `MyComponent` is the class name. The module is listed as `my_component.my_component` because the `my_component`
 package contains the `my_component.py` file and the `my_component.py` file contains the `MyComponent` class.
 
+The `[options.package_data]` section is optional. It should be used when there are non-Python files
+in a package directory that should be included when the component is installed.
 
 
 **4\. Create descriptor.json file in MyComponent/plugin-files/descriptor:**

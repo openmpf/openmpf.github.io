@@ -428,7 +428,7 @@ name = MyComponent
 version = 0.1
 
 [options]
-packages = ocv_component
+packages = my_component
 install_requires =
     mpf_component_api&gt;=0.1
     mpf_component_util&gt;=0.1
@@ -438,7 +438,7 @@ mpf.exported_component =
     component = my_component.my_component:MyComponent
 
 [options.package_data]
-ocv_component=models/*
+my_component=models/*
 </code></pre>
 <p>The <code>name</code> parameter defines the distribution name. Typically the distribution name matches the component name.</p>
 <p>Any dependencies that component requires should be listed in the <code>install_requires</code> field.</p>
@@ -448,6 +448,8 @@ followed by the name of the class. The general pattern is
 <code>'mpf.exported_component': 'component = &lt;package_name&gt;.&lt;module_name&gt;:&lt;class_name&gt;'</code>. In the above example,
 <code>MyComponent</code> is the class name. The module is listed as <code>my_component.my_component</code> because the <code>my_component</code>
 package contains the <code>my_component.py</code> file and the <code>my_component.py</code> file contains the <code>MyComponent</code> class.</p>
+<p>The <code>[options.package_data]</code> section is optional. It should be used when there are non-Python files
+in a package directory that should be included when the component is installed.</p>
 <p><strong>4. Create descriptor.json file in MyComponent/plugin-files/descriptor:</strong></p>
 <p>The <code>batchLibrary</code> field should match the distribution name from the setup.cfg file. In this example the
 field should be: <code>"batchLibrary" : "MyComponent"</code>.
