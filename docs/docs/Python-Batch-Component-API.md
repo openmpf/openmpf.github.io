@@ -102,7 +102,7 @@ would extend [`mpf_component_util.ImageReaderMixin`](#mpf_component_utilimagerea
 During component registration a [virtualenv](http://virtualenv.pypa.io) is created for each component.
 The virtualenv has access to the built-in Python libraries, but does not have access to any third party packages
 that might be installed on the system. When creating the virtualenv for a setuptools-based component the only packages
-that get installed are the component itself and any dependencies specified in the setup.py
+that get installed are the component itself and any dependencies specified in the setup.cfg
 file (including their transitive dependencies). When creating the virtualenv for a basic Python component the only
 package that gets installed is `mpf_component_api`. `mpf_component_api` is the package containing the job classes
 (e.g. [`mpf_component_api.ImageJob`](#mpf_component_apiimagejob),
@@ -158,7 +158,8 @@ Python component can be found
 This is the recommended project structure:
 ```
 ComponentName
-├── setup.py
+├── pyproject.toml
+├── setup.cfg
 ├── component_name
 │   ├── __init__.py
 │   └── component_name.py
@@ -174,31 +175,42 @@ ComponentName
 mkdir MyComponent
 mkdir MyComponent/my_component
 mkdir -p MyComponent/plugin-files/descriptor
-touch MyComponent/setup.py
+touch MyComponent/pyproject.toml
+touch MyComponent/setup.cfg
 touch MyComponent/my_component/__init__.py
 touch MyComponent/my_component/my_component.py
 touch MyComponent/plugin-files/descriptor/descriptor.json
 ```
 
-**2\. Create setup.py file in project's top-level directory:**
+**2\. Create pyproject.toml file in project's top-level directory:**
+`pyproject.toml` should contain the following content:
+```toml
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+```
 
-Example of a minimal setup.py file:
-```python
-import setuptools
 
-setuptools.setup(
-    name='MyComponent',
-    version='0.1',
-    packages=setuptools.find_packages(),
-    install_requires=(
-        'mpf_component_api>=0.1',
-        'mpf_component_util>=0.1'
-    ),
-    entry_points={
-        'mpf.exported_component': 'component = my_component.my_component:MyComponent'
-    }
+**3\. Create setup.cfg file in project's top-level directory:**
 
-)
+Example of a minimal setup.cfg file:
+```
+[metadata]
+name = MyComponent
+version = 0.1
+
+[options]
+packages = my_component
+install_requires =
+    mpf_component_api>=0.1
+    mpf_component_util>=0.1
+
+[options.entry_points]
+mpf.exported_component =
+    component = my_component.my_component:MyComponent
+
+[options.package_data]
+my_component=models/*
 ```
 The `name` parameter defines the distribution name. Typically the distribution name matches the component name.
 
@@ -211,17 +223,19 @@ followed by the name of the class. The general pattern is
 `MyComponent` is the class name. The module is listed as `my_component.my_component` because the `my_component`
 package contains the `my_component.py` file and the `my_component.py` file contains the `MyComponent` class.
 
+The `[options.package_data]` section is optional. It should be used when there are non-Python files
+in a package directory that should be included when the component is installed.
 
 
-**3\. Create descriptor.json file in MyComponent/plugin-files/descriptor:**
+**4\. Create descriptor.json file in MyComponent/plugin-files/descriptor:**
 
-The `batchLibrary` field should match the distribution name from the setup.py file. In this example the
+The `batchLibrary` field should match the distribution name from the setup.cfg file. In this example the
 field should be: `"batchLibrary" : "MyComponent"`.
 See the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) for details about
 the descriptor format.
 
 
-**4\. Implement your component class:**
+**5\. Implement your component class:**
 
 Below is an example of the structure of a simple component. This component extends
 [`mpf_component_util.VideoCaptureMixin`](#mpf_component_utilvideocapturemixin) to simplify the use of
@@ -249,16 +263,16 @@ class MyComponent(mpf_util.VideoCaptureMixin):
 ```
 
 
-**5\. Optional: Add prebuilt wheel files if not available on PyPi:**
+**6\. Optional: Add prebuilt wheel files if not available on PyPi:**
 
 If your component depends on Python libraries that are not available on PyPi, the libraries can be manually added to
 your project. The prebuilt libraries must be placed in your project's `plugin-files/wheelhouse` directory.
-The prebuilt library names must be listed in your `setup.py` file's `install_requires` field.
+The prebuilt library names must be listed in your `setup.cfg` file's `install_requires` field.
 If any of the prebuilt libraries have transitive dependencies that are not available on PyPi, then those libraries
 must also be added to your project's `plugin-files/wheelhouse` directory.
 
 
-**6\. Optional: Create the plugin package for non-Docker deployments:**
+**7\. Optional: Create the plugin package for non-Docker deployments:**
 
 The directory structure of the .tar.gz file will be:
 ```
@@ -287,7 +301,7 @@ cd plugin-packages
 tar -zcf MyComponent.tar.gz MyComponent
 ```
 
-**7\. Create the component Docker image:**
+**8\. Create the component Docker image:**
 
 See the [README](https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview).
 
