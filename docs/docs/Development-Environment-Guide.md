@@ -199,9 +199,9 @@ sudo ln --symbolic /opt/apache-activemq-5.16.4 /opt/activemq;
 
 - Install Tomcat:
 ```bash
-wget -O- 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.41/bin/apache-tomcat-8.5.41.tar.gz' \
+wget -O- 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.78/bin/apache-tomcat-8.5.78.tar.gz' \
         | sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-tomcat-8.5.41 /opt/apache-tomcat;
+sudo ln --symbolic /opt/apache-tomcat-8.5.78 /opt/apache-tomcat;
 sudo sed --in-place '24s/.*/    <WatchedResource>$\{catalina\.ba\se\}\/conf\/web.xml<\/WatchedResource>\n    <Resources cachingAllowed="true" cacheMaxSize="100000" \/>/' \
     /opt/apache-tomcat/conf/context.xml;
 sudo chmod -R 777 /opt/apache-tomcat;
