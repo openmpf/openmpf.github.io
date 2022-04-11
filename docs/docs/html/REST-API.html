@@ -441,8 +441,8 @@
                     <td style='width:10%;'>string</td>
                     <td style='width:30%;'>
                         The name of the pipeline used to process the media. Obtained from
-                        'rest/pipelines'. One of pipelineName or pipelineDefinition must be
-                        provided, but not both.
+                        'rest/pipelines'. One of <code>pipelineName</code> or
+                        <code>pipelineDefinition</code> must be provided, but not both.
                     </td>
                     <td style='width:30%;'>No</td>
                 </tr>
@@ -451,7 +451,8 @@
                     <td style='width:10%;'>TransientPipelineDefinition</td>
                     <td style='width:30%;'>
                         The definition of a temporary pipeline that this job will execute.
-                        One of pipelineName or pipelineDefinition must be provided, but not both.
+                        One of <code>pipelineName</code> or <code>pipelineDefinition</code> must
+                        be provided, but not both.
                     </td>
                     <td style='width:30%;'>No</td>
                 </tr>
@@ -601,7 +602,7 @@
                 <td style='width:30%;'>
                     A list of temporary tasks that may be used by this pipeline. The order that
                     the tasks appear in this list does not affect the order that the tasks
-                    are executed, that is defined in the <code>pipeline</code> field.
+                    are executed — that is defined in the <code>pipeline</code> field.
                 </td>
                 <td style='width:30%;'>No</td>
             </tr>
@@ -683,7 +684,7 @@
                 <td style='width:10%;'>string</td>
                 <td style='width:30%;'>
                     The name of the algorithm that this action will execute. It must be a
-                    preexisting algorithm already added to Workflow Manager
+                    preexisting algorithm already added to Workflow Manager.
                 </td>
                 <td style='width:30%;'>Yes</td>
             </tr>
@@ -1927,7 +1928,9 @@
                     <td class='td-alignment-small'><b>Description</b></td>
                     <td class='td-alignment-std'>
                         The pipelineName should be one of the values in 'rest/pipelines', and the component associated
-                        with that pipeline must support batch processing. The media array should contain objects with
+                        with that pipeline must support batch processing. The pipelineDefinition
+                        field can be provided in the job request, instead of a pipelineName.
+                        The media array should contain objects with
                         a valid mediaUri. Examples: http://localhost/images/image.png,
                         file:///home/user/images/image.jpg.
                         <br/>
