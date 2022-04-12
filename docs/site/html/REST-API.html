@@ -210,6 +210,9 @@
         <div class="toc-entry">JobCreationRequest</div>
         <div class="toc-entry">JobCreationMediaData</div>
         <div class="toc-entry">JobCreationMediaRange</div>
+        <div class="toc-entry">TransientPipelineDefinition</div>
+        <div class="toc-entry">TransientTask</div>
+        <div class="toc-entry">TransientAction</div>
         <div class="toc-entry">DeployedServiceModel</div>
         <div class="toc-entry">JobCreationResponse</div>
         <div class="toc-entry">ServiceModel</div>
@@ -436,22 +439,36 @@
                 <tr style=''>
                     <td style='width:30%;'>pipelineName</td>
                     <td style='width:10%;'>string</td>
-                    <td style='width:30%;'>The name of the pipeline used to process the media. Obtained from 'rest/pipelines'.</td>
-                    <td style='width:30%;'>Yes</td>
+                    <td style='width:30%;'>
+                        The name of the pipeline used to process the media. Obtained from
+                        'rest/pipelines'. One of <code>pipelineName</code> or
+                        <code>pipelineDefinition</code> must be provided, but not both.
+                    </td>
+                    <td style='width:30%;'>No</td>
                 </tr>
-                <tr style=';background-color: #EAEAEA'>
+                <tr style='background-color: #EAEAEA'>
+                    <td style='width:30%;'>pipelineDefinition</td>
+                    <td style='width:10%;'>TransientPipelineDefinition</td>
+                    <td style='width:30%;'>
+                        The definition of a temporary pipeline that this job will execute.
+                        One of <code>pipelineName</code> or <code>pipelineDefinition</code> must
+                        be provided, but not both.
+                    </td>
+                    <td style='width:30%;'>No</td>
+                </tr>
+                <tr>
                     <td style='width:30%;'>priority</td>
                     <td style='width:10%;'>integer</td>
                     <td style='width:30%;'>Priority of the job, integer values 0 - 9 (0 being the lowest) are valid (default value is set in mpf.properties)</td>
                     <td style='width:30%;'>No</td>
                 </tr>
-                <tr style=''>
+                <tr style='background-color: #EAEAEA'>
                     <td style='width:30%;'>callbackURL</td>
                     <td style='width:10%;'>string</td>
                     <td style='width:30%;'>A valid (properly encoded) URL for job completion callbacks. When the job completes, the callback will perform a GET or POST to the callbackURL with the 'jobId' and 'externalId' parameters. For example, if the callbackURL provided is `http://api.example.com/foo`, the jobId is 'hostname-1', and the externalId is 'someid', then a GET callback will be: http://api.example.com/foo?jobId=hostname-1&externalId=someid. If callbackURL ends in 'foo?someparam=something', then a GET callback will be: http://api.example.com/foo?someparam=something&jobId=hostname-1&externalId=someid. If no externalId is provided, then a GET callback will be: http://api.example.com/foo?jobId=hostname-1.</td>
                     <td style='width:30%;'>No</td>
                 </tr>
-                <tr style=';background-color: #EAEAEA'>
+                <tr>
                     <td style='width:30%;'>callbackMethod</td>
                     <td style='width:10%;'>string</td>
                     <td style='width:30%;'>A value of 'GET' or 'POST' to perform a HTTP callback. The default method is GET.</td>
@@ -553,7 +570,141 @@
             </tr>
             </tbody>
         </table>
-        <br/></div>
+        <br/>
+    </div>
+    <div class="div-container-margin"><h3 class="numbered-content">TransientPipelineDefinition</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+                <th class='th-heading'><b>Required</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>pipeline</td>
+                <td style='width:10%;'>array&lt;string></td>
+                <td style='width:30%;'>
+                    A list naming the tasks that this pipeline will execute. These tasks must
+                    either be <code>TransientTask</code>s defined in the <code>tasks</code> field
+                    or be preexisting tasks that have been previously added to Workflow Manager.
+                    When there is a <code>TransientTask</code> with the same name as a task
+                    added to Workflow Manager, the <code>TransientTask</code> will be used.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>tasks</td>
+                <td style='width:10%;'>array&lt;TransientTask></td>
+                <td style='width:30%;'>
+                    A list of temporary tasks that may be used by this pipeline. The order that
+                    the tasks appear in this list does not affect the order that the tasks
+                    are executed — that is defined in the <code>pipeline</code> field.
+                </td>
+                <td style='width:30%;'>No</td>
+            </tr>
+            <tr style='background-color: #EAEAEA'>
+                <td style='width:30%;'>actions</td>
+                <td style='width:10%;'>array&lt;TransientAction></td>
+                <td style='width:30%;'>
+                    A list of temporary actions that may be used by this pipeline.
+                </td>
+                <td style='width:30%;'>No</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+
+    <div class="div-container-margin"><h3 class="numbered-content">TransientTask</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+                <th class='th-heading'><b>Required</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    This task's name. For this task to be executed, it must be listed in
+                    the <code>TransientPipelineDefinition</code>'s <code>pipeline</code> field.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>actions</td>
+                <td style='width:10%;'>array&lt;string></td>
+                <td style='width:30%;'>
+                    A list naming the actions that this task will execute. These actions must
+                    either be <code>TransientAction</code>s defined in the
+                    <code>TransientPipelineDefinition</code>'s <code>actions</code> field or be
+                    preexisting actions that have been previously added to Workflow Manager. When
+                    there is a <code>TransientAction</code> with the same name as an action added
+                    to Workflow Manager, the <code>TransientAction</code> will be used.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+
+    <div class="div-container-margin"><h3 class="numbered-content">TransientAction</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+                <th class='th-heading'><b>Required</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>name</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    This action's name. For this action to be executed, it must be listed in
+                    a <code>TransientTask</code>'s <code>actions</code> field.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>algorithm</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The name of the algorithm that this action will execute. It must be a
+                    preexisting algorithm already added to Workflow Manager.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style='background-color: #EAEAEA'>
+                <td style='width:30%;'>properties</td>
+                <td style='width:10%;'>array&lt;object></td>
+                <td style='width:30%;'>
+                    The properties associated with the action which may be used to override
+                    algorithm properties. Each property is an object with two fields, name and
+                    value. For example:
+                    <code>
+                    [ {"name": "some_name", "value": "some_value"}, {"name": "some_other_name", "value": "some_other_value"}]
+                    </code>
+                </td>
+                <td style='width:30%;'>No</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
 
     <div style='page-break-after:always'></div>
 
@@ -1777,7 +1928,9 @@
                     <td class='td-alignment-small'><b>Description</b></td>
                     <td class='td-alignment-std'>
                         The pipelineName should be one of the values in 'rest/pipelines', and the component associated
-                        with that pipeline must support batch processing. The media array should contain objects with
+                        with that pipeline must support batch processing. The pipelineDefinition
+                        field can be provided in the job request, instead of a pipelineName.
+                        The media array should contain objects with
                         a valid mediaUri. Examples: http://localhost/images/image.png,
                         file:///home/user/images/image.jpg.
                         <br/>
