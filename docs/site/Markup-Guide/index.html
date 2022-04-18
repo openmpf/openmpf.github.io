@@ -388,6 +388,12 @@ default values can be changed be setting the system property listed for each:</p
 <li>The CRF value can be from 0-63. Lower values mean better quality. Recommended values range from 15-35, with 31 being recommended for 1080p HD video. This property is only used if generating VP9-encoded <code>.webm</code> files</li>
 </ul>
 </li>
+<li><code>MARKUP_ANIMATION_ENABLED</code><ul>
+<li>System property: <code>markup.video.animation.enabled</code></li>
+<li>Default value: <code>true</code></li>
+<li>If true, draw bounding boxes to fill in the gaps between detections in each track. Interpolate size and position.</li>
+</ul>
+</li>
 </ul>
 <h1 id="video-markup-icons">Video Markup Icons</h1>
 <table>
