@@ -373,7 +373,7 @@ sudo make --jobs &quot;$(nproc)&quot; install;
 sudo ln --symbolic '/opt/opencv-4.5.5/include/opencv4/opencv2' /usr/local/include/opencv2;
 sudo sh -c 'echo /opt/opencv-4.5.5/lib &gt; /etc/ld.so.conf.d/mpf.conf'
 sudo ldconfig;
-rm -rf /tmp/opencv-contrib /tmp/opencv;
+sudo rm -rf /tmp/opencv-contrib /tmp/opencv;
 </code></pre>
 <ul>
 <li>Build and install the ActiveMQ C++ library:</li>
