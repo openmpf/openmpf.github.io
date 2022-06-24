@@ -28,12 +28,14 @@
 
 set -o errexit -o pipefail -o xtrace
 
-DOCKER_BUILDKIT=1 docker build . -t openmpf_docs_builder
+cd /mpf-docs/docs
+mkdocs build
+
+cd /mpf-docs
+
+bundle exec jekyll build --config _config.yml,_config_dev.yml
 
 if [ "$1" = "serve" ]; then
-    docker run --rm -v "$(pwd):/mpf-docs" -p 4000:4000 -u "$(id -u):$(id -g)" openmpf_docs_builder serve
-else
-    docker run --rm -v "$(pwd):/mpf-docs" -u "$(id -u):$(id -g)" openmpf_docs_builder
+    exec bundle exec jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0
 fi
-
 

@@ -1,6 +1,120 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 6.3.x
+
+<h2>6.3.0: September 2021</h2>
+
+<h3>Documentation</h3>
+
+- Updated the API documents, Development Environment Guide, Node Guide, Install Guide, User Guide, Admin Guide, and
+  others to clarify the difference between Docker and non-Docker behaviors.
+- Transformed Packaging and Registering a Component document into Component Descriptor Reference.
+- Split Media Segmentation Guide from User Guide.
+- Updated and renamed the Workflow Manager document to Workflow Manager Architecture.
+- Updated the various Docker guides to clarify the difference between building Docker images from scratch versus
+  building them using pre-built base images on Docker Hub, emphasizing the latter.
+- Updated the Contributor Guide to document the hotfix pull request process.
+
+<h3>TiesDb Integration</h3>
+
+- TiesDb is a PostgreSQL DB with a RESTful API that stores media metadata. The metadata entries are queried using the
+  hash (sha256, md5) of the media file. TIES stands
+  for [Triage Import Export Schema](https://github.com/Noblis/ties-lib). TiesDb is deployed and managed externally to
+  OpenMPF. For more information please contact us.
+- When a job completes, OpenMPF can post assertions to media entries that exist in TiesDb. In general, one assertion is
+  generated for each algorithm run on a piece of media. It contains the job status, algorithm name, detection
+  type (`FACE`, `TEXT`, `MOTION`, etc.), and number of tracks generated, as well as a link to the full JSON output
+  object.
+- Each assertion serves as a lasting record so that job producers may first check TiesDb to see if an algorithm was run
+  on a piece of media before submitting the same job to OpenMPF again.
+- To enable TiesDb support, set the `TIES_DB_URL` job property or `ties.db.url` system property to
+  the `<http|https>://<host>:<port>` part of the URL. The Workflow Manager will append
+  the `/api/db/supplementals?sha256Hash=<hash>` part. Here is an example of a TiesDb POST:
+```json
+{
+  "dataObject": {
+    "sha256OutputHash": "1f8f2a8b2f5178765dd4a2e952f97f5037c290ee8d011cd7e92fb8f57bc75f17",
+    "outputType": "FACE",
+    "algorithm": "FACECV",
+    "processDate": "2021-09-09T21:37:30.516-04:00",
+    "pipeline": "OCV FACE DETECTION PIPELINE",
+    "outputUri": "file:///home/mpf/git/openmpf-projects/openmpf/trunk/install/share/output-objects/1284/detection.json",
+    "jobStatus": "COMPLETE",
+    "jobId": 1284,
+    "systemVersion": "6.3",
+    "trackCount": 1,
+    "systemHostname": "openmpf-master"
+  },
+  "system": "OpenMPF",
+  "securityTag": "UNCLASSIFIED",
+  "informationType": "OpenMPF FACE",
+  "assertionId": "4874829f666d79881f7803207c7359dc781b97d2c68b471136bf7235a397c5cd"
+}
+```
+
+<h3>Natural Language Processing (NLP) Text Correction Component</h3>
+
+- This component utilizes the [CyHunspell](https://github.com/MSeal/cython_hunspell) library, which is a Python
+  port of the [Hunspell](https://github.com/hunspell/hunspell) spell-checking library, to perform post-processing
+  correction of OCR text. In general, it's intended to be used in a pipeline after a component like
+  TesseractOCRTextDetection that generates `TEXT` tracks. These tracks are then fed-forward into NlpTextCorrection,
+  which will add a `CORRECTED TEXT` property to the existing tracks.
+  The `TESSERACT OCR TEXT DETECTION WITH NLP TEXT CORRECTION PIPELINE` performs this behavior. The component can also
+  run on its own to process plain text files. Refer to
+  the [README](https://github.com/openmpf/openmpf-components/tree/master/python/NlpTextCorrection#readme) for details.
+
+<h3>Azure Cognitive Services (ACS) Read Component</h3>
+
+- This component utilizes
+  the [Azure Cognitive Services Read Detection REST endpoint](https://westcentralus.dev.cognitive.microsoft.com/docs/services/computer-vision-v3-1-ga/operations/5d986960601faab4bf452005)
+  to extract formatted text from documents (PDFs), images, and videos. Refer to
+  the [README](https://github.com/openmpf/openmpf-components/tree/master/python/AzureReadTextDetection#readme) for
+  details.
+
+<h3>Updates</h3>
+
+- [[#1151](https://github.com/openmpf/openmpf/issues/1151)] Now supports `IN_PROGRESS_WITH_WARNINGS` status
+- [[#1234](https://github.com/openmpf/openmpf/issues/1234)] Now sorts JSON output object media by media id
+- [[#1341](https://github.com/openmpf/openmpf/issues/1341)] Added job id to all batch-job-specific Workflow Manager log
+  messages
+- [[#1349](https://github.com/openmpf/openmpf/issues/1349)] Improved reporting and recording job status
+- [[#1353](https://github.com/openmpf/openmpf/issues/1353)] Updated the Workflow Manager to remove and warn about
+  zero-size detections
+- [[#1382](https://github.com/openmpf/openmpf/issues/1382)] Updated Tika version to 1.27 for TikaImageDetection and
+  TikaTextDetection components
+- [[#1387](https://github.com/openmpf/openmpf/issues/1387)] Markup can now be configured in a
+  component's `descriptor.json`
+
+<h3>Bug Fixes</h3>
+
+- [[#1080](https://github.com/openmpf/openmpf/issues/1080)] Batch jobs no longer prematurely set to 100% completion
+  during artifact extraction
+- [[#1106](https://github.com/openmpf/openmpf/issues/1106)] When a job ends in `ERROR` or `CANCELLED_BY_SHUTDOWN` the
+  job status UI now shows an End Date
+- [[#1158](https://github.com/openmpf/openmpf/issues/1158)] JSON output object URI no longer changes when callback fails
+- [[#1317](https://github.com/openmpf/openmpf/issues/1317)] TikaTextDetection no longer generates first PDF track
+  at `PAGE_NUM` 2
+- [[#1337](https://github.com/openmpf/openmpf/issues/1337)] Now using `MPF_BAD_FRAME_SIZE` instead
+  of `MPF_DETECTION_FAILED` for OpenCV empty/resize exception
+- [[#1359](https://github.com/openmpf/openmpf/issues/1359)] Image detection tracks no longer
+  have `endOffsetFrameInclusive` set to 1
+- [[#1373](https://github.com/openmpf/openmpf/issues/1373)] When uploading large files through the Workflow Manager web
+  UI, now more than the first 865032704 bytes get written
+- [[#1379](https://github.com/openmpf/openmpf/issues/1379)] TikaImageDetection component now avoids conflicts by no
+  longer using the same path when extracting images for jobs with multiple pieces of media
+- [[#1386](https://github.com/openmpf/openmpf/issues/1386)] FeedForwardFrameCropper in the Python SDK now handles
+  negative coordinates properly
+- [[#1391](https://github.com/openmpf/openmpf/issues/1391)] If a job is configured to upload markup and markup fails,
+  the job no longer gets stuck
+
+<h3>Known Issues</h3>
+
+- [[#1372](https://github.com/openmpf/openmpf/issues/1372)] TikaImageDetection misses images in PowerPoint and Word
+  documents
+- [[#1389](https://github.com/openmpf/openmpf/issues/1389)] NlpTextCorrection does not properly read the value
+  of `FULL_TEXT_CORRECTION_OUTPUT`
+
 # OpenMPF 6.2.x
 
 <h2>6.2.0: May 2021</h2>

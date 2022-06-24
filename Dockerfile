@@ -1,44 +1,53 @@
-FROM mangar/jekyll:1.0
+# syntax=docker/dockerfile:1.2
 
-MAINTAINER Marcio Mangar "marcio.mangar@gmail.com"
+#############################################################################
+# NOTICE                                                                    #
+#                                                                           #
+# This software (or technical data) was produced for the U.S. Government    #
+# under contract, and is subject to the Rights in Data-General Clause       #
+# 52.227-14, Alt. IV (DEC 2007).                                            #
+#                                                                           #
+# Copyright 2021 The MITRE Corporation. All Rights Reserved.                #
+#############################################################################
 
-RUN gem install jekyll -v 3.1.6
-RUN gem install bundler
+#############################################################################
+# Copyright 2021 The MITRE Corporation                                      #
+#                                                                           #
+# Licensed under the Apache License, Version 2.0 (the "License");           #
+# you may not use this file except in compliance with the License.          #
+# You may obtain a copy of the License at                                   #
+#                                                                           #
+#    http://www.apache.org/licenses/LICENSE-2.0                             #
+#                                                                           #
+# Unless required by applicable law or agreed to in writing, software       #
+# distributed under the License is distributed on an "AS IS" BASIS,         #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  #
+# See the License for the specific language governing permissions and       #
+# limitations under the License.                                            #
+#############################################################################
 
-RUN gem install execjs
-RUN gem install therubyracer
-RUN gem install github-pages
-RUN gem install jekyll-paginate
-RUN gem install jekyll-seo-tag
-RUN gem install jekyll-gist
-RUN gem install json -v 1.8.3
+FROM ubuntu:20.04
 
-RUN gem install minitest -v 5.9.0
-RUN gem install colorator -v 0.1
-RUN gem install ffi -v 1.9.10
-RUN gem install kramdown -v 1.10.0
-RUN gem install rouge -v 1.10.1
-RUN gem install pkg-config -v 1.1.7
-RUN gem install terminal-table -v 1.6.0
-RUN gem install ethon -v 0.9.0
-RUN gem install nokogiri -v 1.6.8
-RUN gem install activesupport -v 4.2.6
-RUN gem install html-pipeline -v 2.4.1
-RUN gem install jekyll-watch -v 1.4.0
-RUN gem install github-pages-health-check -v 1.1.0
-RUN gem install jekyll-github-metadata -v 2.0.0
-RUN gem install jekyll-mentions -v 1.1.2
-RUN gem install jekyll-redirect-from -v 0.10.0
-RUN gem install jemoji -v 0.6.2
-RUN gem install github-pages -v 82
+SHELL ["/bin/bash", "-o", "errexit", "-o", "pipefail", "-c"]
 
 
+RUN --mount=type=tmpfs,target=/var/cache/apt \
+    --mount=type=tmpfs,target=/var/lib/apt/lists  \
+    --mount=type=tmpfs,target=/tmp \
+    apt-get update; \
+    apt-get install --no-install-recommends -y \
+        ruby-dev python3-pip ruby-bundler make gcc libc-dev zlib1g-dev
 
-RUN mkdir -p /app
-ADD ./ /app
 
-WORKDIR /app
+RUN pip3 install --no-cache-dir 'mkdocs==0.17.5' 'jinja2==3.0.0'
 
-EXPOSE 4000
+COPY Gemfile Gemfile.lock /mpf-docs/
 
-CMD bundle exec jekyll serve
+WORKDIR /mpf-docs
+
+RUN bundle install
+
+COPY docker-entrypoint.sh /scripts/docker-entrypoint.sh
+
+ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
+
