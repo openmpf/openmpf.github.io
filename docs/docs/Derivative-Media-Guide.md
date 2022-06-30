@@ -3,11 +3,11 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 
 # Introduction
 
-The simplest, and most common, use case is to execute a pipeline on a single piece of media. This guide will cover a
-different use case where a component in one of the initial stages of the pipeline generates one or more derivative (aka
-child) media from the source (aka parent) media. A common scenario is to extract images from PDFs or other document
-formats. Once extracted, the Workflow Manager (WFM) can perform the subsequent pipeline stages on the source media (if
-necessary) as well as the derivative media.
+This guide covers the derivative media feature, which allows users to create pipelines where a component in one of
+the initial stages of the pipeline generates one or more derivative (aka child) media from the source (aka parent)
+media. A common scenario is to extract images from PDFs or other document formats. Once extracted, the Workflow Manager
+(WFM) can perform the subsequent pipeline stages on the source media (if necessary) as well as the derivative media.
+This differs from typical pipeline execution, which only acts on one or more pieces of source media.
 
 Component actions can be configured to only be performed on source media or derivative media. This is often necessary
 because the source media has a different media type than the derivative media, and therefore different actions are
@@ -222,11 +222,10 @@ the job is done running, the media will be moved to persistent storage in `$MPF_
 remote storage is not enabled.
 
 Specifically, TikaImageDetection uses paths of the
-form `$MPF_HOME/share/tmp/derivative-media/<job-id>/tika-extracted/<guid>/image<index>.<ext>`. The `<job-id>` part
-ensures that the results of two separate OpenMPF jobs do not conflict with each either. The `<guid>` part ensures that
-the results of two different actions executed within the same job on the same source media, or actions executed within
-the same job on different source media files, do not conflict with each other. A new `<guid>` is generated for each
-invocation of `GetDetections()` on the component.
+form `$MPF_HOME/share/tmp/derivative-media/<job-id>/tika-extracted/<guid>/image<index>.<ext>`. The `<guid>` part ensures
+that the results of two different actions executed within the same job on the same source media, or actions executed
+within the same job on different source media files, do not conflict with each other. A new `<guid>` is generated for
+each invocation of `GetDetections()` on the component.
 
 Your media extraction component can optionally include other track properties. These will get added to the derivative
 media metadata. For example, TikaImageDetection adds the `PAGE_NUM` property.

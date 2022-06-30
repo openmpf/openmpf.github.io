@@ -234,11 +234,11 @@
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="introduction">Introduction</h1>
-<p>The simplest, and most common, use case is to execute a pipeline on a single piece of media. This guide will cover a
-different use case where a component in one of the initial stages of the pipeline generates one or more derivative (aka
-child) media from the source (aka parent) media. A common scenario is to extract images from PDFs or other document
-formats. Once extracted, the Workflow Manager (WFM) can perform the subsequent pipeline stages on the source media (if
-necessary) as well as the derivative media.</p>
+<p>This guide covers the derivative media feature, which allows users to create pipelines where a component in one of
+the initial stages of the pipeline generates one or more derivative (aka child) media from the source (aka parent)
+media. A common scenario is to extract images from PDFs or other document formats. Once extracted, the Workflow Manager
+(WFM) can perform the subsequent pipeline stages on the source media (if necessary) as well as the derivative media.
+This differs from typical pipeline execution, which only acts on one or more pieces of source media.</p>
 <p>Component actions can be configured to only be performed on source media or derivative media. This is often necessary
 because the source media has a different media type than the derivative media, and therefore different actions are
 required to process each type of media. For example, PDFs are assigned the <code>UNKNOWN</code> media type (since the WFM is not
@@ -426,11 +426,10 @@ the media should be placed in a top-level directory of the form <code>$MPF_HOME/
 the job is done running, the media will be moved to persistent storage in <code>$MPF_HOME/share/derivative-media/&lt;job-id&gt;</code> if
 remote storage is not enabled.</p>
 <p>Specifically, TikaImageDetection uses paths of the
-form <code>$MPF_HOME/share/tmp/derivative-media/&lt;job-id&gt;/tika-extracted/&lt;guid&gt;/image&lt;index&gt;.&lt;ext&gt;</code>. The <code>&lt;job-id&gt;</code> part
-ensures that the results of two separate OpenMPF jobs do not conflict with each either. The <code>&lt;guid&gt;</code> part ensures that
-the results of two different actions executed within the same job on the same source media, or actions executed within
-the same job on different source media files, do not conflict with each other. A new <code>&lt;guid&gt;</code> is generated for each
-invocation of <code>GetDetections()</code> on the component.</p>
+form <code>$MPF_HOME/share/tmp/derivative-media/&lt;job-id&gt;/tika-extracted/&lt;guid&gt;/image&lt;index&gt;.&lt;ext&gt;</code>. The <code>&lt;guid&gt;</code> part ensures
+that the results of two different actions executed within the same job on the same source media, or actions executed
+within the same job on different source media files, do not conflict with each other. A new <code>&lt;guid&gt;</code> is generated for
+each invocation of <code>GetDetections()</code> on the component.</p>
 <p>Your media extraction component can optionally include other track properties. These will get added to the derivative
 media metadata. For example, TikaImageDetection adds the <code>PAGE_NUM</code> property.</p>
 <p>Note that although this guide only talks about derivative images, your component can generate any kind of media. Be sure
