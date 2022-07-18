@@ -27,7 +27,8 @@ end integration testing.
 
 # Setup VM
 
-- Download "Ubuntu 20.04.3 LTS" from <https://ubuntu.com/download/desktop>.
+- Download the ISO for the desktop version of Ubuntu 20.04 from 
+  <https://releases.ubuntu.com/20.04>.
 
 - Create an Ubuntu VM using the downloaded iso. This part is different based on 
   what VM software you are using.
@@ -45,7 +46,7 @@ end integration testing.
 
 - Open a terminal and run `sudo apt update`
 
-- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-11-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
+- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
 
 - Run `sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h` 
 
@@ -173,29 +174,30 @@ sudo rm -rf /tmp/libheif;
 
 - Install ActiveMQ:
 ```bash
-wget -O- https://archive.apache.org/dist/activemq/5.16.4/apache-activemq-5.16.4-bin.tar.gz \
-| sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-activemq-5.16.4 /opt/activemq;
+wget -O- https://archive.apache.org/dist/activemq/5.17.0/apache-activemq-5.17.0-bin.tar.gz \
+    | sudo tar --extract --gzip --directory /opt;
+sudo ln --symbolic /opt/apache-activemq-5.17.0 /opt/activemq;
+sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
 ```
 
-- In `/opt/activemq/conf/activemq.xml` change line 40 from <br />
+- In `/opt/activemq/conf/activemq.xml` change line 34 from <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">`
   <br /> to <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false">`
 
-- In `/opt/activemq/conf/activemq.xml` (line 44) under the line: 
+- In `/opt/activemq/conf/activemq.xml` (line 38) under the line: 
   `<policyEntries>`, add <br />
   `<policyEntry queue=">" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" />`
 
-- In `/opt/activemq/conf/activemq.xml` (line 72, after making the above addition), 
+- In `/opt/activemq/conf/activemq.xml` (line 66, after making the above addition), 
   change the line: `<managementContext createConnector="false"/>`
   <br /> to <br />
   `<managementContext createConnector="true"/>`.
 
-- In `/opt/activemq/conf/log4j.properties` (line 52), change the line <br />
-  `log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n%throwable{full}` 
+- In `/opt/activemq/conf/log4j2.properties` (line 69), change the line <br />
+  `appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}` 
   <br /> to  <br />
-  `log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n`
+  `appender.logfile.layout.pattern=%d %p [%t] %c - %m%n`
 
 - Install Tomcat:
 ```bash
