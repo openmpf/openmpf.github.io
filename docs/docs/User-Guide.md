@@ -15,7 +15,7 @@ The Open Media Processing Framework (OpenMPF) can be used in three ways:
 
 On the server hosting the Open Media Processing Framework, the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".
 
-The OpenMPF user interface was designed and tested for use with Chrome and FireFox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.
+The OpenMPF user interface was designed and tested for use with Chrome and Firefox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.
 
 ## Logging In
 
@@ -102,11 +102,113 @@ After files have been selected and a pipeline and priority are assigned, clickin
 
 The Job Status page displays a summary of the status for all jobs run by any user in the past. The current status and progress of any running job can be monitored from this view, which is updated automatically.
 
-![Job Status Page](img/mpf_job_status_complete.png "Job Status Page")
+![Job Status Page](img/mpf_job_status.png "Job Status Page")
 
 When a job is COMPLETE a user can view the generated JSON output object data by clicking the "Output Objects" button for that job. A new tab/window will open with the detection output. The detection object output displays a formatted JSON representation of the detection results.
 
-![Job Output Objects](img/mpf_job_status_output.png "Job Output Objects")
+```json
+{
+  "jobId": "localhost-11",
+  "errors": [],
+  "warnings": [],
+  "objectId": "ef027349-8e6a-4472-a459-eba9463787f3",
+  "pipeline": {
+    "name": "OCV FACE DETECTION PIPELINE",
+    "description": "Performs OpenCV face detection.",
+    "tasks": [
+      {
+        "actionType": "DETECTION",
+        "name": "OCV FACE DETECTION TASK",
+        "description": "Performs OpenCV face detection.",
+        "actions": [
+          {
+            "algorithm": "FACECV",
+            "name": "OCV FACE DETECTION ACTION",
+            "description": "Executes the OpenCV face detection algorithm using the default parameters.",
+            "properties": {}
+          }
+        ]
+      }
+    ]
+  },
+  "priority": 4,
+  "siteId": "mpf1",
+  "externalJobId": null,
+  "timeStart": "2021-09-07T20:57:01.073Z",
+  "timeStop": "2021-09-07T20:57:02.946Z",
+  "status": "COMPLETE",
+  "algorithmProperties": {},
+  "jobProperties": {},
+  "environmentVariableProperties": {},
+  "media": [
+    {
+      "mediaId": 3,
+      "path": "file:///opt/mpf/share/remote-media/faces.jpg",
+      "sha256": "184e9b04369248ae8a97ec2a20b1409a016e2895686f90a2a1910a0bef763d56",
+      "mimeType": "image/jpeg",
+      "mediaType": "IMAGE",
+      "length": 1,
+      "mediaMetadata": {
+        "FRAME_HEIGHT": "1275",
+        "FRAME_WIDTH": "1920",
+        "MIME_TYPE": "image/jpeg"
+      },
+      "mediaProperties": {},
+      "status": "COMPLETE",
+      "detectionProcessingErrors": {},
+      "markupResult": null,
+      "output": {
+        "FACE": [
+          {
+            "source": "+#OCV FACE DETECTION ACTION",
+            "algorithm": "FACECV",
+            "tracks": [
+              {
+                "id": "d4b4a6e870c1378a3bc85a234b6f4c881f81a14edcf858d6d256d04ad40bc175",
+                "startOffsetFrame": 0,
+                "stopOffsetFrame": 0,
+                "startOffsetTime": 0,
+                "stopOffsetTime": 0,
+                "type": "FACE",
+                "source": "+#OCV FACE DETECTION ACTION",
+                "confidence": 5,
+                "trackProperties": {},
+                "exemplar": {
+                  "offsetFrame": 0,
+                  "offsetTime": 0,
+                  "x": 652,
+                  "y": 212,
+                  "width": 277,
+                  "height": 277,
+                  "confidence": 5,
+                  "detectionProperties": {},
+                  "artifactExtractionStatus": "NOT_ATTEMPTED",
+                  "artifactPath": null
+                },
+                "detections": [
+                  {
+                    "offsetFrame": 0,
+                    "offsetTime": 0,
+                    "x": 652,
+                    "y": 212,
+                    "width": 277,
+                    "height": 277,
+                    "confidence": 5,
+                    "detectionProperties": {},
+                    "artifactExtractionStatus": "NOT_ATTEMPTED",
+                    "artifactPath": null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
 
 A user can click the "Cancel" button to attempt to cancel the execution of a job before it completes. Note that if a service is currently processing part of a job, for example, a video segment that's part of a larger video file, then it will continue to process that part of the job until it completes or there is an error. The act of cancelling a job will prevent other parts of that job from being processed. Thus, if the "Cancel" button is clicked late into the job execution, or if each part of the job is already being processed by services executing in parallel, it may have no effect. Also, if the video segment size is set to a very large number, and the detection being performed is slow, then cancelling a job could take awhile.
 
