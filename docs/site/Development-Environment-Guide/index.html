@@ -465,9 +465,9 @@ sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
 </li>
 <li>
 <p>In <code>/opt/activemq/conf/log4j2.properties</code> (line 69), change the line <br />
-  <code>log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code> 
+  <code>appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code> 
   <br /> to  <br />
-  <code>log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n</code></p>
+  <code>appender.logfile.layout.pattern=%d %p [%t] %c - %m%n</code></p>
 </li>
 <li>
 <p>Install Tomcat:</p>
