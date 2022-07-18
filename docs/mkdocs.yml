@@ -21,6 +21,7 @@ pages:
     - User Guide: User-Guide.md
     - Media Segmentation Guide: Media-Segmentation-Guide.md
     - Feed Forward Guide: Feed-Forward-Guide.md
+    - Derivative Media Guide: Derivative-Media-Guide.md
     - Object Storage Guide: Object-Storage-Guide.md
     - Markup Guide: Markup-Guide.md
     - REST API: REST-API.md
