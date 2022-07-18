@@ -174,26 +174,27 @@ sudo rm -rf /tmp/libheif;
 
 - Install ActiveMQ:
 ```bash
-wget -O- https://archive.apache.org/dist/activemq/5.16.4/apache-activemq-5.16.4-bin.tar.gz \
-| sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-activemq-5.16.4 /opt/activemq;
+wget -O- https://archive.apache.org/dist/activemq/5.17.0/apache-activemq-5.17.0-bin.tar.gz \
+    | sudo tar --extract --gzip --directory /opt;
+sudo ln --symbolic /opt/apache-activemq-5.17.0 /opt/activemq;
+sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
 ```
 
-- In `/opt/activemq/conf/activemq.xml` change line 40 from <br />
+- In `/opt/activemq/conf/activemq.xml` change line 34 from <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">`
   <br /> to <br />
   `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false">`
 
-- In `/opt/activemq/conf/activemq.xml` (line 44) under the line: 
+- In `/opt/activemq/conf/activemq.xml` (line 38) under the line: 
   `<policyEntries>`, add <br />
   `<policyEntry queue=">" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" />`
 
-- In `/opt/activemq/conf/activemq.xml` (line 72, after making the above addition), 
+- In `/opt/activemq/conf/activemq.xml` (line 66, after making the above addition), 
   change the line: `<managementContext createConnector="false"/>`
   <br /> to <br />
   `<managementContext createConnector="true"/>`.
 
-- In `/opt/activemq/conf/log4j.properties` (line 52), change the line <br />
+- In `/opt/activemq/conf/log4j2.properties` (line 69), change the line <br />
   `log4j.appender.logfile.layout.ConversionPattern=%d | %-5p | %m | %c | %t%n%throwable{full}` 
   <br /> to  <br />
   `log4j.appender.logfile.layout.ConversionPattern=%d %p [%t] %c - %m%n`
