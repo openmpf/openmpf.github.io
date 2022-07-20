@@ -61,6 +61,9 @@
     <a class="current" href="index.html">Release Notes</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#openmpf-70x">OpenMPF 7.0.x</a></li>
+    
+
     <li class="toctree-l3"><a href="#openmpf-63x">OpenMPF 6.3.x</a></li>
     
 
@@ -252,7 +255,163 @@
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="openmpf-70x">OpenMPF 7.0.x</h1>
+<h2>7.0.0: July 2022</h2>
+
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/792">#792</a>] Perform detection on images extracted from PDFs</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1283">#1283</a>] Add user-specified segment boundaries</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1374">#1374</a>] Transition from CentOS 7 to Ubuntu 20.04</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1396">#1396</a>] Report when job callbacks and TiesDb POSTs fail</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1398">#1398</a>] Add Triton Inference Server support to YOLO component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1428">#1428</a>] Allow pipelines to be specified in a job request</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1454">#1454</a>] Transition from Clair scans to Trivy scans</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1485">#1485</a>] Use <code>pyproject.toml</code> and <code>setup.cfg</code> instead of <code>setup.py</code></li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/803">#803</a>] Update Tika Image Detection to generate one track per piece of extracted media</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/808">#808</a>] Update Tika Text Detection component to not use leading zeros for <code>PAGE_NUM</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1105">#1105</a>] Remove dependency on QT from C++ SDK</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1282">#1282</a>] Use job id that enables load balancing</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1303">#1303</a>] Update Tika Image Detection to return <code>MEDIA</code> tracks</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1319">#1319</a>] Review existing error codes and remove unused or redundant error codes</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1384">#1384</a>] Update Apache Tika to 2.4.1 for TikaImageDetection and TikaTextDetection Components</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1436">#1436</a>] CLI Runner should initialize a component once when handling multiple jobs</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1465">#1465</a>] Remove YoloV3 support from OcvYoloDetection component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1513">#1513</a>] Update to Spring 5.3.18</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1528">#1528</a>] CLI runner should also sort by startOffsetTime</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1540">#1540</a>] Upgrade to Java 17</li>
+<li>TODO: [<a href="https://github.com/openmpf/openmpf/issues/1549">#1549</a>] Allow markup animation to be disabled</li>
+<li>TODO: [<a href="https://github.com/openmpf/openmpf/issues/1550">#1550</a>] Add track index to markup</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1372">#1372</a>] Tika Image Detection no longer misses images in PowerPoint and Word documents</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1449">#1449</a>] Simon data is now refreshed when clicking the Processes tab</li>
+<li>TODO: [<a href="https://github.com/openmpf/openmpf/issues/1495">#1495</a>] Fix bug where invalid CSRF token found for <code>/workflow-manager/login</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1501">#1501</a>] MPFVideoCapture now properly reads frames from videos with rotation metadata</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1502">#1502</a>] Detections with <code>HORIZONTAL_FLIP</code> can result in illformed detections and incorrectly padded regions</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1503">#1503</a>] Videos with rotation metadata can result in corrupt markup`</li>
+</ul>
 <h1 id="openmpf-63x">OpenMPF 6.3.x</h1>
+<h2>6.3.14: May 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1530">#1530</a>] Fix S3 code memory leak</li>
+</ul>
+<h2>6.3.12: April 2022</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1519">#1519</a>] Upgrade to OpenCV 4.5.5</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1520">#1520</a>] S3 code now retries on most 400 errors</li>
+</ul>
+<h2>6.3.11: April 2022</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1496">#1496</a>] Update S3 client code</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1514">#1514</a>] Update Tomcat to 8.5.78</li>
+</ul>
+<h2>6.3.10: March 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1486">#1486</a>] Fix bug where <code>MOVING</code> was being added to immutable map twice</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1498">#1498</a>] Can now provide media metadata when frameTimeInfo is missing</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1501">#1501</a>] MPFVideoCapture now properly reads frames from videos with rotation metadata</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1502">#1502</a>] Detections with <code>HORIZONTAL_FLIP</code> will no longer result in illformed detections and incorrectly padded regions</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1503">#1503</a>] Videos with rotation metadata will no longer result in corrupt markup</li>
+</ul>
+<h2>6.3.8: January 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1469">#1469</a>] <code>TENSORFLOW VEHICLE COLOR DETECTION</code> pipelines no longer refer to YOLO tasks that no longer exist</li>
+</ul>
+<h2>6.3.7: January 2022</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1466">#1466</a>] Upgrade log4j to 2.17.1</li>
+</ul>
+<h2>6.3.6: December 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1457">#1457</a>] Upgrade log4j to 2.16.0</li>
+</ul>
+<h2>6.3.5: November 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1451">#1451</a>] Make concurrent callbacks configurable</li>
+</ul>
+<h2>6.3.4: November 2021</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1441">#1441</a>] Modify AdminStatisticsController so that it doesn't hold all jobs in memory at once</li>
+</ul>
+<h2>6.3.3: October 2021</h2>
+
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1425">#1425</a>] Make protobuf size limit configurable</li>
+</ul>
+<h2>6.3.2: October 2021</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1420">#1420</a>] Sphinx component no longer omits audio at end of video files</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1422">#1422</a>] Media inspection now correctly calculates milliseconds from ffmpeg duration</li>
+</ul>
+<h2>6.3.1: September 2021</h2>
+
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1404">#1404</a>] Improve OcvDnnDetection vehicle color detection</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1251">#1251</a>] Add version to JSON output object</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1272">#1272</a>] Update Keyword Tagging to work on multiple inputs</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1350">#1350</a>] Retire old components to the graveyard: DlibFaceDetection, DarknetDetection, and OcvPersonDetection</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1010">#1010</a>] <code>mpf.output.objects.enabled</code> now behaves as expected</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1271">#1271</a>] Azure speech component no longer omits audio at end of video files</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1389">#1389</a>] NLP text correction component now properly reads the value of <code>FULL_TEXT_CORRECTION_OUTPUT</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1403">#1403</a>] Corrected README to state that the Azure Speech Component doesn't support v2 of the API</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1406">#1406</a>] Speech detections in videos are no longer dropped if using keyword tagging</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1411">#1411</a>] Exception no longer occurs when adding <code>SHRUNK_TO_NOTHING=TRUE</code> to an immutable map in multiple pipeline stages</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1413">#1413</a>] Speech detections in videos are no longer dropped if using translation</li>
+</ul>
 <h2>6.3.0: September 2021</h2>
 
 <h3>Documentation</h3>
@@ -372,6 +531,50 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
   of <code>FULL_TEXT_CORRECTION_OUTPUT</code></li>
 </ul>
 <h1 id="openmpf-62x">OpenMPF 6.2.x</h1>
+<h2>6.2.5: July 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1367">#1367</a>] Enable cross-origin resource sharing on Workflow Manager</li>
+</ul>
+<h2>6.2.4: June 2021</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1356">#1356</a>] AzureSpeech now properly reports when media is missing audio stream</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1357">#1357</a>] AzureSpeech now handles case where speaker id is not present</li>
+</ul>
+<h2>6.2.2: June 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1333">#1333</a>] Combine media name and job id into one WFM log line</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1336">#1336</a>] Remove duplicate "Setting status of job to COMPLETE" Workflow Manager log line and other improvements</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1338">#1338</a>] Update OpenCV DNN Detection component to optionally use feed-forward confidence values</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1237">#1237</a>] Fixed jQuery DataTables bug: "int parameter 'draw' is present but cannot be translated into a null value"</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1254">#1254</a>] Jobs table no longer flickers when polling is enabled and the search box is used</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1308">#1308</a>] Prevent OCV YOLO Tracking from generating zero-sized detections</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1313">#1313</a>] Fix JSON output object timestamps for variable frame rate videos</li>
+</ul>
+<h2>6.2.1: May 2021</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1330">#1330</a>] Return error codes for <code>models_ini_parser.py</code> exceptions</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1331">#1331</a>] Decoding certain heic images no longer causes Workflow Manager to segfault</li>
+</ul>
 <h2>6.2.0: May 2021</h2>
 
 <h3>Tesseract OCR Text Detection Component Support for Videos</h3>
