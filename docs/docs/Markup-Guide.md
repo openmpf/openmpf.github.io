@@ -26,6 +26,10 @@ default values can be changed be setting the system property listed for each:
     - System property: `markup.labels.from.detections`
     - Default value: `false`
     - If true, use detection-level details to populate the bounding box labels. Otherwise, use track-level details.
+- `MARKUP_LABELS_TRACK_INDEX_ENABLED`
+    - System property: `markup.labels.track.index.enabled`
+    - Default value: `true`
+    - If true, add the track index to the start of every bounding box label.
 - `MARKUP_LABELS_TEXT_PROP_TO_SHOW`
     - System property: `markup.labels.text.prop.to.show`
     - Default value: `CLASSIFICATION`
@@ -70,6 +74,10 @@ default values can be changed be setting the system property listed for each:
     - System property: `markup.video.vp9.crf`
     - Default value: `31`
     - The CRF value can be from 0-63. Lower values mean better quality. Recommended values range from 15-35, with 31 being recommended for 1080p HD video. This property is only used if generating VP9-encoded `.webm` files
+- `MARKUP_ANIMATION_ENABLED`
+    - System property: `markup.video.animation.enabled`
+    - Default value: `true`
+    - If true, draw bounding boxes to fill in the gaps between detections in each track. Interpolate size and position.
 
 # Video Markup Icons
 
