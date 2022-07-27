@@ -39,7 +39,7 @@ RUN --mount=type=tmpfs,target=/var/cache/apt \
         ruby-dev python3-pip ruby-bundler make gcc libc-dev zlib1g-dev
 
 
-RUN pip3 install --no-cache-dir 'mkdocs==0.17.5' 'jinja2==3.0.0'
+RUN pip3 install --no-cache-dir 'mkdocs==0.17.5' 'jinja2==3.0.0' 'Markdown==3.3.7'
 
 COPY Gemfile Gemfile.lock /mpf-docs/
 
