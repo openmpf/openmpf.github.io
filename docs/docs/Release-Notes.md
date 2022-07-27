@@ -48,6 +48,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
   to another. The tracks will skip the stages (actions) that don't apply.
 - This enables complex pipelines like one that extracts text from a PDF using TikaTextDetection, OCRs embedded images
   using EastTextDetection and TesseractOCRTextDetection, and runs all of the `TEXT` tracks through KeywordTagging.
+- Added the following pipelines to the TikaImageDetection component:
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR PIPELINE`
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR AND KEYWORD TAGGING PIPELINE`
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR (WITH EAST REGIONS) AND KEYWORD TAGGING PIPELINE`
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR (WITH EAST REGIONS) AND KEYWORD TAGGING AND MARKUP PIPELINE`
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA OCV FACE PIPELINE`
+    - `TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA OCV FACE AND MARKUP PIPELINE`
 
 <h3>Report when Job Callbacks and TiesDb POSTs Fail</h3>
 
