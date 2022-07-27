@@ -270,6 +270,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
 <li>Updated the REST API with the <code>pipelineDefinition</code>, <code>frameRanges</code>, and <code>timeRanges</code> fields now supported by the
   <code>[POST] /rest/jobs</code> endpoint.</li>
 <li>Updated the OcvYoloDetection component README with information on using the NVIDIA Triton inference server.</li>
+<li>Updated the Markup Guide with <code>MARKUP_ANIMATION_ENABLED</code> and <code>MARKUP_LABELS_TRACK_INDEX_ENABLED</code>.</li>
 <li>Updated the Contributor Guide with new steps for generating documentation.</li>
 </ul>
 <h3>Transition from CentOS 7 to Ubuntu 20.04</h3>
@@ -290,7 +291,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The 
   environment variable for the Workflow Manager service, or hard-coding <code>NODE_HOSTNAME</code> to the desired hostname.</li>
 <li>The shorter version of the id can still be used in REST requests, but the longer id will always be returned by the
   Workflow Manager when responding to those requests.</li>
-<li>The shorter id will always be used internally by the Workflow Manager, meaning the Job Status web UI and log messages
+<li>The shorter id will always be used internally by the Workflow Manager, meaning the job status web UI and log messages
   will all use the shorter job id. </li>
 </ul>
 <h3>Support for Derivative Media</h3>
