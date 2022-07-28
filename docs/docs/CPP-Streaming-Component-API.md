@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.
 
 <div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> The C++ Streaming API is not complete, and there are no future development plans. Use at your own risk. The only way to make use of the functionality is through the REST API. It requires the Node Manager and does not work in a Docker deployment.</p></div>
 
