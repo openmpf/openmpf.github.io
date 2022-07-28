@@ -72,15 +72,15 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
   defining `tasks` and `actions`. Pre-existing tasks and actions known to the Workflow Manager can be specified in the
   definition. They do not need to be defined again.
 - This feature is a convenient alternative to creating persistent definitions using the `[POST] /rest/pipelines`,
-  `[POST] /rest/tasks`, and `[POST] /rest/actions` endpoints. For example, to quickly add or remove a motion
-  preprocessing stage from a pipeline.
+  `[POST] /rest/tasks`, and `[POST] /rest/actions` endpoints. For example, this feature could be used to quickly add or
+  remove a motion preprocessing stage from a pipeline.
 
 <h3>Allow User-Specified Segment Boundaries</h3>
 
 - Optionally, multiple `frameRanges` and/or `timeRanges` fields can be provided when using the `[POST] /rest/jobs`
   endpoint in order to manually specify segment boundaries. These values will override the normal segmenting behavior of
   the Workflow Manager.
-- Not that overlapping ranges will be combined and large ranges may still be split up according to the value of
+- Note that overlapping ranges will be combined and large ranges may still be split up according to the value of
   `TARGET_SEGMENT_LENGTH` and `VFR_TARGET_SEGMENT_LENGTH`.
 - Note that `frameRanges` is specified using the frame number and `timeRanges` is specified in milliseconds.
 
@@ -143,7 +143,7 @@ Also, the following error codes are no longer being used and have been removed:
 <h3>Changes to JSON Output Object</h3>
 
 - Components that generate `MEDIA` tracks will result in new derivative `media` entries in the JSON output file. This
-  means it's possible to provide a single piece of media as in input and have more than one `media` entry in the JSON
+  means it's possible to provide a single piece of media as an input and have more than one `media` entry in the JSON
   output. The output will always include the original media.
 - Each `media` entry in the JSON output now contains a `parentMediaId` in addition to the `mediaId`. The `parentMediaId`
   for original source media will always be set to -1; otherwise, for derivative media, the `parentMediaId` is set the
@@ -184,9 +184,6 @@ Also, the following error codes are no longer being used and have been removed:
 - [[#1372](https://github.com/openmpf/openmpf/issues/1372)] Tika Image Detection no longer misses images in PowerPoint and Word documents
 - [[#1449](https://github.com/openmpf/openmpf/issues/1449)] Simon data is now refreshed when clicking the Processes tab
 - [[#1495](https://github.com/openmpf/openmpf/issues/1495)] Fix bug where invalid CSRF token found for `/workflow-manager/login`
-- [[#1501](https://github.com/openmpf/openmpf/issues/1501)] MPFVideoCapture now properly reads frames from videos with rotation metadata
-- [[#1502](https://github.com/openmpf/openmpf/issues/1502)] Detections with `HORIZONTAL_FLIP` can result in illformed detections and incorrectly padded regions
-- [[#1503](https://github.com/openmpf/openmpf/issues/1503)] Videos with rotation metadata can result in corrupt markup
 
 # OpenMPF 6.3.x
 

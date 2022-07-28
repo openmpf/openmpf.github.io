@@ -333,8 +333,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
   defining <code>tasks</code> and <code>actions</code>. Pre-existing tasks and actions known to the Workflow Manager can be specified in the
   definition. They do not need to be defined again.</li>
 <li>This feature is a convenient alternative to creating persistent definitions using the <code>[POST] /rest/pipelines</code>,
-  <code>[POST] /rest/tasks</code>, and <code>[POST] /rest/actions</code> endpoints. For example, to quickly add or remove a motion
-  preprocessing stage from a pipeline.</li>
+  <code>[POST] /rest/tasks</code>, and <code>[POST] /rest/actions</code> endpoints. For example, this feature could be used to quickly add or
+  remove a motion preprocessing stage from a pipeline.</li>
 </ul>
 <h3>Allow User-Specified Segment Boundaries</h3>
 
@@ -342,7 +342,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 <li>Optionally, multiple <code>frameRanges</code> and/or <code>timeRanges</code> fields can be provided when using the <code>[POST] /rest/jobs</code>
   endpoint in order to manually specify segment boundaries. These values will override the normal segmenting behavior of
   the Workflow Manager.</li>
-<li>Not that overlapping ranges will be combined and large ranges may still be split up according to the value of
+<li>Note that overlapping ranges will be combined and large ranges may still be split up according to the value of
   <code>TARGET_SEGMENT_LENGTH</code> and <code>VFR_TARGET_SEGMENT_LENGTH</code>.</li>
 <li>Note that <code>frameRanges</code> is specified using the frame number and <code>timeRanges</code> is specified in milliseconds.</li>
 </ul>
@@ -438,7 +438,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 
 <ul>
 <li>Components that generate <code>MEDIA</code> tracks will result in new derivative <code>media</code> entries in the JSON output file. This
-  means it's possible to provide a single piece of media as in input and have more than one <code>media</code> entry in the JSON
+  means it's possible to provide a single piece of media as an input and have more than one <code>media</code> entry in the JSON
   output. The output will always include the original media.</li>
 <li>Each <code>media</code> entry in the JSON output now contains a <code>parentMediaId</code> in addition to the <code>mediaId</code>. The <code>parentMediaId</code>
   for original source media will always be set to -1; otherwise, for derivative media, the <code>parentMediaId</code> is set the
@@ -482,9 +482,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1372">#1372</a>] Tika Image Detection no longer misses images in PowerPoint and Word documents</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1449">#1449</a>] Simon data is now refreshed when clicking the Processes tab</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1495">#1495</a>] Fix bug where invalid CSRF token found for <code>/workflow-manager/login</code></li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1501">#1501</a>] MPFVideoCapture now properly reads frames from videos with rotation metadata</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1502">#1502</a>] Detections with <code>HORIZONTAL_FLIP</code> can result in illformed detections and incorrectly padded regions</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1503">#1503</a>] Videos with rotation metadata can result in corrupt markup</li>
 </ul>
 <h1 id="openmpf-63x">OpenMPF 6.3.x</h1>
 <h2>6.3.14: May 2022</h2>
