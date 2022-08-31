@@ -34,7 +34,11 @@ default values can be changed be setting the system property listed for each:
     - System property: `markup.labels.text.prop.to.show`
     - Default value: `CLASSIFICATION`
     - Name of the text property to show in the label before the numeric property. If using track-level details, and this property is not present at the track level, then the detection property for the track's exemplar will be used. Leave empty to omit.
-    - At most 10 characters of the text value will be displayed in the label.
+- `MARKUP_TEXT_LABEL_MAX_LENGTH`
+    - System property: `markup.labels.text.max.length`
+    - Default value: `10`
+    - The maximum length of the label selected by `MARKUP_LABELS_TEXT_PROP_TO_SHOW`.
+      If the label is longer than the limit, characters after limit will not be displayed.
 - `MARKUP_LABELS_NUMERIC_PROP_TO_SHOW`
     - System property: `markup.labels.numeric.prop.to.show`
     - Default value: `CONFIDENCE`
