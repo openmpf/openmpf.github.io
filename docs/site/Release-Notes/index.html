@@ -64,6 +64,9 @@
     <li class="toctree-l3"><a href="#openmpf-70x">OpenMPF 7.0.x</a></li>
     
 
+    <li class="toctree-l3"><a href="#openmpf-70x_1">OpenMPF 7.0.x</a></li>
+    
+
     <li class="toctree-l3"><a href="#openmpf-63x">OpenMPF 6.3.x</a></li>
     
 
@@ -254,8 +257,236 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2021 The MITRE Corporation. All Rights Reserved.</p>
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="openmpf-70x">OpenMPF 7.0.x</h1>
+<h2>7.0.0: July 2022</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Updated the Development Environment Guide by replacing steps for CentOS 7 with Ubuntu 20.04.</li>
+<li>Added the Derivative Media Guide.</li>
+<li>Updated the Batch Component APIs with revised error codes.</li>
+<li>Updated the Python Batch Component API and Python base Docker image README with instructions for
+  using <code>pyproject.toml</code> and <code>setup.cfg</code>.</li>
+<li>Updated the Admin Guide and User Guide with images that show the new TiesDb and Callback columns in the job status UI.</li>
+<li>Updated the REST API with the <code>pipelineDefinition</code>, <code>frameRanges</code>, and <code>timeRanges</code> fields now supported by the
+  <code>[POST] /rest/jobs</code> endpoint.</li>
+<li>Updated the OcvYoloDetection component README with information on using the NVIDIA Triton inference server.</li>
+<li>Updated the Markup Guide with <code>MARKUP_ANIMATION_ENABLED</code> and <code>MARKUP_LABELS_TRACK_INDEX_ENABLED</code>.</li>
+<li>Updated the Contributor Guide with new steps for generating documentation.</li>
+</ul>
+<h3>Transition from CentOS 7 to Ubuntu 20.04</h3>
+
+<ul>
+<li>All the Docker images that previously used CentOS 7 as a base now use Ubuntu 20.04.</li>
+<li>We decided not to use CentOS 8, which is a version of CentOS Stream, due to concerns about stability.</li>
+<li>Also, Ubuntu is a very common OS within the AI and ML space, and has significant community support.</li>
+</ul>
+<h3>Use Job Id that Enables Load Balancing</h3>
+
+<ul>
+<li>The Workflow Manager can now optionally accept job ids of the form <code>&lt;openmpf-instance-wfm-hostname&gt;-&lt;job-id&gt;</code> through
+  the REST endpoints, where <code>&lt;job-id&gt;</code> is the same as the shorter id used in previous releases. The
+  <code>&lt;openmpf-instance-wfm-hostname&gt;-</code> prefix enables better tracking and separation of jobs run across multiple
+  Workflow Manager instances in a cluster.</li>
+<li>The prefix can be set in the <code>docker-compose.yml</code> file by assigning <code>{{.Node.Hostname}}</code> to the <code>NODE_HOSTNAME</code>
+  environment variable for the Workflow Manager service, or hard-coding <code>NODE_HOSTNAME</code> to the desired hostname.</li>
+<li>The shorter version of the id can still be used in REST requests, but the longer id will always be returned by the
+  Workflow Manager when responding to those requests.</li>
+<li>The shorter id will always be used internally by the Workflow Manager, meaning the job status web UI and log messages
+  will all use the shorter job id. </li>
+</ul>
+<h3>Support for Derivative Media</h3>
+
+<ul>
+<li>The TikaImageDetection component now returns <code>MEDIA</code> tracks instead of <code>IMAGE</code> tracks when extracting images from
+  documents, such as PDFs, Word documents, and PowerPoint slides. The document is considered the "source", or "parent",
+  media, and the images are considered the "derivative", or "child", media.</li>
+<li>Actions can now be configured with <code>SOURCE_MEDIA_ONLY=true</code> or <code>DERIVATIVE_MEDIA_ONLY=true</code>, which will result in only
+  performing the action on that kind of media. Feed forward can still be used to pass track information from one stage
+  to another. The tracks will skip the stages (actions) that don't apply.</li>
+<li>This enables complex pipelines like one that extracts text from a PDF using TikaTextDetection, OCRs embedded images
+  using EastTextDetection and TesseractOCRTextDetection, and runs all of the <code>TEXT</code> tracks through KeywordTagging.</li>
+<li>Added the following pipelines to the TikaImageDetection component:<ul>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR PIPELINE</code></li>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR AND KEYWORD TAGGING PIPELINE</code></li>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR (WITH EAST REGIONS) AND KEYWORD TAGGING PIPELINE</code></li>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA TESSERACT OCR (WITH EAST REGIONS) AND KEYWORD TAGGING AND MARKUP PIPELINE</code></li>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA OCV FACE PIPELINE</code></li>
+<li><code>TIKA IMAGE DETECTION WITH DERIVATIVE MEDIA OCV FACE AND MARKUP PIPELINE</code></li>
+</ul>
+</li>
+</ul>
+<h3>Report when Job Callbacks and TiesDb POSTs Fail</h3>
+
+<ul>
+<li>The job status UI displays two new columns, one that indicates the status of posting to TiesDB, and one that indicates
+  the status of posting the job callback to the job producer.</li>
+<li>Additionally, the <code>[GET] /rest/jobs/{id}</code> endpoint now includes a <code>tiesDbStatus</code> and <code>callbackStatus</code> field.</li>
+<li>Note that, by design, the JSON output itself does not contain these statuses.</li>
+</ul>
+<h3>Allow Pipelines to be Specified in a Job Request</h3>
+
+<ul>
+<li>Optionally, the <code>pipelineDefinition</code> field can be provided instead of the <code>pipelineName</code> field when using the
+  <code>[POST] /rest/jobs</code> endpoint in order to specify a pipeline on the fly for that specific job run. It will not be saved
+  for later reuse.</li>
+<li>The format of the pipeline definition is similar to that in a <code>descriptor.json</code> file, with separate sections for
+  defining <code>tasks</code> and <code>actions</code>. Pre-existing tasks and actions known to the Workflow Manager can be specified in the
+  definition. They do not need to be defined again.</li>
+<li>This feature is a convenient alternative to creating persistent definitions using the <code>[POST] /rest/pipelines</code>,
+  <code>[POST] /rest/tasks</code>, and <code>[POST] /rest/actions</code> endpoints. For example, this feature could be used to quickly add or
+  remove a motion preprocessing stage from a pipeline.</li>
+</ul>
+<h3>Allow User-Specified Segment Boundaries</h3>
+
+<ul>
+<li>Optionally, multiple <code>frameRanges</code> and/or <code>timeRanges</code> fields can be provided when using the <code>[POST] /rest/jobs</code>
+  endpoint in order to manually specify segment boundaries. These values will override the normal segmenting behavior of
+  the Workflow Manager.</li>
+<li>Note that overlapping ranges will be combined and large ranges may still be split up according to the value of
+  <code>TARGET_SEGMENT_LENGTH</code> and <code>VFR_TARGET_SEGMENT_LENGTH</code>.</li>
+<li>Note that <code>frameRanges</code> is specified using the frame number and <code>timeRanges</code> is specified in milliseconds.</li>
+</ul>
+<h3>Add Triton Inference Server support to YOLO component</h3>
+
+<ul>
+<li>The OcvYoloDetection component now supports the ability to send requests to an NVIDIA Triton Inference Server by
+  setting <code>ENABLE_TRITON=true</code>. If set to false, the component will process jobs using OpenCV DNN on the local host
+  running the Docker service, as per normal.</li>
+<li>By default <code>TRITON_SERVER=ocv-yolo-detection-server:8001</code>, which
+  corresponds to the <code>ocv-yolo-detection-server</code> entry in your <code>docker-compose.yml</code> file. Refer to the example entry
+  within <a href="https://github.com/openmpf/openmpf-docker/blob/develop/docker-compose.components.yml"><code>docker-compose.components.yml</code></a>
+  . That entry uses a pre-built and pre-configured version of the Triton server.</li>
+<li>The Triton server runs the YOLOv4 model within the TensorRT framework, which performs a warmup operation when the
+  server starts up to determine which optimizations to enable for the available GPU hardware. <code>*.engine</code> files are
+  generated within the <code>yolo_engine_file</code> Docker volume for later reuse.</li>
+<li>To further improve inferencing speed, shared memory can be configured between the <code>ocv-yolo-detection</code> client service and the
+  <code>ocv-yolo-detection-server</code> service if they are running on the same host. Set <code>TRITON_USE_SHM=true</code> and configure the
+  server with a <code>/dev/shm:/dev/shm</code> Docker volume.</li>
+<li>Depending on the available GPU hardware, the Triton server can achieve speeds that are 5x faster than OpenCV DNN with
+  tracking enabled, no shared memory, and nearly 9x faster with tracking disabled, with shared memory. Our tests used a
+  single RTX 2080 GPU.</li>
+</ul>
+<h3>Removed Unused and Redundant Error Codes</h3>
+
+<ul>
+<li>The error codes shown on the left were redundant and replaced with the corresponding error codes on the right:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Old Error Code</th>
+<th>New Error Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MPF_IMAGE_READ_ERROR</td>
+<td>MPF_COULD_NOT_READ_MEDIA</td>
+</tr>
+<tr>
+<td>MPF_BOUNDING_BOX_SIZE_ERROR</td>
+<td>MPF_BAD_FRAME_SIZE</td>
+</tr>
+<tr>
+<td>MPF_JOB_PROPERTY_IS_NOT_INT</td>
+<td>MPF_INVALID_PROPERTY</td>
+</tr>
+<tr>
+<td>MPF_JOB_PROPERTY_IS_NOT_FLOAT</td>
+<td>MPF_INVALID_PROPERTY</td>
+</tr>
+<tr>
+<td>MPF_INVALID_FRAME_INTERVAL</td>
+<td>MPF_INVALID_PROPERTY</td>
+</tr>
+<tr>
+<td>MPF_DETECTION_TRACKING_FAILED</td>
+<td>MPF_OTHER_DETECTION_ERROR_TYPE</td>
+</tr>
+</tbody>
+</table>
+<p>Also, the following error codes are no longer being used and have been removed:</p>
+<ul>
+<li><code>MPF_UNRECOGNIZED_DATA_TYPE</code><ul>
+<li>All media types can now be processed since we support the <code>UNKNOWN</code> (a.k.a. "generic")
+  media type</li>
+</ul>
+</li>
+<li><code>MPF_INVALID_DATAFILE_URI</code><ul>
+<li>The Workflow Manager will reject a job with an invalid media URI before it gets to a
+  component</li>
+</ul>
+</li>
+<li><code>MPF_INVALID_START_FRAME</code></li>
+<li><code>MPF_INVALID_STOP_FRAME</code></li>
+<li><code>MPF_INVALID_ROTATION</code></li>
+</ul>
+<h3>Markup Improvements</h3>
+
+<ul>
+<li>By default, the Markup component draws bounding boxes to fill in the gaps between detections in each track by
+  interpolating the box size and position. This can now be disabled by setting the job property
+  <code>MARKUP_ANIMATION_ENABLED=false</code>, or the system property <code>markup.video.animation.enabled=false</code>.
+  Disabling this feature can be useful to prevent floating boxes from cluttering the marked-up frames.</li>
+<li>The Markup component will now start each bounding box label with a track index like <code>[0]</code> that can be used to
+  correlate the box with the track in the JSON output object. The JSON output now contains an <code>index</code> field for every
+  track, relative to each piece of media, that is simply an integer that starts at 0 and counts upward. This can be
+  disabled by setting the job property <code>MARKUP_LABELS_TRACK_INDEX_ENABLED=false</code>, or the system property
+  <code>markup.labels.track.index.enabled=false</code>.</li>
+</ul>
+<h3>Changes to JSON Output Object</h3>
+
+<ul>
+<li>Components that generate <code>MEDIA</code> tracks will result in new derivative <code>media</code> entries in the JSON output file. This
+  means it's possible to provide a single piece of media as an input and have more than one <code>media</code> entry in the JSON
+  output. The output will always include the original media.</li>
+<li>Each <code>media</code> entry in the JSON output now contains a <code>parentMediaId</code> in addition to the <code>mediaId</code>. The <code>parentMediaId</code>
+  for original source media will always be set to -1; otherwise, for derivative media, the <code>parentMediaId</code> is set the
+  <code>mediaId</code> of the source media from which the child media was derived.</li>
+<li>Each <code>media</code> entry also contains a new <code>frameRanges</code> and <code>timeRanges</code> collection.</li>
+<li>The JSON output file also contains a new <code>index</code> field for every track, relative to each piece of media.</li>
+</ul>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/792">#792</a>] Perform detection on images extracted from PDFs</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1283">#1283</a>] Add user-specified segment boundaries</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1374">#1374</a>] Transition from CentOS 7 to Ubuntu 20.04</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1396">#1396</a>] Report when job callbacks and TiesDb POSTs fail</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1398">#1398</a>] Add Triton Inference Server support to YOLO component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1428">#1428</a>] Allow pipelines to be specified in a job request</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1454">#1454</a>] Transition from Clair scans to Trivy scans</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1485">#1485</a>] Use <code>pyproject.toml</code> and <code>setup.cfg</code> instead of <code>setup.py</code></li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/803">#803</a>] Update Tika Image Detection to generate one track per piece of extracted media</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/808">#808</a>] Update Tika Text Detection component to not use leading zeros for <code>PAGE_NUM</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1105">#1105</a>] Remove dependency on QT from C++ SDK</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1282">#1282</a>] Use job id that enables load balancing</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1303">#1303</a>] Update Tika Image Detection to return <code>MEDIA</code> tracks</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1319">#1319</a>] Review existing error codes and remove unused or redundant error codes</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1384">#1384</a>] Update Apache Tika to 2.4.1 for TikaImageDetection and TikaTextDetection Components</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1436">#1436</a>] CLI Runner should initialize a component once when handling multiple jobs</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1465">#1465</a>] Remove YoloV3 support from OcvYoloDetection component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1513">#1513</a>] Update to Spring 5.3.18</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1528">#1528</a>] CLI runner should also sort by startOffsetTime</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1540">#1540</a>] Upgrade to Java 17</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1549">#1549</a>] Allow markup animation to be disabled</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1550">#1550</a>] Add track index to markup</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1372">#1372</a>] Tika Image Detection no longer misses images in PowerPoint and Word documents</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1449">#1449</a>] Simon data is now refreshed when clicking the Processes tab</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1495">#1495</a>] Fix bug where invalid CSRF token found for <code>/workflow-manager/login</code></li>
+</ul>
+<h1 id="openmpf-70x_1">OpenMPF 7.0.x</h1>
 <h2>7.0.0: July 2022</h2>
 
 <h3>Documentation</h3>
