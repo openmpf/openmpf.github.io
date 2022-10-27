@@ -252,17 +252,17 @@
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.</p>
 <div style="background-color:orange"><p style="color:white; padding:5px">
-    <b>WARNING:</b> 
-    For most component developers, these steps are not necessary. Instead, 
-    refer to the 
-    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md#overview">C++</a>, 
-    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md#overview">Python</a>, or 
-    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md#overview">Java</a> 
+    <b>WARNING:</b>
+    For most component developers, these steps are not necessary. Instead,
+    refer to the
+    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/cpp_executor/README.md#overview">C++</a>,
+    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/python/README.md#overview">Python</a>, or
+    <a href="https://github.com/openmpf/openmpf-docker/blob/master/components/java_executor/README.md#overview">Java</a>
     README for developing a Docker component in your desired language.
 </p></div>
 
 <div style="background-color:orange"><p style="color:white; padding:5px">
-    <b>WARNING:</b> This guide is a work in progress and may not be completely 
+    <b>WARNING:</b> This guide is a work in progress and may not be completely
     accurate or comprehensive.
 </p></div>
 
@@ -274,11 +274,11 @@ end integration testing.</p>
 <h1 id="setup-vm">Setup VM</h1>
 <ul>
 <li>
-<p>Download the ISO for the desktop version of Ubuntu 20.04 from 
+<p>Download the ISO for the desktop version of Ubuntu 20.04 from
   <a href="https://releases.ubuntu.com/20.04">https://releases.ubuntu.com/20.04</a>.</p>
 </li>
 <li>
-<p>Create an Ubuntu VM using the downloaded iso. This part is different based on 
+<p>Create an Ubuntu VM using the downloaded iso. This part is different based on
   what VM software you are using.</p>
 <ul>
 <li>Use mpf as your username.</li>
@@ -289,7 +289,7 @@ end integration testing.</p>
 </ul>
 </li>
 <li>
-<p>After completing the installation, you will likely be prompted to update 
+<p>After completing the installation, you will likely be prompted to update
   software. You should install the updates.</p>
 </li>
 <li>
@@ -303,7 +303,7 @@ end integration testing.</p>
 <p>Run <code>sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible</code></p>
 </li>
 <li>
-<p>Run <code>sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h</code> </p>
+<p>Run <code>sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h</code></p>
 </li>
 <li>
 <p>Run <code>sudo ln --symbolic /usr/bin/cmake /usr/bin/cmake3</code></p>
@@ -312,7 +312,7 @@ end integration testing.</p>
 <p>Run <code>sudo ln --symbolic /usr/bin/protoc /usr/local/bin/protoc</code></p>
 </li>
 <li>
-<p>Follow instructions to install Docker: 
+<p>Follow instructions to install Docker:
   <a href="https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository">https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository</a></p>
 </li>
 <li>
@@ -326,7 +326,7 @@ sudo systemctl enable docker.socket;
 </code></pre>
 <ul>
 <li>
-<p>Follow instructions so that you can run Docker without sudo: 
+<p>Follow instructions so that you can run Docker without sudo:
   <a href="https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user">https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user</a></p>
 </li>
 <li>
@@ -419,7 +419,7 @@ rm -rf /tmp/pngdefry;
 <li>Install Maven:</li>
 </ul>
 <pre><code class="language-bash">wget -O- 'https://archive.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz' \
-        | sudo tar --extract --gzip --directory /opt; 
+        | sudo tar --extract --gzip --directory /opt;
 sudo ln --symbolic /opt/apache-maven-3.3.3/bin/mvn /usr/local/bin;
 </code></pre>
 <ul>
@@ -453,35 +453,25 @@ sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
   <code>&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false"&gt;</code></p>
 </li>
 <li>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 38) under the line: 
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 38) under the line:
   <code>&lt;policyEntries&gt;</code>, add <br />
   <code>&lt;policyEntry queue="&gt;" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" /&gt;</code></p>
 </li>
 <li>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 66, after making the above addition), 
+<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 66, after making the above addition),
   change the line: <code>&lt;managementContext createConnector="false"/&gt;</code>
   <br /> to <br />
   <code>&lt;managementContext createConnector="true"/&gt;</code>.</p>
 </li>
 <li>
 <p>In <code>/opt/activemq/conf/log4j2.properties</code> (line 69), change the line <br />
-  <code>appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code> 
+  <code>appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code>
   <br /> to  <br />
   <code>appender.logfile.layout.pattern=%d %p [%t] %c - %m%n</code></p>
 </li>
 <li>
-<p>Install Tomcat:</p>
+<p>From your home directory run:</p>
 </li>
-</ul>
-<pre><code class="language-bash">wget -O- 'http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.78/bin/apache-tomcat-8.5.78.tar.gz' \
-        | sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-tomcat-8.5.78 /opt/apache-tomcat;
-sudo sed --in-place '24s/.*/    &lt;WatchedResource&gt;$\{catalina\.ba\se\}\/conf\/web.xml&lt;\/WatchedResource&gt;\n    &lt;Resources cachingAllowed=&quot;true&quot; cacheMaxSize=&quot;100000&quot; \/&gt;/' \
-    /opt/apache-tomcat/conf/context.xml;
-sudo chmod -R 777 /opt/apache-tomcat;
-</code></pre>
-<ul>
-<li>From your home directory run: </li>
 </ul>
 <pre><code class="language-bash">git clone https://github.com/openmpf/openmpf-projects.git --recursive;
 cd openmpf-projects;
@@ -493,7 +483,7 @@ git submodule foreach git checkout develop;
 <p>Run: <code>pip install openmpf-projects/openmpf/trunk/bin/mpf-scripts</code></p>
 </li>
 <li>
-<p>Add <code>PATH="$HOME/.local/bin:$PATH"</code> to <code>~/.bashrc</code> </p>
+<p>Add <code>PATH="$HOME/.local/bin:$PATH"</code> to <code>~/.bashrc</code></p>
 </li>
 <li>
 <p>Run <code>mkdir -p openmpf-projects/openmpf/trunk/install/share/logs</code></p>
@@ -524,39 +514,33 @@ git submodule foreach git checkout develop;
 build specific OpenMPF components. Refer to the commands in the <code>Dockerfile</code>
 for each component you're interested in.</p>
 <h1 id="configure-users">Configure Users</h1>
-<p>To change the default user password settings, modify 
-<code>openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/user.properties</code>. 
-Note that the default settings are public knowledge, which could be a security 
+<p>To change the default user password settings, modify
+<code>openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/user.properties</code>.
+Note that the default settings are public knowledge, which could be a security
 risk.</p>
-<p>Note that <code>mpf remove-user</code> and <code>mpf add-user</code> commands explained in the 
-<a href="#command-line-tools">Command Line Tools</a> section do not modify the 
-<code>user.properties</code> file. If you remove a user using the <code>mpf remove-user</code> 
-command, the changes will take effect at runtime, but an entry may still exist 
-for that user in the <code>user.properties</code> file. If so, then the user account will 
+<p>Note that <code>mpf remove-user</code> and <code>mpf add-user</code> commands explained in the
+<a href="#command-line-tools">Command Line Tools</a> section do not modify the
+<code>user.properties</code> file. If you remove a user using the <code>mpf remove-user</code>
+command, the changes will take effect at runtime, but an entry may still exist
+for that user in the <code>user.properties</code> file. If so, then the user account will
 be recreated the next time the Workflow Manager is restarted.</p>
 <h1 id="build-and-run-the-openmpf-workflow-manager-web-application">Build and Run the OpenMPF Workflow Manager Web Application</h1>
 <ul>
 <li>Build OpenMPF:</li>
 </ul>
-<pre><code class="language-bash">rm -rf /opt/apache-tomcat/webapps/workflow-manager*;
-cd ~/openmpf-projects/openmpf;
+<pre><code class="language-bash">cd ~/openmpf-projects/openmpf;
 mvn clean install \
     -DskipTests -Dmaven.test.skip=true \
     -DskipITs \
-    -Dcargo.maven.skip=true \
     -Dcomponents.build.components=openmpf-components/cpp/OcvFaceDetection \
     -Dstartup.auto.registration.skip=false;
-cp trunk/workflow-manager/target/workflow-manager.war /opt/apache-tomcat/webapps/workflow-manager.war
 </code></pre>
 <ul>
-<li>Start OpenMPF with <code>mpf start</code>. To view the Workflow Manager logs you can 
-  also run <code>tail -f /opt/apache-tomcat/logs/catalina.out</code> in another terminal.</li>
+<li>Start OpenMPF with <code>mpf start</code>.</li>
 </ul>
-<p>The web application should start running in the background as a daemon.
-Look for this log message in the Tomcat
-log (<code>/opt/apache-tomcat/logs/catalina.out</code>) with a time value indicating the
-Workflow Manager has finished starting:</p>
-<pre><code>INFO: Server startup in 39030 ms
+<p>Look for this log message in the terminal with a time value indicating the Workflow Manager has
+finished starting:</p>
+<pre><code>2022-10-11 12:21:16,447 INFO [main] o.m.m.Application - Started Application in 22.843 seconds (JVM running for 24.661)
 </code></pre>
 <p>After startup, the Workflow Manager will be available at
 <a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>.
@@ -567,20 +551,14 @@ the "mpf123" password. Please see the
 Alternatively, if you want to test admin capabilities then log in as "admin"
 user with the "mpfadm" password. Please see the
 <a href="../Admin-Guide/index.html">OpenMPF Admin Guide</a> for more information.
-When finished using OpenMPF, run <code>mpf stop</code>.</p>
+When finished using OpenMPF, stop Workflow Manager with <code>ctrl-c</code> and then run <code>mpf stop</code> to stop
+the other system dependencies.</p>
 <p>The preferred method to start and stop services for OpenMPF is with the
 <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these
 commands, please see the
 <a href="#command-line-tools">Command Line Tools</a> section.
 These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager,
-and Tomcat system processes.</p>
-<p>For debugging purposes, it may be helpful to manually start the Tomcat service
-in a separate terminal window to display the log output. To do that, use
-<code>mpf start --xtc</code> to start ActiveMQ, PostgreSQL, Redis, and the Node Manager
-without starting Tomcat. Then, in another terminal windows run:</p>
-<pre><code>/opt/apache-tomcat/bin/catalina.sh run
-</code></pre>
-<p>Press <code>ctrl-c</code> in the Tomcat window to stop Tomcat.</p>
+and Workflow Manager processes.</p>
 <h1 id="known-issues">Known Issues</h1>
 <p><strong>o.m.m.m.c.JobController - Failure creating job. supplier.get()</strong></p>
 <p>If you see an error message similar to:</p>
@@ -595,65 +573,65 @@ java.lang.NullPointerException: supplier.get()
 <code>export HOSTNAME=$(hostname)</code>. Then, restart the VM.</p>
 <h1 id="appendices"><strong>Appendices</strong></h1>
 <h1 id="command-line-tools">Command Line Tools</h1>
-<p>OpenMPF installs command line tools that can be accessed through a terminal 
-on the development machine. All of the tools take the form of actions: 
-<code>mpf &lt;action&gt; [options ...]</code>. </p>
-<p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for 
+<p>OpenMPF installs command line tools that can be accessed through a terminal
+on the development machine. All of the tools take the form of actions:
+<code>mpf &lt;action&gt; [options ...]</code>.</p>
+<p>Execute <code>mpf --help</code> for general documentation and <code>mpf &lt;action&gt; --help</code> for
 documentation about a specific action.</p>
 <ul>
-<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF 
-  system dependencies, including PostgreSQL, ActiveMQ, Redis, Tomcat, and the 
+<li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF
+  system dependencies, including PostgreSQL, ActiveMQ, Redis, Workflow Manager, and the
   node managers on the various nodes in the OpenMPF cluster.<ul>
-<li><code>mpf status</code>: displays a message indicating whether each of the system 
+<li><code>mpf status</code>: displays a message indicating whether each of the system
    dependencies is running or not</li>
 <li><code>mpf start</code>: starts all of the system dependencies</li>
 <li><code>mpf stop</code>: stops all of the system dependencies</li>
 <li><code>mpf restart</code> : stops and then starts all of the system dependencies</li>
 </ul>
 </li>
-<li><strong>User Actions</strong>: Actions for managing Workflow Manager user accounts. If 
-  changes are made to an existing user then that user will need to log off or 
+<li><strong>User Actions</strong>: Actions for managing Workflow Manager user accounts. If
+  changes are made to an existing user then that user will need to log off or
   the Workflow Manager will need to be restarted for the changes to take effect.<ul>
-<li><code>mpf list-users</code> : lists all of the existing user accounts and their role 
+<li><code>mpf list-users</code> : lists all of the existing user accounts and their role
    (non-admin or admin)</li>
-<li><code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be 
+<li><code>mpf add-user &lt;username&gt; &lt;role&gt;</code>: adds a new user account; will be
    prompted to enter the account password</li>
 <li><code>mpf remove-user &lt;username&gt;</code> : removes an existing user account</li>
-<li><code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin 
+<li><code>mpf change-role &lt;username&gt; &lt;role&gt;</code> : change the role (non-admin to admin
   or vice versa) for an existing user</li>
-<li><code>mpf change-password &lt;username&gt;</code>: change the password for an existing 
+<li><code>mpf change-password &lt;username&gt;</code>: change the password for an existing
   user; will be prompted to enter the new account password</li>
 </ul>
 </li>
-<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a 
-  new install state. User accounts, registered components, as well as custom 
+<li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a
+  new install state. User accounts, registered components, as well as custom
   actions, tasks, and pipelines, are preserved.<ul>
-<li><code>mpf clean</code>: cleans out old job information and results, pending job 
-  requests, marked up media files, and ActiveMQ data, but preserves log 
+<li><code>mpf clean</code>: cleans out old job information and results, pending job
+  requests, marked up media files, and ActiveMQ data, but preserves log
   files and uploaded media</li>
-<li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code> 
+<li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code>
   but also deletes log files and uploaded media</li>
 </ul>
 </li>
 <li><strong>Node Action</strong>: Actions for managing node membership in the OpenMPF cluster.<ul>
-<li><code>mpf list-nodes</code>: If the Workflow Manager is running, get the current 
+<li><code>mpf list-nodes</code>: If the Workflow Manager is running, get the current
   JGroups view; otherwise, list the core nodes</li>
 </ul>
 </li>
 </ul>
 <h2 id="packaging-a-component">Packaging a Component</h2>
-<p>In a non-Docker deployment, admin users can register component packages through 
+<p>In a non-Docker deployment, admin users can register component packages through
 the web UI. Refer to <a href="#component-registration">Component Registration</a>.</p>
-<p>Once the descriptor file is complete, as described in 
-<a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>, 
-the next step is to compile your component source code, and finally, create a 
-.tar.gz package containing the descriptor file, component library, and all 
+<p>Once the descriptor file is complete, as described in
+<a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>,
+the next step is to compile your component source code, and finally, create a
+.tar.gz package containing the descriptor file, component library, and all
 other necessary files.</p>
-<p>The package should contain a top-level directory with a unique name that will 
-not conflict with existing component packages that have already been developed. 
+<p>The package should contain a top-level directory with a unique name that will
+not conflict with existing component packages that have already been developed.
 The top-level directory name should be the same as the <code>componentName</code>.</p>
-<p>Within the top-level directory there must be a directory named “descriptor” 
-with the descriptor JSON file in it. The name of the file must be 
+<p>Within the top-level directory there must be a directory named “descriptor”
+with the descriptor JSON file in it. The name of the file must be
 “descriptor.json”.</p>
 <p>Example:</p>
 <pre><code>//sample-component-1.0.0-tar.gz contents
@@ -664,92 +642,92 @@ SampleComponent/
   lib/
 </code></pre>
 <h3 id="installing-and-registering-a-component">Installing and registering a component</h3>
-<p>The Component Registration web page, located in the Admin section of the 
+<p>The Component Registration web page, located in the Admin section of the
 OpenMPF web user interface, can be used to upload and register the component.</p>
-<p>Drag and drop the .tar.gz file containing the component onto the dropzone area 
+<p>Drag and drop the .tar.gz file containing the component onto the dropzone area
 of that page. The component will automatically be uploaded and registered.</p>
-<p>Upon successful registration, the component will be available for deployment 
-onto OpenMPF nodes via the Node Configuration web page and 
+<p>Upon successful registration, the component will be available for deployment
+onto OpenMPF nodes via the Node Configuration web page and
 <code>/rest/nodes/config</code> end point.</p>
-<p>If the descriptor contains custom actions, tasks, or pipelines, then they will 
+<p>If the descriptor contains custom actions, tasks, or pipelines, then they will
 be automatically added to the system upon registration.</p>
 <blockquote>
-<p><strong>NOTE:</strong> If the descriptor does not contain custom actions, tasks, 
-or pipelines, then a default action, task, and pipeline will be generated 
+<p><strong>NOTE:</strong> If the descriptor does not contain custom actions, tasks,
+or pipelines, then a default action, task, and pipeline will be generated
 and added to the system.</p>
-<p>The default action will use the component’s algorithm with its default 
+<p>The default action will use the component’s algorithm with its default
 property value settings.
 The default task will use the default action.
-The default pipeline will use the default task. This will only be generated 
+The default pipeline will use the default task. This will only be generated
 if the algorithm does not specify any <code>requiresCollection</code> states.</p>
 </blockquote>
 <h3 id="unregistering-a-component">Unregistering a component</h3>
-<p>A component can be unregistered by using the remove button on the Component 
+<p>A component can be unregistered by using the remove button on the Component
 Registration page.</p>
-<p>During unregistration, all services, algorithms, actions, tasks, and pipelines 
-associated with the component are deleted. Additionally, all actions, tasks, 
+<p>During unregistration, all services, algorithms, actions, tasks, and pipelines
+associated with the component are deleted. Additionally, all actions, tasks,
 and pipelines that depend on these elements are removed.</p>
 <h1 id="web-ui">Web UI</h1>
-<p>The following sections will cover some additional functionality permitted to 
+<p>The following sections will cover some additional functionality permitted to
 admin users in a non-Docker deployment.</p>
 <h2 id="node-configuration-and-status">Node Configuration and Status</h2>
-<p>This page provides a list of all of the services that are configured to run on 
+<p>This page provides a list of all of the services that are configured to run on
 the OpenMPF cluster:</p>
 <p><img alt="Node and Process Status Page" src="../img/mpf-adm-node.png" title="Node and Process Status Page" /></p>
-<p>Each node shows information about the current status of each service, if it is 
-unlaunchable due to an underlying error, and how many services are running for 
-each node. If a service is unlaunchable, it will be indicated using a red 
-status icon (not shown). Note that services are grouped by component type. 
+<p>Each node shows information about the current status of each service, if it is
+unlaunchable due to an underlying error, and how many services are running for
+each node. If a service is unlaunchable, it will be indicated using a red
+status icon (not shown). Note that services are grouped by component type.
 Click the chevron "&gt;" to expand a service group to view the individual services.</p>
-<p>An admin user can start, stop, or restart them on an individual basis. If a 
-non-admin user views this page, the "Action(s)" column is not displayed. This 
-page also enables an admin user to edit the configuration for all nodes in the 
+<p>An admin user can start, stop, or restart them on an individual basis. If a
+non-admin user views this page, the "Action(s)" column is not displayed. This
+page also enables an admin user to edit the configuration for all nodes in the
 OpenMPF cluster. A non-admin user can only view the existing configuration.</p>
-<p>An admin user can add a node by using the "Add Node" button and selecting a 
-node in the OpenMPF cluster from the drop-down list. You can also select to add 
-all services at this time. A node and all if its configured services can be 
+<p>An admin user can add a node by using the "Add Node" button and selecting a
+node in the OpenMPF cluster from the drop-down list. You can also select to add
+all services at this time. A node and all if its configured services can be
 removed by clicking the trash can to the right of the node's hostname.</p>
-<p>An admin user can add services individually by selecting the node edit button 
-at the bottom of the node. The number of service instances can be increased or 
+<p>An admin user can add services individually by selecting the node edit button
+at the bottom of the node. The number of service instances can be increased or
 decreased by using the drop-down. Click the "Submit" button to save the changes.</p>
 <p>When making changes, please be aware of the following:</p>
 <ul>
 <li>It may take a minute for the configuration to take effect on the server.</li>
-<li>If you remove an existing service from a node, any job that service is 
+<li>If you remove an existing service from a node, any job that service is
   processing will be stopped, and you will need to resubmit that job.</li>
-<li>If you create a new node, its configuration will not take effect until the 
+<li>If you create a new node, its configuration will not take effect until the
   OpenMPF software is properly installed and started on the associated host.</li>
-<li>If you delete a node, you will need to manually turn off the hardware running 
+<li>If you delete a node, you will need to manually turn off the hardware running
   that node (deleting a node does not shut down the machine).</li>
 </ul>
 <h2 id="component-registration">Component Registration</h2>
-<p>This page allows an admin user to add and remove non-default components to and 
+<p>This page allows an admin user to add and remove non-default components to and
 from the system:</p>
 <p><img alt="Component Registration Page" src="../img/mpf-adm-component.png" title="Component Registration Page" /></p>
-<p>A component package takes the form of a tar.gz file. An admin user can either 
-drag and drop the file onto the "Upload a new component" dropzone area or click 
-the dropzone area to open a file browser and select the file that way. 
-In either case, the component will begin to be uploaded to the system. If the 
-admin user dragged and dropped the file onto the dropzone area then the upload 
-progress will be shown in that area. Once uploaded, the workflow manager will 
-automatically attempt to register the component. Notification messages will 
-appear in the upper right side of the screen to indicate success or failure if 
-an error occurs. The "Current Components" table will display the component 
+<p>A component package takes the form of a tar.gz file. An admin user can either
+drag and drop the file onto the "Upload a new component" dropzone area or click
+the dropzone area to open a file browser and select the file that way.
+In either case, the component will begin to be uploaded to the system. If the
+admin user dragged and dropped the file onto the dropzone area then the upload
+progress will be shown in that area. Once uploaded, the workflow manager will
+automatically attempt to register the component. Notification messages will
+appear in the upper right side of the screen to indicate success or failure if
+an error occurs. The "Current Components" table will display the component
 status.</p>
 <p><img alt="Component Registration Page" src="../img/mpf-adm-component2.png" title="Component Successfully Registered" /></p>
-<p>If for some reason the component package upload succeeded but the component 
-registration failed then the admin user will be able to click the "Register" 
-button again to try to another registration attempt. For example, the admin 
-user may do this after reviewing the workflow manager logs and resolving any 
-issues that prevented the component from successfully registering the first 
-time. One reason may be that a component with the same name already exists on 
-the system. Note that an error will also occur if the top-level directory of 
+<p>If for some reason the component package upload succeeded but the component
+registration failed then the admin user will be able to click the "Register"
+button again to try to another registration attempt. For example, the admin
+user may do this after reviewing the workflow manager logs and resolving any
+issues that prevented the component from successfully registering the first
+time. One reason may be that a component with the same name already exists on
+the system. Note that an error will also occur if the top-level directory of
 the component package, once extracted, already exists in the <code>/opt/mpf/plugins</code>
 directory on the system.</p>
-<p>Once registered, an admin user has the option to remove the component. This 
-will unregister it and completely remove any configured services, as well as 
-the uploaded file and its extracted contents, from the system. Also, the 
-component algorithm as well as any actions, tasks, and pipelines specified in 
+<p>Once registered, an admin user has the option to remove the component. This
+will unregister it and completely remove any configured services, as well as
+the uploaded file and its extracted contents, from the system. Also, the
+component algorithm as well as any actions, tasks, and pipelines specified in
 the component's descriptor file will be removed when the component is removed.</p>
               
             </div>
