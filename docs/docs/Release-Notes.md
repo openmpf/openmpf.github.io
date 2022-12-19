@@ -41,7 +41,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
   artifacts, markup files, and derivative media.
 - Specifically, the Workflow Manager will upload objects to
   `<S3_RESULTS_BUCKET>/<S3_UPLOAD_OBJECT_KEY_PREFIX><file-hash-first-two-chars>/<file-hash-second-two-chars>/<file-hash>`.
-- For example, if you wish to add "work/" to the path, then set `S3_UPLOAD_OBJECT_KEY_PREFIX=work/`.
+- For example, if you wish to add "work/" to the object key, then set `S3_UPLOAD_OBJECT_KEY_PREFIX=work/`.
 
 <h3>Features</h3>
 
