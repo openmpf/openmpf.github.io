@@ -24,7 +24,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
       detection with the lower frame number. This is the default setting.
     - `FIRST`: Select the detection with the lowest frame number
     - `LAST`: Select the detection with the highest frame number
-    - `MIDDLE`: Select the detection with the frame number closest the middle frame of the track, preferring the
+    - `MIDDLE`: Select the detection with the frame number closest to the middle frame of the track, preferring the
       detection with the lower frame number if there is an even number of frames
 
 <h3>Automatic Rotation and Horizontal Flip Enabled by Default</h3>
