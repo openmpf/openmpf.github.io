@@ -61,6 +61,9 @@
     <a class="current" href="index.html">Release Notes</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#openmpf-71x">OpenMPF 7.1.x</a></li>
+    
+
     <li class="toctree-l3"><a href="#openmpf-70x">OpenMPF 7.0.x</a></li>
     
 
@@ -255,7 +258,104 @@
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="openmpf-71x">OpenMPF 7.1.x</h1>
+<h2>7.1.1: December 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1634">#1634</a>] Update version numbers to 7.1</li>
+</ul>
+<h2>7.1.0: December 2022</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Updated the Object Storage Guide with <code>S3_UPLOAD_OBJECT_KEY_PREFIX</code>.</li>
+<li>Updated the Markup Guide with <code>MARKUP_TEXT_LABEL_MAX_LENGTH</code>.</li>
+</ul>
+<h3>Exemplar Selection Policy</h3>
+
+<ul>
+<li>The policy for selecting the exemplar detection for each track can now be set using the <code>EXEMPLAR_POLICY</code> job property
+  with following values:<ul>
+<li><code>CONFIDENCE</code>: Select the detection with the maximum confidence. If some confidences are the same, select the
+  detection with the lower frame number. This is the default setting.</li>
+<li><code>FIRST</code>: Select the detection with the lowest frame number</li>
+<li><code>LAST</code>: Select the detection with the highest frame number</li>
+<li><code>MIDDLE</code>: Select the detection with the frame number closest to the middle frame of the track, preferring the
+  detection with the lower frame number if there is an even number of frames</li>
+</ul>
+</li>
+</ul>
+<h3>Automatic Rotation and Horizontal Flip Enabled by Default</h3>
+
+<ul>
+<li>It is no longer necessary to explicitly set <code>AUTO_ROTATE</code> and <code>AUTO_FLIP</code> to true since that is now the default value.</li>
+<li>These properties affect all video and image components that use the MPFImageReader and MPFVideoCapture tools. When
+  true, if the image has EXIF data, or there is metadata associated with a video that ffmpeg understands, the tools will
+  use that information to properly orient the frames before returning the frames to the component for processing.</li>
+</ul>
+<h3>Support S3 Object Storage Key Prefix</h3>
+
+<ul>
+<li>Set the <code>S3_UPLOAD_OBJECT_KEY_PREFIX</code> job property or <code>s3.upload.object.key.prefix</code> system property to add a prefix to
+  object keys when the Workflow Manager uploads objects to the S3 object store. This affects the JSON output object,
+  artifacts, markup files, and derivative media.</li>
+<li>Specifically, the Workflow Manager will upload objects to
+  <code>&lt;S3_RESULTS_BUCKET&gt;/&lt;S3_UPLOAD_OBJECT_KEY_PREFIX&gt;&lt;file-hash-first-two-chars&gt;/&lt;file-hash-second-two-chars&gt;/&lt;file-hash&gt;</code>.</li>
+<li>For example, if you wish to add "work/" to the object key, then set <code>S3_UPLOAD_OBJECT_KEY_PREFIX=work/</code>.</li>
+</ul>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1526">#1526</a>] Allow markup to display more than 10 characters in the text
+  part of the label</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1527">#1527</a>] Enable the Workflow Manager to select the middle detection
+  as the exemplar</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1566">#1566</a>] Make <code>AUTO_ROTATE</code> and <code>AUTO_FLIP</code> true by default</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1569">#1569</a>] Modify C++ and Python component executor to automatically
+  add the job name to log messages</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1621">#1621</a>] Make S3 object keys used for upload configurable</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1602">#1602</a>] Update Workflow Manager to use Spring Boot</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1631">#1631</a>] Update byte-buddy, Mockito, and Hibernate versions to
+  resolve build issue. Most notably, update Hibernate to 5.6.14.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1632">#1632</a>] Update ActiveMQ to 5.17.3</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1581">#1581</a>] Don't change track start and end frame when
+  <code>FEED_FORWARD_TOP_CONFIDENCE_COUNT</code> is disabled</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1595">#1595</a>] Work around how Ubuntu only recognizes certificate files
+  that end in .crt</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1610">#1610</a>] Prevent premature pipeline creation when using web UI</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1612">#1612</a>] At startup, prevent Workflow Manager from consuming from
+  queues before purging them</li>
+</ul>
 <h1 id="openmpf-70x">OpenMPF 7.0.x</h1>
+<h2>7.0.3: September 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1561">#1561</a>] Fix logging for Python components when running through CLI
+  runner</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1583">#1583</a>] Can now properly view media while job is in progress</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1587">#1587</a>] Fix bugs in amq_detection_component's use of select</li>
+</ul>
+<h2>7.0.2: August 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1562">#1562</a>] Fix bug where an ffmpeg change prevented detecting video
+  rotation</li>
+</ul>
 <h2>7.0.0: July 2022</h2>
 
 <h3>Documentation</h3>

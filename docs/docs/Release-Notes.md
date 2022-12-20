@@ -1,7 +1,93 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 7.1.x
+
+<h2>7.1.1: December 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1634](https://github.com/openmpf/openmpf/issues/1634)] Update version numbers to 7.1
+
+<h2>7.1.0: December 2022</h2>
+
+<h3>Documentation</h3>
+
+- Updated the Object Storage Guide with `S3_UPLOAD_OBJECT_KEY_PREFIX`.
+- Updated the Markup Guide with `MARKUP_TEXT_LABEL_MAX_LENGTH`.
+
+<h3>Exemplar Selection Policy</h3>
+
+- The policy for selecting the exemplar detection for each track can now be set using the `EXEMPLAR_POLICY` job property
+  with following values:
+    - `CONFIDENCE`: Select the detection with the maximum confidence. If some confidences are the same, select the
+      detection with the lower frame number. This is the default setting.
+    - `FIRST`: Select the detection with the lowest frame number
+    - `LAST`: Select the detection with the highest frame number
+    - `MIDDLE`: Select the detection with the frame number closest to the middle frame of the track, preferring the
+      detection with the lower frame number if there is an even number of frames
+
+<h3>Automatic Rotation and Horizontal Flip Enabled by Default</h3>
+
+- It is no longer necessary to explicitly set `AUTO_ROTATE` and `AUTO_FLIP` to true since that is now the default value.
+- These properties affect all video and image components that use the MPFImageReader and MPFVideoCapture tools. When
+  true, if the image has EXIF data, or there is metadata associated with a video that ffmpeg understands, the tools will
+  use that information to properly orient the frames before returning the frames to the component for processing.
+
+<h3>Support S3 Object Storage Key Prefix</h3>
+
+- Set the `S3_UPLOAD_OBJECT_KEY_PREFIX` job property or `s3.upload.object.key.prefix` system property to add a prefix to
+  object keys when the Workflow Manager uploads objects to the S3 object store. This affects the JSON output object,
+  artifacts, markup files, and derivative media.
+- Specifically, the Workflow Manager will upload objects to
+  `<S3_RESULTS_BUCKET>/<S3_UPLOAD_OBJECT_KEY_PREFIX><file-hash-first-two-chars>/<file-hash-second-two-chars>/<file-hash>`.
+- For example, if you wish to add "work/" to the object key, then set `S3_UPLOAD_OBJECT_KEY_PREFIX=work/`.
+
+<h3>Features</h3>
+
+- [[#1526](https://github.com/openmpf/openmpf/issues/1526)] Allow markup to display more than 10 characters in the text
+  part of the label
+- [[#1527](https://github.com/openmpf/openmpf/issues/1527)] Enable the Workflow Manager to select the middle detection
+  as the exemplar
+- [[#1566](https://github.com/openmpf/openmpf/issues/1566)] Make `AUTO_ROTATE` and `AUTO_FLIP` true by default
+- [[#1569](https://github.com/openmpf/openmpf/issues/1569)] Modify C++ and Python component executor to automatically
+  add the job name to log messages
+- [[#1621](https://github.com/openmpf/openmpf/issues/1621)] Make S3 object keys used for upload configurable
+
+<h3>Updates</h3>
+
+- [[#1602](https://github.com/openmpf/openmpf/issues/1602)] Update Workflow Manager to use Spring Boot
+- [[#1631](https://github.com/openmpf/openmpf/issues/1631)] Update byte-buddy, Mockito, and Hibernate versions to
+  resolve build issue. Most notably, update Hibernate to 5.6.14.
+- [[#1632](https://github.com/openmpf/openmpf/issues/1632)] Update ActiveMQ to 5.17.3
+
+<h3>Bug Fixes</h3>
+
+- [[#1581](https://github.com/openmpf/openmpf/issues/1581)] Don't change track start and end frame when
+  `FEED_FORWARD_TOP_CONFIDENCE_COUNT` is disabled
+- [[#1595](https://github.com/openmpf/openmpf/issues/1595)] Work around how Ubuntu only recognizes certificate files
+  that end in .crt
+- [[#1610](https://github.com/openmpf/openmpf/issues/1610)] Prevent premature pipeline creation when using web UI
+- [[#1612](https://github.com/openmpf/openmpf/issues/1612)] At startup, prevent Workflow Manager from consuming from
+  queues before purging them
+
 # OpenMPF 7.0.x
+
+<h2>7.0.3: September 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1561](https://github.com/openmpf/openmpf/issues/1561)] Fix logging for Python components when running through CLI
+  runner
+- [[#1583](https://github.com/openmpf/openmpf/issues/1583)] Can now properly view media while job is in progress
+- [[#1587](https://github.com/openmpf/openmpf/issues/1587)] Fix bugs in amq_detection_component's use of select
+
+<h2>7.0.2: August 2022</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1562](https://github.com/openmpf/openmpf/issues/1562)] Fix bug where an ffmpeg change prevented detecting video
+  rotation
 
 <h2>7.0.0: July 2022</h2>
 
@@ -108,13 +194,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 - The error codes shown on the left were redundant and replaced with the corresponding error codes on the right:
 
 | Old Error Code                | New Error Code                 |
-|-------------------------------|--------------------------------|
+| ----------------------------- | ------------------------------ |
 | MPF_IMAGE_READ_ERROR          | MPF_COULD_NOT_READ_MEDIA       |
 | MPF_BOUNDING_BOX_SIZE_ERROR   | MPF_BAD_FRAME_SIZE             |
 | MPF_JOB_PROPERTY_IS_NOT_INT   | MPF_INVALID_PROPERTY           |
 | MPF_JOB_PROPERTY_IS_NOT_FLOAT | MPF_INVALID_PROPERTY           |
 | MPF_INVALID_FRAME_INTERVAL    | MPF_INVALID_PROPERTY           |
- | MPF_DETECTION_TRACKING_FAILED | MPF_OTHER_DETECTION_ERROR_TYPE |
+| MPF_DETECTION_TRACKING_FAILED | MPF_OTHER_DETECTION_ERROR_TYPE |
 
 Also, the following error codes are no longer being used and have been removed:
 
