@@ -611,6 +611,7 @@ MPFVideoJob(
           <li><code>MIME_TYPE</code> : the MIME type of the media</li>
           <li><code>FRAME_WIDTH</code> : the width of a frame in pixels</li>
           <li><code>FRAME_HEIGHT</code> : the height of a frame in pixels</li>
+          <li><code>HAS_CONSTANT_FRAME_RATE</code> : set to true if the video has a constant frame rate; otherwise, omitted or set to false if the video has variable frame rate or the type of frame rate cannot be determined</li>
         </ul>
         May include the following key-value pair:
         <ul>
