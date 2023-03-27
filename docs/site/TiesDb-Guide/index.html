@@ -348,9 +348,9 @@ to ignore the previously mentioned job properties when computing the job configu
 <code>data.ties.db.check.ignorable.properties.file</code> system property contains the path to the JSON file.
 The JSON file must contain a list of objects with two properties: <code>ignorableForMediaTypes</code> and
 <code>names</code>. <code>ignorableForMediaTypes</code> is a list of strings specifying which media types are able
-to ignore the properties listed in <code>names</code> list.</p>
+to ignore the properties listed in the <code>names</code> list.</p>
 <p>In the example below, the <code>"VERBOSE"</code> job property is never included in the job hash because all
-media types are present in the <code>ignorableForMediaTypes</code> property. <code>"ARTIFACT_EXTRACTION_POLICY"</code>
+media types are present in the <code>ignorableForMediaTypes</code> list. <code>"ARTIFACT_EXTRACTION_POLICY"</code>
 is ignored when the media is audio or unknown. <code>"FRAME_INTERVAL"</code> appears in both the second
 and third object, so it is ignorable when the media is audio, unknown, or image.</p>
 <pre><code class="language-json">[
@@ -368,12 +368,12 @@ and third object, so it is ignorable when the media is audio, unknown, or image.
   }
 ]
 </code></pre>
-<p>The hash of the job's media is also included when computing the job configuration hash. If the job
-request contains the media's hash and MIME type, Workflow Manager can avoid downloading the media
-if a match is found in TiesDB. If the media's hash and MIME type are not included in the job
-request Workflow Manager will use the normal media inspection process to get that information. If
-the media is not a local path, this will require Workflow Manager to download the media. Below
-is an example of a job creation request that includes the media's hash and MIME type:</p>
+<p>The SHA-256 hash of the job's media is also included when computing the job configuration hash.
+If the job request contains the media's hash and MIME type, Workflow Manager can avoid downloading
+the media if a match is found in TiesDB. If the media's hash and MIME type are not included in the
+job request Workflow Manager will use the normal media inspection process to get that information.
+If the media is not a local path, this will require Workflow Manager to download the media.</p>
+<p>Below is an example of a job creation request that includes the media's hash and MIME type:</p>
 <pre><code class="language-json">{
   &quot;algorithmProperties&quot;: {},
   &quot;buildOutput&quot;: true,

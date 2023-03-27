@@ -238,6 +238,8 @@
         <div class="toc-entry">Algorithm.Provides</div>
         <div class="toc-entry">AlgorithmProperty</div>
         <div class="toc-entry">Algorithm.Requires</div>
+        <div class="toc-entry">TiesDbRepostResponse</div>
+        <div class="toc-entry">TiesDbRepostResponse.Failure</div>
 
 
         <div style='page-break-after:always'></div>
@@ -277,6 +279,7 @@
         <div class="toc-entry">POST &nbsp;&nbsp;/rest/actions</div>
         <div class="toc-entry">DELETE &nbsp;&nbsp;/rest/actions?name={name}</div>
         <div class="toc-entry">GET &nbsp;&nbsp;/rest/algorithms</div>
+        <div class="toc-entry">POST &nbsp;&nbsp;/rest/jobs/tiesdbrepost</div>
         <div style='page-break-after:always'></div>
     </div>
     <div style='page-break-after:always'></div>
@@ -1785,6 +1788,66 @@
                 <td style='width:10%;'>array&lt;string&gt;</td>
                 <td style='width:30%;'>
                     The names of the states required by the algorithm.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3 class="numbered-content">TiesDbRepostResponse</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>success</td>
+                <td style='width:10%;'>array&lt;integer&gt;</td>
+                <td style='width:30%;'>
+                    The job ids that were successfully re-posted to TiesDb.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>failures</td>
+                <td style='width:10%;'>array&lt;TiesDbRepostResponse.Failure&gt;</td>
+                <td style='width:30%;'>
+                    An array containing the job ids and descriptions of failed TiesDb re-posts.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br />
+    </div>
+    <div class="div-container-margin">
+        <h3 class="numbered-content">TiesDbRepostResponse.Failure</h3>
+        <hr />
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style=';background-color: #EAEAEA'>
+                <td style='width:30%;'>jobId</td>
+                <td style='width:10%;'>integer</td>
+                <td style='width:30%;'>
+                    An id of a job that was not successfully re-posted to TiesDb.
+                </td>
+            </tr>
+            <tr>
+                <td style='width:30%;'>error</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A textual description explaining why the TiesDb re-post failed.
                 </td>
             </tr>
             </tbody>
@@ -5165,6 +5228,104 @@ http://api.example.com/foo?jobid=hostname-1&outputobjecturi=file%3A%2F%2F%2Fpath
                                 <td class='td-alignment-small'>401</td>
                                 <td class='td-alignment-std'>
                                     Bad credentials.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="div-container-margin">
+        <pre class="post"><code class="huge"><span class="numbered-content">POST</span>&nbsp;&nbsp;/rest/jobs/tiesdbrepost</code></pre>
+        <div>
+            <table class='table-margin'>
+                <tr>
+                    <td class='td-alignment-small'><b>Summary</b></td>
+                    <td class='td-alignment-std'>
+                        Retries posting job results to TiesDB.
+                    </td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Description</b></td>
+                    <td class='td-alignment-std'>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Operation Id</b></td>
+                    <td class='td-alignment-std'></td>
+                </tr>
+                <tr style=';background-color: #EAEAEA'>
+                    <td class='td-alignment-small'><b>Produces</b></td>
+                    <td class='td-alignment-std'>TiesDbRepostResponse</td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Parameters</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <thead>
+                            <tr>
+                                <td class='small-heading'>Name</td>
+                                <td class='small-heading'>In</td>
+                                <td class='small-heading'>Description</td>
+                                <td class='small-heading'>Required</td>
+                                <td class='small-heading'>Type</td>
+                                <td class='small-heading'>Format</td>
+                                <td class='small-heading'>Collection Format</td>
+                                <td class='small-heading'>Default</td>
+                                <td class='small-heading'>Min</td>
+                                <td class='small-heading'>Max</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style=';background-color: #EAEAEA'>
+                                <td class='td-alignment-small-no-width'>jobIds</td>
+                                <td class='td-alignment-small-no-width'>body</td>
+                                <td class='td-alignment-small-no-width'>
+                                    An array of job ids that should have their results re-posted
+                                    to TiesDb.
+                                </td>
+                                <td class='td-alignment-small-no-width'>Yes</td>
+                                <td class='td-alignment-small-no-width'>
+                                    array&lt;integer&gt;
+                                </td>
+                                <td class='td-alignment-small-no-width'>application/json</td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                                <td class='td-alignment-small-no-width'></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Tags</b></td>
+                </tr>
+                <tr>
+                    <td class='td-alignment-small'><b>Responses</b></td>
+                    <td class='td-alignment-std' style='padding-left:0px!important;margin-left:0px!important'>
+                        <table class='table-margin'>
+                            <tr>
+                                <td class='td-alignment-small'><b>code</b></td>
+                                <td class='td-alignment-std'><b>description</b></td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>200</td>
+                                <td class='td-alignment-std'>
+                                    Success
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>401</td>
+                                <td class='td-alignment-std'>
+                                    Bad credentials.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class='td-alignment-small'>500</td>
+                                <td class='td-alignment-std'>
+                                    Failed to re-post results to TiesDb
                                 </td>
                             </tr>
                         </table>
