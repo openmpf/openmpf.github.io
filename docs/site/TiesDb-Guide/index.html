@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>TiesDb Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "TiesDb Guide";
+    var mkdocs_page_input_path = "TiesDb-Guide.md";
+    var mkdocs_page_url = "/TiesDb-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../index.html">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">General</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Release-Notes/index.html">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Guides</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Install-Guide/index.html">Install Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../User-Guide/index.html">User Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Segmentation-Guide/index.html">Media Segmentation Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Derivative-Media-Guide/index.html">Derivative Media Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">TiesDb Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#tiesdb-overview">TiesDb Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#configuration">Configuration</a></li>
+    
+
+    <li class="toctree-l3"><a href="#after-job-supplemental-creation">After Job Supplemental Creation</a></li>
+    
+
+    <li class="toctree-l3"><a href="#before-job-check">Before Job Check</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Additional Developer Resources</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Node-Guide/index.html">Node Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Guides &raquo;</li>
+        
+      
+    
+    <li>TiesDb Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="tiesdb-overview">TiesDb Overview</h1>
+<p>Refer to <a href="https://github.com/Noblis/ties-lib">https://github.com/Noblis/ties-lib</a> for more information on the Triage Import Export
+Schema (TIES). For each piece of media, we create one or more TIES
+"supplementalDescription (Data Object)" entries in the database, one for each
+analytic (algorithm) run on the media. In general, a "supplementalDescription" is a kind of TIES
+"assertion", which is used to represent metadata about the media object. In our case it
+represents the detection and track information in the OpenMPF JSON output object. Workflow Manager
+can be configured to check TiesDb for a supplemental it previously created and use the results
+from that previous job to avoid re-running the job.</p>
+<h1 id="configuration">Configuration</h1>
+<ul>
+<li><code>TIES_DB_URL</code> job property or <code>ties.db.url</code> system property<ul>
+<li>When provided, information about completed jobs will be sent to the specified TiesDb server.</li>
+</ul>
+</li>
+<li><code>SKIP_TIES_DB_CHECK</code> job property or <code>ties.db.skip.check</code> system property<ul>
+<li>When true, TiesDb won't be checked for a compatible job before processing media.</li>
+</ul>
+</li>
+<li><code>TIES_DB_S3_COPY_DISABLED</code> job property or <code>ties.db.s3.copy.disabled</code> system property<ul>
+<li>When true and a job is skipped because a compatible job is found in TiesDb, the results
+  from the previous job will not be copied to a different S3 bucket.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_ACCESS_KEY</code> job property or <code>ties.db.copy.src.s3.access.key</code> system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 access key
+  that will be used when getting the results from S3. If not provided, defaults to the value of
+  <code>S3_ACCESS_KEY</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_SECRET_KEY</code> job property or <code>ties.db.copy.src.s3.secret.key</code> system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 secret key
+  that will be used when getting the results from S3. If not provided, defaults to the value of
+  <code>S3_SECRET_KEY</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_SESSION_TOKEN</code> job property or <code>ties.db.copy.src.s3.session.token</code> system
+  property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 session
+  token that will be used when getting the results from S3. If not provided, defaults to the
+  value of <code>S3_SESSION_TOKEN</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_REGION</code> job property or <code>ties.db.copy.src.s3.region</code> system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 region that
+  will be used when getting the results from S3. If not provided, defaults to the value of
+  <code>S3_REGION</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_USE_VIRTUAL_HOST</code> job property or <code>ties.db.copy.src.s3.use.virtual.host</code>
+  system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this enables virtual host
+  style bucket URIs. If not provided, defaults to the value of <code>S3_USE_VIRTUAL_HOST</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_HOST</code> job property or <code>ties.db.copy.src.s3.host</code> system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 host that
+  will be used when getting the results from S3. If not provided, defaults to the value of
+  <code>S3_HOST</code>.</li>
+</ul>
+</li>
+<li><code>TIES_DB_COPY_SRC_S3_UPLOAD_OBJECT_KEY_PREFIX</code> job property or
+  <code>ties.db.copy.src.s3.upload.object.key.prefix</code> system property<ul>
+<li>If a job is skipped because a compatible job was found in TiesDb, this is the S3 object key
+  prefix that will be used when getting the results from S3. If not provided, defaults to the
+  value of <code>S3_UPLOAD_OBJECT_KEY_PREFIX</code>.</li>
+</ul>
+</li>
+<li><code>data.ties.db.check.ignorable.properties.file</code> system property<ul>
+<li>Path to the JSON file containing the list of properties that should not be considered when
+  checking for a compatible job in TiesDb.</li>
+</ul>
+</li>
+</ul>
+<h1 id="after-job-supplemental-creation">After Job Supplemental Creation</h1>
+<p>When a URL is provided for the <code>TIES_DB_URL</code> job property or <code>ties.db.url</code> system property,
+Workflow Manager will post a supplemental to the provided URL.</p>
+<p>This is an example of what Workflow Manager will post to TiesDb:</p>
+<pre><code class="language-json">{
+  &quot;assertionId&quot;: &quot;87298cc2f31fba73181ea2a9e6ef10dce21ed95e98bdac9c4e1504ea16f486e4&quot;,
+  &quot;dataObject&quot;: {
+    &quot;algorithm&quot;: &quot;MOG&quot;,
+    &quot;pipeline&quot;: &quot;MOG MOTION PIPELINE&quot;,
+    &quot;jobId&quot;: &quot;mpf.example.com-13&quot;,
+    &quot;jobStatus&quot;: &quot;COMPLETE&quot;,
+    &quot;outputType&quot;: &quot;MOTION&quot;,
+    &quot;outputUri&quot;: &quot;http://s3.example.com/2c/f2/2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
+    &quot;processDate&quot;: &quot;2021-10-08T15:24:04.168448Z&quot;,
+    &quot;sha256OutputHash&quot;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
+    &quot;systemHostname&quot;: &quot;mpf.example.com&quot;,
+    &quot;systemVersion&quot;: &quot;6.0.2&quot;,
+    &quot;trackCount&quot;: 100,
+    &quot;jobConfigHash&quot;: &quot;d52ad13e6e2db75e780b858e92b89df18c021674c24fd6c84dd151dcd28f5c56&quot;
+  },
+  &quot;informationType&quot;: &quot;OpenMPF_MOTION&quot;,
+  &quot;securityTag&quot;: &quot;UNCLASSIFIED&quot;,
+  &quot;system&quot;: &quot;OpenMPF&quot;
+}
+</code></pre>
+<h1 id="before-job-check">Before Job Check</h1>
+<p>Workflow Manager can be configured to check TiesDb for a supplemental produced as a result of
+a previously run OpenMPF job. In order for Workflow Manager to do this check, the <code>TIES_DB_URL</code>
+job property or the <code>ties.db.url</code> system property must be set to the TiesDb server's URL and
+the <code>SKIP_TIES_DB_CHECK</code> job property or the <code>ties.db.skip.check</code> system property must be set to
+false. If Workflow Manager finds a supplemental with a <code>jobConfigHash</code> that matches the job that
+Workflow Manager is currently running, Workflow Manager will not process the media in the current
+job. Workflow Manager will use the output of the previous job to create the output for the
+current job. Workflow Manager can also be configured to copy the results of the previous job to a
+different S3 bucket.</p>
+<p>In order to determine if a previous job was similar enough to a current job, a hash of the
+important parts of the jobs is computed. There are certain job properties, that when changed, do
+not change the output. There are also job properties that only affect certain types of media. To
+make it more likely that a matching job will be found in TiesDB, Workflow Manager can be configured
+to ignore the previously mentioned job properties when computing the job configuration hash.</p>
+<p>The properties that should be ignored are specified in a JSON file. The
+<code>data.ties.db.check.ignorable.properties.file</code> system property contains the path to the JSON file.
+The JSON file must contain a list of objects with two properties: <code>ignorableForMediaTypes</code> and
+<code>names</code>. <code>ignorableForMediaTypes</code> is a list of strings specifying which media types are able
+to ignore the properties listed in <code>names</code> list.</p>
+<p>In the example below, the <code>"VERBOSE"</code> job property is never included in the job hash because all
+media types are present in the <code>ignorableForMediaTypes</code> property. <code>"ARTIFACT_EXTRACTION_POLICY"</code>
+is ignored when the media is audio or unknown. <code>"FRAME_INTERVAL"</code> appears in both the second
+and third object, so it is ignorable when the media is audio, unknown, or image.</p>
+<pre><code class="language-json">[
+  {
+    &quot;ignorableForMediaTypes&quot;: [&quot;VIDEO&quot;, &quot;IMAGE&quot;, &quot;AUDIO&quot;, &quot;UNKNOWN&quot;],
+    &quot;names&quot;: [&quot;VERBOSE&quot;]
+  },
+  {
+    &quot;ignorableForMediaTypes&quot;: [&quot;AUDIO&quot;, &quot;UNKNOWN&quot;],
+    &quot;names&quot;: [&quot;ARTIFACT_EXTRACTION_POLICY&quot;, &quot;FRAME_INTERVAL&quot;]
+  },
+  {
+    &quot;ignorableForMediaTypes&quot;: [&quot;IMAGE&quot;],
+    &quot;names&quot;: [&quot;FRAME_INTERVAL&quot;]
+  }
+]
+</code></pre>
+<p>The hash of the job's media is also included when computing the job configuration hash. If the job
+request contains the media's hash and MIME type, Workflow Manager can avoid downloading the media
+if a match is found in TiesDB. If the media's hash and MIME type are not included in the job
+request Workflow Manager will use the normal media inspection process to get that information. If
+the media is not a local path, this will require Workflow Manager to download the media. Below
+is an example of a job creation request that includes the media's hash and MIME type:</p>
+<pre><code class="language-json">{
+  &quot;algorithmProperties&quot;: {},
+  &quot;buildOutput&quot;: true,
+  &quot;jobProperties&quot;: {
+    &quot;S3_ACCESS_KEY&quot;: &quot;xxxxxx&quot;,
+    &quot;S3_SECRET_KEY&quot;: &quot;xxxxxx&quot;,
+    &quot;TIES_DB_URL&quot;: &quot;https://tiesdb.example.com&quot;,
+    &quot;SKIP_TIES_DB_CHECK&quot;: &quot;false&quot;
+  },
+  &quot;media&quot;: [
+    {
+      &quot;mediaUri&quot;: &quot;https://s3.example.com/bucket/my-video.mp4&quot;,
+      &quot;metadata&quot;: {
+        &quot;MEDIA_HASH&quot;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
+        &quot;MIME_TYPE&quot;: &quot;video/mp4&quot;
+      }
+    }
+  ],
+  &quot;pipelineName&quot;: &quot;OCV FACE DETECTION PIPELINE&quot;,
+  &quot;priority&quot;: 4
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Markup-Guide/index.html" class="btn btn-neutral" title="Markup Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Markup-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
