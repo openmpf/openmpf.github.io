@@ -123,6 +123,16 @@
 
     <li class="toctree-l3"><a href="#before-job-check">Before Job Check</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#ignorable-properties">Ignorable Properties</a></li>
+        
+            <li><a class="toctree-l4" href="#avoid-downloading-media">Avoid Downloading Media</a></li>
+        
+            <li><a class="toctree-l4" href="#s3-copy">S3 Copy</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
@@ -237,12 +247,16 @@ Schema (TIES). For each piece of media, we create one or more TIES
 analytic (algorithm) run on the media. In general, a "supplementalDescription" is a kind of TIES
 "assertion", which is used to represent metadata about the media object. In our case it
 represents the detection and track information in the OpenMPF JSON output object. Workflow Manager
-can be configured to check TiesDb for a supplemental it previously created and use the results
-from that previous job to avoid re-running the job.</p>
+can be configured to check TiesDb for a
+<a href="#after-job-supplemental-creation">supplemental it previously created</a> and
+<a href="#before-job-check">use the results from that previous job to avoid re-running the job.</a>
+Workflow Manager can also be configured to <a href="#s3-copy">copy results to a different S3 bucket</a>
+when a matching job is found.</p>
 <h1 id="configuration">Configuration</h1>
 <ul>
 <li><code>TIES_DB_URL</code> job property or <code>ties.db.url</code> system property<ul>
 <li>When provided, information about completed jobs will be sent to the specified TiesDb server.</li>
+<li>For example: <code>https://tiesdb.example.com</code></li>
 </ul>
 </li>
 <li><code>SKIP_TIES_DB_CHECK</code> job property or <code>ties.db.skip.check</code> system property<ul>
@@ -299,14 +313,20 @@ from that previous job to avoid re-running the job.</p>
 </ul>
 </li>
 <li><code>data.ties.db.check.ignorable.properties.file</code> system property<ul>
-<li>Path to the JSON file containing the list of properties that should not be considered when
-  checking for a compatible job in TiesDb.</li>
+<li>Path to the
+  <a href="#ignorable-properties">JSON file containing the list of properties that should not be considered</a>
+  when checking for a compatible job in TiesDb.</li>
 </ul>
 </li>
 </ul>
 <h1 id="after-job-supplemental-creation">After Job Supplemental Creation</h1>
 <p>When a URL is provided for the <code>TIES_DB_URL</code> job property or <code>ties.db.url</code> system property,
-Workflow Manager will post a supplemental to the provided URL.</p>
+Workflow Manager will post a supplemental to TiesDb at the end of the job. The full URL that
+Workflow Manager will post to is created by taking the provided URL and appending
+<code>/api/db/supplementals?sha256Hash=&lt;MEDIA_HASH&gt;</code> to it. If, for example, the provided TiesDb URL
+is <code>https://tiesdb.example.com/path</code> and the SHA-256 hash of the media is
+<code>d1bc8d3ba4afc7e109612cb73acbdd</code>, Workflow Manager will post to <br/>
+<code>https://tiesdb.example.com/path/api/db/supplementals?sha256Hash=d1bc8d3ba4afc7e109612cb73acbdd</code></p>
 <p>This is an example of what Workflow Manager will post to TiesDb:</p>
 <pre><code class="language-json">{
   &quot;assertionId&quot;: &quot;87298cc2f31fba73181ea2a9e6ef10dce21ed95e98bdac9c4e1504ea16f486e4&quot;,
@@ -316,7 +336,7 @@ Workflow Manager will post a supplemental to the provided URL.</p>
     &quot;jobId&quot;: &quot;mpf.example.com-13&quot;,
     &quot;jobStatus&quot;: &quot;COMPLETE&quot;,
     &quot;outputType&quot;: &quot;MOTION&quot;,
-    &quot;outputUri&quot;: &quot;http://s3.example.com/2c/f2/2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
+    &quot;outputUri&quot;: &quot;https://s3.example.com/2c/f2/2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
     &quot;processDate&quot;: &quot;2021-10-08T15:24:04.168448Z&quot;,
     &quot;sha256OutputHash&quot;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;,
     &quot;systemHostname&quot;: &quot;mpf.example.com&quot;,
@@ -339,19 +359,49 @@ Workflow Manager is currently running, Workflow Manager will not process the med
 job. Workflow Manager will use the output of the previous job to create the output for the
 current job. Workflow Manager can also be configured to copy the results of the previous job to a
 different S3 bucket.</p>
+<p>It is possible for there to be multiple matching supplementals in TiesDb. In that case,
+Workflow Manager will first pick the supplementals with the best job status. The job statuses
+from best to worst are <code>COMPLETE</code>, <code>COMPLETE_WITH_WARNINGS</code>, and <code>COMPLETE_WITH_ERRORS</code>. If no jobs
+with those statuses exist, all other statuses are considered equally bad. If there are multiple
+supplementals with the same status, the most recently created supplemental will be used.</p>
 <p>In order to determine if a previous job was similar enough to a current job, a hash of the
-important parts of the jobs is computed. There are certain job properties, that when changed, do
-not change the output. There are also job properties that only affect certain types of media. To
-make it more likely that a matching job will be found in TiesDB, Workflow Manager can be configured
-to ignore the previously mentioned job properties when computing the job configuration hash.</p>
+important parts of the jobs is computed. The parts of the job that are included in the hash are:</p>
+<ul>
+<li>Names of the algorithms used in the pipeline and their order</li>
+<li>Non-<a href="#ignorable-properties">ignorable job properties</a></li>
+<li><code>output.changed.counter</code> system property<ul>
+<li>This is an integer that is incremented when there is a change to the Workflow Manager after
+  which previous TiesDb records should not be used. Because this number is part of the job
+  configuration hash, changing this number invalidates all previous TiesDb records.</li>
+</ul>
+</li>
+<li>Component descriptor's <code>outputVersion</code> property.<ul>
+<li>This works the same way as <code>output.changed.counter</code>, except that it only invalidates TiesDb
+  records for jobs that used the component.</li>
+</ul>
+</li>
+<li>Frame ranges and time ranges</li>
+<li>JSON output object major and minor version</li>
+<li>SHA-256 hashes of all input media<ul>
+<li>As a result of this, in order to find a matching job, both jobs must have been run on all
+  of the same media. To improve the chances that a matching job is found in TiesDb, a user
+  can choose to only submit jobs for a single piece of media.</li>
+</ul>
+</li>
+</ul>
+<h3 id="ignorable-properties">Ignorable Properties</h3>
+<p>There are certain job properties, that when changed, do not change the output. There are also job
+properties that only affect certain types of media. To make it more likely that a matching job will
+be found in TiesDb, Workflow Manager can be configured to ignore the previously mentioned job
+properties when computing the job configuration hash.</p>
 <p>The properties that should be ignored are specified in a JSON file. The
 <code>data.ties.db.check.ignorable.properties.file</code> system property contains the path to the JSON file.
 The JSON file must contain a list of objects with two properties: <code>ignorableForMediaTypes</code> and
 <code>names</code>. <code>ignorableForMediaTypes</code> is a list of strings specifying which media types are able
 to ignore the properties listed in the <code>names</code> list.</p>
-<p>In the example below, the <code>"VERBOSE"</code> job property is never included in the job hash because all
-media types are present in the <code>ignorableForMediaTypes</code> list. <code>"ARTIFACT_EXTRACTION_POLICY"</code>
-is ignored when the media is audio or unknown. <code>"FRAME_INTERVAL"</code> appears in both the second
+<p>In the example below, the <code>VERBOSE</code> job property is never included in the job hash because all
+media types are present in the <code>ignorableForMediaTypes</code> list. <code>ARTIFACT_EXTRACTION_POLICY</code>
+is ignored when the media is audio or unknown. <code>FRAME_INTERVAL</code> appears in both the second
 and third object, so it is ignorable when the media is audio, unknown, or image.</p>
 <pre><code class="language-json">[
   {
@@ -368,6 +418,7 @@ and third object, so it is ignorable when the media is audio, unknown, or image.
   }
 ]
 </code></pre>
+<h3 id="avoid-downloading-media">Avoid Downloading Media</h3>
 <p>The SHA-256 hash of the job's media is also included when computing the job configuration hash.
 If the job request contains the media's hash and MIME type, Workflow Manager can avoid downloading
 the media if a match is found in TiesDB. If the media's hash and MIME type are not included in the
@@ -396,6 +447,29 @@ If the media is not a local path, this will require Workflow Manager to download
   &quot;priority&quot;: 4
 }
 </code></pre>
+<h3 id="s3-copy">S3 Copy</h3>
+<p>When the <code>TIES_DB_S3_COPY_DISABLED</code> job property or <code>ties.db.s3.copy.disabled</code> system property is
+false and a matching job is found in TiesDb, Workflow Manager will copy the artifacts, markup,
+and derivative media to the bucket specified in the current job's <code>S3_RESULTS_BUCKET</code> job property
+or <code>s3.results.bucket</code> system property. Since the job's artifacts, markup, and derivative media
+are in a new location, the output object must be updated before it is uploaded to the new S3 bucket.
+In the updated output object, the <code>tiesDbSourceJobId</code> property will be set to the previous job's ID.
+If the S3 copy is disabled, <code>tiesDbSourceJobId</code> is not added because the original job's output
+object is used without changes.</p>
+<p>When performing the S3 copy, the S3 job properties like <code>S3_ACCESS_KEY</code> and <code>S3_SECRET_KEY</code> use
+the values from the current job and apply to the destination of the copy. If the values for the
+S3 properties should be different for the source of the copy, the properties prefixed with
+<code>TIES_DB_COPY_SRC_</code> can be set. If for a given property the <code>TIES_DB_COPY_SRC_</code> prefixed version is
+not set, the non-prefixed version will be used.</p>
+<p>For example, if a job is received with the following properties set:</p>
+<ul>
+<li><code>S3_SECRET_KEY</code>=<code>new-secret-key</code></li>
+<li><code>S3_ACCESS_KEY</code>=<code>access-key</code></li>
+<li><code>TIES_DB_COPY_SRC_S3_SECRET_KEY</code>=<code>old-secret-key</code></li>
+</ul>
+<p>then, when accessing the previous job's results <code>access-key</code> will be used for the access key and
+<code>old-secret-key</code> will be used for the secret key. When uploading the results to the new bucket,
+<code>access-key</code> will be used for the access key and <code>new-secret-key</code> will be used for the secret key.</p>
               
             </div>
           </div>
