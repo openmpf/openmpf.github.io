@@ -214,11 +214,12 @@ In the updated output object, the `tiesDbSourceJobId` property will be set to th
 If the S3 copy is disabled, `tiesDbSourceJobId` is not added because the original job's output
 object is used without changes.
 
-When performing the S3 copy, the S3 job properties like `S3_ACCESS_KEY` and `S3_SECRET_KEY` use
-the values from the current job and apply to the destination of the copy. If the values for the
-S3 properties should be different for the source of the copy, the properties prefixed with
-`TIES_DB_COPY_SRC_` can be set. If for a given property the `TIES_DB_COPY_SRC_` prefixed version is
-not set, the non-prefixed version will be used.
+When performing the S3 copy, the [S3 job properties](Object-Storage-Guide#s3-object-storage) like
+`S3_ACCESS_KEY` and `S3_SECRET_KEY` use the values from the current job and apply to the
+destination of the copy. If the values for the
+[S3 properties](Object-Storage-Guide#s3-object-storage) should be different for the source of
+the copy, the properties prefixed with `TIES_DB_COPY_SRC_` can be set. If for a given property the
+`TIES_DB_COPY_SRC_` prefixed version is not set, the non-prefixed version will be used.
 
 For example, if a job is received with the following properties set:
 
