@@ -253,7 +253,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 <p>Optional. At least one of <code>batchLibrary</code> or <code>streamLibrary</code> must be provided.</p>
 <p>For C++ components, this contains the full path to the Component Logic shared object library used for batch processing once the component is deployed.</p>
 <p>For Java components, this contains the name of the jar which contains the component implementation used for batch processing.</p>
-<p>For setuptools-based Python components, this contains the component's distribution name, which is declared in the 
+<p>For setuptools-based Python components, this contains the component's distribution name, which is declared in the
 component's <code>setup.py</code> file. The distribution name is usually the same name as the component.</p>
 <p>For basic Python components, this contains the full path to the Python file containing the component class.</p>
 <p>Example (C++):
@@ -321,6 +321,11 @@ component's <code>setup.py</code> file. The distribution name is usually the sam
 <li>
 <p><strong>actionType:</strong>
   Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
+</li>
+<li>
+<p><strong>outputChangedCounter:</strong>
+  Optional. An integer that should be incremented when the component is changed in a way that
+  would cause it to produce different output.</p>
 </li>
 <li>
 <p><strong>requiresCollection:</strong>
