@@ -125,7 +125,7 @@ important parts of the jobs is computed. The parts of the job that are included 
     - This is an integer that is incremented when there is a change to the Workflow Manager after
       which previous TiesDb records should not be used. Because this number is part of the job
       configuration hash, changing this number invalidates all previous TiesDb records.
-- Component descriptor's `outputVersion` property.
+- Component descriptor's `outputChangedCounter` property.
     - This works the same way as `output.changed.counter`, except that it only invalidates TiesDb
       records for jobs that used the component.
 - Frame ranges and time ranges
