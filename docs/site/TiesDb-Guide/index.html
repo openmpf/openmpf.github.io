@@ -263,9 +263,10 @@ when a matching job is found.</p>
 <li>When true, TiesDb won't be checked for a compatible job before processing media.</li>
 </ul>
 </li>
-<li><code>TIES_DB_S3_COPY_DISABLED</code> job property or <code>ties.db.s3.copy.disabled</code> system property<ul>
+<li><code>TIES_DB_S3_COPY_ENABLED</code> job property or <code>ties.db.s3.copy.enabled</code> system property<ul>
 <li>When true and a job is skipped because a compatible job is found in TiesDb, the results
-  from the previous job will not be copied to a different S3 bucket.</li>
+  from the previous job will be copied to a different S3 bucket. Copying results will always
+  result in a new JSON output object, even if using the same S3 location as the previous job.</li>
 </ul>
 </li>
 <li><code>TIES_DB_COPY_SRC_S3_ACCESS_KEY</code> job property or <code>ties.db.copy.src.s3.access.key</code> system property<ul>
@@ -448,14 +449,16 @@ If the media is not a local path, this will require Workflow Manager to download
 }
 </code></pre>
 <h3 id="s3-copy">S3 Copy</h3>
-<p>When the <code>TIES_DB_S3_COPY_DISABLED</code> job property or <code>ties.db.s3.copy.disabled</code> system property is
-false and a matching job is found in TiesDb, Workflow Manager will copy the artifacts, markup,
+<p>When the <code>TIES_DB_S3_COPY_ENABLED</code> job property or <code>ties.db.s3.copy.enabled</code> system property is
+true and a matching job is found in TiesDb, Workflow Manager will copy the artifacts, markup,
 and derivative media to the bucket specified in the current job's <code>S3_RESULTS_BUCKET</code> job property
 or <code>s3.results.bucket</code> system property. Since the job's artifacts, markup, and derivative media
 are in a new location, the output object must be updated before it is uploaded to the new S3 bucket.
 In the updated output object, the <code>tiesDbSourceJobId</code> property will be set to the previous job's ID.
-If the S3 copy is disabled, <code>tiesDbSourceJobId</code> is not added because the original job's output
-object is used without changes.</p>
+When the S3 copy is enabled and the results bucket is the same as the previous job, a new output
+object is created, but copies of the artifacts, markup, and derivative media are not
+created. If the S3 copy is disabled, <code>tiesDbSourceJobId</code> is not added because the original job's
+output object is used without changes.</p>
 <p>When performing the S3 copy, the <a href="../Object-Storage-Guide#s3-object-storage">S3 job properties</a> like
 <code>S3_ACCESS_KEY</code> and <code>S3_SECRET_KEY</code> use the values from the current job and apply to the
 destination of the copy. If the values for the S3 properties should be different for the source of
