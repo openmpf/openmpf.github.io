@@ -107,9 +107,10 @@ job property or the `ties.db.url` system property must be set to the TiesDb serv
 the `SKIP_TIES_DB_CHECK` job property or the `ties.db.skip.check` system property must be set to
 false. If Workflow Manager finds a supplemental with a `jobConfigHash` that matches the job that
 Workflow Manager is currently running, Workflow Manager will not process the media in the current
-job. Workflow Manager will use the output of the previous job to create the output for the
-current job. Workflow Manager can also be configured to copy the results of the previous job to a
-different S3 bucket.
+job. Workflow Manager will use the output of the previous job to determine the output for the
+current job. When Workflow Manager is configured to copy the results of the previous job to a
+different S3 bucket, a new output object will be created. Otherwise, the previous job's output
+object will be used.
 
 It is possible for there to be multiple matching supplementals in TiesDb. In that case,
 Workflow Manager will first pick the supplementals with the best job status. The job statuses
@@ -213,9 +214,9 @@ or `s3.results.bucket` system property. Since the job's artifacts, markup, and d
 are in a new location, the output object must be updated before it is uploaded to the new S3 bucket.
 In the updated output object, the `tiesDbSourceJobId` property will be set to the previous job's ID.
 When the S3 copy is enabled and the results bucket is the same as the previous job, a new output
-object is created, but copies of the artifacts, markup, and derivative media are not
-created. If the S3 copy is disabled, `tiesDbSourceJobId` is not added because the original job's
-output object is used without changes.
+object is created, but copies of the artifacts, markup, and derivative media are not created. If
+the S3 copy is disabled, `tiesDbSourceJobId` is not added because the original job's output object
+is used without changes. If the copy fails, a link to the old JSON output object will be provided.
 
 When performing the S3 copy, the [S3 job properties](Object-Storage-Guide#s3-object-storage) like
 `S3_ACCESS_KEY` and `S3_SECRET_KEY` use the values from the current job and apply to the
