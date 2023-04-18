@@ -51,7 +51,7 @@ For C++ components, this contains the full path to the Component Logic shared ob
 
 For Java components, this contains the name of the jar which contains the component implementation used for batch processing.
 
-For setuptools-based Python components, this contains the component's distribution name, which is declared in the 
+For setuptools-based Python components, this contains the component's distribution name, which is declared in the
 component's `setup.py` file. The distribution name is usually the same name as the component.
 
 For basic Python components, this contains the full path to the Python file containing the component class.
@@ -129,6 +129,11 @@ Contains the following sub-fields:
 
 * **actionType:**
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
+
+
+* **outputChangedCounter:**
+  Optional. An integer that should be incremented when the component is changed in a way that
+  would cause it to produce different output.
 
 
 * **requiresCollection:**
