@@ -5,7 +5,20 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 
 <h2>7.2.0: April 2023</h2>
 
+<h3>Documentation</h3>
+
+- TiesDb Guide
+- Object Storage Guide
+
 <h3>Features</h3>
+
+- TODO
+
+<h3>Updates</h3>
+
+- TODO
+
+<h3>Bug Fixes</h3>
 
 - TODO
 
