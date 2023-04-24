@@ -1,7 +1,53 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 7.2.x
+
+<h2>7.2.0: April 2023</h2>
+
+<h3>Features</h3>
+
+- TODO
+
 # OpenMPF 7.1.x
+
+<h2>7.1.12: March 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1667](https://github.com/openmpf/openmpf/issues/1667)] Handle Webp files with extra data at the end that cause components to crash
+
+<h2>7.1.10: March 2023</h2>
+
+<h3>Updates</h3>
+
+- [[#1662](https://github.com/openmpf/openmpf/issues/1662)] Monitor StorageBackend
+
+<h2>7.1.9: February 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1675](https://github.com/openmpf/openmpf/issues/1675)] Prevent upgrade of cudnn in yolo server dockerfile
+
+<h2>7.1.8: February 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1649](https://github.com/openmpf/openmpf/issues/1649)] Install specific version of libcudnn8 in Docker build
+
+<h2>7.1.7: February 2023</h2>
+
+<h3>Updates</h3>
+
+- [[#1674](https://github.com/openmpf/openmpf/issues/1674)] Update `SPEAKER_ID` logic, set `LONG_SPEAKER_ID=0`
+
+<h2>7.1.5: January 2023</h2>
+
+<h3>Features</h3>
+
+- [[#1542](https://github.com/openmpf/openmpf/issues/1542)] Update Azure Speech Detection component to select transcription language based on feed-forward track
+- [[#1543](https://github.com/openmpf/openmpf/issues/1543)] Update audio transcoder to accept subsegments
+- [[#1605](https://github.com/openmpf/openmpf/issues/1605)] Update Azure Translation to use detected language from upstream
 
 <h2>7.1.1: December 2022</h2>
 
