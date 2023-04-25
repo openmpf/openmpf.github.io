@@ -7,20 +7,49 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 
 <h3>Documentation</h3>
 
-- TiesDb Guide
-- Object Storage Guide
+- Created a new TiesDb Guide.
+- Updated the Component Descriptor Reference with `outputChangedCounter`.
+- Updated the REST API with a new `[POST] /rest/jobs/tiesdbrepost` endpoint.
+- Updated the REST API `POST /rest/jobs` response with `tiesDbCheckStatus` and `outputObjectUri`.
+
+<h3>TiesDb Re-Post</h3>
+
+- UI changes
+- New endpoint
+
+<h3>TiesDb Checking</h3>
+
+- Motivation
+- Will return most recent best status results first
+- Bypass media inspection by providing `MEDIA_HASH` and `MIME_TYPE` `media.metadata` in the job request.
+- S3 copy by default, what if turned off
+
+<h3>TiesDb Linked Media</h3>
+
+- Thumbnail use case
+- Use of `LINKED_MEDIA_HASH` `media.mediaProperty`
+
+<h3>Output Changed Counter</h3>
+
+- Workflow Manager
+- Component `descriptor.json`
+
+<h3>Changes to JSON Output Object</h3>
+
+- New JSON output objects will include `tiesDbSourceJobId` and `tiesDbSourceMediaPath` when the Workflow Manager can use previous job results stored in TiesDB. Note that the Workflow Manager will not generate new JSON output object unless `S3_RESULTS_BUCKET` is set to a valid value, S3 access and secret keys are provided, and `TIES_DB_S3_COPY_ENABLED=true`.
 
 <h3>Features</h3>
 
-- TODO
+- [[#1438](https://github.com/openmpf/openmpf/issues/1438)] Create a REST endpoint that will attempt to re-post to TiesDb
+- [[#1613](https://github.com/openmpf/openmpf/issues/1613)] Check TiesDb before running a job
+- [[#1650](https://github.com/openmpf/openmpf/issues/1650)] Create TiesDb records for thumbnail jobs under the parent media
 
 <h3>Updates</h3>
 
-- TODO
-
-<h3>Bug Fixes</h3>
-
-- TODO
+- [[#1342](https://github.com/openmpf/openmpf/issues/1342)] Use ffprobe to get FPS during media inspection
+- [[#1564](https://github.com/openmpf/openmpf/issues/1564)] Use ffprobe's JSON output instead of regexes during media inspection
+- [[#1601](https://github.com/openmpf/openmpf/issues/1601)] Update the Workflow Manager jobs table to be more efficient
+- [[#1611](https://github.com/openmpf/openmpf/issues/1611)] Remove Workflow Manager timeout and bootout behavior
 
 # OpenMPF 7.1.x
 
@@ -2629,8 +2658,6 @@ for optional dependencies.
   width and/or height dimension that was not an exact power of two.
     - The reason was because the code downsamples each frame by a power of two and rounds the value of the width and
       height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to
-      the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.
-
 <h3>Known Issues</h3>
 
 - If a job is submitted through the REST API, and a user to logged into the web UI and looking at the job status page,
