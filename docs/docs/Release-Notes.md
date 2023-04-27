@@ -10,19 +10,43 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 - Created a new TiesDb Guide.
 - Updated the Component Descriptor Reference with `outputChangedCounter`.
 - Updated the REST API with a new `[POST] /rest/jobs/tiesdbrepost` endpoint.
-- Updated the REST API `POST /rest/jobs` response with `tiesDbCheckStatus` and `outputObjectUri`.
+- Updated the REST API `[POST] /rest/jobs` response with `tiesDbCheckStatus` and `outputObjectUri`.
 
 <h3>TiesDb Re-Post</h3>
 
-- UI changes
-- New endpoint
+- Added a new `[POST] /rest/jobs/tiesdbrepost` endpoint that accepts an array of job ids as an input and will attempt to
+  re-post the job assertions (records) to TiesDb for each one. 
+- Added a "TiesDb" column to the Job Status page. If there is a problem posting a record to the TiesDb server the column
+  will contain an "ERROR" button. Clicking on it will provide a description of the error and a button that can be used
+  to re-post the associated job records.
 
 <h3>TiesDb Checking</h3>
 
-- Motivation
-- Will return most recent best status results first
-- Bypass media inspection by providing `MEDIA_HASH` and `MIME_TYPE` `media.metadata` in the job request.
-- S3 copy by default, what if turned off
+- If the `TIES_DB_URL` job property or `ties.db.url` system property is set when submitting a job request, then the
+  Workflow Manager will attempt to check TiesDb for existing job results before running the job again.
+- The Workflow Manager will attempt to use the most-recently-created job results, preferring jobs that completed without
+  errors or warnings, and preferring jobs that completed with warnings over completed with errors.
+- To prevent this check, set `SKIP_TIES_DB_CHECK=true`. That will force the job to run and attempt to post the new
+  job results to TiesDb.
+- When using TiesDb, we strongly recommend providing both the `MEDIA_HASH` and `MIME_TYPE` in the `media.metadata` map
+  in the job request. This will enable the Workflow Manager to skip media inspection. When using S3 object storage, this
+  means that the Workflow Manager will not need to download the media before checking TiesDb for existing job records.
+- The `[POST] /rest/jobs` response now contains a `tiesDbCheckStatus` and `outputObjectUri` field. `tiesDbCheckStatus`
+  can be set to one of the following values:
+    - `NOT_REQUESTED`
+    - `NO_TIES_DB_URL_IN_JOB`
+    - `MEDIA_HASHES_ABSENT`
+    - `MEDIA_MIME_TYPES_ABSENT`
+    - `NO_MATCH`
+    - `FOUND_MATCH`
+- When there is a `FOUND_MATCH`, the `outputObjectUri` will be set to the URI of the old TiesDb record.
+- By default, the `ties.db.s3.copy.enabled` system property is set to `true`. This means that the Workflow Manager will
+  attempt to copy all of the artifacts, markup, and derivative media associated with the job in TiesDb from the S3
+  locations associated with the old job to the new S3 location specified in the new job. A new JSON output object will
+  be generated. To disabled this behavior set that system property, or `TIES_DB_S3_COPY_ENABLED`, to `false`. Then the
+  Workflow Manager will simply provide a link to the old JSON as the result of the new job.
+- If there is a problem copying between S3 locations, the "TiesDb" column to the Job Status page will show a
+  "COPY ERROR" botton. Clicking on it will provide a description of the error.
 
 <h3>TiesDb Linked Media</h3>
 
@@ -37,6 +61,16 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 <h3>Changes to JSON Output Object</h3>
 
 - New JSON output objects will include `tiesDbSourceJobId` and `tiesDbSourceMediaPath` when the Workflow Manager can use previous job results stored in TiesDB. Note that the Workflow Manager will not generate new JSON output object unless `S3_RESULTS_BUCKET` is set to a valid value, S3 access and secret keys are provided, and `TIES_DB_S3_COPY_ENABLED=true`.
+
+<h3>ffprobe for Media Inspection</h3>
+
+- More precise FPS (give example)
+
+<h3>Web User Interface</h3>
+
+- Job Status page search
+- Removed timeout and bootout
+- Column that reports TiesDb status (successful post / existing record retrieval status)
 
 <h3>Features</h3>
 
