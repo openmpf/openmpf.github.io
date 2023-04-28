@@ -784,6 +784,49 @@
                         <td style='width:20%;'></td>
                         <td style='width:40%;'>See <b>MpfResponse</b> in the <b>Definitions</b> section.</td>
                     </tr>
+                    <tr style=';background-color: #EAEAEA'>
+                        <td style='width:40%;'>tiesDbCheckStatus</td>
+                        <td style='width:20%;'>string</td>
+                        <td style='width:40%;'>
+                            The status of the TiesDb before job check. The possible statuses are:
+                            <ul>
+                                <li>
+                                    <b>NOT_REQUESTED:</b> The TiesDb check was not performed
+                                    because the SKIP_TIES_DB_CHECK job property was true.
+                                </li>
+                                <li>
+                                    <b>NO_TIES_DB_URL_IN_JOB:</b> The TiesDb check was not
+                                    performed because the TIES_DB_URL job property was not set.
+                                </li>
+                                <li>
+                                    <b>MEDIA_HASHES_ABSENT:</b> The job was configured to check
+                                    TiesDb, but the media hash was not provided. The check will
+                                    occur after media inspection.
+                                </li>
+                                <li>
+                                    <b>MEDIA_MIME_TYPES_ABSENT:</b> The job was configured to check
+                                    TiesDb, but the media's mime type was not provided. The check
+                                    will occur after media inspection.
+                                </li>
+                                <li>
+                                    <b>NO_MATCH:</b> TiesDb was checked, but no compatible job was
+                                    found.
+                                </li>
+                                <li>
+                                    <b>FOUND_MATCH:</b> A compatible job was found in TiesDb.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr style=''>
+                        <td style='width:40%;'>outputObjectUri</td>
+                        <td style='width:20%;'>string</td>
+                        <td style='width:40%;'>
+                            If a compatible job is found in TiesDb and the job is not configured to
+                            copy the results to a new S3 bucket, this will contain the URI to the
+                            old job's output object.
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <br />
