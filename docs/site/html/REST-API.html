@@ -183,7 +183,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: April 3, 2023</div>
+    <div class='footer'>Last updated on: May 4, 2023</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -824,7 +824,9 @@
                         <td style='width:40%;'>
                             If a compatible job is found in TiesDb and the job is not configured to
                             copy the results to a new S3 bucket, this will contain the URI to the
-                            old job's output object.
+                            old job's output object. A compatible TiesDb job can only be found
+                            during job creation when the MEDIA_HASH and MIME_TYPE media metadata
+                            are provided in the job request.
                         </td>
                     </tr>
                 </tbody>
