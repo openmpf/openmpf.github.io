@@ -123,10 +123,6 @@ Contains the following sub-fields:
   Required. Contains a brief description of the algorithm.
 
 
-* **detectionType:**
-  Required. Defines the type of entity associated with the algorithm. For example: `CLASS`, `FACE`, `MOTION`, `PERSON`, `SPEECH`, or `TEXT`.
-
-
 * **actionType:**
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
