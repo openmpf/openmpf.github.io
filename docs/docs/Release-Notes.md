@@ -1,15 +1,15 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
 
 # OpenMPF 7.2.x
 
-<h2>7.2.0: April 2023</h2>
+<h2>7.2.0: May 2023</h2>
 
 <h3>Documentation</h3>
 
-- Created a new TiesDb Guide.
-- Updated the Component Descriptor Reference with `outputChangedCounter`.
-- Updated the REST API with a new `[POST] /rest/jobs/tiesdbrepost` endpoint.
+- Created a new [TiesDb Guide](TiesDb-Guide/index.html).
+- Updated the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) with `outputChangedCounter`.
+- Updated the [REST API](REST-API/index.html) with a new `[POST] /rest/jobs/tiesdbrepost` endpoint.
 - Updated the REST API `[POST] /rest/jobs` response with `tiesDbCheckStatus` and `outputObjectUri`.
 
 <h3>TiesDb Re-Post</h3>
@@ -22,8 +22,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
 
 <h3>TiesDb Checking</h3>
 
-- If the `TIES_DB_URL` job property or `ties.db.url` system property is set when submitting a job request, then the
-  Workflow Manager will attempt to check TiesDb for existing job results before running the job again.
+- If the `TIES_DB_URL` job property or `ties.db.url` system property is set when submitting a job creation request, 
+  then the Workflow Manager will attempt to check TiesDb for existing job results before running the job again.
 - The Workflow Manager will attempt to use the most-recently-created job results, preferring jobs that completed without
   errors or warnings, and preferring jobs that completed with warnings over completed with errors.
 - To prevent this check, set `SKIP_TIES_DB_CHECK=true`. That will force the job to run and attempt to post the new
@@ -32,45 +32,71 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2022 The 
   in the job request. This will enable the Workflow Manager to skip media inspection. When using S3 object storage, this
   means that the Workflow Manager will not need to download the media before checking TiesDb for existing job records.
 - The `[POST] /rest/jobs` response now contains a `tiesDbCheckStatus` and `outputObjectUri` field. `tiesDbCheckStatus`
-  can be set to one of the following values:
+  will be set to one of the following values:
     - `NOT_REQUESTED`
     - `NO_TIES_DB_URL_IN_JOB`
     - `MEDIA_HASHES_ABSENT`
     - `MEDIA_MIME_TYPES_ABSENT`
     - `NO_MATCH`
     - `FOUND_MATCH`
-- When there is a `FOUND_MATCH`, the `outputObjectUri` will be set to the URI of the old TiesDb record.
+- When there is a `FOUND_MATCH`, the `outputObjectUri` will be set to the URI of the old TiesDb record if S3 copy is
+  not enabled.
 - By default, the `ties.db.s3.copy.enabled` system property is set to `true`. This means that the Workflow Manager will
   attempt to copy all of the artifacts, markup, and derivative media associated with the job in TiesDb from the S3
   locations associated with the old job to the new S3 location specified in the new job. A new JSON output object will
-  be generated. To disabled this behavior set that system property, or `TIES_DB_S3_COPY_ENABLED`, to `false`. Then the
+  be generated. To disable this behavior set the system property, or `TIES_DB_S3_COPY_ENABLED`, to `false`. Then the
   Workflow Manager will simply provide a link to the old JSON as the result of the new job.
 - If there is a problem copying between S3 locations, the "TiesDb" column to the Job Status page will show a
-  "COPY ERROR" botton. Clicking on it will provide a description of the error.
+  "COPY ERROR" button. Clicking on it will provide a description of the error.
 
 <h3>TiesDb Linked Media</h3>
 
-- Thumbnail use case
-- Use of `LINKED_MEDIA_HASH` `media.mediaProperty`
+- Added support for the `LINKED_MEDIA_HASH` `media.mediaProperty` in the job creation request. When specified,
+  the value of the `LINKED_MEDIA_HASH` will be used instead of the actual media hash when creating a record in TiesDb,
+  and also when looking for existing records in TiesDb.
+- This feature can be used to submit a transcoded (or thumbnail) version of an image to process instead of the source
+  image. For example, the source image may be in a format not supported by OpenMPF. In this case, the value of the
+  `LINKED_MEDIA_HASH` can be set to the source image, but the rest of the job creation request would specify
+  the `media.path` and `media.mediaMetadata` for the transcoded version of that image.
 
 <h3>Output Changed Counter</h3>
 
-- Workflow Manager
-- Component `descriptor.json`
+- Added the `output.changed.counter` system property to the Workflow Manager and `outputChangedCounter` field to each
+  component's `descriptor.json`. These values are used when calcuating the hash for a job when its record is posted to
+  TiesDb, and also when checking TiesDb for existing records when a new job is submitted.
+- If the Workflow Manager is updated for any reason that should invalidate pre-existing job results, such as a
+  change to the fields in the JSON output object, or significant improvements to track merging, for example, then the
+  value of `output.changed.counter` should be incremented by one. This will ensure that records in TiesDb will not be
+  used so that all future jobs will need to be (re)run at least once until the counter is incremented again.
+- The same is true for each component. If a component is updated for any reason that should invalidate
+  pre-existing job results, such as changes to input or output properties, or substantial improvements to the algorithm,
+  then the value of `outputChangedCounter` should be incremented by one.
 
 <h3>Changes to JSON Output Object</h3>
 
-- New JSON output objects will include `tiesDbSourceJobId` and `tiesDbSourceMediaPath` when the Workflow Manager can use previous job results stored in TiesDB. Note that the Workflow Manager will not generate new JSON output object unless `S3_RESULTS_BUCKET` is set to a valid value, S3 access and secret keys are provided, and `TIES_DB_S3_COPY_ENABLED=true`.
+- New JSON output objects will include `tiesDbSourceJobId` and `tiesDbSourceMediaPath` when the Workflow Manager can use
+  previous job results stored in TiesDB. Note that the Workflow Manager will not generate a new JSON output object
+  unless `S3_RESULTS_BUCKET` is set to a valid value, S3 access and secret keys are provided, and
+  `TIES_DB_S3_COPY_ENABLED=true`.
 
 <h3>ffprobe for Media Inspection</h3>
 
-- More precise FPS (give example)
+- The Workflow Manager media inspection behavior now uses `ffprobe` with `-print_format json` to return more precise
+  `FPS` values for the `media.mediaMetadata` in the JSON output object. For example, the previous version of the
+  Workflow Manager would return `29.97`, where the new version will return `29.97002997002997`. In multi-hour-long
+  vidoes this can prevent cases where the last few frames were being ignored.
+- The previous version of the Workflow Manager was using both `ffmpeg` and OpenCV to determine the number of frames in
+  a video. We removed the OpenCV frame counter in this version because the `ffprobe` approach is more accurate.
+  The `ffprobe` command replaces the old `ffmpeg` command. 
 
 <h3>Web User Interface</h3>
 
-- Job Status page search
-- Removed timeout and bootout
-- Column that reports TiesDb status (successful post / existing record retrieval status)
+- Updated the Job Status page to be more efficient. Searching a database of hundreds of thousands of jobs takes a long
+  time. By limiting the search to one page of results at a time the UI is more responsive.
+- Removed timeout and bootout. The user session will no longer automatically end due to time out, or due to the same
+  user logging in from a different host or browser. These behaviors were deemed too disruptive by end users.
+- Updated the Job Status page to include a "TiesDb" column that reports TiesDb status, such as when posting records
+  to TiesDb and when retrieving existing records.
 
 <h3>Features</h3>
 
