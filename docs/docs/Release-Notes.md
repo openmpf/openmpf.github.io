@@ -2718,6 +2718,8 @@ for optional dependencies.
   width and/or height dimension that was not an exact power of two.
     - The reason was because the code downsamples each frame by a power of two and rounds the value of the width and
       height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to
+      the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.
+
 <h3>Known Issues</h3>
 
 - If a job is submitted through the REST API, and a user to logged into the web UI and looking at the job status page,

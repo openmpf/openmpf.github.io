@@ -3316,7 +3316,8 @@ for optional dependencies.
   “1” and a detection was found close to the edge of the frame. Specifically, this would only happen if the video had a
   width and/or height dimension that was not an exact power of two.<ul>
 <li>The reason was because the code downsamples each frame by a power of two and rounds the value of the width and
-  height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to</li>
+  height up to the nearest integer. Later on when upscaling detection rectangles back to a size that’s relative to
+  the original image, the resized rectangle sometimes extended beyond the bounds of the original frame.</li>
 </ul>
 </li>
 </ul>
