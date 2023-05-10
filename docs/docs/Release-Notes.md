@@ -62,7 +62,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>Output Changed Counter</h3>
 
 - Added the `output.changed.counter` system property to the Workflow Manager and `outputChangedCounter` field to each
-  component's `descriptor.json`. These values are used when calcuating the hash for a job when its record is posted to
+  component's `descriptor.json`. These values are used when calculating the hash for a job when its record is posted to
   TiesDb, and also when checking TiesDb for existing records when a new job is submitted.
 - If the Workflow Manager is updated for any reason that should invalidate pre-existing job results, such as a
   change to the fields in the JSON output object, or significant improvements to track merging, for example, then the
