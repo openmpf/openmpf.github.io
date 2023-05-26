@@ -144,11 +144,7 @@ Once the job is completed, this route converts the aggregated track and detectio
 
 ## Detection Response Route
 
-The **Detection Response Route** is the re-entry point to the WFM. It unmarshals the protobuf responses from components and converts them into the Track and Detection objects used within the WFM. It then optionally performs each of the following actions: track merging, detection padding, detecting moving objects, and artifact extraction. It stores the track and detection data in the Redis database and optionally uploads artifacts to an object storage server.
-
-## Task Response Aggregation Route <small><i>(Not Shown)</i></small>
-
-The **Task Response Aggregation Route** is one of the exit points for the Detection Response Route. It waits until all of the sub-job responses have been retrieved for the current stage (task) of the pipeline, then it invokes the Job Router Route to see if any additional processing needs to be done.
+The **Detection Response Route** is the re-entry point to the WFM. It unmarshals the protobuf responses from components and converts them into the Track and Detection objects used within the WFM. It then optionally performs each of the following actions: track merging, detection padding, detecting moving objects, and artifact extraction. It stores the track and detection data in the Redis database and optionally uploads artifacts to an object storage server. Then, it invokes the Job Router Route to see if any additional processing needs to be done.
 
 ## Markup Response Route <small><i>(Not Shown)</i></small>
 
@@ -156,6 +152,6 @@ Markup files are copies of the initial media with any detections visually highli
 
 ## Other Routes <small><i>(Not Shown)</i></small>
 
-Additionally, there is a **Detection Cancellation Route** for cancelling detection requests sent to components, and a **Markup Cancellation Route** for cancelling requests sent to the Markup component. 
+Additionally, there is a **Detection Cancellation Route** for cancelling detection requests sent to components, and a **Markup Cancellation Route** for cancelling requests sent to the Markup component.
 
 Also, there is a **DLQ Route** for handling messages that appear in the ActiveMQ Dead Letter Queue (DLQ), which usually indicates a component failure or inability to deliver a message. In these cases, the job is terminated with an error condition.
