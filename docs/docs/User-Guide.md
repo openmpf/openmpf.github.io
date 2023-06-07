@@ -27,12 +27,6 @@ The landing page for a user is the Job Status page:
 
 ![Landing Page](img/mpf_landing.png "Landing Page")
 
-Logging in starts a user session. By default, after 30 minutes of inactivity the user will automatically be logged out of the system. Within one minute of logging out the user will be prompted to extend or end their session. Note that the timeout period can be configured by any admin user with the admin role.
-
-A given user can only be logged into the OpenMPF from one machine using one browser at a time. If the same user attempts to log in from another machine, or another browser on the same machine, then the first user session will be terminated immediately and redirected back to the login page. This feature ensures that the user will be able to immediately log in again if the user accidentally closes the browser window or shuts down their machine without properly logging out first.
-
-A user may have multiple browser tabs or windows open for the same session, for example, to view the Jobs Status page and Logs page at the same time. It is not recommended that two users login using the same browser at the same time in different tabs or windows. Technically, the second user to login will take precedence, but the first user session will not appear to be terminated. Instead the first user will appear to share recent jobs and other information with the second user. Also, when one of the users logs out in this scenario, they will both be logged out.
-
 ## Logging out
 
 To log out a user can click the down arrow associated with the user icon at the top right hand corner of the page and then select "Logout":

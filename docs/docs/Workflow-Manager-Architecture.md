@@ -53,7 +53,6 @@ The table below lists the controllers:
 | AdminPropertySettingsController | Allows access and modification of system properties |
 | AdminStatisticsController | Generates job statistics |
 | AtmosphereController | Uses Atmosphere to manage server-side push |
-| BootoutController | Handles bootouts when a second session is opened by the same user |
 | HomeController | Manages index page and version information |
 | JobController | Manages job creation and interaction |
 | LoginController | Manages login/logout and authentication |
@@ -63,7 +62,6 @@ The table below lists the controllers:
 | PipelineController | Handles the creation and deletion of actions, tasks, and pipelines |
 | ServerMediaController | Enables selection and deselection of files at a directory level |
 | SystemMessageController | Manages system level messages, such as notifying users that a server restart is needed |
-| TimeoutController | Manages session timeouts |
 
 The following sections describe some of the controllers in more detail.
 
