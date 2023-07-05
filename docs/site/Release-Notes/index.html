@@ -320,13 +320,13 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>TiesDb Linked Media</h3>
 
 <ul>
-<li>Added support for the <code>LINKED_MEDIA_HASH</code> <code>media.mediaProperty</code> in the job creation request. When specified,
-  the value of the <code>LINKED_MEDIA_HASH</code> will be used instead of the actual media hash when creating a record in TiesDb,
+<li>Added support for <code>LINKED_MEDIA_HASH</code> in the <code>media.properties</code> section of the job creation request. When specified,
+  the value of <code>LINKED_MEDIA_HASH</code> will be used instead of the actual media hash when creating a record in TiesDb,
   and also when looking for existing records in TiesDb.</li>
 <li>This feature can be used to submit a transcoded (or thumbnail) version of an image to process instead of the source
-  image. For example, the source image may be in a format not supported by OpenMPF. In this case, the value of the
+  image. For example, the source image may be in a format not supported by OpenMPF. In this case, the value of
   <code>LINKED_MEDIA_HASH</code> can be set to the source image, but the rest of the job creation request would specify
-  the <code>media.path</code> and <code>media.mediaMetadata</code> for the transcoded version of that image.</li>
+  the <code>media.mediaUri</code> and <code>media.metadata</code> for the transcoded version of that image.</li>
 </ul>
 <h3>Output Changed Counter</h3>
 
