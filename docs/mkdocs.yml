@@ -19,6 +19,7 @@ pages:
     - Install Guide: Install-Guide.md
     - Admin Guide: Admin-Guide.md
     - User Guide: User-Guide.md
+    - OpenID Connect Guide: OpenID-Connect-Guide.md
     - Media Segmentation Guide: Media-Segmentation-Guide.md
     - Feed Forward Guide: Feed-Forward-Guide.md
     - Derivative Media Guide: Derivative-Media-Guide.md
