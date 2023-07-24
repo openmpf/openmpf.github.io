@@ -57,7 +57,11 @@ specify the name of claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
     list, it will be automatically added.
 - `OIDC_USER_NAME_ATTR` (Optional): The name of the claim containing the user name. Defaults to
     `sub`.
-
+- `OIDC_REDIRECT_URI` (Optional): Specifies the URL the user's browser will be redirected to after
+    logging in to the OIDC provider. If provided, the URL must end in `/login/oauth2/code/provider`.
+    This would generally be used when the host name Workflow Manager uses to connect to the OIDC
+    provider is different from the OIDC provider's public host name. The value can use the
+    [template variables supported by Spring.](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-auth-code-redirect-uri)
 
 
 ## Example with Keycloak
@@ -65,117 +69,83 @@ specify the name of claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
 The following example explains how to test Workflow Manager with Keycloak as the OIDC provider.
 It is just an example and should not be used in production.
 
-1\. Start Keycloak in development mode:
+1\. Get the Docker gateway IP address by running the command below. It will be used in later steps.
+```bash
+docker network inspect --format '{{(index .IPAM.Config 0).Gateway}}' bridge
+```
+
+2\. Start Keycloak in development mode using the command below. Do not start Workflow Manager yet.
+    The values for the OIDC environment variables are dependent on how you set up Keycloak in the
+    following steps.
 ```bash
 docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin \
     quay.io/keycloak/keycloak:21.1.1 start-dev
 ```
 
-2\. Go to <http://localhost:9090/admin> in a browser and login with username `admin` and
+3\. Go to <http://localhost:9090/admin> in a browser and login with username `admin` and
     password `admin`.
 
-3\. Create a new realm:
+4\. Create a new realm:
 
-- Click the dropdown box in the upper left that says "master".
-- Click "Create Realm".
-- Enter a realm name.
-- Click "Create".
-- Use the realm name you entered to set Workflow Manager's `OIDC_ISSUER_URI` environment
-    variable to: `http://localhost:9090/realms/<realm-name>`
+- Create a new realm using the drop down box in upper left that says "master".
+- Use the realm name you entered and the gateway IP address from step 1 to set Workflow
+    Manager's `OIDC_ISSUER_URI` environment variable to:
+    `http://<docker-gateway-ip>:9090/realms/<realm-name>`
 
+5\. Create the client Workflow Manager will use to authenticate users:
 
-4\. Create the client Workflow Manager will use to authenticate users:
-
-- Click "Clients" in the left menu.
-- Click "Create client".
-- Make sure "Client type" is "OpenID Connect".
-- Enter a client ID.
-- Click "Next".
-- Enable "Client authentication".
-- Make sure "Standard flow" is checked.
-- Click "Next"
-- In "Valid redirect URIs" enter the base URL for Workflow Manager with
-    `/login/oauth2/code/provider` appended.
-- In "Valid post logout redirect URIs" enter the base URL for Workflow Manager.
-- Click "Save"
+- The "Client type" needs to be set to "OpenID Connect".
+- "Client authentication" must be enabled.
+- "Standard flow" must be enabled.
+- Set "Valid redirect URIs" to `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
+- Set "Valid post logout redirect URIs" to `http://localhost:8080/workflow-manager`
 - Set Workflow Manager's `OIDC_CLIENT_ID` environment variable to the client ID you entered.
-- On the "Client details" page for the new client go to the "Credentials" tab.
-- Click the eye icon next to "Client secret".
-- Set Workflow Manager's `OIDC_CLIENT_SECRET` environment variable to the value displayed in
-    "Client secret".
+- Set Workflow Manager's `OIDC_CLIENT_SECRET` environment variable to the "Client secret" in the
+    "Credentials" tab.
 
-5\. Create a Keycloak role that maps to a Workflow Manager role:
+6\. Create a Keycloak role that maps to a Workflow Manager role:
 
-- Click "Realm roles" in the left menu.
-- Click "Create role".
-- Enter a "Role name".
-- Click "Save".
+- Use the "Realm roles" link in the left menu to create a new role.
 - If the Keycloak role should make the user an `ADMIN` in Workflow Manager, set Workflow
     Manager's `OIDC_ADMIN_CLAIM_VALUE` to the role name you just entered. If it should be a
     `USER`, then set the `OIDC_USER_CLAIM_VALUE` environment variable.
 - Only one of `OIDC_ADMIN_CLAIM_VALUE` and `OIDC_USER_CLAIM_VALUE` need to be set. If you would
     like to set up both roles repeat this step.
 
-6\. Include the Keycloak role(s) in the access token:
+7\. Include the Keycloak role(s) in the access token:
 
-- Click "Client scopes" in the left menu.
-- Click "roles".
-- Click the "Mappers" tab.
-- Click "Add mapper"
-- Click "From predefined mappers".
-- Check "groups".
-- Click "Add".
+- In the "Client scopes" menu add a mapper to the "roles" scope.
+- Use the "groups" prefined mapper
 - The default name "Token Claim Name" is "groups". This can be changed.
-- If you created an `ADMIN` role in step 5 set `OIDC_ADMIN_CLAIM_NAME` to the value in
+- If you created an `ADMIN` role in step 6 set `OIDC_ADMIN_CLAIM_NAME` to the value in
     "Token Claim Name". If you created a `USER` role, do the same for `OIDC_USER_CLAIM_NAME`.
 
-7\. Optionally, configure Workflow Manager to display the user name instead of the ID.
+8\. Optionally, set Workflow Manager's `OIDC_USER_NAME_ATTR` to `preferred_username` to display the
+    user name instead of the ID.
 
-- Set Workflow Manager's `OIDC_USER_NAME_ATTR` environment variable to `preferred_username`.
+9\. Create Users
 
-8\. Create users:
+- After creating a user, set a password in the "Credentials" tab.
+- Use the "Role mapping" tab to add the user to one of roles created in step 6.
 
-- Click "Users" in the left menu.
-- Click "Create new user".
-- Enter a "Username".
-- Click "Create".
-- Click the "Credentials" tab.
-- Click "Set password".
-- Set a password.
-- Uncheck "Temporary".
-- Click "Save".
-- Click the "Role mapping" tab.
-- Click "Assign role".
-- Check one of the roles create in step 5.
-- Click "Assign".
+10\. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
+     redirected to the Keycloak log in page. You can log in using the users created in step 9.
 
-9\. You should now be able to start Workflow Manager. When you initially navigate to Workflow
-   Manager, you will be redirected to the Keycloak log in page. You can log in using the
-   users created in step 8.
+11\. Add REST clients:
 
-10\. Add REST clients:
-
-- Click "Clients" in the left menu.
-- Click "Create client".
-- Set a "Client ID".
-- Click "Next".
-- Enable "Client authentication".
-- Enable "Service accounts roles".
-- Click "Next".
-- Click "Save".
-- Click the "Service account roles" tab.
-- Click "Assign role".
-- Check a role created in step 5.
-- Click "Assign".
+- Use the "Clients" menu to create a new client.
+- The client needs to have "Client authentication" and "Service accounts roles" enabled.
+- Use the "Service account roles" tab to add the client to one of the roles created in step 5.
 
 
 ### Test REST authentication
-Using the client id/secret from step 10 and the realm name from step 3, run the following command:
+Using the Docker gateway IP address from step 1, the client ID and secret from step 11, and the
+realm name from step 4, run the following command:
 ```bash
-curl -d grant_type=client_credentials -u '<client-id>:<client-secret>' 'http://localhost:9090/realms/<realm-name>/protocol/openid-connect/token'
+curl -d grant_type=client_credentials -u '<client-id>:<client-secret>' 'http://<docker-gateway-ip>:9090/realms/<realm-name>/protocol/openid-connect/token'
 ```
 The response JSON will contain a token in the `"access_token"` property. That token need to
 included as a bearer token in REST requests to Workflow Manager. For example:
 ```bash
-curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/jobs/1
+curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/actions
 ```
