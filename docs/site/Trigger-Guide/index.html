@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Trigger Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Trigger Guide";
+    var mkdocs_page_input_path = "Trigger-Guide.md";
+    var mkdocs_page_url = "/Trigger-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../index.html">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">General</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Release-Notes/index.html">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Guides</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Install-Guide/index.html">Install Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../User-Guide/index.html">User Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Segmentation-Guide/index.html">Media Segmentation Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Derivative-Media-Guide/index.html">Derivative Media Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../TiesDb-Guide/index.html">TiesDb Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">Trigger Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#trigger-overview">Trigger Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#syntax">Syntax</a></li>
+    
+
+    <li class="toctree-l3"><a href="#trigger-algorithm">Trigger Algorithm</a></li>
+    
+
+    <li class="toctree-l3"><a href="#filtering-example">Filtering Example</a></li>
+    
+
+    <li class="toctree-l3"><a href="#json-escaping">JSON escaping</a></li>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Additional Developer Resources</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Node-Guide/index.html">Node Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Guides &raquo;</li>
+        
+      
+    
+    <li>Trigger Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="trigger-overview">Trigger Overview</h1>
+<p>The <code>TRIGGER</code> property enables pipelines that use <a href="../Feed-Forward-Guide">feed forward</a> to have
+pipeline stages that only process certain tracks based on their track properties. It can be used
+to select the best algorithm when there are multiple similar algorithms that each perform better
+under certain circumstances. It can also be used to iteratively filter down tracks at each stage of
+a pipeline.</p>
+<h1 id="syntax">Syntax</h1>
+<p>The syntax for the <code>TRIGGER</code> property is: <code>&lt;prop_name&gt;=&lt;prop_value1&gt;[;&lt;prop_value2&gt;...]</code>.
+The left hand side of the equals sign is the name of track property that will be used to determine
+if a track matches the trigger. The right hand side specifies the required value for the specified
+track property. More than one value can be specified by separating them with a semicolon. When
+multiple properties are specified the track property must match any one of the specified values.
+If the value should match a track property that contains a semicolon or backslash,
+they must be escaped with a leading backslash. For example, <code>CLASSIFICATION=dog;cat</code> will match
+"dog" or "cat". <code>CLASSIFICATION=dog\;cat</code> will match "dog;cat". <code>CLASSIFICATION=dog\\cat</code> will
+match "dog\cat". When specifying a trigger in JSON it will need to <a href="#json-escaping">doubly escaped</a>.</p>
+<h1 id="trigger-algorithm">Trigger Algorithm</h1>
+<p>To describe the way that Workflow Manager applies the trigger we will use the example pipeline
+defined below.</p>
+<ol>
+<li>WHISPER SPEECH LANGUAGE DETECTION ACTION<ul>
+<li>(No TRIGGER)</li>
+</ul>
+</li>
+<li>SPHINX SPEECH DETECTION ACTION<ul>
+<li>TRIGGER: <code>ISO_LANGUAGE=eng</code></li>
+</ul>
+</li>
+<li>WHISPER SPEECH DETECTION ACTION<ul>
+<li>TRIGGER: <code>ISO_LANGUAGE=spa</code></li>
+</ul>
+</li>
+<li>ARGOS TRANSLATION (WITH FF REGION) ACTION<ul>
+<li>TRIGGER: <code>ISO_LANGUAGE=spa</code></li>
+</ul>
+</li>
+<li>KEYWORD TAGGING (WITH FF REGION) ACTION<ul>
+<li>(No TRIGGER)</li>
+</ul>
+</li>
+</ol>
+<p>The goal of this pipeline is to determine if someone says one of the key words in an audio file or
+the audio of a video file. The complication is that the input file could either be in English,
+Spanish, or a combination of both, so the Spanish audio must also be translated. We want to use
+Sphinx for English audio because we are pretending that Sphinx performs better than Whisper on
+English audio for this example.</p>
+<p>Triggers have no effect on the first stage because there are no input tracks to apply the trigger
+to. In the example above, the first stage will output tracks containing an <code>ISO_LANGUAGE</code> track
+property. The value will correspond to the language Whisper determines the audio to be in.</p>
+<p>In the second stage, Workflow Manager will pass forward any tracks from stage one that match the
+trigger. In the example above, Workflow Manager will check the track properties all of the tracks
+from stage one. Tracks that have an <code>ISO_LANGUAGE</code> track property and have it set to "eng" will
+be fed in to stage two.</p>
+<p>When the Workflow Manager decides which tracks to feed in to stages beyond the second, it considers
+all tracks generated prior to the stage that were not triggered by a previous stage. The third
+stage in the example shows why we need to check all previous stages. If we only checked the
+previous stage, then the third stage would be receiving the tracks that Sphinx already produced
+a transcription for. The part of the algorithm where Workflow Manager filters out previously
+triggered tracks has no effect because the triggers for stage two and stage three are mutually
+exclusive. None of the tracks from stage two get fed in to stage three because Sphinx does not
+add an <code>ISO_LANGUAGE</code> track property.</p>
+<p>The fourth stage shows why Workflow Manager must filter out previously triggered tracks. If it did
+not, stage four would receive the Spanish tracks from both stage one and stage three. Only the
+tracks from stage three have the transcription, so they are the only tracks that can be translated.
+In the example above, only the tracks from stage three get fed in to stage four. Workflow Manager
+made the decision using the following steps:</p>
+<ol>
+<li><strong>Get all tracks produced in stage one.</strong></li>
+<li>Remove all tracks that have <code>ISO_LANGUAGE=eng</code> because they were triggered by stage two.</li>
+<li>Remove all tracks that have <code>ISO_LANGUAGE=spa</code> because they were triggered by stage three.<ul>
+<li>After this operation, the only tracks that remain have no <code>ISO_LANGUAGE</code> or are a language
+  other than English or Spanish.</li>
+</ul>
+</li>
+<li>Remove all tracks that do <strong>not</strong> have <code>ISO_LANGUAGE=spa</code> because they don't match the current
+   stage's trigger.<ul>
+<li>This operation ends up removing all the tracks from stage one because the Spanish tracks were
+  removed in step 3.</li>
+</ul>
+</li>
+<li>If there were any remaining tracks, they would be sent to stage four.</li>
+<li><strong>Get all tracks produced in stage two.</strong></li>
+<li>Remove all tracks that have <code>ISO_LANGUAGE=spa</code> because they were triggered by stage three.<ul>
+<li>Sphinx does not produce tracks with <code>ISO_LANGUAGE=spa</code>, so no tracks are excluded at this
+  point.</li>
+</ul>
+</li>
+<li>Remove all tracks that do <strong>not</strong> have <code>ISO_LANGUAGE=spa</code>.<ul>
+<li>This operation ends up removing all the tracks because Sphinx does not produce tracks with
+  <code>ISO_LANGUAGE=spa</code></li>
+</ul>
+</li>
+<li>If there were any remaining tracks, they would be sent to stage four.</li>
+<li><strong>Get all tracks produced in stage three.</strong></li>
+<li>Stage three is the stage immediately before stage four, so there are no previous triggers to
+    check.</li>
+<li>Remove all tracks that do <strong>not</strong> have <code>ISO_LANGUAGE=spa</code>.<ul>
+<li>No tracks are removed. They all have <code>ISO_LANGUAGE=spa</code> because only Spanish tracks were
+    fed in to stage 3.</li>
+</ul>
+</li>
+<li>Send the remaining tracks to stage four.</li>
+</ol>
+<p>The fifth stage has no trigger set. When no trigger is set, that means all tracks will be triggered
+by that stage. This decision ensures that pipelines that pipelines with no triggers behave the
+same way as pipelines with triggers. If you apply the trigger algorithm to a pipeline where
+each stage triggers all tracks, it will end up being the same as "pass stage N all the tracks
+produced in stage N-1". Stage N will not get tracks from stage N-2, because stage N-2's tracks
+would have been triggered by stage N-1.</p>
+<p>In the example above stage five will receive:</p>
+<ul>
+<li>The tracks from stage one that were neither English nor Spanish.<ul>
+<li>The English tracks were triggered by stage two.</li>
+<li>The Spanish tracks were triggered by stage three.</li>
+<li>Tracks in other languages were never triggered.</li>
+</ul>
+</li>
+<li>All of the tracks from stage two.<ul>
+<li>Sphinx didn't set <code>ISO_LANGUAGE</code> so they could not be triggered by a later stage.</li>
+</ul>
+</li>
+<li><strong>None</strong> of the tracks from stage three.<ul>
+<li>They were all triggered by stage four.</li>
+</ul>
+</li>
+<li>All of the tracks from stage four.<ul>
+<li>Stage four is immediately before stage five, so there is no trigger to apply.</li>
+</ul>
+</li>
+</ul>
+<h1 id="filtering-example">Filtering Example</h1>
+<p>The example above shows an example of how triggers can be used to conditionally execute or skip
+stages in a pipeline. Triggers can also be useful when all stages get triggered. In cases like
+that, the individual triggers are logically <code>AND</code>ed together. This allows you to produce pipelines
+that search for very specific things.</p>
+<p>The pipeline below will extract the license plate numbers for all blue cars that contain either
+an orangutan or a chimpanzee.</p>
+<ol>
+<li>OCV YOLO OBJECT DETECTION TASK<ul>
+<li>(No TRIGGER)</li>
+</ul>
+</li>
+<li>CAFFE GOOGLENET DETECTION ACTION<ul>
+<li>TRIGGER: <code>CLASSIFICATION=car</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
+</ul>
+</li>
+<li>TENSORFLOW VEHICLE COLOR DETECTION ACTION<ul>
+<li>TRIGGER: <code>CLASSIFICATION=orangutan, orang, orangutang, Pongo pygmaeus;chimpanzee, chimp, Pan troglodytes</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
+</ul>
+</li>
+<li>OALPR LICENSE PLATE TEXT DETECTION ACTION<ul>
+<li>TRIGGER: <code>CLASSIFICATION=blue</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
+</ul>
+</li>
+</ol>
+<h1 id="json-escaping">JSON escaping</h1>
+<p>Many times job properties are defined using JSON and track properties appear in the JSON output
+object. JSON also uses backslash as its escape character. Since the TRIGGER property and JSON both
+use backslash as the escape character, when specifying the TRIGGER property in JSON, the string
+must be doubly escaped.</p>
+<p>If the job request contains this JSON fragment:</p>
+<pre><code class="language-json">{ &quot;algorithmProperties&quot;: { &quot;DNNCV&quot;: {&quot;TRIGGER&quot;: &quot;CLASS=dog;cat&quot;} } }
+</code></pre>
+<p>it will match either "dog" or "cat", but not "dog;cat".</p>
+<p>This JSON fragment:</p>
+<pre><code class="language-json">{ &quot;algorithmProperties&quot;: { &quot;DNNCV&quot;: {&quot;TRIGGER&quot;: &quot;CLASS=dog\\;cat&quot;} } }
+</code></pre>
+<p>would only match "dog;cat".</p>
+<p>This JSON fragment:</p>
+<pre><code class="language-json">{ &quot;algorithmProperties&quot;: { &quot;DNNCV&quot;: {&quot;TRIGGER&quot;: &quot;CLASS=dog\\\\cat&quot;} } }
+</code></pre>
+<p>would only match "dog\cat". The track property in the JSON output object would appear as:</p>
+<pre><code class="language-json">{ &quot;trackProperties&quot;: { &quot;CLASSIFICATION&quot;: &quot;dog\\cat&quot; } }
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Component-API-Overview/index.html" class="btn btn-neutral float-right" title="Component API Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../REST-API/index.html" class="btn btn-neutral" title="REST API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../REST-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Component-API-Overview/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
