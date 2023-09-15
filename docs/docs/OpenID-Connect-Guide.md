@@ -12,7 +12,7 @@ In order to use OIDC, Workflow Manager must first be registered with OIDC provid
 process for this varies by provider.  As part of the registration process, a client ID and client
 secret should be provided. Those values should be set in the `OIDC_CLIENT_ID` and
 `OIDC_CLIENT_SECRET` environment variables. During the registration process the provider will
-likely request a redirect URI. The redirect URI should be set to the base URI for Workflow Manger
+likely request a redirect URI. The redirect URI should be set to the base URI for Workflow Manager
 with `/login/oauth2/code/provider` appended.
 
 The documentation for the OIDC provider should specify the base URI a client should use to
@@ -23,7 +23,7 @@ request to the URI with `/.well-known/openid-configuration` appended.
 After a user or REST client authenticates with the OIDC provider, Workflow Manager will check for a
 claim with a specific value to determine if the user is authorized to access Workflow Manager and
 with what role. The `OIDC_USER_CLAIM_NAME` and `OIDC_ADMIN_CLAIM_NAME` environment variables
-specify the name of claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
+specify the name of the claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
 `OIDC_ADMIN_CLAIM_VALUE` environment variables specify the required value of the claim.
 
 
@@ -51,7 +51,7 @@ specify the name of claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
     `ADMIN` role.
 - `OIDC_ADMIN_CLAIM_VALUE` (Optional): Specifies the required value of the claim specified in
     `OIDC_ADMIN_CLAIM_NAME`. If the claim is a list, only one of the values in the list must match.
-- `OIDC_SCOPES` (Optional): A comma-separated list the scopes to be requested from the OIDC
+- `OIDC_SCOPES` (Optional): A comma-separated list of the scopes to be requested from the OIDC
     provider when authenticating a user through the web UI. The OIDC specification requires one of
     the scopes to be `openid`, so if this environment variable is omitted or `openid` is not in the
     list, it will be automatically added.
@@ -59,8 +59,8 @@ specify the name of claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
     `sub`.
 - `OIDC_REDIRECT_URI` (Optional): Specifies the URL the user's browser will be redirected to after
     logging in to the OIDC provider. If provided, the URL must end in `/login/oauth2/code/provider`.
-    This would generally be used when the host name Workflow Manager uses to connect to the OIDC
-    provider is different from the OIDC provider's public host name. The value can use the
+    This would generally be used when the host name that Workflow Manager uses to connect to the
+    OIDC provider is different from the OIDC provider's public host name. The value can use the
     [template variables supported by Spring.](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-auth-code-redirect-uri)
 
 
@@ -92,14 +92,20 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
     Manager's `OIDC_ISSUER_URI` environment variable to:
     `http://<docker-gateway-ip>:9090/realms/<realm-name>`
 
-5\. Create the client Workflow Manager will use to authenticate users:
+5\. Create the client that Workflow Manager will use to authenticate users:
 
-- The "Client type" needs to be set to "OpenID Connect".
-- "Client authentication" must be enabled.
-- "Standard flow" must be enabled.
-- Set "Valid redirect URIs" to `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
-- Set "Valid post logout redirect URIs" to `http://localhost:8080/workflow-manager`
-- Set Workflow Manager's `OIDC_CLIENT_ID` environment variable to the client ID you entered.
+- Use the "Clients" link in the left menu to create a new client.
+- General Settings:
+    - The "Client type" needs to be set to "OpenID Connect".
+    - Enter a "Client ID".
+    - Set Workflow Manager's `OIDC_CLIENT_ID` environment variable to the client ID you entered.
+- Capability config:
+    - "Client authentication" must be enabled.
+    - "Standard flow" must be enabled.
+- Login settings:
+    - Set "Valid redirect URIs" to
+      `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
+    - Set "Valid post logout redirect URIs" to `http://localhost:8080/workflow-manager`
 - Set Workflow Manager's `OIDC_CLIENT_SECRET` environment variable to the "Client secret" in the
     "Credentials" tab.
 
@@ -115,7 +121,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 7\. Include the Keycloak role(s) in the access token:
 
 - In the "Client scopes" menu add a mapper to the "roles" scope.
-- Use the "groups" prefined mapper
+- Use the "groups" predefined mapper.
 - The default name "Token Claim Name" is "groups". This can be changed.
 - If you created an `ADMIN` role in step 6 set `OIDC_ADMIN_CLAIM_NAME` to the value in
     "Token Claim Name". If you created a `USER` role, do the same for `OIDC_USER_CLAIM_NAME`.
@@ -134,8 +140,9 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 11\. Add REST clients:
 
 - Use the "Clients" menu to create a new client.
-- The client needs to have "Client authentication" and "Service accounts roles" enabled.
-- Use the "Service account roles" tab to add the client to one of the roles created in step 5.
+- Capability config:
+    - The client needs to have "Client authentication" and "Service accounts roles" enabled.
+    - Use the "Service account roles" tab to add the client to one of the roles created in step 5.
 
 
 ### Test REST authentication
@@ -144,7 +151,7 @@ realm name from step 4, run the following command:
 ```bash
 curl -d grant_type=client_credentials -u '<client-id>:<client-secret>' 'http://<docker-gateway-ip>:9090/realms/<realm-name>/protocol/openid-connect/token'
 ```
-The response JSON will contain a token in the `"access_token"` property. That token need to
+The response JSON will contain a token in the `"access_token"` property. That token needs to be
 included as a bearer token in REST requests to Workflow Manager. For example:
 ```bash
 curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/actions
