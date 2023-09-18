@@ -26,9 +26,14 @@ with what role. The `OIDC_USER_CLAIM_NAME` and `OIDC_ADMIN_CLAIM_NAME` environme
 specify the name of the claim that must be present. The `OIDC_USER_CLAIM_VALUE` and
 `OIDC_ADMIN_CLAIM_VALUE` environment variables specify the required value of the claim.
 
+If Workflow Manager is configured to use OIDC, then the component services must also be configured
+to use OIDC. The component services will use OIDC if either the `OIDC_JWT_ISSUER_URI` or
+`OIDC_ISSUER_URI` environment variables are set on the component service. When a component service
+is configured to use OIDC, the `WFM_USER` and `WFM_PASSWORD` environment variables are used to
+specify the client ID and secret that will be used during component registration.
 
 
-### Environment Variables
+### Workflow Manager Environment Variables
 
 - `OIDC_ISSUER_URI` (Required): URI for the OIDC provider that will be used to authenticate users
     through the web UI. If `OIDC_JWT_ISSUER_URI` is not set, `OIDC_ISSUER_URI` will also be used to
@@ -64,6 +69,18 @@ specify the name of the claim that must be present. The `OIDC_USER_CLAIM_VALUE` 
     [template variables supported by Spring.](https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-auth-code-redirect-uri)
 
 
+### Component Environment Variables
+
+- `OIDC_JWT_ISSUER_URI` or `OIDC_ISSUER_URI`: URI for the OIDC provider that will be used to
+    authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
+    environment variable with `/.well-known/openid-configuration` appended. If both environment
+    variables are provided, `OIDC_JWT_ISSUER_URI` will be used.
+- `WFM_USER`: The client ID that the component service will use when registering the component
+    with Workflow Manager.
+- `WFM_PASSWORD`: The client secret that the component service will use when registering the
+    component with Workflow Manager.
+
+
 ## Example with Keycloak
 
 The following example explains how to test Workflow Manager with Keycloak as the OIDC provider.
@@ -89,7 +106,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 
 - Create a new realm using the drop down box in upper left that says "master".
 - Use the realm name you entered and the gateway IP address from step 1 to set Workflow
-    Manager's `OIDC_ISSUER_URI` environment variable to:
+    Manager and the component services' `OIDC_ISSUER_URI` environment variable to:
     `http://<docker-gateway-ip>:9090/realms/<realm-name>`
 
 5\. Create the client that Workflow Manager will use to authenticate users:
@@ -129,20 +146,31 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 8\. Optionally, set Workflow Manager's `OIDC_USER_NAME_ATTR` to `preferred_username` to display the
     user name instead of the ID.
 
-9\. Create Users
+9\. Create Users:
 
 - After creating a user, set a password in the "Credentials" tab.
 - Use the "Role mapping" tab to add the user to one of roles created in step 6.
 
-10\. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
-     redirected to the Keycloak log in page. You can log in using the users created in step 9.
-
-11\. Add REST clients:
+10\. Add Component Registration REST client:
 
 - Use the "Clients" menu to create a new client.
 - Capability config:
     - The client needs to have "Client authentication" and "Service accounts roles" enabled.
     - Use the "Service account roles" tab to add the client to one of the roles created in step 5.
+- Set the component services' `WFM_USER` environment variable to the client ID you entered.
+- Set component services' `WFM_PASSWORD` environment variable to the "Client secret" in the
+    "Credentials" tab.
+
+11\. Add external REST clients:
+
+- Use the "Clients" menu to create a new client.
+- Capability config:
+    - The client needs to have "Client authentication" and "Service accounts roles" enabled.
+    - Use the "Service account roles" tab to add the client to one of the roles created in step 5.
+
+12\. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
+     redirected to the Keycloak log in page. You can log in using the users created in step 9.
+
 
 
 ### Test REST authentication
