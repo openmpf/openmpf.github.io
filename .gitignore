@@ -4,6 +4,7 @@ _site
 .vagrant
 *.iml
 *.idea*
+.vscode
 
 # general
 .DS_Store
