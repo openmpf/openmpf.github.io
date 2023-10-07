@@ -27,7 +27,7 @@ match "dog\cat". When specifying a trigger in JSON it will need to [doubly escap
 
 # Multiple Flows Using Triggers
 
-To describe the way that Workflow Manager applies the trigger, we will use the example pipeline
+To describe the way that the Workflow Manager applies the trigger, we will use the example pipeline
 defined below. Note that this is a hypothetical pipeline and not tested in a real deployment:
 
 1. WHISPER SPEECH LANGUAGE DETECTION ACTION
