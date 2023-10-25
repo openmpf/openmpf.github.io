@@ -28,18 +28,23 @@ match "dog\cat". When specifying a trigger in JSON it will need to [doubly escap
 # Multiple Flows Using Triggers
 
 To describe the way that the Workflow Manager applies the trigger, we will use the example pipeline
-defined below. Note that this is a hypothetical pipeline and not tested in a real deployment:
+defined below. Each task in the pipeline is composed of one action, so only the actions are shown.
+Note that this is a hypothetical pipeline and not intended for use in a real deployment:
 
 1. WHISPER SPEECH LANGUAGE DETECTION ACTION
     - (No TRIGGER)
 2. SPHINX SPEECH DETECTION ACTION
     - TRIGGER: `ISO_LANGUAGE=eng`
+    - FEED_FORWARD_TYPE: `REGION`
 3. WHISPER SPEECH DETECTION ACTION
     - TRIGGER: `ISO_LANGUAGE=spa`
-4. ARGOS TRANSLATION (WITH FF REGION) ACTION
+    - FEED_FORWARD_TYPE: `REGION`
+4. ARGOS TRANSLATION ACTION
     - TRIGGER: `ISO_LANGUAGE=spa`
-5. KEYWORD TAGGING (WITH FF REGION) ACTION
+    - FEED_FORWARD_TYPE: `REGION`
+5. KEYWORD TAGGING ACTION
     - (No TRIGGER)
+    - FEED_FORWARD_TYPE: `REGION`
 
 We can represent this as a flow chart:
 
@@ -48,9 +53,13 @@ We can represent this as a flow chart:
 The goal of this pipeline is to determine if someone in an audio file, or the audio of a video file,
 says a keyword we're interested in. The complication is that the input file could either be in
 English, Spanish, or another language we're not interested in. Spanish audio must be translated to
-English before looking for keywords. We want to use Sphinx for decoding English audio (because we're
-pretending that Sphinx performs better than Whisper on English audio for this example) and Whisper
-for decoding Spanish audio.
+English before looking for keywords. 
+
+We're going to pretend that Whisper language detection can return multiple tracks, one per language
+detected in the audio, although in reality it's limited to detecting one language for the entire
+piece of media. Also, we want to use Sphinx for decoding English audio, because we're pretending
+that Sphinx performs better than Whisper on English audio, and we want to use Whisper for decoding
+Spanish audio.
 
 Execution flows from top to bottom, starting with stage 1, the 
 `WHISPER SPEECH LANGUAGE DETECTION ACTION`. The first stage should not have a trigger condition. If
@@ -140,8 +149,9 @@ execute or skip stages in a pipeline. Triggers can also be useful when all stage
 cases like that, the individual triggers are logically `AND`ed together. This allows you to produce
 pipelines that search for very specific things.
 
-Consider the example pipeline defined below. Again, note that this is a hypothetical pipeline and
-not tested in a real deployment:
+Consider the example pipeline defined below. Again, each task in the pipeline is composed of one
+action, so only the actions are shown. Also, note that this is a hypothetical pipeline and not
+intended for use in a real real deployment:
 
 1. OCV YOLO OBJECT DETECTION ACTION
     - (No TRIGGER)

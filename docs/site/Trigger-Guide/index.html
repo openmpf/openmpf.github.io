@@ -261,7 +261,8 @@ they must be escaped with a leading backslash. For example, <code>CLASSIFICATION
 match "dog\cat". When specifying a trigger in JSON it will need to <a href="#json-escaping">doubly escaped</a>.</p>
 <h1 id="multiple-flows-using-triggers">Multiple Flows Using Triggers</h1>
 <p>To describe the way that the Workflow Manager applies the trigger, we will use the example pipeline
-defined below. Note that this is a hypothetical pipeline and not tested in a real deployment:</p>
+defined below. Each task in the pipeline is composed of one action, so only the actions are shown.
+Note that this is a hypothetical pipeline and not intended for use in a real deployment:</p>
 <ol>
 <li>WHISPER SPEECH LANGUAGE DETECTION ACTION<ul>
 <li>(No TRIGGER)</li>
@@ -269,18 +270,22 @@ defined below. Note that this is a hypothetical pipeline and not tested in a rea
 </li>
 <li>SPHINX SPEECH DETECTION ACTION<ul>
 <li>TRIGGER: <code>ISO_LANGUAGE=eng</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
 </ul>
 </li>
 <li>WHISPER SPEECH DETECTION ACTION<ul>
 <li>TRIGGER: <code>ISO_LANGUAGE=spa</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
 </ul>
 </li>
-<li>ARGOS TRANSLATION (WITH FF REGION) ACTION<ul>
+<li>ARGOS TRANSLATION ACTION<ul>
 <li>TRIGGER: <code>ISO_LANGUAGE=spa</code></li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
 </ul>
 </li>
-<li>KEYWORD TAGGING (WITH FF REGION) ACTION<ul>
+<li>KEYWORD TAGGING ACTION<ul>
 <li>(No TRIGGER)</li>
+<li>FEED_FORWARD_TYPE: <code>REGION</code></li>
 </ul>
 </li>
 </ol>
@@ -289,9 +294,12 @@ defined below. Note that this is a hypothetical pipeline and not tested in a rea
 <p>The goal of this pipeline is to determine if someone in an audio file, or the audio of a video file,
 says a keyword we're interested in. The complication is that the input file could either be in
 English, Spanish, or another language we're not interested in. Spanish audio must be translated to
-English before looking for keywords. We want to use Sphinx for decoding English audio (because we're
-pretending that Sphinx performs better than Whisper on English audio for this example) and Whisper
-for decoding Spanish audio.</p>
+English before looking for keywords. </p>
+<p>We're going to pretend that Whisper language detection can return multiple tracks, one per language
+detected in the audio, although in reality it's limited to detecting one language for the entire
+piece of media. Also, we want to use Sphinx for decoding English audio, because we're pretending
+that Sphinx performs better than Whisper on English audio, and we want to use Whisper for decoding
+Spanish audio.</p>
 <p>Execution flows from top to bottom, starting with stage 1, the 
 <code>WHISPER SPEECH LANGUAGE DETECTION ACTION</code>. The first stage should not have a trigger condition. If
 one is set, it will be ignored.</p>
@@ -360,8 +368,9 @@ speech-to-text stage 3 they would not have a transcript to translate.</p>
 execute or skip stages in a pipeline. Triggers can also be useful when all stages get triggered. In
 cases like that, the individual triggers are logically <code>AND</code>ed together. This allows you to produce
 pipelines that search for very specific things.</p>
-<p>Consider the example pipeline defined below. Again, note that this is a hypothetical pipeline and
-not tested in a real deployment:</p>
+<p>Consider the example pipeline defined below. Again, each task in the pipeline is composed of one
+action, so only the actions are shown. Also, note that this is a hypothetical pipeline and not
+intended for use in a real real deployment:</p>
 <ol>
 <li>OCV YOLO OBJECT DETECTION ACTION<ul>
 <li>(No TRIGGER)</li>
