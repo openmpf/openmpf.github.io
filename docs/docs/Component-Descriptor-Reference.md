@@ -127,6 +127,11 @@ Contains the following sub-fields:
   Required. Defines the type of processing that the algorithm performs. Must be set to `DETECTION`.
 
 
+* **trackType:**
+  Required. The type of object detected by the component. Should be in all CAPS. Examples
+  include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
+
+
 * **outputChangedCounter:**
   Optional. An integer that should be incremented when the component is changed in a way that
   would cause it to produce different output.

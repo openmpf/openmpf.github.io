@@ -517,28 +517,6 @@ public boolean supports(MPFDataType dataType) {
     return dataType == MPFDataType.IMAGE || dataType == MPFDataType.VIDEO;
 }
 </code></pre>
-<h4 id="getdetectiontype">getDetectionType()</h4>
-<p>Returns the type of object detected by the component.</p>
-<ul>
-<li>Method Definition:</li>
-</ul>
-<pre><code class="language-java">public String getDetectionType()
-</code></pre>
-<ul>
-<li>
-<p>Parameters: none</p>
-</li>
-<li>
-<p>Returns: (<code>String</code>) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
-</li>
-<li>
-<p>Example:</p>
-</li>
-</ul>
-<pre><code class="language-java">public String getDetectionType() {
-    return &quot;FACE&quot;;
-}
-</code></pre>
 <h3 id="getdetectionsmpfimagejob">getDetections(MPFImageJob)</h3>
 <p>Used to detect objects in image files. The MPFImageJob class contains the URI specifying the location of the image file.</p>
 <p>Currently, the dataUri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". This is because all media is copied to the OpenMPF server before the job is executed.</p>
@@ -937,7 +915,7 @@ of the service (e.g. Docker container).</p>
       <td>stopFrame</td>
       <td><code>int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>
@@ -1030,7 +1008,7 @@ of the service (e.g. Docker container).</p>
       <td>stopTime</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>
@@ -1107,7 +1085,7 @@ of the service (e.g. Docker container).</p>
       <td>stopTime</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>

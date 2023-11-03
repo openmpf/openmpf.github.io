@@ -550,32 +550,10 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
     return data_type == MPFDetectionDataType::IMAGE || data_type == MPFDetectionDataType::VIDEO;
 }
 </code></pre>
-<h4 id="getdetectiontype">GetDetectionType()</h4>
-<p>Returns the type of object detected by the component.</p>
-<ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="language-c++">string GetDetectionType()
-</code></pre>
-<ul>
-<li>
-<p>Parameters: none</p>
-</li>
-<li>
-<p>Returns: (<code>string</code>) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
-</li>
-<li>
-<p>Example:</p>
-</li>
-</ul>
-<pre><code class="language-c++">string SampleComponent::GetDetectionType() {
-    return &quot;FACE&quot;;
-}
-</code></pre>
 <h4 id="getdetectionsmpfimagejob">GetDetections(MPFImageJob …)</h4>
-<p>Used to detect objects in an image file. The MPFImageJob structure contains 
+<p>Used to detect objects in an image file. The MPFImageJob structure contains
 the data_uri specifying the location of the image file.</p>
-<p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". 
+<p>Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg".
 This is because all media is copied to the OpenMPF server before the job is executed.</p>
 <ul>
 <li>Function Definition:</li>
@@ -605,9 +583,9 @@ This is because all media is copied to the OpenMPF server before the job is exec
 <li>Returns: (<code>std::vector&lt;MPFImageLocation&gt;</code>) The <a href="#mpfimagelocation"><code>MPFImageLocation</code></a> data for each detected object.</li>
 </ul>
 <h4 id="getdetectionsmpfvideojob">GetDetections(MPFVideoJob …)</h4>
-<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" 
-of video data and each segment (containing a range of frames) is assigned to a different job. Components are not 
-guaranteed to receive requests in any order. For example, the first request processed by a component might receive 
+<p>Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments"
+of video data and each segment (containing a range of frames) is assigned to a different job. Components are not
+guaranteed to receive requests in any order. For example, the first request processed by a component might receive
 a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.</p>
 <ul>
 <li>Function Definition:</li>
@@ -634,10 +612,10 @@ a request for frames 300-399 of a Video A, while the next request may cover fram
 </tbody>
 </table>
 <ul>
-<li>Returns: (<code>std::vector&lt;MPFVideoTrack&gt;</code>) The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.  </li>
+<li>Returns: (<code>std::vector&lt;MPFVideoTrack&gt;</code>) The <a href="#mpfvideotrack"><code>MPFVideoTrack</code></a> data for each detected object.</li>
 </ul>
 <h4 id="getdetectionsmpfaudiojob">GetDetections(MPFAudioJob …)</h4>
-<p>Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain 
+<p>Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain
 the entirety of the audio file.</p>
 <ul>
 <li>Function Definition:</li>
@@ -667,7 +645,7 @@ the entirety of the audio file.</p>
 <li>Returns: (<code>std::vector&lt;MPFAudioTrack&gt;</code>) The <a href="#mpfaudiotrack"><code>MPFAudioTrack</code></a> data for each detected object.</li>
 </ul>
 <h4 id="getdetectionsmpfgenericjob">GetDetections(MPFGenericJob …)</h4>
-<p>Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and 
+<p>Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and
 handled generically. These files are not logically segmented, so a job will contain the entirety of the file.</p>
 <ul>
 <li>Function Definition:</li>
@@ -756,12 +734,12 @@ handled generically. These files are not logically segmented, so a job will cont
 </tr>
 </tbody>
 </table>
-<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows 
-users to set job properties in their 
-<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a> 
-These will take precedence over all other property types (job, algorithm, media, etc). It is not 
-possible to change the value of properties set via environment variables at runtime and therefore 
-they should only be used to specify properties that will not change throughout the entire lifetime 
+<p>Job properties can also be set through environment variables prefixed with <code>MPF_PROP_</code>. This allows
+users to set job properties in their
+<a href="https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96">docker-compose files.</a>
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
 of the service (e.g. Docker container).</p>
 <h4 id="mpfimagejob">MPFImageJob</h4>
 <p>Extends <a href="#mpfjob"><code>MPFJob</code></a></p>
@@ -891,7 +869,7 @@ of the service (e.g. Docker container).</p>
       <td>stop_frame</td>
       <td><code>const int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>track</td>
       <td><code>const MPFVideoTrack &</code></td>
@@ -949,7 +927,7 @@ of the service (e.g. Docker container).</p>
   const string &amp;data_uri,
   int start_time,
   int stop_time,
-  const MPFAudioTrack &amp;track,    
+  const MPFAudioTrack &amp;track,
   const Properties &amp;job_properties,
   const Properties &amp;media_properties)
 </code></pre>
@@ -1142,9 +1120,9 @@ MPFImageLocation(
 </ul>
 <p>A component that performs generic object classification can add an entry to <code>detection_properties</code> where the key is <code>CLASSIFICATION</code> and the value is the type of object detected.</p>
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 0, y_left_upper = 0, width = 100, height = 50, confidence = 1.0,
-    { {"CLASSIFICATION", "backpack"} } 
+    { {"CLASSIFICATION", "backpack"} }
 }
 </code></pre>
 
@@ -1159,11 +1137,11 @@ The <code>detection_properties</code> map may have both <code>HORIZONTAL_FLIP</c
 <p>The Workflow Manager performs the following algorithm to draw the bounding box when generating markup:</p>
 <ol>
 <li style="color:red">
-    Draw the rectangle ignoring rotation and flip. 
+    Draw the rectangle ignoring rotation and flip.
 </li>
 
 <li style="color:blue">
-   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner. 
+   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner.
 </li>
 
 <li style="color:green">
@@ -1176,15 +1154,15 @@ The <code>detection_properties</code> map may have both <code>HORIZONTAL_FLIP</c
 Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is drawn in green.
 The detection for the image above is:</p>
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 210, y_left_upper = 189, width = 177, height = 41, confidence = 1.0,
-    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } } 
+    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } }
 }
 </code></pre>
 
 <p>Note that the <code>x_left_upper</code>, <code>y_left_upper</code>, <code>width</code>, and <code>height</code> values describe the red rectangle. The addition
 of the <code>ROTATION</code> property results in the blue rectangle, and the addition of the <code>HORIZONTAL_FLIP</code> property results
-in the green rectangle. </p>
+in the green rectangle.</p>
 <p>One way to think about the process is "draw the unrotated and unflipped rectangle, stick a pin in the upper left corner,
 and then rotate and flip around the pin".</p>
 <h6 id="rotation-only-example">Rotation-Only Example</h6>
@@ -1192,20 +1170,20 @@ and then rotate and flip around the pin".</p>
 <p>The Workflow Manager generated the above image by performing markup on the original image with the following
 detection:</p>
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 156, y_left_upper = 339, width = 194, height = 243, confidence = 1.0,
-    { {"ROTATION", "90.0"} } 
+    { {"ROTATION", "90.0"} }
 }
 </code></pre>
 
 <p>The markup process followed steps 1 and 2 in the previous section, skipping step 3 because there is no
-<code>HORIZONTAL_FLIP</code>. </p>
+<code>HORIZONTAL_FLIP</code>.</p>
 <p>In order to properly extract the detection region from the original image, such as when generating an artifact, you
 would need to rotate the region in the above image 90 degrees clockwise around the cyan dot currently shown in the
-bottom-left corner so that the face is in the proper upright position. </p>
+bottom-left corner so that the face is in the proper upright position.</p>
 <p>When the rotation is properly corrected in this way, the cyan dot will appear in the top-left corner of the bounding
 box. That is why its position is described using the <code>x_left_upper</code>, and <code>y_left_upper</code> variables. They refer to the
-top-left corner of the correctly oriented region. </p>
+top-left corner of the correctly oriented region.</p>
 <h4 id="mpfvideotrack">MPFVideoTrack</h4>
 <p>Structure used to store the location of detected objects in a video file.</p>
 <ul>
@@ -1357,7 +1335,7 @@ MPFGenericTrack(
 </table>
 <h3 id="exception-types">Exception Types</h3>
 <h4 id="mpfdetectionexception">MPFDetectionException</h4>
-<p>Exception that should be thrown by the <code>GetDetections()</code> methods when an error occurs. 
+<p>Exception that should be thrown by the <code>GetDetections()</code> methods when an error occurs.
 The content of the <code>error_code</code> and <code>what()</code> members will appear in the JSON output object.</p>
 <ul>
 <li>Constructors:</li>
@@ -1388,7 +1366,7 @@ MPFDetectionException(const std::string &amp;what)
 </table>
 <h3 id="enumeration-types">Enumeration Types</h3>
 <h4 id="mpfdetectionerror">MPFDetectionError</h4>
-<p>Enum used to indicate the type of error that occurred in a <code>GetDetections()</code> method. It is used as a parameter to 
+<p>Enum used to indicate the type of error that occurred in a <code>GetDetections()</code> method. It is used as a parameter to
 the <code>MPFDetectionException</code> constructor. A component is not required to support all error types.</p>
 <table>
 <thead>
@@ -1467,11 +1445,11 @@ the <code>MPFDetectionException</code> constructor. A component is not required 
 <h3 id="utility-classes">Utility Classes</h3>
 <p>For convenience, the OpenMPF provides the <code>MPFImageReader</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFImageReader.h">source</a>) and <code>MPFVideoCapture</code> (<a href="https://github.com/openmpf/openmpf-cpp-component-sdk/blob/master/detection/api/include/MPFVideoCapture.h">source</a>) utility classes to perform horizontal flipping, rotation, and cropping to a region of interest. Note, that when using these classes, the component will also need to utilize the class to perform a reverse transform to convert the transformed pixel coordinates back to the original (e.g. pre-flipped, pre-rotated, and pre-cropped) coordinate space.</p>
 <h1 id="c-component-build-environment">C++ Component Build Environment</h1>
-<p>A C++ component library must be built for the same C++ compiler and Linux 
-version that is used by the OpenMPF Component Executable. This is to ensure 
-compatibility between the executable and the library functions at the 
-Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on 
-Ubuntu 20.04 (kernel version 5.13.0-30), and the OpenMPF C++ Component 
+<p>A C++ component library must be built for the same C++ compiler and Linux
+version that is used by the OpenMPF Component Executable. This is to ensure
+compatibility between the executable and the library functions at the
+Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on
+Ubuntu 20.04 (kernel version 5.13.0-30), and the OpenMPF C++ Component
 Executable is built with g++ (GCC) 9.3.0-17.</p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.</p>
 <h1 id="component-development-best-practices">Component Development Best Practices</h1>
@@ -1492,18 +1470,18 @@ Executable is built with g++ (GCC) 9.3.0-17.</p>
 </code></pre>
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
-<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
-OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
-The Component Executor will configure log4cxx globally. Components should call 
-<code>log4cxx::Logger::getLogger("&lt;componentName&gt;")</code> to a get a reference to the logger. If you 
+<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves.
+The Component Executor will configure log4cxx globally. Components should call
+<code>log4cxx::Logger::getLogger("&lt;componentName&gt;")</code> to a get a reference to the logger. If you
 are using a different logging framework, you should make sure its behavior is similar to how
-the Component Executor configures log4cxx as described below. </p>
+the Component Executor configures log4cxx as described below.</p>
 <p>The following log LEVELs are supported: <code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.
-The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging 
+The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging
 verbosity. When <code>LOG_LEVEL</code> is absent, <code>INFO</code> is used.</p>
-<p>Note that multiple instances of the same component can log to the same file. 
+<p>Note that multiple instances of the same component can log to the same file.
 Also, logging content can span multiple lines.</p>
-<p>The logger will write to both standard error and 
+<p>The logger will write to both standard error and
 <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>.</p>
 <p>Each log statement will take the form:
 <code>DATE TIME LEVEL CONTENT</code></p>
