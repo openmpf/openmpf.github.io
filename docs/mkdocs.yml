@@ -25,6 +25,7 @@ pages:
     - Object Storage Guide: Object-Storage-Guide.md
     - Markup Guide: Markup-Guide.md
     - TiesDb Guide: TiesDb-Guide.md
+    - Trigger Guide: Trigger-Guide.md
     - REST API: REST-API.md
 - Component Development:
     - Component API Overview: Component-API-Overview.md

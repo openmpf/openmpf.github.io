@@ -113,6 +113,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../REST-API/index.html">REST API</a>
                 </li>
     </ul>
@@ -168,8 +172,6 @@
         <ul>
         
             <li><a class="toctree-l4" href="#componentget_detections_from_-methods">component.get_detections_from_* methods</a></li>
-        
-            <li><a class="toctree-l4" href="#componentdetection_type">component.detection_type</a></li>
         
             <li><a class="toctree-l4" href="#image-api">Image API</a></li>
         
@@ -304,7 +306,6 @@ sent by the OpenMPF Workflow Manager (WFM).</p>
 <p>The basic pseudocode for the Component Executable is as follows:</p>
 <pre><code class="language-python">component_cls = locate_component_class()
 component = component_cls()
-detection_type = component.detection_type
 
 while True:
     job = receive_job()
@@ -329,8 +330,7 @@ while True:
 <p>The Component Executable receives and parses requests from the WFM, invokes methods on the Component Logic to get
 detection objects, and subsequently populates responses with the component output and sends them to the WFM.</p>
 <p>A component developer implements a detection component by creating a class that defines one or more of the
-get_detections_from_* methods and has a <a href="#componentdetection_type"><code>detection_type</code></a> field.
-See the <a href="#api-specification">API Specification</a> for more information.</p>
+get_detections_from_* methods. See the <a href="#api-specification">API Specification</a> for more information.</p>
 <p>The figures below present high-level component diagrams of the Python Batch Component API.
 This figure shows the basic structure:</p>
 <p><img alt="OpenMPF Component Diagram" src="../img/component_diagram_python_batch_no_mixin.png" title="OpenMPF Component Diagram" /></p>
@@ -476,7 +476,6 @@ import mpf_component_util as mpf_util
 logger = logging.getLogger('MyComponent')
 
 class MyComponent(mpf_util.VideoCaptureMixin):
-    detection_type = 'FACE'
 
     @staticmethod
     def get_detections_from_video_capture(video_job, video_capture):
@@ -548,7 +547,6 @@ the descriptor format.</p>
 logger = logging.getLogger('MyComponent')
 
 class MyComponent:
-    detection_type = 'FACE'
 
     @staticmethod
     def get_detections_from_video(video_job):
@@ -576,8 +574,7 @@ is the component.</p>
 <p><strong>5. Create the component Docker image:</strong></p>
 <p>See the <a href="https://github.com/openmpf/openmpf-docker/tree/master/components/python#overview">README</a>.</p>
 <h1 id="api-specification">API Specification</h1>
-<p>An OpenMPF Python component is a class that defines one or more of the get_detections_from_* methods and has a
-<code>detection_type</code> field.</p>
+<p>An OpenMPF Python component is a class that defines one or more of the get_detections_from_* methods.</p>
 <h4 id="componentget_detections_from_-methods">component.get_detections_from_* methods</h4>
 <p>All get_detections_from_* methods are invoked through an instance of the component class. The only parameter passed
 in is an appropriate job object (e.g. <code>mpf_component_api.ImageJob</code>, <code>mpf_component_api.VideoJob</code>). Since the methods
@@ -605,16 +602,6 @@ For example:</p>
 <p>All get_detections_from_* methods must return an iterable of the appropriate detection type
 (e.g. <code>mpf_component_api.ImageLocation</code>, <code>mpf_component_api.VideoTrack</code>). The return value is normally a list or generator,
 but any iterable can be used.</p>
-<h4 id="componentdetection_type">component.detection_type</h4>
-<ul>
-<li><code>str</code> field describing the type of object that is detected by the component. Should be in all CAPS.
-Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</li>
-<li>Example:</li>
-</ul>
-<pre><code class="language-python">class MyComponent:
-    detection_type = 'FACE'
-
-</code></pre>
 <h2 id="image-api">Image API</h2>
 <h4 id="componentget_detections_from_imageimage_job">component.get_detections_from_image(image_job)</h4>
 <p>Used to detect objects in an image file.</p>
@@ -897,12 +884,12 @@ a static method, or a class method.</p>
       <td>start_frame</td>
       <td><code>int</code></td>
       <td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>stop_frame</td>
       <td><code>int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
@@ -1157,7 +1144,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
       <td>stop_time</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
@@ -1382,20 +1369,20 @@ listed <a href="../CPP-Batch-Component-API/index.html#mpfdetectionerror">here</a
 the <code>MPF_</code> prefix. You can replace the <code>MISSING_PROPERTY</code> part in the above code with any other error type. When
 generating an exception, choose the type that best describes your error.</p>
 <h1 id="python-component-build-environment">Python Component Build Environment</h1>
-<p>All Python components must work with CPython 3.8.10. Also, Python components 
-must work with the Linux version that is used by the OpenMPF Component 
-Executable. At this writing, OpenMPF runs on 
-Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any 
-OS, but incompatibility issues can arise when using Python libraries that 
-include compiled extension modules. Python libraries are typically distributed 
-as wheel files. The wheel format requires that the file name follows the pattern 
-of <code>&lt;dist_name&gt;-&lt;version&gt;-&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;.whl</code>. 
-<code>&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;</code> are called 
-<a href="https://www.python.org/dev/peps/pep-0425">compatibility tags</a>. For example, 
-<code>mpf_component_api</code> is pure Python, so the name of its wheel file is 
-<code>mpf_component_api-0.1-py3-none-any.whl</code>. <code>py3</code> means it will work with any 
-Python 3 implementation because it does not use any implementation-specific 
-features. <code>none</code> means that it does not use the Python ABI. <code>any</code> means it will 
+<p>All Python components must work with CPython 3.8.10. Also, Python components
+must work with the Linux version that is used by the OpenMPF Component
+Executable. At this writing, OpenMPF runs on
+Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any
+OS, but incompatibility issues can arise when using Python libraries that
+include compiled extension modules. Python libraries are typically distributed
+as wheel files. The wheel format requires that the file name follows the pattern
+of <code>&lt;dist_name&gt;-&lt;version&gt;-&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;.whl</code>.
+<code>&lt;python_tag&gt;-&lt;abi_tag&gt;-&lt;platform_tag&gt;</code> are called
+<a href="https://www.python.org/dev/peps/pep-0425">compatibility tags</a>. For example,
+<code>mpf_component_api</code> is pure Python, so the name of its wheel file is
+<code>mpf_component_api-0.1-py3-none-any.whl</code>. <code>py3</code> means it will work with any
+Python 3 implementation because it does not use any implementation-specific
+features. <code>none</code> means that it does not use the Python ABI. <code>any</code> means it will
 work on any platform.</p>
 <p>The following combinations of compatibility tags are supported:</p>
 <ul>
@@ -1487,7 +1474,7 @@ work on any platform.</p>
 <li><code>py31-none-any</code></li>
 <li><code>py30-none-any</code></li>
 </ul>
-<p>The list above was generated with the following command: 
+<p>The list above was generated with the following command:
 <code>python3 -c 'import pip._internal.pep425tags as tags; print("\n".join(str(t) for t in tags.get_supported()))'</code></p>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
@@ -1500,15 +1487,15 @@ multiple instantiations of the component, each running as a separate service.</p
 <p>OpenMPF components should be stateless in operation and give identical output for a provided input
 (i.e. when processing the same job).</p>
 <h2 id="logging">Logging</h2>
-<p>It recommended that components use Python's built-in 
-<a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module.</a> The component should 
-<code>import logging</code> and call <code>logging.getLogger('&lt;componentName&gt;')</code> to get a logger instance. 
-The component should not configure logging itself. The Component Executor will configure the 
-<code>logging</code> module for the component. The logger will write log messages to standard error and 
-<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>. Note that multiple instances of the 
-same component can log to the same file. Also, logging content can span multiple lines. </p>
-<p>The following log levels are supported: <code>FATAL, ERROR, WARN, INFO, DEBUG</code>. 
-The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging 
+<p>It recommended that components use Python's built-in
+<a href="https://docs.python.org/3/library/logging.html"><code>logging</code> module.</a> The component should
+<code>import logging</code> and call <code>logging.getLogger('&lt;componentName&gt;')</code> to get a logger instance.
+The component should not configure logging itself. The Component Executor will configure the
+<code>logging</code> module for the component. The logger will write log messages to standard error and
+<code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>. Note that multiple instances of the
+same component can log to the same file. Also, logging content can span multiple lines.</p>
+<p>The following log levels are supported: <code>FATAL, ERROR, WARN, INFO, DEBUG</code>.
+The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging
 verbosity. When <code>LOG_LEVEL</code> is absent, <code>INFO</code> is used.</p>
 <p>The format of the log messages is:</p>
 <pre><code>DATE TIME LEVEL [SOURCE_FILE:LINE_NUMBER] - MESSAGE

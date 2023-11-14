@@ -304,33 +304,13 @@ bool SampleComponent::Supports(MPFDetectionDataType data_type) {
 }
 ```
 
-#### GetDetectionType()
-
-Returns the type of object detected by the component.
-
-* Function Definition:
-```c++
-string GetDetectionType()
-```
-
-* Parameters: none
-
-* Returns: (`string`) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
-
-* Example:
-
-```c++
-string SampleComponent::GetDetectionType() {
-    return "FACE";
-}
-```
 
 #### GetDetections(MPFImageJob …)
 
-Used to detect objects in an image file. The MPFImageJob structure contains 
+Used to detect objects in an image file. The MPFImageJob structure contains
 the data_uri specifying the location of the image file.
 
-Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg". 
+Currently, the data_uri is always a local file path. For example, "/opt/mpf/share/remote-media/test-file.jpg".
 This is because all media is copied to the OpenMPF server before the job is executed.
 
 * Function Definition:
@@ -349,9 +329,9 @@ std::vector<MPFImageLocation> GetDetections(const MPFImageJob &job);
 
 #### GetDetections(MPFVideoJob …)
 
-Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments" 
-of video data and each segment (containing a range of frames) is assigned to a different job. Components are not 
-guaranteed to receive requests in any order. For example, the first request processed by a component might receive 
+Used to detect objects in a video file. Prior to being sent to the component, videos are split into logical "segments"
+of video data and each segment (containing a range of frames) is assigned to a different job. Components are not
+guaranteed to receive requests in any order. For example, the first request processed by a component might receive
 a request for frames 300-399 of a Video A, while the next request may cover frames 900-999 of a Video B.
 
 * Function Definition:
@@ -365,12 +345,12 @@ std::vector<MPFVideoTrack>  GetDetections(const MPFVideoJob &job);
 |---|---|---|
 | job  | `const MPFVideoJob&`  |  Structure containing details about the work to be performed. See [`MPFVideoJob`](#mpfvideojob) |
 
-* Returns: (`std::vector<MPFVideoTrack>`) The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.  
+* Returns: (`std::vector<MPFVideoTrack>`) The [`MPFVideoTrack`](#mpfvideotrack) data for each detected object.
 
 
 #### GetDetections(MPFAudioJob …)
 
-Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain 
+Used to detect objects in an audio file. Currently, audio files are not logically segmented, so a job will contain
 the entirety of the audio file.
 
 * Function Definition:
@@ -389,7 +369,7 @@ std::vector<MPFAudioTrack> GetDetections(const MPFAudioJob &job);
 
 #### GetDetections(MPFGenericJob …)
 
-Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and 
+Used to detect objects in files that aren't video, image, or audio files. Such files are of the UNKNOWN type and
 handled generically. These files are not logically segmented, so a job will contain the entirety of the file.
 
 * Function Definition:
@@ -445,12 +425,12 @@ MPFJob(
 | media_properties <a name="media-properties"></a> | `const Properties &` | Contains a map of `<string, string>` of metadata about the media associated with the job. The entries in the map vary depending on the type of media. Refer to the type-specific job structures below. |
 
 
-Job properties can also be set through environment variables prefixed with `MPF_PROP_`. This allows 
-users to set job properties in their 
-[docker-compose files.](https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96) 
-These will take precedence over all other property types (job, algorithm, media, etc). It is not 
-possible to change the value of properties set via environment variables at runtime and therefore 
-they should only be used to specify properties that will not change throughout the entire lifetime 
+Job properties can also be set through environment variables prefixed with `MPF_PROP_`. This allows
+users to set job properties in their
+[docker-compose files.](https://github.com/openmpf/openmpf-docker/blob/32d072c9578441f2a07ec2da3bc3765aa1ff9cce/docker-compose.components.yml#L96)
+These will take precedence over all other property types (job, algorithm, media, etc). It is not
+possible to change the value of properties set via environment variables at runtime and therefore
+they should only be used to specify properties that will not change throughout the entire lifetime
 of the service (e.g. Docker container).
 
 
@@ -586,7 +566,7 @@ MPFVideoJob(
       <td>stop_frame</td>
       <td><code>const int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>track</td>
       <td><code>const MPFVideoTrack &</code></td>
@@ -645,7 +625,7 @@ MPFAudioJob(
   const string &data_uri,
   int start_time,
   int stop_time,
-  const MPFAudioTrack &track,    
+  const MPFAudioTrack &track,
   const Properties &job_properties,
   const Properties &media_properties)
 ```
@@ -810,9 +790,9 @@ MPFImageLocation(
 A component that performs generic object classification can add an entry to `detection_properties` where the key is `CLASSIFICATION` and the value is the type of object detected.
 
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 0, y_left_upper = 0, width = 100, height = 50, confidence = 1.0,
-    { {"CLASSIFICATION", "backpack"} } 
+    { {"CLASSIFICATION", "backpack"} }
 }
 </code></pre>
 
@@ -831,11 +811,11 @@ The Workflow Manager performs the following algorithm to draw the bounding box w
 
 <ol>
 <li style="color:red">
-    Draw the rectangle ignoring rotation and flip. 
+    Draw the rectangle ignoring rotation and flip.
 </li>
 
 <li style="color:blue">
-   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner. 
+   Rotate the rectangle counter-clockwise the given number of degrees around its top left corner.
 </li>
 
 <li style="color:green">
@@ -850,15 +830,15 @@ Step 1 is drawn in red. Step 2 is drawn in blue. Step 3 and the final result is 
 The detection for the image above is:
 
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 210, y_left_upper = 189, width = 177, height = 41, confidence = 1.0,
-    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } } 
+    { {"ROTATION", "15"}, { "HORIZONTAL_FLIP", "true" } }
 }
 </code></pre>
 
 Note that the `x_left_upper`, `y_left_upper`, `width`, and `height` values describe the red rectangle. The addition
 of the `ROTATION` property results in the blue rectangle, and the addition of the `HORIZONTAL_FLIP` property results
-in the green rectangle. 
+in the green rectangle.
 
 One way to think about the process is "draw the unrotated and unflipped rectangle, stick a pin in the upper left corner,
 and then rotate and flip around the pin".
@@ -871,22 +851,22 @@ The Workflow Manager generated the above image by performing markup on the origi
 detection:
 
 <pre><code class="text" style="color:black">
-MPFImageLocation { 
+MPFImageLocation {
     x_left_upper = 156, y_left_upper = 339, width = 194, height = 243, confidence = 1.0,
-    { {"ROTATION", "90.0"} } 
+    { {"ROTATION", "90.0"} }
 }
 </code></pre>
 
 The markup process followed steps 1 and 2 in the previous section, skipping step 3 because there is no
-`HORIZONTAL_FLIP`. 
+`HORIZONTAL_FLIP`.
 
 In order to properly extract the detection region from the original image, such as when generating an artifact, you
 would need to rotate the region in the above image 90 degrees clockwise around the cyan dot currently shown in the
-bottom-left corner so that the face is in the proper upright position. 
+bottom-left corner so that the face is in the proper upright position.
 
 When the rotation is properly corrected in this way, the cyan dot will appear in the top-left corner of the bounding
 box. That is why its position is described using the `x_left_upper`, and `y_left_upper` variables. They refer to the
-top-left corner of the correctly oriented region. 
+top-left corner of the correctly oriented region.
 
 #### MPFVideoTrack
 
@@ -977,7 +957,7 @@ MPFGenericTrack(
 
 #### MPFDetectionException
 
-Exception that should be thrown by the `GetDetections()` methods when an error occurs. 
+Exception that should be thrown by the `GetDetections()` methods when an error occurs.
 The content of the `error_code` and `what()` members will appear in the JSON output object.
 
 * Constructors:
@@ -996,7 +976,7 @@ MPFDetectionException(const std::string &what)
 
 #### MPFDetectionError
 
-Enum used to indicate the type of error that occurred in a `GetDetections()` method. It is used as a parameter to 
+Enum used to indicate the type of error that occurred in a `GetDetections()` method. It is used as a parameter to
 the `MPFDetectionException` constructor. A component is not required to support all error types.
 
 |  ENUM  |   Description  |
@@ -1025,11 +1005,11 @@ For convenience, the OpenMPF provides the `MPFImageReader` ([source](https://git
 
 # C++ Component Build Environment
 
-A C++ component library must be built for the same C++ compiler and Linux 
-version that is used by the OpenMPF Component Executable. This is to ensure 
-compatibility between the executable and the library functions at the 
-Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on 
-Ubuntu 20.04 (kernel version 5.13.0-30), and the OpenMPF C++ Component 
+A C++ component library must be built for the same C++ compiler and Linux
+version that is used by the OpenMPF Component Executable. This is to ensure
+compatibility between the executable and the library functions at the
+Application Binary Interface (ABI) level. At this writing, the OpenMPF runs on
+Ubuntu 20.04 (kernel version 5.13.0-30), and the OpenMPF C++ Component
 Executable is built with g++ (GCC) 9.3.0-17.
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or files needed for execution. This includes all other non-standard libraries used by the component (aside from the standard Linux and C++ libraries), and any configuration or data files.
@@ -1057,27 +1037,27 @@ componentName
 │   └── descriptor.json
 └── lib
     └──libComponentName.so - Compiled component library
-```  
+```
 
 Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 
 ## Logging
-It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for 
-OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
-The Component Executor will configure log4cxx globally. Components should call 
-`log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you 
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves.
+The Component Executor will configure log4cxx globally. Components should call
+`log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you
 are using a different logging framework, you should make sure its behavior is similar to how
-the Component Executor configures log4cxx as described below. 
+the Component Executor configures log4cxx as described below.
 
 The following log LEVELs are supported: `FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
-The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 
+The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging
 verbosity. When `LOG_LEVEL` is absent, `INFO` is used.
 
-Note that multiple instances of the same component can log to the same file. 
+Note that multiple instances of the same component can log to the same file.
 Also, logging content can span multiple lines.
 
-The logger will write to both standard error and 
+The logger will write to both standard error and
 `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`.
 
 Each log statement will take the form:

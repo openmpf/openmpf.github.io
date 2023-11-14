@@ -113,6 +113,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../REST-API/index.html">REST API</a>
                 </li>
     </ul>
@@ -296,7 +300,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
     }
     if (is_end_of_segment) {
         streaming_video_tracks = component-&gt;EndSegment()
-        SendSummaryReport(frame_number, component-&gt;getDetectionType(), streaming_video_tracks)
+        SendSummaryReport(frame_number, streaming_video_tracks)
     }
 }
 </code></pre>
@@ -388,28 +392,6 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
     LOG4CXX_INFO(hw_logger_, &quot;[&quot; &lt;&lt; job_name_ &lt;&lt; &quot;] Initialized SampleComponent component.&quot;)
 }
 </code></pre>
-<h3 id="getdetectiontype">GetDetectionType()</h3>
-<p>Returns the type of object detected by the component.</p>
-<ul>
-<li>Function Definition:</li>
-</ul>
-<pre><code class="language-c++">string GetDetectionType()
-</code></pre>
-<ul>
-<li>
-<p>Parameters: none</p>
-</li>
-<li>
-<p>Returns: (<code>string</code>) The type of object detected by the component. Should be in all CAPS. Examples include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
-</li>
-<li>
-<p>Example:</p>
-</li>
-</ul>
-<pre><code class="language-c++">string SampleComponent::GetDetectionType() {
-    return &quot;FACE&quot;;
-}
-</code></pre>
 <h3 id="beginsegmentvideosegmentinfo">BeginSegment(VideoSegmentInfo)</h3>
 <p>Indicate the beginning of a new video segment. The next call to <code>ProcessFrame()</code> will be the first frame of the new segment. <code>ProcessFrame()</code> will never be called before this function.</p>
 <ul>
@@ -455,7 +437,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <p>Note that this function may not be invoked for every frame in the current segment. For example, if FRAME_INTERVAL = 2, then this function will only be invoked for every other frame since those are the only ones that need to be processed.</p>
 <p>Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment.</p>
 <ul>
-<li>Function Definition:   </li>
+<li>Function Definition:</li>
 </ul>
 <pre><code class="language-c++">bool ProcessFrame(const cv::Mat &amp;frame, int frame_number)
 </code></pre>
@@ -494,7 +476,7 @@ EXPORT_MPF_STREAMING_COMPONENT(StreamingHelloWorld);
 <pre><code class="language-c++">bool SampleComponent::ProcessFrame(const cv::Mat &amp;frame, int frame_number) {
     // Look for detections. Generate tracks and store them until the end of the segment.
     if (started_first_track_in_current_segment) {
-        return true;        
+        return true;
     } else {
         return false;
     }
@@ -804,18 +786,18 @@ Executable is built with g++ (GCC) 9.3.0-17.</p>
 </code></pre>
 <p>Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.</p>
 <h2 id="logging">Logging</h2>
-<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for 
-OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
-The Component Executor will configure log4cxx globally. Components should call 
-<code>log4cxx::Logger::getLogger("&lt;componentName&gt;")</code> to a get a reference to the logger. If you 
+<p>It is recommended to use <a href="https://logging.apache.org/log4cxx/index.html">Apache log4cxx</a> for
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves.
+The Component Executor will configure log4cxx globally. Components should call
+<code>log4cxx::Logger::getLogger("&lt;componentName&gt;")</code> to a get a reference to the logger. If you
 are using a different logging framework, you should make sure its behavior is similar to how
-the Component Executor configures log4cxx as described below. </p>
+the Component Executor configures log4cxx as described below.</p>
 <p>The following log LEVELs are supported: <code>FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE</code>.
-The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging 
+The <code>LOG_LEVEL</code> environment variable can be set to one of the log levels to change the logging
 verbosity. When <code>LOG_LEVEL</code> is absent, <code>INFO</code> is used.</p>
-<p>Note that multiple instances of the same component can log to the same file. 
+<p>Note that multiple instances of the same component can log to the same file.
 Also, logging content can span multiple lines.</p>
-<p>The logger will write to both standard error and 
+<p>The logger will write to both standard error and
 <code>${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/&lt;componentName&gt;.log</code>.</p>
 <p>Each log statement will take the form:
 <code>DATE TIME LEVEL CONTENT</code></p>

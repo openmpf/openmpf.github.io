@@ -32,7 +32,6 @@ The basic pseudocode for the Component Executable is as follows:
 ```python
 component_cls = locate_component_class()
 component = component_cls()
-detection_type = component.detection_type
 
 while True:
     job = receive_job()
@@ -60,8 +59,7 @@ The Component Executable receives and parses requests from the WFM, invokes meth
 detection objects, and subsequently populates responses with the component output and sends them to the WFM.
 
 A component developer implements a detection component by creating a class that defines one or more of the
-get_detections_from_* methods and has a [`detection_type`](#componentdetection_type) field.
-See the [API Specification](#api-specification) for more information.
+get_detections_from_* methods. See the [API Specification](#api-specification) for more information.
 
 The figures below present high-level component diagrams of the Python Batch Component API.
 This figure shows the basic structure:
@@ -250,7 +248,6 @@ import mpf_component_util as mpf_util
 logger = logging.getLogger('MyComponent')
 
 class MyComponent(mpf_util.VideoCaptureMixin):
-    detection_type = 'FACE'
 
     @staticmethod
     def get_detections_from_video_capture(video_job, video_capture):
@@ -347,7 +344,6 @@ import logging
 logger = logging.getLogger('MyComponent')
 
 class MyComponent:
-    detection_type = 'FACE'
 
     @staticmethod
     def get_detections_from_video(video_job):
@@ -368,7 +364,7 @@ ComponentName
 ├── dependency.py
 └── descriptor
     └── descriptor.json
-```  
+```
 To create the plugin packages you can run the build script as follows:
 ```
 ~/openmpf-projects/openmpf-build-tools/build-openmpf-components/build_components.py -c MyComponent
@@ -386,8 +382,7 @@ See the [README](https://github.com/openmpf/openmpf-docker/tree/master/component
 
 # API Specification
 
-An OpenMPF Python component is a class that defines one or more of the get_detections_from_\* methods and has a
-`detection_type` field.
+An OpenMPF Python component is a class that defines one or more of the get_detections_from_\* methods.
 
 
 #### component.get_detections_from_\* methods
@@ -424,17 +419,6 @@ class MyComponent:
 All get_detections_from_\* methods must return an iterable of the appropriate detection type
 (e.g. `mpf_component_api.ImageLocation`, `mpf_component_api.VideoTrack`). The return value is normally a list or generator,
 but any iterable can be used.
-
-
-#### component.detection_type
-* `str` field describing the type of object that is detected by the component. Should be in all CAPS.
-Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
-* Example:
-```python
-class MyComponent:
-    detection_type = 'FACE'
-
-```
 
 
 ## Image API
@@ -689,12 +673,12 @@ Class containing data used for detection of objects in a video file.
       <td>start_frame</td>
       <td><code>int</code></td>
       <td>The first frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>stop_frame</td>
       <td><code>int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>    
+    </tr>
     <tr>
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
@@ -930,7 +914,7 @@ Currently, audio files are not logically segmented, so a job will contain the en
       <td>stop_time</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in milliseconds) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>job_properties</td>
       <td><code>dict[str, str]</code></td>
@@ -1121,20 +1105,20 @@ generating an exception, choose the type that best describes your error.
 
 
 # Python Component Build Environment
-All Python components must work with CPython 3.8.10. Also, Python components 
-must work with the Linux version that is used by the OpenMPF Component 
-Executable. At this writing, OpenMPF runs on 
-Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any 
-OS, but incompatibility issues can arise when using Python libraries that 
-include compiled extension modules. Python libraries are typically distributed 
-as wheel files. The wheel format requires that the file name follows the pattern 
-of `<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`. 
-`<python_tag>-<abi_tag>-<platform_tag>` are called 
-[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example, 
-`mpf_component_api` is pure Python, so the name of its wheel file is 
-`mpf_component_api-0.1-py3-none-any.whl`. `py3` means it will work with any 
-Python 3 implementation because it does not use any implementation-specific 
-features. `none` means that it does not use the Python ABI. `any` means it will 
+All Python components must work with CPython 3.8.10. Also, Python components
+must work with the Linux version that is used by the OpenMPF Component
+Executable. At this writing, OpenMPF runs on
+Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any
+OS, but incompatibility issues can arise when using Python libraries that
+include compiled extension modules. Python libraries are typically distributed
+as wheel files. The wheel format requires that the file name follows the pattern
+of `<dist_name>-<version>-<python_tag>-<abi_tag>-<platform_tag>.whl`.
+`<python_tag>-<abi_tag>-<platform_tag>` are called
+[compatibility tags](https://www.python.org/dev/peps/pep-0425). For example,
+`mpf_component_api` is pure Python, so the name of its wheel file is
+`mpf_component_api-0.1-py3-none-any.whl`. `py3` means it will work with any
+Python 3 implementation because it does not use any implementation-specific
+features. `none` means that it does not use the Python ABI. `any` means it will
 work on any platform.
 
 The following combinations of compatibility tags are supported:
@@ -1227,7 +1211,7 @@ The following combinations of compatibility tags are supported:
 * `py31-none-any`
 * `py30-none-any`
 
-The list above was generated with the following command: 
+The list above was generated with the following command:
 `python3 -c 'import pip._internal.pep425tags as tags; print("\n".join(str(t) for t in tags.get_supported()))'`
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
@@ -1248,16 +1232,16 @@ OpenMPF components should be stateless in operation and give identical output fo
 
 
 ## Logging
-It recommended that components use Python's built-in 
-[`logging` module.](https://docs.python.org/3/library/logging.html) The component should 
-`import logging` and call `logging.getLogger('<componentName>')` to get a logger instance. 
-The component should not configure logging itself. The Component Executor will configure the 
-`logging` module for the component. The logger will write log messages to standard error and 
-`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`. Note that multiple instances of the 
-same component can log to the same file. Also, logging content can span multiple lines. 
+It recommended that components use Python's built-in
+[`logging` module.](https://docs.python.org/3/library/logging.html) The component should
+`import logging` and call `logging.getLogger('<componentName>')` to get a logger instance.
+The component should not configure logging itself. The Component Executor will configure the
+`logging` module for the component. The logger will write log messages to standard error and
+`${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`. Note that multiple instances of the
+same component can log to the same file. Also, logging content can span multiple lines.
 
-The following log levels are supported: `FATAL, ERROR, WARN, INFO, DEBUG`. 
-The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 
+The following log levels are supported: `FATAL, ERROR, WARN, INFO, DEBUG`.
+The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging
 verbosity. When `LOG_LEVEL` is absent, `INFO` is used.
 
 The format of the log messages is:
