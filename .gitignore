@@ -4,8 +4,13 @@ _site
 .vagrant
 *.iml
 *.idea*
+.vscode
 
 # general
 .DS_Store
 Thumbs.db
 ehthumbs.db
+
+# temp
+*.bkp
+*.dtmp

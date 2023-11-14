@@ -40,7 +40,7 @@ while (has_next_frame) {
     }
     if (is_end_of_segment) {
         streaming_video_tracks = component->EndSegment()
-        SendSummaryReport(frame_number, component->getDetectionType(), streaming_video_tracks)
+        SendSummaryReport(frame_number, streaming_video_tracks)
     }
 }
 ```
@@ -146,26 +146,6 @@ SampleComponent::SampleComponent(const MPFStreamingVideoJob &job)
 }
 ```
 
-### GetDetectionType()
-
-Returns the type of object detected by the component.
-
-* Function Definition:
-```c++
-string GetDetectionType()
-```
-
-* Parameters: none
-
-* Returns: (`string`) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `CLASS` (for object classification), or `TEXT`.
-
-* Example:
-
-```c++
-string SampleComponent::GetDetectionType() {
-    return "FACE";
-}
-```
 
 ### BeginSegment(VideoSegmentInfo)
 
@@ -189,7 +169,7 @@ void BeginSegment(const VideoSegmentInfo &segment_info)
 void SampleComponent::BeginSegment(const VideoSegmentInfo &segment_info) {
     // Prepare for next segment
 }
-```   
+```
 
 ### ProcessFrame(Mat ...)
 
@@ -203,7 +183,7 @@ Note that this function may not be invoked for every frame in the current segmen
 
 Also, it may not be invoked for the first nor last frame in the segment. For example, if FRAME_INTERVAL = 3 and the segment size is 10, then it will be invoked for frames {0, 3, 6, 9} for the first segment, and frames {12, 15, 18} for the second segment.
 
-* Function Definition:   
+* Function Definition:
 ```c++
 bool ProcessFrame(const cv::Mat &frame, int frame_number)
 ```
@@ -222,12 +202,12 @@ bool ProcessFrame(const cv::Mat &frame, int frame_number)
 bool SampleComponent::ProcessFrame(const cv::Mat &frame, int frame_number) {
     // Look for detections. Generate tracks and store them until the end of the segment.
     if (started_first_track_in_current_segment) {
-        return true;        
+        return true;
     } else {
         return false;
     }
 }
-```   
+```
 
 ### EndSegment()
 
@@ -442,27 +422,27 @@ componentName
 │   └── descriptor.json
 └── lib
     └──libComponentName.so - Compiled component library
-```  
+```
 
 Once built, components should be packaged into a .tar.gz containing the contents of the directory shown above.
 
 
 ## Logging
-It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for 
-OpenMPF Component logging. Components using log4cxx should not configure logging themselves. 
-The Component Executor will configure log4cxx globally. Components should call 
-`log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you 
+It is recommended to use [Apache log4cxx](https://logging.apache.org/log4cxx/index.html) for
+OpenMPF Component logging. Components using log4cxx should not configure logging themselves.
+The Component Executor will configure log4cxx globally. Components should call
+`log4cxx::Logger::getLogger("<componentName>")` to a get a reference to the logger. If you
 are using a different logging framework, you should make sure its behavior is similar to how
-the Component Executor configures log4cxx as described below. 
+the Component Executor configures log4cxx as described below.
 
 The following log LEVELs are supported: `FATAL, ERROR, WARN,  INFO,  DEBUG, TRACE`.
-The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging 
+The `LOG_LEVEL` environment variable can be set to one of the log levels to change the logging
 verbosity. When `LOG_LEVEL` is absent, `INFO` is used.
 
-Note that multiple instances of the same component can log to the same file. 
+Note that multiple instances of the same component can log to the same file.
 Also, logging content can span multiple lines.
 
-The logger will write to both standard error and 
+The logger will write to both standard error and
 `${MPF_LOG_PATH}/${THIS_MPF_NODE}/log/<componentName>.log`.
 
 Each log statement will take the form:

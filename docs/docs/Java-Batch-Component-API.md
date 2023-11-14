@@ -255,25 +255,6 @@ public boolean supports(MPFDataType dataType) {
 }
 ```
 
-#### getDetectionType()
-
-Returns the type of object detected by the component.
-
-* Method Definition:
-```java
-public String getDetectionType()
-```
-
-* Parameters: none
-
-* Returns: (`String`) The type of object detected by the component. Should be in all CAPS. Examples include: `FACE`, `MOTION`, `PERSON`, `SPEECH`, `CLASS` (for object classification), or `TEXT`.
-
-* Example:
-```java
-public String getDetectionType() {
-    return "FACE";
-}
-```
 
 ### getDetections(MPFImageJob)
 
@@ -585,7 +566,7 @@ public MPFVideoJob(
       <td>stopFrame</td>
       <td><code>int</code></td>
       <td>The last frame number (0-based index) of the video that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>
@@ -680,7 +661,7 @@ public MPFAudioJob(
       <td>stopTime</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>
@@ -759,7 +740,7 @@ public MPFGenericJob(
       <td>stopTime</td>
       <td><code>int</code></td>
       <td>The time (0-based index, in ms) associated with the end of the segment of the audio file that should be processed to look for detections.</td>
-    </tr>        
+    </tr>
     <tr>
       <td>jobProperties</td>
       <td><code>Map&ltString, String&gt</code></td>

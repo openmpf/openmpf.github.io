@@ -117,6 +117,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../REST-API/index.html">REST API</a>
                 </li>
     </ul>
@@ -321,6 +325,11 @@ component's <code>setup.py</code> file. The distribution name is usually the sam
 <li>
 <p><strong>actionType:</strong>
   Required. Defines the type of processing that the algorithm performs. Must be set to <code>DETECTION</code>.</p>
+</li>
+<li>
+<p><strong>trackType:</strong>
+  Required. The type of object detected by the component. Should be in all CAPS. Examples
+  include: <code>FACE</code>, <code>MOTION</code>, <code>PERSON</code>, <code>SPEECH</code>, <code>CLASS</code> (for object classification), or <code>TEXT</code>.</p>
 </li>
 <li>
 <p><strong>outputChangedCounter:</strong>
