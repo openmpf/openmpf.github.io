@@ -3,6 +3,43 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 # OpenMPF 7.2.x
 
+<h2>7.2.5: November 2023</h2>
+
+<h3>Updates</h3>
+
+- [[#1715](https://github.com/openmpf/openmpf/issues/1715)] Upgrade ActiveMQ to 5.17.6
+
+<h2>7.2.4: September 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1707](https://github.com/openmpf/openmpf/issues/1707)] Fix bug where TiesDB check status reports
+  `NO_TIES_DB_URL_IN_JOB` instead of `MEDIA_MIME_TYPES_ABSENT`
+
+<h2>7.2.3: June 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1697](https://github.com/openmpf/openmpf/issues/1697)] Prevent OcvYoloDetection component from deadlocking on
+  strange frame sizes when using Triton
+
+<h2>7.2.2: June 2023</h2>
+
+<h3>Features</h3>
+
+- [[#1693](https://github.com/openmpf/openmpf/issues/1693)] Add property to enable/disable SAS in AzureSpeech
+
+<h3>Bug Fixes</h3>
+
+- [[#1695](https://github.com/openmpf/openmpf/issues/1695)] Fix memory leak in KeywordTagging component
+
+<h2>7.2.1: June 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1678](https://github.com/openmpf/openmpf/issues/1678)] Fix bug where ffmpeg hangs when processing some kinds of
+  unsupported/corrupted media
+
 <h2>7.2.0: May 2023</h2>
 
 <h3>Documentation</h3>
