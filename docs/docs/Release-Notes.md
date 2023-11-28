@@ -25,7 +25,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h2>7.2.2: June 2023</h2>
 
-<h3>Features</h3>
+<h3>Updates</h3>
 
 - [[#1693](https://github.com/openmpf/openmpf/issues/1693)] Add property to enable/disable SAS in AzureSpeech
 
