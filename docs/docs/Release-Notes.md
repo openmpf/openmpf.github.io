@@ -1,6 +1,12 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 8.0.x
+
+<h2>8.0.0: December 2023</h2>
+
+
+
 # OpenMPF 7.2.x
 
 <h2>7.2.5: November 2023</h2>
@@ -8,6 +14,11 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>Updates</h3>
 
 - [[#1715](https://github.com/openmpf/openmpf/issues/1715)] Upgrade ActiveMQ to 5.17.6
+
+<h3>Bug Fixes</h3>
+
+- [[#1711](https://github.com/openmpf/openmpf/issues/1711)] When selecting detections with the highest confidence,
+  Workflow Manager should consistently handle detections with equal confidence
 
 <h2>7.2.4: September 2023</h2>
 
