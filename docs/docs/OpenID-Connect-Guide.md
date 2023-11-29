@@ -29,8 +29,8 @@ specify the name of the claim that must be present. The `OIDC_USER_CLAIM_VALUE` 
 If Workflow Manager is configured to use OIDC, then the component services must also be configured
 to use OIDC. The component services will use OIDC if either the `OIDC_JWT_ISSUER_URI` or
 `OIDC_ISSUER_URI` environment variables are set on the component service. When a component service
-is configured to use OIDC, the `WFM_USER` and `WFM_PASSWORD` environment variables are used to
-specify the client ID and secret that will be used during component registration.
+is configured to use OIDC, the `OIDC_CLIENT_ID` and `OIDC_CLIENT_SECRET` environment variables are
+used to specify the client ID and secret that will be used during component registration.
 
 
 ### Workflow Manager Environment Variables
@@ -41,7 +41,8 @@ specify the client ID and secret that will be used during component registration
     `OIDC_ISSUER_URI` with `/.well-known/openid-configuration` appended.
 - `OIDC_JWT_ISSUER_URI` (Optional): Works the same way as `OIDC_ISSUER_URI`, except that the
     configuration will only be used to authenticate REST clients. When not provided,
-    `OIDC_ISSUER_URI` will be used.
+    `OIDC_ISSUER_URI` will be used. This would be used when the authentication provider's endpoint
+    for user authentication is different from the endpoint for authentication of REST clients.
 - `OIDC_CLIENT_ID` (Required): The client ID that Workflow Manager will use to authenticate with
     the OIDC provider.
 - `OIDC_CLIENT_SECRET` (Required): The client secret Workflow Manager will use to authenticate
@@ -71,14 +72,17 @@ specify the client ID and secret that will be used during component registration
 
 ### Component Environment Variables
 
-- `OIDC_JWT_ISSUER_URI` or `OIDC_ISSUER_URI`: URI for the OIDC provider that will be used to
-    authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
+- `OIDC_JWT_ISSUER_URI` or `OIDC_ISSUER_URI` (Required): URI for the OIDC provider that will be used
+    to authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
     environment variable with `/.well-known/openid-configuration` appended. If both environment
-    variables are provided, `OIDC_JWT_ISSUER_URI` will be used.
-- `WFM_USER`: The client ID that the component service will use when registering the component
-    with Workflow Manager.
-- `WFM_PASSWORD`: The client secret that the component service will use when registering the
-    component with Workflow Manager.
+    variables are provided, `OIDC_JWT_ISSUER_URI` will be used. If `OIDC_JWT_ISSUER_URI` is set on
+    Workflow Manager, it should be set to the same value on the component services. If
+    `OIDC_JWT_ISSUER_URI` is not set on Workflow Manager, `OIDC_ISSUER_URI` should be set to the
+    same value on Workflow Manager and the component services.
+- `OIDC_CLIENT_ID` (Required): The client ID that the component service will use when registering
+    the component with Workflow Manager.
+- `OIDC_CLIENT_SECRET` (Required): The client secret that the component service will use when
+    registering the component with Workflow Manager.
 
 
 ## Example with Keycloak
@@ -156,7 +160,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 - Use the "Clients" menu to create a new client.
 - Capability config:
     - The client needs to have "Client authentication" and "Service accounts roles" enabled.
-    - Use the "Service account roles" tab to add the client to one of the roles created in step 5.
+    - Use the "Service account roles" tab to add the client to one of the roles created in step 6.
 - Set the component services' `WFM_USER` environment variable to the client ID you entered.
 - Set component services' `WFM_PASSWORD` environment variable to the "Client secret" in the
     "Credentials" tab.
@@ -166,7 +170,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 - Use the "Clients" menu to create a new client.
 - Capability config:
     - The client needs to have "Client authentication" and "Service accounts roles" enabled.
-    - Use the "Service account roles" tab to add the client to one of the roles created in step 5.
+    - Use the "Service account roles" tab to add the client to one of the roles created in step 6.
 
 12\. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
      redirected to the Keycloak log in page. You can log in using the users created in step 9.

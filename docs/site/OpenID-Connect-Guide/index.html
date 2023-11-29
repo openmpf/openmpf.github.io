@@ -259,8 +259,8 @@ specify the name of the claim that must be present. The <code>OIDC_USER_CLAIM_VA
 <p>If Workflow Manager is configured to use OIDC, then the component services must also be configured
 to use OIDC. The component services will use OIDC if either the <code>OIDC_JWT_ISSUER_URI</code> or
 <code>OIDC_ISSUER_URI</code> environment variables are set on the component service. When a component service
-is configured to use OIDC, the <code>WFM_USER</code> and <code>WFM_PASSWORD</code> environment variables are used to
-specify the client ID and secret that will be used during component registration.</p>
+is configured to use OIDC, the <code>OIDC_CLIENT_ID</code> and <code>OIDC_CLIENT_SECRET</code> environment variables are
+used to specify the client ID and secret that will be used during component registration.</p>
 <h3 id="workflow-manager-environment-variables">Workflow Manager Environment Variables</h3>
 <ul>
 <li><code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used to authenticate users
@@ -269,7 +269,8 @@ specify the client ID and secret that will be used during component registration
     <code>OIDC_ISSUER_URI</code> with <code>/.well-known/openid-configuration</code> appended.</li>
 <li><code>OIDC_JWT_ISSUER_URI</code> (Optional): Works the same way as <code>OIDC_ISSUER_URI</code>, except that the
     configuration will only be used to authenticate REST clients. When not provided,
-    <code>OIDC_ISSUER_URI</code> will be used.</li>
+    <code>OIDC_ISSUER_URI</code> will be used. This would be used when the authentication provider's endpoint
+    for user authentication is different from the endpoint for authentication of REST clients.</li>
 <li><code>OIDC_CLIENT_ID</code> (Required): The client ID that Workflow Manager will use to authenticate with
     the OIDC provider.</li>
 <li><code>OIDC_CLIENT_SECRET</code> (Required): The client secret Workflow Manager will use to authenticate
@@ -298,14 +299,17 @@ specify the client ID and secret that will be used during component registration
 </ul>
 <h3 id="component-environment-variables">Component Environment Variables</h3>
 <ul>
-<li><code>OIDC_JWT_ISSUER_URI</code> or <code>OIDC_ISSUER_URI</code>: URI for the OIDC provider that will be used to
-    authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
+<li><code>OIDC_JWT_ISSUER_URI</code> or <code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used
+    to authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
     environment variable with <code>/.well-known/openid-configuration</code> appended. If both environment
-    variables are provided, <code>OIDC_JWT_ISSUER_URI</code> will be used.</li>
-<li><code>WFM_USER</code>: The client ID that the component service will use when registering the component
-    with Workflow Manager.</li>
-<li><code>WFM_PASSWORD</code>: The client secret that the component service will use when registering the
-    component with Workflow Manager.</li>
+    variables are provided, <code>OIDC_JWT_ISSUER_URI</code> will be used. If <code>OIDC_JWT_ISSUER_URI</code> is set on
+    Workflow Manager, it should be set to the same value on the component services. If
+    <code>OIDC_JWT_ISSUER_URI</code> is not set on Workflow Manager, <code>OIDC_ISSUER_URI</code> should be set to the
+    same value on Workflow Manager and the component services.</li>
+<li><code>OIDC_CLIENT_ID</code> (Required): The client ID that the component service will use when registering
+    the component with Workflow Manager.</li>
+<li><code>OIDC_CLIENT_SECRET</code> (Required): The client secret that the component service will use when
+    registering the component with Workflow Manager.</li>
 </ul>
 <h2 id="example-with-keycloak">Example with Keycloak</h2>
 <p>The following example explains how to test Workflow Manager with Keycloak as the OIDC provider.
@@ -380,7 +384,7 @@ It is just an example and should not be used in production.</p>
 <li>Use the "Clients" menu to create a new client.</li>
 <li>Capability config:<ul>
 <li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
-<li>Use the "Service account roles" tab to add the client to one of the roles created in step 5.</li>
+<li>Use the "Service account roles" tab to add the client to one of the roles created in step 6.</li>
 </ul>
 </li>
 <li>Set the component services' <code>WFM_USER</code> environment variable to the client ID you entered.</li>
@@ -392,7 +396,7 @@ It is just an example and should not be used in production.</p>
 <li>Use the "Clients" menu to create a new client.</li>
 <li>Capability config:<ul>
 <li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
-<li>Use the "Service account roles" tab to add the client to one of the roles created in step 5.</li>
+<li>Use the "Service account roles" tab to add the client to one of the roles created in step 6.</li>
 </ul>
 </li>
 </ul>
