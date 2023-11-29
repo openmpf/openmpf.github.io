@@ -74,6 +74,10 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 - Blah
 
+<h3>OpenID-Connect (OIDC) Authentication</h3>
+
+- Blah
+
 <h3>Argos Translation Component</h3>
 
 - Blah
@@ -85,9 +89,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>Contrastive Language–Image Pre-training (CLIP) Component</h3>
 
 - Blah
-
-
-
 
 # OpenMPF 7.2.x
 
