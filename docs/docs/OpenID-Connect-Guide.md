@@ -78,7 +78,8 @@ used to specify the client ID and secret that will be used during component regi
     variables are provided, `OIDC_JWT_ISSUER_URI` will be used. If `OIDC_JWT_ISSUER_URI` is set on
     Workflow Manager, it should be set to the same value on the component services. If
     `OIDC_JWT_ISSUER_URI` is not set on Workflow Manager, `OIDC_ISSUER_URI` should be set to the
-    same value on Workflow Manager and the component services.
+    same value on Workflow Manager and the component services. When either environment variable is
+    set, the `WFM_USER` and `WFM_PASSWORD` environment variables are ignored.
 - `OIDC_CLIENT_ID` (Required): The client ID that the component service will use when registering
     the component with Workflow Manager.
 - `OIDC_CLIENT_SECRET` (Required): The client secret that the component service will use when
