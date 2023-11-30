@@ -198,6 +198,7 @@ curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-ma
 - Use the "Clients" menu to create a new client.
 - Capability config:
     - The client needs to have "Client authentication" and "Service accounts roles" enabled.
+- Configure the callback receiver or TiesDb with the client ID and secret.
 
 2\. Create a client role:
 
