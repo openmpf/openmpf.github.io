@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>OpenID Connect Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "OpenID Connect Guide";
+    var mkdocs_page_input_path = "OpenID-Connect-Guide.md";
+    var mkdocs_page_url = "/OpenID-Connect-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../index.html">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">General</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Release-Notes/index.html">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Guides</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Install-Guide/index.html">Install Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../User-Guide/index.html">User Guide</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">OpenID Connect Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#openid-connect-overview">OpenID Connect Overview</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#configuration">Configuration</a></li>
+        
+            <li><a class="toctree-l4" href="#example-with-keycloak">Example with Keycloak</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Segmentation-Guide/index.html">Media Segmentation Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Derivative-Media-Guide/index.html">Derivative Media Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../TiesDb-Guide/index.html">TiesDb Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Additional Developer Resources</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Node-Guide/index.html">Node Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Guides &raquo;</li>
+        
+      
+    
+    <li>OpenID Connect Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="openid-connect-overview">OpenID Connect Overview</h1>
+<p>Workflow Manager can use an OpenID Connect (OIDC) provider to handle authentication for users of
+the web UI and clients of the REST API.</p>
+<h2 id="configuration">Configuration</h2>
+<p>In order to use OIDC, Workflow Manager must first be registered with OIDC provider. The exact
+process for this varies by provider.  As part of the registration process, a client ID and client
+secret should be provided. Those values should be set in the <code>OIDC_CLIENT_ID</code> and
+<code>OIDC_CLIENT_SECRET</code> environment variables. During the registration process the provider will
+likely request a redirect URI. The redirect URI should be set to the base URI for Workflow Manager
+with <code>/login/oauth2/code/provider</code> appended.</p>
+<p>The documentation for the OIDC provider should specify the base URI a client should use to
+authenticate users. The URI should be set in the <code>OIDC_ISSUER_URI</code> environment variable. To verify
+the URI is correct, check that the JSON discovery document is returned when sending an HTTP GET
+request to the URI with <code>/.well-known/openid-configuration</code> appended.</p>
+<p>After a user or REST client authenticates with the OIDC provider, Workflow Manager will check for a
+claim with a specific value to determine if the user is authorized to access Workflow Manager and
+with what role. The <code>OIDC_USER_CLAIM_NAME</code> and <code>OIDC_ADMIN_CLAIM_NAME</code> environment variables
+specify the name of the claim that must be present. The <code>OIDC_USER_CLAIM_VALUE</code> and
+<code>OIDC_ADMIN_CLAIM_VALUE</code> environment variables specify the required value of the claim.</p>
+<p>If Workflow Manager is configured to use OIDC, then the component services must also be configured
+to use OIDC. The component services will use OIDC if either the <code>OIDC_JWT_ISSUER_URI</code> or
+<code>OIDC_ISSUER_URI</code> environment variables are set on the component service. When a component service
+is configured to use OIDC, the <code>OIDC_CLIENT_ID</code> and <code>OIDC_CLIENT_SECRET</code> environment variables are
+used to specify the client ID and secret that will be used during component registration.</p>
+<h3 id="workflow-manager-environment-variables">Workflow Manager Environment Variables</h3>
+<ul>
+<li><code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used to authenticate users
+    through the web UI. If <code>OIDC_JWT_ISSUER_URI</code> is not set, <code>OIDC_ISSUER_URI</code> will also be used to
+    authenticate REST clients.  The OIDC configuration endpoint must exist at the value of
+    <code>OIDC_ISSUER_URI</code> with <code>/.well-known/openid-configuration</code> appended.</li>
+<li><code>OIDC_JWT_ISSUER_URI</code> (Optional): Works the same way as <code>OIDC_ISSUER_URI</code>, except that the
+    configuration will only be used to authenticate REST clients. When not provided,
+    <code>OIDC_ISSUER_URI</code> will be used. This would be used when the authentication provider's endpoint
+    for user authentication is different from the endpoint for authentication of REST clients.</li>
+<li><code>OIDC_CLIENT_ID</code> (Required): The client ID that Workflow Manager will use to authenticate with
+    the OIDC provider.</li>
+<li><code>OIDC_CLIENT_SECRET</code> (Required): The client secret Workflow Manager will use to authenticate
+    with the OIDC provider.</li>
+<li><code>OIDC_USER_CLAIM_NAME</code> (Optional): Specifies the name of the claim from the authentication token
+    that is required for a user or REST client to be granted access to Workflow Manager with the
+    <code>USER</code> role.</li>
+<li><code>OIDC_USER_CLAIM_VALUE</code> (Optional): Specifies the required value of the claim specified in
+    <code>OIDC_USER_CLAIM_NAME</code>. If the claim is a list, only one of the values in the list must match.</li>
+<li><code>OIDC_ADMIN_CLAIM_NAME</code> (Optional): Specifies the name of the claim from the authentication token
+    that is required for a user or REST client to be granted access to Workflow Manager with the
+    <code>ADMIN</code> role.</li>
+<li><code>OIDC_ADMIN_CLAIM_VALUE</code> (Optional): Specifies the required value of the claim specified in
+    <code>OIDC_ADMIN_CLAIM_NAME</code>. If the claim is a list, only one of the values in the list must match.</li>
+<li><code>OIDC_SCOPES</code> (Optional): A comma-separated list of the scopes to be requested from the OIDC
+    provider when authenticating a user through the web UI. The OIDC specification requires one of
+    the scopes to be <code>openid</code>, so if this environment variable is omitted or <code>openid</code> is not in the
+    list, it will be automatically added.</li>
+<li><code>OIDC_USER_NAME_ATTR</code> (Optional): The name of the claim containing the user name. Defaults to
+    <code>sub</code>.</li>
+<li><code>OIDC_REDIRECT_URI</code> (Optional): Specifies the URL the user's browser will be redirected to after
+    logging in to the OIDC provider. If provided, the URL must end in <code>/login/oauth2/code/provider</code>.
+    This would generally be used when the host name that Workflow Manager uses to connect to the
+    OIDC provider is different from the OIDC provider's public host name. The value can use the
+    <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-auth-code-redirect-uri">template variables supported by Spring.</a></li>
+</ul>
+<h3 id="component-environment-variables">Component Environment Variables</h3>
+<ul>
+<li><code>OIDC_JWT_ISSUER_URI</code> or <code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used
+    to authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
+    environment variable with <code>/.well-known/openid-configuration</code> appended. If both environment
+    variables are provided, <code>OIDC_JWT_ISSUER_URI</code> will be used. If <code>OIDC_JWT_ISSUER_URI</code> is set on
+    Workflow Manager, it should be set to the same value on the component services. If
+    <code>OIDC_JWT_ISSUER_URI</code> is not set on Workflow Manager, <code>OIDC_ISSUER_URI</code> should be set to the
+    same value on Workflow Manager and the component services. When either environment variable is
+    set, the <code>WFM_USER</code> and <code>WFM_PASSWORD</code> environment variables are ignored.</li>
+<li><code>OIDC_CLIENT_ID</code> (Required): The client ID that the component service will use when registering
+    the component with Workflow Manager.</li>
+<li><code>OIDC_CLIENT_SECRET</code> (Required): The client secret that the component service will use when
+    registering the component with Workflow Manager.</li>
+</ul>
+<h2 id="example-with-keycloak">Example with Keycloak</h2>
+<p>The following example explains how to test Workflow Manager with Keycloak as the OIDC provider.
+It is just an example and should not be used in production.</p>
+<p>1. Get the Docker gateway IP address by running the command below. It will be used in later steps.</p>
+<pre><code class="language-bash">docker network inspect --format '{{(index .IPAM.Config 0).Gateway}}' bridge
+</code></pre>
+<p>2. Start Keycloak in development mode using the command below. Do not start Workflow Manager yet.
+    The values for the OIDC environment variables are dependent on how you set up Keycloak in the
+    following steps.</p>
+<pre><code class="language-bash">docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin \
+    quay.io/keycloak/keycloak:21.1.1 start-dev
+</code></pre>
+<p>3. Go to <a href="http://localhost:9090/admin">http://localhost:9090/admin</a> in a browser and login with username <code>admin</code> and
+    password <code>admin</code>.</p>
+<p>4. Create a new realm:</p>
+<ul>
+<li>Create a new realm using the drop down box in upper left that says "master".</li>
+<li>Use the realm name you entered and the gateway IP address from step 1 to set Workflow
+    Manager and the component services' <code>OIDC_ISSUER_URI</code> environment variable to:
+    <code>http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;</code></li>
+</ul>
+<p>5. Create the client that Workflow Manager will use to authenticate users:</p>
+<ul>
+<li>Use the "Clients" link in the left menu to create a new client.</li>
+<li>General Settings:<ul>
+<li>The "Client type" needs to be set to "OpenID Connect".</li>
+<li>Enter a "Client ID".</li>
+<li>Set Workflow Manager's <code>OIDC_CLIENT_ID</code> environment variable to the client ID you entered.</li>
+</ul>
+</li>
+<li>Capability config:<ul>
+<li>"Client authentication" must be enabled.</li>
+<li>"Standard flow" must be enabled.</li>
+</ul>
+</li>
+<li>Login settings:<ul>
+<li>Set "Valid redirect URIs" to
+  <code>http://localhost:8080/workflow-manager/login/oauth2/code/provider</code></li>
+<li>Set "Valid post logout redirect URIs" to <code>http://localhost:8080/workflow-manager</code></li>
+</ul>
+</li>
+<li>Set Workflow Manager's <code>OIDC_CLIENT_SECRET</code> environment variable to the "Client secret" in the
+    "Credentials" tab.</li>
+</ul>
+<p>6. Create a Keycloak role that maps to a Workflow Manager role:</p>
+<ul>
+<li>Use the "Realm roles" link in the left menu to create a new role.</li>
+<li>If the Keycloak role should make the user an <code>ADMIN</code> in Workflow Manager, set Workflow
+    Manager's <code>OIDC_ADMIN_CLAIM_VALUE</code> to the role name you just entered. If it should be a
+    <code>USER</code>, then set the <code>OIDC_USER_CLAIM_VALUE</code> environment variable.</li>
+<li>Only one of <code>OIDC_ADMIN_CLAIM_VALUE</code> and <code>OIDC_USER_CLAIM_VALUE</code> need to be set. If you would
+    like to set up both roles repeat this step.</li>
+</ul>
+<p>7. Include the Keycloak role(s) in the access token:</p>
+<ul>
+<li>In the "Client scopes" menu add a mapper to the "roles" scope.</li>
+<li>Use the "groups" predefined mapper.</li>
+<li>The default name "Token Claim Name" is "groups". This can be changed.</li>
+<li>If you created an <code>ADMIN</code> role in step 6 set <code>OIDC_ADMIN_CLAIM_NAME</code> to the value in
+    "Token Claim Name". If you created a <code>USER</code> role, do the same for <code>OIDC_USER_CLAIM_NAME</code>.</li>
+</ul>
+<p>8. Optionally, set Workflow Manager's <code>OIDC_USER_NAME_ATTR</code> to <code>preferred_username</code> to display the
+    user name instead of the ID.</p>
+<p>9. Create Users:</p>
+<ul>
+<li>After creating a user, set a password in the "Credentials" tab.</li>
+<li>Use the "Role mapping" tab to add the user to one of roles created in step 6.</li>
+</ul>
+<p>10. Add Component Registration REST client:</p>
+<ul>
+<li>Use the "Clients" menu to create a new client.</li>
+<li>Capability config:<ul>
+<li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
+<li>Use the "Service account roles" tab to add the client to one of the roles created in step 6.</li>
+</ul>
+</li>
+<li>Set the component services' <code>WFM_USER</code> environment variable to the client ID you entered.</li>
+<li>Set component services' <code>WFM_PASSWORD</code> environment variable to the "Client secret" in the
+    "Credentials" tab.</li>
+</ul>
+<p>11. Add external REST clients:</p>
+<ul>
+<li>Use the "Clients" menu to create a new client.</li>
+<li>Capability config:<ul>
+<li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
+<li>Use the "Service account roles" tab to add the client to one of the roles created in step 6.</li>
+</ul>
+</li>
+</ul>
+<p>12. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
+     redirected to the Keycloak log in page. You can log in using the users created in step 9.</p>
+<h3 id="test-rest-authentication">Test REST authentication</h3>
+<p>Using the Docker gateway IP address from step 1, the client ID and secret from step 11, and the
+realm name from step 4, run the following command:</p>
+<pre><code class="language-bash">curl -d grant_type=client_credentials -u '&lt;client-id&gt;:&lt;client-secret&gt;' 'http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;/protocol/openid-connect/token'
+</code></pre>
+<p>The response JSON will contain a token in the <code>"access_token"</code> property. That token needs to be
+included as a bearer token in REST requests to Workflow Manager. For example:</p>
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer &lt;access-token&gt;&quot; http://localhost:8080/workflow-manager/rest/actions
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Media-Segmentation-Guide/index.html" class="btn btn-neutral float-right" title="Media Segmentation Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../User-Guide/index.html" class="btn btn-neutral" title="User Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../User-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Media-Segmentation-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
