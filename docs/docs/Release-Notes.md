@@ -90,6 +90,25 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 - Blah
 
+<h3>Features</h3>
+
+- [[#1547](https://github.com/openmpf/openmpf/issues/1547)] Create Argos translation component
+- [[#1574](https://github.com/openmpf/openmpf/issues/1574)] Update the WFM to support an optional `TRIGGER` property on any action
+- [[#1598](https://github.com/openmpf/openmpf/issues/1598)] Create a Whisper component for speech-to-text and and translation
+- [[#1644](https://github.com/openmpf/openmpf/issues/1644)] Create CLIP component for processing images
+- [[#1704](https://github.com/openmpf/openmpf/issues/1704)] Update Workflow Manager to authenticate users and REST clients using OIDC
+
+<h3>Updates</h3>
+
+- [[#799](https://github.com/openmpf/openmpf/issues/799)] Avoid unnecessary serialization between Camel routes
+- [[#1643](https://github.com/openmpf/openmpf/issues/1643)] Remove `LONG_SPEAKER_ID` and instead only use `SPEAKER_ID`
+- [[#1645](https://github.com/openmpf/openmpf/issues/1645)] Refactor camel code
+- [[#1727](https://github.com/openmpf/openmpf/issues/1727)] Update to ffmpeg 6.1
+
+<h3>Bug Fixes</h3>
+
+- [[#1642](https://github.com/openmpf/openmpf/issues/1642)] `InProgressBatchJobsService.setProcessedAction` is now called when a previous task produces no tracks
+
 # OpenMPF 7.2.x
 
 <h2>7.2.5: November 2023</h2>
