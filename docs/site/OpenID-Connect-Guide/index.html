@@ -345,6 +345,7 @@ It is just an example and should not be used in production.</p>
 <li>Capability config:<ul>
 <li>"Client authentication" must be enabled.</li>
 <li>"Standard flow" must be enabled.</li>
+<li>"Service accounts roles" must be enabled.</li>
 </ul>
 </li>
 <li>Login settings:<ul>
@@ -412,6 +413,28 @@ realm name from step 4, run the following command:</p>
 included as a bearer token in REST requests to Workflow Manager. For example:</p>
 <pre><code class="language-bash">curl -H &quot;Authorization: Bearer &lt;access-token&gt;&quot; http://localhost:8080/workflow-manager/rest/actions
 </code></pre>
+<h3 id="use-oauth-when-sending-job-complete-callbacks-and-when-posting-to-tiesdb">Use OAuth when sending job complete callbacks and when posting to TiesDb.</h3>
+<p>1. Create a client for the callback receiver or TiesDb:</p>
+<ul>
+<li>Use the "Clients" menu to create a new client.</li>
+<li>Capability config:<ul>
+<li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
+</ul>
+</li>
+</ul>
+<p>2. Create a client role:</p>
+<ul>
+<li>Use the "Roles" tab to add a role to the client that was just created.</li>
+</ul>
+<p>3. Add the role to the Workflow Manager's client:</p>
+<ul>
+<li>Go to the client details page for the client created for Workflow Manager.</li>
+<li>Go to the "Service accounts roles" tab.</li>
+<li>Click "Assign role".</li>
+<li>Change "Filter by realm roles" to "Filter by clients".</li>
+<li>Assign the role created in step 2.</li>
+</ul>
+<p>4. Run jobs with the <code>CALLBACK_USE_OIDC</code> or <code>TIES_DB_USE_OIDC</code> job properties set.</p>
               
             </div>
           </div>

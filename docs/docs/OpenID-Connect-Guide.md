@@ -124,6 +124,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 - Capability config:
     - "Client authentication" must be enabled.
     - "Standard flow" must be enabled.
+    - "Service accounts roles" must be enabled.
 - Login settings:
     - Set "Valid redirect URIs" to
       `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
@@ -189,3 +190,25 @@ included as a bearer token in REST requests to Workflow Manager. For example:
 ```bash
 curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/actions
 ```
+
+
+### Use OAuth when sending job complete callbacks and when posting to TiesDb.
+1\. Create a client for the callback receiver or TiesDb:
+
+- Use the "Clients" menu to create a new client.
+- Capability config:
+    - The client needs to have "Client authentication" and "Service accounts roles" enabled.
+
+2\. Create a client role:
+
+- Use the "Roles" tab to add a role to the client that was just created.
+
+3\. Add the role to the Workflow Manager's client:
+
+- Go to the client details page for the client created for Workflow Manager.
+- Go to the "Service accounts roles" tab.
+- Click "Assign role".
+- Change "Filter by realm roles" to "Filter by clients".
+- Assign the role created in step 2.
+
+4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set.
