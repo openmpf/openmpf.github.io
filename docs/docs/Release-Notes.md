@@ -72,7 +72,18 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Trigger Support</h3>
 
-- Blah
+- A `TRIGGER` property can now be added to any action in a pipeline. It will only be used if `FEED_FORWWARD_TYPE` is
+  provided and set to something other than `NONE`. The `TRIGGER` property is used to conditionally control if the
+  Workflow Manager executes that action. Each feed-forward track that is not executed is passed to the next stage of the
+  pipeline. This results in skipping untriggered actions.
+- The value of `TRIGGER` takes the form `<prop_name>=<prop_value1>[;<prop_value2>...]`. For example, if the value is
+  `CLASSIFICATION=car` then the Workflow Manager would only execute the associated action using feed-forward tracks from
+  the previous stage in the pipeline if those tracks have the `CLASSIFICATION` track property with a value of `car`.
+  This could be useful to skip a license plate detection action. To enable the action to trigger on more than just `car`
+  tracks you can provide a list of valid values. For example, `CLASSIFICATION=car;truck;bus`.
+- The [Trigger Guide](Trigger-Guide/index.html) goes into more detail and provides an example of a pipeline with
+  multiple speech-to-text stages. `TRIGGER` is the used to select which speech-to-text algorithm is executed based on
+  the detected language in the media.
 
 <h3>OpenID-Connect (OIDC) Authentication</h3>
 
