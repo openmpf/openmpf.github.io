@@ -124,7 +124,8 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 - Capability config:
     - "Client authentication" must be enabled.
     - "Standard flow" must be enabled.
-    - "Service accounts roles" must be enabled.
+    - "Service accounts roles" must be enabled so that Workflow Manager can include an OAuth token
+        in job completion callbacks and when communicating with TiesDb.
 - Login settings:
     - Set "Valid redirect URIs" to
       `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
@@ -213,3 +214,49 @@ curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-ma
 - Assign the role created in step 2.
 
 4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set.
+
+
+### Test callback authentication
+
+The Python script below can be used to test callback authentication. Before running the script you
+must run `pip install Flask-pyoidc==3.14.2`. To run the script, you must set the `OIDC_ISSUER_URI`,
+`OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables. The `Flask-pyoidc` package
+requires you to configure it to authenticate Web users, but we are only testing the authentication
+of REST clients.
+
+```python
+import json
+import logging
+import os
+
+from flask import Flask, jsonify
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from flask_pyoidc import OIDCAuthentication
+
+logging.basicConfig(level=logging.INFO)
+
+app = Flask(__name__)
+app.config.update(
+    OIDC_REDIRECT_URI='http://localhost:5000/redirect_uri',
+    SECRET_KEY='secret',
+    DEBUG=True
+)
+
+auth = OIDCAuthentication({
+    'default': ProviderConfiguration(
+        os.getenv('OIDC_ISSUER_URI'),
+        client_metadata=ClientMetadata(
+            os.getenv('OIDC_CLIENT_ID'), os.getenv('OIDC_CLIENT_SECRET'))
+    )
+}, app)
+
+@app.route('/api', methods = ('GET', 'POST'))
+@auth.token_auth('default')
+def api():
+    print(type(auth.current_token_identity))
+    print(json.dumps(auth.current_token_identity, sort_keys=True, indent=4))
+    return jsonify({'message': 'test message'})
+
+if __name__ == '__main__':
+    app.run()
+```
