@@ -213,16 +213,28 @@ curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-ma
 - Change "Filter by realm roles" to "Filter by clients".
 - Assign the role created in step 2.
 
-4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set.
+4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set to `TRUE`.
 
 
 ### Test callback authentication
 
 The Python script below can be used to test callback authentication. Before running the script you
 must run `pip install Flask-pyoidc==3.14.2`. To run the script, you must set the `OIDC_ISSUER_URI`,
-`OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables. The `Flask-pyoidc` package
-requires you to configure it to authenticate Web users, but we are only testing the authentication
-of REST clients.
+`OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables. Note that the script configures
+the `Flask-pyoidc` package to authenticate Web users, as required by the package, but we are only
+testing the authentication of REST clients.
+
+Once the script is running, a user can submit a job via the Workflow Manager Swagger page with the
+following fields to test callbacks:
+```json
+{
+  "callbackMethod": "POST",
+  "callbackURL": "http://localhost:5000/api",
+  "jobProperties": {
+    "CALLBACK_USE_OIDC": "TRUE"
+  }
+}
+```
 
 ```python
 import json
