@@ -345,6 +345,8 @@ It is just an example and should not be used in production.</p>
 <li>Capability config:<ul>
 <li>"Client authentication" must be enabled.</li>
 <li>"Standard flow" must be enabled.</li>
+<li>"Service accounts roles" must be enabled so that Workflow Manager can include an OAuth token
+    in job completion callbacks and when communicating with TiesDb.</li>
 </ul>
 </li>
 <li>Login settings:<ul>
@@ -411,6 +413,80 @@ realm name from step 4, run the following command:</p>
 <p>The response JSON will contain a token in the <code>"access_token"</code> property. That token needs to be
 included as a bearer token in REST requests to Workflow Manager. For example:</p>
 <pre><code class="language-bash">curl -H &quot;Authorization: Bearer &lt;access-token&gt;&quot; http://localhost:8080/workflow-manager/rest/actions
+</code></pre>
+<h3 id="use-oauth-when-sending-job-complete-callbacks-and-when-posting-to-tiesdb">Use OAuth when sending job complete callbacks and when posting to TiesDb.</h3>
+<p>1. Create a client for the callback receiver or TiesDb:</p>
+<ul>
+<li>Use the "Clients" menu to create a new client.</li>
+<li>Capability config:<ul>
+<li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
+</ul>
+</li>
+<li>Configure the callback receiver or TiesDb with the client ID and secret.</li>
+</ul>
+<p>2. Create a client role:</p>
+<ul>
+<li>Use the "Roles" tab to add a role to the client that was just created.</li>
+</ul>
+<p>3. Add the role to the Workflow Manager's client:</p>
+<ul>
+<li>Go to the client details page for the client created for Workflow Manager.</li>
+<li>Go to the "Service accounts roles" tab.</li>
+<li>Click "Assign role".</li>
+<li>Change "Filter by realm roles" to "Filter by clients".</li>
+<li>Assign the role created in step 2.</li>
+</ul>
+<p>4. Run jobs with the <code>CALLBACK_USE_OIDC</code> or <code>TIES_DB_USE_OIDC</code> job properties set to <code>TRUE</code>.</p>
+<h3 id="test-callback-authentication">Test callback authentication</h3>
+<p>The Python script below can be used to test callback authentication. Before running the script you
+must run <code>pip install Flask-pyoidc==3.14.2</code>. To run the script, you must set the <code>OIDC_ISSUER_URI</code>,
+<code>OIDC_CLIENT_ID</code>, and <code>OIDC_CLIENT_SECRET</code> environment variables. Note that the script configures
+the <code>Flask-pyoidc</code> package to authenticate Web users, as required by the package, but we are only
+testing the authentication of REST clients.</p>
+<p>Once the script is running, a user can submit a job via the Workflow Manager Swagger page with the
+following fields to test callbacks:</p>
+<pre><code class="language-json">{
+  &quot;callbackMethod&quot;: &quot;POST&quot;,
+  &quot;callbackURL&quot;: &quot;http://localhost:5000/api&quot;,
+  &quot;jobProperties&quot;: {
+    &quot;CALLBACK_USE_OIDC&quot;: &quot;TRUE&quot;
+  }
+}
+</code></pre>
+<pre><code class="language-python">import json
+import logging
+import os
+
+from flask import Flask, jsonify
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from flask_pyoidc import OIDCAuthentication
+
+logging.basicConfig(level=logging.INFO)
+
+app = Flask(__name__)
+app.config.update(
+    OIDC_REDIRECT_URI='http://localhost:5000/redirect_uri',
+    SECRET_KEY='secret',
+    DEBUG=True
+)
+
+auth = OIDCAuthentication({
+    'default': ProviderConfiguration(
+        os.getenv('OIDC_ISSUER_URI'),
+        client_metadata=ClientMetadata(
+            os.getenv('OIDC_CLIENT_ID'), os.getenv('OIDC_CLIENT_SECRET'))
+    )
+}, app)
+
+@app.route('/api', methods = ('GET', 'POST'))
+@auth.token_auth('default')
+def api():
+    print(type(auth.current_token_identity))
+    print(json.dumps(auth.current_token_identity, sort_keys=True, indent=4))
+    return jsonify({'message': 'test message'})
+
+if __name__ == '__main__':
+    app.run()
 </code></pre>
               
             </div>

@@ -124,6 +124,8 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 - Capability config:
     - "Client authentication" must be enabled.
     - "Standard flow" must be enabled.
+    - "Service accounts roles" must be enabled so that Workflow Manager can include an OAuth token
+        in job completion callbacks and when communicating with TiesDb.
 - Login settings:
     - Set "Valid redirect URIs" to
       `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
@@ -188,4 +190,85 @@ The response JSON will contain a token in the `"access_token"` property. That to
 included as a bearer token in REST requests to Workflow Manager. For example:
 ```bash
 curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/actions
+```
+
+
+### Use OAuth when sending job complete callbacks and when posting to TiesDb.
+1\. Create a client for the callback receiver or TiesDb:
+
+- Use the "Clients" menu to create a new client.
+- Capability config:
+    - The client needs to have "Client authentication" and "Service accounts roles" enabled.
+- Configure the callback receiver or TiesDb with the client ID and secret.
+
+2\. Create a client role:
+
+- Use the "Roles" tab to add a role to the client that was just created.
+
+3\. Add the role to the Workflow Manager's client:
+
+- Go to the client details page for the client created for Workflow Manager.
+- Go to the "Service accounts roles" tab.
+- Click "Assign role".
+- Change "Filter by realm roles" to "Filter by clients".
+- Assign the role created in step 2.
+
+4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set to `TRUE`.
+
+
+### Test callback authentication
+
+The Python script below can be used to test callback authentication. Before running the script you
+must run `pip install Flask-pyoidc==3.14.2`. To run the script, you must set the `OIDC_ISSUER_URI`,
+`OIDC_CLIENT_ID`, and `OIDC_CLIENT_SECRET` environment variables. Note that the script configures
+the `Flask-pyoidc` package to authenticate Web users, as required by the package, but we are only
+testing the authentication of REST clients.
+
+Once the script is running, a user can submit a job via the Workflow Manager Swagger page with the
+following fields to test callbacks:
+```json
+{
+  "callbackMethod": "POST",
+  "callbackURL": "http://localhost:5000/api",
+  "jobProperties": {
+    "CALLBACK_USE_OIDC": "TRUE"
+  }
+}
+```
+
+```python
+import json
+import logging
+import os
+
+from flask import Flask, jsonify
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from flask_pyoidc import OIDCAuthentication
+
+logging.basicConfig(level=logging.INFO)
+
+app = Flask(__name__)
+app.config.update(
+    OIDC_REDIRECT_URI='http://localhost:5000/redirect_uri',
+    SECRET_KEY='secret',
+    DEBUG=True
+)
+
+auth = OIDCAuthentication({
+    'default': ProviderConfiguration(
+        os.getenv('OIDC_ISSUER_URI'),
+        client_metadata=ClientMetadata(
+            os.getenv('OIDC_CLIENT_ID'), os.getenv('OIDC_CLIENT_SECRET'))
+    )
+}, app)
+
+@app.route('/api', methods = ('GET', 'POST'))
+@auth.token_auth('default')
+def api():
+    print(type(auth.current_token_identity))
+    print(json.dumps(auth.current_token_identity, sort_keys=True, indent=4))
+    return jsonify({'message': 'test message'})
+
+if __name__ == '__main__':
+    app.run()
 ```
