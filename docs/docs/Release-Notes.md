@@ -72,7 +72,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Trigger Support</h3>
 
-- A `TRIGGER` property can now be added to any action in a pipeline. It will only be used if `FEED_FORWWARD_TYPE` is
+- A `TRIGGER` property can now be added to any action in a pipeline. It will only be used if `FEED_FORWARD_TYPE` is
   provided and set to something other than `NONE`. The `TRIGGER` property is used to conditionally control if the
   Workflow Manager executes that action. Each feed-forward track that is not executed is passed to the next stage of the
   pipeline. This results in skipping untriggered actions.
