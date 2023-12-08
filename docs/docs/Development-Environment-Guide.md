@@ -171,34 +171,6 @@ cd;
 sudo rm -rf /tmp/libheif;
 ```
 
-
-- Install ActiveMQ:
-```bash
-wget -O- https://archive.apache.org/dist/activemq/5.17.0/apache-activemq-5.17.0-bin.tar.gz \
-    | sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-activemq-5.17.0 /opt/activemq;
-sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
-```
-
-- In `/opt/activemq/conf/activemq.xml` change line 34 from <br />
-  `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}">`
-  <br /> to <br />
-  `<broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false">`
-
-- In `/opt/activemq/conf/activemq.xml` (line 38) under the line:
-  `<policyEntries>`, add <br />
-  `<policyEntry queue=">" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" />`
-
-- In `/opt/activemq/conf/activemq.xml` (line 66, after making the above addition),
-  change the line: `<managementContext createConnector="false"/>`
-  <br /> to <br />
-  `<managementContext createConnector="true"/>`.
-
-- In `/opt/activemq/conf/log4j2.properties` (line 69), change the line <br />
-  `appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}`
-  <br /> to  <br />
-  `appender.logfile.layout.pattern=%d %p [%t] %c - %m%n`
-
 - From your home directory run:
 ```bash
 git clone https://github.com/openmpf/openmpf-projects.git --recursive;
@@ -284,8 +256,7 @@ The preferred method to start and stop services for OpenMPF is with the
 `mpf start` and `mpf stop` commands. For additional information on these
 commands, please see the
 [Command Line Tools](#command-line-tools) section.
-These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager,
-and Workflow Manager processes.
+These will start and stop the PostgreSQL, Redis, Node Manager, and Workflow Manager processes.
 
 
 # Known Issues
@@ -317,7 +288,7 @@ Execute `mpf --help` for general documentation and `mpf <action> --help` for
 documentation about a specific action.
 
 - **Start / Stop Actions**: Actions for starting and stopping the OpenMPF
-  system dependencies, including PostgreSQL, ActiveMQ, Redis, Workflow Manager, and the
+  system dependencies, including PostgreSQL, Redis, Workflow Manager, and the
   node managers on the various nodes in the OpenMPF cluster.
     - `mpf status`: displays a message indicating whether each of the system
        dependencies is running or not
@@ -339,9 +310,8 @@ documentation about a specific action.
 - **Clean Actions**: Actions to remove old data and revert the system to a
   new install state. User accounts, registered components, as well as custom
   actions, tasks, and pipelines, are preserved.
-    - `mpf clean`: cleans out old job information and results, pending job
-      requests, marked up media files, and ActiveMQ data, but preserves log
-      files and uploaded media
+    - `mpf clean`: cleans out old job information and results, pending job requests, and marked up
+      media files, but preserves log files and uploaded media.
     - `mpf clean --delete-logs --delete-uploaded-media`: the same as `mpf clean`
       but also deletes log files and uploaded media
 - **Node Action**: Actions for managing node membership in the OpenMPF cluster.
