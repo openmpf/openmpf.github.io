@@ -13,7 +13,7 @@ The Open Media Processing Framework (OpenMPF) can be used in three ways:
 
 ## Accessing the Web UI
 
-On the server hosting the Open Media Processing Framework, the Web UI is accessible at http://localhost:8080/workflow-manager. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".
+On the server hosting the Open Media Processing Framework, the Web UI is accessible at http://localhost:8080. To access it from other machines, substitute the hostname or IP address of the master node server in place of "localhost".
 
 The OpenMPF user interface was designed and tested for use with Chrome and Firefox. It has not been tested with other browsers. Attempting to use an unsupported browser will result in a warning.
 

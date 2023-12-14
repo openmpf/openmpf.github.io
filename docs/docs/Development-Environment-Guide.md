@@ -239,8 +239,7 @@ finished starting:
 2022-10-11 12:21:16,447 INFO [main] o.m.m.Application - Started Application in 22.843 seconds (JVM running for 24.661)
 ```
 
-After startup, the Workflow Manager will be available at
-<http://localhost:8080/workflow-manager>.
+After startup, the Workflow Manager will be available at <http://localhost:8080>.
 Browse to this URL using Firefox or Chrome.
 
 If you want to test regular user capabilities, log in as the "mpf" user with

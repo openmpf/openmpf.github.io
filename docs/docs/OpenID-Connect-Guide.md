@@ -128,8 +128,8 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
         in job completion callbacks and when communicating with TiesDb.
 - Login settings:
     - Set "Valid redirect URIs" to
-      `http://localhost:8080/workflow-manager/login/oauth2/code/provider`
-    - Set "Valid post logout redirect URIs" to `http://localhost:8080/workflow-manager`
+      `http://localhost:8080/login/oauth2/code/provider`
+    - Set "Valid post logout redirect URIs" to `http://localhost:8080`
 - Set Workflow Manager's `OIDC_CLIENT_SECRET` environment variable to the "Client secret" in the
     "Credentials" tab.
 
@@ -189,7 +189,7 @@ curl -d grant_type=client_credentials -u '<client-id>:<client-secret>' 'http://<
 The response JSON will contain a token in the `"access_token"` property. That token needs to be
 included as a bearer token in REST requests to Workflow Manager. For example:
 ```bash
-curl -H "Authorization: Bearer <access-token>" http://localhost:8080/workflow-manager/rest/actions
+curl -H "Authorization: Bearer <access-token>" http://localhost:8080/rest/actions
 ```
 
 
