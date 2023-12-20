@@ -7,12 +7,43 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Documentation</h3>
 
-- Created a new [Trigger Guide](Trigger-Guide/index.html).
 - Created a new [OpenID Connect Guide](OpenID-Connect-Guide/index.html).
-- Updated the [C++ Batch Component API](CPP-Batch-Component-API.md), [Python Batch Component
-  API](Python-Batch-Component-API.md), and [Java Batch Component API](Java-Batch-Component-API.md) to remove the ability
-  to get the detection type since track type is now specified in `descriptor.json`.
+- Updated the [Admin Guide](Admin-Guide/index.html) and [User Guide](User-Guide/index.html) to remove
+  `/workflow-manager` from the Workflow Manager base URL. The Admin Guide includes a section for new the Hawtio web
+  console.
+- Created a new [Trigger Guide](Trigger-Guide/index.html).
+- Updated the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [Python Batch Component
+  API](Python-Batch-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html) to
+  remove the ability to get the detection type since track type is now specified in `descriptor.json`.
 - Updated the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) with `algorithm.trackType`.
+
+<h3>OpenID-Connect (OIDC) Authentication</h3>
+
+- The Workflow Manager can now optionally use an OpenID Connect (OIDC) provider to handle authentication for users of
+  the web UI and clients of the REST API. The URI for the OIDC provider is specificed using the `OIDC_ISSUER_URI`
+  environment variable.
+- When enabled, OIDC is used to authenticate combinents when they register with the Workflow Manager.
+- When `CALLBACK_USE_OIDC` is set to `true`, the Workflow Manager will send a token in job request callbacks.
+- When `TIES_DB_USE_OIDC` is set to `true`, the Workflow Manager will send a token when posting to a TiesDb server.
+- When OIDC is not enabled, the Workflow Manager uses basic authentication with usernames and passwords, as in previous
+  versions of OpenMPF.
+- Refer to the [OpenID Connect Guide](OpenID-Connect-Guide/index.html) for more information on the various OIDC
+  environment variables and a Keycloak example.
+
+<h3>Embedded ActiveMQ Broker and Hawtio</h3>
+
+- ActiveMQ is now part of the Workflow Manager Spring Boot web application and is no longer run as a separate Docker
+  service. This enables ActiveMQ to integrate with Spring Security so it can be protected by the Workflow Manager's OIDC
+  support.
+- The Workflow Manager is the sender or recipient of all ActiveMQ messages, so embedding ActiveMQ in the Workflow
+  Manager prevents a network hop on all messages.
+- The ActiveMQ management page has been replaced by [Hawtio](https://hawt.io/), which is more feature rich and can be
+  used to monitor the state of the ActiveMQ queues used for communication between the Workflow Manager and the
+  components. The Hawtio web console can be accessed by selecting "Hawtio" from the "Configuration" dropdown menu in the
+  top menu bar of the web UI.
+- Importantly, the base URL for the Workflow Manager is now http://localhost:8080 instead of
+  http://localhost:8080/workflow-manager. `/workflow-manager` is no longer part of the path. This change was made to
+  enable Hawtio integration.
 
 <h3>Component API Updates</h3>
 
@@ -85,10 +116,6 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
   multiple speech-to-text stages. `TRIGGER` is the used to select which speech-to-text algorithm is executed based on
   the detected language in the media.
 
-<h3>OpenID-Connect (OIDC) Authentication</h3>
-
-- Blah
-
 <h3>Argos Translation Component</h3>
 
 - Blah
@@ -108,6 +135,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - [[#1598](https://github.com/openmpf/openmpf/issues/1598)] Create a Whisper component for speech-to-text and and translation
 - [[#1644](https://github.com/openmpf/openmpf/issues/1644)] Create CLIP component for processing images
 - [[#1704](https://github.com/openmpf/openmpf/issues/1704)] Update Workflow Manager to authenticate users and REST clients using OIDC
+- [[#1730](https://github.com/openmpf/openmpf/issues/1730)] Update Workflow Manager to optionally use OIDC when sending callbacks and posting to TiesDb
+- [[#1733](https://github.com/openmpf/openmpf/issues/1733)] Update Workflow Manager to use an embedded ActiveMQ broker
 
 <h3>Updates</h3>
 

@@ -278,12 +278,45 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>Documentation</h3>
 
 <ul>
-<li>Created a new <a href="../Trigger-Guide/index.html">Trigger Guide</a>.</li>
 <li>Created a new <a href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a>.</li>
+<li>Updated the <a href="../Admin-Guide/index.html">Admin Guide</a> and <a href="../User-Guide/index.html">User Guide</a> to remove
+  <code>/workflow-manager</code> from the Workflow Manager base URL. The Admin Guide includes a section for new the Hawtio web
+  console.</li>
+<li>Created a new <a href="../Trigger-Guide/index.html">Trigger Guide</a>.</li>
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component
-  API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> to remove the ability
-  to get the detection type since track type is now specified in <code>descriptor.json</code>.</li>
+  API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> to
+  remove the ability to get the detection type since track type is now specified in <code>descriptor.json</code>.</li>
 <li>Updated the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a> with <code>algorithm.trackType</code>.</li>
+</ul>
+<h3>OpenID-Connect (OIDC) Authentication</h3>
+
+<ul>
+<li>The Workflow Manager can now optionally use an OpenID Connect (OIDC) provider to handle authentication for users of
+  the web UI and clients of the REST API. The URI for the OIDC provider is specificed using the <code>OIDC_ISSUER_URI</code>
+  environment variable.</li>
+<li>When enabled, OIDC is used to authenticate combinents when they register with the Workflow Manager.</li>
+<li>When <code>CALLBACK_USE_OIDC</code> is set to <code>true</code>, the Workflow Manager will send a token in job request callbacks.</li>
+<li>When <code>TIES_DB_USE_OIDC</code> is set to <code>true</code>, the Workflow Manager will send a token when posting to a TiesDb server.</li>
+<li>When OIDC is not enabled, the Workflow Manager uses basic authentication with usernames and passwords, as in previous
+  versions of OpenMPF.</li>
+<li>Refer to the <a href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a> for more information on the various OIDC
+  environment variables and a Keycloak example.</li>
+</ul>
+<h3>Embedded ActiveMQ Broker and Hawtio</h3>
+
+<ul>
+<li>ActiveMQ is now part of the Workflow Manager Spring Boot web application and is no longer run as a separate Docker
+  service. This enables ActiveMQ to integrate with Spring Security so it can be protected by the Workflow Manager's OIDC
+  support.</li>
+<li>The Workflow Manager is the sender or recipient of all ActiveMQ messages, so embedding ActiveMQ in the Workflow
+  Manager prevents a network hop on all messages.</li>
+<li>The ActiveMQ management page has been replaced by <a href="https://hawt.io/">Hawtio</a>, which is more feature rich and can be
+  used to monitor the state of the ActiveMQ queues used for communication between the Workflow Manager and the
+  components. The Hawtio web console can be accessed by selecting "Hawtio" from the "Configuration" dropdown menu in the
+  top menu bar of the web UI.</li>
+<li>Importantly, the base URL for the Workflow Manager is now http://localhost:8080 instead of
+  http://localhost:8080/workflow-manager. <code>/workflow-manager</code> is no longer part of the path. This change was made to
+  enable Hawtio integration.</li>
 </ul>
 <h3>Component API Updates</h3>
 
@@ -344,12 +377,18 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>Trigger Support</h3>
 
 <ul>
-<li>Blah</li>
-</ul>
-<h3>OpenID-Connect (OIDC) Authentication</h3>
-
-<ul>
-<li>Blah</li>
+<li>A <code>TRIGGER</code> property can now be added to any action in a pipeline. It will only be used if <code>FEED_FORWARD_TYPE</code> is
+  provided and set to something other than <code>NONE</code>. The <code>TRIGGER</code> property is used to conditionally control if the
+  Workflow Manager executes that action. Each feed-forward track that is not executed is passed to the next stage of the
+  pipeline. This results in skipping untriggered actions.</li>
+<li>The value of <code>TRIGGER</code> takes the form <code>&lt;prop_name&gt;=&lt;prop_value1&gt;[;&lt;prop_value2&gt;...]</code>. For example, if the value is
+  <code>CLASSIFICATION=car</code> then the Workflow Manager would only execute the associated action using feed-forward tracks from
+  the previous stage in the pipeline if those tracks have the <code>CLASSIFICATION</code> track property with a value of <code>car</code>.
+  This could be useful to skip a license plate detection action. To enable the action to trigger on more than just <code>car</code>
+  tracks you can provide a list of valid values. For example, <code>CLASSIFICATION=car;truck;bus</code>.</li>
+<li>The <a href="../Trigger-Guide/index.html">Trigger Guide</a> goes into more detail and provides an example of a pipeline with
+  multiple speech-to-text stages. <code>TRIGGER</code> is the used to select which speech-to-text algorithm is executed based on
+  the detected language in the media.</li>
 </ul>
 <h3>Argos Translation Component</h3>
 
@@ -374,6 +413,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1598">#1598</a>] Create a Whisper component for speech-to-text and and translation</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1644">#1644</a>] Create CLIP component for processing images</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1704">#1704</a>] Update Workflow Manager to authenticate users and REST clients using OIDC</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1730">#1730</a>] Update Workflow Manager to optionally use OIDC when sending callbacks and posting to TiesDb</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1733">#1733</a>] Update Workflow Manager to use an embedded ActiveMQ broker</li>
 </ul>
 <h3>Updates</h3>
 
