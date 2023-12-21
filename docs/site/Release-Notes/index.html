@@ -397,6 +397,17 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
   multiple speech-to-text stages. <code>TRIGGER</code> is used to select which speech-to-text algorithm is executed based on the
   detected language in the media.</li>
 </ul>
+<h3>Changed All "whitelist" References to "allow list"</h3>
+
+<ul>
+<li>In an effort to be more culturally sensitive, all references to "whitelist" have been removed or renamed to "allow
+  list".</li>
+<li>The <code>whitelist.</code> prefix has been removed from the entries in the <code>mediaType.properties</code> file. For example,
+  <code>whitelist.image/gif=VIDEO</code> is now <code>image/gif=VIDEO</code>.</li>
+<li>The OcvDnnDetection component <code>FEED_FORWARD_WHITELIST_FILE</code> property has been renamed to
+  <code>FEED_FORWARD_ALLOW_LIST_FILE</code>.</li>
+<li>The OcvYoloDetection component <code>CLASS_WHITELIST_FILE</code> property has been renamed to <code>CLASS_ALLOW_LIST_FILE</code>.</li>
+</ul>
 <h3>Argos Translation Component</h3>
 
 <ul>
@@ -455,6 +466,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <li>[<a href="https://github.com/openmpf/openmpf/issues/799">#799</a>] Avoid unnecessary serialization between Camel routes</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1643">#1643</a>] Remove <code>LONG_SPEAKER_ID</code> and instead only use <code>SPEAKER_ID</code></li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1645">#1645</a>] Refactor camel code</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1705">#1705</a>] Change all references to "whitelist" to "allow list" and "blacklist" to "block list"</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1727">#1727</a>] Update to ffmpeg 6.1</li>
 </ul>
 <h3>Bug Fixes</h3>
