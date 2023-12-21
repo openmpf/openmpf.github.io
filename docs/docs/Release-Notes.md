@@ -20,9 +20,9 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <h3>OpenID-Connect (OIDC) Authentication</h3>
 
 - The Workflow Manager can now optionally use an OpenID Connect (OIDC) provider to handle authentication for users of
-  the web UI and clients of the REST API. The URI for the OIDC provider is specificed using the `OIDC_ISSUER_URI`
+  the web UI and clients of the REST API. The URI for the OIDC provider is specified using the `OIDC_ISSUER_URI`
   environment variable.
-- When enabled, OIDC is used to authenticate combinents when they register with the Workflow Manager.
+- When enabled, OIDC is used to authenticate components when they register with the Workflow Manager.
 - When `CALLBACK_USE_OIDC` is set to `true`, the Workflow Manager will send a token in job request callbacks.
 - When `TIES_DB_USE_OIDC` is set to `true`, the Workflow Manager will send a token when posting to a TiesDb server.
 - When OIDC is not enabled, the Workflow Manager uses basic authentication with usernames and passwords, as in previous
@@ -118,15 +118,41 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Argos Translation Component</h3>
 
-- Blah
+- This new component utilizes [Argos Translate](https://github.com/argosopentech/argos-translate) to translate input
+  text from a given source language to English. It can be used in a feed-forward pipeline to process tracks with
+  language and/or script identifiers from an upstream stage.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/tree/master/python/ArgosTranslation#readme) for
+  details.
 
 <h3>Whisper Speech-to-Text and Translation Component</h3>
 
-- Blah
+- This new component utilizes [OpenAI Whisper](https://github.com/openai/whisper) to perform language detection,
+  speech-to-text transcription, or speech translation.
+- If multiple languages are spoken in a single piece of media, language detection will detect only one of them.
+- Note that Whisper is not designed to return a transcription in the source language when performing translation, so we
+  implemented the component to perform an additional transcribe call when configured to perform translation.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/tree/master/python/WhisperSpeechDetection#readme)
+  for details.
 
 <h3>Contrastive Language–Image Pre-training (CLIP) Component</h3>
 
-- Blah
+- This new component utilizes [CLIP](https://github.com/openai/CLIP) to classify images using the 80 COCO classes, 1000
+  ImageNet classes, or a list of user-provided classes. It can run on a CPU or GPU and make calls to an NVIDIA Triton
+  inference server.
+- Classification is performed by taking the class names and filling in one or more text prompts. For example, "a photo
+  of {}", where "{}" can be "dog" or "cat". An embedding is generated using the text prompt(s) for each class and
+  compared against the image embedding to get a match score. Optionally, users can provide a list of their own text
+  prompts.
+- OpenAI trained the CLIP model using a wide variety of images and their respective captions from the Internet. This may
+  make it suitable for a wide variety of classification tasks without further training (known as zero-shot
+  classification). For example, a user could make up a list of classes for arbitrary objects like "walrus", "paperclip",
+  "pizza", etc., and use the default text prompts.
+- It is also possible to use CLIP to classify concepts like scenes and sentiment. For example, using a text prompt of "a
+  {} scene" where the classes are "safe", "violent", and "dangerous".
+- Optionally, the CLIP component can return the image embedding as the track `FEATURE`. For example, this can be used
+  for search and retrieval tasks by comparing it to other embeddings enrolled in a database.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/tree/master/python/ClipDetection#readme) for
+  details.
 
 <h3>Features</h3>
 
