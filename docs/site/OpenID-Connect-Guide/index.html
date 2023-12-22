@@ -351,8 +351,8 @@ It is just an example and should not be used in production.</p>
 </li>
 <li>Login settings:<ul>
 <li>Set "Valid redirect URIs" to
-  <code>http://localhost:8080/workflow-manager/login/oauth2/code/provider</code></li>
-<li>Set "Valid post logout redirect URIs" to <code>http://localhost:8080/workflow-manager</code></li>
+  <code>http://localhost:8080/login/oauth2/code/provider</code></li>
+<li>Set "Valid post logout redirect URIs" to <code>http://localhost:8080</code></li>
 </ul>
 </li>
 <li>Set Workflow Manager's <code>OIDC_CLIENT_SECRET</code> environment variable to the "Client secret" in the
@@ -412,7 +412,7 @@ realm name from step 4, run the following command:</p>
 </code></pre>
 <p>The response JSON will contain a token in the <code>"access_token"</code> property. That token needs to be
 included as a bearer token in REST requests to Workflow Manager. For example:</p>
-<pre><code class="language-bash">curl -H &quot;Authorization: Bearer &lt;access-token&gt;&quot; http://localhost:8080/workflow-manager/rest/actions
+<pre><code class="language-bash">curl -H &quot;Authorization: Bearer &lt;access-token&gt;&quot; http://localhost:8080/rest/actions
 </code></pre>
 <h3 id="use-oauth-when-sending-job-complete-callbacks-and-when-posting-to-tiesdb">Use OAuth when sending job complete callbacks and when posting to TiesDb.</h3>
 <p>1. Create a client for the callback receiver or TiesDb:</p>
