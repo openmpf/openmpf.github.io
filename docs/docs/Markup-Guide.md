@@ -16,7 +16,7 @@ default values can be changed be setting the system property listed for each:
 
 - `MARKUP_LABELS_ENABLED`
     - System property: `markup.labels.enabled`
-    - Default value: `true`  
+    - Default value: `true`
     - If true, add a label to each detection box.
 - `MARKUP_LABELS_ALPHA`
     - System property: `markup.labels.alpha`
@@ -80,7 +80,7 @@ default values can be changed be setting the system property listed for each:
     - The CRF value can be from 0-63. Lower values mean better quality. Recommended values range from 15-35, with 31 being recommended for 1080p HD video. This property is only used if generating VP9-encoded `.webm` files
 - `MARKUP_ANIMATION_ENABLED`
     - System property: `markup.video.animation.enabled`
-    - Default value: `true`
+    - Default value: `false`
     - If true, draw bounding boxes to fill in the gaps between detections in each track. Interpolate size and position.
 
 # Video Markup Icons
@@ -115,10 +115,10 @@ The frame above shows a paper clip icon to indicate that the detection is the re
 ![Walking With Border Skies](img/markup/walking-with-border-skis.jpg "Walking With Border Skis")
 
 The frame above shows the person detection in addition to a new skis detection. The confidence for the latter is lower, which is good considering the algorithm misclassified the person's shadow as skis. The skis track is only a few frames long, so the WFM determined it was a non-moving (stationary) track. This is represented by the anchor icon at the start of the label. Also, notice that the labels are semi-transparent. This allows you to read labels and see frame content that would otherwise be hidden if the labels were completely opaque. Note that you may want to set `MARKUP_LABELS_ALPHA` to `0.75` or greater when using the `mjpeg` encoder.
-  
+
 # Video Encoder Considerations
 
-Performing markup on an image will always generate a `.png` file. Performing markup on a video will generate a video file based on the value of `MARKUP_VIDEO_ENCODER`. The `vp9`, `h264`, and `mjpg` encoders are supported. 
+Performing markup on an image will always generate a `.png` file. Performing markup on a video will generate a video file based on the value of `MARKUP_VIDEO_ENCODER`. The `vp9`, `h264`, and `mjpg` encoders are supported.
 
 The `vp9` and `h264` encoders serve the same purpose in that both formats can be played in the WFM web UI in most web browsers, while the `.avi` files resulting from the `mjpeg` format must be downloaded and played using a separate program like [VLC](https://www.videolan.org/vlc/index.html) or [mpv](https://mpv.io/). In general, `h264` encoding is much faster than `vp9` encoding, so you may want to use it instead of `vp9`. Please be aware that you may be required to pay [Usage Royalties](License-And-Distribution.md#usage-royalties) when using the `h264` encoder for commercial purposes.
 
