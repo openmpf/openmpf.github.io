@@ -450,40 +450,7 @@ cd;
 sudo rm -rf /tmp/libheif;
 </code></pre>
 <ul>
-<li>Install ActiveMQ:</li>
-</ul>
-<pre><code class="language-bash">wget -O- https://archive.apache.org/dist/activemq/5.17.0/apache-activemq-5.17.0-bin.tar.gz \
-    | sudo tar --extract --gzip --directory /opt;
-sudo ln --symbolic /opt/apache-activemq-5.17.0 /opt/activemq;
-sudo chown -R mpf:mpf /opt/apache-activemq-5.17.0
-</code></pre>
-<ul>
-<li>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> change line 34 from <br />
-  <code>&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}"&gt;</code>
-  <br /> to <br />
-  <code>&lt;broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.data}" persistent="false"&gt;</code></p>
-</li>
-<li>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 38) under the line:
-  <code>&lt;policyEntries&gt;</code>, add <br />
-  <code>&lt;policyEntry queue="&gt;" prioritizedMessages="true" useCache="false" expireMessagesPeriod="0" queuePrefetch="1" /&gt;</code></p>
-</li>
-<li>
-<p>In <code>/opt/activemq/conf/activemq.xml</code> (line 66, after making the above addition),
-  change the line: <code>&lt;managementContext createConnector="false"/&gt;</code>
-  <br /> to <br />
-  <code>&lt;managementContext createConnector="true"/&gt;</code>.</p>
-</li>
-<li>
-<p>In <code>/opt/activemq/conf/log4j2.properties</code> (line 69), change the line <br />
-  <code>appender.logfile.layout.pattern=%d | %-5p | %m | %c | %t%n%throwable{full}</code>
-  <br /> to  <br />
-  <code>appender.logfile.layout.pattern=%d %p [%t] %c - %m%n</code></p>
-</li>
-<li>
-<p>From your home directory run:</p>
-</li>
+<li>From your home directory run:</li>
 </ul>
 <pre><code class="language-bash">git clone https://github.com/openmpf/openmpf-projects.git --recursive;
 cd openmpf-projects;
@@ -554,8 +521,7 @@ mvn clean install \
 finished starting:</p>
 <pre><code>2022-10-11 12:21:16,447 INFO [main] o.m.m.Application - Started Application in 22.843 seconds (JVM running for 24.661)
 </code></pre>
-<p>After startup, the Workflow Manager will be available at
-<a href="http://localhost:8080/workflow-manager">http://localhost:8080/workflow-manager</a>.
+<p>After startup, the Workflow Manager will be available at <a href="http://localhost:8080">http://localhost:8080</a>.
 Browse to this URL using Firefox or Chrome.</p>
 <p>If you want to test regular user capabilities, log in as the "mpf" user with
 the "mpf123" password. Please see the
@@ -569,8 +535,7 @@ the other system dependencies.</p>
 <code>mpf start</code> and <code>mpf stop</code> commands. For additional information on these
 commands, please see the
 <a href="#command-line-tools">Command Line Tools</a> section.
-These will start and stop the ActiveMQ, PostgreSQL, Redis, Node Manager,
-and Workflow Manager processes.</p>
+These will start and stop the PostgreSQL, Redis, Node Manager, and Workflow Manager processes.</p>
 <h1 id="known-issues">Known Issues</h1>
 <p><strong>o.m.m.m.c.JobController - Failure creating job. supplier.get()</strong></p>
 <p>If you see an error message similar to:</p>
@@ -592,7 +557,7 @@ on the development machine. All of the tools take the form of actions:
 documentation about a specific action.</p>
 <ul>
 <li><strong>Start / Stop Actions</strong>: Actions for starting and stopping the OpenMPF
-  system dependencies, including PostgreSQL, ActiveMQ, Redis, Workflow Manager, and the
+  system dependencies, including PostgreSQL, Redis, Workflow Manager, and the
   node managers on the various nodes in the OpenMPF cluster.<ul>
 <li><code>mpf status</code>: displays a message indicating whether each of the system
    dependencies is running or not</li>
@@ -618,9 +583,8 @@ documentation about a specific action.</p>
 <li><strong>Clean Actions</strong>: Actions to remove old data and revert the system to a
   new install state. User accounts, registered components, as well as custom
   actions, tasks, and pipelines, are preserved.<ul>
-<li><code>mpf clean</code>: cleans out old job information and results, pending job
-  requests, marked up media files, and ActiveMQ data, but preserves log
-  files and uploaded media</li>
+<li><code>mpf clean</code>: cleans out old job information and results, pending job requests, and marked up
+  media files, but preserves log files and uploaded media.</li>
 <li><code>mpf clean --delete-logs --delete-uploaded-media</code>: the same as <code>mpf clean</code>
   but also deletes log files and uploaded media</li>
 </ul>

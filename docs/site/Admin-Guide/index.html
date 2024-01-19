@@ -92,6 +92,8 @@
         
             <li><a class="toctree-l4" href="#properties-settings">Properties Settings</a></li>
         
+            <li><a class="toctree-l4" href="#hawtio">Hawtio</a></li>
+        
         </ul>
     
 
@@ -247,7 +249,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>INFO:</b> This document refers to components and pipelines that are no longer supported by OpenMPF; however, the images and general content still reflect the appearance and usage of the OpenMPF web UI and its features.</p></div>
 
 <h1 id="web-ui">Web UI</h1>
-<p>The login procedure, as well as all of the pages accessible through the Workflow Manager sidebar, are the same for admin and non-admin users. Refer to the <a href="../User-Guide/index.html">User Guide</a> for more information. The default account for an admin user has the username "admin" and password "mpfadm". </p>
+<p>The login procedure, as well as all of the pages accessible through the Workflow Manager sidebar, are the same for admin and non-admin users. Refer to the <a href="../User-Guide/index.html">User Guide</a> for more information. The default account for an admin user has the username "admin" and password "mpfadm".</p>
 <p>We highly recommend changing the default username and password settings for any environment which is exposed on a network, especially production environments. The default settings are public knowledge, which could be a security risk. Please refer to the <a href="#user-configuration">User Configuration</a> section below.</p>
 <p>This document will cover the additional functionality permitted to admin users through the Admin Console pages.</p>
 <h2 id="dashboard">Dashboard</h2>
@@ -263,14 +265,19 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <p>At the bottom of the properties table is the "Save Properties" button. The number of modified properties is shown in parentheses. Clicking the button will make the necessary changes to the properties file on the file system, but the changes will not take effect until the workflow manager is restarted. The saved properties will be colored blue and a blue icon will be displayed to the right of the property name. Additionally, a notification will appear at the top of the page alerting all system users that a restart is required:</p>
 <p><img alt="Properties Settings Page" src="../img/mpf-adm-property-settings-change.png" title="Properties Settings Page" /></p>
+<h2 id="hawtio">Hawtio</h2>
+<p>The <a href="https://hawt.io/">Hawtio</a> web console can be accessed by selecting "Hawtio" from the
+"Configuration" dropdown menu in the top menu bar. Hawtio exposes various management information
+and settings. It can be used to monitor the state of the ActiveMQ queues used for communication
+between the Workflow Manager and the components.</p>
 <h1 id="user-configuration">User Configuration</h1>
 <p>Every time the Workflow Manager starts it will attempt to create accounts for the users listed in the <code>user.properties</code> file. At runtime this file is extracted to <code>$MPF_HOME/config</code> on the machine running the Workflow Manager. For every user listed in that file, the Workflow Manager will create that user account if a user with the same name doesn't already exists in the SQL database. By default, that file contains two entries, one for the "admin" user with the "mpfadm" password, and one for a non-admin "mpf" user with the "mpf123" password.</p>
-<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries before attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created. </p>
+<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries before attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created.</p>
 <p>The official way to deploy OpenMPF is to use the Docker container platform. If you are using Docker, please follow the instructions in the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users">README</a> that explain how to use a <code>docker secret</code> for your custom <code>user.properties</code> file.</p>
 <h1 id="optional-configure-https">(Optional) Configure HTTPS</h1>
-<p>The official way to deploy OpenMPF is to use the Docker container platform. 
-If you are using Docker, please follow the instructions in the openmpf-docker 
-<a href="https://github.com/openmpf/openmpf-docker#optional-configure-https">README</a> 
+<p>The official way to deploy OpenMPF is to use the Docker container platform.
+If you are using Docker, please follow the instructions in the openmpf-docker
+<a href="https://github.com/openmpf/openmpf-docker#optional-configure-https">README</a>
 that explain how to configure HTTPS.</p>
               
             </div>
