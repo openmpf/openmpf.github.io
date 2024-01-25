@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>REST API - OpenMPF</title>
+  <title>Roll Up Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "REST API";
-    var mkdocs_page_input_path = "REST-API.md";
-    var mkdocs_page_url = "/REST-API/index.html";
+    var mkdocs_page_name = "Roll Up Guide";
+    var mkdocs_page_input_path = "Roll-Up-Guide.md";
+    var mkdocs_page_url = "/Roll-Up-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -119,16 +119,22 @@
                     
     <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
                 </li>
-                <li class="">
-                    
-    <a class="" href="../Roll-Up-Guide/index.html">Roll Up Guide</a>
-                </li>
                 <li class=" current">
                     
-    <a class="current" href="index.html">REST API</a>
+    <a class="current" href="index.html">Roll Up Guide</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#roll-up-overview">Roll Up Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#roll-up-file">Roll Up File</a></li>
+    
+
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
                 </li>
     </ul>
 	    </li>
@@ -217,7 +223,7 @@
         
       
     
-    <li>REST API</li>
+    <li>Roll Up Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -227,9 +233,87 @@
           <div role="main">
             <div class="section">
               
-                <p>The OpenMPF REST API is provided by Swagger and is available within the OpenMPF Workflow Manager web application. Swagger enables users to test the endpoints using the running instance of OpenMPF.</p>
-<p>Click <a href="../html/REST-API.html" target="_blank">here</a> for a generated version of the content.</p>
-<p>Note that in a Docker deployment the <code>/rest/nodes</code> and <code>/rest/streaming</code> endpoints are disabled.</p>
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="roll-up-overview">Roll Up Overview</h1>
+<p>The Workflow Manager can be configured to replace the values of detection properties after
+receiving detections from a component. This is commonly used to replace specific terms with a more
+general category. To use this feature, a JSON file in the format described below must be created.
+Then, the <code>ROLL_UP_FILE</code> job property must be set to the file path where that file is located.</p>
+<h1 id="roll-up-file">Roll Up File</h1>
+<p>At the top level, the roll up file contains an array. The array contains an object for each
+detection property should be modified. Each object contains the following fields:</p>
+<ul>
+<li><code>propertyToProcess</code>: (Required) A detection property key. The value will be modified according to
+    the <code>groups</code> key.</li>
+<li><code>originalPropertyCopy</code>: (Optional) Copies the value of <code>propertyToProcess</code> prior to roll up to
+    another property. The copy is made even if property is not modified.</li>
+<li><code>groups</code>: (Optional) Array containing an object for each roll up name. If the value of the
+    detection property specified by <code>propertyToProcess</code> matches a string listed in <code>members</code>, it
+    will be replaced by the content of the <code>rollUp</code> property.</li>
+</ul>
+<p>In the example below, the value of the "CLASSIFICATION" detection property will be copied to
+"ORIGINAL CLASSIFICATION" before the roll up is performed. If the "CLASSIFICATION" detection
+property is set to "truck", "car", or "bus", the value of the detection property will be replaced
+by "vehicle". In a real use case there will generally be multiple roll up groups for a single
+detection property. The "sandwich" group shows how to include an additional mapping for the same
+detection property. The "PROP2" section is an example of how to apply roll up to an additional
+detection property with a different configuration.</p>
+<pre><code class="language-json">[
+    {
+        &quot;propertyToProcess&quot;: &quot;CLASSIFICATION&quot;,
+        &quot;originalPropertyCopy&quot;: &quot;ORIGINAL CLASSIFICATION&quot;,
+        &quot;groups&quot;: [
+            {
+                &quot;rollUp&quot;: &quot;vehicle&quot;,
+                &quot;members&quot;: [
+                    &quot;truck&quot;,
+                    &quot;car&quot;,
+                    &quot;bus&quot;
+                ]
+            },
+            {
+                &quot;rollUp&quot;: &quot;sandwich&quot;,
+                &quot;members&quot;: [
+                    &quot;grilled cheese&quot;,
+                    &quot;reuben&quot;,
+                    &quot;hamburger&quot;,
+                    &quot;hot dog&quot;
+                ]
+            }
+        ]
+    },
+    {
+        &quot;propertyToProcess&quot;: &quot;PROP2&quot;,
+        &quot;groups&quot;: [
+            {
+                &quot;rollUp&quot;: &quot;new name&quot;,
+                &quot;members&quot;: [
+                    &quot;old name&quot;
+                ]
+            }
+        ]
+    }
+]
+</code></pre>
+<p>If the roll up above was applied to these detection properties:</p>
+<pre><code class="language-json">{
+    &quot;CLASSIFICATION&quot;: &quot;truck&quot;,
+    &quot;PROP2&quot;: &quot;truck&quot;,
+    &quot;PROP3&quot;: &quot;other&quot;
+}
+</code></pre>
+<p>it would result in:</p>
+<pre><code class="language-json">{
+    &quot;CLASSIFICATION&quot;: &quot;vehicle&quot;,
+    &quot;ORIGINAL CLASSIFICATION&quot;: &quot;truck&quot;,
+    &quot;PROP2&quot;: &quot;truck&quot;,
+    &quot;PROP3&quot;: &quot;other&quot;
+}
+</code></pre>
+<p>"PROP2" was not modified because because only the "CLASSIFICATION" property has the "vehicle" roll
+up group. "PROP3" was not changed because it is not in the roll up file.</p>
               
             </div>
           </div>
@@ -237,10 +321,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Component-API-Overview/index.html" class="btn btn-neutral float-right" title="Component API Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Roll-Up-Guide/index.html" class="btn btn-neutral" title="Roll Up Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Trigger-Guide/index.html" class="btn btn-neutral" title="Trigger Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -268,10 +352,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Roll-Up-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Trigger-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Component-API-Overview/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
