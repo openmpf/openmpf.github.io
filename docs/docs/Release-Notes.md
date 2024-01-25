@@ -11,11 +11,14 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - Updated the [Admin Guide](Admin-Guide/index.html) and [User Guide](User-Guide/index.html) to remove
   `/workflow-manager` from the Workflow Manager base URL. The Admin Guide includes a section for the new Hawtio web
   console.
+- Updated the [REST API](REST-API/index.html) to use path parameters for pipelines, tasks, actions, and algorithms
+  endpoints.
 - Updated the [Component Descriptor Reference](Component-Descriptor-Reference/index.html) with `algorithm.trackType`.
 - Updated the [C++ Batch Component API](CPP-Batch-Component-API/index.html), [Python Batch Component
   API](Python-Batch-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html) to
   remove the ability to get the detection type since track type is now specified in `descriptor.json`.
 - Created a new [Trigger Guide](Trigger-Guide/index.html).
+- <span style="color:red">TODO: Created a new [Roll Up Guide](Health-Check-Guide/index.html).</span>
 
 <h3>OpenID-Connect (OIDC) Authentication</h3>
 
@@ -44,6 +47,25 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - Importantly, the base URL for the Workflow Manager is now http://localhost:8080 instead of
   http://localhost:8080/workflow-manager. `/workflow-manager` is no longer part of the path. This change was made to
   enable Hawtio integration.
+
+<h3>REST API Updates</h3>
+
+- The following changes have been made to the REST endpoints to address a limitation with Swagger (OpenAPI). These
+  changes enable the REST endpoints to properly show up in the Swagger page, which is accessed by selecting "REST API"
+  from the "Configuration" dropdown menu in the top menu bar of the web UI.
+
+| Old REST Endpoint | New REST Endpoint |
+| - | - |
+| [GET] /rest/pipelines?name={name} | [GET] /rest/pipelines/{name} |
+| [GET] /rest/tasks?name={name} | [GET] /rest/tasks/{name} |
+| [GET] /rest/actions?name={name} | [GET] /rest/actions/{name} |
+| [GET] /rest/algorithms?name={name} | [GET] /rest/algorithms/{name} |
+| [DELETE] /rest/pipelines?name={name} | [DELETE] /rest/pipelines/{name} |
+| [DELETE] /rest/tasks?name={name} | [DELETE] /rest/tasks/{name} |
+| [DELETE] /rest/actions?name={name} | [DELETE] /rest/actions/{name} |
+
+- In general, the name is now specified as part of the URL path instead of as a URL parameter.
+- `/` and `;` characters are no longer allowed in these names.
 
 <h3>Packaging and Deployment</h3>
 
@@ -117,6 +139,10 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
   multiple speech-to-text stages. `TRIGGER` is used to select which speech-to-text algorithm is executed based on the
   detected language in the media.
 
+<h3>Roll Up Support</h3>
+
+- <span style="color:red">TODO: Add details</span>
+
 <h3>Changed All "whitelist" References to "allow list"</h3>
 
 - In an effort to be more culturally sensitive, all references to "whitelist" have been removed or renamed to "allow
@@ -174,20 +200,41 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - [[#1704](https://github.com/openmpf/openmpf/issues/1704)] Update Workflow Manager to authenticate users and REST clients using OIDC
 - [[#1730](https://github.com/openmpf/openmpf/issues/1730)] Update Workflow Manager to optionally use OIDC when sending callbacks and posting to TiesDb
 - [[#1733](https://github.com/openmpf/openmpf/issues/1733)] Update Workflow Manager to use an embedded ActiveMQ broker
+- [[#1793](https://github.com/openmpf/openmpf/issues/1739)] Add Roll Up support to Workflow Manager
 
 <h3>Updates</h3>
 
 - [[#799](https://github.com/openmpf/openmpf/issues/799)] Avoid unnecessary serialization between Camel routes
+- [[#949](https://github.com/openmpf/openmpf/issues/949)] Change `/pipelines?name=MYPIPELINE` REST endpoint to `/pipelines/MYPIPELINE`
 - [[#1643](https://github.com/openmpf/openmpf/issues/1643)] Remove `LONG_SPEAKER_ID` and instead only use `SPEAKER_ID`
 - [[#1645](https://github.com/openmpf/openmpf/issues/1645)] Refactor camel code
 - [[#1705](https://github.com/openmpf/openmpf/issues/1705)] Change all references to "whitelist" to "allow list" and "blacklist" to "block list"
-- [[#1727](https://github.com/openmpf/openmpf/issues/1727)] Update to ffmpeg 6.1
+- [[#1759](https://github.com/openmpf/openmpf/issues/1759)] Disable markup animation by default
 
 <h3>Bug Fixes</h3>
 
 - [[#1642](https://github.com/openmpf/openmpf/issues/1642)] `InProgressBatchJobsService.setProcessedAction` is now called when a previous task produces no tracks
+- [[#1755](https://github.com/openmpf/openmpf/issues/1755)] The Workflow Manager logs page does not properly handle multi-byte characters
 
 # OpenMPF 7.2.x
+
+<h2>7.2.6: January 2024</h2>
+
+<h3>Documentation</h3>
+
+- <span style="color:red">TODO: Created a new [Health Check Guide](Health-Check-Guide/index.html).</span>
+
+<h3>Health Check Support</h3>
+
+- <span style="color:red">TODO: Add details</span>
+
+<h3>Features</h3>
+
+- [[#1731](https://github.com/openmpf/openmpf/issues/1731)] Implement health checks for C++ and Python components
+
+<h3>Updates</h3>
+
+- [[#1727](https://github.com/openmpf/openmpf/issues/1727)] Update ffmpeg to 6.1
 
 <h2>7.2.5: November 2023</h2>
 
