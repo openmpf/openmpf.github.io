@@ -81,6 +81,11 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
+     <loc>/Health-Check-Guide/index.html</loc>
+     <lastmod>2024-01-29</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
      <loc>/REST-API/index.html</loc>
      <lastmod>2024-01-29</lastmod>
      <changefreq>daily</changefreq>
