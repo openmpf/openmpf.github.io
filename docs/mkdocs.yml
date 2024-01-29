@@ -27,6 +27,7 @@ pages:
     - Markup Guide: Markup-Guide.md
     - TiesDb Guide: TiesDb-Guide.md
     - Trigger Guide: Trigger-Guide.md
+    - Roll Up Guide: Roll-Up-Guide.md
     - Health Check Guide: Health-Check-Guide.md
     - REST API: REST-API.md
 - Component Development:
