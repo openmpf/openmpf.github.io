@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>GPU Support Guide - OpenMPF</title>
+  <title>Health Check Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "GPU Support Guide";
-    var mkdocs_page_input_path = "GPU-Support-Guide.md";
-    var mkdocs_page_url = "/GPU-Support-Guide/index.html";
+    var mkdocs_page_name = "Health Check Guide";
+    var mkdocs_page_input_path = "Health-Check-Guide.md";
+    var mkdocs_page_url = "/Health-Check-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -119,9 +119,21 @@
                     
     <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
+    <a class="current" href="index.html">Health Check Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#health-check-overview">Health Check Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#environment-variables">Environment Variables</a></li>
+    
+
+    <li class="toctree-l3"><a href="#the-ini-file">The INI File</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -154,27 +166,9 @@
                     
     <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="index.html">GPU Support Guide</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
-    
-
-    <li class="toctree-l3"><a href="#building-a-component">Building a Component</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l3"><a href="#opencv-gpu-support">OpenCV GPU Support</a></li>
-    
-
-    </ul>
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
                 </li>
     </ul>
 	    </li>
@@ -228,11 +222,11 @@
     
       
         
-          <li>Component Development &raquo;</li>
+          <li>Guides &raquo;</li>
         
       
     
-    <li>GPU Support Guide</li>
+    <li>Health Check Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -242,47 +236,59 @@
           <div role="main">
             <div class="section">
               
-                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
-<h1 id="introduction">Introduction</h1>
-<p>A subset of OpenMPF components are capable of running on NVIDIA GPUs. GPU support is through the NVIDIA CUDA libraries 
-and runtime. This guide provides information needed for new component developers that would like to use NVIDIA GPUs 
-to accelerate their component processing, and for users of the existing components that provide GPU support.</p>
-<h1 id="building-a-component">Building a Component</h1>
-<p>OpenMPF components that use GPUs are built with the NVIDIA nvcc compiler. Information about the nvcc compiler can be 
-found <a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html">here</a>. The compiler accepts a number of 
-flags to optimize the code generated, and the output of the compiler is called a "fatbin", since it may contain 
-versions of the CUDA code compiled for multiple GPU architectures. This section discusses the nvcc compiler flags that 
-are used within OpenMPF to tell the nvcc compiler what to include in the compiled output.</p>
-<p>The nvcc compiler can generate two types of code: ELF code for a specific GPU architecture, and PTX code, which is the 
-NVIDIA virtual machine and instruction set architecture that is generated in the first phase of nvcc compilation. 
-You can learn more about PTX <a href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html">here</a>. A fatbin may 
-have one or the other type of code, or both, for one or a set of different architectures. </p>
-<p>By default, the OpenMPF components are built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
-to accomplish this are described in this 
-<a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation">table</a>. 
-OpenMPF uses the <code>-gencode</code> flag, with the <code>-arch=compute_30</code> and <code>-code=compute_30</code> flags. This generates PTX code 
-for the minimum compute capability; at runtime, the NVIDIA driver will just-in-time compile the PTX code for the 
-architecture the code is running on.</p>
-<h2 id="customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</h2>
-<p>OpenMPF has several GPU components. Initially, we tested a GPU component on a variety of NVIDIA GPU architectures and
-found an insignificant difference in the run time for different architectures using this approach, and so we have opted
-to provide maximum runtime portability. For any new components that may be developed, this may not be the case, and
-similar testing should be undertaken to determine the correct set of flags for that component. The nvcc compiler flags
-are configured by setting the <code>CUDA_NVCC_FLAGS</code> CMake variable in the individual component's CMakeLists.txt file, e.g.:</p>
-<pre><code>set(CUDA_NVCC_FLAGS --compiler-options -fPIC -gencode arch=compute_30,code=compute_30)
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="health-check-overview">Health Check Overview</h1>
+<p>The C++ and Python component executors can be configured to run health checks on components prior
+to running jobs. Health checks are configured using environment variables and an INI file. All of
+the log lines pertaining to the health check will be prefixed with <code>[Health check] -</code>  instead
+of <code>[Job #: media] -</code>.</p>
+<p>When the component executor receives a job from ActiveMQ, it checks if health checks are enabled
+and if more than the specified timeout has passed since the last health check. If both conditions
+are true, the component executor will run a health check job before the actual job. Health checks
+only run after a job from ActiveMQ is received. If the timeout period expires, but no job is
+received or a job is already running, the health check will not run until the next job is received.</p>
+<p>If the health check job completes successfully, then the component executor runs the job received
+from ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum
+number of consecutive health check failures has not been met, the component executor will wait the
+timeout period before until attempting to receive another job from ActiveMQ. If the maximum number
+of consecutive health check failures has been met, the component executor will exit with exit
+code 39. If the component is running in a Docker container, the container will exit.</p>
+<h1 id="environment-variables">Environment Variables</h1>
+<ul>
+<li><code>HEALTH_CHECK</code>: When set to "ENABLED", the component executor will run health checks.</li>
+<li><code>HEALTH_CHECK_TIMEOUT</code>: When set to a positive integer, specifies the minimum number of seconds
+    between health checks. When absent or set to 0, a health check will run before every job.</li>
+<li><code>HEALTH_CHECK_RETRY_MAX_ATTEMPTS</code>: When set to a positive integer, specifies the number of
+    consecutive health check failures that will cause the component service to exit. When absent or
+    set to 0, the component service will never exit because of a failed health check.</li>
+</ul>
+<h1 id="the-ini-file">The INI File</h1>
+<p>When health checks are enabled, the component executor will look for an INI file at
+<code>$MPF_HOME/plugins/&lt;component-name&gt;/health/health-check.ini</code>. Below is an example of the expected
+INI file.</p>
+<pre><code class="language-ini">media=$MPF_HOME/plugins/OcvFaceDetection/health/meds_faces_image.png
+min_num_tracks=2
+media_type=IMAGE
+
+[job_properties]
+JOB PROP1=VALUE1
+JOB PROP2=VALUE2
+
+[media_properties]
+MEDIA PROP=MEDIA VALUE
 </code></pre>
-<h1 id="opencv-gpu-support">OpenCV GPU Support</h1>
-<p>In OpenMPF, OpenCV is built with CUDA support, including the CUDA Deep Neural Network library, cuDNN. C++ components
-that use OpenCV CUDA support will have built-in access to it through the base C++ builder and executor Docker images, and
-the above-mentioned GPU compile flags will have already been set when OpenCV was built.</p>
-<blockquote>
-<p><strong>NOTE:</strong> Most OpenMPF GPU components are written so that they can run on the CPU only, as well as using GPU hardware. 
-If the component is built on a system that does not have the NVIDIA CUDA Toolkit installed, then the build will 
-default to compiling for the CPU. It is recommended that developers of new GPU components make every attempt to 
-follow this model, so that other users are not burdened with installing the NVIDIA CUDA Toolkit when they have no 
-plans to run on GPU hardware.</p>
-</blockquote>
+<p>The supported keys are:</p>
+<ul>
+<li><code>media</code>: (Required) Path to the media file that will be used in the health check.</li>
+<li><code>min_num_tracks</code>: (Required) The minimum number of tracks the component must find for the health
+    check to pass.</li>
+<li><code>media_type</code>: (Required) The type of media referenced in the <code>media</code> key. It must be one of
+    "IMAGE", "VIDEO", "AUDIO", or "GENERIC".</li>
+<li><code>job_properties</code>: (Optional) Job properties that will set on the health check job.</li>
+<li><code>media_properties</code>: (Optional) Media properties that will set on the health check job.</li>
+</ul>
               
             </div>
           </div>
@@ -290,10 +296,10 @@ plans to run on GPU hardware.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Contributor-Guide/index.html" class="btn btn-neutral float-right" title="Contributor Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Java-Batch-Component-API/index.html" class="btn btn-neutral" title="Java Batch Component API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Trigger-Guide/index.html" class="btn btn-neutral" title="Trigger Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -321,10 +327,10 @@ plans to run on GPU hardware.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Java-Batch-Component-API/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Trigger-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Contributor-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
