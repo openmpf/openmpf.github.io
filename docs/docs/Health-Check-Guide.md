@@ -6,7 +6,9 @@ The MITRE Corporation. All Rights Reserved.
 # Health Check Overview
 
 The C++ and Python component executors can be configured to run health checks on components prior
-to running jobs. Health checks are configured using environment variables and an INI file.
+to running jobs. Health checks are configured using environment variables and an INI file. All of
+the log lines pertaining to the health check will be prefixed with `[Health check] -`  instead
+of `[Job #: media] -`.
 
 When the component executor receives a job from ActiveMQ, it checks if health checks are enabled
 and if more than the specified timeout has passed since the last health check. If both conditions
@@ -14,11 +16,12 @@ are true, the component executor will run a health check job before the actual j
 only run after a job from ActiveMQ is received. If the timeout period expires, but no job is
 received or a job is already running, the health check will not run until the next job is received.
 
-If the health check job completes successfully, then component executor runs the job received from
-ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum number of
-consecutive health failures has been met, the component executor will exit with exit code 39.
-Otherwise, the component executor will wait the timeout period before until attempting to receive
-another job from ActiveMQ.
+If the health check job completes successfully, then the component executor runs the job received
+from ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum
+number of consecutive health check failures has not been met, the component executor will wait the
+timeout period before until attempting to receive another job from ActiveMQ. If the maximum number
+of consecutive health check failures has been met, the component executor will exit with exit
+code 39. If the component is running in a Docker container, the container will exit.
 
 
 # Environment Variables

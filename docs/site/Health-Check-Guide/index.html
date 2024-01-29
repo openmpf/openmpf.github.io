@@ -241,17 +241,20 @@ and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007
 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="health-check-overview">Health Check Overview</h1>
 <p>The C++ and Python component executors can be configured to run health checks on components prior
-to running jobs. Health checks are configured using environment variables and an INI file.</p>
+to running jobs. Health checks are configured using environment variables and an INI file. All of
+the log lines pertaining to the health check will be prefixed with <code>[Health check] -</code>  instead
+of <code>[Job #: media] -</code>.</p>
 <p>When the component executor receives a job from ActiveMQ, it checks if health checks are enabled
 and if more than the specified timeout has passed since the last health check. If both conditions
 are true, the component executor will run a health check job before the actual job. Health checks
 only run after a job from ActiveMQ is received. If the timeout period expires, but no job is
 received or a job is already running, the health check will not run until the next job is received.</p>
-<p>If the health check job completes successfully, then component executor runs the job received from
-ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum number of
-consecutive health failures has been met, the component executor will exit with exit code 39.
-Otherwise, the component executor will wait the timeout period before until attempting to receive
-another job from ActiveMQ.</p>
+<p>If the health check job completes successfully, then the component executor runs the job received
+from ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum
+number of consecutive health check failures has not been met, the component executor will wait the
+timeout period before until attempting to receive another job from ActiveMQ. If the maximum number
+of consecutive health check failures has been met, the component executor will exit with exit
+code 39. If the component is running in a Docker container, the container will exit.</p>
 <h1 id="environment-variables">Environment Variables</h1>
 <ul>
 <li><code>HEALTH_CHECK</code>: When set to "ENABLED", the component executor will run health checks.</li>
