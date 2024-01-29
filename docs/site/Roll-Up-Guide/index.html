@@ -237,29 +237,14 @@
 and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="roll-up-overview">Roll Up Overview</h1>
-<p>The Workflow Manager can be configured to replace the values of detection properties after
-receiving detections from a component. This is commonly used to replace specific terms with a more
-general category. To use this feature, a JSON file in the format described below must be created.
-Then, the <code>ROLL_UP_FILE</code> job property must be set to the file path where that file is located.</p>
+<p>The Workflow Manager can be configured to replace the values of track and detection properties after
+receiving tracks and detections from a component. This feature is commonly used to replace specific
+terms with a more general category. For example, the "CLASSIFICATION" property may be set to "car",
+"bus", and "truck". Those are all a kind of "vehicle". To use this feature, a JSON file in the
+format described below must be created. Then, the <code>ROLL_UP_FILE</code> job property must be set to the
+file path where that file is located.</p>
 <h1 id="roll-up-file">Roll Up File</h1>
-<p>At the top level, the roll up file contains an array. The array contains an object for each
-detection property should be modified. Each object contains the following fields:</p>
-<ul>
-<li><code>propertyToProcess</code>: (Required) A detection property key. The value will be modified according to
-    the <code>groups</code> key.</li>
-<li><code>originalPropertyCopy</code>: (Optional) Copies the value of <code>propertyToProcess</code> prior to roll up to
-    another property. The copy is made even if property is not modified.</li>
-<li><code>groups</code>: (Optional) Array containing an object for each roll up name. If the value of the
-    detection property specified by <code>propertyToProcess</code> matches a string listed in <code>members</code>, it
-    will be replaced by the content of the <code>rollUp</code> property.</li>
-</ul>
-<p>In the example below, the value of the "CLASSIFICATION" detection property will be copied to
-"ORIGINAL CLASSIFICATION" before the roll up is performed. If the "CLASSIFICATION" detection
-property is set to "truck", "car", or "bus", the value of the detection property will be replaced
-by "vehicle". In a real use case there will generally be multiple roll up groups for a single
-detection property. The "sandwich" group shows how to include an additional mapping for the same
-detection property. The "PROP2" section is an example of how to apply roll up to an additional
-detection property with a different configuration.</p>
+<p>The JSON below is an example of a roll up file.</p>
 <pre><code class="language-json">[
     {
         &quot;propertyToProcess&quot;: &quot;CLASSIFICATION&quot;,
@@ -285,7 +270,18 @@ detection property with a different configuration.</p>
         ]
     },
     {
-        &quot;propertyToProcess&quot;: &quot;PROP2&quot;,
+        &quot;propertyToProcess&quot;: &quot;COLOR&quot;,
+        &quot;groups&quot;: [
+            {
+                &quot;rollUp&quot;: &quot;purple&quot;,
+                &quot;members&quot;: [
+                    &quot;indigo&quot;
+                ]
+            }
+        ]
+    },
+    {
+        &quot;propertyToProcess&quot;: &quot;PROP3&quot;,
         &quot;groups&quot;: [
             {
                 &quot;rollUp&quot;: &quot;new name&quot;,
@@ -297,23 +293,46 @@ detection property with a different configuration.</p>
     }
 ]
 </code></pre>
+<p>At the top level, the roll up file contains an array where each element defines a detection property
+that should be modified. In this example, there is one element for "CLASSIFICATION", one for
+"COLOR", and one for "PROP3". Each element contains the following fields:</p>
+<ul>
+<li><code>propertyToProcess</code>: (Required) A detection property key. The value will be modified according to
+    the <code>groups</code> key.</li>
+<li><code>originalPropertyCopy</code>: (Optional) Copies the value of <code>propertyToProcess</code> prior to roll up to
+    another property. The copy is made even if the property is not modified.</li>
+<li><code>groups</code>: (Optional) Array containing an element for each roll up name. If the value of the
+    detection property specified by <code>propertyToProcess</code> matches a string listed in <code>members</code>, it
+    will be replaced by the content of the <code>rollUp</code> property.</li>
+</ul>
+<p>In the example above, the value of the "CLASSIFICATION" detection property will be copied to
+"ORIGINAL CLASSIFICATION" before the roll up is performed. If the "CLASSIFICATION" detection
+property is set to "truck", "car", or "bus", the value of the detection property will be replaced
+by "vehicle".</p>
+<p>In a real use case there will generally be multiple roll up groups for a single detection property.
+The "sandwich" group shows how to include an additional mapping for the same "CLASSIFICATION"
+property. The "COLOR" and "PROP3" sections show examples of how to apply roll up to different
+detection properties with different configurations.</p>
 <p>If the roll up above was applied to these detection properties:</p>
 <pre><code class="language-json">{
     &quot;CLASSIFICATION&quot;: &quot;truck&quot;,
-    &quot;PROP2&quot;: &quot;truck&quot;,
-    &quot;PROP3&quot;: &quot;other&quot;
+    &quot;COLOR&quot;: &quot;red&quot;,
+    &quot;PROP3&quot;: &quot;truck&quot;,
+    &quot;PROP4&quot;: &quot;other&quot;
 }
 </code></pre>
 <p>it would result in:</p>
 <pre><code class="language-json">{
     &quot;CLASSIFICATION&quot;: &quot;vehicle&quot;,
     &quot;ORIGINAL CLASSIFICATION&quot;: &quot;truck&quot;,
-    &quot;PROP2&quot;: &quot;truck&quot;,
-    &quot;PROP3&quot;: &quot;other&quot;
+    &quot;COLOR&quot;: &quot;red&quot;,
+    &quot;PROP3&quot;: &quot;truck&quot;,
+    &quot;PROP4&quot;: &quot;other&quot;
 }
 </code></pre>
-<p>"PROP2" was not modified because because only the "CLASSIFICATION" property has the "vehicle" roll
-up group. "PROP3" was not changed because it is not in the roll up file.</p>
+<p>"COLOR" was not modified since it does not define a roll up group with "red" as a member. "PROP3"
+was not modified because only the "CLASSIFICATION" property has a roll up group with "truck" as a
+member. "PROP4" was not modified because it is not in the roll up file.</p>
               
             </div>
           </div>

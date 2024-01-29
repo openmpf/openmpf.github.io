@@ -15,6 +15,8 @@ file path where that file is located.
 
 # Roll Up File
 
+The JSON below is an example of a roll up file.
+
 ```json
 [
     {
@@ -66,7 +68,7 @@ file path where that file is located.
 ```
 
 At the top level, the roll up file contains an array where each element defines a detection property
-that should be modified. In those example, there is one element for "CLASSIFICATION", one for
+that should be modified. In this example, there is one element for "CLASSIFICATION", one for
 "COLOR", and one for "PROP3". Each element contains the following fields:
 
 - `propertyToProcess`: (Required) A detection property key. The value will be modified according to
@@ -85,7 +87,7 @@ by "vehicle".
 In a real use case there will generally be multiple roll up groups for a single detection property.
 The "sandwich" group shows how to include an additional mapping for the same "CLASSIFICATION"
 property. The "COLOR" and "PROP3" sections show examples of how to apply roll up to different
-detection properties with a different configuration.
+detection properties with different configurations.
 
 If the roll up above was applied to these detection properties:
 
@@ -112,4 +114,4 @@ it would result in:
 
 "COLOR" was not modified since it does not define a roll up group with "red" as a member. "PROP3"
 was not modified because only the "CLASSIFICATION" property has a roll up group with "truck" as a
-member. "PROP4" was not modified because it is not in the roll up file. 
+member. "PROP4" was not modified because it is not in the roll up file.
