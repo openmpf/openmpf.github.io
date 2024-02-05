@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Admin Guide - OpenMPF</title>
+  <title>Health Check Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Admin Guide";
-    var mkdocs_page_input_path = "Admin-Guide.md";
-    var mkdocs_page_url = "/Admin-Guide/index.html";
+    var mkdocs_page_name = "Health Check Guide";
+    var mkdocs_page_input_path = "Health-Check-Guide.md";
+    var mkdocs_page_url = "/Health-Check-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -79,31 +79,9 @@
                     
     <a class="" href="../Install-Guide/index.html">Install Guide</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="index.html">Admin Guide</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#web-ui">Web UI</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#dashboard">Dashboard</a></li>
-        
-            <li><a class="toctree-l4" href="#properties-settings">Properties Settings</a></li>
-        
-            <li><a class="toctree-l4" href="#hawtio">Hawtio</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l3"><a href="#user-configuration">User Configuration</a></li>
-    
-
-    <li class="toctree-l3"><a href="#optional-configure-https">(Optional) Configure HTTPS</a></li>
-    
-
-    </ul>
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
                 </li>
                 <li class="">
                     
@@ -145,9 +123,21 @@
                     
     <a class="" href="../Roll-Up-Guide/index.html">Roll Up Guide</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
+    <a class="current" href="index.html">Health Check Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#health-check-overview">Health Check Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#environment-variables">Environment Variables</a></li>
+    
+
+    <li class="toctree-l3"><a href="#the-ini-file">The INI File</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -240,7 +230,7 @@
         
       
     
-    <li>Admin Guide</li>
+    <li>Health Check Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -250,43 +240,59 @@
           <div role="main">
             <div class="section">
               
-                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
-<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> Please refer to the <a href="#user-configuration">User Configuration</a> section for changing the default user passwords.</p></div>
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="health-check-overview">Health Check Overview</h1>
+<p>The C++ and Python component executors can be configured to run health checks on components prior
+to running jobs. Health checks are configured using environment variables and an INI file. All of
+the log lines pertaining to the health check will be prefixed with <code>[Health check] -</code>  instead
+of <code>[Job #: media] -</code>.</p>
+<p>When the component executor receives a job from ActiveMQ, it checks if health checks are enabled
+and if more than the specified timeout has passed since the last health check. If both conditions
+are true, the component executor will run a health check job before the actual job. Health checks
+only run after a job from ActiveMQ is received. If the timeout period expires, but no job is
+received or a job is already running, the health check will not run until the next job is received.</p>
+<p>If the health check job completes successfully, then the component executor runs the job received
+from ActiveMQ. If the health check fails, the job will be returned to ActiveMQ. If the maximum
+number of consecutive health check failures has not been met, the component executor will wait the
+timeout period before until attempting to receive another job from ActiveMQ. If the maximum number
+of consecutive health check failures has been met, the component executor will exit with exit
+code 39. If the component is running in a Docker container, the container will exit.</p>
+<h1 id="environment-variables">Environment Variables</h1>
+<ul>
+<li><code>HEALTH_CHECK</code>: When set to "ENABLED", the component executor will run health checks.</li>
+<li><code>HEALTH_CHECK_TIMEOUT</code>: When set to a positive integer, specifies the minimum number of seconds
+    between health checks. When absent or set to 0, a health check will run before every job.</li>
+<li><code>HEALTH_CHECK_RETRY_MAX_ATTEMPTS</code>: When set to a positive integer, specifies the number of
+    consecutive health check failures that will cause the component service to exit. When absent or
+    set to 0, the component service will never exit because of a failed health check.</li>
+</ul>
+<h1 id="the-ini-file">The INI File</h1>
+<p>When health checks are enabled, the component executor will look for an INI file at
+<code>$MPF_HOME/plugins/&lt;component-name&gt;/health/health-check.ini</code>. Below is an example of the expected
+INI file.</p>
+<pre><code class="language-ini">media=$MPF_HOME/plugins/OcvFaceDetection/health/meds_faces_image.png
+min_num_tracks=2
+media_type=IMAGE
 
-<div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>INFO:</b> This document refers to components and pipelines that are no longer supported by OpenMPF; however, the images and general content still reflect the appearance and usage of the OpenMPF web UI and its features.</p></div>
+[job_properties]
+JOB PROP1=VALUE1
+JOB PROP2=VALUE2
 
-<h1 id="web-ui">Web UI</h1>
-<p>The login procedure, as well as all of the pages accessible through the Workflow Manager sidebar, are the same for admin and non-admin users. Refer to the <a href="../User-Guide/index.html">User Guide</a> for more information. The default account for an admin user has the username "admin" and password "mpfadm".</p>
-<p>We highly recommend changing the default username and password settings for any environment which is exposed on a network, especially production environments. The default settings are public knowledge, which could be a security risk. Please refer to the <a href="#user-configuration">User Configuration</a> section below.</p>
-<p>This document will cover the additional functionality permitted to admin users through the Admin Console pages.</p>
-<h2 id="dashboard">Dashboard</h2>
-<p>The landing page for an admin user is the Job Status page:</p>
-<p><img alt="Admin Landing Page" src="../img/mpf-adm-landing.png" title="Admin Landing Page" /></p>
-<p>The Job Status page displays a summary of the status for all jobs run by any user in the past. The current status and progress of any running job can be monitored from this view, which is updated automatically.</p>
-<h2 id="properties-settings">Properties Settings</h2>
-<p>This page allows an admin user to view and edit various OpenMPF properties:</p>
-<p><img alt="Properties Settings Page" src="../img/mpf-adm-property-settings.png" title="Properties Settings Page" /></p>
-<p>An admin user can click inside of the "Value" field for any of the properties and type a new value. Doing so will change the color of the property to orange and display an orange icon to the right of the property name.</p>
-<p>Note that if the admin user types in the original value of the property, or clicks the "Reset" button, then it will return back to the normal coloration.</p>
-<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> Changing the value of these properties can prevent the workflow manager from running after the web server is restarted. Also, no validation checks are performed on the user-provided values. Proceed with caution!</p></div>
-
-<p>At the bottom of the properties table is the "Save Properties" button. The number of modified properties is shown in parentheses. Clicking the button will make the necessary changes to the properties file on the file system, but the changes will not take effect until the workflow manager is restarted. The saved properties will be colored blue and a blue icon will be displayed to the right of the property name. Additionally, a notification will appear at the top of the page alerting all system users that a restart is required:</p>
-<p><img alt="Properties Settings Page" src="../img/mpf-adm-property-settings-change.png" title="Properties Settings Page" /></p>
-<h2 id="hawtio">Hawtio</h2>
-<p>The <a href="https://hawt.io/">Hawtio</a> web console can be accessed by selecting "Hawtio" from the
-"Configuration" dropdown menu in the top menu bar. Hawtio exposes various management information
-and settings. It can be used to monitor the state of the ActiveMQ queues used for communication
-between the Workflow Manager and the components.</p>
-<h1 id="user-configuration">User Configuration</h1>
-<p>Every time the Workflow Manager starts it will attempt to create accounts for the users listed in the <code>user.properties</code> file. At runtime this file is extracted to <code>$MPF_HOME/config</code> on the machine running the Workflow Manager. For every user listed in that file, the Workflow Manager will create that user account if a user with the same name doesn't already exists in the SQL database. By default, that file contains two entries, one for the "admin" user with the "mpfadm" password, and one for a non-admin "mpf" user with the "mpf123" password.</p>
-<p>We highly recommend modifying the <code>user.properties</code> file with your own user entries before attempting to start the Workflow Manager for the first time. This will ensure that the default user accounts are not created.</p>
-<p>The official way to deploy OpenMPF is to use the Docker container platform. If you are using Docker, please follow the instructions in the openmpf-docker <a href="https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-configure-users">README</a> that explain how to use a <code>docker secret</code> for your custom <code>user.properties</code> file.</p>
-<h1 id="optional-configure-https">(Optional) Configure HTTPS</h1>
-<p>The official way to deploy OpenMPF is to use the Docker container platform.
-If you are using Docker, please follow the instructions in the openmpf-docker
-<a href="https://github.com/openmpf/openmpf-docker#optional-configure-https">README</a>
-that explain how to configure HTTPS.</p>
+[media_properties]
+MEDIA PROP=MEDIA VALUE
+</code></pre>
+<p>The supported keys are:</p>
+<ul>
+<li><code>media</code>: (Required) Path to the media file that will be used in the health check.</li>
+<li><code>min_num_tracks</code>: (Required) The minimum number of tracks the component must find for the health
+    check to pass.</li>
+<li><code>media_type</code>: (Required) The type of media referenced in the <code>media</code> key. It must be one of
+    "IMAGE", "VIDEO", "AUDIO", or "GENERIC".</li>
+<li><code>job_properties</code>: (Optional) Job properties that will set on the health check job.</li>
+<li><code>media_properties</code>: (Optional) Media properties that will set on the health check job.</li>
+</ul>
               
             </div>
           </div>
@@ -294,10 +300,10 @@ that explain how to configure HTTPS.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../User-Guide/index.html" class="btn btn-neutral float-right" title="User Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Install-Guide/index.html" class="btn btn-neutral" title="Install Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Roll-Up-Guide/index.html" class="btn btn-neutral" title="Roll Up Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -325,10 +331,10 @@ that explain how to configure HTTPS.</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Install-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Roll-Up-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../User-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

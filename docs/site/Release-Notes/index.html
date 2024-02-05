@@ -175,6 +175,14 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Roll-Up-Guide/index.html">Roll Up Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../REST-API/index.html">REST API</a>
                 </li>
     </ul>
@@ -286,11 +294,14 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <li>Updated the <a href="../Admin-Guide/index.html">Admin Guide</a> and <a href="../User-Guide/index.html">User Guide</a> to remove
   <code>/workflow-manager</code> from the Workflow Manager base URL. The Admin Guide includes a section for the new Hawtio web
   console.</li>
+<li>Updated the <a href="../REST-API/index.html">REST API</a> to use path parameters for pipelines, tasks, actions, and algorithms
+  endpoints.</li>
 <li>Updated the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a> with <code>algorithm.trackType</code>.</li>
 <li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component
   API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> to
   remove the ability to get the detection type since track type is now specified in <code>descriptor.json</code>.</li>
 <li>Created a new <a href="../Trigger-Guide/index.html">Trigger Guide</a>.</li>
+<li>Created a new <a href="../Roll-Up-Guide/index.html">Roll Up Guide</a>.</li>
 </ul>
 <h3>OpenID-Connect (OIDC) Authentication</h3>
 
@@ -321,6 +332,55 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <li>Importantly, the base URL for the Workflow Manager is now http://localhost:8080 instead of
   http://localhost:8080/workflow-manager. <code>/workflow-manager</code> is no longer part of the path. This change was made to
   enable Hawtio integration.</li>
+</ul>
+<h3>REST API Updates</h3>
+
+<ul>
+<li>The following changes have been made to the REST endpoints to address a limitation with Swagger (OpenAPI). These
+  changes enable the REST endpoints to properly show up in the Swagger page, which is accessed by selecting "REST API"
+  from the "Configuration" dropdown menu in the top menu bar of the web UI.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Old REST Endpoint</th>
+<th>New REST Endpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[GET] /rest/pipelines?name={name}</td>
+<td>[GET] /rest/pipelines/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/tasks?name={name}</td>
+<td>[GET] /rest/tasks/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/actions?name={name}</td>
+<td>[GET] /rest/actions/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/algorithms?name={name}</td>
+<td>[GET] /rest/algorithms/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/pipelines?name={name}</td>
+<td>[DELETE] /rest/pipelines/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/tasks?name={name}</td>
+<td>[DELETE] /rest/tasks/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/actions?name={name}</td>
+<td>[DELETE] /rest/actions/{name}</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>In general, the name is now specified as part of the URL path instead of as a URL parameter.</li>
+<li><code>/</code> and <code>;</code> characters are no longer allowed in these names.</li>
 </ul>
 <h3>Packaging and Deployment</h3>
 
@@ -397,6 +457,35 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
   multiple speech-to-text stages. <code>TRIGGER</code> is used to select which speech-to-text algorithm is executed based on the
   detected language in the media.</li>
 </ul>
+<h3>Roll Up Support</h3>
+
+<ul>
+<li>The Workflow Manager can be configured to replace the values of track and detection properties
+  after receiving tracks and detections from a component. For example, the <code>CLASSIFICATION</code> property
+  may be set to "car", "bus", and "truck". Those can be rolled up into "vehicle".</li>
+<li>To use this feature, set the <code>ROLL_UP_FILE</code> property to the path of a JSON file that matches
+  the format of this example:</li>
+</ul>
+<pre><code class="language-json">[
+    {
+        &quot;propertyToProcess&quot;: &quot;CLASSIFICATION&quot;,
+        &quot;originalPropertyCopy&quot;: &quot;ORIGINAL CLASSIFICATION&quot;,
+        &quot;groups&quot;: [
+            {
+                &quot;rollUp&quot;: &quot;vehicle&quot;,
+                &quot;members&quot;: [
+                    &quot;truck&quot;,
+                    &quot;car&quot;,
+                    &quot;bus&quot;
+                ]
+            }
+       ]
+    }
+]
+</code></pre>
+<ul>
+<li>Refer to the <a href="../Roll-Up-Guide/index.html">Roll Up Guide</a> for an explanation and more details.</li>
+</ul>
 <h3>Changed All "whitelist" References to "allow list"</h3>
 
 <ul>
@@ -459,22 +548,71 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1704">#1704</a>] Update Workflow Manager to authenticate users and REST clients using OIDC</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1730">#1730</a>] Update Workflow Manager to optionally use OIDC when sending callbacks and posting to TiesDb</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1733">#1733</a>] Update Workflow Manager to use an embedded ActiveMQ broker</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1739">#1793</a>] Add Roll Up support to Workflow Manager</li>
 </ul>
 <h3>Updates</h3>
 
 <ul>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/799">#799</a>] Avoid unnecessary serialization between Camel routes</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/949">#949</a>] Change <code>/pipelines?name=MYPIPELINE</code> REST endpoint to <code>/pipelines/MYPIPELINE</code></li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1643">#1643</a>] Remove <code>LONG_SPEAKER_ID</code> and instead only use <code>SPEAKER_ID</code></li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1645">#1645</a>] Refactor camel code</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1705">#1705</a>] Change all references to "whitelist" to "allow list" and "blacklist" to "block list"</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1727">#1727</a>] Update to ffmpeg 6.1</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1759">#1759</a>] Disable markup animation by default</li>
 </ul>
 <h3>Bug Fixes</h3>
 
 <ul>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1642">#1642</a>] <code>InProgressBatchJobsService.setProcessedAction</code> is now called when a previous task produces no tracks</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1755">#1755</a>] The Workflow Manager logs page does not properly handle multi-byte characters</li>
 </ul>
 <h1 id="openmpf-72x">OpenMPF 7.2.x</h1>
+<h2>7.2.6: January 2024</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Created a new <a href="../Health-Check-Guide/index.html">Health Check Guide</a>.</li>
+</ul>
+<h3>Health Check Support</h3>
+
+<ul>
+<li>The C++ and Python component executors can be configured to run health checks on components prior to running jobs.
+  Health checks are configured using environment variables:<ul>
+<li><code>HEALTH_CHECK</code>: When set to "ENABLED", the component executor will run health checks.</li>
+<li><code>HEALTH_CHECK_TIMEOUT</code>: When set to a positive integer, specifies the minimum number of seconds between health
+  checks. When absent or set to 0, a health check will run before every job.</li>
+<li><code>HEALTH_CHECK_RETRY_MAX_ATTEMPTS</code>: When set to a positive integer, specifies the number of consecutive health
+  check failures that will cause the component service to exit. When absent or set to 0, the component service will
+  never exit because of a failed health check.</li>
+</ul>
+</li>
+<li>Also, an INI file must be provided at <code>$MPF_HOME/plugins/&lt;component-name&gt;/health/health-check.ini</code>. For example:</li>
+</ul>
+<pre><code class="language-ini">media=$MPF_HOME/plugins/OcvFaceDetection/health/meds_faces_image.png
+min_num_tracks=2
+media_type=IMAGE
+
+[job_properties]
+JOB PROP1=VALUE1
+JOB PROP2=VALUE2
+
+[media_properties]
+MEDIA PROP=MEDIA VALUE
+</code></pre>
+<ul>
+<li>Refer to the <a href="../Health-Check-Guide/index.html">Health Check Guide</a> for an explanation and more details.</li>
+</ul>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1731">#1731</a>] Implement health checks for C++ and Python components</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1727">#1727</a>] Update ffmpeg to 6.1</li>
+</ul>
 <h2>7.2.5: November 2023</h2>
 
 <h3>Updates</h3>

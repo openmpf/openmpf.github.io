@@ -18,7 +18,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
   API](Python-Batch-Component-API/index.html), and [Java Batch Component API](Java-Batch-Component-API/index.html) to
   remove the ability to get the detection type since track type is now specified in `descriptor.json`.
 - Created a new [Trigger Guide](Trigger-Guide/index.html).
-- <span style="color:red">TODO: Created a new [Roll Up Guide](Health-Check-Guide/index.html).</span>
+- Created a new [Roll Up Guide](Roll-Up-Guide/index.html).
 
 <h3>OpenID-Connect (OIDC) Authentication</h3>
 
@@ -141,7 +141,30 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Roll Up Support</h3>
 
-- <span style="color:red">TODO: Add details</span>
+- The Workflow Manager can be configured to replace the values of track and detection properties
+  after receiving tracks and detections from a component. For example, the `CLASSIFICATION` property
+  may be set to "car", "bus", and "truck". Those can be rolled up into "vehicle".
+- To use this feature, set the `ROLL_UP_FILE` property to the path of a JSON file that matches
+  the format of this example:
+```json
+[
+    {
+        "propertyToProcess": "CLASSIFICATION",
+        "originalPropertyCopy": "ORIGINAL CLASSIFICATION",
+        "groups": [
+            {
+                "rollUp": "vehicle",
+                "members": [
+                    "truck",
+                    "car",
+                    "bus"
+                ]
+            }
+       ]
+    }
+]
+```
+- Refer to the [Roll Up Guide](Roll-Up-Guide/index.html) for an explanation and more details.
 
 <h3>Changed All "whitelist" References to "allow list"</h3>
 
@@ -222,11 +245,32 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 <h3>Documentation</h3>
 
-- <span style="color:red">TODO: Created a new [Health Check Guide](Health-Check-Guide/index.html).</span>
+- Created a new [Health Check Guide](Health-Check-Guide/index.html).
 
 <h3>Health Check Support</h3>
 
-- <span style="color:red">TODO: Add details</span>
+- The C++ and Python component executors can be configured to run health checks on components prior to running jobs.
+  Health checks are configured using environment variables:
+    - `HEALTH_CHECK`: When set to "ENABLED", the component executor will run health checks.
+    - `HEALTH_CHECK_TIMEOUT`: When set to a positive integer, specifies the minimum number of seconds between health
+      checks. When absent or set to 0, a health check will run before every job.
+    - `HEALTH_CHECK_RETRY_MAX_ATTEMPTS`: When set to a positive integer, specifies the number of consecutive health
+      check failures that will cause the component service to exit. When absent or set to 0, the component service will
+      never exit because of a failed health check.
+- Also, an INI file must be provided at `$MPF_HOME/plugins/<component-name>/health/health-check.ini`. For example:
+```ini
+media=$MPF_HOME/plugins/OcvFaceDetection/health/meds_faces_image.png
+min_num_tracks=2
+media_type=IMAGE
+
+[job_properties]
+JOB PROP1=VALUE1
+JOB PROP2=VALUE2
+
+[media_properties]
+MEDIA PROP=MEDIA VALUE
+```
+- Refer to the [Health Check Guide](Health-Check-Guide/index.html) for an explanation and more details.
 
 <h3>Features</h3>
 
