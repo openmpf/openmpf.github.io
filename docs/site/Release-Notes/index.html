@@ -61,6 +61,9 @@
     <a class="current" href="index.html">Release Notes</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#openmpf-80x">OpenMPF 8.0.x</a></li>
+    
+
     <li class="toctree-l3"><a href="#openmpf-72x">OpenMPF 7.2.x</a></li>
     
 
@@ -281,7 +284,384 @@
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="openmpf-80x">OpenMPF 8.0.x</h1>
+<h2>8.0.0: December 2023</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Created a new <a href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a>.</li>
+<li>Updated the <a href="../Admin-Guide/index.html">Admin Guide</a> and <a href="../User-Guide/index.html">User Guide</a> to remove
+  <code>/workflow-manager</code> from the Workflow Manager base URL. The Admin Guide includes a section for the new Hawtio web
+  console.</li>
+<li>Updated the <a href="../REST-API/index.html">REST API</a> to use path parameters for pipelines, tasks, actions, and algorithms
+  endpoints.</li>
+<li>Updated the <a href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a> with <code>algorithm.trackType</code>.</li>
+<li>Updated the <a href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>, <a href="../Python-Batch-Component-API/index.html">Python Batch Component
+  API</a>, and <a href="../Java-Batch-Component-API/index.html">Java Batch Component API</a> to
+  remove the ability to get the detection type since track type is now specified in <code>descriptor.json</code>.</li>
+<li>Created a new <a href="../Trigger-Guide/index.html">Trigger Guide</a>.</li>
+<li>Created a new <a href="../Roll-Up-Guide/index.html">Roll Up Guide</a>.</li>
+</ul>
+<h3>OpenID-Connect (OIDC) Authentication</h3>
+
+<ul>
+<li>The Workflow Manager can now optionally use an OpenID Connect (OIDC) provider to handle authentication for users of
+  the web UI and clients of the REST API. The URI for the OIDC provider is specified using the <code>OIDC_ISSUER_URI</code>
+  environment variable.</li>
+<li>When enabled, OIDC is used to authenticate components when they register with the Workflow Manager.</li>
+<li>When <code>CALLBACK_USE_OIDC</code> is set to <code>true</code>, the Workflow Manager will send a token in job request callbacks.</li>
+<li>When <code>TIES_DB_USE_OIDC</code> is set to <code>true</code>, the Workflow Manager will send a token when posting to a TiesDb server.</li>
+<li>When OIDC is not enabled, the Workflow Manager uses basic authentication with usernames and passwords, as in previous
+  versions of OpenMPF.</li>
+<li>Refer to the <a href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a> for more information on the various OIDC
+  environment variables and a Keycloak example.</li>
+</ul>
+<h3>Embedded ActiveMQ Broker and Hawtio</h3>
+
+<ul>
+<li>ActiveMQ is now part of the Workflow Manager Spring Boot web application and is no longer run as a separate Docker
+  service. This enables ActiveMQ to integrate with Spring Security so it can be protected by the Workflow Manager's OIDC
+  support.</li>
+<li>The Workflow Manager is the sender or recipient of all ActiveMQ messages, so embedding ActiveMQ in the Workflow
+  Manager prevents a network hop on all messages.</li>
+<li>The ActiveMQ management page has been replaced by <a href="https://hawt.io/">Hawtio</a>, which is more feature rich and can be
+  used to monitor the state of the ActiveMQ queues used for communication between the Workflow Manager and the
+  components. The Hawtio web console can be accessed by selecting "Hawtio" from the "Configuration" dropdown menu in the
+  top menu bar of the web UI.</li>
+<li>Importantly, the base URL for the Workflow Manager is now http://localhost:8080 instead of
+  http://localhost:8080/workflow-manager. <code>/workflow-manager</code> is no longer part of the path. This change was made to
+  enable Hawtio integration.</li>
+</ul>
+<h3>REST API Updates</h3>
+
+<ul>
+<li>The following changes have been made to the REST endpoints to address a limitation with Swagger (OpenAPI). These
+  changes enable the REST endpoints to properly show up in the Swagger page, which is accessed by selecting "REST API"
+  from the "Configuration" dropdown menu in the top menu bar of the web UI.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Old REST Endpoint</th>
+<th>New REST Endpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[GET] /rest/pipelines?name={name}</td>
+<td>[GET] /rest/pipelines/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/tasks?name={name}</td>
+<td>[GET] /rest/tasks/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/actions?name={name}</td>
+<td>[GET] /rest/actions/{name}</td>
+</tr>
+<tr>
+<td>[GET] /rest/algorithms?name={name}</td>
+<td>[GET] /rest/algorithms/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/pipelines?name={name}</td>
+<td>[DELETE] /rest/pipelines/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/tasks?name={name}</td>
+<td>[DELETE] /rest/tasks/{name}</td>
+</tr>
+<tr>
+<td>[DELETE] /rest/actions?name={name}</td>
+<td>[DELETE] /rest/actions/{name}</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>In general, the name is now specified as part of the URL path instead of as a URL parameter.</li>
+<li><code>/</code> and <code>;</code> characters are no longer allowed in these names.</li>
+</ul>
+<h3>Packaging and Deployment</h3>
+
+<ul>
+<li>Each component's <code>descriptor.json</code> now requires an <code>algorithm.trackType</code> field. This is used by the Workflow Manager
+  to determine the kind of tracks that may be generated by the component (e.g. <code>FACE</code>, <code>TEXT</code>, <code>CLASS</code>, etc.). This is
+  now used in place of the component API calls that were used to get the detection type. </li>
+</ul>
+<h3>Component API Updates</h3>
+
+<ul>
+<li>The following changes were made since the track type is now part of each component's <code>descriptor.json</code>:<ul>
+<li>Removed <code>GetDetectionType()</code> from the CPP Component API.</li>
+<li>Removed <code>detection_type</code> from the Python Component API.</li>
+<li>Removed <code>getDetectionType()</code> from the Java Component API.</li>
+</ul>
+</li>
+</ul>
+<h3>Changes to JSON Output Object</h3>
+
+<ul>
+<li>New JSON output objects use <code>action</code> instead of <code>source</code> in the track type group. Also, <code>source</code> is removed from each track.</li>
+<li>Consider this example of the old JSON output:</li>
+</ul>
+<pre><code class="language-json">&quot;output&quot;: {
+  &quot;FACE&quot;: [
+    {
+      &quot;source&quot;: &quot;+#MOG MOTION DETECTION (WITH AUTO-ORIENTATION) PREPROCESSOR ACTION#OCV FACE DETECTION (WITH AUTO-ORIENTATION) ACTION&quot;,
+      &quot;algorithm&quot;: &quot;FACECV&quot;,
+      &quot;tracks&quot;: [
+        {
+          &quot;id&quot;: &quot;4bcba9b95b92a5115b7da1097fcffa962480d0b4424a656772bef12161d775c1&quot;,
+          &quot;startOffsetFrame&quot;: 0,
+          &quot;stopOffsetFrame&quot;: 0,
+          &quot;startOffsetTime&quot;: 0,
+          &quot;stopOffsetTime&quot;: 0,
+          &quot;type&quot;: &quot;FACE&quot;,
+          &quot;source&quot;: &quot;+#MOG MOTION DETECTION (WITH AUTO-ORIENTATION) PREPROCESSOR ACTION#OCV FACE DETECTION (WITH AUTO-ORIENTATION) ACTION&quot;,
+          &quot;confidence&quot;: 8.799637,
+          ...
+</code></pre>
+<blockquote>
+<p>The corresponding new JSON output is:</p>
+</blockquote>
+<pre><code class="language-json">&quot;output&quot;: {
+  &quot;FACE&quot;: [
+    {
+      &quot;action&quot;: &quot;OCV FACE DETECTION (WITH AUTO-ORIENTATION) ACTION&quot;,
+      &quot;algorithm&quot;: &quot;FACECV&quot;,
+      &quot;tracks&quot;: [
+        {
+          &quot;id&quot;: &quot;4bcba9b95b92a5115b7da1097fcffa962480d0b4424a656772bef12161d775c1&quot;,
+          &quot;startOffsetFrame&quot;: 0,
+          &quot;stopOffsetFrame&quot;: 0,
+          &quot;startOffsetTime&quot;: 0,
+          &quot;stopOffsetTime&quot;: 0,
+          &quot;type&quot;: &quot;FACE&quot;,
+          &quot;confidence&quot;: 8.799637,
+          ...
+</code></pre>
+<h3>Trigger Support</h3>
+
+<ul>
+<li>A <code>TRIGGER</code> property can now be added to any action in a pipeline. It will only be used if <code>FEED_FORWARD_TYPE</code> is
+  provided and set to something other than <code>NONE</code>. The <code>TRIGGER</code> property is used to conditionally control if the
+  Workflow Manager executes that action. Each feed-forward track that is not executed is passed to the next stage of the
+  pipeline. This results in skipping untriggered actions.</li>
+<li>The value of <code>TRIGGER</code> takes the form <code>&lt;prop_name&gt;=&lt;prop_value1&gt;[;&lt;prop_value2&gt;...]</code>. For example, if the value is
+  <code>CLASSIFICATION=car</code> then the Workflow Manager would only execute the associated action using feed-forward tracks from
+  the previous stage in the pipeline if those tracks have the <code>CLASSIFICATION</code> track property with a value of <code>car</code>.
+  This could be useful to skip a license plate detection action. To enable the action to trigger on more than just <code>car</code>
+  tracks you can provide a list of valid values. For example, <code>CLASSIFICATION=car;truck;bus</code>.</li>
+<li>The <a href="../Trigger-Guide/index.html">Trigger Guide</a> goes into more detail and provides an example of a pipeline with
+  multiple speech-to-text stages. <code>TRIGGER</code> is used to select which speech-to-text algorithm is executed based on the
+  detected language in the media.</li>
+</ul>
+<h3>Roll Up Support</h3>
+
+<ul>
+<li>The Workflow Manager can be configured to replace the values of track and detection properties
+  after receiving tracks and detections from a component. For example, the <code>CLASSIFICATION</code> property
+  may be set to "car", "bus", and "truck". Those can be rolled up into "vehicle".</li>
+<li>To use this feature, set the <code>ROLL_UP_FILE</code> property to the path of a JSON file that matches
+  the format of this example:</li>
+</ul>
+<pre><code class="language-json">[
+    {
+        &quot;propertyToProcess&quot;: &quot;CLASSIFICATION&quot;,
+        &quot;originalPropertyCopy&quot;: &quot;ORIGINAL CLASSIFICATION&quot;,
+        &quot;groups&quot;: [
+            {
+                &quot;rollUp&quot;: &quot;vehicle&quot;,
+                &quot;members&quot;: [
+                    &quot;truck&quot;,
+                    &quot;car&quot;,
+                    &quot;bus&quot;
+                ]
+            }
+       ]
+    }
+]
+</code></pre>
+<ul>
+<li>Refer to the <a href="../Roll-Up-Guide/index.html">Roll Up Guide</a> for an explanation and more details.</li>
+</ul>
+<h3>Changed All "whitelist" References to "allow list"</h3>
+
+<ul>
+<li>In an effort to be more culturally sensitive, all references to "whitelist" have been removed or renamed to "allow
+  list".</li>
+<li>The <code>whitelist.</code> prefix has been removed from the entries in the <code>mediaType.properties</code> file. For example,
+  <code>whitelist.image/gif=VIDEO</code> is now <code>image/gif=VIDEO</code>.</li>
+<li>The OcvDnnDetection component <code>FEED_FORWARD_WHITELIST_FILE</code> property has been renamed to
+  <code>FEED_FORWARD_ALLOW_LIST_FILE</code>.</li>
+<li>The OcvYoloDetection component <code>CLASS_WHITELIST_FILE</code> property has been renamed to <code>CLASS_ALLOW_LIST_FILE</code>.</li>
+</ul>
+<h3>Argos Translation Component</h3>
+
+<ul>
+<li>This new component utilizes <a href="https://github.com/argosopentech/argos-translate">Argos Translate</a> to translate input
+  text from a given source language to English. It can be used in a feed-forward pipeline to process tracks with
+  language and/or script identifiers from an upstream stage.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/tree/master/python/ArgosTranslation#readme">README</a> for
+  details.</li>
+</ul>
+<h3>Whisper Speech-to-Text and Translation Component</h3>
+
+<ul>
+<li>This new component utilizes <a href="https://github.com/openai/whisper">OpenAI Whisper</a> to perform language detection,
+  speech-to-text transcription, or speech translation.</li>
+<li>If multiple languages are spoken in a single piece of media, language detection will detect only one of them.</li>
+<li>Note that Whisper is not designed to return a transcription in the source language when performing translation, so we
+  implemented the component to perform an additional transcribe call when configured to perform translation.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/tree/master/python/WhisperSpeechDetection#readme">README</a>
+  for details.</li>
+</ul>
+<h3>Contrastive Language–Image Pre-training (CLIP) Component</h3>
+
+<ul>
+<li>This new component utilizes <a href="https://github.com/openai/CLIP">CLIP</a> to classify images using the 80 COCO classes, 1000
+  ImageNet classes, or a list of user-provided classes. It can run on a CPU or GPU, and can make calls to an NVIDIA
+  Triton inference server.</li>
+<li>Classification is performed by taking the class names and filling in one or more text prompts. For example, "a photo
+  of {}", where "{}" can be "dog" or "cat". An embedding is generated using the text prompt(s) for each class and
+  compared against the image embedding to get a match score. Optionally, users can provide a list of their own text
+  prompts.</li>
+<li>OpenAI trained the CLIP model using a wide variety of images and their respective captions from the Internet. This may
+  make it suitable for a wide variety of classification tasks without further training (known as zero-shot
+  classification). For example, a user could make up a list of classes for arbitrary objects like "walrus", "paperclip",
+  "pizza", etc., and use the default text prompts.</li>
+<li>It is also possible to use CLIP to classify concepts like scenes and sentiment. For example, using a text prompt of "a
+  {} scene" where the classes are "safe", "violent", and "dangerous".</li>
+<li>Optionally, the CLIP component can return the image embedding as the track <code>FEATURE</code>. For example, this can be used
+  for search and retrieval tasks by comparing it to other embeddings enrolled in a database.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/tree/master/python/ClipDetection#readme">README</a> for
+  details.</li>
+</ul>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1547">#1547</a>] Create Argos translation component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1574">#1574</a>] Update the WFM to support an optional <code>TRIGGER</code> property on any action</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1598">#1598</a>] Create a Whisper component for speech-to-text and and translation</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1644">#1644</a>] Create CLIP component for processing images</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1704">#1704</a>] Update Workflow Manager to authenticate users and REST clients using OIDC</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1730">#1730</a>] Update Workflow Manager to optionally use OIDC when sending callbacks and posting to TiesDb</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1733">#1733</a>] Update Workflow Manager to use an embedded ActiveMQ broker</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1739">#1793</a>] Add Roll Up support to Workflow Manager</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/799">#799</a>] Avoid unnecessary serialization between Camel routes</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/949">#949</a>] Change <code>/pipelines?name=MYPIPELINE</code> REST endpoint to <code>/pipelines/MYPIPELINE</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1643">#1643</a>] Remove <code>LONG_SPEAKER_ID</code> and instead only use <code>SPEAKER_ID</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1645">#1645</a>] Refactor camel code</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1705">#1705</a>] Change all references to "whitelist" to "allow list" and "blacklist" to "block list"</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1759">#1759</a>] Disable markup animation by default</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1642">#1642</a>] <code>InProgressBatchJobsService.setProcessedAction</code> is now called when a previous task produces no tracks</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1755">#1755</a>] The Workflow Manager logs page does not properly handle multi-byte characters</li>
+</ul>
 <h1 id="openmpf-72x">OpenMPF 7.2.x</h1>
+<h2>7.2.6: January 2024</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Created a new <a href="../Health-Check-Guide/index.html">Health Check Guide</a>.</li>
+</ul>
+<h3>Health Check Support</h3>
+
+<ul>
+<li>The C++ and Python component executors can be configured to run health checks on components prior to running jobs.
+  Health checks are configured using environment variables:<ul>
+<li><code>HEALTH_CHECK</code>: When set to "ENABLED", the component executor will run health checks.</li>
+<li><code>HEALTH_CHECK_TIMEOUT</code>: When set to a positive integer, specifies the minimum number of seconds between health
+  checks. When absent or set to 0, a health check will run before every job.</li>
+<li><code>HEALTH_CHECK_RETRY_MAX_ATTEMPTS</code>: When set to a positive integer, specifies the number of consecutive health
+  check failures that will cause the component service to exit. When absent or set to 0, the component service will
+  never exit because of a failed health check.</li>
+</ul>
+</li>
+<li>Also, an INI file must be provided at <code>$MPF_HOME/plugins/&lt;component-name&gt;/health/health-check.ini</code>. For example:</li>
+</ul>
+<pre><code class="language-ini">media=$MPF_HOME/plugins/OcvFaceDetection/health/meds_faces_image.png
+min_num_tracks=2
+media_type=IMAGE
+
+[job_properties]
+JOB PROP1=VALUE1
+JOB PROP2=VALUE2
+
+[media_properties]
+MEDIA PROP=MEDIA VALUE
+</code></pre>
+<ul>
+<li>Refer to the <a href="../Health-Check-Guide/index.html">Health Check Guide</a> for an explanation and more details.</li>
+</ul>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1731">#1731</a>] Implement health checks for C++ and Python components</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1727">#1727</a>] Update ffmpeg to 6.1</li>
+</ul>
+<h2>7.2.5: November 2023</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1715">#1715</a>] Upgrade ActiveMQ to 5.17.6</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1711">#1711</a>] When selecting detections with the highest confidence,
+  Workflow Manager should consistently handle detections with equal confidence</li>
+</ul>
+<h2>7.2.4: September 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1707">#1707</a>] Fix bug where TiesDB check status reports
+  <code>NO_TIES_DB_URL_IN_JOB</code> instead of <code>MEDIA_MIME_TYPES_ABSENT</code></li>
+</ul>
+<h2>7.2.3: June 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1697">#1697</a>] Prevent OcvYoloDetection component from deadlocking on
+  strange frame sizes when using Triton</li>
+</ul>
+<h2>7.2.2: June 2023</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1693">#1693</a>] Add property to enable/disable SAS in AzureSpeech</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1695">#1695</a>] Fix memory leak in KeywordTagging component</li>
+</ul>
+<h2>7.2.1: June 2023</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1678">#1678</a>] Fix bug where ffmpeg hangs when processing some kinds of
+  unsupported/corrupted media</li>
+</ul>
 <h2>7.2.0: May 2023</h2>
 
 <h3>Documentation</h3>
