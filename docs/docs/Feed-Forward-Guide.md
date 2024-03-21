@@ -36,7 +36,7 @@ If you wish to use the above properties, then you can configure them for the fir
 
 # Feed Forward Properties
 
-Components that support feed forward have two algorithm properties that control the feed forward behavior: `FEED_FORWARD_TYPE` and `FEED_FORWARD_TOP_CONFIDENCE_COUNT`.
+Components that support feed forward have two algorithm properties that control the feed forward behavior: `FEED_FORWARD_TYPE` and `FEED_FORWARD_TOP_QUALITY_COUNT`.
 
 `FEED_FORWARD_TYPE` can be set to the following values:
 
@@ -47,9 +47,9 @@ Components that support feed forward have two algorithm properties that control 
 
 > **NOTE:** When using `REGION`, the location of the region within the frame, and the size of the region, may be different for each detection in the feed forward track. Thus, `REGION` should not be used by algorithms that perform region tracking and require a consistent coordinate space from detection to detection. For those algorithms, use `SUPERSET_REGION` instead. That will ensure that each detection region is relative to the upper right corner of the superset region for that track.
 
-`FEED_FORWARD_TOP_CONFIDENCE_COUNT` allows you to drop low confidence detections from feed forward tracks. Setting the property to a value less than or equal to 0 has no effect. In that case all detections in the feed forward track will be processed.
+`FEED_FORWARD_TOP_QUALITY_COUNT` allows you to drop low quality detections from feed forward tracks. Setting the property to a value less than or equal to 0 has no effect. In that case all detections in the feed forward track will be processed.
 
-When `FEED_FORWARD_TOP_CONFIDENCE_COUNT` is set to a number greater than 0, say 5, then the top 5 detections in the feed forward track (based on highest confidence) will be processed. If the track contains less than 5 detections then all of the detections in the track will be processed. If one or more detections have the same confidence value, then the detection(s) with the lower frame index take precedence.
+When `FEED_FORWARD_TOP_QUALITY_COUNT` is set to a number greater than 0, say 5, then the top 5 highest quality detections in the feed forward track will be processed. Determination of quality is based on the job property `QUALITY_SELECTION_PROPERTY`, which defaults to `CONFIDENCE`, but may be set to a different detection property. [See the documentation in the "Quality Selection Guide"] If the track contains less than 5 detections then all of the detections in the track will be processed. If one or more detections have the same quality value, then the detection(s) with the lower frame index take precedence.
 
 
 # Superset Region
@@ -166,7 +166,7 @@ Refer to `runMogThenCaffeFeedForwardExactRegionTest()` in the [`TestSystemOnDiff
 
 > **NOTE:** Short and/or spurious MOG motion tracks will result in more overhead work when performing feed forward. To mitigate this, consider setting the `MERGE_TRACKS`, `MIN_GAP_BETWEEN_TRACKS`, and `MIN_TRACK_LENGTH` properties to generate longer motion tracks and discard short and/or spurious motion tracks.
 
-> **NOTE:** It doesn’t make sense to use `FEED_FORWARD_TOP_CONFIDENCE_COUNT` on a pipeline stage that follows a MOG or SuBSENSE motion detection stage. That’s because those motion detectors don’t generate tracks with confidence values. Instead, `FEED_FORWARD_TOP_CONFIDENCE_COUNT` could potentially be used when feeding person tracks into a face detector, for example, if those person tracks have confidence values.
+> **NOTE:** It doesn’t make sense to use `FEED_FORWARD_TOP_QUALITY_COUNT` on a pipeline stage that follows a MOG or SuBSENSE motion detection stage. That’s because those motion detectors don’t generate tracks with confidence values (`CONFIDENCE`being the default value for the `QUALITY_SELECTION_PROPERTY` job property). Instead, `FEED_FORWARD_TOP_QUALITY_COUNT` could potentially be used when feeding person tracks into a face detector, for example, if the detections in those person tracks have the requested `QUALITY_SELECTION_PROPERTY` set.
 
 
 <b>OCV Face Detection with MOG Motion Detection and Feed Forward Superset Region</b>
