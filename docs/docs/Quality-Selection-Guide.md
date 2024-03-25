@@ -3,32 +3,68 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The 
 
 # Introduction
 
-There are a few places in OpenMPF where the quality of a detection comes into play. Here, "detection quality" is defined to be a measurement of how "good" the detection is that can be used to rank the detections in a track from highest to lowest quality. Traditionally, OpenMPF has used detection "confidence" as an indicator of quality. Detection confidence is assumed to be greater than 0, and higher values indicate higher quality detections. However, there are some components that do not compute a confidence value for its detections, and there may be others that compute a different value that is a better measure of quality for that detection algorithm.
-
-The primary way in which the OpenMPF system uses detection quality is to determine the track "exemplar", which is the highest quality detection in the track.  For components that do not compute a confidence value, or where all detections have identical confidence, the workflow manager would choose the first detection in the track as the exemplar. For components that would rather use a different property as an indicator of quality, there was no means of indicating that to the workflow manager.
-
-The workflow manager also filters detections and tracks by quality, so that only high quality detections and tracks appear in the final output. This filtering can be controlled by the user through the `CONFIDENCE_THRESHOLD` property. All detections below this threshold are discarded, and if all the detections in a track are discarded, then the track itself is also discarded. Note that components may do this filtering themselves, while others leave it to the workflow manager to do the filtering. The thresholding process can also be circumvented by setting this threshold to a value less than the lowest possible value for the confidence. For example, if the detection confidence computed by a component has values in the range 0 to 1, then setting the threshold property to -1 will result in all detections and all tracks being retained.
-
-The workflow manager also uses confidence to select the detections to include in a feed-forward track, when only the top N highest quality detections are to be processed in the downstream component. The number of detections to feed forward for each track is defined by the `FEED_FORWARD_TOP_CONFIDENCE_COUNT` property.
-
-The detection quality is also used in artifact extraction, where the user may want to get artifacts for the top N highest quality detections. This is controlled with the `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT` property. The detections in a track will be sorted by their confidence value, and then the N detections with the highest confidence will be extracted, up to the number of available detections, where N is an integer greater than 0.
-
-# Quality Selection Property
-
-Prior to release 9.0 of OpenMPF, the workflow manager was restricted to using detection confidence as its measure of quality. As mentioned above, for certain detection algorithms, there may be other detection properties that serve as a better measure of detection quality. With release 9.0, the user may now specify what property to use for all of the quality selection functionality mentioned above. 
-
-For all OpenMPF components, there are now two properties that are used to control quality selection. The first is named `QUALITY_SELECTION_PROPERTY`. It is a string that defines the name of the property to use for quality selection. If this property is set to `CONFIDENCE`, then the `confidence` member of the OpenMPF `ImageLocation` object is used, just as it did in releases prior to 9.0. If it is set to any other string, then the workflow manager will search the `detection_properties` map in each `ImageLocation` for an entry with that key, and use the corresponding value as the detection quality. The value associated with this property must be an integer or floating point value, where higher values indicate higher quality.
-
-The second property that is used in quality selection is named `QUALITY_SELECTION_THRESHOLD`. This threshold is used for filtering out low quality detections and tracks. This property replaces the `CONFIDENCE_THRESHOLD` property. If the `QUALITY_SELECTION_PROPERTY` is set to `CONFIDENCE`, this property should be set to the corresponding confidence threshold value.
-
-For consistency, the two properties `FEED_FORWARD_TOP_CONFIDENCE_COUNT` and `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT` have been renamed to `FEED_FORWARD_TOP_QUALITY_COUNT` and `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT`, respectively.
+There are a few places in OpenMPF where the quality of a detection comes into play. Here, "detection quality" is defined
+to be a measurement of how "good" the detection is that can be used to rank the detections in a track from highest to
+lowest quality. In many cases, components use "confidence" as an indicator of quality; however, there are some
+components that do not compute a confidence value for its detections, and there are others that compute a different
+value that is a better measure of quality for that detection algorithm. As discussed in the next section, OpenMPF uses
+detection quality for a variety of purposes.
 
 
-# Hybrid Quality Selection Properties
+# Quality Selection Properties
 
-In some cases, there may be a detection property that a component would like to use as a measure of quality but it doesn't lend itself to simple thresholding. For example, a face detector might be able to calculate the face pose, and would like to select faces that are in the most frontal pose as the highest quality detections. The yaw of the face pose may be used to indicate this, but if it's values are between, say, -90 degrees and +90 degrees, then the highest quality detection would be the one with a value of yaw closest to 0. This violates the need for the quality selection property to take on a range of values where the highest value indicates the highest quality.
+`QUALITY_SELECTION_PROPERTY` is a string that defines the name of the property to use for quality selection. For
+example, a face detection component may generate detections with a `DESCRIPTOR_MAGNITUDE` property that represents the
+quality of the face embedding and how useful it is for reidentification. The Workflow Manager will search the
+`detection_properties` map in each detection and track for that key and use the corresponding value as the detection
+quality. The value associated with this property must be an integer or floating point value, where higher values
+indicate higher quality.
 
-Another use case might be where the component would like to choose detections based on a set of quality values, or properties. Continuing with the face pose example, the component might like to designate the detection with pose closest to frontal as the highest quality, but would also like to assign high quality to detections where the pose is closest to profile, meaning values of yaw closest to -90 or +90 degrees.
+One exception is when this property is set to `CONFIDENCE` and no `CONFIDENCE` property exists in the
+`detection_properties` map. Then the `confidence` member of each detection and track is used instead.
 
-In both of these cases, the component can create a custom detection property that is used to rank these detections as it sees fit. It could use a detection property called `RANK`, and assign values to that property to rank the detections from lowest to highest quality. In the example of the face detector wanting to use the yaw of the face pose, the detection with a value of yaw closest to 0 would be assigned a `RANK` property with the highest value, then the detections with values of yaw closest to +/-90 degrees would be assigned the second and third highest values of `RANK`. Detections without the `RANK` property would be treated as having the lowest possible quality value. Thus, the track exemplar would be the face with the frontal pose, and the `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` property could be set to 3, so that the frontal and two profile pose detections would be kept as track artifacts.
+The primary way in which OpenMPF uses detection quality is to determine the track "exemplar", which is the highest
+quality detection in the track. For components that do not compute a quality value, or where all detections have
+identical quality, the Workflow Manager will choose the first detection in the track as the exemplar.
+
+`QUALITY_SELECTION_THRESHOLD` is a numerical value used for filtering out low quality detections and tracks. All
+detections below this threshold are discarded, and if all the detections in a track are discarded, then the track itself
+is also discarded. Note that components may do this filtering themselves, while others leave it to the Workflow Manager
+to do the filtering. The thresholding process can be circumvented by setting this threshold to a value less than the
+lowest possible value. For example, if the detection quality value computed by a component has values in the range 0 to
+1, then setting the threshold property to -1 will result in all detections and all tracks being retained.
+
+`FEED_FORWARD_TOP_QUALITY_COUNT` can be used to select the number of detections to include in a feed-forward track. For
+example, if set to 10, only the top 10 highest quality detections are fed forward to the downstream component for that
+track. If less then 10 detections meet the `QUALITY_SELECTION_THRESHOLD`, then only that many detections are fed
+forward. Refer to the [Feed Forward Guide](Feed-Forward-Guide/index.html) for more information.
+
+`ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` can be used to select the number of detections that will be used to
+extract artifacts. For example, if set to 10, the detections in a track will be sorted by their detection quality value,
+and then the artifacts for the 10 detections with the highest quality will be extracted. If less then 10 detections meet
+the `QUALITY_SELECTION_THRESHOLD`, then only that many artifacts will be extracted.
+
+
+# Hybrid Quality Selection
+
+In some cases, there may be a detection property that a component would like to use as a measure of quality but it
+doesn't lend itself to simple thresholding. For example, a face detector might be able to calculate the face pose, and
+would like to select faces that are in the most frontal pose as the highest quality detections. The yaw of the face pose
+may be used to indicate this, but if it's values are between, say, -90 degrees and +90 degrees, then the highest quality
+detection would be the one with a value of yaw closest to 0. This violates the need for the quality selection property
+to take on a range of values where the highest value indicates the highest quality.
+
+Another use case might be where the component would like to choose detections based on a set of quality values, or
+properties. Continuing with the face pose example, the component might like to designate the detection with pose closest
+to frontal as the highest quality, but would also like to assign high quality to detections where the pose is closest to
+profile, meaning values of yaw closest to -90 or +90 degrees.
+
+In both of these cases, the component can create a custom detection property that is used to rank these detections as it
+sees fit. It could use a detection property called `RANK`, and assign values to that property to rank the detections
+from lowest to highest quality. In the example of the face detector wanting to use the yaw of the face pose, the
+detection with a value of yaw closest to 0 would be assigned a `RANK` property with the highest value, then the
+detections with values of yaw closest to +/-90 degrees would be assigned the second and third highest values of `RANK`.
+Detections without the `RANK` property would be treated as having the lowest possible quality value. Thus, the track
+exemplar would be the face with the frontal pose, and the `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` property could
+be set to 3, so that the frontal and two profile pose detections would be kept as track artifacts.
 
