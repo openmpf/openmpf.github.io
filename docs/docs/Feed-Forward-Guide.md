@@ -20,7 +20,7 @@ Consider using feed forward for the following reasons:
 
 2. You wish to reduce processing time by creating a pipeline in which algorithms are chained from fastest to slowest. For example, a pipeline that starts with motion detection will only feed regions with motion to the next stage, which may be a compute-intensive face detection algorithm. Reducing the amount of data that algorithm needs to process will speed up run times.
 
-> **NOTE:** Enabling feed forward results in more sub-jobs and more message passing between the workflow manager and components than the default segmenting behavior. Generally speaking, the more feed forward tracks, the greater the overhead cost. The cost may be outweighed by how feed forward can “filter out” pixel data that doesn’t need to be processed. Often, the greater the media resolution, the more pixel data is filtered out, and the greater the benefit.
+> **NOTE:** Enabling feed forward results in more sub-jobs and more message passing between the Workflow Manager and components than the default segmenting behavior. Generally speaking, the more feed forward tracks, the greater the overhead cost. The cost may be outweighed by how feed forward can “filter out” pixel data that doesn’t need to be processed. Often, the greater the media resolution, the more pixel data is filtered out, and the greater the benefit.
 
 The output of a feed forward pipeline is the intersection of each stage's output. For example, running a feed forward pipeline that contains a motion detector and a face detector will ultimately output detections where motion was detected in the first stage and a face was detected in the second stage.
 
