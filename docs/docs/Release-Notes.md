@@ -2892,7 +2892,7 @@ for optional dependencies.
 
 <h3>Feed Forward Behavior</h3>
 
-- Updated the workflow manager (WFM) and all video components to optionally perform feed forward processing for batch
+- Updated the Workflow Manager (WFM) and all video components to optionally perform feed forward processing for batch
   jobs. This allows tracks to be passed forward from one pipeline stage to the next. Components in the next stage will
   only process the frames associated with the detections in those tracks. This differs from the default segmenting
   behavior, which does not preserve detection regions or track information between stages.
