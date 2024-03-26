@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>License and Distribution - OpenMPF</title>
+  <title>Quality Selection Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "License and Distribution";
-    var mkdocs_page_input_path = "License-And-Distribution.md";
-    var mkdocs_page_url = "/License-And-Distribution/index.html";
+    var mkdocs_page_name = "Quality Selection Guide";
+    var mkdocs_page_input_path = "Quality-Selection-Guide.md";
+    var mkdocs_page_url = "/Quality-Selection-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -60,25 +60,9 @@
                     
     <a class="" href="../Release-Notes/index.html">Release Notes</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="index.html">License and Distribution</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#license-considerations">License Considerations</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#open-source">Open Source</a></li>
-        
-            <li><a class="toctree-l4" href="#docker-distribution">Docker Distribution</a></li>
-        
-            <li><a class="toctree-l4" href="#usage-royalties">Usage Royalties</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
                 </li>
                 <li class="">
                     
@@ -143,9 +127,21 @@
                     
     <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+    <a class="current" href="index.html">Quality Selection Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+
+    <li class="toctree-l3"><a href="#quality-selection-properties">Quality Selection Properties</a></li>
+    
+
+    <li class="toctree-l3"><a href="#hybrid-quality-selection">Hybrid Quality Selection</a></li>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -234,11 +230,11 @@
     
       
         
-          <li>General &raquo;</li>
+          <li>Guides &raquo;</li>
         
       
     
-    <li>License and Distribution</li>
+    <li>Quality Selection Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -249,53 +245,59 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
-<h1 id="license-considerations">License Considerations</h1>
-<p>We are not lawyers and provide this information to the best of our ability in an attempt to honor all licensing
-agreements and clarify the potential responsibilities of OpenMPF users.</p>
-<h2 id="open-source">Open Source</h2>
-<p>The Open Media Processing Framework (OpenMPF) source code is publicly available on <a href="https://github.com/openmpf">GitHub</a>.
-By distributing the OpenMPF software as raw source code the development team is able to keep most of the software clean
-from copyleft and patent issues so that it can be published under a more open
-<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license and freely distributed to interested parties.</p>
-<blockquote>
-<p><strong>IMPORTANT:</strong> It is the responsibility of the end users who build the OpenMPF software to abide by all of the
-non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building
-OpenMPF and linking in these dependencies at build time or run time may result in creating a derivative work under the
-terms of the GNU General Public License. Refer to <a href="../Acknowledgements/index.html">Acknowledgements</a> for more information
-about these dependencies.
-</p>
-</blockquote>
-<h2 id="docker-distribution">Docker Distribution</h2>
-<p>The OpenMPF Docker images are released under <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPLv2</a>, unless
-otherwise stated.</p>
-<h3 id="ffmpeg-devel-integration">ffmpeg-devel Integration</h3>
-<p>The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of
-OpenCV that is in turn linked with a version of ffmpeg-devel built with
-<code>--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265</code>.
-Distribution of software that includes the latter two encoders must be released under GPLv2 and
-cannot be used commercially without obtaining the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
-<a href="https://x265.org/">MulticoreWare</a>. See <a href="http://x265.org/x265-licensing-faq/">here</a> for more information.</p>
-<p>Note that the OpenMPF core is built with, but does not require, the x264 or x265 encoders. In some cases, such as when
-generating video markup, users have the option to use x264, or an alternative encoder such as vp9 or mjpeg.</p>
-<h2 id="usage-royalties">Usage Royalties</h2>
-<h3 id="x264-and-x256-encoders">x264 and x256 Encoders</h3>
-<p>If someone uses a component that makes use of the x264 or x256 encoders in FFmpeg for commercial applications, then that
-person should obtain the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
-<a href="http://x265.org/">MulticoreWare</a>, respectively.</p>
-<h3 id="h264-and-hevc-decoders">"h264" and "hevc" Decoders</h3>
-<p>FFmpeg comes bundled with its own native "h264" and "hevc" decoders, which OpenMPF may use depending on the media types
-provided when creating jobs. Although released under LGPL, use of these decoders for commercial applications may still
-require the payment of royalties to patent holders. The FFmpeg group states on their <a href="http://www.ffmpeg.org/legal.html">Legal
-page</a>:</p>
-<blockquote>
-<p>Q: Does FFmpeg use patented algorithms?</p>
-<p>A: We do not know, we are not lawyers so we are not qualified to answer this. Also we have never read patents to
-implement any part of FFmpeg, so even if we were qualified we could not answer it as we do not know what is patented.</p>
-<p>There have been cases where companies have used FFmpeg in their products. These companies found out that once you
-start trying to make money from patented technologies, the owners of the patents will come after their licensing fees.
-Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related technologies.</p>
-</blockquote>
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="introduction">Introduction</h1>
+<p>There are a few places in OpenMPF where the quality of a detection comes into play. Here, "detection quality" is defined
+to be a measurement of how "good" the detection is that can be used to rank the detections in a track from highest to
+lowest quality. In many cases, components use "confidence" as an indicator of quality; however, there are some
+components that do not compute a confidence value for its detections, and there are others that compute a different
+value that is a better measure of quality for that detection algorithm. As discussed in the next section, OpenMPF uses
+detection quality for a variety of purposes.</p>
+<h1 id="quality-selection-properties">Quality Selection Properties</h1>
+<p><code>QUALITY_SELECTION_PROPERTY</code> is a string that defines the name of the property to use for quality selection. For
+example, a face detection component may generate detections with a <code>DESCRIPTOR_MAGNITUDE</code> property that represents the
+quality of the face embedding and how useful it is for reidentification. The Workflow Manager will search the
+<code>detection_properties</code> map in each detection and track for that key and use the corresponding value as the detection
+quality. The value associated with this property must be an integer or floating point value, where higher values
+indicate higher quality.</p>
+<p>One exception is when this property is set to <code>CONFIDENCE</code> and no <code>CONFIDENCE</code> property exists in the
+<code>detection_properties</code> map. Then the <code>confidence</code> member of each detection and track is used instead.</p>
+<p>The primary way in which OpenMPF uses detection quality is to determine the track "exemplar", which is the highest
+quality detection in the track. For components that do not compute a quality value, or where all detections have
+identical quality, the Workflow Manager will choose the first detection in the track as the exemplar.</p>
+<p><code>QUALITY_SELECTION_THRESHOLD</code> is a numerical value used for filtering out low quality detections and tracks. All
+detections below this threshold are discarded, and if all the detections in a track are discarded, then the track itself
+is also discarded. Note that components may do this filtering themselves, while others leave it to the Workflow Manager
+to do the filtering. The thresholding process can be circumvented by setting this threshold to a value less than the
+lowest possible value. For example, if the detection quality value computed by a component has values in the range 0 to
+1, then setting the threshold property to -1 will result in all detections and all tracks being retained.</p>
+<p><code>FEED_FORWARD_TOP_QUALITY_COUNT</code> can be used to select the number of detections to include in a feed-forward track. For
+example, if set to 10, only the top 10 highest quality detections are fed forward to the downstream component for that
+track. If less then 10 detections meet the <code>QUALITY_SELECTION_THRESHOLD</code>, then only that many detections are fed
+forward. Refer to the <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a> for more information.</p>
+<p><code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code> can be used to select the number of detections that will be used to
+extract artifacts. For example, if set to 10, the detections in a track will be sorted by their detection quality value,
+and then the artifacts for the 10 detections with the highest quality will be extracted. If less then 10 detections meet
+the <code>QUALITY_SELECTION_THRESHOLD</code>, then only that many artifacts will be extracted.</p>
+<h1 id="hybrid-quality-selection">Hybrid Quality Selection</h1>
+<p>In some cases, there may be a detection property that a component would like to use as a measure of quality but it
+doesn't lend itself to simple thresholding. For example, a face detector might be able to calculate the face pose, and
+would like to select faces that are in the most frontal pose as the highest quality detections. The yaw of the face pose
+may be used to indicate this, but if it's values are between, say, -90 degrees and +90 degrees, then the highest quality
+detection would be the one with a value of yaw closest to 0. This violates the need for the quality selection property
+to take on a range of values where the highest value indicates the highest quality.</p>
+<p>Another use case might be where the component would like to choose detections based on a set of quality values, or
+properties. Continuing with the face pose example, the component might like to designate the detection with pose closest
+to frontal as the highest quality, but would also like to assign high quality to detections where the pose is closest to
+profile, meaning values of yaw closest to -90 or +90 degrees.</p>
+<p>In both of these cases, the component can create a custom detection property that is used to rank these detections as it
+sees fit. It could use a detection property called <code>RANK</code>, and assign values to that property to rank the detections
+from lowest to highest quality. In the example of the face detector wanting to use the yaw of the face pose, the
+detection with a value of yaw closest to 0 would be assigned a <code>RANK</code> property with the highest value, then the
+detections with values of yaw closest to +/-90 degrees would be assigned the second and third highest values of <code>RANK</code>.
+Detections without the <code>RANK</code> property would be treated as having the lowest possible quality value. Thus, the track
+exemplar would be the face with the frontal pose, and the <code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code> property could
+be set to 3, so that the frontal and two profile pose detections would be kept as track artifacts.</p>
               
             </div>
           </div>
@@ -303,10 +305,10 @@ Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related tech
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Release-Notes/index.html" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Health-Check-Guide/index.html" class="btn btn-neutral" title="Health Check Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -334,10 +336,10 @@ Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related tech
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Release-Notes/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Health-Check-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

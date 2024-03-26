@@ -32,9 +32,9 @@ An admin user can click inside of the "Value" field for any of the properties an
 
 Note that if the admin user types in the original value of the property, or clicks the "Reset" button, then it will return back to the normal coloration.
 
-<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> Changing the value of these properties can prevent the workflow manager from running after the web server is restarted. Also, no validation checks are performed on the user-provided values. Proceed with caution!</p></div>
+<div style="background-color:orange"><p style="color:white; padding:5px"><b>WARNING:</b> Changing the value of these properties can prevent the Workflow Manager from running after the web server is restarted. Also, no validation checks are performed on the user-provided values. Proceed with caution!</p></div>
 
-At the bottom of the properties table is the "Save Properties" button. The number of modified properties is shown in parentheses. Clicking the button will make the necessary changes to the properties file on the file system, but the changes will not take effect until the workflow manager is restarted. The saved properties will be colored blue and a blue icon will be displayed to the right of the property name. Additionally, a notification will appear at the top of the page alerting all system users that a restart is required:
+At the bottom of the properties table is the "Save Properties" button. The number of modified properties is shown in parentheses. Clicking the button will make the necessary changes to the properties file on the file system, but the changes will not take effect until the Workflow Manager is restarted. The saved properties will be colored blue and a blue icon will be displayed to the right of the property name. Additionally, a notification will appear at the top of the page alerting all system users that a restart is required:
 
 ![Properties Settings Page](img/mpf-adm-property-settings-change.png "Properties Settings Page")
 
