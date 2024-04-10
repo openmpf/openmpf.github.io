@@ -89,27 +89,26 @@ sudo -i -u postgres createdb -O mpf mpf
 - Build and install OpenCV:
 ```bash
 mkdir /tmp/opencv-contrib;
-wget -O- 'https://github.com/opencv/opencv_contrib/archive/4.5.5.tar.gz' \
+wget -O- 'https://github.com/opencv/opencv_contrib/archive/4.9.0.tar.gz' \
     | tar --extract --gzip --directory /tmp/opencv-contrib;
 mkdir /tmp/opencv;
 cd  /tmp/opencv;
-wget -O- 'https://github.com/opencv/opencv/archive/4.5.5.tar.gz' \
+wget -O- 'https://github.com/opencv/opencv/archive/4.9.0.tar.gz' \
     | tar --extract --gzip;
-cd opencv-4.5.5;
+cd opencv-4.9.0;
 mkdir build;
 cd build;
 export OpenBLAS_HOME=/usr/lib/x86_64-linux-gnu/openblas-pthread; \
-cmake -DCMAKE_INSTALL_PREFIX:PATH='/opt/opencv-4.5.5' \
+cmake -DCMAKE_INSTALL_PREFIX:PATH='/opt/opencv-4.9.0' \
     -DWITH_IPP=false \
     -DBUILD_EXAMPLES=false \
     -DBUILD_TESTS=false \
     -DBUILD_PERF_TESTS=false \
-    -DWITH_CUBLAS=true \
-    -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv-contrib/opencv_contrib-4.5.5/modules \
+    -DOPENCV_EXTRA_MODULES_PATH=/tmp/opencv-contrib/opencv_contrib-4.9.0/modules \
     ..;
 sudo make --jobs "$(nproc)" install;
-sudo ln --symbolic '/opt/opencv-4.5.5/include/opencv4/opencv2' /usr/local/include/opencv2;
-sudo sh -c 'echo /opt/opencv-4.5.5/lib > /etc/ld.so.conf.d/mpf.conf'
+sudo ln --symbolic '/opt/opencv-4.9.0/include/opencv4/opencv2' /usr/local/include/opencv2;
+sudo sh -c 'echo /opt/opencv-4.9.0/lib > /etc/ld.so.conf.d/mpf.conf'
 sudo ldconfig;
 sudo rm -rf /tmp/opencv-contrib /tmp/opencv;
 ```
