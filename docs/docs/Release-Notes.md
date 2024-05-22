@@ -1,7 +1,216 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
 
+# OpenMPF 9.0.x
+
+<h2>9.0.0: May 2024</h2>
+
+<h3>Documentation</h3>
+
+- Created a new [Quality Selection Guide](Quality-Selection-Guide/index.html).
+
+<h3>Quality Selection</h3>
+
+- Can now specify a `QUALITY_SELECTION_PROPERTY` and `QUALITY_SELECTION_THRESHOLD` for choosing exemplars, artifacts,
+  and controlling feed-forward behavior.
+- The following old job properties and old system properties are no longer supported. The tables show the new properties
+  that should be used instead:
+
+| Old Job Property | New Job Properties |
+| - | - |
+| `CONFIDENCE_THRESHOLD` | `QUALITY_SELECTION_PROPERTY`<br>`QUALITY_SELECTION_THRESHOLD` |
+| `ARTIFACT_EXTRACTION_POLICY_TOP_CONFIDENCE_COUNT` | `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` |
+| `FEED_FORWARD_TOP_CONFIDENCE_COUNT` | `FEED_FORWARD_TOP_QUALITY_COUNT` |
+
+| Old System Property | New System Properties |
+| - | - |
+| `detection.confidence.threshold` | `detection.quality.selection.prop`<br>`detection.quality.selection.threshold` |
+| `detection.artifact.extraction.policy.top.confidence.count` | `detection.artifact.extraction.policy.top.quality.count` |
+
+- By default, `QUALITY_SELECTION_PROPERTY` is set to the value of `detection.quality.selection.prop` system property,
+  which, by default, is `CONFIDENCE`. In most cases this preserves the previous behavior.
+- By default, `QUALITY_SELECTION_THRESHOLD` is set to the value of `detection.quality.selection.threshold` system
+  property, which, by default, is `-Infinity`. This setting disables the threshold. Previously, the default value of
+  `detection.confidence.threshold` was -1, which disabled the threshold for most components.
+- Components that previously used `CONFIDENCE_THRESHOLD` now have `QUALITY_SELECTION_PROPERTY=CONFIDENCE`. Also,
+  `QUALITY_SELECTION_THRESHOLD` is set to the previous value of `CONFIDENCE_THRESHOLD`. For example, see [this
+  commit](https://github.com/openmpf/openmpf-components/commit/b8e0bdd2a454790f344fa62364b9c97ea2c10bb1#diff-3ece8e4ec55d097df5f58aff2dc217770be3c868910fc13639bae296b9938961)
+  for changes made to the OcvYoloDetection component.
+- `EXEMPLAR_POLICY` is now set to `QUALITY` by default. This setting results in choosing the detection within each track
+  with the maximum quality according to the `QUALITY_SELECTION_PROPERTY`. Previously, the selection was always made
+  based on highest detection confidence.
+- Similarly, the new `FEED_FORWARD_TOP_QUALITY_COUNT` and `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` properties use
+  `QUALITY_SELECTION_PROPERTY` and `QUALITY_SELECTION_THRESHOLD`.
+- Refer to the [Quality Selection Guide](Quality-Selection-Guide/index.html) for details.
+
+<h3>Transformer Tagging Component</h3>
+
+- This component uses a user-specified corpus JSON file to match known phrases against each sentence in the input text
+  data.
+- The input text sentences that generate match scores above the threshold are called "trigger sentences". These
+  sentences are grouped by "tag" based on which entry in the corpus they matched against.
+- The underlying [all-mpnet-base-v2 model](https://huggingface.co/sentence-transformers/all-mpnet-base-v2) was trained
+  on a variety of text data in order to understand the commonalities in phrasing, subject, and context.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/TransformerTagging/README.md)
+  for details.
+
+<h3>Keyword Tagging Component Ouput</h3>
+
+- Updated the Keyword Tagging Component to generate output in the same format as the  Transformer Tagging Component. For
+  example, the output properties used to take the form `[INPUT] TRIGGER WORDS` and `[INPUT] TRIGGER WORDS OFFSET`:
+
+```
+TEXT TRIGGER WORDS
+TEXT TRIGGER WORDS OFFSET
+TRANSLATION TRIGGER WORDS
+TRANSLATION TRIGGER WORDS OFFSET
+```
+
+- Now the output properties take the form `[INPUT] [TAG] TRIGGER WORDS` and `[INPUT] [TAG] TRIGGER WORDS OFFSET`::
+
+```
+TEXT TRAVEL TRIGGER WORDS
+TEXT TRAVEL TRIGGER WORDS OFFSET
+TRANSLATION TRAVEL TRIGGER WORDS
+TRANSLATION TRAVEL TRIGGER WORDS OFFSET
+```
+
+- Notice that in the above example the new output properties include the word `TRAVEL`. If trigger words a detected for
+  other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and `TRIGGER WORDS
+  OFFSET` output properies.
+- This change enables the job consumer to determine which trigger words are associated with each entry in the `TAGS` output property.
+- Refer to the "Outputs" section of the
+  [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/KeywordTagging/README.md#outputs) for details.
+
+<h3>Reporting Component Processing Time</h3>
+
+- The JSON output object contains a new section for reporting component processing time in milliseconds. For example:
+
+```json
+"timing": {
+  "processingTime": 1514,
+  "actions": [
+      {
+        "name": "OCV YOLO VEHICLE DETECTION ACTION",
+        "processingTime": 1431
+      },
+      {
+        "name": "TENSORFLOW VEHICLE COLOR DETECTION (WITH FF REGION) ACTION",
+        "processingTime": 83
+      }
+  ]
+},
+```
+
+- This does not include the time sub-jobs spent waiting in queues, or processing time by the Workflow Manager, such as
+  the time to perform media inspection.
+- Also, the above JSON is reported in the TiesDB job record within the `dataObject` field.
+
+<h3>NLP Text Splitter Utility</h3>
+
+- The new NLP Text Splitter utility uses spaCy or [Where's the Point (WtP)](https://github.com/bminixhofer/wtpsplit)
+  models for determining how to break up text into sentences.
+- Supports both CPU processing and optional GPU processing.
+- Updated the Azure Translation Component to use this utility to ensure that translation requests are within the 50,000
+  character limit.
+- Refer to the
+  [README](https://github.com/openmpf/openmpf-python-component-sdk/blob/master/detection/nlp_text_splitter/README.md)
+  for details.
+
+<h3>CLIP Component Video Support</h3>
+
+- The CLIP Component now supports processing videos in addition to the previous ability to process images. Specify the
+  batch size using `DETECTION_FRAME_BATCH_SIZE`.
+- The component also supports a new, larger, and more accurate `ViT-L/14` model in addition to the previous `ViT-B/32`
+  model. Both models are supported via the optional Triton server as well as within the component itself for non-Triton
+  deployments.
+- Refer to the
+  [README](https://github.com/openmpf/openmpf-components/blob/master/python/ClipDetection/README.md#non-triton-performance)
+  for performance metrics.
+- The `NUMBER_OF_TEMPLATES` property has been renamed to `TEMPLATE_TYPE` and now accepts one of the following values:
+  `openai_1`, `openai_7`, `openai_80`.
+
+<h3>Import Root Certificates for Components</h3>
+
+- Can now specify a `MPF_CA_CERTS` environment variable for component Docker services to import root certificates.
+- May be useful when components need to communicate with external web services.
+- Refer to the [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-import-root-certificates-for-additional-certificate-authorities) for details.
+
+<h3>Docker Secrets for Environment Variables</h3>
+
+- Can now use Docker secrets for environment variables in the Docker compose file.
+- This prevents exposing information as plain text in `docker-compose.yml`.
+- May be useful for environment variables like:
+    - Workflow Manager username and password: `WFM_USER` and `WFM_PASSWORD`
+    - Keystore password when enabling Workflow Manager HTTPS: `KEYSTORE_PASSWORD`
+    - Azure credentials: `MPF_PROP_ACS_URL` and `MPF_PROP_ACS_SUBSCRIPTION_KEY`
+- Refer to the
+  [README](https://github.com/openmpf/openmpf-docker/blob/master/README.md#optional-use-secrets-for-environment-variables)
+  for details.
+
+<h3>Features</h3>
+
+  - [[#1692](https://github.com/openmpf/openmpf/issues/1692)] Create a TransformerTagging component
+  - [[#1718](https://github.com/openmpf/openmpf/issues/1718)] Support a `QUALITY_SELECTION_PROP` to specify how the WFM should choose an exemplar
+  - [[#1754](https://github.com/openmpf/openmpf/issues/1754)] Report amount of time components spent executing a job
+  - [[#1756](https://github.com/openmpf/openmpf/issues/1756)] Support `MPF_CA_CERTS` for components
+  - [[#1771](https://github.com/openmpf/openmpf/issues/1771)] Azure Translation: Identify character limits. Split text using NLP Text Splitter.
+  - [[#1798](https://github.com/openmpf/openmpf/issues/1798)] Add NLP Text Splitter to Python Component SDK
+
+<h3>Updates</h3>
+
+  - [[#1694](https://github.com/openmpf/openmpf/issues/1694)] Update CLIP component to support videos
+  - [[#1706](https://github.com/openmpf/openmpf/issues/1706)] Update KeywordTagging to work with TransformerTagging
+  - [[#1745](https://github.com/openmpf/openmpf/issues/1745)] Support using docker secrets for environment variables in `docker-compose.yml`
+  - [[#1769](https://github.com/openmpf/openmpf/issues/1769)] Upgrade to proto3 and clean up `.proto` files
+  - [[#1774](https://github.com/openmpf/openmpf/issues/1774)] Update how TransformerTagging tokenizes sentences
+  - [[#1785](https://github.com/openmpf/openmpf/issues/1785)] Upgrade to OpenCV 4.9
+  - [[#1786](https://github.com/openmpf/openmpf/issues/1786)] Modify the behavior of Markup when `CONFIDENCE` is the bounding box label to be displayed
+  - [[#1797](https://github.com/openmpf/openmpf/issues/1797)] Further update Azure Translation and STT language maps
+  - [[#1803](https://github.com/openmpf/openmpf/issues/1803)] Upgrade Postgres client used by Workflow Manager
+
+<h3>Bug Fixes</h3>
+
+  - [[#1781](https://github.com/openmpf/openmpf/issues/1781)] Markup boxes are not drawn when animation is disabled and there are gaps in a track
+  - [[#1799](https://github.com/openmpf/openmpf/issues/1799)] Keyword Tagging removes newlines so character offsets don't line up with original text
+
 # OpenMPF 8.0.x
+
+<h2>8.0.4: May 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1805](https://github.com/openmpf/openmpf/issues/1805)] Workflow Manager incorrectly detects whether certain videos
+  are constant or variable frame rate
+
+<h2>8.0.3: April 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+- [[#1788](https://github.com/openmpf/openmpf/issues/1788)] Azure Speech and Translation: Update supported language
+  mappings
+
+<h2>8.0.2: March 2024</h2>
+
+<h3>Documentation</h3>
+
+- Updated the [REST API](REST-API/index.html) with new `[GET] /rest/queues` and `[GET] /rest/queues/{name}` endpoints.
+
+<h3>Updates</h3>
+
+- [[#1776](https://github.com/openmpf/openmpf/issues/1776)] Add REST endpoint for retrieving the ActiveMQ message counts
+  for each queue
+
+<h2>8.0.1: March 2024</h2>
+
+<h3>Updates</h3>
+
+- [[#1768](https://github.com/openmpf/openmpf/issues/1768)] Add Option to Merge Text Sections in TikaTextDetection
+
+<h3>Bug Fixes</h3>
+
+- [[#1763](https://github.com/openmpf/openmpf/issues/1763)] Media inspections fails when ffprobe does not specify a
+  stream "codec_type"
 
 <h2>8.0.0: December 2023</h2>
 
