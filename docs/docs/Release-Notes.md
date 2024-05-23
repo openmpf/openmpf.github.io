@@ -24,8 +24,8 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 
 | Old System Property | New System Properties |
 | - | - |
-| `detection.confidence.threshold` | `detection.quality.selection.prop`<br>`detection.quality.selection.threshold` |
-| `detection.artifact.extraction.policy.top.confidence.count` | `detection.artifact.extraction.policy.top.quality.count` |
+| <span style="font-size:0.82em;">`detection.confidence.threshold`</span> | <span style="font-size:0.82em;">`detection.quality.selection.prop`<br>`detection.quality.selection.threshold`</span> |
+| <span style="font-size:0.82em;">`detection.artifact.extraction.policy.top.confidence.count`</span> | <span style="font-size:0.82em;">`detection.artifact.extraction.policy.top.quality.count`</span> |
 
 - By default, `QUALITY_SELECTION_PROPERTY` is set to the value of `detection.quality.selection.prop` system property,
   which, by default, is `CONFIDENCE`. In most cases this preserves the previous behavior.
@@ -59,16 +59,16 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - Updated the Keyword Tagging Component to generate output in the same format as the  Transformer Tagging Component. For
   example, the output properties used to take the form `[INPUT] TRIGGER WORDS` and `[INPUT] TRIGGER WORDS OFFSET`:
 
-```
+```text
 TEXT TRIGGER WORDS
 TEXT TRIGGER WORDS OFFSET
 TRANSLATION TRIGGER WORDS
 TRANSLATION TRIGGER WORDS OFFSET
 ```
 
-- Now the output properties take the form `[INPUT] [TAG] TRIGGER WORDS` and `[INPUT] [TAG] TRIGGER WORDS OFFSET`::
+- Now the output properties take the form `[INPUT] [TAG] TRIGGER WORDS` and `[INPUT] [TAG] TRIGGER WORDS OFFSET`:
 
-```
+```text
 TEXT TRAVEL TRIGGER WORDS
 TEXT TRAVEL TRIGGER WORDS OFFSET
 TRANSLATION TRAVEL TRIGGER WORDS
@@ -76,9 +76,10 @@ TRANSLATION TRAVEL TRIGGER WORDS OFFSET
 ```
 
 - Notice that in the above example the new output properties include the word `TRAVEL`. If trigger words a detected for
-  other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and `TRIGGER WORDS
-  OFFSET` output properies.
-- This change enables the job consumer to determine which trigger words are associated with each entry in the `TAGS` output property.
+  other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and
+  `TRIGGER WORDS OFFSET` output properies.
+- This change enables the job consumer to determine which trigger words are associated with each entry in the `TAGS`
+  output property.
 - Refer to the "Outputs" section of the
   [README](https://github.com/openmpf/openmpf-components/blob/master/cpp/KeywordTagging/README.md#outputs) for details.
 
