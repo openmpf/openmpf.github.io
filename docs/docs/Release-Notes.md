@@ -75,8 +75,8 @@ TRANSLATION TRAVEL TRIGGER WORDS
 TRANSLATION TRAVEL TRIGGER WORDS OFFSET
 ```
 
-- Notice that in the above example the new output properties include the word `TRAVEL`. If trigger words a detected for
-  other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and
+- Notice that in the above example the new output properties include the word `TRAVEL`. If trigger words are detected
+  for other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and
   `TRIGGER WORDS OFFSET` output properies.
 - This change enables the job consumer to determine which trigger words are associated with each entry in the `TAGS`
   output property.
