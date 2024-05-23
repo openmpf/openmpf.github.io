@@ -54,10 +54,10 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The 
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/TransformerTagging/README.md)
   for details.
 
-<h3>Keyword Tagging Component Ouput</h3>
+<h3>Keyword Tagging Component Output</h3>
 
 - Updated the Keyword Tagging Component to generate output in the same format as the  Transformer Tagging Component. For
-  example, the output properties used to take the form `[INPUT] TRIGGER WORDS` and `[INPUT] TRIGGER WORDS OFFSET`:
+  example, the output properties used to take the form `<INPUT> TRIGGER WORDS` and `<INPUT> TRIGGER WORDS OFFSET`:
 
 ```text
 TEXT TRIGGER WORDS
@@ -66,7 +66,7 @@ TRANSLATION TRIGGER WORDS
 TRANSLATION TRIGGER WORDS OFFSET
 ```
 
-- Now the output properties take the form `[INPUT] [TAG] TRIGGER WORDS` and `[INPUT] [TAG] TRIGGER WORDS OFFSET`:
+- Now the output properties take the form `<INPUT> <TAG> TRIGGER WORDS` and `<INPUT> <TAG> TRIGGER WORDS OFFSET`:
 
 ```text
 TEXT TRAVEL TRIGGER WORDS
@@ -77,7 +77,7 @@ TRANSLATION TRAVEL TRIGGER WORDS OFFSET
 
 - Notice that in the above example the new output properties include the word `TRAVEL`. If trigger words are detected
   for other tags, such as `FINANCIAL` and `VEHICLE`, those words will be used in separate `TRIGGER WORDS` and
-  `TRIGGER WORDS OFFSET` output properies.
+  `TRIGGER WORDS OFFSET` output properties.
 - This change enables the job consumer to determine which trigger words are associated with each entry in the `TAGS`
   output property.
 - Refer to the "Outputs" section of the
