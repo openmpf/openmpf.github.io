@@ -19,7 +19,7 @@ The OpenMPF project consists of the following repositories:
  - [openmpf/openmpf-projects](https://github.com/openmpf/openmpf-projects)
  - [openmpf/openmpf-docker](https://github.com/openmpf/openmpf-docker)
 
-Work across the project is tracked using our [workboard](https://github.com/orgs/openmpf/projects/3).
+Work across the project is tracked using our [workboard](https://github.com/orgs/openmpf/projects/11).
 
 # Contribution Guidelines
 
