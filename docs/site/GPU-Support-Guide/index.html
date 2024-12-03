@@ -172,12 +172,6 @@
 
     <li class="toctree-l3"><a href="#building-a-component">Building a Component</a></li>
     
-        <ul>
-        
-            <li><a class="toctree-l4" href="#customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</a></li>
-        
-        </ul>
-    
 
     <li class="toctree-l3"><a href="#opencv-gpu-support">OpenCV GPU Support</a></li>
     
@@ -266,20 +260,11 @@ are used within OpenMPF to tell the nvcc compiler what to include in the compile
 NVIDIA virtual machine and instruction set architecture that is generated in the first phase of nvcc compilation. 
 You can learn more about PTX <a href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html">here</a>. A fatbin may 
 have one or the other type of code, or both, for one or a set of different architectures. </p>
-<p>By default, the OpenMPF components are built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
+<p>OpenMPF components should be built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
 to accomplish this are described in this 
-<a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation">table</a>. 
-OpenMPF uses the <code>-gencode</code> flag, with the <code>-arch=compute_30</code> and <code>-code=compute_30</code> flags. This generates PTX code 
-for the minimum compute capability; at runtime, the NVIDIA driver will just-in-time compile the PTX code for the 
-architecture the code is running on.</p>
-<h2 id="customizing-the-gpu-compile-flags">Customizing the GPU Compile Flags</h2>
-<p>OpenMPF has several GPU components. Initially, we tested a GPU component on a variety of NVIDIA GPU architectures and
-found an insignificant difference in the run time for different architectures using this approach, and so we have opted
-to provide maximum runtime portability. For any new components that may be developed, this may not be the case, and
-similar testing should be undertaken to determine the correct set of flags for that component. The nvcc compiler flags
-are configured by setting the <code>CUDA_NVCC_FLAGS</code> CMake variable in the individual component's CMakeLists.txt file, e.g.:</p>
-<pre><code>set(CUDA_NVCC_FLAGS --compiler-options -fPIC -gencode arch=compute_30,code=compute_30)
-</code></pre>
+<a href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation">table</a>.
+If you are using CMake to build the component, the compute capabilities can also be specified using the target property
+<code>CUDA_ARCHITECTURES</code>, which is documented <a href="https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html#prop_tgt:CUDA_ARCHITECTURES">here</a>.</p>
 <h1 id="opencv-gpu-support">OpenCV GPU Support</h1>
 <p>In OpenMPF, OpenCV is built with CUDA support, including the CUDA Deep Neural Network library, cuDNN. C++ components
 that use OpenCV CUDA support will have built-in access to it through the base C++ builder and executor Docker images, and
