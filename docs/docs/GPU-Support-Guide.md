@@ -24,7 +24,7 @@ OpenMPF components should be built for maximum portability across NVIDIA GPU arc
 to accomplish this are described in this 
 [table](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation).
 If you are using CMake to build the component, the compute capabilities can also be specified using the target property
-`CUDA_ARCHITECTURES`, documented [here](https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html#prop_tgt:CUDA_ARCHITECTURES).
+`CUDA_ARCHITECTURES`, which is documented [here](https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html#prop_tgt:CUDA_ARCHITECTURES).
 
 # OpenCV GPU Support
 
