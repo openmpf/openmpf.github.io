@@ -23,8 +23,9 @@ have one or the other type of code, or both, for one or a set of different archi
 OpenMPF components should be built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
 to accomplish this are described in this 
 [table](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation).
-If you are using CMake to build the component, the compute capabilities can also be specified using the target property
-`CUDA_ARCHITECTURES`, which is documented [here](https://cmake.org/cmake/help/latest/prop_tgt/CUDA_ARCHITECTURES.html#prop_tgt:CUDA_ARCHITECTURES).
+If you are using CMake to build the component, the compute capabilities can be specified in a couple of different ways,
+depending on the version of CMake that is being used. See for example [CMAKE_CUDA_FLAGS](https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html),
+or [CMAKE_CUDA_ARCHITECTURES](https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html).
 
 # OpenCV GPU Support
 
