@@ -26,7 +26,6 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Text Region | EAST
 | Detection | Text (OCR) | Apache Tika
 | Detection | Text (OCR) | Tesseract OCR
-| Detection | Text (OCR) | Azure Cognitive Services Computer Vision API (OCR endpoint)
 | Detection | Text (OCR) | Azure Cognitive Services Read API
 | Detection | Form Structure (with OCR) | Azure Cognitive Services Form Recognizer API
 | Detection | Keywords | Boost Regular Expressions
