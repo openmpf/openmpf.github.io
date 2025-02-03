@@ -11,7 +11,7 @@ produced.
 
 # New Job Request Fields
 
-Below is an example of a job that uses media selectors. The job uses a two stage pipeline.
+Below is an example of a job that uses media selectors. The job uses a two-stage pipeline.
 The first stage performs language identification. The second performs translation.
 ```json
 {
@@ -48,8 +48,8 @@ The first stage performs language identification. The second performs translatio
     from Argos in the media selectors output file rather than the detected language from the first
     stage.
 - `$.media.*.mediaSelectors`: List of media selectors that will be used for the media.
-- `$.media.*.mediaSelectors.*.type`: The name of the type of media selector that is used in the
-    `expression` field.
+- `$.media.*.mediaSelectors.*.type`: The name of the [type of media selector](#media-selector-types)
+    that is used in the `expression` field.
 - `$.media.*.mediaSelectors.*.expression`: A string specifying the sections of the document that
     should be processed. The `type` field specifies the syntax of the expression.
 - `$.media.*.mediaSelectors.*.resultDetectionProperty`: A detection property name from tracks
@@ -99,7 +99,7 @@ of the object is recursively explored.
             {
                 "key4": ["d", "e"],
                 "key5": ["f", "g"],
-                "key6" 6
+                "key6": 6
             }
         ]
     }
@@ -191,6 +191,44 @@ The `mediaSelectorsOutputUri` field will refer to a document containing the cont
             "to": "chinese recipient 3",
             "from": "chinese sender 3",
             "content": "Where are you?"
+        }
+    ]
+}
+```
+
+If `MEDIA_SELECTORS_DELIMETER` was set to " | Translation: ", the file would contain the content
+below.
+
+```json
+{
+    "otherStuffKey": ["other stuff value"],
+    "spanishMessages": [
+        {
+            "to": "spanish recipient 1",
+            "from": "spanish sender 1",
+            "content": "¿Hola, cómo estás? | Translation: Hello, how are you?"
+        },
+        {
+            "to": "spanish recipient 2",
+            "from": "spanish sender 2",
+            "content": "¿Dónde está la biblioteca? | Translation: Where is the library?"
+        }
+    ],
+    "chineseMessages": [
+        {
+            "to": "chinese recipient 1",
+            "from": "chinese sender 1",
+            "content": "现在是几奌？ | Translation: What time is it?"
+        },
+        {
+            "to": "chinese recipient 2",
+            "from": "chinese sender 2",
+            "content": "你叫什么名字？ | Translation: What is your name?"
+        },
+        {
+            "to": "chinese recipient 3",
+            "from": "chinese sender 3",
+            "content": "你在哪里？ | Translation: Where are you?"
         }
     ]
 }

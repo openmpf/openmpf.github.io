@@ -268,7 +268,7 @@ The MITRE Corporation. All Rights Reserved.</p>
 processed. A copy of the input file with the specified sections replaced by component output is
 produced.</p>
 <h1 id="new-job-request-fields">New Job Request Fields</h1>
-<p>Below is an example of a job that uses media selectors. The job uses a two stage pipeline.
+<p>Below is an example of a job that uses media selectors. The job uses a two-stage pipeline.
 The first stage performs language identification. The second performs translation.</p>
 <pre><code class="language-json">{
     &quot;algorithmProperties&quot;: {},
@@ -305,8 +305,8 @@ The first stage performs language identification. The second performs translatio
     from Argos in the media selectors output file rather than the detected language from the first
     stage.</li>
 <li><code>$.media.*.mediaSelectors</code>: List of media selectors that will be used for the media.</li>
-<li><code>$.media.*.mediaSelectors.*.type</code>: The name of the type of media selector that is used in the
-    <code>expression</code> field.</li>
+<li><code>$.media.*.mediaSelectors.*.type</code>: The name of the <a href="#media-selector-types">type of media selector</a>
+    that is used in the <code>expression</code> field.</li>
 <li><code>$.media.*.mediaSelectors.*.expression</code>: A string specifying the sections of the document that
     should be processed. The <code>type</code> field specifies the syntax of the expression.</li>
 <li><code>$.media.*.mediaSelectors.*.resultDetectionProperty</code>: A detection property name from tracks
@@ -347,7 +347,7 @@ of the object is recursively explored.</p>
             {
                 &quot;key4&quot;: [&quot;d&quot;, &quot;e&quot;],
                 &quot;key5&quot;: [&quot;f&quot;, &quot;g&quot;],
-                &quot;key6&quot; 6
+                &quot;key6&quot;: 6
             }
         ]
     }
@@ -463,6 +463,41 @@ document below.</p>
             &quot;to&quot;: &quot;chinese recipient 3&quot;,
             &quot;from&quot;: &quot;chinese sender 3&quot;,
             &quot;content&quot;: &quot;Where are you?&quot;
+        }
+    ]
+}
+</code></pre>
+<p>If <code>MEDIA_SELECTORS_DELIMETER</code> was set to " | Translation: ", the file would contain the content
+below.</p>
+<pre><code class="language-json">{
+    &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
+    &quot;spanishMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;spanish recipient 1&quot;,
+            &quot;from&quot;: &quot;spanish sender 1&quot;,
+            &quot;content&quot;: &quot;¿Hola, cómo estás? | Translation: Hello, how are you?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;spanish recipient 2&quot;,
+            &quot;from&quot;: &quot;spanish sender 2&quot;,
+            &quot;content&quot;: &quot;¿Dónde está la biblioteca? | Translation: Where is the library?&quot;
+        }
+    ],
+    &quot;chineseMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;chinese recipient 1&quot;,
+            &quot;from&quot;: &quot;chinese sender 1&quot;,
+            &quot;content&quot;: &quot;现在是几奌？ | Translation: What time is it?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 2&quot;,
+            &quot;from&quot;: &quot;chinese sender 2&quot;,
+            &quot;content&quot;: &quot;你叫什么名字？ | Translation: What is your name?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 3&quot;,
+            &quot;from&quot;: &quot;chinese sender 3&quot;,
+            &quot;content&quot;: &quot;你在哪里？ | Translation: Where are you?&quot;
         }
     ]
 }
