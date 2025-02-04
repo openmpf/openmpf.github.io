@@ -50,16 +50,20 @@ The first stage performs language identification. The second performs translatio
 - `$.media.*.mediaSelectors`: List of media selectors that will be used for the media.
 - `$.media.*.mediaSelectors.*.type`: The name of the [type of media selector](#media-selector-types)
     that is used in the `expression` field.
-- `$.media.*.mediaSelectors.*.expression`: A string specifying the sections of the document that
-    should be processed. The `type` field specifies the syntax of the expression.
+- `$.media.*.mediaSelectors.*.expression`: A case-sensitive string specifying the sections of the
+    document that should be processed. The `type` field specifies the syntax of the expression.
 - `$.media.*.mediaSelectors.*.resultDetectionProperty`: A detection property name from tracks
     produced by the `mediaSelectorsOutputAction`. The media selectors output document will be
     populated with the content of the specified property.
 - `$.media.*.mediaSelectors.*.selectionProperties`: Job properties that will only be used for
-    sub-jobs created for a specific media selector.
+    sub-jobs created for a specific media selector. For example, when performing Argos translation
+    on a JSON file in a single-stage pipeline without an upstream language detection stage, this
+    could set `DEFAULT_SOURCE_LANGUAGE=es` for some media selectors and
+    `DEFAULT_SOURCE_LANGUAGE=zh` for others.
 
 
 # New Job Properties
+
 - `MEDIA_SELECTORS_DELIMETER`: When not provided and a job uses media selectors, the selected parts
     of the document will be replaced with the action output. When provided, the selected parts of
     the document will contain the original content, followed by the value of this property, and

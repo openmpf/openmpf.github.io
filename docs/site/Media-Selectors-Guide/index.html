@@ -307,13 +307,16 @@ The first stage performs language identification. The second performs translatio
 <li><code>$.media.*.mediaSelectors</code>: List of media selectors that will be used for the media.</li>
 <li><code>$.media.*.mediaSelectors.*.type</code>: The name of the <a href="#media-selector-types">type of media selector</a>
     that is used in the <code>expression</code> field.</li>
-<li><code>$.media.*.mediaSelectors.*.expression</code>: A string specifying the sections of the document that
-    should be processed. The <code>type</code> field specifies the syntax of the expression.</li>
+<li><code>$.media.*.mediaSelectors.*.expression</code>: A case-sensitive string specifying the sections of the
+    document that should be processed. The <code>type</code> field specifies the syntax of the expression.</li>
 <li><code>$.media.*.mediaSelectors.*.resultDetectionProperty</code>: A detection property name from tracks
     produced by the <code>mediaSelectorsOutputAction</code>. The media selectors output document will be
     populated with the content of the specified property.</li>
 <li><code>$.media.*.mediaSelectors.*.selectionProperties</code>: Job properties that will only be used for
-    sub-jobs created for a specific media selector.</li>
+    sub-jobs created for a specific media selector. For example, when performing Argos translation
+    on a JSON file in a single-stage pipeline without an upstream language detection stage, this
+    could set <code>DEFAULT_SOURCE_LANGUAGE=es</code> for some media selectors and
+    <code>DEFAULT_SOURCE_LANGUAGE=zh</code> for others.</li>
 </ul>
 <h1 id="new-job-properties">New Job Properties</h1>
 <ul>
