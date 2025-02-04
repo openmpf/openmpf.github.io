@@ -82,7 +82,8 @@ The first stage performs language identification. The second performs translatio
 
 Used to extract content for JSON files. Uses the "Jayway JsonPath" library to parse the expressions.
 The specific syntax supported is available on their
-[GitHub page](https://github.com/json-path/JsonPath?tab=readme-ov-file#operators).
+[GitHub page](https://github.com/json-path/JsonPath?tab=readme-ov-file#operators). JsonPath
+expressions are case-sensitive.
 
 When extracting content from the document, only strings, arrays, and objects are considered. All
 other JSON types are ignored. When the JsonPath expression matches an array, each element is
