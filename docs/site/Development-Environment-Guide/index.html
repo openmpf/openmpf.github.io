@@ -324,16 +324,13 @@ end integration testing.</p>
 <p>Open a terminal and run <code>sudo apt update</code></p>
 </li>
 <li>
-<p>Run <code>sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible</code></p>
+<p>Run <code>sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible</code></p>
 </li>
 <li>
 <p>Run <code>sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h</code></p>
 </li>
 <li>
 <p>Run <code>sudo ln --symbolic /usr/bin/cmake /usr/bin/cmake3</code></p>
-</li>
-<li>
-<p>Run <code>sudo ln --symbolic /usr/bin/protoc /usr/local/bin/protoc</code></p>
 </li>
 <li>
 <p>Follow instructions to install Docker:
@@ -459,6 +456,32 @@ cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false ..;
 sudo make --jobs &quot;$(nproc)&quot; install;
 cd;
 sudo rm -rf /tmp/libheif;
+</code></pre>
+<ul>
+<li>Build and install Protocol Buffers:</li>
+</ul>
+<pre><code class="language-bash">mkdir /tmp/abseil;
+wget -O- 'https://github.com/abseil/abseil-cpp/releases/download/20240722.0/abseil-cpp-20240722.0.tar.gz' \
+    | tar --extract --gzip --directory /tmp/abseil;
+
+mkdir /tmp/protobuf;
+cd /tmp/protobuf;
+wget -O- 'https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz' \
+    | tar --extract --gzip;
+
+cd protobuf-28.3;
+mkdir build;
+cd build;
+cmake \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DABSL_ROOT_DIR=/tmp/abseil/abseil-cpp-20240722.0 \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    ..;
+cmake --build . --parallel &quot;$(nproc)&quot;;
+sudo cmake --install . --strip;
+cd;
+sudo rm -rf /tmp/abseil /tmp/protobuf
 </code></pre>
 <ul>
 <li>From your home directory run:</li>
