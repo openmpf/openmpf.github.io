@@ -65,8 +65,8 @@ the first stage, the subsequent stages will inherit the effects of those propert
 
 # Feed Forward Properties
 
-Components that support feed forward have two algorithm properties that control the feed forward behavior:
-`FEED_FORWARD_TYPE` and `FEED_FORWARD_TOP_QUALITY_COUNT`.
+Components that support feed forward have three algorithm properties that control the feed forward behavior:
+`FEED_FORWARD_TYPE`, `FEED_FORWARD_TOP_QUALITY_COUNT`, and `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`.
 
 `FEED_FORWARD_TYPE` can be set to the following values:
 
@@ -95,6 +95,14 @@ detections in the feed forward track will be processed. Determination of quality
 the [Quality Selection Guide](Quality-Selection-Guide/index.html). If the track contains less than 5 detections then all
 of the detections in the track will be processed. If one or more detections have the same quality value, then the
 detection(s) with the lower frame index take precedence.
+
+`FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` allows you to include detections based on properties in addition to those
+from the `QUALITY_SELECTION_PROPERTY`. To do this, you need to set the property `BEST_DETECTION_PROPERTY_NAME_LIST` in the
+previous stage of processing. This property is a string composed of a semi-colon separated list of detection properties.
+For example, if you want to use something other than `CONFIDENCE` for the `QUALITY_SELECTION_PROPERTY`, but you also want
+to include the detection with the highest confidence in your feed-forward track, then you can set the
+`BEST_DETECTION_PROPERTY_NAME_LIST` property to `"CONFIDENCE"` in the first stage, and then set the
+`FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` property to `"BEST_CONFIDENCE"`.
 
 
 # Superset Region
