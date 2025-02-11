@@ -97,12 +97,11 @@ of the detections in the track will be processed. If one or more detections have
 detection(s) with the lower frame index take precedence.
 
 `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` allows you to include detections based on properties in addition to those
-from the `QUALITY_SELECTION_PROPERTY`. To do this, you need to set the property `BEST_DETECTION_PROPERTY_NAME_LIST` in the
-previous stage of processing. This property is a string composed of a semi-colon separated list of detection properties.
-For example, if you want to use something other than `CONFIDENCE` for the `QUALITY_SELECTION_PROPERTY`, but you also want
-to include the detection with the highest confidence in your feed-forward track, then you can set the
-`BEST_DETECTION_PROPERTY_NAME_LIST` property to `"CONFIDENCE"` in the first stage, and then set the
-`FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` property to `"BEST_CONFIDENCE"`.
+chosen with the `QUALITY_SELECTION_PROPERTY`. For example, you may want to use something other than `CONFIDENCE` for the
+`QUALITY_SELECTION_PROPERTY`, but you also want to include the detection with the highest confidence in your feed-forward
+track. If the component executing in the first stage of the pipeline adds a `BEST_CONFIDENCE` property to the detection
+with highest confidence in each track, you can then set the `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` property to
+`"BEST_CONFIDENCE"`, and the detections with that property will be added to the feed-forward track.
 
 
 # Superset Region
