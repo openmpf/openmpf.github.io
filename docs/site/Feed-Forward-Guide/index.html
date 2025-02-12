@@ -354,11 +354,12 @@ the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>.
 of the detections in the track will be processed. If one or more detections have the same quality value, then the
 detection(s) with the lower frame index take precedence.</p>
 <p><code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> allows you to include detections based on properties in addition to those
-chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. For example, you may want to use something other than <code>CONFIDENCE</code> for the
-<code>QUALITY_SELECTION_PROPERTY</code>, but you also want to include the detection with the highest confidence in your feed-forward
-track. If the component executing in the first stage of the pipeline adds a <code>BEST_CONFIDENCE</code> property to the detection
-with highest confidence in each track, you can then set the <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> property to
-<code>"BEST_CONFIDENCE"</code>, and the detections with that property will be added to the feed-forward track.</p>
+chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. It consists of a string that is a semi-colon separated list of detection
+properties. For example, you may want to use something other than <code>CONFIDENCE</code> for the <code>QUALITY_SELECTION_PROPERTY</code>, but
+you also want to include the detection with the highest confidence in your feed-forward track. If the component executing
+in the first stage of the pipeline adds a <code>BEST_CONFIDENCE</code> property to the detection with highest confidence in each track,
+you can then set the <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> property to <code>BEST_CONFIDENCE</code>, and the detections with
+that property will be added to the feed-forward track.</p>
 <h1 id="superset-region">Superset Region</h1>
 <p>A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a
 track. This is also known as a “union” or <a href="https://en.wikipedia.org/wiki/Minimum_bounding_rectangle">“minimum bounding
