@@ -328,8 +328,8 @@ that <code>FEED_FORWARD_TYPE</code> is set to <code>NONE</code>, or not specifie
 stage to use feed forward. Because only the frames with detections, and those detection regions, are passed forward from
 the first stage, the subsequent stages will inherit the effects of those properties set on the first stage.  </p>
 <h1 id="feed-forward-properties">Feed Forward Properties</h1>
-<p>Components that support feed forward have two algorithm properties that control the feed forward behavior:
-<code>FEED_FORWARD_TYPE</code> and <code>FEED_FORWARD_TOP_QUALITY_COUNT</code>.</p>
+<p>Components that support feed forward have three algorithm properties that control the feed forward behavior:
+<code>FEED_FORWARD_TYPE</code>, <code>FEED_FORWARD_TOP_QUALITY_COUNT</code>, and <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code>.</p>
 <p><code>FEED_FORWARD_TYPE</code> can be set to the following values:</p>
 <ul>
 <li><code>NONE</code>: Feed forward is disabled (default setting).</li>
@@ -357,6 +357,13 @@ detections in the feed forward track will be processed. Determination of quality
 the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>. If the track contains less than 5 detections then all
 of the detections in the track will be processed. If one or more detections have the same quality value, then the
 detection(s) with the lower frame index take precedence.</p>
+<p><code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> allows you to include detections based on properties in addition to those
+chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. It consists of a string that is a semi-colon separated list of detection
+properties. For example, you may want to use something other than <code>CONFIDENCE</code> for the <code>QUALITY_SELECTION_PROPERTY</code>, but
+you also want to include the detection with the highest confidence in your feed-forward track. If the component executing
+in the first stage of the pipeline adds a <code>BEST_CONFIDENCE</code> property to the detection with highest confidence in each track,
+you can then set the <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> property to <code>BEST_CONFIDENCE</code>, and the detections with
+that property will be added to the feed-forward track.</p>
 <h1 id="superset-region">Superset Region</h1>
 <p>A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a
 track. This is also known as a “union” or <a href="https://en.wikipedia.org/wiki/Minimum_bounding_rectangle">“minimum bounding
