@@ -20,7 +20,9 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Speech | Sphinx
 | Detection | Speech | Azure Cognitive Services Batch Transcription API
 | Detection | Scene | OpenCV
+| Detection | Captions/Features | LLaVA
 | Detection | Classification | OpenCV DNN (GoogLeNet, Yahoo NSFW, vehicle color)
+| Detection | Classification | CLIP
 | Detection/Tracking | Classification | OpenCV DNN (YOLO)
 | Detection/Tracking | Classification/Features | TensorRT (COCO classes)
 | Detection | Text Region | EAST
