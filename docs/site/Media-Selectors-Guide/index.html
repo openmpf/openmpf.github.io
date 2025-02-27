@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Media Selectors Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Media Selectors Guide";
+    var mkdocs_page_input_path = "Media-Selectors-Guide.md";
+    var mkdocs_page_url = "/Media-Selectors-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../index.html">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">General</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Release-Notes/index.html">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Guides</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Install-Guide/index.html">Install Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../User-Guide/index.html">User Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Segmentation-Guide/index.html">Media Segmentation Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Derivative-Media-Guide/index.html">Derivative Media Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../TiesDb-Guide/index.html">TiesDb Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Roll-Up-Guide/index.html">Roll Up Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">Media Selectors Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#media-selectors-overview">Media Selectors Overview</a></li>
+    
+
+    <li class="toctree-l3"><a href="#new-job-request-fields">New Job Request Fields</a></li>
+    
+
+    <li class="toctree-l3"><a href="#new-job-properties">New Job Properties</a></li>
+    
+
+    <li class="toctree-l3"><a href="#media-selector-types">Media Selector Types</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#json_path">JSON_PATH</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#media-selectors-output-file">Media Selectors Output File</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Additional Developer Resources</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Node-Guide/index.html">Node Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Guides &raquo;</li>
+        
+      
+    
+    <li>Media Selectors Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2025
+The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="media-selectors-overview">Media Selectors Overview</h1>
+<p>Media selectors allow users to specify that only specific sections of a document should be
+processed. A copy of the input file with the specified sections replaced by component output is
+produced.</p>
+<h1 id="new-job-request-fields">New Job Request Fields</h1>
+<p>Below is an example of a job that uses media selectors. The job uses a two-stage pipeline.
+The first stage performs language identification. The second performs translation.</p>
+<pre><code class="language-json">{
+    &quot;algorithmProperties&quot;: {},
+    &quot;buildOutput&quot;: true,
+    &quot;jobProperties&quot;: {},
+    &quot;media&quot;: [
+        {
+            &quot;mediaUri&quot;: &quot;file:///opt/mpf/share/remote-media/test-json-path-translation.json&quot;,
+            &quot;properties&quot;: {},
+            &quot;mediaSelectorsOutputAction&quot;: &quot;ARGOS TRANSLATION (WITH FF REGION AND NO TASK MERGING) ACTION&quot;,
+            &quot;mediaSelectors&quot;: [
+                {
+                    &quot;type&quot;: &quot;JSON_PATH&quot;,
+                    &quot;expression&quot;: &quot;$.spanishMessages.*.content&quot;,
+                    &quot;resultDetectionProperty&quot;: &quot;TRANSLATION&quot;,
+                    &quot;selectionProperties&quot;: {}
+                },
+                {
+                    &quot;type&quot;: &quot;JSON_PATH&quot;,
+                    &quot;expression&quot;: &quot;$.chineseMessages.*.content&quot;,
+                    &quot;resultDetectionProperty&quot;: &quot;TRANSLATION&quot;,
+                    &quot;selectionProperties&quot;: {}
+                }
+            ]
+        }
+    ],
+    &quot;pipelineName&quot;: &quot;ARGOS TRANSLATION (WITH FASTTEXT LANGUAGE ID) TEXT FILE PIPELINE&quot;,
+    &quot;priority&quot;: 4
+}
+</code></pre>
+<ul>
+<li><code>$.media.*.mediaSelectorsOutputAction</code>: Name of the action that produces content for the media
+    selectors output file. In the above example, we specify that we want the translated content
+    from Argos in the media selectors output file rather than the detected language from the first
+    stage.</li>
+<li><code>$.media.*.mediaSelectors</code>: List of media selectors that will be used for the media.</li>
+<li><code>$.media.*.mediaSelectors.*.type</code>: The name of the <a href="#media-selector-types">type of media selector</a>
+    that is used in the <code>expression</code> field.</li>
+<li><code>$.media.*.mediaSelectors.*.expression</code>: A string specifying the sections of the document that
+    should be processed. The <code>type</code> field specifies the syntax of the expression.</li>
+<li><code>$.media.*.mediaSelectors.*.resultDetectionProperty</code>: A detection property name from tracks
+    produced by the <code>mediaSelectorsOutputAction</code>. The media selectors output document will be
+    populated with the content of the specified property.</li>
+<li><code>$.media.*.mediaSelectors.*.selectionProperties</code>: Job properties that will only be used for
+    sub-jobs created for a specific media selector. For example, when performing Argos translation
+    on a JSON file in a single-stage pipeline without an upstream language detection stage, this
+    could set <code>DEFAULT_SOURCE_LANGUAGE=es</code> for some media selectors and
+    <code>DEFAULT_SOURCE_LANGUAGE=zh</code> for others.</li>
+</ul>
+<h1 id="new-job-properties">New Job Properties</h1>
+<ul>
+<li><code>MEDIA_SELECTORS_DELIMETER</code>: When not provided and a job uses media selectors, the selected parts
+    of the document will be replaced with the action output. When provided, the selected parts of
+    the document will contain the original content, followed by the value of this property, and
+    finally the action output.</li>
+<li><code>MEDIA_SELECTORS_DUPLICATE_POLICY</code>: Specifies how to handle the case where a job uses media
+    selectors and there are multiple outputs for a single selection. When set to <code>LONGEST</code>, the
+    longer of the two outputs is chosen and the shorter one is discarded. When set to <code>ERROR</code>,
+    duplicates are considered an error. When set to <code>JOIN</code>, the duplicates are combined using
+    <code>|</code> as a delimiter.</li>
+<li><code>MEDIA_SELECTORS_NO_MATCHES_IS_ERROR</code>: When true and a job uses media selectors, an error will be
+    generated when none of the selectors match content from the media.</li>
+</ul>
+<h1 id="media-selector-types">Media Selector Types</h1>
+<p><code>JSON_PATH</code> is only type currently supported, but others are planned.</p>
+<h2 id="json_path">JSON_PATH</h2>
+<p>Used to extract content for JSON files. Uses the "Jayway JsonPath" library to parse the expressions.
+The specific syntax supported is available on their
+<a href="https://github.com/json-path/JsonPath?tab=readme-ov-file#operators">GitHub page</a>. JsonPath
+expressions are case-sensitive.</p>
+<p>When extracting content from the document, only strings, arrays, and objects are considered. All
+other JSON types are ignored. When the JsonPath expression matches an array, each element is
+recursively explored. When the expression matches an object, keys are left unchanged and each value
+of the object is recursively explored.</p>
+<h3 id="json_path-matching-example">JSON_PATH Matching Example</h3>
+<pre><code class="language-json">{
+    &quot;key1&quot;: [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;],
+    &quot;key2&quot;: {
+        &quot;key3&quot;: [
+            {
+                &quot;key4&quot;: [&quot;d&quot;, &quot;e&quot;],
+                &quot;key5&quot;: [&quot;f&quot;, &quot;g&quot;],
+                &quot;key6&quot;: 6
+            }
+        ]
+    }
+}
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$</code></td>
+<td>a, b, c, d, e, f, g</td>
+</tr>
+<tr>
+<td><code>$.*</code></td>
+<td>a, b, c, d, e, f, g</td>
+</tr>
+<tr>
+<td><code>$.key1</code></td>
+<td>a, b, c</td>
+</tr>
+<tr>
+<td><code>$.key1[0]</code></td>
+<td>a</td>
+</tr>
+<tr>
+<td><code>$.key2</code></td>
+<td>d, e, f, g</td>
+</tr>
+<tr>
+<td><code>$.key2.key3</code></td>
+<td>d, e, f, g</td>
+</tr>
+<tr>
+<td><code>$.key2.key3.*.key4</code></td>
+<td>d, e</td>
+</tr>
+<tr>
+<td><code>$.key2.key3.*.*[0]</code></td>
+<td>d, f</td>
+</tr>
+</tbody>
+</table>
+<h1 id="media-selectors-output-file">Media Selectors Output File</h1>
+<p>When media selectors are used, the JsonOutputObject will contain a URI referencing the file
+location in the <code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
+<p>The job from the <a href="#new-job-request-fields">New Job Request Fields section</a> could be used with the
+document below.</p>
+<pre><code class="language-json">{
+    &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
+    &quot;spanishMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;spanish recipient 1&quot;,
+            &quot;from&quot;: &quot;spanish sender 1&quot;,
+            &quot;content&quot;: &quot;¿Hola, cómo estás?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;spanish recipient 2&quot;,
+            &quot;from&quot;: &quot;spanish sender 2&quot;,
+            &quot;content&quot;: &quot;¿Dónde está la biblioteca?&quot;
+        }
+    ],
+    &quot;chineseMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;chinese recipient 1&quot;,
+            &quot;from&quot;: &quot;chinese sender 1&quot;,
+            &quot;content&quot;: &quot;现在是几奌？&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 2&quot;,
+            &quot;from&quot;: &quot;chinese sender 2&quot;,
+            &quot;content&quot;: &quot;你叫什么名字？&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 3&quot;,
+            &quot;from&quot;: &quot;chinese sender 3&quot;,
+            &quot;content&quot;: &quot;你在哪里？&quot;
+        }
+    ]
+}
+</code></pre>
+<p>The <code>mediaSelectorsOutputUri</code> field will refer to a document containing the content below.</p>
+<pre><code class="language-json">{
+    &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
+    &quot;spanishMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;spanish recipient 1&quot;,
+            &quot;from&quot;: &quot;spanish sender 1&quot;,
+            &quot;content&quot;: &quot;Hello, how are you?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;spanish recipient 2&quot;,
+            &quot;from&quot;: &quot;spanish sender 2&quot;,
+            &quot;content&quot;: &quot;Where is the library?&quot;
+        }
+    ],
+    &quot;chineseMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;chinese recipient 1&quot;,
+            &quot;from&quot;: &quot;chinese sender 1&quot;,
+            &quot;content&quot;: &quot;What time is it?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 2&quot;,
+            &quot;from&quot;: &quot;chinese sender 2&quot;,
+            &quot;content&quot;: &quot;What is your name?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 3&quot;,
+            &quot;from&quot;: &quot;chinese sender 3&quot;,
+            &quot;content&quot;: &quot;Where are you?&quot;
+        }
+    ]
+}
+</code></pre>
+<p>If <code>MEDIA_SELECTORS_DELIMETER</code> was set to " | Translation: ", the file would contain the content
+below.</p>
+<pre><code class="language-json">{
+    &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
+    &quot;spanishMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;spanish recipient 1&quot;,
+            &quot;from&quot;: &quot;spanish sender 1&quot;,
+            &quot;content&quot;: &quot;¿Hola, cómo estás? | Translation: Hello, how are you?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;spanish recipient 2&quot;,
+            &quot;from&quot;: &quot;spanish sender 2&quot;,
+            &quot;content&quot;: &quot;¿Dónde está la biblioteca? | Translation: Where is the library?&quot;
+        }
+    ],
+    &quot;chineseMessages&quot;: [
+        {
+            &quot;to&quot;: &quot;chinese recipient 1&quot;,
+            &quot;from&quot;: &quot;chinese sender 1&quot;,
+            &quot;content&quot;: &quot;现在是几奌？ | Translation: What time is it?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 2&quot;,
+            &quot;from&quot;: &quot;chinese sender 2&quot;,
+            &quot;content&quot;: &quot;你叫什么名字？ | Translation: What is your name?&quot;
+        },
+        {
+            &quot;to&quot;: &quot;chinese recipient 3&quot;,
+            &quot;from&quot;: &quot;chinese sender 3&quot;,
+            &quot;content&quot;: &quot;你在哪里？ | Translation: Where are you?&quot;
+        }
+    ]
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../REST-API/index.html" class="btn btn-neutral float-right" title="REST API">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Quality-Selection-Guide/index.html" class="btn btn-neutral" title="Quality Selection Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Quality-Selection-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../REST-API/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
