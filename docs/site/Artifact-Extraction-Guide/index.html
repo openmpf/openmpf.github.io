@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>License and Distribution - OpenMPF</title>
+  <title>Artifact Extraction Guide - OpenMPF</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "License and Distribution";
-    var mkdocs_page_input_path = "License-And-Distribution.md";
-    var mkdocs_page_url = "/License-And-Distribution/index.html";
+    var mkdocs_page_name = "Artifact Extraction Guide";
+    var mkdocs_page_input_path = "Artifact-Extraction-Guide.md";
+    var mkdocs_page_url = "/Artifact-Extraction-Guide/index.html";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -60,25 +60,9 @@
                     
     <a class="" href="../Release-Notes/index.html">Release Notes</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="index.html">License and Distribution</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#license-considerations">License Considerations</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#open-source">Open Source</a></li>
-        
-            <li><a class="toctree-l4" href="#docker-distribution">Docker Distribution</a></li>
-        
-            <li><a class="toctree-l4" href="#usage-royalties">Usage Royalties</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
                 </li>
                 <li class="">
                     
@@ -143,9 +127,31 @@
                     
     <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>
+    <a class="current" href="index.html">Artifact Extraction Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+
+    <li class="toctree-l3"><a href="#artifact-extraction-properties">Artifact Extraction Properties</a></li>
+    
+
+    <li class="toctree-l3"><a href="#artifact-cropping-and-rotation">Artifact Cropping and Rotation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#image-with-markup">Image with markup</a></li>
+        
+            <li><a class="toctree-l4" href="#left-detection">Left Detection</a></li>
+        
+            <li><a class="toctree-l4" href="#right-detection">Right Detection</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -238,11 +244,11 @@
     
       
         
-          <li>General &raquo;</li>
+          <li>Guides &raquo;</li>
         
       
     
-    <li>License and Distribution</li>
+    <li>Artifact Extraction Guide</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -254,52 +260,81 @@
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
-<h1 id="license-considerations">License Considerations</h1>
-<p>We are not lawyers and provide this information to the best of our ability in an attempt to honor all licensing
-agreements and clarify the potential responsibilities of OpenMPF users.</p>
-<h2 id="open-source">Open Source</h2>
-<p>The Open Media Processing Framework (OpenMPF) source code is publicly available on <a href="https://github.com/openmpf">GitHub</a>.
-By distributing the OpenMPF software as raw source code the development team is able to keep most of the software clean
-from copyleft and patent issues so that it can be published under a more open
-<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a> license and freely distributed to interested parties.</p>
-<blockquote>
-<p><strong>IMPORTANT:</strong> It is the responsibility of the end users who build the OpenMPF software to abide by all of the
-non-commercial and re-distribution restrictions imposed by the dependencies that the OpenMPF software uses. Building
-OpenMPF and linking in these dependencies at build time or run time may result in creating a derivative work under the
-terms of the GNU General Public License. Refer to <a href="../Acknowledgements/index.html">Acknowledgements</a> for more information
-about these dependencies.
-</p>
-</blockquote>
-<h2 id="docker-distribution">Docker Distribution</h2>
-<p>The OpenMPF Docker images are released under <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPLv2</a>, unless
-otherwise stated.</p>
-<h3 id="ffmpeg-devel-integration">ffmpeg-devel Integration</h3>
-<p>The software in the Workflow Manager image, and most C++ component images, is dynamically linked with a version of
-OpenCV that is in turn linked with a version of ffmpeg-devel built with
-<code>--enable-gpl --enable-nonfree --enable-libx264 --enable-libx265</code>.
-Distribution of software that includes the latter two encoders must be released under GPLv2 and
-cannot be used commercially without obtaining the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
-<a href="https://x265.org/">MulticoreWare</a>. See <a href="http://x265.org/x265-licensing-faq/">here</a> for more information.</p>
-<p>Note that the OpenMPF core is built with, but does not require, the x264 or x265 encoders. In some cases, such as when
-generating video markup, users have the option to use x264, or an alternative encoder such as vp9 or mjpeg.</p>
-<h2 id="usage-royalties">Usage Royalties</h2>
-<h3 id="x264-and-x256-encoders">x264 and x256 Encoders</h3>
-<p>If someone uses a component that makes use of the x264 or x256 encoders in FFmpeg for commercial applications, then that
-person should obtain the appropriate licenses from <a href="https://x264.org/">x264 LLC / CoreCodec</a> or
-<a href="http://x265.org/">MulticoreWare</a>, respectively.</p>
-<h3 id="h264-and-hevc-decoders">"h264" and "hevc" Decoders</h3>
-<p>FFmpeg comes bundled with its own native "h264" and "hevc" decoders, which OpenMPF may use depending on the media types
-provided when creating jobs. Although released under LGPL, use of these decoders for commercial applications may still
-require the payment of royalties to patent holders. The FFmpeg group states on their <a href="http://www.ffmpeg.org/legal.html">Legal
-page</a>:</p>
-<blockquote>
-<p>Q: Does FFmpeg use patented algorithms?</p>
-<p>A: We do not know, we are not lawyers so we are not qualified to answer this. Also we have never read patents to
-implement any part of FFmpeg, so even if we were qualified we could not answer it as we do not know what is patented.</p>
-<p>There have been cases where companies have used FFmpeg in their products. These companies found out that once you
-start trying to make money from patented technologies, the owners of the patents will come after their licensing fees.
-Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related technologies.</p>
-</blockquote>
+<h1 id="introduction">Introduction</h1>
+<p>Artifact extraction is an optional behavior of OpenMPF that allows the user to save artifacts from a job onto disk. An
+artifact is a frame extracted from a piece of media. Extracting artifacts gives you a way to visualize representative
+detections from the tracks found in a piece of media. For example, you might want to extract an artifact for the
+exemplar in all tracks found in a piece of media, or you might want to extract artifacts for the exemplar and a few
+other frames that come before and after the exemplar. The workflow manager performs artifact extraction after all
+detection processing for a job is complete. Artifacts can be written to local shared storage, or to a remote S3 storage
+location.</p>
+<h1 id="artifact-extraction-properties">Artifact Extraction Properties</h1>
+<p>The choice of which artifacts to extract is highly configurable using the following properties.</p>
+<ul>
+<li><code>ARTIFACT_EXTRACTION_POLICY</code>: This property sets the high level policy controlling artifact extraction. It must have
+one of the following values:<ul>
+<li><code>NONE</code>: No artifact extraction will be performed.</li>
+<li><code>VISUAL_TYPES_ONLY</code>: Extract artifacts only for tracks associated with a "visual" data type. Visual data types
+  include <code>IMAGE</code> and <code>VIDEO</code>.</li>
+<li><code>ALL_TYPES</code>: Extract artifacts regardless of data type.</li>
+<li><code>ALL_DETECTIONS</code>: Extract artifacts for all detections in the track.</li>
+</ul>
+</li>
+</ul>
+<p>The default value is <code>VISUAL_TYPES_ONLY</code>, which turns off artifact extraction for data types such as <code>MOTION</code>,
+<code>SPEECH</code>, <code>SCENE</code>, and <code>SOUND</code>. [<strong>NOTE:</strong> Artifact extraction for anything other that <code>IMAGE</code> or <code>VIDEO</code> is not currently
+supported and will result in an error for the job.]</p>
+<p>With the <code>VISUAL_TYPES_ONLY</code> or <code>ALL_TYPES</code> policy, artifacts will be extracted according to the
+<code>ARTIFACT_EXTRACTION_POLICY_XXX</code> properties described below. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, these
+properties are ignored. The values of these properties are "or-ed" together, but if a detection satisfies more than one property, it will only be extracted exactly once.</p>
+<ul>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code>: A boolean property which if set to true, causes the extracted artifact to
+be cropped to the width and height of the bounding box of the detection, instead of extracting the entire frame.
+Default value is <code>true</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_EXEMPLAR_FRAME_PLUS</code>: This property may be set to an integer value N, which causes
+the exemplar frame and N frames before and after the exemplar to be extracted. If N = 0, then only
+the exemplar will be extracted. If N &gt; 0, then the exemplar plus N frames before and after it will be extracted.
+If N &lt; 0, then this property is disabled. The default value is 0.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_FIRST_FRAME</code>: When set to true, then detections in the first frame in each track will
+be extracted. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME</code>: When set to true, then detections in the frame closest to the middle of
+each track will be extracted. The middle frame is the frame that is equally distant from the start and stop frames,
+but that frame does not necessarily contain a detection in a given track, so we search for the detection in the track
+that is closest to that middle frame. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_LAST_FRAME</code>: When set to true, then detections in the last frame in each track will
+be extracted. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code>: When this property is set to an integer value N greater than 0
+the detections in a track will be sorted by the detection property given by the <code>QUALITY_SELECTION_PROPERTY</code> job
+property, and then the N detections with the highest quality will be extracted, up to the number of available
+detections. If N is less than or equal to 0, then this policy is disabled. The default value is 0.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code>: This property may be set to a string comprised of a
+semi-colon delimited list of strings. The strings in this list define the detection property names to be used for
+artifact extraction. If a detection in a track has a property that corresponds to any of the names in this list,
+an artifact will be created for it. For example, you might have a component that finds the detection in each track that has the largest size (width x height), and adds a property to that detection named <code>BEST_SIZE</code>. You could then set this property to the string <code>BEST_SIZE</code> and artifacts for those detections will be extracted along with all others requested. If the string is empty, then this property is disabled. The default value is
+the empty string.</p>
+</li>
+</ul>
+<h1 id="artifact-cropping-and-rotation">Artifact Cropping and Rotation</h1>
+<p>If the <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> job property is set to true, then the bounding box in the detection object is used to define the cropping. Here is an example showing an image where two detections were found. The two detections in the frame are illustrated with the bounding boxes added by markup. The cropped artifacts are also shown below. Notice that the detection on the left in the image is rotated, but the cropped artifact has had the rotation removed.</p>
+<h2 id="image-with-markup">Image with markup</h2>
+<p><img alt="Image With Markup" src="../img/artifacts/original_with_markup.png" title="Image With Markup" /></p>
+<h2 id="left-detection">Left Detection</h2>
+<p><img alt="Rotated Cropped Artifact" src="../img/artifacts/frame-7-0-1.png" title="Rotated Cropped Artifact" /></p>
+<h2 id="right-detection">Right Detection</h2>
+<p><img alt="Cropped Artifact" src="../img/artifacts/frame-7-0-0.png" title="Cropped Artifact" /></p>
               
             </div>
           </div>
@@ -307,10 +342,10 @@ Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related tech
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../Acknowledgements/index.html" class="btn btn-neutral float-right" title="Acknowledgements">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Quality-Selection-Guide/index.html" class="btn btn-neutral float-right" title="Quality Selection Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../Release-Notes/index.html" class="btn btn-neutral" title="Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Health-Check-Guide/index.html" class="btn btn-neutral" title="Health Check Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -338,10 +373,10 @@ Notably, MPEG LA is vigilant and diligent about collecting for MPEG-related tech
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../Release-Notes/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../Health-Check-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../Acknowledgements/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../Quality-Selection-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
