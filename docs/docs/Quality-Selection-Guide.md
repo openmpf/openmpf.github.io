@@ -48,7 +48,7 @@ forward. Refer to the [Feed Forward Guide](Feed-Forward-Guide/index.html) for mo
 `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` can be used to select the number of detections that will be used to
 extract artifacts. For example, if set to 10, the detections in a track will be sorted by their detection quality value,
 and then the artifacts for the 10 detections with the highest quality will be extracted. If less then 10 detections meet
-the `QUALITY_SELECTION_THRESHOLD`, then only that many artifacts will be extracted.
+the `QUALITY_SELECTION_THRESHOLD`, then only that many artifacts will be extracted. Refer to the [Artifact Extraction Guide](Artifact-Extraction-Guide/index.html) for more information about artifact extraction.
 
 
 # Hybrid Quality Selection
