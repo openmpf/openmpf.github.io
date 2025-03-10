@@ -138,11 +138,14 @@
     <li class="toctree-l3"><a href="#artifact-extraction-properties">Artifact Extraction Properties</a></li>
     
 
+    <li class="toctree-l3"><a href="#combining-properties">Combining Properties</a></li>
+    
+
     <li class="toctree-l3"><a href="#artifact-cropping-and-rotation">Artifact Cropping and Rotation</a></li>
     
         <ul>
         
-            <li><a class="toctree-l4" href="#image-with-markup">Image with markup</a></li>
+            <li><a class="toctree-l4" href="#image-with-markup">Image with Markup</a></li>
         
             <li><a class="toctree-l4" href="#left-detection">Left Detection</a></li>
         
@@ -266,12 +269,13 @@
 Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="introduction">Introduction</h1>
 <p>Artifact extraction is an optional behavior of OpenMPF that allows the user to save artifacts from a job onto disk. An
-artifact is a frame extracted from a piece of media. Extracting artifacts gives you a way to visualize representative
+artifact is a frame region extracted from a piece of media. Extracting artifacts gives you a way to visualize representative
 detections from the tracks found in a piece of media. For example, you might want to extract an artifact for the
-exemplar in all tracks found in a piece of media, or you might want to extract artifacts for the exemplar and a few
-other frames that come before and after the exemplar. The workflow manager performs artifact extraction after all
-detection processing for a job is complete. Artifacts can be written to local shared storage, or to a remote S3 storage
-location.</p>
+exemplar in all tracks found in a piece of media. The exemplar for the track is the detection in the track that has the
+highest value for the detection property chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. (Refer to the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a> for documentation on quality selection.) In another scenario, you might want to extract
+artifacts for the exemplar as well as a few other frames that come before and after the exemplar.</p>
+<p>The Workflow Manager performs artifact extraction after all detection processing for a job is complete. Artifacts can be
+written to local shared storage, or to a remote S3 storage location. Refer to the <a href="../Object-Storage-Guide/index.html">Object Storage Guide</a> for information on using object storage.</p>
 <h1 id="artifact-extraction-properties">Artifact Extraction Properties</h1>
 <p>The choice of which artifacts to extract is highly configurable using the following properties.</p>
 <ul>
@@ -289,11 +293,11 @@ one of the following values:<ul>
 <code>SPEECH</code>, <code>SCENE</code>, and <code>SOUND</code>. [<strong>NOTE:</strong> Artifact extraction for anything other that <code>IMAGE</code> or <code>VIDEO</code> is not currently
 supported and will result in an error for the job.]</p>
 <p>With the <code>VISUAL_TYPES_ONLY</code> or <code>ALL_TYPES</code> policy, artifacts will be extracted according to the
-<code>ARTIFACT_EXTRACTION_POLICY_XXX</code> properties described below. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, these
-properties are ignored. The values of these properties are "or-ed" together, but if a detection satisfies more than one property, it will only be extracted exactly once.</p>
+<code>ARTIFACT_EXTRACTION_POLICY_*</code> properties described below. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, these
+properties are ignored.</p>
 <ul>
 <li>
-<p><code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code>: A boolean property which if set to true, causes the extracted artifact to
+<p><code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code>: When set to true, causes the extracted artifact to
 be cropped to the width and height of the bounding box of the detection, instead of extracting the entire frame.
 Default value is <code>true</code>.</p>
 </li>
@@ -321,7 +325,7 @@ be extracted. The default value is <code>false</code>.</p>
 <p><code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code>: When this property is set to an integer value N greater than 0
 the detections in a track will be sorted by the detection property given by the <code>QUALITY_SELECTION_PROPERTY</code> job
 property, and then the N detections with the highest quality will be extracted, up to the number of available
-detections. If N is less than or equal to 0, then this policy is disabled. The default value is 0.</p>
+detections. If N is less than or equal to 0, then this policy is disabled. The default value is 0. (Refer to the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a> for documentation on quality selection.)</p>
 </li>
 <li>
 <p><code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code>: This property may be set to a string comprised of a
@@ -331,9 +335,11 @@ an artifact will be created for it. For example, you might have a component that
 the empty string.</p>
 </li>
 </ul>
+<h1 id="combining-properties">Combining Properties</h1>
+<p>The above properties can be combined to satisfy a set of criteria. For example, if <code>ARTIFACT_EXTRACTION_POLICY_FIRST_FRAME</code> is set to <code>true</code> and <code>ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME</code> is set to <code>true</code>, then the first and middle frames will be extracted. If <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> is also set to true then the detection crops for the first and middle frames will be extracted instead of the whole frames. If <code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code> is also set to 5, then the above still applies, and the 5 detection crops in a track with the highest quality values will also be extracted. Note that the top 5 may already include the first and middle frames. An artifact will only ever be extracted once, even if it is chosen according to more than one of the artifact extraction policies.</p>
 <h1 id="artifact-cropping-and-rotation">Artifact Cropping and Rotation</h1>
-<p>If the <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> job property is set to true, then the bounding box in the detection object is used to define the cropping. Here is an example showing an image where two detections were found. The two detections in the frame are illustrated with the bounding boxes added by markup. The cropped artifacts are also shown below. Notice that the detection on the left in the image is rotated, but the cropped artifact has had the rotation removed.</p>
-<h2 id="image-with-markup">Image with markup</h2>
+<p>If the <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> job property is set to true, then the bounding box in the detection object is used to define the cropping. Here is an example showing an image where two detections were found. The two detections in the frame are illustrated with the bounding boxes added by markup. (Refer to the <a href="../Markup-Guide/index.html">Markup Guide</a> for documentation on how markup is added to images and videos.) The cropped artifacts are also shown below. Notice that the detection on the left in the image is rotated, but the cropped artifact has had the rotation removed.</p>
+<h2 id="image-with-markup">Image with Markup</h2>
 <p><img alt="Image With Markup" src="../img/artifacts/original_with_markup.png" title="Image With Markup" /></p>
 <h2 id="left-detection">Left Detection</h2>
 <p><img alt="Rotated Cropped Artifact" src="../img/artifacts/frame-7-0-1.png" title="Rotated Cropped Artifact" /></p>
