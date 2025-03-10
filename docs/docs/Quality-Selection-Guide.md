@@ -27,10 +27,10 @@ Workflow Manager will simply choose the first detection in the track as the exem
 to choose something other than the first detection in the track, you can use the `EXEMPLAR_POLICY` property to control
 that. The allowed values for this property are:
 
-- `FIRST`, which selects the first detection in each track as the exemplar
-- `MIDDLE`, which chooses the detection closest to the middle of the track
-- `LAST`, which chooses the last detection in the track
-- `QUALITY`, which uses the `QUALITY_SELECTION_PROPERTY` to choose the exemplar. This is the default.
+- `FIRST`: which selects the first detection in each track as the exemplar
+- `MIDDLE`: which chooses the detection closest to the middle of the track
+- `LAST`: which chooses the last detection in the track
+- `QUALITY`: which uses the `QUALITY_SELECTION_PROPERTY` to choose the exemplar. This is the default.
 
 
 `QUALITY_SELECTION_THRESHOLD` is a numerical value used for filtering out low quality detections and tracks. All
