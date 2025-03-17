@@ -46,7 +46,7 @@ end integration testing.
 
 - Open a terminal and run `sudo apt update`
 
-- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
+- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl`
 
 - Run `sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h`
 
@@ -194,6 +194,13 @@ cd;
 sudo rm -rf /tmp/abseil /tmp/protobuf
 ```
 
+- Install Python3.12:
+```bash
+sudo add-apt-repository -y ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12-dev python3.12-venv
+```
+
 - From your home directory run:
 ```bash
 git clone https://github.com/openmpf/openmpf-projects.git --recursive;
@@ -215,6 +222,8 @@ git submodule foreach git checkout develop;
 - Run `sudo cp openmpf-projects/openmpf/trunk/node-manager/src/scripts/node-manager.service /etc/systemd/system/node-manager.service`
 
 - Run `cd ~/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/; cp mpf-private-example.properties mpf-private.properties`
+
+- Run `pip3.8 install ansible`
 
 - Run `sudo sh -c 'echo "[mpf-child]\nlocalhost" >> /etc/ansible/hosts'`
 
