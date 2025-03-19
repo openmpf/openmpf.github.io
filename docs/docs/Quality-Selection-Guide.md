@@ -21,9 +21,17 @@ quality. The value associated with this property must be an integer or floating 
 indicate higher quality. The one exception is that if this property is set to `CONFIDENCE`, then the `confidence` member
 of each detection and track is used to determine quality.
 
-The primary way in which OpenMPF uses detection quality is to determine the track "exemplar", which is the highest
-quality detection in the track. For components that do not compute a quality value, or where all detections have
-identical quality, the Workflow Manager will choose the first detection in the track as the exemplar.
+The choice of the exemplar to represent a track is most often determined based on the `QUALITY_SELECTION_PROPERTY`.
+For components that do not compute a quality value or that assign identical quality to all detections, the
+Workflow Manager will simply choose the first detection in the track as the exemplar. In this circumstance, if you want
+to choose something other than the first detection in the track, you can use the `EXEMPLAR_POLICY` property to control
+that. The allowed values for this property are:
+
+- `FIRST`: which selects the first detection in each track as the exemplar
+- `MIDDLE`: which chooses the detection closest to the middle of the track
+- `LAST`: which chooses the last detection in the track
+- `QUALITY`: which uses the `QUALITY_SELECTION_PROPERTY` to choose the exemplar. This is the default.
+
 
 `QUALITY_SELECTION_THRESHOLD` is a numerical value used for filtering out low quality detections and tracks. All
 detections below this threshold are discarded, and if all the detections in a track are discarded, then the track itself
@@ -40,7 +48,7 @@ forward. Refer to the [Feed Forward Guide](Feed-Forward-Guide/index.html) for mo
 `ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT` can be used to select the number of detections that will be used to
 extract artifacts. For example, if set to 10, the detections in a track will be sorted by their detection quality value,
 and then the artifacts for the 10 detections with the highest quality will be extracted. If less then 10 detections meet
-the `QUALITY_SELECTION_THRESHOLD`, then only that many artifacts will be extracted.
+the `QUALITY_SELECTION_THRESHOLD`, then only that many artifacts will be extracted. Refer to the [Artifact Extraction Guide](Artifact-Extraction-Guide/index.html) for more information about artifact extraction.
 
 
 # Hybrid Quality Selection
