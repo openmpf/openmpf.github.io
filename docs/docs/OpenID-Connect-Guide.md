@@ -88,6 +88,8 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 4\. Create a new realm:
 
 - Create a new realm using the drop down box in upper left that says "master".
+- Use the realm name you entered and the gateway IP address from step 1 to set Workflow Manager's
+    `OIDC_ISSUER_URI` environment variable to: `http://<docker-gateway-ip>:9090/realms/<realm-name>`
 
 5\. Create the client that Workflow Manager will use to authenticate users:
 
@@ -146,7 +148,7 @@ docker run -p 9090:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin
 
 
 ### Test REST authentication
-Using the Docker gateway IP address from step 1, the client ID and secret from step 11, and the
+Using the Docker gateway IP address from step 1, the client ID and secret from step 10, and the
 realm name from step 4, run the following command:
 ```bash
 curl -d grant_type=client_credentials -u '<client-id>:<client-secret>' 'http://<docker-gateway-ip>:9090/realms/<realm-name>/protocol/openid-connect/token'

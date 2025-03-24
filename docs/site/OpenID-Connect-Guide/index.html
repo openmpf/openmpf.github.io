@@ -329,6 +329,8 @@ It is just an example and should not be used in production.</p>
 <p>4. Create a new realm:</p>
 <ul>
 <li>Create a new realm using the drop down box in upper left that says "master".</li>
+<li>Use the realm name you entered and the gateway IP address from step 1 to set Workflow Manager's
+    <code>OIDC_ISSUER_URI</code> environment variable to: <code>http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;</code></li>
 </ul>
 <p>5. Create the client that Workflow Manager will use to authenticate users:</p>
 <ul>
@@ -391,7 +393,7 @@ It is just an example and should not be used in production.</p>
 <p>11. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
      redirected to the Keycloak log in page. You can log in using the users created in step 9.</p>
 <h3 id="test-rest-authentication">Test REST authentication</h3>
-<p>Using the Docker gateway IP address from step 1, the client ID and secret from step 11, and the
+<p>Using the Docker gateway IP address from step 1, the client ID and secret from step 10, and the
 realm name from step 4, run the following command:</p>
 <pre><code class="language-bash">curl -d grant_type=client_credentials -u '&lt;client-id&gt;:&lt;client-secret&gt;' 'http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;/protocol/openid-connect/token'
 </code></pre>
