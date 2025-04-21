@@ -117,7 +117,7 @@ object will be used.
 
 It is possible for there to be multiple matching supplementals in TiesDb. In that case,
 Workflow Manager will first pick the supplementals with the best job status. The job statuses
-from best to worst are `COMPLETE`, `COMPLETE_WITH_WARNINGS`, and `COMPLETE_WITH_ERRORS`. If no jobs
+from best to worst are `COMPLETE`, and `COMPLETE_WITH_WARNINGS`. If no jobs
 with those statuses exist, all other statuses are considered equally bad. If there are multiple
 supplementals with the same status, the most recently created supplemental will be used.
 
