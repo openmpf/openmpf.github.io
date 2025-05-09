@@ -3355,7 +3355,7 @@ MEDIA PROP=MEDIA VALUE
 
 <ul>
 <li>Jobs now properly end in <code>ERROR</code> if an invalid media URL is provided or there is a problem accessing remote media.</li>
-<li>Jobs now end in <code>ERROR</code> when a detection splitter error occurs due to missing system properties.</li>
+<li>Jobs now end in <code>COMPLETE_WITH_ERRORS</code> when a detection splitter error occurs due to missing system properties.</li>
 <li>Components can now include their own version of the Google Protobuf library. It will not conflict with the version
   used by the rest of OpenMPF.</li>
 <li>The Java component executor now sets the proper job id in the job name instead of using the ActiveMQ message request
