@@ -116,10 +116,10 @@ different S3 bucket, a new output object will be created. Otherwise, the previou
 object will be used.
 
 It is possible for there to be multiple matching supplementals in TiesDb. In that case,
-Workflow Manager will first pick the supplementals with the best job status. The job statuses
-from best to worst are `COMPLETE`, and `COMPLETE_WITH_WARNINGS`. If no jobs
-with those statuses exist, all other statuses are considered equally bad. If there are multiple
-supplementals with the same status, the most recently created supplemental will be used.
+Workflow Manager will first pick the supplementals with the best job status. It first looks for a
+job status of `COMPLETE`, and then `COMPLETE_WITH_WARNINGS`. If no jobs with those statuses exist,
+all other statuses are considered equally bad. If there are multiple supplementals with the same
+status, the most recently created supplemental will be used.
 
 In order to determine if a previous job was similar enough to a current job, a hash of the
 important parts of the jobs is computed. The parts of the job that are included in the hash are:
