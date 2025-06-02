@@ -395,10 +395,10 @@ current job. When Workflow Manager is configured to copy the results of the prev
 different S3 bucket, a new output object will be created. Otherwise, the previous job's output
 object will be used.</p>
 <p>It is possible for there to be multiple matching supplementals in TiesDb. In that case,
-Workflow Manager will first pick the supplementals with the best job status. The job statuses
-from best to worst are <code>COMPLETE</code>, and <code>COMPLETE_WITH_WARNINGS</code>. If no jobs
-with those statuses exist, all other statuses are considered equally bad. If there are multiple
-supplementals with the same status, the most recently created supplemental will be used.</p>
+Workflow Manager will first pick the supplementals with the best job status. It first looks for a
+job status of <code>COMPLETE</code>, and then <code>COMPLETE_WITH_WARNINGS</code>. If no jobs with those statuses exist,
+all other statuses are considered equally bad. If there are multiple supplementals with the same
+status, the most recently created supplemental will be used.</p>
 <p>In order to determine if a previous job was similar enough to a current job, a hash of the
 important parts of the jobs is computed. The parts of the job that are included in the hash are:</p>
 <ul>
