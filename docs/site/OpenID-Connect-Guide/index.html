@@ -276,11 +276,6 @@ claim with a specific value to determine if the user is authorized to access Wor
 with what role. The <code>OIDC_USER_CLAIM_NAME</code> and <code>OIDC_ADMIN_CLAIM_NAME</code> environment variables
 specify the name of the claim that must be present. The <code>OIDC_USER_CLAIM_VALUE</code> and
 <code>OIDC_ADMIN_CLAIM_VALUE</code> environment variables specify the required value of the claim.</p>
-<p>If Workflow Manager is configured to use OIDC, then the component services must also be configured
-to use OIDC. The component services will use OIDC if either the <code>OIDC_JWT_ISSUER_URI</code> or
-<code>OIDC_ISSUER_URI</code> environment variables are set on the component service. When a component service
-is configured to use OIDC, the <code>OIDC_CLIENT_ID</code> and <code>OIDC_CLIENT_SECRET</code> environment variables are
-used to specify the client ID and secret that will be used during component registration.</p>
 <h3 id="workflow-manager-environment-variables">Workflow Manager Environment Variables</h3>
 <ul>
 <li><code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used to authenticate users
@@ -317,21 +312,6 @@ used to specify the client ID and secret that will be used during component regi
     OIDC provider is different from the OIDC provider's public host name. The value can use the
     <a href="https://docs.spring.io/spring-security/reference/servlet/oauth2/client/authorization-grants.html#oauth2Client-auth-code-redirect-uri">template variables supported by Spring.</a></li>
 </ul>
-<h3 id="component-environment-variables">Component Environment Variables</h3>
-<ul>
-<li><code>OIDC_JWT_ISSUER_URI</code> or <code>OIDC_ISSUER_URI</code> (Required): URI for the OIDC provider that will be used
-    to authenticate REST clients. The OIDC configuration endpoint must exist at the value of this
-    environment variable with <code>/.well-known/openid-configuration</code> appended. If both environment
-    variables are provided, <code>OIDC_JWT_ISSUER_URI</code> will be used. If <code>OIDC_JWT_ISSUER_URI</code> is set on
-    Workflow Manager, it should be set to the same value on the component services. If
-    <code>OIDC_JWT_ISSUER_URI</code> is not set on Workflow Manager, <code>OIDC_ISSUER_URI</code> should be set to the
-    same value on Workflow Manager and the component services. When either environment variable is
-    set, the <code>WFM_USER</code> and <code>WFM_PASSWORD</code> environment variables are ignored.</li>
-<li><code>OIDC_CLIENT_ID</code> (Required): The client ID that the component service will use when registering
-    the component with Workflow Manager.</li>
-<li><code>OIDC_CLIENT_SECRET</code> (Required): The client secret that the component service will use when
-    registering the component with Workflow Manager.</li>
-</ul>
 <h2 id="example-with-keycloak">Example with Keycloak</h2>
 <p>The following example explains how to test Workflow Manager with Keycloak as the OIDC provider.
 It is just an example and should not be used in production.</p>
@@ -349,9 +329,8 @@ It is just an example and should not be used in production.</p>
 <p>4. Create a new realm:</p>
 <ul>
 <li>Create a new realm using the drop down box in upper left that says "master".</li>
-<li>Use the realm name you entered and the gateway IP address from step 1 to set Workflow
-    Manager and the component services' <code>OIDC_ISSUER_URI</code> environment variable to:
-    <code>http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;</code></li>
+<li>Use the realm name you entered and the gateway IP address from step 1 to set Workflow Manager's
+    <code>OIDC_ISSUER_URI</code> environment variable to: <code>http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;</code></li>
 </ul>
 <p>5. Create the client that Workflow Manager will use to authenticate users:</p>
 <ul>
@@ -402,19 +381,7 @@ It is just an example and should not be used in production.</p>
 <li>After creating a user, set a password in the "Credentials" tab.</li>
 <li>Use the "Role mapping" tab to add the user to one of roles created in step 6.</li>
 </ul>
-<p>10. Add Component Registration REST client:</p>
-<ul>
-<li>Use the "Clients" menu to create a new client.</li>
-<li>Capability config:<ul>
-<li>The client needs to have "Client authentication" and "Service accounts roles" enabled.</li>
-<li>Use the "Service account roles" tab to add the client to one of the roles created in step 6.</li>
-</ul>
-</li>
-<li>Set the component services' <code>WFM_USER</code> environment variable to the client ID you entered.</li>
-<li>Set component services' <code>WFM_PASSWORD</code> environment variable to the "Client secret" in the
-    "Credentials" tab.</li>
-</ul>
-<p>11. Add external REST clients:</p>
+<p>10. Add external REST clients:</p>
 <ul>
 <li>Use the "Clients" menu to create a new client.</li>
 <li>Capability config:<ul>
@@ -423,10 +390,10 @@ It is just an example and should not be used in production.</p>
 </ul>
 </li>
 </ul>
-<p>12. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
+<p>11. Start Workflow Manager. When you initially navigate to Workflow Manager, you will be
      redirected to the Keycloak log in page. You can log in using the users created in step 9.</p>
 <h3 id="test-rest-authentication">Test REST authentication</h3>
-<p>Using the Docker gateway IP address from step 1, the client ID and secret from step 11, and the
+<p>Using the Docker gateway IP address from step 1, the client ID and secret from step 10, and the
 realm name from step 4, run the following command:</p>
 <pre><code class="language-bash">curl -d grant_type=client_credentials -u '&lt;client-id&gt;:&lt;client-secret&gt;' 'http://&lt;docker-gateway-ip&gt;:9090/realms/&lt;realm-name&gt;/protocol/openid-connect/token'
 </code></pre>
