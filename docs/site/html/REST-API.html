@@ -499,7 +499,14 @@
         <tr style=';background-color: #EAEAEA'>
             <td style='width:30%;'>mediaUri</td>
             <td style='width:10%;'>string</td>
-            <td style='width:30%;'>A valid (properly encoded) URI to a single media source for the job.</td>
+            <td style='width:30%;'>
+                A valid (properly encoded) URI to a single media source for the job. The following
+                URI schemes are supported: <code>file:</code>, <code>http:</code>,
+                <code>https:</code>, and
+                <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">
+                    <code>data:</code>
+                </a>.
+            </td>
             <td style='width:30%;'>Yes</td>
         </tr>
         <tr style=''>
@@ -1041,8 +1048,8 @@
                     <td style="width:40%;">
                         A string that will be one of the following values: UNKNOWN,
                         INITIALIZED (the job has been initialized but not started),
-                        IN_PROGRESS, IN_PROGRESS_ERRORS, IN_PROGRESS_WARNINGS
-                        COMPLETE, COMPLETE_WITH_ERRORS, COMPLETE_WITH_WARNINGS,
+                        IN_PROGRESS, IN_PROGRESS_ERRORS, IN_PROGRESS_WARNINGS,
+                        COMPLETE, COMPLETE_WITH_WARNINGS,
                         CANCELLING, CANCELLED, CANCELLED_BY_SHUTDOWN, ERROR
                     </td>
                 </tr>
@@ -1070,7 +1077,7 @@
                     <td style="width:40%;">terminal</td>
                     <td style="width:20%;">boolean</td>
                     <td style="width:40%;">
-                        True if jobStatus is COMPLETE, COMPLETE_WITH_ERRORS,
+                        True if jobStatus is COMPLETE,
                         COMPLETE_WITH_WARNINGS, CANCELLED, CANCELLED_BY_SHUTDOWN, or ERROR;
                         otherwise false
                     </td>
