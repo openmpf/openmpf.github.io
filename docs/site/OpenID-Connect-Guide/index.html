@@ -423,7 +423,7 @@ included as a bearer token in REST requests to Workflow Manager. For example:</p
 <li>Change "Filter by realm roles" to "Filter by clients".</li>
 <li>Assign the role created in step 2.</li>
 </ul>
-<p>4. Run jobs with the <code>CALLBACK_USE_OIDC</code> or <code>TIES_DB_USE_OIDC</code> job properties set to <code>TRUE</code>.</p>
+<p>4. Run jobs with the <code>CALLBACK_ADD_TOKEN</code> or <code>TIES_DB_ADD_TOKEN</code> job properties set to <code>TRUE</code>.</p>
 <h3 id="test-callback-authentication">Test callback authentication</h3>
 <p>The Python script below can be used to test callback authentication. Before running the script you
 must run <code>pip install Flask-pyoidc==3.14.2</code>. To run the script, you must set the <code>OIDC_ISSUER_URI</code>,
@@ -436,7 +436,7 @@ following fields to test callbacks:</p>
   &quot;callbackMethod&quot;: &quot;POST&quot;,
   &quot;callbackURL&quot;: &quot;http://localhost:5000/api&quot;,
   &quot;jobProperties&quot;: {
-    &quot;CALLBACK_USE_OIDC&quot;: &quot;TRUE&quot;
+    &quot;CALLBACK_ADD_TOKEN&quot;: &quot;TRUE&quot;
   }
 }
 </code></pre>
