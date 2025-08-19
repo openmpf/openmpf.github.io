@@ -521,8 +521,8 @@ must also be added to your project's <code>plugin-files/wheelhouse</code> direct
     ├── MyComponent-0.1-py3-none-any.whl
     ├── mpf_component_api-0.1-py3-none-any.whl
     ├── mpf_component_util-0.1-py3-none-any.whl
-    ├── numpy-1.18.4-cp38-cp38-manylinux1_x86_64.whl
-    └── opencv_python-4.2.0.34-cp38-cp38-manylinux1_x86_64.whl
+    ├── numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    └── opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
 </code></pre>
 <p>To create the plugin packages you can run the build script as follows:</p>
 <pre><code>~/openmpf-projects/openmpf-build-tools/build-openmpf-components/build_components.py -psdk ~/openmpf-projects/openmpf-python-component-sdk -c MyComponent
@@ -1389,7 +1389,7 @@ listed <a href="../CPP-Batch-Component-API/index.html#mpfdetectionerror">here</a
 the <code>MPF_</code> prefix. You can replace the <code>MISSING_PROPERTY</code> part in the above code with any other error type. When
 generating an exception, choose the type that best describes your error.</p>
 <h1 id="python-component-build-environment">Python Component Build Environment</h1>
-<p>All Python components must work with CPython 3.8.10. Also, Python components
+<p>All Python components must work with CPython 3.12. Also, Python components
 must work with the Linux version that is used by the OpenMPF Component
 Executable. At this writing, OpenMPF runs on
 Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any
@@ -1404,98 +1404,26 @@ of <code>&lt;dist_name&gt;-&lt;version&gt;-&lt;python_tag&gt;-&lt;abi_tag&gt;-&l
 Python 3 implementation because it does not use any implementation-specific
 features. <code>none</code> means that it does not use the Python ABI. <code>any</code> means it will
 work on any platform.</p>
-<p>The following combinations of compatibility tags are supported:</p>
+<p>The acceptable Python version tags are:</p>
 <ul>
-<li><code>cp38-cp38-manylinux2014_x86_64</code></li>
-<li><code>cp38-cp38-manylinux2010_x86_64</code></li>
-<li><code>cp38-cp38-manylinux1_x86_64</code></li>
-<li><code>cp38-cp38-linux_x86_64</code></li>
-<li><code>cp38-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp38-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp38-abi3-manylinux1_x86_64</code></li>
-<li><code>cp38-abi3-linux_x86_64</code></li>
-<li><code>cp38-none-manylinux2014_x86_64</code></li>
-<li><code>cp38-none-manylinux2010_x86_64</code></li>
-<li><code>cp38-none-manylinux1_x86_64</code></li>
-<li><code>cp38-none-linux_x86_64</code></li>
-<li><code>cp37-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp37-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp37-abi3-manylinux1_x86_64</code></li>
-<li><code>cp37-abi3-linux_x86_64</code></li>
-<li><code>cp36-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp36-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp36-abi3-manylinux1_x86_64</code></li>
-<li><code>cp36-abi3-linux_x86_64</code></li>
-<li><code>cp35-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp35-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp35-abi3-manylinux1_x86_64</code></li>
-<li><code>cp35-abi3-linux_x86_64</code></li>
-<li><code>cp34-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp34-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp34-abi3-manylinux1_x86_64</code></li>
-<li><code>cp34-abi3-linux_x86_64</code></li>
-<li><code>cp33-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp33-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp33-abi3-manylinux1_x86_64</code></li>
-<li><code>cp33-abi3-linux_x86_64</code></li>
-<li><code>cp32-abi3-manylinux2014_x86_64</code></li>
-<li><code>cp32-abi3-manylinux2010_x86_64</code></li>
-<li><code>cp32-abi3-manylinux1_x86_64</code></li>
-<li><code>cp32-abi3-linux_x86_64</code></li>
-<li><code>py38-none-manylinux2014_x86_64</code></li>
-<li><code>py38-none-manylinux2010_x86_64</code></li>
-<li><code>py38-none-manylinux1_x86_64</code></li>
-<li><code>py38-none-linux_x86_64</code></li>
-<li><code>py3-none-manylinux2014_x86_64</code></li>
-<li><code>py3-none-manylinux2010_x86_64</code></li>
-<li><code>py3-none-manylinux1_x86_64</code></li>
-<li><code>py3-none-linux_x86_64</code></li>
-<li><code>py37-none-manylinux2014_x86_64</code></li>
-<li><code>py37-none-manylinux2010_x86_64</code></li>
-<li><code>py37-none-manylinux1_x86_64</code></li>
-<li><code>py37-none-linux_x86_64</code></li>
-<li><code>py36-none-manylinux2014_x86_64</code></li>
-<li><code>py36-none-manylinux2010_x86_64</code></li>
-<li><code>py36-none-manylinux1_x86_64</code></li>
-<li><code>py36-none-linux_x86_64</code></li>
-<li><code>py35-none-manylinux2014_x86_64</code></li>
-<li><code>py35-none-manylinux2010_x86_64</code></li>
-<li><code>py35-none-manylinux1_x86_64</code></li>
-<li><code>py35-none-linux_x86_64</code></li>
-<li><code>py34-none-manylinux2014_x86_64</code></li>
-<li><code>py34-none-manylinux2010_x86_64</code></li>
-<li><code>py34-none-manylinux1_x86_64</code></li>
-<li><code>py34-none-linux_x86_64</code></li>
-<li><code>py33-none-manylinux2014_x86_64</code></li>
-<li><code>py33-none-manylinux2010_x86_64</code></li>
-<li><code>py33-none-manylinux1_x86_64</code></li>
-<li><code>py33-none-linux_x86_64</code></li>
-<li><code>py32-none-manylinux2014_x86_64</code></li>
-<li><code>py32-none-manylinux2010_x86_64</code></li>
-<li><code>py32-none-manylinux1_x86_64</code></li>
-<li><code>py32-none-linux_x86_64</code></li>
-<li><code>py31-none-manylinux2014_x86_64</code></li>
-<li><code>py31-none-manylinux2010_x86_64</code></li>
-<li><code>py31-none-manylinux1_x86_64</code></li>
-<li><code>py31-none-linux_x86_64</code></li>
-<li><code>py30-none-manylinux2014_x86_64</code></li>
-<li><code>py30-none-manylinux2010_x86_64</code></li>
-<li><code>py30-none-manylinux1_x86_64</code></li>
-<li><code>py30-none-linux_x86_64</code></li>
-<li><code>cp38-none-any</code></li>
-<li><code>py38-none-any</code></li>
-<li><code>py3-none-any</code></li>
-<li><code>py37-none-any</code></li>
-<li><code>py36-none-any</code></li>
-<li><code>py35-none-any</code></li>
-<li><code>py34-none-any</code></li>
-<li><code>py33-none-any</code></li>
-<li><code>py32-none-any</code></li>
-<li><code>py31-none-any</code></li>
-<li><code>py30-none-any</code></li>
+<li><code>cp312</code> (or lower)</li>
+<li><code>py312</code> (or lower)</li>
 </ul>
-<p>The list above was generated with the following command:
-<code>python3 -c 'import pip._internal.pep425tags as tags; print("\n".join(str(t) for t in tags.get_supported()))'</code></p>
+<p>The <strong>ONLY</strong> acceptable ABI tags are:</p>
+<ul>
+<li><code>cp312</code></li>
+<li><code>abi3</code></li>
+<li><code>none</code></li>
+</ul>
+<p>The acceptable platform tags are:</p>
+<ul>
+<li><code>any</code></li>
+<li><code>linux_x86_64</code></li>
+<li><code>manylinux2010_x86_64</code></li>
+<li><code>manylinux2014_x86_64</code></li>
+<li><code>manylinux1_x86_64</code></li>
+<li><code>manylinux_2_5_x86_64</code> through <code>manylinux_2_31_x86_64</code></li>
+</ul>
 <p>Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
 (aside from the standard Python libraries), and any configuration or data files.</p>
