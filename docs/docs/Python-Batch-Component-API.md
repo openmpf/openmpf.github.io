@@ -1136,11 +1136,13 @@ The acceptable platform tags are:
 
 - `any`
 - `linux_x86_64`
+- `manylinux1_x86_64`
 - `manylinux2010_x86_64`
 - `manylinux2014_x86_64`
-- `manylinux1_x86_64`
-- `manylinux_2_5_x86_64` through `manylinux_2_31_x86_64`
+- `manylinux_2_5_x86_64` through `manylinux_2_39_x86_64`
 
+
+The full list of compatible tags can be listed by running: `pip3 debug --verbose`
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component
