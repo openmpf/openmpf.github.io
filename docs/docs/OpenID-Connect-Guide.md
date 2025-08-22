@@ -180,7 +180,7 @@ curl -H "Authorization: Bearer <access-token>" http://localhost:8080/rest/action
 - Change "Filter by realm roles" to "Filter by clients".
 - Assign the role created in step 2.
 
-4\. Run jobs with the `CALLBACK_USE_OIDC` or `TIES_DB_USE_OIDC` job properties set to `TRUE`.
+4\. Run jobs with the `CALLBACK_ADD_TOKEN` or `TIES_DB_ADD_TOKEN` job properties set to `TRUE`.
 
 
 ### Test callback authentication
@@ -198,7 +198,7 @@ following fields to test callbacks:
   "callbackMethod": "POST",
   "callbackURL": "http://localhost:5000/api",
   "jobProperties": {
-    "CALLBACK_USE_OIDC": "TRUE"
+    "CALLBACK_ADD_TOKEN": "TRUE"
   }
 }
 ```
