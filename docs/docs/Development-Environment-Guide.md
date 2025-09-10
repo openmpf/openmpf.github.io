@@ -46,7 +46,7 @@ end integration testing.
 
 - Open a terminal and run `sudo apt update`
 
-- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
+- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ ninja-build nasm libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
 
 - Run `sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h`
 
@@ -157,13 +157,20 @@ sudo ln --symbolic /opt/apache-maven-3.3.3/bin/mvn /usr/local/bin;
 ```bash
 mkdir /tmp/libheif;
 cd /tmp/libheif;
-wget -O- https://github.com/strukturag/libheif/archive/refs/tags/v1.12.0.tar.gz \
+wget -O- https://github.com/strukturag/libheif/archive/refs/tags/v1.20.2.tar.gz \
     | tar --extract --gzip;
-cd libheif-1.12.0;
+cd libheif-1.20.2/third-party;
+bash aom.cmd;
+cd ..;
 mkdir build;
 cd build;
-cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false ..;
-sudo make --jobs "$(nproc)" install;
+PKG_CONFIG_PATH="/tmp/libheif/libheif-1.20.2/third-party/aom/dist/lib/pkgconfig" \
+cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false -DWITH_AOM_DECODER=true -DENABLE_PLUGIN_LOADING=false -DCMAKE_BUILD_TYPE=Release ..;
+sudo make --jobs "$(nproc)" install/strip;
+sudo cp heifio/libheifio.a /usr/lib64;
+cd ../heifio;
+sudo mkdir -p /usr/include/libheif/heifio;
+sudo cp *.h /usr/include/libheif/heifio;
 cd;
 sudo rm -rf /tmp/libheif;
 ```
