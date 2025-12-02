@@ -79,7 +79,7 @@ The first stage performs language identification. The second performs translatio
 
 # Media Selector Types
 
-`JSON_PATH` is only type currently supported, but others are planned.
+[`JSON_PATH`](#json_path) and [`CSV_COLS`](#csv_cols) are currently supported.
 
 
 ## JSON_PATH
@@ -120,6 +120,142 @@ Expression           | Matches
 `$.key2.key3`        | d, e, f, g
 `$.key2.key3.*.key4` | d, e
 `$.key2.key3.*.*[0]` | d, f
+
+
+## CSV_COLS
+
+Used to extract content from specific columns of a CSV file.  The expression itself must be a
+single row of CSV listing the columns to extract. The `CSV_SELECTORS_ARE_INDICES` job property
+controls whether the entries refer to column names or zero-based integer indices.
+
+
+
+### CSV Specific Job Properties
+
+An issue when processing CSV is that sometimes the first row is considered headers and in others
+the first row is actually data. In the default configuration
+(`CSV_SELECTORS_ARE_INDICES` = `FALSE` and `CSV_FIRST_ROW_IS_DATA` = `FALSE`), the selector
+elements refer to column names and the first row is not processed as data. When the first row is
+actual data, `CSV_SELECTORS_ARE_INDICES` = `TRUE` and `CSV_FIRST_ROW_IS_DATA` = `TRUE` should be
+set. If the first row is headers, but you want to specify the columns by index,
+`CSV_SELECTORS_ARE_INDICES` = `TRUE` and `CSV_FIRST_ROW_IS_DATA` = `FALSE` should be
+set.
+
+- `CSV_SELECTORS_ARE_INDICES`: When `FALSE` (the default), the selector expression must contain
+    column names.  When `TRUE` the selector should contain the zero-based integer indices of the
+    columns that should be processed.
+
+- `CSV_CSV_FIRST_ROW_IS_DATA`: When `FALSE` (the default), the first row is considered headers and
+    will not be processed. When `TRUE`, the first row is considered data and the first row will be
+    processed.
+
+
+### CSV_COLS Matching Example
+
+The table below shows combinations of values for `CSV_SELECTORS_ARE_INDICES` and
+`CSV_FIRST_ROW_IS_DATA` when matched against the CSV content below.
+
+```text
+header0,header1,"header,2"
+a,b,c
+d,e,f,g
+```
+
+`ARE_INDICES` refers to `CSV_SELECTORS_ARE_INDICES` and `FIRST_ROW_IS_DATA`
+refers to `CSV_FIRST_ROW_IS_DATA`.
+
+Expression        | <abbr title="CSV_SELECTORS_ARE_INDICES">ARE_INDICES</abbr> | <abbr title="CSV_FIRST_ROW_IS_DATA">FIRST_ROW_IS_DATA</abbr> | Matches
+---------------------|--------------|-------------------|------------
+`header0,"header,2"` |    ❌        |       ❌          | a, c, d, f
+`header0,"header,2"` |    ❌        |       ✅          | header0, "header,2", a, c, d, f
+`header0,headerX`    |    ❌        |     ✅ / ❌       | 💣 - Error: "headerX" does not exist
+`header0,header,2`   |    ❌        |     ✅ / ❌       | 💣 - Error: "header" and "2" do not exist
+`header0,"header,2"` |    ✅        |     ✅ / ❌       | 💣 - Error: The expression contains non-integers.
+`0,2`                |    ✅        |       ❌          | a, c, d, f
+`0,2`                |    ✅        |       ✅          | header0, "header,2", a, c, d, f
+`0,3,4`              |    ✅        |       ❌          | a, d, g
+`0,2`                |    ❌        |    ✅ / ❌        | 💣 - Error: There are no columns with "0" or "2" as the header.
+<!-- Expression      | ARE_INDICES  | FIRST_ROW_IS_DATA | Matches -->
+
+
+### CSV Text Encodings
+
+We recommend submitting UTF-8 encoded CSV files, but we do attempt to recognize other text
+encodings. When attempting to determine the input file encoding, Workflow Manager will inspect the
+first 12,000 bytes of the file. If all of the 12,000 bytes are valid UTF-8 bytes, then Workflow
+Manager will treat the file as UTF-8. Otherwise, Workflow Manager will use
+[Tika's `CharsetDetector`](https://tika.apache.org/2.9.1/api/org/apache/tika/parser/txt/CharsetDetector.html)
+to determine the encoding.
+
+The media selectors output file will always be UTF-8 encoded. If the input file was UTF-8 encoded
+and had a byte-order mark, then a byte-order mark will be added to the output file.
+
+
+#### Byte-order mark
+
+The UTF-8, UTF-16, and UTF-32 text encodings may have a byte-order mark present. The byte-order
+mark is the Unicode character named "ZERO WIDTH NO-BREAK SPACE" with a code point of U+FEFF. Each
+encoding will encode it as different bytes. For example, in UTF-8 it is encoded with three bytes:
+`0xEF`, `0xBB`, `0xBF`.
+
+Many CSV parsers do not have special handling for the byte-order mark. They just treat it as a
+normal character and consider it to be the first character in the first cell. Workflow Manager
+discards the byte-order mark before parsing the CSV.
+
+
+#### Excel
+
+If you open a CSV file in Microsoft Excel and the text is garbled, you should open the file in a
+text editor that supports UTF-8 and see if the text is garbled there too. When saving a CSV file
+from Excel, if you select "CSV (Comma delimited)(*.csv)", Excel will silently replace East Asian
+characters with question marks. Selecting "CSV UTF-8 (Comma delimited) (.csv)" preserves the East
+Asian characters, but it adds a byte-order mark to the file. If you open a UTF-8 encoded file in
+Excel, it will treat it as ISO-8859-1 unless the file has a UTF-8 byte-order mark.
+
+Using a byte-order mark with UTF-8 is uncommon because the UTF-8 encoding does not have endianess
+like UTF-16 and UTF-32. Excel adding the byte-order mark can be problematic because a
+lot of software does not expect it to be present.
+
+
+As an example, consider an Excel spreadsheet with the following content:
+
+Col,1 | Col,2
+------|--------
+item1 | item2
+
+
+If you save that as "CSV UTF-8 (Comma delimited) (.csv)" and then `cat` the file you will get:
+
+```text
+"Col,1","Col,2"
+item1,item2
+```
+
+Since the two column names contain commas, the cells need to be escaped with quotation marks so that
+the internal comma is not interpreted as a record separator. If you parse that file with
+[Python's built-in CSV parser](https://docs.python.org/3/library/csv.html) you get the following
+result:
+
+ ﻿"Col | 1"    | Col,2
+-------|-------|------
+item1  | item2 |
+
+
+While the first cell above appears to be four characters in length, it is actually five. The first
+character is U+FEFF (ZERO WIDTH NO-BREAK SPACE). Since the first cell starts with
+U+FEFF (ZERO WIDTH NO-BREAK SPACE), rather than U+0022 (QUOTATION MARK), the first comma is
+unescaped so it is interpreted as the record separator.
+
+Since the byte-order mark is invisible when rendered, simply printing the content will not reveal
+the issue. It is visible in a hexdump produced with `hexdump -C` on Linux or `Format-Hex` in
+Windows Powershell. In output from `hexdump -C` below, you can see that there is content before the
+quotation mark and that content matches the UTF-8 encoded byte-order mark of `0xEF`, `0xBB`, `0xBF`.
+
+```text
+00000000  ef bb bf 22 43 6f 6c 2c  31 22 2c 22 43 6f 6c 2c  |..."Col,1","Col,|
+00000010  32 22 0d 0a 69 74 65 6d  31 2c 69 74 65 6d 32 0d  |2"..item1,item2.|
+00000020  0a                                                |.|
+```
 
 
 
