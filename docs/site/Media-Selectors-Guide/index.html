@@ -160,9 +160,6 @@
         </ul>
     
 
-    <li class="toctree-l3"><a href="#media-selectors-output-file">Media Selectors Output File</a></li>
-    
-
     </ul>
                 </li>
                 <li class="">
@@ -274,8 +271,8 @@ The MITRE Corporation. All Rights Reserved.</p>
 processed. A copy of the input file with the specified sections replaced by component output is
 produced.</p>
 <h1 id="new-job-request-fields">New Job Request Fields</h1>
-<p>Below is an example of a job that uses media selectors. The job uses a two-stage pipeline.
-The first stage performs language identification. The second performs translation.</p>
+<p>Below is an example of a job that uses <code>JSON_PATH</code> media selectors. The job uses a two-stage
+pipeline. The first stage performs language identification. The second performs translation.</p>
 <pre><code class="language-json">{
     &quot;algorithmProperties&quot;: {},
     &quot;buildOutput&quot;: true,
@@ -326,17 +323,23 @@ The first stage performs language identification. The second performs translatio
 </ul>
 <h1 id="new-job-properties">New Job Properties</h1>
 <ul>
-<li><code>MEDIA_SELECTORS_DELIMETER</code>: When not provided and a job uses media selectors, the selected parts
+<li>
+<p><code>MEDIA_SELECTORS_DELIMETER</code>: When not provided and a job uses media selectors, the selected parts
     of the document will be replaced with the action output. When provided, the selected parts of
     the document will contain the original content, followed by the value of this property, and
-    finally the action output.</li>
-<li><code>MEDIA_SELECTORS_DUPLICATE_POLICY</code>: Specifies how to handle the case where a job uses media
+    finally the action output.</p>
+</li>
+<li>
+<p><code>MEDIA_SELECTORS_DUPLICATE_POLICY</code>: Specifies how to handle the case where a job uses media
     selectors and there are multiple outputs for a single selection. When set to <code>LONGEST</code>, the
     longer of the two outputs is chosen and the shorter one is discarded. When set to <code>ERROR</code>,
     duplicates are considered an error. When set to <code>JOIN</code>, the duplicates are combined using
-    <code>|</code> as a delimiter.</li>
-<li><code>MEDIA_SELECTORS_NO_MATCHES_IS_ERROR</code>: When true and a job uses media selectors, an error will be
-    generated when none of the selectors match content from the media.</li>
+    <code>|</code> as a delimiter.</p>
+</li>
+<li>
+<p><code>MEDIA_SELECTORS_NO_MATCHES_IS_ERROR</code>: When true and a job uses media selectors, an error will be
+    generated when none of the selectors match content from the media.</p>
+</li>
 </ul>
 <h1 id="media-selector-types">Media Selector Types</h1>
 <p><a href="#json_path"><code>JSON_PATH</code></a> and <a href="#csv_cols"><code>CSV_COLS</code></a> are currently supported.</p>
@@ -405,191 +408,11 @@ of the object is recursively explored.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="csv_cols">CSV_COLS</h2>
-<p>Used to extract content from specific columns of a CSV file.  The expression itself must be a
-single row of CSV listing the columns to extract. The <code>CSV_SELECTORS_ARE_INDICES</code> job property
-controls whether the entries refer to column names or zero-based integer indices.</p>
-<h3 id="csv-specific-job-properties">CSV Specific Job Properties</h3>
-<p>An issue when processing CSV is that sometimes the first row is considered headers and in others
-the first row is actually data. In the default configuration
-(<code>CSV_SELECTORS_ARE_INDICES</code> = <code>FALSE</code> and <code>CSV_FIRST_ROW_IS_DATA</code> = <code>FALSE</code>), the selector
-elements refer to column names and the first row is not processed as data. When the first row is
-actual data, <code>CSV_SELECTORS_ARE_INDICES</code> = <code>TRUE</code> and <code>CSV_FIRST_ROW_IS_DATA</code> = <code>TRUE</code> should be
-set. If the first row is headers, but you want to specify the columns by index,
-<code>CSV_SELECTORS_ARE_INDICES</code> = <code>TRUE</code> and <code>CSV_FIRST_ROW_IS_DATA</code> = <code>FALSE</code> should be
-set.</p>
-<ul>
-<li>
-<p><code>CSV_SELECTORS_ARE_INDICES</code>: When <code>FALSE</code> (the default), the selector expression must contain
-    column names.  When <code>TRUE</code> the selector should contain the zero-based integer indices of the
-    columns that should be processed.</p>
-</li>
-<li>
-<p><code>CSV_CSV_FIRST_ROW_IS_DATA</code>: When <code>FALSE</code> (the default), the first row is considered headers and
-    will not be processed. When <code>TRUE</code>, the first row is considered data and the first row will be
-    processed.</p>
-</li>
-</ul>
-<h3 id="csv_cols-matching-example">CSV_COLS Matching Example</h3>
-<p>The table below shows combinations of values for <code>CSV_SELECTORS_ARE_INDICES</code> and
-<code>CSV_FIRST_ROW_IS_DATA</code> when matched against the CSV content below.</p>
-<pre><code class="language-text">header0,header1,&quot;header,2&quot;
-a,b,c
-d,e,f,g
-</code></pre>
-<p><code>ARE_INDICES</code> refers to <code>CSV_SELECTORS_ARE_INDICES</code> and <code>FIRST_ROW_IS_DATA</code>
-refers to <code>CSV_FIRST_ROW_IS_DATA</code>.</p>
-<table>
-<thead>
-<tr>
-<th>Expression</th>
-<th><abbr title="CSV_SELECTORS_ARE_INDICES">ARE_INDICES</abbr></th>
-<th><abbr title="CSV_FIRST_ROW_IS_DATA">FIRST_ROW_IS_DATA</abbr></th>
-<th>Matches</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>header0,"header,2"</code></td>
-<td>❌</td>
-<td>❌</td>
-<td>a, c, d, f</td>
-</tr>
-<tr>
-<td><code>header0,"header,2"</code></td>
-<td>❌</td>
-<td>✅</td>
-<td>header0, "header,2", a, c, d, f</td>
-</tr>
-<tr>
-<td><code>header0,headerX</code></td>
-<td>❌</td>
-<td>✅ / ❌</td>
-<td>💣 - Error: "headerX" does not exist</td>
-</tr>
-<tr>
-<td><code>header0,header,2</code></td>
-<td>❌</td>
-<td>✅ / ❌</td>
-<td>💣 - Error: "header" and "2" do not exist</td>
-</tr>
-<tr>
-<td><code>header0,"header,2"</code></td>
-<td>✅</td>
-<td>✅ / ❌</td>
-<td>💣 - Error: The expression contains non-integers.</td>
-</tr>
-<tr>
-<td><code>0,2</code></td>
-<td>✅</td>
-<td>❌</td>
-<td>a, c, d, f</td>
-</tr>
-<tr>
-<td><code>0,2</code></td>
-<td>✅</td>
-<td>✅</td>
-<td>header0, "header,2", a, c, d, f</td>
-</tr>
-<tr>
-<td><code>0,3,4</code></td>
-<td>✅</td>
-<td>❌</td>
-<td>a, d, g</td>
-</tr>
-<tr>
-<td><code>0,2</code></td>
-<td>❌</td>
-<td>✅ / ❌</td>
-<td>💣 - Error: There are no columns with "0" or "2" as the header.</td>
-</tr>
-</tbody>
-</table>
-<!-- Expression      | ARE_INDICES  | FIRST_ROW_IS_DATA | Matches -->
-
-<h3 id="csv-text-encodings">CSV Text Encodings</h3>
-<p>We recommend submitting UTF-8 encoded CSV files, but we do attempt to recognize other text
-encodings. When attempting to determine the input file encoding, Workflow Manager will inspect the
-first 12,000 bytes of the file. If all of the 12,000 bytes are valid UTF-8 bytes, then Workflow
-Manager will treat the file as UTF-8. Otherwise, Workflow Manager will use
-<a href="https://tika.apache.org/2.9.1/api/org/apache/tika/parser/txt/CharsetDetector.html">Tika's <code>CharsetDetector</code></a>
-to determine the encoding.</p>
-<p>The media selectors output file will always be UTF-8 encoded. If the input file was UTF-8 encoded
-and had a byte-order mark, then a byte-order mark will be added to the output file.</p>
-<h4 id="byte-order-mark">Byte-order mark</h4>
-<p>The UTF-8, UTF-16, and UTF-32 text encodings may have a byte-order mark present. The byte-order
-mark is the Unicode character named "ZERO WIDTH NO-BREAK SPACE" with a code point of U+FEFF. Each
-encoding will encode it as different bytes. For example, in UTF-8 it is encoded with three bytes:
-<code>0xEF</code>, <code>0xBB</code>, <code>0xBF</code>.</p>
-<p>Many CSV parsers do not have special handling for the byte-order mark. They just treat it as a
-normal character and consider it to be the first character in the first cell. Workflow Manager
-discards the byte-order mark before parsing the CSV.</p>
-<h4 id="excel">Excel</h4>
-<p>If you open a CSV file in Microsoft Excel and the text is garbled, you should open the file in a
-text editor that supports UTF-8 and see if the text is garbled there too. When saving a CSV file
-from Excel, if you select "CSV (Comma delimited)(*.csv)", Excel will silently replace East Asian
-characters with question marks. Selecting "CSV UTF-8 (Comma delimited) (.csv)" preserves the East
-Asian characters, but it adds a byte-order mark to the file. If you open a UTF-8 encoded file in
-Excel, it will treat it as ISO-8859-1 unless the file has a UTF-8 byte-order mark.</p>
-<p>Using a byte-order mark with UTF-8 is uncommon because the UTF-8 encoding does not have endianess
-like UTF-16 and UTF-32. Excel adding the byte-order mark can be problematic because a
-lot of software does not expect it to be present.</p>
-<p>As an example, consider an Excel spreadsheet with the following content:</p>
-<table>
-<thead>
-<tr>
-<th>Col,1</th>
-<th>Col,2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>item1</td>
-<td>item2</td>
-</tr>
-</tbody>
-</table>
-<p>If you save that as "CSV UTF-8 (Comma delimited) (.csv)" and then <code>cat</code> the file you will get:</p>
-<pre><code class="language-text">&quot;Col,1&quot;,&quot;Col,2&quot;
-item1,item2
-</code></pre>
-<p>Since the two column names contain commas, the cells need to be escaped with quotation marks so that
-the internal comma is not interpreted as a record separator. If you parse that file with
-<a href="https://docs.python.org/3/library/csv.html">Python's built-in CSV parser</a> you get the following
-result:</p>
-<table>
-<thead>
-<tr>
-<th>﻿"Col</th>
-<th>1"</th>
-<th>Col,2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>item1</td>
-<td>item2</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>While the first cell above appears to be four characters in length, it is actually five. The first
-character is U+FEFF (ZERO WIDTH NO-BREAK SPACE). Since the first cell starts with
-U+FEFF (ZERO WIDTH NO-BREAK SPACE), rather than U+0022 (QUOTATION MARK), the first comma is
-unescaped so it is interpreted as the record separator.</p>
-<p>Since the byte-order mark is invisible when rendered, simply printing the content will not reveal
-the issue. It is visible in a hexdump produced with <code>hexdump -C</code> on Linux or <code>Format-Hex</code> in
-Windows Powershell. In output from <code>hexdump -C</code> below, you can see that there is content before the
-quotation mark and that content matches the UTF-8 encoded byte-order mark of <code>0xEF</code>, <code>0xBB</code>, <code>0xBF</code>.</p>
-<pre><code class="language-text">00000000  ef bb bf 22 43 6f 6c 2c  31 22 2c 22 43 6f 6c 2c  |...&quot;Col,1&quot;,&quot;Col,|
-00000010  32 22 0d 0a 69 74 65 6d  31 2c 69 74 65 6d 32 0d  |2&quot;..item1,item2.|
-00000020  0a                                                |.|
-</code></pre>
-<h1 id="media-selectors-output-file">Media Selectors Output File</h1>
+<h3 id="json_path-output-file">JSON_PATH Output File</h3>
 <p>When media selectors are used, the JsonOutputObject will contain a URI referencing the file
 location in the <code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
-<p>The job from the <a href="#new-job-request-fields">New Job Request Fields section</a> could be used with the
-document below.</p>
+<p>For example, consider that the <code>mediaUri</code> from job in the 
+<a href="#new-job-request-fields">New Job Request Fields section</a> refers to the document below.</p>
 <pre><code class="language-json">{
     &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
     &quot;spanishMessages&quot;: [
@@ -692,6 +515,210 @@ below.</p>
     ]
 }
 </code></pre>
+<h2 id="csv_cols">CSV_COLS</h2>
+<p>Used to extract content from specific columns of a CSV file.  The expression itself must be a
+single row of CSV listing the columns to extract. The <code>CSV_SELECTORS_ARE_INDICES</code> job property
+controls whether the entries refer to column names or zero-based integer indices.</p>
+<h3 id="csv-specific-job-properties">CSV-Specific Job Properties</h3>
+<ul>
+<li>
+<p><code>CSV_SELECTORS_ARE_INDICES</code>: When <code>FALSE</code> (the default), the selector expression must contain
+    column names.  When <code>TRUE</code> the selector should contain the zero-based integer indices of the
+    columns that should be processed.</p>
+</li>
+<li>
+<p><code>CSV_CSV_FIRST_ROW_IS_DATA</code>: When <code>FALSE</code> (the default), the first row is considered headers and
+    will not be processed. When <code>TRUE</code>, the first row is considered data and the first row will be
+    processed.</p>
+</li>
+</ul>
+<p>An issue when processing CSV is that sometimes the first row is considered headers (a.k.a. column
+names) and in others the first row is actually data and there are no headers.</p>
+<ul>
+<li>
+<p>In the default configuration (<code>CSV_SELECTORS_ARE_INDICES</code> = <code>FALSE</code> and
+    <code>CSV_FIRST_ROW_IS_DATA</code> = <code>FALSE</code>), the selector expression refers to column names and the
+    first row is not processed as data.</p>
+</li>
+<li>
+<p>If the first row is actual data, and you want to specify the columns by index instead of by
+    name in the selector expression, set <code>CSV_SELECTORS_ARE_INDICES</code> = <code>TRUE</code> and
+    <code>CSV_FIRST_ROW_IS_DATA</code> = <code>TRUE</code>.</p>
+</li>
+<li>
+<p>If the first row is headers, and you want to specify the columns by index instead of by
+    name in the selector expression, set <code>CSV_SELECTORS_ARE_INDICES</code> = <code>TRUE</code> and
+    <code>CSV_FIRST_ROW_IS_DATA</code> = <code>FALSE</code>.</p>
+</li>
+</ul>
+<h3 id="csv_cols-matching-example">CSV_COLS Matching Example</h3>
+<p>The table below shows combinations of values for <code>CSV_SELECTORS_ARE_INDICES</code> and
+<code>CSV_FIRST_ROW_IS_DATA</code> when matched against this CSV content:</p>
+<pre><code class="language-text">header0,header1,&quot;header,2&quot;
+a,b,c
+d,e,f,g
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th><code>CSV_SELECTORS_</code><br><code>ARE_INDICES</code></th>
+<th><code>CSV_FIRST_ROW_</code><br><code>IS_DATA</code></th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>header0,"header,2"</code></td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>a, c, d, f</td>
+</tr>
+<tr>
+<td><code>header0,"header,2"</code></td>
+<td>FALSE</td>
+<td>TRUE</td>
+<td>header0, "header,2", a, c, d, f</td>
+</tr>
+<tr>
+<td><code>header0,headerX</code></td>
+<td>FALSE</td>
+<td>TRUE / FALSE</td>
+<td><strong>Error</strong>: "headerX" does not exist</td>
+</tr>
+<tr>
+<td><code>header0,header,2</code></td>
+<td>FALSE</td>
+<td>TRUE / FALSE</td>
+<td><strong>Error</strong>: "header" and "2" do not exist</td>
+</tr>
+<tr>
+<td><code>header0,"header,2"</code></td>
+<td>TRUE</td>
+<td>TRUE / FALSE</td>
+<td><strong>Error</strong>: The expression contains non-integers.</td>
+</tr>
+<tr>
+<td><code>0,2</code></td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>a, c, d, f</td>
+</tr>
+<tr>
+<td><code>0,2</code></td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>header0, "header,2", a, c, d, f</td>
+</tr>
+<tr>
+<td><code>0,3,4</code></td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>a, d, g</td>
+</tr>
+<tr>
+<td><code>0,2</code></td>
+<td>FALSE</td>
+<td>TRUE / FALSE</td>
+<td><strong>Error</strong>: There are no columns with "0" or "2" as the header.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="csv-text-encodings">CSV Text Encodings</h3>
+<p>We recommend submitting UTF-8-encoded CSV files, but we do attempt to recognize other text
+encodings. When attempting to determine the input file encoding, the Workflow Manager will inspect
+the first 12,000 bytes of the file. If all of the 12,000 bytes are valid UTF-8 bytes, then the
+Workflow Manager will treat the file as UTF-8. Otherwise, the Workflow Manager will use
+<a href="https://tika.apache.org/2.9.1/api/org/apache/tika/parser/txt/CharsetDetector.html">Tika's <code>CharsetDetector</code></a>
+to determine the encoding.</p>
+<p>The media selectors output file will always be UTF-8-encoded. If the input file was UTF-8-encoded
+and had a byte-order mark, then a byte-order mark will be added to the output file.</p>
+<h4 id="byte-order-mark">Byte-order mark</h4>
+<p>The UTF-8, UTF-16, and UTF-32 text encodings may have a byte-order mark present. The byte-order
+mark is the Unicode character named "ZERO WIDTH NO-BREAK SPACE" with a code point of U+FEFF. Each
+encoding will encode it as different bytes. For example, in UTF-8 it is encoded with three bytes:
+<code>0xEF</code>, <code>0xBB</code>, <code>0xBF</code>.</p>
+<p>Many CSV parsers do not have special handling for the byte-order mark. They just treat it as a
+normal character and consider it to be the first character in the first cell. The Workflow Manager
+discards the byte-order mark before parsing the CSV.</p>
+<h4 id="excel">Excel</h4>
+<ul>
+<li>
+<p>If you open a CSV file in Microsoft Excel and the text is garbled, you should open the file
+    in a text editor that supports UTF-8 and see if the text is garbled there too.</p>
+</li>
+<li>
+<p>When saving a CSV file from Excel, if you select "CSV (Comma delimited)(*.csv)", Excel will
+    silently replace East Asian characters with question marks. Selecting
+    "CSV UTF-8 (Comma delimited) (.csv)" preserves the East Asian characters, but it adds a
+    byte-order mark to the file.</p>
+</li>
+<li>
+<p>If you open a UTF-8-encoded file in Excel, it will treat it as ISO-8859-1 unless the file has
+    a UTF-8 byte-order mark.</p>
+</li>
+</ul>
+<p>Using a byte-order mark with UTF-8 is uncommon because the UTF-8 encoding does not have endianess
+like UTF-16 and UTF-32. The byte-order mark added by Excel can cause problems because a
+lot of software does not expect it to be present.</p>
+<p>As an example, consider an Excel spreadsheet with the following content:</p>
+<table>
+<thead>
+<tr>
+<th>Col,1</th>
+<th>Col,2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>item1</td>
+<td>item2</td>
+</tr>
+</tbody>
+</table>
+<p>If you save that as "CSV UTF-8 (Comma delimited) (.csv)" and then <code>cat</code> the file you will get:</p>
+<pre><code class="language-text">&quot;Col,1&quot;,&quot;Col,2&quot;
+item1,item2
+</code></pre>
+<p>Since the two column names contain commas, the cells need to be escaped with quotation marks so that
+the internal comma is not interpreted as a record separator. If you parse that file with
+<a href="https://docs.python.org/3/library/csv.html">Python's built-in CSV parser</a> you get the following
+result:</p>
+<table>
+<thead>
+<tr>
+<th>﻿"Col</th>
+<th>1"</th>
+<th>Col,2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>item1</td>
+<td>item2</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>While the first cell above appears to be four characters in length, it is actually five. The first
+character is U+FEFF (ZERO WIDTH NO-BREAK SPACE). Since the first cell starts with
+U+FEFF (ZERO WIDTH NO-BREAK SPACE), rather than U+0022 (QUOTATION MARK), the first comma is
+unescaped so it is interpreted as the record separator.</p>
+<p>Since the byte-order mark is invisible when rendered, simply printing the content will not reveal
+the issue. It is visible in a hexdump produced with <code>hexdump -C</code> on Linux or <code>Format-Hex</code> in
+Windows Powershell. In the output from <code>hexdump -C</code> below, you can see that there is content before
+the quotation mark and that content matches the UTF-8-encoded byte-order mark of <code>0xEF</code>, <code>0xBB</code>,
+<code>0xBF</code>.</p>
+<pre><code class="language-text">00000000  ef bb bf 22 43 6f 6c 2c  31 22 2c 22 43 6f 6c 2c  |...&quot;Col,1&quot;,&quot;Col,|
+00000010  32 22 0d 0a 69 74 65 6d  31 2c 69 74 65 6d 32 0d  |2&quot;..item1,item2.|
+00000020  0a                                                |.|
+</code></pre>
+<h3 id="csv_cols-output-file">CSV_COLS Output File</h3>
+<p>When media selectors are used, the JsonOutputObject will contain a URI referencing the file
+location in the <code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
+<p>TODO: Provide an example input file. (JSON_PATH refers to an example from an earlier section,
+but we need to create an example CSV here.)</p>
+<p>TODO: Provide an example output without and with delimiters, like the JSON_PATH examples.</p>
               
             </div>
           </div>
