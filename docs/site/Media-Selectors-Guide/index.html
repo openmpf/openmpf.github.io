@@ -411,7 +411,7 @@ of the object is recursively explored.</p>
 <h3 id="json_path-output-file">JSON_PATH Output File</h3>
 <p>When media selectors are used, the JsonOutputObject will contain a URI referencing the file
 location in the <code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
-<p>For example, consider that the <code>mediaUri</code> from job in the 
+<p>For example, consider that the <code>mediaUri</code> from job in the
 <a href="#new-job-request-fields">New Job Request Fields section</a> refers to the document below.</p>
 <pre><code class="language-json">{
     &quot;otherStuffKey&quot;: [&quot;other stuff value&quot;],
@@ -714,11 +714,60 @@ the quotation mark and that content matches the UTF-8-encoded byte-order mark of
 00000020  0a                                                |.|
 </code></pre>
 <h3 id="csv_cols-output-file">CSV_COLS Output File</h3>
-<p>When media selectors are used, the JsonOutputObject will contain a URI referencing the file
-location in the <code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
-<p>TODO: Provide an example input file. (JSON_PATH refers to an example from an earlier section,
-but we need to create an example CSV here.)</p>
-<p>TODO: Provide an example output without and with delimiters, like the JSON_PATH examples.</p>
+<p>When media selectors are used, a copy of the input file with the specified sections replaced by
+component output is produced. The URI to the file will be present in the
+<code>$.media.*.mediaSelectorsOutputUri</code> field.</p>
+<p>Below is an example of a job that uses <code>CSV_COLS</code> media selectors. The job uses a two-stage
+pipeline. The first stage performs language identification. The second performs translation.</p>
+<pre><code class="language-json">{
+    &quot;algorithmProperties&quot;: {},
+    &quot;buildOutput&quot;: true,
+    &quot;jobProperties&quot;: {},
+    &quot;media&quot;: [
+        {
+            &quot;mediaUri&quot;: &quot;file:///opt/mpf/share/remote-media/test-csv-translation.csv&quot;,
+            &quot;properties&quot;: {},
+            &quot;mediaSelectorsOutputAction&quot;: &quot;ARGOS TRANSLATION (WITH FF REGION AND NO TASK MERGING) ACTION&quot;,
+            &quot;mediaSelectors&quot;: [
+                {
+                    &quot;type&quot;: &quot;CSV_COLS&quot;,
+                    &quot;expression&quot;: &quot;Spanish&quot;,
+                    &quot;resultDetectionProperty&quot;: &quot;TRANSLATION&quot;,
+                    &quot;selectionProperties&quot;: {}
+                },
+                {
+                    &quot;type&quot;: &quot;CSV_COLS&quot;,
+                    &quot;expression&quot;: &quot;Chinese&quot;,
+                    &quot;resultDetectionProperty&quot;: &quot;TRANSLATION&quot;,
+                    &quot;selectionProperties&quot;: {}
+                }
+            ]
+        }
+    ],
+    &quot;pipelineName&quot;: &quot;ARGOS TRANSLATION (WITH FASTTEXT LANGUAGE ID) TEXT FILE PIPELINE&quot;,
+    &quot;priority&quot;: 4
+}
+</code></pre>
+<p>The input file, <code>test-csv-translation.csv</code>, contains the content below.</p>
+<pre><code class="language-text">English,Spanish,Chinese
+&quot;Hello, how are you?&quot;,&quot;¿Hola, cómo estás?&quot;,你好吗？
+Where is the library?,¿Dónde está la biblioteca?,图书馆在哪里？
+What time is it?,¿Qué hora es?,现在是几奌？
+</code></pre>
+<p>The <code>mediaSelectorsOutputUri</code> field from the output object will refer to a document containing the
+content below.</p>
+<pre><code class="language-text">English,Spanish,Chinese
+&quot;Hello, how are you?&quot;,&quot;Hello, how are you?&quot;,How are you?
+Where is the library?,Where's the library?,Where's the library?
+What time is it?,What time is it?,What time is it?
+</code></pre>
+<p>If <code>MEDIA_SELECTORS_DELIMETER</code> was set to " | Translation: ", the file would contain the content
+below.</p>
+<pre><code class="language-text">English,Spanish,Chinese
+&quot;Hello, how are you?&quot;,&quot;¿Hola, cómo estás? | Translation: Hello, how are you?&quot;,你好吗？ | Translation: How are you?
+Where is the library?,¿Dónde está la biblioteca? | Translation: Where's the library?,图书馆在哪里？ | Translation: Where's the library?
+What time is it?,¿Qué hora es? | Translation: What time is it?,现在是几奌？ | Translation: What time is it?
+</code></pre>
               
             </div>
           </div>

@@ -132,7 +132,7 @@ Expression           | Matches
 When media selectors are used, the JsonOutputObject will contain a URI referencing the file
 location in the `$.media.*.mediaSelectorsOutputUri` field.
 
-For example, consider that the `mediaUri` from job in the 
+For example, consider that the `mediaUri` from job in the
 [New Job Request Fields section](#new-job-request-fields) refers to the document below.
 
 ```json
@@ -390,10 +390,67 @@ the quotation mark and that content matches the UTF-8-encoded byte-order mark of
 
 ### CSV_COLS Output File
 
-When media selectors are used, the JsonOutputObject will contain a URI referencing the file
-location in the `$.media.*.mediaSelectorsOutputUri` field.
+When media selectors are used, a copy of the input file with the specified sections replaced by
+component output is produced. The URI to the file will be present in the
+`$.media.*.mediaSelectorsOutputUri` field.
 
-TODO: Provide an example input file. (JSON_PATH refers to an example from an earlier section,
-but we need to create an example CSV here.)
+Below is an example of a job that uses `CSV_COLS` media selectors. The job uses a two-stage
+pipeline. The first stage performs language identification. The second performs translation.
 
-TODO: Provide an example output without and with delimiters, like the JSON_PATH examples.
+```json
+{
+    "algorithmProperties": {},
+    "buildOutput": true,
+    "jobProperties": {},
+    "media": [
+        {
+            "mediaUri": "file:///opt/mpf/share/remote-media/test-csv-translation.csv",
+            "properties": {},
+            "mediaSelectorsOutputAction": "ARGOS TRANSLATION (WITH FF REGION AND NO TASK MERGING) ACTION",
+            "mediaSelectors": [
+                {
+                    "type": "CSV_COLS",
+                    "expression": "Spanish",
+                    "resultDetectionProperty": "TRANSLATION",
+                    "selectionProperties": {}
+                },
+                {
+                    "type": "CSV_COLS",
+                    "expression": "Chinese",
+                    "resultDetectionProperty": "TRANSLATION",
+                    "selectionProperties": {}
+                }
+            ]
+        }
+    ],
+    "pipelineName": "ARGOS TRANSLATION (WITH FASTTEXT LANGUAGE ID) TEXT FILE PIPELINE",
+    "priority": 4
+}
+```
+
+The input file, `test-csv-translation.csv`, contains the content below.
+```text
+English,Spanish,Chinese
+"Hello, how are you?","¿Hola, cómo estás?",你好吗？
+Where is the library?,¿Dónde está la biblioteca?,图书馆在哪里？
+What time is it?,¿Qué hora es?,现在是几奌？
+```
+
+The `mediaSelectorsOutputUri` field from the output object will refer to a document containing the
+content below.
+```text
+English,Spanish,Chinese
+"Hello, how are you?","Hello, how are you?",How are you?
+Where is the library?,Where's the library?,Where's the library?
+What time is it?,What time is it?,What time is it?
+```
+
+If `MEDIA_SELECTORS_DELIMETER` was set to " | Translation: ", the file would contain the content
+below.
+
+```text
+English,Spanish,Chinese
+"Hello, how are you?","¿Hola, cómo estás? | Translation: Hello, how are you?",你好吗？ | Translation: How are you?
+Where is the library?,¿Dónde está la biblioteca? | Translation: Where's the library?,图书馆在哪里？ | Translation: Where's the library?
+What time is it?,¿Qué hora es? | Translation: What time is it?,现在是几奌？ | Translation: What time is it?
+```
