@@ -132,7 +132,7 @@ Expression           | Matches
 When media selectors are used, the JsonOutputObject will contain a URI referencing the file
 location in the `$.media.*.mediaSelectorsOutputUri` field.
 
-For example, consider that the `mediaUri` from job in the
+For example, consider that the `mediaUri` from the job in the
 [New Job Request Fields section](#new-job-request-fields) refers to the document below.
 
 ```json
