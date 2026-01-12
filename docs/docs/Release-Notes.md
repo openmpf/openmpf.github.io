@@ -1,7 +1,166 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The MITRE Corporation. All Rights Reserved.
+
+# OpenMPF 10.0.x
+
+<h2>10.0.0: January 2026</h2>
+
+<h3>Documentation</h3>
+
+- Created a new [Artifact Extraction Guide](Artifact-Extraction-Guide/index.html).
+
+<h3>No Language Left Behind (NLLB) Translation Component</h3>
+
+The No Language Left Behind component is based on [Meta's No Language Left Behind Project](https://ai.meta.com/research/no-language-left-behind/). The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the **`facebook/nllb-200-3.3B` model**, the largest of Meta’s [No Language Left Behind (NLLB)](https://huggingface.co/models?search=facebook/nllb) models. This provides the highest translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as [nllb-200-distilled-1.3B](https://huggingface.co/facebook/nllb-200-distilled-1.3B) or [nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M).
+
+Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md) for details.
+
+<h3> FastText Language Identification Component</h3>
+
+The FastText Language Detection Component utilizes the [GlotLID](https://github.com/cisnlp/GlotLID) language identification model
+and the [fastText](https://github.com/facebookresearch/fastText) library to perform language identification on text.
+
+Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md) for details.
+
+<h3>Subject Tracking Component [Experimental]</h3>
+
+The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.
+
+<h3>Audit Logging</h3>
+
+We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:
+- login/logout user information
+- create/read/update/download of data, configuration information, or action/pipeline information
+- rest API access
+- load UI content
+- TiesDB and S3 storage operations
+- Access to Hawtio
+
+The information is logged as a JSON string. The fields of the logging statement consist of:
+- `eid` : an event id signifying the type of event
+- `time` : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ
+- `tag` : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.
+- `app` : the name of the application where the event occurred, which is a constant set to "openmpf"
+- `user` : the username of the user that initiated the activity being logged.
+- `op` : operation identifier, one of c(create), r(read/view), m(modify), d(delete), l(login)
+- `res` : operation result, one of a(allowed), d(denied), e(error)
+- `uri` : [optional] the full web or file path.
+- `bucket` : [optional] The string identifying the S3 bucket for object storage
+- `objectKey` : [optional] The name that identifies the object in the S3 bucket
+- `msg` : a message string
+
+Audit logging is enabled by default, but can be disabled by setting the `audit.logging.enabled` system property to `false`.
+
+<h3>Features</h3>
+
+  - [[#1719](https://github.com/openmpf/openmpf/issues/1719)] Remove `OUTPUT_LAST_TASK_ONLY` and support `IS_ANNOTATOR` and `SUPPRESS_TRACKS` WFM properties
+  - [[#1796](https://github.com/openmpf/openmpf/issues/1796)] Translate specific CSV columns
+  - [[#1831](https://github.com/openmpf/openmpf/issues/1831)] Create a No Language Left Behind (NLLB) translation component
+  - [[#1832](https://github.com/openmpf/openmpf/issues/1832)] Add initial subject tracking implementation
+  - [[#1841](https://github.com/openmpf/openmpf/issues/1841)] Create new feature to allow feed-forward and artifact extraction selection based on a set of detection properties
+  - [[#1851](https://github.com/openmpf/openmpf/issues/1851)] Allow users to use JSON Path to specify which parts of a JSON document to process
+  - [[#1862](https://github.com/openmpf/openmpf/issues/1862)] Create a language identification component using FastText
+  - [[#1869](https://github.com/openmpf/openmpf/issues/1869)] Add support for using media selectors with multi-stage pipelines
+  - [[#1875](https://github.com/openmpf/openmpf/issues/1875)] Allow users to provide a data URI for media.
+  - [[#1889](https://github.com/openmpf/openmpf/issues/1889)] Update detection components to register using ActiveMQ.
+  - [[#1907](https://github.com/openmpf/openmpf/issues/1907)] Support feeding forward all tracks to one sub-job (for Python video jobs only)
+  - [[#1920](https://github.com/openmpf/openmpf/issues/1920)] Add audit logging of callbacks
+  - [[#1921](https://github.com/openmpf/openmpf/issues/1921)] Add audit logging for TiesDb
+  - [[#1979](https://github.com/openmpf/openmpf/issues/1979)] Add event ids, bucket keys, and URIs to audit logging
+  - [[#1933](https://github.com/openmpf/openmpf/issues/1933)] Add Custom SSO support
+
+<h3>Updates</h3>
+
+  - [[#1085](https://github.com/openmpf/openmpf/issues/1085)] Some detection processing errors should result in a final `ERROR` status instead of `COMPLETE_WITH_ERRORS`
+  - [[#1269](https://github.com/openmpf/openmpf/issues/1269)] Improve `UNSUPPORTED_DATA_TYPE` message in JSON output object
+  - [[#1679](https://github.com/openmpf/openmpf/issues/1679)] Retire AzureOcrTextDetection component
+  - [[#1847](https://github.com/openmpf/openmpf/issues/1847)] Suppress the warning when a track does not contain the requested quality selection property
+  - [[#1854](https://github.com/openmpf/openmpf/issues/1854)] Update Jenkins build to generate SBOM
+  - [[#1857](https://github.com/openmpf/openmpf/issues/1857)] Optionally skip TiesDb check through Create Job page
+  - [[#1858](https://github.com/openmpf/openmpf/issues/1858)] Optionally give transient pipeline a name
+  - [[#1879](https://github.com/openmpf/openmpf/issues/1879)] Merge `COMPLETE_WITH_ERRORS` status into `ERROR`
+  - [[#1884](https://github.com/openmpf/openmpf/issues/1884)] Upgrade to Python 3.12
+  - [[#1956](https://github.com/openmpf/openmpf/issues/1956)] Initial TiesDB check failure should result in a warning, not an error
+
+<h3>Bug Fixes</h3>
+
+  - [[#1916](https://github.com/openmpf/openmpf/issues/1916)] JSON button remains disabled on Job Status page when job ends in `ERROR`
+  - [[#1926](https://github.com/openmpf/openmpf/issues/1926)] Bad TiesDB URL results in multiple UI notifications and TiesDB status staying `IN PROGRESS`
+  - [[#1984](https://github.com/openmpf/openmpf/issues/1984)] Update CharsetDetectingReader to always use UTF-8 when the input only contains valid UTF-8 bytes
 
 # OpenMPF 9.0.x
+
+<h2>9.0.11: October 2025</h2>
+
+<h3>Updates</h3>
+
+- [[#1911](https://github.com/openmpf/openmpf/issues/1911)] Update LlamaVideoSummarization to use TIMELINE_CHECK_ACCEPTABLE_THRESHOLD
+
+<h3>Bug Fixes</h3>
+
+ - [[#1910](https://github.com/openmpf/openmpf/issues/1910)] Check LlamaVideoSummarization timestamps
+ - [[#1970](https://github.com/openmpf/openmpf/issues/1970)] Use postgres:17-alpine
+
+<h2>9.0.10: August 2025</h2>
+
+<h3>Bug Fixes</h3>
+
+ - [[#1950](https://github.com/openmpf/openmpf/issues/1950)] HeifConverter fails for some avif files
+
+<h2>9.0.9: August 2025</h2>
+
+<h3>Features</h3>
+
+- [[#1940](https://github.com/openmpf/openmpf/issues/1940)] Record stats for the ffprobe process that determines PTS value
+
+<h3>Bug Fixes</h3>
+
+- [[#1930](https://github.com/openmpf/openmpf/issues/1930)] Reading a file that uses the libaom-av1 decoder causes a crash during artifact extraction
+- [[#1943](https://github.com/openmpf/openmpf/issues/1943)] Memory leak in HeifConverter.cpp
+
+<h2>9.0.8: June 2025</h2>
+
+<h3>Features</h3>
+
+- [[#1883](https://github.com/openmpf/openmpf/issues/1883)] Create LLaMA video summarization component
+- [[#1888](https://github.com/openmpf/openmpf/issues/1888)] Enable segments to be specified by seconds
+
+<h2>9.0.7: May 2025</h2>
+
+<h3>Updates</h3>
+
+  - [[#1903](https://github.com/openmpf/openmpf/issues/1903)] Support AVIF images
+
+<h2>9.0.6: December 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+  - [[#1865](https://github.com/openmpf/openmpf/issues/1865)] WTP models are not installed in AzureTranslation
+
+<h2>9.0.3: July 2024</h2>
+
+<h3>Updates</h3>
+
+  - [[#1834](https://github.com/openmpf/openmpf/issues/1834)] Make delay in AzureRead configurable and delay before first poll attempt
+  - [[#1770](https://github.com/openmpf/openmpf/issues/1770)] Update Keyword Tagging to support emails, dates, phone numbers, and other formats
+
+<h2>9.0.2: July 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+  - [[#1828](https://github.com/openmpf/openmpf/issues/1828)] Track object provides incorrect parameters to the `ExemplarPolicyUtil.getExemplar()` function
+  - [[#1827](https://github.com/openmpf/openmpf/issues/1827)] `nlp_text_splitter` installation fails because of an issue with the thinc library
+
+<h2>9.0.1: June 2024</h2>
+
+<h3>Updates</h3>
+
+  - [[#1822](https://github.com/openmpf/openmpf/issues/1822)] Capitalize all tags produced by the KeywordTagging and TransformerTagging components
+
+<h3>Bug Fixes</h3>
+
+  - [[#1819](https://github.com/openmpf/openmpf/issues/1819)] Workflow Manager splitterThreadPoolProfile does not properly re-use threads
+  - [[#1823](https://github.com/openmpf/openmpf/issues/1823)] TransformerTagging does not handle multiple feed-forward properties to process
 
 <h2>9.0.0: May 2024</h2>
 
