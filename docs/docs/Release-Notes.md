@@ -29,6 +29,7 @@ The OR-Tools Subject Tracking component associates detection tracks of different
 <h3>Audit Logging</h3>
 
 We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:
+
 - login/logout user information
 - create/read/update/download of data, configuration information, or action/pipeline information
 - rest API access
@@ -37,6 +38,7 @@ We have added internal audit logging that may be used to audit events that occur
 - Access to Hawtio
 
 The information is logged as a JSON string. The fields of the logging statement consist of:
+
 - `eid` : an event id signifying the type of event
 - `time` : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ
 - `tag` : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.
@@ -53,7 +55,7 @@ Audit logging is enabled by default, but can be disabled by setting the `audit.l
 
 <h3>Additional Quality Selection Properties</h3>
 
-We have added the ability to perform feed-forward processing and artifact extraction based on component-defined properties, in addition to the standard `QUALITY_SELECTION_PROPERTY`. Two new job properties have been added: `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST` and `"FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`. A detection component may choose to mark certain detections in a track as "best" by adding a custom property to those detections. For example, you could mark the detection whose bounding box has the largest area by adding a detection property named `BEST_SIZE` to that detection. If you want to extract the artifact for that detection, then you would add the string `BEST_SIZE` to the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`. This would result in that detection artifact being extracted in addition to the others that would be extracted based on the `QUALITY_SELECTION_PROPERTY`. This works in a similar way for feed-forward processing, where detections that have been marked will be fed forward in addition to those selected according to the quality selection property. Note that an artifact will only be extracted once, even if it is chosen based on the quality selection property and the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`, and this applies to feed-forward processing as well.
+We have added the ability to perform feed-forward processing and artifact extraction based on component-defined properties, in addition to the standard `QUALITY_SELECTION_PROPERTY`. Two new job properties have been added: `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST` and `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`. A detection component may choose to mark certain detections in a track as "best" by adding a custom property to those detections. For example, you could mark the detection whose bounding box has the largest area by adding a detection property named `BEST_SIZE` to that detection. If you want to extract the artifact for that detection, then you would add the string `BEST_SIZE` to the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`. This would result in that detection artifact being extracted in addition to the others that would be extracted based on the `QUALITY_SELECTION_PROPERTY`. This works in a similar way for feed-forward processing, where detections that have been marked will be fed forward in addition to those selected according to the quality selection property. Note that an artifact will only be extracted once, even if it is chosen based on the quality selection property and the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`, and this applies to feed-forward processing as well.
 
 <h3>Features</h3>
 

@@ -61,6 +61,9 @@
     <a class="current" href="index.html">Release Notes</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#openmpf-100x">OpenMPF 10.0.x</a></li>
+    
+
     <li class="toctree-l3"><a href="#openmpf-90x">OpenMPF 9.0.x</a></li>
     
 
@@ -298,8 +301,181 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="openmpf-100x">OpenMPF 10.0.x</h1>
+<h2>10.0.0: January 2026</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+<li>Created a new <a href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>.</li>
+</ul>
+<h3>No Language Left Behind (NLLB) Translation Component</h3>
+
+<p>The No Language Left Behind component is based on <a href="https://ai.meta.com/research/no-language-left-behind/">Meta's No Language Left Behind Project</a>. The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the <strong><code>facebook/nllb-200-3.3B</code> model</strong>, the largest of Meta’s <a href="https://huggingface.co/models?search=facebook/nllb">No Language Left Behind (NLLB)</a> models. This provides the highest translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as <a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B">nllb-200-distilled-1.3B</a> or <a href="https://huggingface.co/facebook/nllb-200-distilled-600M">nllb-200-distilled-600M</a>.</p>
+<p>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md">README</a> for details.</p>
+<h3> FastText Language Identification Component</h3>
+
+<p>The FastText Language Detection Component utilizes the <a href="https://github.com/cisnlp/GlotLID">GlotLID</a> language identification model
+and the <a href="https://github.com/facebookresearch/fastText">fastText</a> library to perform language identification on text.</p>
+<p>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md">README</a> for details.</p>
+<h3>Subject Tracking Component [Experimental]</h3>
+
+<p>The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.</p>
+<h3>Audit Logging</h3>
+
+<p>We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:</p>
+<ul>
+<li>login/logout user information</li>
+<li>create/read/update/download of data, configuration information, or action/pipeline information</li>
+<li>rest API access</li>
+<li>load UI content</li>
+<li>TiesDB and S3 storage operations</li>
+<li>Access to Hawtio</li>
+</ul>
+<p>The information is logged as a JSON string. The fields of the logging statement consist of:</p>
+<ul>
+<li><code>eid</code> : an event id signifying the type of event</li>
+<li><code>time</code> : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ</li>
+<li><code>tag</code> : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.</li>
+<li><code>app</code> : the name of the application where the event occurred, which is a constant set to "openmpf"</li>
+<li><code>user</code> : the username of the user that initiated the activity being logged.</li>
+<li><code>op</code> : operation identifier, one of c(create), r(read/view), m(modify), d(delete), l(login)</li>
+<li><code>res</code> : operation result, one of a(allowed), d(denied), e(error)</li>
+<li><code>uri</code> : [optional] the full web or file path.</li>
+<li><code>bucket</code> : [optional] The string identifying the S3 bucket for object storage</li>
+<li><code>objectKey</code> : [optional] The name that identifies the object in the S3 bucket</li>
+<li><code>msg</code> : a message string</li>
+</ul>
+<p>Audit logging is enabled by default, but can be disabled by setting the <code>audit.logging.enabled</code> system property to <code>false</code>.</p>
+<h3>Additional Quality Selection Properties</h3>
+
+<p>We have added the ability to perform feed-forward processing and artifact extraction based on component-defined properties, in addition to the standard <code>QUALITY_SELECTION_PROPERTY</code>. Two new job properties have been added: <code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code> and <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code>. A detection component may choose to mark certain detections in a track as "best" by adding a custom property to those detections. For example, you could mark the detection whose bounding box has the largest area by adding a detection property named <code>BEST_SIZE</code> to that detection. If you want to extract the artifact for that detection, then you would add the string <code>BEST_SIZE</code> to the <code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code>. This would result in that detection artifact being extracted in addition to the others that would be extracted based on the <code>QUALITY_SELECTION_PROPERTY</code>. This works in a similar way for feed-forward processing, where detections that have been marked will be fed forward in addition to those selected according to the quality selection property. Note that an artifact will only be extracted once, even if it is chosen based on the quality selection property and the <code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code>, and this applies to feed-forward processing as well.</p>
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1719">#1719</a>] Remove <code>OUTPUT_LAST_TASK_ONLY</code> and support <code>IS_ANNOTATOR</code> and <code>SUPPRESS_TRACKS</code> WFM properties</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1796">#1796</a>] Translate specific CSV columns</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1831">#1831</a>] Create a No Language Left Behind (NLLB) translation component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1832">#1832</a>] Add initial subject tracking implementation</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1841">#1841</a>] Create new feature to allow feed-forward and artifact extraction selection based on a set of detection properties</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1851">#1851</a>] Allow users to use JSON Path to specify which parts of a JSON document to process</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1862">#1862</a>] Create a language identification component using FastText</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1869">#1869</a>] Add support for using media selectors with multi-stage pipelines</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1875">#1875</a>] Allow users to provide a data URI for media.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1889">#1889</a>] Update detection components to register using ActiveMQ.</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1907">#1907</a>] Support feeding forward all tracks to one sub-job (for Python video jobs only)</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1920">#1920</a>] Add audit logging of callbacks</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1921">#1921</a>] Add audit logging for TiesDb</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1979">#1979</a>] Add event ids, bucket keys, and URIs to audit logging</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1933">#1933</a>] Add Custom SSO support</li>
+</ul>
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1085">#1085</a>] Some detection processing errors should result in a final <code>ERROR</code> status instead of <code>COMPLETE_WITH_ERRORS</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1269">#1269</a>] Improve <code>UNSUPPORTED_DATA_TYPE</code> message in JSON output object</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1679">#1679</a>] Retire AzureOcrTextDetection component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1847">#1847</a>] Suppress the warning when a track does not contain the requested quality selection property</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1854">#1854</a>] Update Jenkins build to generate SBOM</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1857">#1857</a>] Optionally skip TiesDb check through Create Job page</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1858">#1858</a>] Optionally give transient pipeline a name</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1879">#1879</a>] Merge <code>COMPLETE_WITH_ERRORS</code> status into <code>ERROR</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1884">#1884</a>] Upgrade to Python 3.12</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1956">#1956</a>] Initial TiesDB check failure should result in a warning, not an error</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1916">#1916</a>] JSON button remains disabled on Job Status page when job ends in <code>ERROR</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1926">#1926</a>] Bad TiesDB URL results in multiple UI notifications and TiesDB status staying <code>IN PROGRESS</code></li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1984">#1984</a>] Update CharsetDetectingReader to always use UTF-8 when the input only contains valid UTF-8 bytes</li>
+</ul>
 <h1 id="openmpf-90x">OpenMPF 9.0.x</h1>
+<h2>9.0.11: October 2025</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1911">#1911</a>] Update LlamaVideoSummarization to use TIMELINE_CHECK_ACCEPTABLE_THRESHOLD</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1910">#1910</a>] Check LlamaVideoSummarization timestamps</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1970">#1970</a>] Use postgres:17-alpine</li>
+</ul>
+<h2>9.0.10: August 2025</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1950">#1950</a>] HeifConverter fails for some avif files</li>
+</ul>
+<h2>9.0.9: August 2025</h2>
+
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1940">#1940</a>] Record stats for the ffprobe process that determines PTS value</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1930">#1930</a>] Reading a file that uses the libaom-av1 decoder causes a crash during artifact extraction</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1943">#1943</a>] Memory leak in HeifConverter.cpp</li>
+</ul>
+<h2>9.0.8: June 2025</h2>
+
+<h3>Features</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1883">#1883</a>] Create LLaMA video summarization component</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1888">#1888</a>] Enable segments to be specified by seconds</li>
+</ul>
+<h2>9.0.7: May 2025</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1903">#1903</a>] Support AVIF images</li>
+</ul>
+<h2>9.0.6: December 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1865">#1865</a>] WTP models are not installed in AzureTranslation</li>
+</ul>
+<h2>9.0.3: July 2024</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1834">#1834</a>] Make delay in AzureRead configurable and delay before first poll attempt</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1770">#1770</a>] Update Keyword Tagging to support emails, dates, phone numbers, and other formats</li>
+</ul>
+<h2>9.0.2: July 2024</h2>
+
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1828">#1828</a>] Track object provides incorrect parameters to the <code>ExemplarPolicyUtil.getExemplar()</code> function</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1827">#1827</a>] <code>nlp_text_splitter</code> installation fails because of an issue with the thinc library</li>
+</ul>
+<h2>9.0.1: June 2024</h2>
+
+<h3>Updates</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1822">#1822</a>] Capitalize all tags produced by the KeywordTagging and TransformerTagging components</li>
+</ul>
+<h3>Bug Fixes</h3>
+
+<ul>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1819">#1819</a>] Workflow Manager splitterThreadPoolProfile does not properly re-use threads</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1823">#1823</a>] TransformerTagging does not handle multiple feed-forward properties to process</li>
+</ul>
 <h2>9.0.0: May 2024</h2>
 
 <h3>Documentation</h3>
