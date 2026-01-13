@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
 
 # API Overview
 
@@ -280,8 +280,8 @@ MyComponent
     ├── MyComponent-0.1-py3-none-any.whl
     ├── mpf_component_api-0.1-py3-none-any.whl
     ├── mpf_component_util-0.1-py3-none-any.whl
-    ├── numpy-1.18.4-cp38-cp38-manylinux1_x86_64.whl
-    └── opencv_python-4.2.0.34-cp38-cp38-manylinux1_x86_64.whl
+    ├── numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    └── opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
 ```
 
 To create the plugin packages you can run the build script as follows:
@@ -646,7 +646,7 @@ a static method, or a class method.
 
 
 #### mpf_component_api.VideoJob
-Class containing data used for detection of objects in a video file.
+Class containing data used for detection of objects in a video file. Contains at most one feed-forward track.
 
 * Members:
 
@@ -713,7 +713,7 @@ Class containing data used for detection of objects in a video file.
     <tr>
       <td>feed_forward_track</td>
       <td><code>None</code> or <code>mpf_component_api.VideoTrack</code></td>
-      <td>An <code>mpf_component_api.VideoTrack</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
+      <td>An optional <code>mpf_component_api.VideoTrack</code> from the previous pipeline stage. Provided when feed forward is enabled. See <a href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>.</td>
     </tr>
   </tbody>
 </table>
@@ -731,6 +731,65 @@ These will take precedence over all other property types (job, algorithm, media,
 possible to change the value of properties set via environment variables at runtime and therefore
 they should only be used to specify properties that will not change throughout the entire lifetime
 of the service (e.g. Docker container).
+
+
+#### component.get_detections_from_all_video_tracks(video_job)
+
+<div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>EXPERIMENTAL:</b> This feature is not fully implemented.</p></div>
+
+Similar to `component.get_detections_from_video(video_job)`, but able to process multiple feed-forward tracks at once.
+Refer to the [Feed Forward All Tracks](Feed-Forward-Guide.md#feed-forward-all-tracks) section of the Feed Forward Guide
+to learn about the `FEED_FORWARD_ALL_TRACKS` property and how it affects feed-forward behavior.
+
+Known limitation: No multi-track `mpf_component_util.VideoCapture` support.
+
+* Method Definition:
+```python
+class MyComponent:
+    def get_detections_from_all_video_tracks(self, video_job):
+        return [mpf_component_api.VideoTrack(...), ...]
+```
+
+`get_detections_from_all_video_tracks`, like all get_detections_from_\* methods, can be implemented either as an
+instance method, a static method, or a class method.
+
+* Parameters:
+
+| Parameter | Data Type                             | Description |
+|-----------|---------------------------------------|-------------|
+| video_job | `mpf_component_api.AllVideoTracksJob` | Object containing details about the work to be performed.
+
+* Returns: An iterable of `mpf_component_api.VideoTrack`
+
+
+#### mpf_component_api.AllVideoTracksJob
+
+<div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>EXPERIMENTAL:</b> This feature is not fully implemented.</p></div>
+
+Class containing data used for detection of objects in a video file. May contain multiple feed-forward tracks.
+
+Members are the same as `mpf_component_api.VideoJob` with the exception that `feed_forward_track` is replaced by
+`feed_forward_tracks`.
+
+* Members:
+
+<table>
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Data Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>feed_forward_tracks</td>
+      <td><code>None</code> or <code>List[mpf_component_api.VideoTrack]</code></td>
+      <td>An optional list of <code>mpf_component_api.VideoTrack</code> objects from the previous pipeline stage. Provided when feed forward is enabled and <code>FEED_FORWARD_ALL_TRACKS</code> is true. See <a href="../Feed-Forward-Guide/index.html#feed-forward-all-tracks">Feed Forward Guide</a>.</td>
+    </tr>
+  </tbody>
+</table>
+
 
 
 #### mpf_component_api.VideoTrack
@@ -1105,7 +1164,7 @@ generating an exception, choose the type that best describes your error.
 
 
 # Python Component Build Environment
-All Python components must work with CPython 3.8.10. Also, Python components
+All Python components must work with CPython 3.12. Also, Python components
 must work with the Linux version that is used by the OpenMPF Component
 Executable. At this writing, OpenMPF runs on
 Ubuntu 20.04 (kernel version 5.13.0-30). Pure Python code should work on any
@@ -1121,98 +1180,28 @@ Python 3 implementation because it does not use any implementation-specific
 features. `none` means that it does not use the Python ABI. `any` means it will
 work on any platform.
 
-The following combinations of compatibility tags are supported:
+The acceptable Python version tags are:
 
-* `cp38-cp38-manylinux2014_x86_64`
-* `cp38-cp38-manylinux2010_x86_64`
-* `cp38-cp38-manylinux1_x86_64`
-* `cp38-cp38-linux_x86_64`
-* `cp38-abi3-manylinux2014_x86_64`
-* `cp38-abi3-manylinux2010_x86_64`
-* `cp38-abi3-manylinux1_x86_64`
-* `cp38-abi3-linux_x86_64`
-* `cp38-none-manylinux2014_x86_64`
-* `cp38-none-manylinux2010_x86_64`
-* `cp38-none-manylinux1_x86_64`
-* `cp38-none-linux_x86_64`
-* `cp37-abi3-manylinux2014_x86_64`
-* `cp37-abi3-manylinux2010_x86_64`
-* `cp37-abi3-manylinux1_x86_64`
-* `cp37-abi3-linux_x86_64`
-* `cp36-abi3-manylinux2014_x86_64`
-* `cp36-abi3-manylinux2010_x86_64`
-* `cp36-abi3-manylinux1_x86_64`
-* `cp36-abi3-linux_x86_64`
-* `cp35-abi3-manylinux2014_x86_64`
-* `cp35-abi3-manylinux2010_x86_64`
-* `cp35-abi3-manylinux1_x86_64`
-* `cp35-abi3-linux_x86_64`
-* `cp34-abi3-manylinux2014_x86_64`
-* `cp34-abi3-manylinux2010_x86_64`
-* `cp34-abi3-manylinux1_x86_64`
-* `cp34-abi3-linux_x86_64`
-* `cp33-abi3-manylinux2014_x86_64`
-* `cp33-abi3-manylinux2010_x86_64`
-* `cp33-abi3-manylinux1_x86_64`
-* `cp33-abi3-linux_x86_64`
-* `cp32-abi3-manylinux2014_x86_64`
-* `cp32-abi3-manylinux2010_x86_64`
-* `cp32-abi3-manylinux1_x86_64`
-* `cp32-abi3-linux_x86_64`
-* `py38-none-manylinux2014_x86_64`
-* `py38-none-manylinux2010_x86_64`
-* `py38-none-manylinux1_x86_64`
-* `py38-none-linux_x86_64`
-* `py3-none-manylinux2014_x86_64`
-* `py3-none-manylinux2010_x86_64`
-* `py3-none-manylinux1_x86_64`
-* `py3-none-linux_x86_64`
-* `py37-none-manylinux2014_x86_64`
-* `py37-none-manylinux2010_x86_64`
-* `py37-none-manylinux1_x86_64`
-* `py37-none-linux_x86_64`
-* `py36-none-manylinux2014_x86_64`
-* `py36-none-manylinux2010_x86_64`
-* `py36-none-manylinux1_x86_64`
-* `py36-none-linux_x86_64`
-* `py35-none-manylinux2014_x86_64`
-* `py35-none-manylinux2010_x86_64`
-* `py35-none-manylinux1_x86_64`
-* `py35-none-linux_x86_64`
-* `py34-none-manylinux2014_x86_64`
-* `py34-none-manylinux2010_x86_64`
-* `py34-none-manylinux1_x86_64`
-* `py34-none-linux_x86_64`
-* `py33-none-manylinux2014_x86_64`
-* `py33-none-manylinux2010_x86_64`
-* `py33-none-manylinux1_x86_64`
-* `py33-none-linux_x86_64`
-* `py32-none-manylinux2014_x86_64`
-* `py32-none-manylinux2010_x86_64`
-* `py32-none-manylinux1_x86_64`
-* `py32-none-linux_x86_64`
-* `py31-none-manylinux2014_x86_64`
-* `py31-none-manylinux2010_x86_64`
-* `py31-none-manylinux1_x86_64`
-* `py31-none-linux_x86_64`
-* `py30-none-manylinux2014_x86_64`
-* `py30-none-manylinux2010_x86_64`
-* `py30-none-manylinux1_x86_64`
-* `py30-none-linux_x86_64`
-* `cp38-none-any`
-* `py38-none-any`
-* `py3-none-any`
-* `py37-none-any`
-* `py36-none-any`
-* `py35-none-any`
-* `py34-none-any`
-* `py33-none-any`
-* `py32-none-any`
-* `py31-none-any`
-* `py30-none-any`
+- `cp312` (or lower)
+- `py312` (or lower)
 
-The list above was generated with the following command:
-`python3 -c 'import pip._internal.pep425tags as tags; print("\n".join(str(t) for t in tags.get_supported()))'`
+The **ONLY** acceptable ABI tags are:
+
+- `cp312`
+- `abi3`
+- `none`
+
+The acceptable platform tags are:
+
+- `any`
+- `linux_x86_64`
+- `manylinux1_x86_64`
+- `manylinux2010_x86_64`
+- `manylinux2014_x86_64`
+- `manylinux_2_5_x86_64` through `manylinux_2_39_x86_64`
+
+
+The full list of compatible tags can be listed by running: `pip3 debug --verbose`
 
 Components should be supplied as a tar file, which includes not only the component library, but any other libraries or
 files needed for execution. This includes all other non-standard libraries used by the component

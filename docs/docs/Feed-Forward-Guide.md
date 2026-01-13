@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
 
 # Introduction
 
@@ -65,8 +65,8 @@ the first stage, the subsequent stages will inherit the effects of those propert
 
 # Feed Forward Properties
 
-Components that support feed forward have two algorithm properties that control the feed forward behavior:
-`FEED_FORWARD_TYPE` and `FEED_FORWARD_TOP_QUALITY_COUNT`.
+Components that support feed forward have three algorithm properties that control the feed forward behavior:
+`FEED_FORWARD_TYPE`, `FEED_FORWARD_TOP_QUALITY_COUNT`, and `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`.
 
 `FEED_FORWARD_TYPE` can be set to the following values:
 
@@ -95,6 +95,14 @@ detections in the feed forward track will be processed. Determination of quality
 the [Quality Selection Guide](Quality-Selection-Guide/index.html). If the track contains less than 5 detections then all
 of the detections in the track will be processed. If one or more detections have the same quality value, then the
 detection(s) with the lower frame index take precedence.
+
+`FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` allows you to include detections based on properties in addition to those
+chosen with the `QUALITY_SELECTION_PROPERTY`. It consists of a string that is a semi-colon separated list of detection
+properties. For example, you may want to use something other than `CONFIDENCE` for the `QUALITY_SELECTION_PROPERTY`, but
+you also want to include the detection with the highest confidence in your feed-forward track. If the component executing
+in the first stage of the pipeline adds a `BEST_CONFIDENCE` property to the detection with highest confidence in each track,
+you can then set the `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST` property to `BEST_CONFIDENCE`, and the detections with
+that property will be added to the feed-forward track.
 
 
 # Superset Region
@@ -302,3 +310,25 @@ a 1-to-1 correspondence with a MOG motion track.
 Refer to `runMogThenOcvFaceFeedForwardRegionTest()` in the
 [`TestSystemOnDiff`](https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java)
 class for a system test that demonstrates this behavior.
+
+
+# Feed Forward All Tracks
+
+<div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>EXPERIMENTAL:</b> This feature is not fully implemented.</p></div>
+
+The default feed-forward behavior will result in generating one sub-job per track generated in the previous stage.
+Consider a scenario where you need to implement a tracking component that takes individual detections from a stage and
+groups them into tracks. That component needs to accept all tracks from the previous stage as an input to the same
+sub-job.
+
+Setting `FEED_FORWARD_ALL_TRACKS` to true will result in generating one sub-job that contains all the tracks generated
+in the previous stage. Refer to the
+[component.get_detections_from_all_video_tracks(video_job)](Python-Batch-Component-API.md#componentget_detections_from_all_video_tracksvideo_job)
+section of the Python Batch Component API for more details. This property works in conjunction with the other
+feed-forward properties discussed in the [Feed Forward Properties](#feed-forward-properties) section.
+
+Known limitations:
+
+- Only Python supported.
+- Only video supported.
+- Not tested with [triggers](Trigger-Guide.md).

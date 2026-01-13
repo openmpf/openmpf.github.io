@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Artifact Extraction Guide - OpenMPF</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Artifact Extraction Guide";
+    var mkdocs_page_input_path = "Artifact-Extraction-Guide.md";
+    var mkdocs_page_url = "/Artifact-Extraction-Guide/index.html";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="icon icon-home"> OpenMPF</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../index.html">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">General</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Release-Notes/index.html">Release Notes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../License-And-Distribution/index.html">License and Distribution</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Acknowledgements/index.html">Acknowledgements</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Guides</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Install-Guide/index.html">Install Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Admin-Guide/index.html">Admin Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../User-Guide/index.html">User Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../OpenID-Connect-Guide/index.html">OpenID Connect Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Segmentation-Guide/index.html">Media Segmentation Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Feed-Forward-Guide/index.html">Feed Forward Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Derivative-Media-Guide/index.html">Derivative Media Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Object-Storage-Guide/index.html">Object Storage Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Markup-Guide/index.html">Markup Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../TiesDb-Guide/index.html">TiesDb Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Trigger-Guide/index.html">Trigger Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Roll-Up-Guide/index.html">Roll Up Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Health-Check-Guide/index.html">Health Check Guide</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="index.html">Artifact Extraction Guide</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#introduction">Introduction</a></li>
+    
+
+    <li class="toctree-l3"><a href="#artifact-extraction-properties">Artifact Extraction Properties</a></li>
+    
+
+    <li class="toctree-l3"><a href="#combining-properties">Combining Properties</a></li>
+    
+
+    <li class="toctree-l3"><a href="#artifact-cropping-and-rotation">Artifact Cropping and Rotation</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#image-with-markup">Image with Markup</a></li>
+        
+            <li><a class="toctree-l4" href="#left-detection">Left Detection</a></li>
+        
+            <li><a class="toctree-l4" href="#right-detection">Right Detection</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Selectors-Guide/index.html">Media Selectors Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../REST-API/index.html">REST API</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Component Development</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Component-API-Overview/index.html">Component API Overview</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Component-Descriptor-Reference/index.html">Component Descriptor Reference</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Batch-Component-API/index.html">C++ Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Python-Batch-Component-API/index.html">Python Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Java-Batch-Component-API/index.html">Java Batch Component API</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../GPU-Support-Guide/index.html">GPU Support Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Additional Developer Resources</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../Contributor-Guide/index.html">Contributor Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Development-Environment-Guide/index.html">Development Environment Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Node-Guide/index.html">Node Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Workflow-Manager-Architecture/index.html">Workflow Manager Architecture</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../CPP-Streaming-Component-API/index.html">C++ Streaming Component API</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">OpenMPF</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Guides &raquo;</li>
+        
+      
+    
+    <li>Artifact Extraction Guide</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
+<h1 id="introduction">Introduction</h1>
+<p>Artifact extraction is an optional behavior of OpenMPF that allows the user to save artifacts from a job onto disk. An
+artifact is a frame region extracted from a piece of media. Extracting artifacts gives you a way to visualize representative
+detections from the tracks found in a piece of media. For example, you might want to extract an artifact for the
+exemplar in all tracks found in a piece of media. The exemplar for the track is the detection in the track that has the
+highest value for the detection property chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. (Refer to the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a> for documentation on quality selection.) In another scenario, you might want to extract
+artifacts for the exemplar as well as a few other frames that come before and after the exemplar.</p>
+<p>The Workflow Manager performs artifact extraction after all detection processing for a job is complete. Artifacts can be
+written to local shared storage, or to a remote S3 storage location. Refer to the <a href="../Object-Storage-Guide/index.html">Object Storage Guide</a> for information on using object storage.</p>
+<h1 id="artifact-extraction-properties">Artifact Extraction Properties</h1>
+<p>The choice of which artifacts to extract is highly configurable using the following properties.</p>
+<ul>
+<li><code>ARTIFACT_EXTRACTION_POLICY</code>: This property sets the high level policy controlling artifact extraction. It must have
+one of the following values:<ul>
+<li><code>NONE</code>: No artifact extraction will be performed.</li>
+<li><code>VISUAL_TYPES_ONLY</code>: Extract artifacts only for tracks associated with a "visual" data type. Visual data types
+  include <code>IMAGE</code> and <code>VIDEO</code>.</li>
+<li><code>ALL_TYPES</code>: Extract artifacts regardless of data type.</li>
+<li><code>ALL_DETECTIONS</code>: Extract artifacts for all detections in the track.</li>
+</ul>
+</li>
+</ul>
+<p>The default value is <code>VISUAL_TYPES_ONLY</code>, which turns off artifact extraction for data types such as <code>MOTION</code>,
+<code>SPEECH</code>, <code>SCENE</code>, and <code>SOUND</code>. [<strong>NOTE:</strong> Artifact extraction for anything other that <code>IMAGE</code> or <code>VIDEO</code> is not currently
+supported and will result in an error for the job.]</p>
+<p>With the <code>VISUAL_TYPES_ONLY</code> or <code>ALL_TYPES</code> policy, artifacts will be extracted according to the
+<code>ARTIFACT_EXTRACTION_POLICY_*</code> properties described below. With the <code>NONE</code> and <code>ALL_DETECTIONS</code> policies, these
+properties are ignored.</p>
+<ul>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code>: When set to true, causes the extracted artifact to
+be cropped to the width and height of the bounding box of the detection, instead of extracting the entire frame.
+Default value is <code>true</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_EXEMPLAR_FRAME_PLUS</code>: This property may be set to an integer value N, which causes
+the exemplar frame and N frames before and after the exemplar to be extracted. If N = 0, then only
+the exemplar will be extracted. If N &gt; 0, then the exemplar plus N frames before and after it will be extracted.
+If N &lt; 0, then this property is disabled. The default value is 0.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_FIRST_FRAME</code>: When set to true, then detections in the first frame in each track will
+be extracted. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME</code>: When set to true, then detections in the frame closest to the middle of
+each track will be extracted. The middle frame is the frame that is equally distant from the start and stop frames,
+but that frame does not necessarily contain a detection in a given track, so we search for the detection in the track
+that is closest to that middle frame. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_LAST_FRAME</code>: When set to true, then detections in the last frame in each track will
+be extracted. The default value is <code>false</code>.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code>: When this property is set to an integer value N greater than 0
+the detections in a track will be sorted by the detection property given by the <code>QUALITY_SELECTION_PROPERTY</code> job
+property, and then the N detections with the highest quality will be extracted, up to the number of available
+detections. If N is less than or equal to 0, then this policy is disabled. The default value is 0. (Refer to the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a> for documentation on quality selection.)</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST</code>: This property may be set to a string comprised of a
+semi-colon delimited list of strings. The strings in this list define the detection property names to be used for
+artifact extraction. If a detection in a track has a property that corresponds to any of the names in this list,
+an artifact will be created for it. For example, you might have a component that finds the detection in each track that has the largest size (width x height), and adds a property to that detection named <code>BEST_SIZE</code>. You could then set this property to the string <code>BEST_SIZE</code> and artifacts for those detections will be extracted along with all others requested. If the string is empty, then this property is disabled. The default value is
+the empty string.</p>
+</li>
+</ul>
+<h1 id="combining-properties">Combining Properties</h1>
+<p>The above properties can be combined to satisfy a set of criteria. For example, if <code>ARTIFACT_EXTRACTION_POLICY_FIRST_FRAME</code> is set to <code>true</code> and <code>ARTIFACT_EXTRACTION_POLICY_MIDDLE_FRAME</code> is set to <code>true</code>, then the first and middle frames will be extracted. If <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> is also set to true then the detection crops for the first and middle frames will be extracted instead of the whole frames. If <code>ARTIFACT_EXTRACTION_POLICY_TOP_QUALITY_COUNT</code> is also set to 5, then the above still applies, and the 5 detection crops in a track with the highest quality values will also be extracted. Note that the top 5 may already include the first and middle frames. An artifact will only ever be extracted once, even if it is chosen according to more than one of the artifact extraction policies.</p>
+<h1 id="artifact-cropping-and-rotation">Artifact Cropping and Rotation</h1>
+<p>If the <code>ARTIFACT_EXTRACTION_POLICY_CROPPING</code> job property is set to true, then the bounding box in the detection object is used to define the cropping. Here is an example showing an image where two detections were found. The two detections in the frame are illustrated with the bounding boxes added by markup. (Refer to the <a href="../Markup-Guide/index.html">Markup Guide</a> for documentation on how markup is added to images and videos.) The cropped artifacts are also shown below. Notice that the detection on the left in the image is rotated, but the cropped artifact has had the rotation removed.</p>
+<h2 id="image-with-markup">Image with Markup</h2>
+<p><img alt="Image With Markup" src="../img/artifacts/original_with_markup.png" title="Image With Markup" /></p>
+<h2 id="left-detection">Left Detection</h2>
+<p><img alt="Rotated Cropped Artifact" src="../img/artifacts/frame-7-0-1.png" title="Rotated Cropped Artifact" /></p>
+<h2 id="right-detection">Right Detection</h2>
+<p><img alt="Cropped Artifact" src="../img/artifacts/frame-7-0-0.png" title="Cropped Artifact" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Quality-Selection-Guide/index.html" class="btn btn-neutral float-right" title="Quality Selection Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../Health-Check-Guide/index.html" class="btn btn-neutral" title="Health Check Guide"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>OpenMPF</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../Health-Check-Guide/index.html" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Quality-Selection-Guide/index.html" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../js/mustache.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

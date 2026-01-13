@@ -183,7 +183,7 @@
         </font></i></p>
         <br/>
     </div>
-    <div class='footer'>Last updated on: March 19, 2024</div>
+    <div class='footer'>Last updated on: January 31, 2025</div>
     <div class="coverHeadings">
         <h1>Introduction</h1>
     </div>
@@ -200,6 +200,7 @@
         <div class="toc-entry">JobCreationRequest</div>
         <div class="toc-entry">JobCreationMediaData</div>
         <div class="toc-entry">JobCreationMediaRange</div>
+        <div class="toc-entry">JobCreationMediaSelector</div>
         <div class="toc-entry">TransientPipelineDefinition</div>
         <div class="toc-entry">TransientTask</div>
         <div class="toc-entry">TransientAction</div>
@@ -498,7 +499,14 @@
         <tr style=';background-color: #EAEAEA'>
             <td style='width:30%;'>mediaUri</td>
             <td style='width:10%;'>string</td>
-            <td style='width:30%;'>A valid (properly encoded) URI to a single media source for the job.</td>
+            <td style='width:30%;'>
+                A valid (properly encoded) URI to a single media source for the job. The following
+                URI schemes are supported: <code>file:</code>, <code>http:</code>,
+                <code>https:</code>, and
+                <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">
+                    <code>data:</code>
+                </a>.
+            </td>
             <td style='width:30%;'>Yes</td>
         </tr>
         <tr style=''>
@@ -513,7 +521,7 @@
             </td>
             <td style='width:30%;'>No</td>
         </tr>
-        <tr style=''>
+        <tr style='background-color: #EAEAEA'>
             <td style='width:30%;'>properties</td>
             <td style='width:10%;'>object</td>
             <td style='width:30%;'>A map of key-value pairs using strings which may be used to override the parameters associated with the pipeline or job properties for this medium.</td>
@@ -529,7 +537,7 @@
             </td>
             <td style='width:30%;'>No</td>
         </tr>
-        <tr style=''>
+        <tr style='background-color: #EAEAEA'>
             <td style='width:30%;'>timeRanges</td>
             <td style='width:10%;'>array&lt;JobCreationMediaRange></td>
             <td style='width:30%;'>
@@ -537,6 +545,26 @@
                 The times are specified in milliseconds. Multiple ranges can be provided. If
                 <code>frameRanges</code> are also included in the request those frames will also be
                 processed.
+            </td>
+            <td style='width:30%;'>No</td>
+        </tr>
+        <tr style=''>
+            <td style='width:30%;'>mediaSelectorsOutputAction</td>
+            <td style='width:10%;'>string</td>
+            <td style='width:30%;'>
+                Name of the action that produces content for the media selectors output file.
+                When <code>mediaSelectorsOutputAction</code> is provided,
+                <code>mediaSelectors</code> should also be provided.
+            </td>
+            <td style='width:30%;'>No</td>
+        </tr>
+        <tr style='background-color: #EAEAEA'>
+            <td style='width:30%;'>mediaSelectors</td>
+            <td style='width:10%;'>array&lt;JobCreationMediaSelector></td>
+            <td style='width:30%;'>
+                Used to specify that only specific sections of a document should be processed.
+                When <code>mediaSelectors</code> are present,
+                <code>mediaSelectorsOutputAction</code> must also be present.
             </td>
             <td style='width:30%;'>No</td>
         </tr>
@@ -572,6 +600,62 @@
         </table>
         <br/>
     </div>
+
+    <div class="div-container-margin"><h3 class="numbered-content">JobCreationMediaSelector</h3>
+        <hr/>
+        <table class='table-margin'>
+            <thead>
+            <tr>
+                <th class='th-heading'><b>Name</b></th>
+                <th class='th-heading-small'><b>Type</b></th>
+                <th class='th-heading'><b>Description</b></th>
+                <th class='th-heading'><b>Required</b></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr style='background-color: #EAEAEA'>
+                <td style='width:30%;'>expression</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A string specifying the sections of the document that should be processed.
+                    The <code>type</code> field specifies the syntax of the expression.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>type</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    The name of the type of media selector that is used in the
+                    <code>expression</code> field. "JSON_PATH" is only type currently supported.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            <tr style='background-color: #EAEAEA'>
+                <td style='width:30%;'>selectionProperties</td>
+                <td style='width:10%;'>object&lt;string, string></td>
+                <td style='width:30%;'>
+                    A map of key-value pairs using strings which may be used to override the
+                    parameters associated with the pipeline or job properties for the sections of
+                    the document that match the <code>expression</code>.
+                </td>
+                <td style='width:30%;'>No</td>
+            </tr>
+            <tr style=''>
+                <td style='width:30%;'>resultDetectionProperty</td>
+                <td style='width:10%;'>string</td>
+                <td style='width:30%;'>
+                    A detection property name from tracks produced by the
+                    <code>mediaSelectorsOutputAction</code>. The media selectors output document
+                    will be populated with the content of the specified property.
+                </td>
+                <td style='width:30%;'>Yes</td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+
     <div class="div-container-margin"><h3 class="numbered-content">TransientPipelineDefinition</h3>
         <hr/>
         <table class='table-margin'>
@@ -964,8 +1048,8 @@
                     <td style="width:40%;">
                         A string that will be one of the following values: UNKNOWN,
                         INITIALIZED (the job has been initialized but not started),
-                        IN_PROGRESS, IN_PROGRESS_ERRORS, IN_PROGRESS_WARNINGS
-                        COMPLETE, COMPLETE_WITH_ERRORS, COMPLETE_WITH_WARNINGS,
+                        IN_PROGRESS, IN_PROGRESS_ERRORS, IN_PROGRESS_WARNINGS,
+                        COMPLETE, COMPLETE_WITH_WARNINGS,
                         CANCELLING, CANCELLED, CANCELLED_BY_SHUTDOWN, ERROR
                     </td>
                 </tr>
@@ -993,7 +1077,7 @@
                     <td style="width:40%;">terminal</td>
                     <td style="width:20%;">boolean</td>
                     <td style="width:40%;">
-                        True if jobStatus is COMPLETE, COMPLETE_WITH_ERRORS,
+                        True if jobStatus is COMPLETE,
                         COMPLETE_WITH_WARNINGS, CANCELLED, CANCELLED_BY_SHUTDOWN, or ERROR;
                         otherwise false
                     </td>

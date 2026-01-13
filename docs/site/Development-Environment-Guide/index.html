@@ -129,7 +129,15 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Selectors-Guide/index.html">Media Selectors Guide</a>
                 </li>
                 <li class="">
                     
@@ -274,7 +282,7 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
 <div style="background-color:orange"><p style="color:white; padding:5px">
     <b>WARNING:</b>
     For most component developers, these steps are not necessary. Instead,
@@ -324,16 +332,13 @@ end integration testing.</p>
 <p>Open a terminal and run <code>sudo apt update</code></p>
 </li>
 <li>
-<p>Run <code>sudo apt install gnupg2 unzip xz-utils cmake make g++ ninja-build nasm libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible</code></p>
+<p>Run <code>sudo apt install gnupg2 unzip xz-utils cmake make g++ ninja-build nasm libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl</code></p>
 </li>
 <li>
 <p>Run <code>sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h</code></p>
 </li>
 <li>
 <p>Run <code>sudo ln --symbolic /usr/bin/cmake /usr/bin/cmake3</code></p>
-</li>
-<li>
-<p>Run <code>sudo ln --symbolic /usr/bin/protoc /usr/local/bin/protoc</code></p>
 </li>
 <li>
 <p>Follow instructions to install Docker:
@@ -457,8 +462,9 @@ bash aom.cmd;
 cd ..;
 mkdir build;
 cd build;
-PKG_CONFIG_PATH=&quot;/tmp/libheif/libheif-1.20.2/third-party/aom/dist/lib/pkgconfig&quot; \
-cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false -DWITH_AOM_DECODER=true -DENABLE_PLUGIN_LOADING=false -DCMAKE_BUILD_TYPE=Release ..;
+PKG_CONFIG_PATH=&quot;/tmp/libheif/libheif-1.20.2/third-party/aom/dist/lib/pkgconfig&quot; cmake3 \
+    -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false -DWITH_AOM_DECODER=true \
+    -DENABLE_PLUGIN_LOADING=false -DCMAKE_BUILD_TYPE=Release ..;
 sudo make --jobs &quot;$(nproc)&quot; install/strip;
 sudo cp heifio/libheifio.a /usr/lib64;
 cd ../heifio;
@@ -466,6 +472,39 @@ sudo mkdir -p /usr/include/libheif/heifio;
 sudo cp *.h /usr/include/libheif/heifio;
 cd;
 sudo rm -rf /tmp/libheif;
+</code></pre>
+<ul>
+<li>Build and install Protocol Buffers:</li>
+</ul>
+<pre><code class="language-bash">mkdir /tmp/abseil;
+wget -O- 'https://github.com/abseil/abseil-cpp/releases/download/20240722.0/abseil-cpp-20240722.0.tar.gz' \
+    | tar --extract --gzip --directory /tmp/abseil;
+
+mkdir /tmp/protobuf;
+cd /tmp/protobuf;
+wget -O- 'https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz' \
+    | tar --extract --gzip;
+
+cd protobuf-28.3;
+mkdir build;
+cd build;
+cmake \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DABSL_ROOT_DIR=/tmp/abseil/abseil-cpp-20240722.0 \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    ..;
+cmake --build . --parallel &quot;$(nproc)&quot;;
+sudo cmake --install . --strip;
+cd;
+sudo rm -rf /tmp/abseil /tmp/protobuf
+</code></pre>
+<ul>
+<li>Install Python3.12:</li>
+</ul>
+<pre><code class="language-bash">sudo add-apt-repository -y ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12-dev python3.12-venv
 </code></pre>
 <ul>
 <li>From your home directory run:</li>
@@ -496,6 +535,9 @@ git submodule foreach git checkout develop;
 </li>
 <li>
 <p>Run <code>cd ~/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/; cp mpf-private-example.properties mpf-private.properties</code></p>
+</li>
+<li>
+<p>Run <code>pip3.8 install ansible</code></p>
 </li>
 <li>
 <p>Run <code>sudo sh -c 'echo "[mpf-child]\nlocalhost" &gt;&gt; /etc/ansible/hosts'</code></p>

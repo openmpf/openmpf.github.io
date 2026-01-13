@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
 
 # Introduction
 
@@ -20,23 +20,12 @@ NVIDIA virtual machine and instruction set architecture that is generated in the
 You can learn more about PTX [here](https://docs.nvidia.com/cuda/parallel-thread-execution/index.html). A fatbin may 
 have one or the other type of code, or both, for one or a set of different architectures. 
 
-By default, the OpenMPF components are built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
+OpenMPF components should be built for maximum portability across NVIDIA GPU architectures. The nvcc flags 
 to accomplish this are described in this 
-[table](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation). 
-OpenMPF uses the `-gencode` flag, with the `-arch=compute_30` and `-code=compute_30` flags. This generates PTX code 
-for the minimum compute capability; at runtime, the NVIDIA driver will just-in-time compile the PTX code for the 
-architecture the code is running on.
-
-## Customizing the GPU Compile Flags
-
-OpenMPF has several GPU components. Initially, we tested a GPU component on a variety of NVIDIA GPU architectures and
-found an insignificant difference in the run time for different architectures using this approach, and so we have opted
-to provide maximum runtime portability. For any new components that may be developed, this may not be the case, and
-similar testing should be undertaken to determine the correct set of flags for that component. The nvcc compiler flags
-are configured by setting the `CUDA_NVCC_FLAGS` CMake variable in the individual component's CMakeLists.txt file, e.g.:
-```
-set(CUDA_NVCC_FLAGS --compiler-options -fPIC -gencode arch=compute_30,code=compute_30)
-```
+[table](https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#options-for-steering-gpu-code-generation).
+If you are using CMake to build the component, the compute capabilities can be specified in a couple of different ways,
+depending on the version of CMake that is being used. See for example [CMAKE_CUDA_FLAGS](https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html),
+or [CMAKE_CUDA_ARCHITECTURES](https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html).
 
 # OpenCV GPU Support
 

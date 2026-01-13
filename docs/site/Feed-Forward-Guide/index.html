@@ -124,6 +124,9 @@
     <li class="toctree-l3"><a href="#feed-forward-pipeline-examples">Feed Forward Pipeline Examples</a></li>
     
 
+    <li class="toctree-l3"><a href="#feed-forward-all-tracks">Feed Forward All Tracks</a></li>
+    
+
     </ul>
                 </li>
                 <li class="">
@@ -156,7 +159,15 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Selectors-Guide/index.html">Media Selectors Guide</a>
                 </li>
                 <li class="">
                     
@@ -260,7 +271,7 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.</p>
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="introduction">Introduction</h1>
 <p>Feed forward is an optional behavior of OpenMPF that allows tracks from one detection stage of the pipeline to be
 directly “fed into” the next stage. It differs from the default segmenting behavior in the following major ways:</p>
@@ -324,8 +335,8 @@ that <code>FEED_FORWARD_TYPE</code> is set to <code>NONE</code>, or not specifie
 stage to use feed forward. Because only the frames with detections, and those detection regions, are passed forward from
 the first stage, the subsequent stages will inherit the effects of those properties set on the first stage.  </p>
 <h1 id="feed-forward-properties">Feed Forward Properties</h1>
-<p>Components that support feed forward have two algorithm properties that control the feed forward behavior:
-<code>FEED_FORWARD_TYPE</code> and <code>FEED_FORWARD_TOP_QUALITY_COUNT</code>.</p>
+<p>Components that support feed forward have three algorithm properties that control the feed forward behavior:
+<code>FEED_FORWARD_TYPE</code>, <code>FEED_FORWARD_TOP_QUALITY_COUNT</code>, and <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code>.</p>
 <p><code>FEED_FORWARD_TYPE</code> can be set to the following values:</p>
 <ul>
 <li><code>NONE</code>: Feed forward is disabled (default setting).</li>
@@ -353,6 +364,13 @@ detections in the feed forward track will be processed. Determination of quality
 the <a href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>. If the track contains less than 5 detections then all
 of the detections in the track will be processed. If one or more detections have the same quality value, then the
 detection(s) with the lower frame index take precedence.</p>
+<p><code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> allows you to include detections based on properties in addition to those
+chosen with the <code>QUALITY_SELECTION_PROPERTY</code>. It consists of a string that is a semi-colon separated list of detection
+properties. For example, you may want to use something other than <code>CONFIDENCE</code> for the <code>QUALITY_SELECTION_PROPERTY</code>, but
+you also want to include the detection with the highest confidence in your feed-forward track. If the component executing
+in the first stage of the pipeline adds a <code>BEST_CONFIDENCE</code> property to the detection with highest confidence in each track,
+you can then set the <code>FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST</code> property to <code>BEST_CONFIDENCE</code>, and the detections with
+that property will be added to the feed-forward track.</p>
 <h1 id="superset-region">Superset Region</h1>
 <p>A “superset region” is the smallest region of interest that contains all of the detections for all of the frames in a
 track. This is also known as a “union” or <a href="https://en.wikipedia.org/wiki/Minimum_bounding_rectangle">“minimum bounding
@@ -508,6 +526,24 @@ a 1-to-1 correspondence with a MOG motion track.</p>
 <p>Refer to <code>runMogThenOcvFaceFeedForwardRegionTest()</code> in the
 <a href="https://github.com/openmpf/openmpf/blob/master/trunk/mpf-system-tests/src/test/java/org/mitre/mpf/mst/TestSystemOnDiff.java"><code>TestSystemOnDiff</code></a>
 class for a system test that demonstrates this behavior.</p>
+<h1 id="feed-forward-all-tracks">Feed Forward All Tracks</h1>
+<div style="background-color:DeepSkyBlue"><p style="color:white; padding:5px"><b>EXPERIMENTAL:</b> This feature is not fully implemented.</p></div>
+
+<p>The default feed-forward behavior will result in generating one sub-job per track generated in the previous stage.
+Consider a scenario where you need to implement a tracking component that takes individual detections from a stage and
+groups them into tracks. That component needs to accept all tracks from the previous stage as an input to the same
+sub-job.</p>
+<p>Setting <code>FEED_FORWARD_ALL_TRACKS</code> to true will result in generating one sub-job that contains all the tracks generated
+in the previous stage. Refer to the
+<a href="../Python-Batch-Component-API/index.html#componentget_detections_from_all_video_tracksvideo_job">component.get_detections_from_all_video_tracks(video_job)</a>
+section of the Python Batch Component API for more details. This property works in conjunction with the other
+feed-forward properties discussed in the <a href="#feed-forward-properties">Feed Forward Properties</a> section.</p>
+<p>Known limitations:</p>
+<ul>
+<li>Only Python supported.</li>
+<li>Only video supported.</li>
+<li>Not tested with <a href="../Trigger-Guide/index.html">triggers</a>.</li>
+</ul>
               
             </div>
           </div>

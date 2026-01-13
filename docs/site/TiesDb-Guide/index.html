@@ -154,7 +154,15 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../Media-Selectors-Guide/index.html">Media Selectors Guide</a>
                 </li>
                 <li class="">
                     
@@ -258,7 +266,7 @@
             <div class="section">
               
                 <p><strong>NOTICE:</strong> This software (or technical data) was produced for the U.S. Government under contract,
-and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024
 The MITRE Corporation. All Rights Reserved.</p>
 <h1 id="tiesdb-overview">TiesDb Overview</h1>
 <p>Refer to <a href="https://github.com/Noblis/ties-lib">https://github.com/Noblis/ties-lib</a> for more information on the Triage Import Export
@@ -387,10 +395,10 @@ current job. When Workflow Manager is configured to copy the results of the prev
 different S3 bucket, a new output object will be created. Otherwise, the previous job's output
 object will be used.</p>
 <p>It is possible for there to be multiple matching supplementals in TiesDb. In that case,
-Workflow Manager will first pick the supplementals with the best job status. The job statuses
-from best to worst are <code>COMPLETE</code>, <code>COMPLETE_WITH_WARNINGS</code>, and <code>COMPLETE_WITH_ERRORS</code>. If no jobs
-with those statuses exist, all other statuses are considered equally bad. If there are multiple
-supplementals with the same status, the most recently created supplemental will be used.</p>
+Workflow Manager will first pick the supplementals with the best job status. It first looks for a
+job status of <code>COMPLETE</code>, and then <code>COMPLETE_WITH_WARNINGS</code>. If no jobs with those statuses exist,
+all other statuses are considered equally bad. If there are multiple supplementals with the same
+status, the most recently created supplemental will be used.</p>
 <p>In order to determine if a previous job was similar enough to a current job, a hash of the
 important parts of the jobs is computed. The parts of the job that are included in the hash are:</p>
 <ul>

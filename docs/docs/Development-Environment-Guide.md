@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
 
 <div style="background-color:orange"><p style="color:white; padding:5px">
     <b>WARNING:</b>
@@ -46,13 +46,11 @@ end integration testing.
 
 - Open a terminal and run `sudo apt update`
 
-- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ ninja-build nasm libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk libprotobuf-dev protobuf-compiler libprotobuf-java python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl ansible`
+- Run `sudo apt install gnupg2 unzip xz-utils cmake make g++ ninja-build nasm libgtest-dev mediainfo libssl-dev liblog4cxx-dev libboost-dev file openjdk-17-jdk python3.8-dev python3-pip python3.8-venv libde265-dev libopenblas-dev liblapacke-dev libavcodec-dev libavcodec-extra libavformat-dev libavutil-dev libswscale-dev libavresample-dev libharfbuzz-dev libfreetype-dev ffmpeg git git-lfs redis postgresql-12 curl`
 
 - Run `sudo ln --symbolic /usr/include/x86_64-linux-gnu/openblas-pthread/cblas.h /usr/include/cblas.h`
 
 - Run `sudo ln --symbolic /usr/bin/cmake /usr/bin/cmake3`
-
-- Run `sudo ln --symbolic /usr/bin/protoc /usr/local/bin/protoc`
 
 - Follow instructions to install Docker:
   <https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository>
@@ -166,8 +164,9 @@ bash aom.cmd;
 cd ..;
 mkdir build;
 cd build;
-PKG_CONFIG_PATH="/tmp/libheif/libheif-1.20.2/third-party/aom/dist/lib/pkgconfig" \
-cmake3 -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false -DWITH_AOM_DECODER=true -DENABLE_PLUGIN_LOADING=false -DCMAKE_BUILD_TYPE=Release ..;
+PKG_CONFIG_PATH="/tmp/libheif/libheif-1.20.2/third-party/aom/dist/lib/pkgconfig" cmake3 \
+    -DCMAKE_INSTALL_PREFIX=/usr -DWITH_EXAMPLES=false -DWITH_AOM_DECODER=true \
+    -DENABLE_PLUGIN_LOADING=false -DCMAKE_BUILD_TYPE=Release ..;
 sudo make --jobs "$(nproc)" install/strip;
 sudo cp heifio/libheifio.a /usr/lib64;
 cd ../heifio;
@@ -175,6 +174,39 @@ sudo mkdir -p /usr/include/libheif/heifio;
 sudo cp *.h /usr/include/libheif/heifio;
 cd;
 sudo rm -rf /tmp/libheif;
+```
+
+- Build and install Protocol Buffers:
+```bash
+mkdir /tmp/abseil;
+wget -O- 'https://github.com/abseil/abseil-cpp/releases/download/20240722.0/abseil-cpp-20240722.0.tar.gz' \
+    | tar --extract --gzip --directory /tmp/abseil;
+
+mkdir /tmp/protobuf;
+cd /tmp/protobuf;
+wget -O- 'https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protobuf-28.3.tar.gz' \
+    | tar --extract --gzip;
+
+cd protobuf-28.3;
+mkdir build;
+cd build;
+cmake \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+    -DABSL_ROOT_DIR=/tmp/abseil/abseil-cpp-20240722.0 \
+    -Dprotobuf_BUILD_TESTS=OFF \
+    ..;
+cmake --build . --parallel "$(nproc)";
+sudo cmake --install . --strip;
+cd;
+sudo rm -rf /tmp/abseil /tmp/protobuf
+```
+
+- Install Python3.12:
+```bash
+sudo add-apt-repository -y ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12-dev python3.12-venv
 ```
 
 - From your home directory run:
@@ -198,6 +230,8 @@ git submodule foreach git checkout develop;
 - Run `sudo cp openmpf-projects/openmpf/trunk/node-manager/src/scripts/node-manager.service /etc/systemd/system/node-manager.service`
 
 - Run `cd ~/openmpf-projects/openmpf/trunk/workflow-manager/src/main/resources/properties/; cp mpf-private-example.properties mpf-private.properties`
+
+- Run `pip3.8 install ansible`
 
 - Run `sudo sh -c 'echo "[mpf-child]\nlocalhost" >> /etc/ansible/hosts'`
 

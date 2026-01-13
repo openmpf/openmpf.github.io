@@ -1,5 +1,5 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract, and is subject to the
-Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2023 The MITRE Corporation. All Rights Reserved.
+Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024 The MITRE Corporation. All Rights Reserved.
 
 # Overview
 
@@ -26,11 +26,11 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Text Region | EAST
 | Detection | Text (OCR) | Apache Tika
 | Detection | Text (OCR) | Tesseract OCR
-| Detection | Text (OCR) | Azure Cognitive Services Computer Vision API (OCR endpoint)
 | Detection | Text (OCR) | Azure Cognitive Services Read API
 | Detection | Form Structure (with OCR) | Azure Cognitive Services Form Recognizer API
 | Detection | Keywords | Boost Regular Expressions
 | Detection | Image (from document) | Apache Tika
 | Translation | Language | Azure Cognitive Services Translate API
+| Detection | Language | fastText with the GlotLID model
 
 The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.
