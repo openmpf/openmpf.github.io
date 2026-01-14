@@ -11,7 +11,7 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The 
 
 <h3>No Language Left Behind (NLLB) Translation Component</h3>
 
-The No Language Left Behind component is based on [Meta's No Language Left Behind Project](https://ai.meta.com/research/no-language-left-behind/). The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the **`facebook/nllb-200-3.3B` model**, the largest of Meta’s [No Language Left Behind (NLLB)](https://huggingface.co/models?search=facebook/nllb) models. This provides the highest translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as [nllb-200-distilled-1.3B](https://huggingface.co/facebook/nllb-200-distilled-1.3B) or [nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M).
+The No Language Left Behind component is based on [Meta's No Language Left Behind Project](https://ai.meta.com/research/no-language-left-behind/). The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the **`facebook/nllb-200-3.3B` model** [No Language Left Behind (NLLB)](https://huggingface.co/models?search=facebook/nllb). This provides the high translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as [nllb-200-distilled-1.3B](https://huggingface.co/facebook/nllb-200-distilled-1.3B) or [nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M).
 
 Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md) for details.
 
@@ -22,9 +22,11 @@ and the [fastText](https://github.com/facebookresearch/fastText) library to perf
 
 Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md) for details.
 
-<h3>Subject Tracking Component [Experimental]</h3>
+<h3>Subject Tracking API and OR-Tools Subject Component [Experimental]</h3>
 
-The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.
+- The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.
+
+- The component source can be found [here](https://github.com/openmpf-components/blob/master/python/OrToolsSubjectComponent).
 
 <h3>Audit Logging</h3>
 
@@ -51,11 +53,72 @@ The information is logged as a JSON string. The fields of the logging statement 
 - `objectKey` : [optional] The name that identifies the object in the S3 bucket
 - `msg` : a message string
 
+- Here is example audit logging output when creating a job through the REST API:
+
+```text
+{"eid":200,"time":"2026-01-14T14:30:40.864Z","tag":"&B1E7-FFFF&","app":"openmpf","user":"admin","op":"c","res":"a","uri":"/rest/jobs","msg":"create job succeeded for Pipeline: OCV TINY YOLO VEHICLE DETECTION (WITH MARKUP) PIPELINE, Media URIs: [file:///opt/mpf/share/remote-media/car_video.MOV]"}
+```
+
+
+
 Audit logging is enabled by default, but can be disabled by setting the `audit.logging.enabled` system property to `false`.
 
 <h3>Additional Quality Selection Properties</h3>
 
-We have added the ability to perform feed-forward processing and artifact extraction based on component-defined properties, in addition to the standard `QUALITY_SELECTION_PROPERTY`. Two new job properties have been added: `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST` and `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`. A detection component may choose to mark certain detections in a track as "best" by adding a custom property to those detections. For example, you could mark the detection whose bounding box has the largest area by adding a detection property named `BEST_SIZE` to that detection. If you want to extract the artifact for that detection, then you would add the string `BEST_SIZE` to the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`. This would result in that detection artifact being extracted in addition to the others that would be extracted based on the `QUALITY_SELECTION_PROPERTY`. This works in a similar way for feed-forward processing, where detections that have been marked will be fed forward in addition to those selected according to the quality selection property. Note that an artifact will only be extracted once, even if it is chosen based on the quality selection property and the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`, and this applies to feed-forward processing as well.
+- We have added the ability to perform feed-forward processing and artifact extraction based on component-defined properties, in addition to the standard `QUALITY_SELECTION_PROPERTY`. 
+- Two new job properties have been added: `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST` and `FEED_FORWARD_BEST_DETECTION_PROP_NAMES_LIST`. A detection component may choose to mark certain detections in a track as "best" by adding a custom property to those detections. For example, you could mark the detection whose bounding box has the largest area by adding a detection property named `BEST_SIZE` to that detection. If you want to extract the artifact for that detection, then you would add the string `BEST_SIZE` to the `ARTIFACT_EXTRACTION_POLICY_BEST_DETECTION_PROP_NAMES_LIST`. This would result in that detection artifact being extracted in addition to the others that would be extracted based on the `QUALITY_SELECTION_PROPERTY`.
+- Refer to the [Artifact Extraction Guide](Artifact-Extraction-Guide/index.html) and the [Feed-Forward Guide](Feed-Forward-Guide.md) for more details.
+
+<h3>Python 3.12</h3>
+
+- The version of python that is used throughout OpenMPF has been upgraded from 3.8 to 3.12.
+
+<h3>Feed-forward All Tracks [Experimental]</h3>
+
+- Previously, the Workflow Manager would feed forward each track from a previous pipeline stage to the next stage one track at a time. To support use cases where the next stage needs all of the tracks in one sub-job, we added a new job property `FEED_FORWARD_ALL_TRACKS`. When set to `true`, the workflow manager will pass all tracks generated in the current stage of the pipeline to the next.
+
+- A new class was added to the python component API:
+
+```text
+class AllVideoTracksJob(NamedTuple):
+    job_name: str
+    data_uri: str
+    start_frame: int
+    stop_frame: int
+    job_properties: Mapping[str, str]
+    media_properties: Mapping[str, str]
+    feed_forward_tracks: List[VideoTrack]
+```
+ and a new method: `get_detections_from_all_video_tracks()`.
+
+- This functionality is experimental and currently supported only with the python component API.
+
+- Refer to the [python component SDK](https://github.com/openmpf-python-sdk/blob/master/detection/api) for details.
+
+- An example illustrating the use of this feature can be found in the python SDK test component [test_component.py](https://github.com/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component.test_component.py).
+
+<h3>Support for Supplying a Data URI for Media When Creating a Job</h3>
+
+- Users may now supply the media for an OpenMPF job using a data URI when creating a job through the REST API. The mediaURI field may contain a valid (properly encoded) URI to a single media source using one of the following URI schemes: `file:`, `http:`, `https:`, `data:`.
+
+- The data URI format is explained [here](https://en.wikipedia.org/wiki/Data_URI_scheme).
+
+Here is an example of a jobCreationRequest using a data URI for an image:
+```text
+{
+  "buildOutput": true,
+  "callbackMethod": "",
+  "callbackURL": "",
+  "externalId": "my-id",
+  "media": [
+    {
+      "mediaUri": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wgARCAAKAAoDAREAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAj/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAGVAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAEFAh//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/AR//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/AR//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Ah//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAE/IR//2gAMAwEAAgADAAAAEJJP/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPxAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPxAf/8QAFBABAAAAAAAAAAAAAAAAAAAAIP/aAAgBAQABPxAf/9k="
+    }
+  ],
+  "pipelineName": "OCV YOLO OBJECT DETECTION PIPELINE",
+  "priority": 1
+}
+```
 
 <h3>Features</h3>
 
@@ -126,6 +189,13 @@ We have added the ability to perform feed-forward processing and artifact extrac
 
 <h2>9.0.8: June 2025</h2>
 
+<h3>LLaMA Video Summarization Component</h3>
+
+- This component uses the VideoLLaMA3 model to generate a description of the activity in a video. It can describe a segment of the video, or create a summary of the entire video.
+
+- Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/LlamaVideoSummarization/README.md)
+  for details.
+
 <h3>Features</h3>
 
 - [[#1883](https://github.com/openmpf/openmpf/issues/1883)] Create LLaMA video summarization component
@@ -144,6 +214,23 @@ We have added the ability to perform feed-forward processing and artifact extrac
   - [[#1865](https://github.com/openmpf/openmpf/issues/1865)] WTP models are not installed in AzureTranslation
 
 <h2>9.0.3: July 2024</h2>
+
+<h3>New Keyword Tagging Formats</h3>
+
+- The Keyword Tagging component was updated to use the Perl regex syntax, thereby enabling more regex features including look-behind/ahead.
+
+- Additional patterns were added to the tags file to enhance the base matching capability of the component:
+
+```text
+    phone numbers
+    emails
+    date formats
+    time
+    P.O Box
+    SSN
+    currency symbols
+```
+- Refer to the Keyword Tagging Component configuration file [text-tags.json](https://github.com/openmpf/openmpf-components/blob/master/cpp/KeywordTagging/plugin-files/config/text-tags.json) for a complete list of the regex expressions currently supported.
 
 <h3>Updates</h3>
 
