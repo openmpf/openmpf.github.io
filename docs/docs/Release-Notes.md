@@ -82,8 +82,8 @@ class AllVideoTracksJob(NamedTuple):
 get_detections_from_all_video_tracks()
 ```
 - This functionality is experimental and currently supported only with the Python Component API.
-- Refer to the [Python Component SDK](https://github.com/openmpf/openmpf-python-sdk/tree/master/detection/api) for details.
-- An example illustrating the use of this feature can be found in the Python Component SDK test component [test_component.py](https://github.com/openmpf/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component.test_component.py).
+- Refer to the [Python Component SDK](https://github.com/openmpf/openmpf-python-component-sdk/tree/master/detection/api) for details.
+- An example illustrating the use of this feature can be found in the Python Component SDK test component [test_component.py](https://github.com/openmpf/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component/test_component.py).
 
 <h3>Support for Supplying a Data URI for Media When Creating a Job</h3>
 
