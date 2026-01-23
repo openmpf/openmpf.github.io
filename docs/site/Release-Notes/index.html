@@ -312,27 +312,28 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The 
 </ul>
 <h3>No Language Left Behind (NLLB) Translation Component</h3>
 
-<p>The No Language Left Behind component is based on <a href="https://ai.meta.com/research/no-language-left-behind/">Meta's No Language Left Behind Project</a>. The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the <strong><code>facebook/nllb-200-3.3B</code> model</strong> <a href="https://huggingface.co/models?search=facebook/nllb">No Language Left Behind (NLLB)</a>. This provides the high translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as <a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B">nllb-200-distilled-1.3B</a> or <a href="https://huggingface.co/facebook/nllb-200-distilled-600M">nllb-200-distilled-600M</a>.</p>
-<p>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md">README</a> for details.</p>
+<ul>
+<li>The No Language Left Behind component is based on <a href="https://ai.meta.com/research/no-language-left-behind/">Meta's No Language Left Behind Project</a>. The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track.</li>
+<li>By default, this component is configured to use the <strong><code>facebook/nllb-200-3.3B</code></strong> model. A list of NLLB models can be found in the hugging face repository <a href="https://huggingface.co/models?search=facebook/nllb">here</a>. That model provides high translation quality, but also requires significant hardware resources. To accommodate smaller deployment environments, this component can use smaller NLLB models, such as <a href="https://huggingface.co/facebook/nllb-200-distilled-1.3B">nllb-200-distilled-1.3B</a> or <a href="https://huggingface.co/facebook/nllb-200-distilled-600M">nllb-200-distilled-600M</a>.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md">README</a> for details.</li>
+</ul>
 <h3> FastText Language Identification Component</h3>
 
-<p>The FastText Language Detection Component utilizes the <a href="https://github.com/cisnlp/GlotLID">GlotLID</a> language identification model
-and the <a href="https://github.com/facebookresearch/fastText">fastText</a> library to perform language identification on text.</p>
-<p>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md">README</a> for details.</p>
+<ul>
+<li>The FastText Language Detection Component utilizes the <a href="https://github.com/cisnlp/GlotLID">GlotLID</a> language identification model
+and the <a href="https://github.com/facebookresearch/fastText">fastText</a> library to perform language identification on text.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md">README</a> for details.</li>
+</ul>
 <h3>Subject Tracking API and OR-Tools Subject Component [Experimental]</h3>
 
 <ul>
-<li>
-<p>The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.</p>
-</li>
-<li>
-<p>The component source can be found <a href="https://github.com/openmpf-components/blob/master/python/OrToolsSubjectComponent">here</a>.</p>
-</li>
+<li>The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.</li>
+<li>The component source can be found <a href="https://github.com/openmpf/openmpf-components/tree/master/python/OrToolsSubjectComponent">here</a>.</li>
 </ul>
 <h3>Audit Logging</h3>
 
-<p>We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:</p>
 <ul>
+<li>We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:<ul>
 <li>login/logout user information</li>
 <li>create/read/update/download of data, configuration information, or action/pipeline information</li>
 <li>rest API access</li>
@@ -340,8 +341,8 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 <li>TiesDB and S3 storage operations</li>
 <li>Access to Hawtio</li>
 </ul>
-<p>The information is logged as a JSON string. The fields of the logging statement consist of:</p>
-<ul>
+</li>
+<li>The information is logged as a JSON string. The fields of the logging statement consist of:<ul>
 <li><code>eid</code> : an event id signifying the type of event</li>
 <li><code>time</code> : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ</li>
 <li><code>tag</code> : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.</li>
@@ -352,16 +353,16 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 <li><code>uri</code> : [optional] the full web or file path.</li>
 <li><code>bucket</code> : [optional] The string identifying the S3 bucket for object storage</li>
 <li><code>objectKey</code> : [optional] The name that identifies the object in the S3 bucket</li>
-<li>
-<p><code>msg</code> : a message string</p>
+<li><code>msg</code> : a message string</li>
+</ul>
 </li>
-<li>
-<p>Here is example audit logging output when creating a job through the REST API:</p>
-</li>
+<li>Here is example audit logging output when creating a job through the REST API:</li>
 </ul>
 <pre><code class="language-text">{&quot;eid&quot;:200,&quot;time&quot;:&quot;2026-01-14T14:30:40.864Z&quot;,&quot;tag&quot;:&quot;&amp;B1E7-FFFF&amp;&quot;,&quot;app&quot;:&quot;openmpf&quot;,&quot;user&quot;:&quot;admin&quot;,&quot;op&quot;:&quot;c&quot;,&quot;res&quot;:&quot;a&quot;,&quot;uri&quot;:&quot;/rest/jobs&quot;,&quot;msg&quot;:&quot;create job succeeded for Pipeline: OCV TINY YOLO VEHICLE DETECTION (WITH MARKUP) PIPELINE, Media URIs: [file:///opt/mpf/share/remote-media/car_video.MOV]&quot;}
 </code></pre>
-<p>Audit logging is enabled by default, but can be disabled by setting the <code>audit.logging.enabled</code> system property to <code>false</code>.</p>
+<ul>
+<li>Audit logging is enabled by default, but can be disabled by setting the <code>audit.logging.enabled</code> system property to <code>false</code>.</li>
+</ul>
 <h3>Additional Quality Selection Properties</h3>
 
 <ul>
@@ -377,12 +378,8 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 <h3>Feed-forward All Tracks [Experimental]</h3>
 
 <ul>
-<li>
-<p>Previously, the Workflow Manager would feed forward each track from a previous pipeline stage to the next stage one track at a time. To support use cases where the next stage needs all of the tracks in one sub-job, we added a new job property <code>FEED_FORWARD_ALL_TRACKS</code>. When set to <code>true</code>, the workflow manager will pass all tracks generated in the current stage of the pipeline to the next.</p>
-</li>
-<li>
-<p>A new class was added to the python component API:</p>
-</li>
+<li>Previously, the Workflow Manager would feed forward each track from a previous pipeline stage to the next stage one track at a time. To support use cases where the next stage needs all of the tracks in one sub-job, we added a new job property <code>FEED_FORWARD_ALL_TRACKS</code>. When set to <code>true</code>, the workflow manager will pass all tracks generated in the current stage of the pipeline to the next.</li>
+<li>A new class was added to the Python component API:</li>
 </ul>
 <pre><code class="language-text">class AllVideoTracksJob(NamedTuple):
     job_name: str
@@ -393,29 +390,23 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
     media_properties: Mapping[str, str]
     feed_forward_tracks: List[VideoTrack]
 </code></pre>
-<p>and a new method: <code>get_detections_from_all_video_tracks()</code>.</p>
 <ul>
-<li>
-<p>This functionality is experimental and currently supported only with the python component API.</p>
-</li>
-<li>
-<p>Refer to the <a href="https://github.com/openmpf-python-sdk/blob/master/detection/api">python component SDK</a> for details.</p>
-</li>
-<li>
-<p>An example illustrating the use of this feature can be found in the python SDK test component <a href="https://github.com/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component.test_component.py">test_component.py</a>.</p>
-</li>
+<li>A new method was also added:</li>
+</ul>
+<pre><code class="language-text">get_detections_from_all_video_tracks()
+</code></pre>
+<ul>
+<li>This functionality is experimental and currently supported only with the Python Component API.</li>
+<li>Refer to the <a href="https://github.com/openmpf/openmpf-python-component-sdk/tree/master/detection/api">Python Component SDK</a> for details.</li>
+<li>An example illustrating the use of this feature can be found in the Python Component SDK test component <a href="https://github.com/openmpf/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component/test_component.py">test_component.py</a>.</li>
 </ul>
 <h3>Support for Supplying a Data URI for Media When Creating a Job</h3>
 
 <ul>
-<li>
-<p>Users may now supply the media for an OpenMPF job using a data URI when creating a job through the REST API. The mediaURI field may contain a valid (properly encoded) URI to a single media source using one of the following URI schemes: <code>file:</code>, <code>http:</code>, <code>https:</code>, <code>data:</code>.</p>
-</li>
-<li>
-<p>The data URI format is explained <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">here</a>.</p>
-</li>
+<li>Users may now supply the media for an OpenMPF job using a data URI when creating a job through the REST API. The <code>mediaURI</code> field may contain a valid (properly encoded) URI to a single media source using one of the following URI schemes: <code>file:</code>, <code>http:</code>, <code>https:</code>, <code>data:</code>.</li>
+<li>The data URI format is explained <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">here</a>.</li>
+<li>Here is an example of a jobCreationRequest using a data URI for an image:</li>
 </ul>
-<p>Here is an example of a jobCreationRequest using a data URI for an image:</p>
 <pre><code class="language-text">{
   &quot;buildOutput&quot;: true,
   &quot;callbackMethod&quot;: &quot;&quot;,
@@ -430,6 +421,14 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
   &quot;priority&quot;: 1
 }
 </code></pre>
+<h3>Media Selectors For Translation</h3>
+
+<ul>
+<li>For some types of text documents, the user may wish to perform translation on only specific sections. For example, if you have a text file that contains mixed numerical and text data, such as a CSV data file with text headers for the columns, you would only need to translate the headers. Media selectors allow users to specify which sections of the document to process.</li>
+<li>When media selectors are used, the translation component will produce a copy of the input file with the specified sections replaced with the translation results. The job output object will contain a URI specifying where that output file is stored in the <code>$.media.*.mediaSelectorsOutputUri</code> field</li>
+<li>Media selectors are supported with JSON or CSV input files.</li>
+<li>Refer to the <a href="../Media-Selectors-Guide/index.html">Media Selectors Guide</a> for explanation and examples of how to use media selectors.</li>
+</ul>
 <h3>Features</h3>
 
 <ul>
@@ -446,8 +445,8 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1907">#1907</a>] Support feeding forward all tracks to one sub-job (for Python video jobs only)</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1920">#1920</a>] Add audit logging of callbacks</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1921">#1921</a>] Add audit logging for TiesDb</li>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1979">#1979</a>] Add event ids, bucket keys, and URIs to audit logging</li>
 <li>[<a href="https://github.com/openmpf/openmpf/issues/1933">#1933</a>] Add Custom SSO support</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1979">#1979</a>] Add event ids, bucket keys, and URIs to audit logging</li>
 </ul>
 <h3>Updates</h3>
 
@@ -476,7 +475,7 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 <h3>Updates</h3>
 
 <ul>
-<li>[<a href="https://github.com/openmpf/openmpf/issues/1911">#1911</a>] Update LlamaVideoSummarization to use TIMELINE_CHECK_ACCEPTABLE_THRESHOLD</li>
+<li>[<a href="https://github.com/openmpf/openmpf/issues/1911">#1911</a>] Update LlamaVideoSummarization to use <code>TIMELINE_CHECK_ACCEPTABLE_THRESHOLD</code></li>
 </ul>
 <h3>Bug Fixes</h3>
 
@@ -510,7 +509,7 @@ and the <a href="https://github.com/facebookresearch/fastText">fastText</a> libr
 
 <ul>
 <li>
-<p>This component uses the VideoLLaMA3 model to generate a description of the activity in a video. It can describe a segment of the video, or create a summary of the entire video.</p>
+<p>This component uses the VideoLLaMA3 model to generate a description of the activity in a video. It summarizes each 3-minute video segment and generates a timeline of events for each segment.</p>
 </li>
 <li>
 <p>Refer to the <a href="https://github.com/openmpf/openmpf-components/blob/master/python/LlamaVideoSummarization/README.md">README</a>
