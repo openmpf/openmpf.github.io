@@ -21,6 +21,7 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Speech | Azure Cognitive Services Batch Transcription API
 | Detection | Scene | OpenCV
 | Detection | Classification | OpenCV DNN (GoogLeNet, Yahoo NSFW, vehicle color)
+| Detection | Classification | Clip
 | Detection/Tracking | Classification | OpenCV DNN (YOLO)
 | Detection/Tracking | Classification/Features | TensorRT (COCO classes)
 | Detection | Text Region | EAST
@@ -29,8 +30,14 @@ A list of algorithms currently integrated into the OpenMPF as distributed proces
 | Detection | Text (OCR) | Azure Cognitive Services Read API
 | Detection | Form Structure (with OCR) | Azure Cognitive Services Form Recognizer API
 | Detection | Keywords | Boost Regular Expressions
+| Detection | Known Phrases | Transformer Tagging
 | Detection | Image (from document) | Apache Tika
-| Translation | Language | Azure Cognitive Services Translate API
+| Correction | Text | Natural Language Processing using cython_hunspell library
 | Detection | Language | fastText with the GlotLID model
+| Translation | Language | Azure Cognitive Services Translate API
+| Translation | Language | No Language Left Behind (NLLB)
+| Translation | Language | Argos
+| Translation | Language | Whisper
+| Video Summarization | Activity | LLAMA3
 
 The OpenMPF exposes data processing and job management web services via a User Interface (UI). These services allow users to upload media, create media processing jobs, determine the status of jobs, and retrieve the artifacts associated with completed jobs. The web services give application developers flexibility to use the OpenMPF in their preferred environment and programming language.
