@@ -108,9 +108,9 @@ get_detections_from_all_video_tracks()
 
 <h3>Media Selectors For Translation</h3>
 
-- For some types of text documents, the user may wish to perform translation on only specific sections. For example, if you have a text file that contains mixed numerical and text data, such as a CSV data file with text headers for the columns, you would only need to translate the headers. Media selectors allow users to specify which sections of the document to process.
-- When media selectors are used, the translation component will produce a copy of the input file with the specified sections replaced with the translation results. The job output object will contain a URI specifying where that output file is stored in the `$.media.*.mediaSelectorsOutputUri` field
-- Media selectors are supported with JSON or CSV input files.
+- For some types of documents the user may wish to translate specific sections. For example, if you have a CSV file that contains columns of English text, Spanish text, and numerical data, and you only want to translate the Spanish text. Media selectors allow users to specify which sections of the document to process.
+- When media selectors are used, the Workflow Manager will produce a copy of the input file with the specified sections replaced with the translation results. The job output object will contain a URI specifying where that output file is stored in the `$.media.*.mediaSelectorsOutputUri` field
+- Media selectors support JSON and CSV input files.
 - Refer to the [Media Selectors Guide](Media-Selectors-Guide/index.html) for explanation and examples of how to use media selectors.
 
 <h3>Features</h3>
