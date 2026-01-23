@@ -11,57 +11,47 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The 
 
 <h3>No Language Left Behind (NLLB) Translation Component</h3>
 
-The No Language Left Behind component is based on [Meta's No Language Left Behind Project](https://ai.meta.com/research/no-language-left-behind/). The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track. By default, this component is configured to use the **`facebook/nllb-200-3.3B` model** [No Language Left Behind (NLLB)](https://huggingface.co/models?search=facebook/nllb). This provides the high translation quality, but also requires significant hardware resources. To accommodate smaller deployment enviroments, this component can use smaller NLLB models, such as [nllb-200-distilled-1.3B](https://huggingface.co/facebook/nllb-200-distilled-1.3B) or [nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M).
-
-Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md) for details.
+- The No Language Left Behind component is based on [Meta's No Language Left Behind Project](https://ai.meta.com/research/no-language-left-behind/). The component translates input text from a given source language to English. The source language can be provided as a job property, or be indicated in the detection properties from a feed-forward track.
+- By default, this component is configured to use the **`facebook/nllb-200-3.3B`** model. A list of NLLB models can be found in the hugging face repository [here](https://huggingface.co/models?search=facebook/nllb). That model provides high translation quality, but also requires significant hardware resources. To accommodate smaller deployment environments, this component can use smaller NLLB models, such as [nllb-200-distilled-1.3B](https://huggingface.co/facebook/nllb-200-distilled-1.3B) or [nllb-200-distilled-600M](https://huggingface.co/facebook/nllb-200-distilled-600M).
+- Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/NllbTranslation/README.md) for details.
 
 <h3> FastText Language Identification Component</h3>
 
-The FastText Language Detection Component utilizes the [GlotLID](https://github.com/cisnlp/GlotLID) language identification model
+- The FastText Language Detection Component utilizes the [GlotLID](https://github.com/cisnlp/GlotLID) language identification model
 and the [fastText](https://github.com/facebookresearch/fastText) library to perform language identification on text.
-
-Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md) for details.
+- Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/FastTextLanguageDetection/README.md) for details.
 
 <h3>Subject Tracking API and OR-Tools Subject Component [Experimental]</h3>
 
 - The OR-Tools Subject Tracking component associates detection tracks of different types (e.g., face, person, vehicle) to create a subject and track it in video.
-
-- The component source can be found [here](https://github.com/openmpf-components/blob/master/python/OrToolsSubjectComponent).
+- The component source can be found [here](https://github.com/openmpf/openmpf-components/tree/master/python/OrToolsSubjectComponent).
 
 <h3>Audit Logging</h3>
 
-We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:
-
-- login/logout user information
-- create/read/update/download of data, configuration information, or action/pipeline information
-- rest API access
-- load UI content
-- TiesDB and S3 storage operations
-- Access to Hawtio
-
-The information is logged as a JSON string. The fields of the logging statement consist of:
-
-- `eid` : an event id signifying the type of event
-- `time` : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ
-- `tag` : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.
-- `app` : the name of the application where the event occurred, which is a constant set to "openmpf"
-- `user` : the username of the user that initiated the activity being logged.
-- `op` : operation identifier, one of c(create), r(read/view), m(modify), d(delete), l(login)
-- `res` : operation result, one of a(allowed), d(denied), e(error)
-- `uri` : [optional] the full web or file path.
-- `bucket` : [optional] The string identifying the S3 bucket for object storage
-- `objectKey` : [optional] The name that identifies the object in the S3 bucket
-- `msg` : a message string
-
+- We have added internal audit logging that may be used to audit events that occur during OpenMPF operation. Logging has been added to the Workflow Manager to record these types of events:
+    - login/logout user information
+    - create/read/update/download of data, configuration information, or action/pipeline information
+    - rest API access
+    - load UI content
+    - TiesDB and S3 storage operations
+    - Access to Hawtio
+- The information is logged as a JSON string. The fields of the logging statement consist of:
+    - `eid` : an event id signifying the type of event
+    - `time` : a timestamp for the event in UTC with format YYYY-MM-DDThh:mm:ss.mmmZ
+    - `tag` : a tag value, which could be used to categorize events. For this release, all event logging uses a single constant tag value.
+    - `app` : the name of the application where the event occurred, which is a constant set to "openmpf"
+    - `user` : the username of the user that initiated the activity being logged.
+    - `op` : operation identifier, one of c(create), r(read/view), m(modify), d(delete), l(login)
+    - `res` : operation result, one of a(allowed), d(denied), e(error)
+    - `uri` : [optional] the full web or file path.
+    - `bucket` : [optional] The string identifying the S3 bucket for object storage
+    - `objectKey` : [optional] The name that identifies the object in the S3 bucket
+    - `msg` : a message string
 - Here is example audit logging output when creating a job through the REST API:
-
 ```text
 {"eid":200,"time":"2026-01-14T14:30:40.864Z","tag":"&B1E7-FFFF&","app":"openmpf","user":"admin","op":"c","res":"a","uri":"/rest/jobs","msg":"create job succeeded for Pipeline: OCV TINY YOLO VEHICLE DETECTION (WITH MARKUP) PIPELINE, Media URIs: [file:///opt/mpf/share/remote-media/car_video.MOV]"}
 ```
-
-
-
-Audit logging is enabled by default, but can be disabled by setting the `audit.logging.enabled` system property to `false`.
+- Audit logging is enabled by default, but can be disabled by setting the `audit.logging.enabled` system property to `false`.
 
 <h3>Additional Quality Selection Properties</h3>
 
@@ -76,9 +66,7 @@ Audit logging is enabled by default, but can be disabled by setting the `audit.l
 <h3>Feed-forward All Tracks [Experimental]</h3>
 
 - Previously, the Workflow Manager would feed forward each track from a previous pipeline stage to the next stage one track at a time. To support use cases where the next stage needs all of the tracks in one sub-job, we added a new job property `FEED_FORWARD_ALL_TRACKS`. When set to `true`, the workflow manager will pass all tracks generated in the current stage of the pipeline to the next.
-
-- A new class was added to the python component API:
-
+- A new class was added to the Python component API:
 ```text
 class AllVideoTracksJob(NamedTuple):
     job_name: str
@@ -89,21 +77,19 @@ class AllVideoTracksJob(NamedTuple):
     media_properties: Mapping[str, str]
     feed_forward_tracks: List[VideoTrack]
 ```
- and a new method: `get_detections_from_all_video_tracks()`.
-
-- This functionality is experimental and currently supported only with the python component API.
-
-- Refer to the [python component SDK](https://github.com/openmpf-python-sdk/blob/master/detection/api) for details.
-
-- An example illustrating the use of this feature can be found in the python SDK test component [test_component.py](https://github.com/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component.test_component.py).
+- A new method was also added:
+```text
+get_detections_from_all_video_tracks()
+```
+- This functionality is experimental and currently supported only with the Python Component API.
+- Refer to the [Python Component SDK](https://github.com/openmpf/openmpf-python-sdk/tree/master/detection/api) for details.
+- An example illustrating the use of this feature can be found in the Python Component SDK test component [test_component.py](https://github.com/openmpf/openmpf-python-component-sdk/blob/master/detection/examples/PythonTestComponent/test_component.test_component.py).
 
 <h3>Support for Supplying a Data URI for Media When Creating a Job</h3>
 
-- Users may now supply the media for an OpenMPF job using a data URI when creating a job through the REST API. The mediaURI field may contain a valid (properly encoded) URI to a single media source using one of the following URI schemes: `file:`, `http:`, `https:`, `data:`.
-
+- Users may now supply the media for an OpenMPF job using a data URI when creating a job through the REST API. The `mediaURI` field may contain a valid (properly encoded) URI to a single media source using one of the following URI schemes: `file:`, `http:`, `https:`, `data:`.
 - The data URI format is explained [here](https://en.wikipedia.org/wiki/Data_URI_scheme).
-
-Here is an example of a jobCreationRequest using a data URI for an image:
+- Here is an example of a jobCreationRequest using a data URI for an image:
 ```text
 {
   "buildOutput": true,
@@ -120,6 +106,13 @@ Here is an example of a jobCreationRequest using a data URI for an image:
 }
 ```
 
+<h3>Media Selectors For Translation</h3>
+
+- For some types of text documents, the user may wish to perform translation on only specific sections. For example, if you have a text file that contains mixed numerical and text data, such as a CSV data file with text headers for the columns, you would only need to translate the headers. Media selectors allow users to specify which sections of the document to process.
+- When media selectors are used, the translation component will produce a copy of the input file with the specified sections replaced with the translation results. The job output object will contain a URI specifying where that output file is stored in the `$.media.*.mediaSelectorsOutputUri` field
+- Media selectors are supported with JSON or CSV input files.
+- Refer to the [Media Selectors Guide](Media-Selectors-Guide/index.html) for explanation and examples of how to use media selectors.
+
 <h3>Features</h3>
 
   - [[#1719](https://github.com/openmpf/openmpf/issues/1719)] Remove `OUTPUT_LAST_TASK_ONLY` and support `IS_ANNOTATOR` and `SUPPRESS_TRACKS` WFM properties
@@ -135,8 +128,8 @@ Here is an example of a jobCreationRequest using a data URI for an image:
   - [[#1907](https://github.com/openmpf/openmpf/issues/1907)] Support feeding forward all tracks to one sub-job (for Python video jobs only)
   - [[#1920](https://github.com/openmpf/openmpf/issues/1920)] Add audit logging of callbacks
   - [[#1921](https://github.com/openmpf/openmpf/issues/1921)] Add audit logging for TiesDb
-  - [[#1979](https://github.com/openmpf/openmpf/issues/1979)] Add event ids, bucket keys, and URIs to audit logging
   - [[#1933](https://github.com/openmpf/openmpf/issues/1933)] Add Custom SSO support
+  - [[#1979](https://github.com/openmpf/openmpf/issues/1979)] Add event ids, bucket keys, and URIs to audit logging
 
 <h3>Updates</h3>
 
@@ -163,7 +156,7 @@ Here is an example of a jobCreationRequest using a data URI for an image:
 
 <h3>Updates</h3>
 
-- [[#1911](https://github.com/openmpf/openmpf/issues/1911)] Update LlamaVideoSummarization to use TIMELINE_CHECK_ACCEPTABLE_THRESHOLD
+- [[#1911](https://github.com/openmpf/openmpf/issues/1911)] Update LlamaVideoSummarization to use `TIMELINE_CHECK_ACCEPTABLE_THRESHOLD`
 
 <h3>Bug Fixes</h3>
 
@@ -191,7 +184,7 @@ Here is an example of a jobCreationRequest using a data URI for an image:
 
 <h3>LLaMA Video Summarization Component</h3>
 
-- This component uses the VideoLLaMA3 model to generate a description of the activity in a video. It can describe a segment of the video, or create a summary of the entire video.
+- This component uses the VideoLLaMA3 model to generate a description of the activity in a video. It summarizes each 3-minute video segment and generates a timeline of events for each segment.
 
 - Refer to the [README](https://github.com/openmpf/openmpf-components/blob/master/python/LlamaVideoSummarization/README.md)
   for details.
