@@ -3,6 +3,12 @@ Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026 The 
 
 # OpenMPF 10.0.x
 
+<h2>10.0.1: January 2026</h2>
+
+<h3>Bug Fixes</h3>
+
+  - [[#2019](https://github.com/openmpf/openmpf/issues/2019)] Tesseract builds with AVX, breaking Docker image compatibility
+
 <h2>10.0.0: January 2026</h2>
 
 <h3>Documentation</h3>
@@ -143,12 +149,17 @@ get_detections_from_all_video_tracks()
   - [[#1879](https://github.com/openmpf/openmpf/issues/1879)] Merge `COMPLETE_WITH_ERRORS` status into `ERROR`
   - [[#1884](https://github.com/openmpf/openmpf/issues/1884)] Upgrade to Python 3.12
   - [[#1956](https://github.com/openmpf/openmpf/issues/1956)] Initial TiesDB check failure should result in a warning, not an error
+  - [[#2015](https://github.com/openmpf/openmpf/issues/2015)] Add tag to SBOM upload
+  - [[#2018](https://github.com/openmpf/openmpf/issues/2018)] Prioritize using image version as the SBOM project version
 
 <h3>Bug Fixes</h3>
 
   - [[#1916](https://github.com/openmpf/openmpf/issues/1916)] JSON button remains disabled on Job Status page when job ends in `ERROR`
   - [[#1926](https://github.com/openmpf/openmpf/issues/1926)] Bad TiesDB URL results in multiple UI notifications and TiesDB status staying `IN PROGRESS`
   - [[#1984](https://github.com/openmpf/openmpf/issues/1984)] Update CharsetDetectingReader to always use UTF-8 when the input only contains valid UTF-8 bytes
+  - [[#2010](https://github.com/openmpf/openmpf/issues/2010)] Nightly tests fail due to suppressed tracks and components not registering
+  - [[#2013](https://github.com/openmpf/openmpf/issues/2013)] URL for the Noto Emoji font is no longer valid
+  - [[#2016](https://github.com/openmpf/openmpf/issues/2016)] opencv-python version 4.13.0.90 is broken
 
 # OpenMPF 9.0.x
 
