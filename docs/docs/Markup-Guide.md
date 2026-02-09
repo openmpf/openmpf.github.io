@@ -9,6 +9,12 @@ pipeline. By default, many other OpenMPF components provide `* (WITH MARKUP)` pi
 the Markup component will not appear in the list of components in the Component Registration web UI because it's a core
 feature of OpenMPF.
 
+<div style="background-color:orange"><p style="color:white; padding:5px">
+    <b>WARNING:</b>
+    Marked-up videos are generated using a constant frame rate and will not match the frame rate of source videos that
+    use a variable frame rate. The frame numbers in the videos will align, but the timestamps may not.
+</p></div>
+
 # Configuration
 
 The following properties can be set as job properties or algorithm properties on the `MARKUPCV` algorithm. Also, the
@@ -98,11 +104,11 @@ default values can be changed be setting the system property listed for each:
 
 ![Walking No Border Exemplar](img/markup/walking-no-border-exemplar.jpg "Walking No Border Exemplar")
 
-Above we show frame 94 of a marked up video. Frame numbers are enabled so the frame number is shown in the top-right corner. Exemplar icons are enabled, and since this detection is the track exemplar a star icon is shown in the label. Also, the label shows the track's `CLASSIFICATION` property followed by the track confidence. All of the examples shown in this section will display track-level information because `MARKUP_LABELS_FROM_DETECTIONS=false`. The circle represents the top-left corner of the detection. See [this section](CPP-Batch-Component-API.md#rotation-and-horizontal-flip) of the C++ Batch Component API for more information on flip and rotation.
+Above we show frame 94 of a marked-up video. Frame numbers are enabled so the frame number is shown in the top-right corner. Exemplar icons are enabled, and since this detection is the track exemplar a star icon is shown in the label. Also, the label shows the track's `CLASSIFICATION` property followed by the track confidence. All of the examples shown in this section will display track-level information because `MARKUP_LABELS_FROM_DETECTIONS=false`. The circle represents the top-left corner of the detection. See [this section](CPP-Batch-Component-API.md#rotation-and-horizontal-flip) of the C++ Batch Component API for more information on flip and rotation.
 
 ![Walking With Border Algorithm Detection](img/markup/walking-with-border-algorithm-detection.jpg "Walking With Border Algorithm Detection")
 
-Above we show frame 25 of the marked up video. This time we configured markup to show a black border around the video frame. This is useful when the label extends beyond the edge of the original video frame, as shown here. Also, this time we configured markup to show icons indicating if the track is moving or stationary. The fast-forward icon at the start of the label indicates that this track is moving. Additionally, this time we configured markup to show icons indicating the bounding box source. The magnifying glass icon after the fast-forward icon indicates that this detection is a direct result of the component's detection algorithm. Note that the magnifying glass icon will be replaced with the star icon for exemplars.
+Above we show frame 25 of the marked-up video. This time we configured markup to show a black border around the video frame. This is useful when the label extends beyond the edge of the original video frame, as shown here. Also, this time we configured markup to show icons indicating if the track is moving or stationary. The fast-forward icon at the start of the label indicates that this track is moving. Additionally, this time we configured markup to show icons indicating the bounding box source. The magnifying glass icon after the fast-forward icon indicates that this detection is a direct result of the component's detection algorithm. Note that the magnifying glass icon will be replaced with the star icon for exemplars.
 
 ![Walking With Border Animation](img/markup/walking-with-border-animation.jpg "Walking With Border Animation")
 
