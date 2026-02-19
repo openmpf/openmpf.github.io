@@ -279,8 +279,14 @@ written to local shared storage, or to a remote S3 storage location. Refer to th
 <h1 id="artifact-extraction-properties">Artifact Extraction Properties</h1>
 <p>The choice of which artifacts to extract is highly configurable using the following properties.</p>
 <ul>
-<li><code>ARTIFACT_EXTRACTION_POLICY</code>: This property sets the high level policy controlling artifact extraction. It must have
-one of the following values:<ul>
+<li>
+<p><code>SUPPRESS_TRACKS</code>: When an action has this property set to <code>true</code>, no artifacts for that action
+  will be extracted and none of the other properties listed below will have any effect.</p>
+</li>
+<li>
+<p><code>ARTIFACT_EXTRACTION_POLICY</code>: This property sets the high level policy controlling artifact extraction. It must have
+one of the following values:</p>
+<ul>
 <li><code>NONE</code>: No artifact extraction will be performed.</li>
 <li><code>VISUAL_TYPES_ONLY</code>: Extract artifacts only for tracks associated with a "visual" data type. Visual data types
   include <code>IMAGE</code> and <code>VIDEO</code>.</li>
