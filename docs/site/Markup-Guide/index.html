@@ -147,6 +147,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../Artifact-Extraction-Guide/index.html">Artifact Extraction Guide</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../Quality-Selection-Guide/index.html">Quality Selection Guide</a>
                 </li>
                 <li class="">
@@ -262,6 +266,12 @@ component provides one task called <code>OCV GENERIC MARKUP TASK</code> that can
 pipeline. By default, many other OpenMPF components provide <code>* (WITH MARKUP)</code> pipelines that use this task. Note that
 the Markup component will not appear in the list of components in the Component Registration web UI because it's a core
 feature of OpenMPF.</p>
+<div style="background-color:orange"><p style="color:white; padding:5px">
+    <b>WARNING:</b>
+    Marked-up videos are generated using a constant frame rate and will not match the frame rate of source videos that
+    use a variable frame rate. The frame numbers in the videos will align, but the timestamps may not.
+</p></div>
+
 <h1 id="configuration">Configuration</h1>
 <p>The following properties can be set as job properties or algorithm properties on the <code>MARKUPCV</code> algorithm. Also, the
 default values can be changed be setting the system property listed for each:</p>
@@ -411,9 +421,9 @@ default values can be changed be setting the system property listed for each:</p
 </table>
 <h1 id="video-markup-examples">Video Markup Examples</h1>
 <p><img alt="Walking No Border Exemplar" src="../img/markup/walking-no-border-exemplar.jpg" title="Walking No Border Exemplar" /></p>
-<p>Above we show frame 94 of a marked up video. Frame numbers are enabled so the frame number is shown in the top-right corner. Exemplar icons are enabled, and since this detection is the track exemplar a star icon is shown in the label. Also, the label shows the track's <code>CLASSIFICATION</code> property followed by the track confidence. All of the examples shown in this section will display track-level information because <code>MARKUP_LABELS_FROM_DETECTIONS=false</code>. The circle represents the top-left corner of the detection. See <a href="../CPP-Batch-Component-API/index.html#rotation-and-horizontal-flip">this section</a> of the C++ Batch Component API for more information on flip and rotation.</p>
+<p>Above we show frame 94 of a marked-up video. Frame numbers are enabled so the frame number is shown in the top-right corner. Exemplar icons are enabled, and since this detection is the track exemplar a star icon is shown in the label. Also, the label shows the track's <code>CLASSIFICATION</code> property followed by the track confidence. All of the examples shown in this section will display track-level information because <code>MARKUP_LABELS_FROM_DETECTIONS=false</code>. The circle represents the top-left corner of the detection. See <a href="../CPP-Batch-Component-API/index.html#rotation-and-horizontal-flip">this section</a> of the C++ Batch Component API for more information on flip and rotation.</p>
 <p><img alt="Walking With Border Algorithm Detection" src="../img/markup/walking-with-border-algorithm-detection.jpg" title="Walking With Border Algorithm Detection" /></p>
-<p>Above we show frame 25 of the marked up video. This time we configured markup to show a black border around the video frame. This is useful when the label extends beyond the edge of the original video frame, as shown here. Also, this time we configured markup to show icons indicating if the track is moving or stationary. The fast-forward icon at the start of the label indicates that this track is moving. Additionally, this time we configured markup to show icons indicating the bounding box source. The magnifying glass icon after the fast-forward icon indicates that this detection is a direct result of the component's detection algorithm. Note that the magnifying glass icon will be replaced with the star icon for exemplars.</p>
+<p>Above we show frame 25 of the marked-up video. This time we configured markup to show a black border around the video frame. This is useful when the label extends beyond the edge of the original video frame, as shown here. Also, this time we configured markup to show icons indicating if the track is moving or stationary. The fast-forward icon at the start of the label indicates that this track is moving. Additionally, this time we configured markup to show icons indicating the bounding box source. The magnifying glass icon after the fast-forward icon indicates that this detection is a direct result of the component's detection algorithm. Note that the magnifying glass icon will be replaced with the star icon for exemplars.</p>
 <p><img alt="Walking With Border Animation" src="../img/markup/walking-with-border-animation.jpg" title="Walking With Border Animation" /></p>
 <p>The frame above shows a movie camera icon to indicate that the detection is the result of the Workflow Manager (WFM) interpolating (animating) the size and position of the bounding box to fill gaps between detections in the track. Considering how blurry the person appears in this frame, it's not surprising that the algorithm could not detect him. If you perform a job with <code>FRAME_INTERVAL</code> greater than one, or otherwise perform frame skipping, then all bounding boxes in skipped frames will be the result of WFM animation. Note that the classification and confidence values are simply carried over from the last detection that was not the result of WFM animation.</p>
 <p><img alt="Walking With Border Filled Gap" src="../img/markup/walking-with-border-filled-gap.jpg" title="Walking With Border Filled Gap" /></p>

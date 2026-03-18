@@ -29,6 +29,7 @@ pages:
     - Trigger Guide: Trigger-Guide.md
     - Roll Up Guide: Roll-Up-Guide.md
     - Health Check Guide: Health-Check-Guide.md
+    - Artifact Extraction Guide: Artifact-Extraction-Guide.md
     - Quality Selection Guide: Quality-Selection-Guide.md
     - Media Selectors Guide: Media-Selectors-Guide.md
     - REST API: REST-API.md

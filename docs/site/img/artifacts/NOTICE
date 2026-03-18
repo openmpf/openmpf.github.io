@@ -1,0 +1,12 @@
+# original_with_markup.png
+Based on https://pixabay.com/photos/girls-students-asian-glasses-1741925/
+The Pixabay Content License can be found at https://pixabay.com/service/license-summary/
+Added bounding boxes.
+
+# frame-7-0-0.png
+Based on https://pixabay.com/photos/girls-students-asian-glasses-1741925/
+Cropped the image using one of the bounding boxes added to 'original_with_markup.png'
+
+# frame-7-0-1.png
+Based on https://pixabay.com/photos/girls-students-asian-glasses-1741925/
+Cropped the image using the other bouding box added to 'original_with_markup.png'
