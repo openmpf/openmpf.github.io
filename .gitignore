@@ -5,6 +5,7 @@ _site
 *.iml
 *.idea*
 .vscode
+.env
 
 # general
 .DS_Store

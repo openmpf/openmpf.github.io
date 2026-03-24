@@ -1,4 +1,3 @@
-#! /usr/bin/bash
 
 #############################################################################
 # NOTICE                                                                    #
@@ -26,15 +25,27 @@
 # limitations under the License.                                            #
 #############################################################################
 
-set -o errexit -o pipefail -o xtrace
+x-mpf-docs-base: &base
+  image: openmpf_docs_builder:latest
+  build: .
+  volumes:
+    - ./:/mpf-docs
+  user: "${UG_ID}"
 
-cd /mpf-docs/docs
-mkdocs build
+services:
+  build-mpf-docs:
+    <<: *base
+    profiles:
+      - build
 
-cd /mpf-docs
-
-if [ "$1" = "serve" ]; then
-    exec bundle exec jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0
-else
-    bundle exec jekyll build --config _config.yml,_config_dev.yml
-fi
+  serve-mpf-docs:
+    <<: *base
+    command: ["serve"]
+    ports:
+      - "4000:4000"
+    profiles:
+      - ''
+    develop:
+      watch:
+        - path: ./docs/docs
+          action: restart

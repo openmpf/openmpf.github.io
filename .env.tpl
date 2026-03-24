@@ -1,5 +1,3 @@
-#! /usr/bin/bash
-
 #############################################################################
 # NOTICE                                                                    #
 #                                                                           #
@@ -7,11 +5,11 @@
 # under contract, and is subject to the Rights in Data-General Clause       #
 # 52.227-14, Alt. IV (DEC 2007).                                            #
 #                                                                           #
-# Copyright 2024 The MITRE Corporation. All Rights Reserved.                #
+# Copyright 2026 The MITRE Corporation. All Rights Reserved.                #
 #############################################################################
 
 #############################################################################
-# Copyright 2024 The MITRE Corporation                                      #
+# Copyright 2026 The MITRE Corporation                                      #
 #                                                                           #
 # Licensed under the Apache License, Version 2.0 (the "License");           #
 # you may not use this file except in compliance with the License.          #
@@ -26,15 +24,5 @@
 # limitations under the License.                                            #
 #############################################################################
 
-set -o errexit -o pipefail -o xtrace
-
-cd /mpf-docs/docs
-mkdocs build
-
-cd /mpf-docs
-
-if [ "$1" = "serve" ]; then
-    exec bundle exec jekyll serve --config _config.yml,_config_dev.yml --host 0.0.0.0
-else
-    bundle exec jekyll build --config _config.yml,_config_dev.yml
-fi
+# Run:
+# echo "UG_ID=$(id -u):$(id -g)" >> .env

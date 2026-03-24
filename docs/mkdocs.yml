@@ -40,6 +40,7 @@ pages:
     - Python Batch Component API: Python-Batch-Component-API.md
     - Java Batch Component API: Java-Batch-Component-API.md
     - GPU Support Guide: GPU-Support-Guide.md
+    - Python Subject Tracking Component API: Python-Subject-Tracking-Component-API.md
 - Additional Developer Resources:
     - Contributor Guide: Contributor-Guide.md
     - Development Environment Guide: Development-Environment-Guide.md
