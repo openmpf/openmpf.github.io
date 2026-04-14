@@ -17,6 +17,9 @@ written to local shared storage, or to a remote S3 storage location. Refer to th
 
 The choice of which artifacts to extract is highly configurable using the following properties.
 
+- `SUPPRESS_TRACKS`: When an action has this property set to `true`, no artifacts for that action
+  will be extracted and none of the other properties listed below will have any effect.
+
 - `ARTIFACT_EXTRACTION_POLICY`: This property sets the high level policy controlling artifact extraction. It must have
 one of the following values:
     - `NONE`: No artifact extraction will be performed.
