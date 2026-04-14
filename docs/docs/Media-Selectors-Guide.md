@@ -23,7 +23,7 @@ pipeline. The first stage performs language identification. The second performs 
         {
             "mediaUri": "file:///opt/mpf/share/remote-media/test-json-path-translation.json",
             "properties": {},
-            "mediaSelectorsOutputAction": "ARGOS TRANSLATION (WITH FF REGION AND NO TASK MERGING) ACTION",
+            "mediaSelectorsOutputAction": "ARGOS TRANSLATION (WITH FF REGION AND NOT ANNOTATOR) ACTION",
             "mediaSelectors": [
                 {
                     "type": "JSON_PATH",
@@ -406,7 +406,7 @@ pipeline. The first stage performs language identification. The second performs 
         {
             "mediaUri": "file:///opt/mpf/share/remote-media/test-csv-translation.csv",
             "properties": {},
-            "mediaSelectorsOutputAction": "ARGOS TRANSLATION (WITH FF REGION AND NO TASK MERGING) ACTION",
+            "mediaSelectorsOutputAction": "ARGOS TRANSLATION (WITH FF REGION AND NOT ANNOTATOR) ACTION",
             "mediaSelectors": [
                 {
                     "type": "CSV_COLS",
