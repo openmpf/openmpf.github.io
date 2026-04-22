@@ -40,10 +40,10 @@ pages:
     - Python Batch Component API: Python-Batch-Component-API.md
     - Java Batch Component API: Java-Batch-Component-API.md
     - GPU Support Guide: GPU-Support-Guide.md
-    - Python Subject Tracking Component API: Python-Subject-Tracking-Component-API.md
 - Additional Developer Resources:
     - Contributor Guide: Contributor-Guide.md
     - Development Environment Guide: Development-Environment-Guide.md
     - Node Guide: Node-Guide.md
     - Workflow Manager Architecture: Workflow-Manager-Architecture.md
     - C++ Streaming Component API: CPP-Streaming-Component-API.md
+    - Python Subject Tracking Component API: Python-Subject-Tracking-Component-API.md

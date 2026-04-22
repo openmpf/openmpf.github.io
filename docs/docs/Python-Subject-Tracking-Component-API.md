@@ -1,6 +1,13 @@
 **NOTICE:** This software (or technical data) was produced for the U.S. Government under contract,
-and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2024
+and is subject to the Rights in Data-General Clause 52.227-14, Alt. IV (DEC 2007). Copyright 2026
 The MITRE Corporation. All Rights Reserved.
+
+<div style="background-color:orange">
+    <p style="color:white; padding:5px">
+        <b>WARNING: </b> The Subject Tracking API is not complete, and there are no future
+        development plans. Use at your own risk.
+    </p>
+</div>
 
 # API Overview
 
@@ -10,6 +17,94 @@ audio, or generic media inputs and return structured information about detected 
 (`mpf_subject_api.Relationship`), and any accompanying properties. This specification describes the
 job objects passed to components and the structured results they should return to the OpenMPF
 framework.
+
+
+# How to Create a Python Subject Tracking Component
+
+In this example, we create a subject tracking component named "MySubjectComponent". An example can
+be found
+[here](https://github.com/openmpf/openmpf-python-component-sdk/tree/master/subject/examples/PythonSubjectComponent)
+
+```
+MySubjectComponent
+├── Dockerfile
+├── plugin-files
+│   └── descriptor
+│       └── descriptor.json
+├── pyproject.toml
+└── my_subject_component
+    └── __init__.py
+```
+
+**1\. Create directory structure:**
+```bash
+mkdir -p MySubjectComponent/plugin-files/descriptor
+mkdir MySubjectComponent/my_subject_component
+touch MySubjectComponent/Dockerfile
+touch MySubjectComponent/plugin-files/descriptor/descriptor.json
+touch MySubjectComponent/pyproject.toml
+touch MySubjectComponent/my_subject_component/__init__.py
+```
+
+**2\. Create pyproject.toml file in project's top-level directory:**
+
+Example of a minimal pyproject.toml file:
+```toml
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "MySubjectComponent"
+version = "0.1"
+dependencies = [
+    "mpf_subject_api>=0.1"
+]
+
+[project.entry-points."mpf.exported_component"]
+component = "my_subject_component:MySubjectComponent"
+
+[tool.setuptools.package-data]
+my_subject_component = ["models/*"]
+```
+
+
+The `project.name` parameter defines the distribution name. Typically the distribution name matches
+the component name.
+
+Any dependencies that component requires should be listed in the `project.dependencies` field.
+
+The Component Executor looks in the `[project.entry-points."mpf.exported_component"]` element and
+uses the `component` field to determine the component class. The `component` field should be the
+(possibly dotted) module name, followed by a `:`, followed by the name of the class.  In the
+example above, the module name is `my_subject_component` because the `MySubjectComponent` class is
+defined in `my_subject_component/__init__.py`. If the class was defined in
+`my_subject_component/other_file.py`, the entry point would be
+`my_subject_component.other_file:MySubjectComponent`.
+
+The `[tool.setuptools.package-data]` section is optional. It should be used when there are
+non-Python files in a package directory that should be included when the component is installed.
+
+
+**3\. Create descriptor.json file in MySubjectComponent/plugin-files/descriptor:**
+
+Example of a minimal descriptor.json file:
+```json
+{
+    "componentName": "MySubjectComponent",
+    "componentVersion": "10.0",
+    "sourceLanguage": "python",
+    "componentLibrary": "MySubjectComponent",
+    "properties": [
+        {
+            "name": "MIN_IOU",
+            "description" : "Minimum required intersection over union for two tracks to be associated.",
+            "type": "FLOAT",
+            "defaultValue": "0.03"
+        }
+    ]
+}
+```
 
 
 # API Specification
